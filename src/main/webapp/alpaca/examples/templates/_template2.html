@@ -1,0 +1,30 @@
+Hello ${customer.first} ${customer.last}.<br/>
+Your shopping cart has ${products.length} item(s):
+<table border="1">
+    <tr>
+        <td>Name</td><td>Description</td>
+        <td>Price</td><td>Quantity & Alert</td>
+    </tr>
+
+{{if (products.length > 0) }}
+  {{each products}}
+    <tr>
+        <td>${this.name}</td>
+        <td>${this.desc}</td>
+        <td>$${this.price}</td>
+        <td>${this.quantity} : ${this.alert}</td>
+    </tr>
+  {{/each}}
+{{else}}
+    <tr>
+        <td colspan="4">No products in your cart.</td>
+    </tr>
+{{/if}}
+
+</table>
+
+{{if customer.level == "gold"}}
+        We love you!  Please check out our Gold Customer specials!
+{{else}}
+        Become a Gold Customer by buying more stuff here.
+{{/if}}        

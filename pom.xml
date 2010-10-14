@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.gitana.sdk</groupId>
+	<artifactId>alpaca-forms</artifactId>
+	<version>1.0.0.SNAPSHOT</version>
+	<name>Alpaca Forms</name>
+	<packaging>pom</packaging>
+	<url>http://www.gitanasoftware.org/</url>
+	
+	<licenses>
+    	<license>
+      		<name>The Apache Software License, Version 2.0</name>
+      		<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      		<distribution>repo</distribution>
+    	</license>
+  	</licenses>
+
+  	<scm>
+    	<url>http://github.com/gitana/alpaca</url>
+  	</scm>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>oss.sonatype.org</id>
+			<url>http://oss.sonatype.org/content/groups/public</url>
+		</pluginRepository>		
+	</pluginRepositories>
+
+	<build>
+	    <plugins>
+			<plugin>
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>maven-minify-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<id>minify</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<jsSourceDir>alpaca/js</jsSourceDir>
+					<jsSourceFiles>
+						<param>license.js</param>
+						<param>Alpaca.js</param>
+						<param>ControlField.js</param>
+						<param>ContainerField.js</param>
+						<param>Field.js</param>
+						<param>JsonSchema.js</param>
+						<param>fields/TextField.js</param>
+						<param>fields/TextAreaField.js</param>
+						<param>fields/UpperCaseField.js</param>
+						<param>fields/NumberField.js</param>
+						<param>fields/ObjectField.js</param>
+						<param>fields/IPv4Field.js</param>
+						<param>fields/DateField.js</param>
+						<param>fields/CheckBoxField.js</param>
+						<param>fields/ArrayField.js</param>
+						
+					</jsSourceFiles>
+					<cssSourceDir>alpaca/css</cssSourceDir>
+					<cssSourceFiles>
+					</cssSourceFiles>
+					<jsFinalFile>alpaca.js</jsFinalFile>
+					<cssFinalFile>alpaca.css</cssFinalFile>
+					<linebreak>-1</linebreak>
+					<nomunge>false</nomunge>
+					<verbose>true</verbose>
+					<preserveAllSemiColons>false</preserveAllSemiColons>
+					<disableOptimizations>false</disableOptimizations>
+					<bufferSize>4096</bufferSize>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>license</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<target>
+						<!--
+						<concat destfile="${project.build.directory}/${project.build.finalName}/js/alpaca.min.updated.js" fixlastline="yes">
+							<filelist dir="." files="src/main/webapp/alpaca/js/license.js ${project.build.directory}/${project.build.finalName}/js/alpaca.min.js" />
+						</concat>
+						<delete file="${project.build.directory}/${project.build.finalName}/js/alpaca.min.js" />
+						<move file="${project.build.directory}/${project.build.finalName}/js/alpaca.min.updated.js" 
+							  tofile="${project.build.directory}/${project.build.finalName}/js/alpaca.min.js" />
+						-->
+					</target>
+				</configuration>
+			</plugin>
+	    </plugins>
+	</build>
+  	
+  	<dependencies>
+  	</dependencies>
+  	
+</project>

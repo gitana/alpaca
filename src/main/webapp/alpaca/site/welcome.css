@@ -1,0 +1,29 @@
+* {margin:0; padding:0;}
+
+html {background:#e5eff1; width:100%;}
+
+body { 	 
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:100%; 
+	color:#000000;
+	background: white 0 bottom repeat-x #fff;
+}
+
+#main {
+	width:1038px; 	
+	padding:0;
+	margin:0 auto;
+	font-size:0.75em;
+	line-height:1.666em;
+}
+
+img {border:0; vertical-align:top; text-align:left;}
+
+a {color:#449eb6; outline:none;}
+a:hover{text-decoration:none;}
+
+ul, ol {list-style:none;}
+
+table, table td {padding:0; border:none; border-collapse:collapse;}
+
+

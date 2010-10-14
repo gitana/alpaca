@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+        <!-- Dependencies -->
+        <script type="text/javascript" src="../../lib/jquery/jquery-1.4.2.min.js"></script>     
+        <script type="text/javascript" src="../../lib/tmpl/jquery.tmpl.js"></script>
+        <script type="text/javascript" src="../../lib/tmpl/jquery.tmplPlus.js"></script>
+        <script type="text/javascript" src="../../lib/base/base.js"></script>
+        
+        <!-- Alpaca -->
+        <link type="text/css" href="../css/alpaca.css" rel="stylesheet" />
+        <script type="text/javascript" src="../js/Alpaca.js"></script>
+        <script type="text/javascript" src="../js/Field.js"></script>
+        <script type="text/javascript" src="../js/ControlField.js"></script>
+        <script type="text/javascript" src="../js/ContainerField.js"></script>
+        <script type="text/javascript" src="../js/fields/TextField.js"></script>
+        <script type="text/javascript" src="../js/fields/NumberField.js"></script>
+        <script type="text/javascript" src="../js/fields/CheckBoxField.js"></script>
+        <script type="text/javascript" src="../js/fields/ObjectField.js"></script>
+
+	</head>
+	<body>
+	
+	   <div id="field"></div>
+	   
+	   <script type="text/javascript">
+$(function() {
+
+	var data = {
+        "title": "The title",
+        "description": "A description",
+        "scores": {
+           "hole1": 3,
+           "hole2": 9.7
+        },
+        "onTime": true
+	};
+
+	var settings = {
+        "scores": {
+            "properties": {
+	            "hole1": {
+	                "validate": false,
+	                "label":"Not Validated"
+	            }
+	        },
+	        "properties": {
+	            "hole2": {
+		            "label": "Validated"
+	            }
+	        }
+	    },
+	    "onTime": {
+	        "rightLabel": "Showed up on time"
+	    }
+	};
+	
+	var field = $("#field").alpaca(data, {
+		settings: settings
+	});
+
+	field.render();
+});
+       </script>
+		
+	</body>
+</html>
+
+

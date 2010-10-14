@@ -1,0 +1,31 @@
+Fancy Form
+<br/>
+<br/>
+RAW DATA
+<br/>
+Title: ${title}
+<br/>
+Description: ${description}
+<br/>
+Scores
+{{each scores}}
+<br/>
+Scores - : ${this}
+{{/each}}
+<br/>
+OnTime: ${onTime}
+
+<br/>
+<br/>
+<br/>
+Here is a the "title" field from the current item rendered in a text field:
+<br/>
+{{alpaca("title", "text")}}
+<div style="clear:both"></div>
+<br/>
+Here is the "score.hole1" field from the current item:
+<br/>
+{{alpaca("scores.hole1")}}
+<br/>
+STUFF BELOW
+

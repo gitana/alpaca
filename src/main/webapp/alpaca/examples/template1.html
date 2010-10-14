@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+        <!-- Dependencies -->
+        <script type="text/javascript" src="../../lib/jquery/jquery-1.4.2.min.js"></script>     
+        <script type="text/javascript" src="../../lib/tmpl/jquery.tmpl.js"></script>
+        <script type="text/javascript" src="../../lib/tmpl/jquery.tmplPlus.js"></script>
+        <script type="text/javascript" src="../../lib/base/base.js"></script>
+        
+        <!-- Alpaca -->
+        <link type="text/css" href="../css/alpaca.css" rel="stylesheet" />
+        <script type="text/javascript" src="../js/Alpaca.js"></script>
+        <script type="text/javascript" src="../js/Field.js"></script>
+        <script type="text/javascript" src="../js/ControlField.js"></script>
+        <script type="text/javascript" src="../js/ContainerField.js"></script>
+        <script type="text/javascript" src="../js/fields/TextField.js"></script>
+        <script type="text/javascript" src="../js/fields/NumberField.js"></script>
+        <script type="text/javascript" src="../js/fields/CheckBoxField.js"></script>
+        <script type="text/javascript" src="../js/fields/ObjectField.js"></script>
+        <script type="text/javascript" src="../js/fields/ArrayField.js"></script>
+
+	</head>
+	<body>
+	
+	   <div id="field"></div>
+	   
+	   <script type="text/javascript">
+
+var data = 
+{
+    products : [ { name: "mac", desc: "computer",     
+                   price: 1000, quantity: 100, alert:null },
+                 { name: "ipod", desc: "music player", 
+                   price:  200, quantity: 200, alert:"on sale now!" },
+                 { name: "cinema display", desc: "screen",       
+                   price:  800, quantity: 300, alert:"best deal!" } ],
+    customer : { first: "John", last: "Public", level: "gold" }
+};
+
+var settings =
+{
+	"products": {
+	    "label": "Products"
+    },
+    "customer": {
+        "label": "Customer"
+    }
+};
+
+$(function() {
+	var field = $("#field").alpaca(data, {
+		settings: settings
+	});
+
+	field.render();
+});
+       </script>
+		
+	</body>
+</html>
+
+
