@@ -1,29 +1,56 @@
 /*********************************************************************************************
  **
- ** CONTROL
+ ** FIELD ABSTRACT CLASS
  **
  *********************************************************************************************/
 
-/** This gets wrapped around every Alpaca control's SPAN element **/
-.alpaca-control
+/** This gets wrapped around every Alpaca field's SPAN element **/
+DIV.alpaca-field
 {
 	display: inline-block;
 }
 
-/**
- * MARKS CONTROL VALUE AS REQUIRED OR OPTIONAL
- */
-.alpaca-control-required
+.alpaca-field-required
 {
 }
 
-.alpaca-control-optional
+.alpaca-field-optional
 {
 }
 
-.alpaca-control-message 
+
+/*********************************************************************************************
+ **
+ ** CONTROL FIELD ABSTRACT CLASS
+ **
+ *********************************************************************************************/
+
+/** #fieldContainer **/
+.alpaca-field-container
+{
+    display: inline-block;
+}
+
+.alpaca-field-label 
 {
    float: left;
+   color: #505050;
+   text-align: right;
+   padding: 0.2em 0.5em 0 0;
+}
+
+.alpaca-field-helper 
+{
+   clear:both;
+   color: #505050;
+   font-size: 75%;
+   margin-top: 2px;
+}
+
+.alpaca-field-message 
+{
+   clear: both;
+   float: none;
    margin: 4px;
    font-size: 85%;
 }
@@ -33,34 +60,34 @@
  * VALID, INVALID, EMPTY states (and focused)
  */
 
-.alpaca-control-invalid > div.alpaca-message {
+.alpaca-field-invalid > div.alpaca-field-message {
    color:#C00E0C;
    font-weight:bold;
 }
 
-.alpaca-control-invalid > div.alpaca-field-label {
+.alpaca-field-invalid > div.alpaca-field-label {
    color:#C00E0C;
    font-weight:bold;
 }
 
-.alpaca-control-invalid > div.alpaca-field-label label {
+.alpaca-field-invalid > div.alpaca-field-label label {
    background:transparent url(../images/error_bang.gif) no-repeat scroll 0 1px;
    padding-left:20px;
 }
 
-.alpaca-control-valid > div.alpaca-message {
+.alpaca-field-valid > div.alpaca-field-message {
    color:#505050;
    font-weight: normal;
 }
 
-.alpaca-control-valid > div.alpaca-field-label {
+.alpaca-field-valid > div.alpaca-field-label {
    color:#505050;
    font-weight:normal;
 }
 
 /* Properties set by an invalid higher hierarchy field are disabled for valid or empty subfields */
-.alpaca-control-valid > div.alpaca-field-label label,
-.alpaca-control-empty > div.alpaca-field-label label {
+.alpaca-field-valid > div.alpaca-field-label label,
+.alpaca-field-empty > div.alpaca-field-label label {
    background: none;
    padding-left: inherit;
    font-weight:normal;
@@ -68,41 +95,6 @@
 }
 
 
-
-
-/*********************************************************************************************
- **
- ** FIELD
- **
- *********************************************************************************************/
-
-.alpaca-field
-{
-}
-	
-.alpaca-field-label 
-{
-   float: left;
-   color: #505050;
-   text-align: right;
-   padding: 0.2em 0.5em 0 0;
-}
-
-.alpaca-field-description 
-{
-   clear:both;
-   color: #505050;
-   font-size: 75%;
-   margin-top: 2px;
-}
-
-/** around outerEl **/
-/*
-div.alpaca-fieldWrapper
-{
-   margin-bottom:0.2em;
-}
-*/
 
 
 
@@ -120,11 +112,6 @@ div.alpaca-fieldWrapper
 
 .alpaca-textfield
 {
-}
-	
-.alpaca-textfield-wrapper 
-{
-   float: none;
 }
 
 

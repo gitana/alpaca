@@ -45,25 +45,35 @@
 				<configuration>
 					<jsSourceDir>alpaca/js</jsSourceDir>
 					<jsSourceFiles>
-						<param>license.js</param>
-						<param>Alpaca.js</param>
-						<param>ControlField.js</param>
-						<param>ContainerField.js</param>
-						<param>Field.js</param>
-						<param>JsonSchema.js</param>
-						<param>fields/TextField.js</param>
-						<param>fields/TextAreaField.js</param>
-						<param>fields/UpperCaseField.js</param>
-						<param>fields/NumberField.js</param>
-						<param>fields/ObjectField.js</param>
-						<param>fields/IPv4Field.js</param>
-						<param>fields/DateField.js</param>
-						<param>fields/CheckBoxField.js</param>
-						<param>fields/ArrayField.js</param>
+						<param>../js_src/license.js</param>
+
+						<!-- third party dependencies -->						
+						<!--
+						<param>../../../../../lib/jquery-1.4.2.min.js</param>
+						-->
+						<param>../../../../../lib/jquery.tmpl.js</param>
+						<param>../../../../../lib/base.js</param>
+
+						<!-- alpaca core and fields -->						
+						<param>../js_src/Alpaca.js</param>
+						<param>../js_src/ControlField.js</param>
+						<param>../js_src/ContainerField.js</param>
+						<param>../js_src/Field.js</param>
+						<param>../js_src/JsonSchema.js</param>
+						<param>../js_src/fields/TextField.js</param>
+						<param>../js_src/fields/TextAreaField.js</param>
+						<param>../js_src/fields/UpperCaseField.js</param>
+						<param>../js_src/fields/NumberField.js</param>
+						<param>../js_src/fields/ObjectField.js</param>
+						<param>../js_src/fields/IPv4Field.js</param>
+						<param>../js_src/fields/DateField.js</param>
+						<param>../js_src/fields/CheckBoxField.js</param>
+						<param>../js_src/fields/ArrayField.js</param>
 						
 					</jsSourceFiles>
 					<cssSourceDir>alpaca/css</cssSourceDir>
 					<cssSourceFiles>
+						<param>../css_src/alpaca.css</param>
 					</cssSourceFiles>
 					<jsFinalFile>alpaca.js</jsFinalFile>
 					<cssFinalFile>alpaca.css</cssFinalFile>
@@ -89,14 +99,25 @@
 				</executions>
 				<configuration>
 					<target>
-						<!--
-						<concat destfile="${project.build.directory}/${project.build.finalName}/js/alpaca.min.updated.js" fixlastline="yes">
-							<filelist dir="." files="src/main/webapp/alpaca/js/license.js ${project.build.directory}/${project.build.finalName}/js/alpaca.min.js" />
+						
+						<!-- Update the minified file to include license information -->
+						<concat destfile="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.updated.js" fixlastline="yes">
+							<filelist dir="." files="src/main/webapp/alpaca/js/license.js ${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.js" />
 						</concat>
-						<delete file="${project.build.directory}/${project.build.finalName}/js/alpaca.min.js" />
-						<move file="${project.build.directory}/${project.build.finalName}/js/alpaca.min.updated.js" 
-							  tofile="${project.build.directory}/${project.build.finalName}/js/alpaca.min.js" />
-						-->
+						<delete file="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.js" />
+						<move file="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.updated.js" 
+							  tofile="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.js" />
+							
+						<!-- Copy other directories into place -->
+						<copy todir="${project.build.directory}/${project.build.finalName}/alpaca">
+							<fileset dir="src/main/webapp/alpaca">
+								<exclude name="css/**" />
+								<exclude name="js/**" />
+								<exclude name="css_src/**" />
+								<exclude name="js_src/**" />
+							</fileset>
+						</copy>
+						
 					</target>
 				</configuration>
 			</plugin>

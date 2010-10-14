@@ -14,7 +14,7 @@
 		/**
 		 * Convert a JSON schema to an Alpaca schema
 		 */
-		import: function(schema, onSuccess)
+		importSchema: function(schema, onSuccess)
 		{
 			var _this = this;
 
