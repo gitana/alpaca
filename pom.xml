@@ -54,16 +54,18 @@
 						<param>../../../../../lib/jquery.tmpl.js</param>
 						<param>../../../../../lib/base.js</param>
 
-						<!-- alpaca core and fields -->						
+						<!-- alpaca core -->			
 						<param>../js_src/Alpaca.js</param>
+						<param>../js_src/Field.js</param>
 						<param>../js_src/ControlField.js</param>
 						<param>../js_src/ContainerField.js</param>
-						<param>../js_src/Field.js</param>
 						<param>../js_src/JsonSchema.js</param>
+						
+						<!-- alpaca fields -->
 						<param>../js_src/fields/TextField.js</param>
-						<param>../js_src/fields/TextAreaField.js</param>
-						<param>../js_src/fields/UpperCaseField.js</param>
 						<param>../js_src/fields/NumberField.js</param>
+						<param>../js_src/fields/TextAreaField.js</param>
+						<param>../js_src/fields/UpperCaseField.js</param>						
 						<param>../js_src/fields/ObjectField.js</param>
 						<param>../js_src/fields/IPv4Field.js</param>
 						<param>../js_src/fields/DateField.js</param>
