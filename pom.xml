@@ -5,7 +5,7 @@
 	<artifactId>alpaca-forms</artifactId>
 	<version>1.0.0.SNAPSHOT</version>
 	<name>Alpaca Forms</name>
-	<packaging>pom</packaging>
+	<packaging>war</packaging>
 	<url>http://www.gitanasoftware.org/</url>
 	
 	<licenses>
@@ -122,6 +122,28 @@
 						
 					</target>
 				</configuration>
+			</plugin>
+			<!-- Jetty Plugin for smoke screen tests -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>7.0.1.v20091125</version>
+		        <configuration>
+				    <scanIntervalSeconds>1</scanIntervalSeconds>
+				    <stopPort>9966</stopPort>
+				    <stopKey>foo</stopKey>
+					<webAppConfig>
+						<contextPath>/</contextPath>
+					</webAppConfig>
+					<connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>8180</port>
+						</connector>
+					</connectors>
+					<scanTargets>
+						<scanTarget>src/main/webapp</scanTarget>
+					</scanTargets>
+		        </configuration>
 			</plugin>
 	    </plugins>
 	</build>
