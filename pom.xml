@@ -103,20 +103,20 @@
 					<target>
 						
 						<!-- Update the minified file to include license information -->
-						<concat destfile="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.updated.js" fixlastline="yes">
-							<filelist dir="." files="src/main/webapp/alpaca/js/license.js ${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.js" />
+						<concat destfile="${project.build.directory}/${project.build.finalName}/alpaca/alpaca.min.updated.js" fixlastline="yes">
+							<filelist dir="." files="src/main/webapp/alpaca/js/license.js ${project.build.directory}/${project.build.finalName}/alpaca/alpaca.min.js" />
 						</concat>
-						<delete file="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.js" />
-						<move file="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.updated.js" 
-							  tofile="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.js" />
-							
+						<delete file="${project.build.directory}/${project.build.finalName}/alpaca/alpaca.min.js" />
+						<move file="${project.build.directory}/${project.build.finalName}/alpaca/alpaca.min.updated.js" 
+							  tofile="${project.build.directory}/${project.build.finalName}/alpaca/alpaca.min.js" />
+						
 						<!-- Copy other directories into place -->
 						<copy todir="${project.build.directory}/${project.build.finalName}/alpaca">
 							<fileset dir="src/main/webapp/alpaca">
-								<exclude name="css/**" />
-								<exclude name="js/**" />
-								<exclude name="css_src/**" />
-								<exclude name="js_src/**" />
+								<exclude name="**/css/*" />
+								<exclude name="**/js/**" />
+								<exclude name="**/css_src/**" />
+								<exclude name="**/js_src/**" />
 							</fileset>
 						</copy>
 						
