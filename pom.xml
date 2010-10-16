@@ -104,7 +104,7 @@
 						
 						<!-- Update the minified file to include license information -->
 						<concat destfile="${project.build.directory}/${project.build.finalName}/alpaca/alpaca.min.updated.js" fixlastline="yes">
-							<filelist dir="." files="src/main/webapp/alpaca/js/license.js ${project.build.directory}/${project.build.finalName}/alpaca/alpaca.min.js" />
+							<filelist dir="." files="src/main/webapp/alpaca/js_src/license.js ${project.build.directory}/${project.build.finalName}/alpaca/alpaca.min.js" />
 						</concat>
 						<delete file="${project.build.directory}/${project.build.finalName}/alpaca/alpaca.min.js" />
 						<move file="${project.build.directory}/${project.build.finalName}/alpaca/alpaca.min.updated.js" 
