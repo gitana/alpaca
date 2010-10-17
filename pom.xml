@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.gitana.sdk</groupId>
-	<artifactId>alpaca-forms</artifactId>
+	<artifactId>alpaca</artifactId>
 	<version>1.0.0.SNAPSHOT</version>
-	<name>Alpaca Forms</name>
-	<packaging>war</packaging>
+	<name>Alpaca</name>
+	<packaging>pom</packaging>
 	<url>http://www.gitanasoftware.org/</url>
 	
 	<licenses>
@@ -29,6 +29,18 @@
 
 	<build>
 	    <plugins>
+
+			<!-- Eclipse Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <downloadSources>true</downloadSources>
+                    <downloadJavadocs>false</downloadJavadocs>
+                </configuration>
+            </plugin>
+
 			<plugin>
 				<groupId>com.samaxes.maven</groupId>
 				<artifactId>maven-minify-plugin</artifactId>
@@ -43,34 +55,34 @@
 					</execution>
 				</executions>
 				<configuration>
-					<jsSourceDir>alpaca/js</jsSourceDir>
+					<jsSourceDir>alpaca</jsSourceDir>
 					<jsSourceFiles>
-						<param>../js_src/license.js</param>
+						<param>./js_src/license.js</param>
 
 						<!-- third party dependencies -->						
 						<!--
-						<param>../../../../../lib/jquery-1.4.2.min.js</param>
+						<param>../../../../lib/jquery-1.4.2.min.js</param>
 						-->
-						<param>../../../../../lib/jquery.tmpl.js</param>
-						<param>../../../../../lib/base.js</param>
+						<param>../../../../lib/jquery.tmpl.js</param>
+						<param>../../../../lib/base.js</param>
 
 						<!-- alpaca core -->			
-						<param>../js_src/Alpaca.js</param>
-						<param>../js_src/Field.js</param>
-						<param>../js_src/ControlField.js</param>
-						<param>../js_src/ContainerField.js</param>
-						<param>../js_src/JsonSchema.js</param>
+						<param>./js_src/Alpaca.js</param>
+						<param>./js_src/Field.js</param>
+						<param>./js_src/ControlField.js</param>
+						<param>./js_src/ContainerField.js</param>
+						<param>./js_src/JsonSchema.js</param>
 						
 						<!-- alpaca fields -->
-						<param>../js_src/fields/TextField.js</param>
-						<param>../js_src/fields/NumberField.js</param>
-						<param>../js_src/fields/TextAreaField.js</param>
-						<param>../js_src/fields/UpperCaseField.js</param>						
-						<param>../js_src/fields/ObjectField.js</param>
-						<param>../js_src/fields/IPv4Field.js</param>
-						<param>../js_src/fields/DateField.js</param>
-						<param>../js_src/fields/CheckBoxField.js</param>
-						<param>../js_src/fields/ArrayField.js</param>
+						<param>./js_src/fields/TextField.js</param>
+						<param>./js_src/fields/NumberField.js</param>
+						<param>./js_src/fields/TextAreaField.js</param>
+						<param>./js_src/fields/UpperCaseField.js</param>						
+						<param>./js_src/fields/ObjectField.js</param>
+						<param>./js_src/fields/IPv4Field.js</param>
+						<param>./js_src/fields/DateField.js</param>
+						<param>./js_src/fields/CheckBoxField.js</param>
+						<param>./js_src/fields/ArrayField.js</param>
 						
 					</jsSourceFiles>
 					<cssSourceDir>alpaca/css</cssSourceDir>
