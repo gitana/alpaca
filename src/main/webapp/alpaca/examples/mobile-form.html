@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="../js/alpaca.js"></script>
+		<link type="text/css" href="../css/alpaca.css" rel="stylesheet" />
+	</head>
+	<body>
+	
+	   <div id="field"></div>
+	   
+	   <div id="field2"></div>
+	   
+	   <div id="field3"></div>
+
+	   <script type="text/javascript">
+
+var data = {
+    "name": "Joe Smith",
+    "age": 57
+};
+
+var settings = {
+	"id": "user-form",
+	"name": "User Form",
+	"description":"Collect User Profile Information",
+	"fields" :[{
+		"id": "name",
+		"type":"text",
+		"settings": {
+     		"template": "",
+			"fieldClass":"name",
+ 			"label": "Name",
+			"size": 30,
+			"readonly": false,
+			"formName": "name"
+		}},{
+		"id": "age",
+		"type":"number",
+		"settings": {
+	 	    "template": "",
+	 		"fieldClass":"age",
+	 		"validate": true,
+	 	 	"label": "Age",
+	 		"helper": "Enter User's Age",
+			"size": 2,
+			"formName": "age"
+		}
+	}] 
+};
+
+var schema = {
+		"description":"A person", 
+		"type":"object",
+		"properties": {
+			"name": {"type":"string"},
+			"age" : {
+				"type":"integer",
+				"maximum":125}
+		}
+};
+
+var settings2 = {
+     		"template": "",
+			"fieldClass":"name",
+ 			"label": "Name",
+			"size": 30,
+			"readonly": false,
+			"formName": "name",
+			"data": {
+				"role":"page"
+			}
+};
+
+var schema2 = {"type":"string"};
+
+var template = "/alpaca/examples/templates/_mobile-template.html";
+
+$(function() {
+
+	var field = $("#field").alpaca(data, {
+		"settings": settings,
+		"schema": schema,
+	    "template": template
+	});
+
+	field.render();
+});
+
+$(function() {
+
+	var field = $("#field2").alpaca(data, {
+		"settings": settings,
+		"schema": schema
+	});
+
+	field.render();
+});
+
+$(function() {
+
+	var field = $("#field3").alpaca(data.name, {
+		"settings": settings2,				
+		"schema": schema2
+	});
+
+	field.render();
+});
+       </script>
+		
+	</body>
+</html>
+
+

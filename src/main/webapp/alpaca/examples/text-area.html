@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="../js/alpaca.js"></script>
+		<link type="text/css" href="../css/alpaca.css" rel="stylesheet" />
+		<style type="text/css">
+body {
+	margin: 5px;
+	padding: 0;
+	font: 12px normal Verdana, Arial, Helvetica, sans-serif;
+}
+h1 {
+	font: 5em normal Georgia, 'Times New Roman', Times, serif;
+	text-align:center;
+
+}
+h1 span { color: #8fc1c7; }
+h1 small{
+	font: 0.2em normal Verdana, Arial, Helvetica, sans-serif;
+	text-transform:uppercase;
+	letter-spacing: 1.5em;
+	display: block;
+	color: #ccc;
+}
+.container {
+	margin: 0 auto;
+	width: 600px;
+}
+
+pre {
+	font-size: 12px;
+	padding: 0;
+	margin: 0;
+	background: #f0f0f0;
+	border: 1px solid #ccc;
+	line-height: 20px;
+	width: 1200px;
+	overflow: auto;
+	overflow-Y:hidden;
+}
+pre code {
+	margin: 0 0 0 40px;
+	padding: 5px 0;
+	display: block;
+}
+
+</style>
+	</head>
+	<body>
+	
+	   <h3>Text Area</h3>
+	   <hr/>
+	   <h4>Test Case 1: </h4>	   
+	   <div id="field1"></div>
+	   <h4>Code: </h4>
+	   <pre><code>$("#field1").alpaca("A bit of text that is longer than 3 characters").render();</code></pre>
+	   <script type="text/javascript">
+	   		$("#field1").alpaca("A bit of text that is longer than 3 characters",{
+		"type": "textarea"
+	}).render();	   
+	   </script>
+	   <hr/>	
+	   <h4>Test Case 2: </h4>	   
+	   <div id="field2"></div>
+	   <h4>Code: </h4>
+	   <pre><code>$(function() {
+var control = $("#field2").alpaca("A bit of text that is longer than 3 characters", {
+	"settings": {
+		"label": "Text Label",
+		"helper": "whazzzup",
+		"labelClass": "label-class",
+		"helperClass": "helper-class",
+		"size": 60
+	},
+	"schema": {
+		"maxLength": 3
+	}		
+});
+control.render();	
+});</code></pre>	   
+	   <script type="text/javascript">	   	
+$(function() {
+	var control = $("#field2").alpaca("A bit of text that is longer than 3 characters", {
+		"type": "textarea",
+		"settings": {
+		   "label": "Text Label",
+		   "helper": "whazzzup",
+		   "labelClass": "label-class",
+		   "helperClass": "helper-class",
+		   "rols": 10,
+		   "cols": 50
+		},
+		"schema": {
+			"maxLength": 3
+		}		
+	});
+	control.render();	
+});
+       </script>
+	   <hr/>	
+	   <h4>Test Case 3: </h4>	   
+	   <div id="field3"></div>
+	   <h4>Code: </h4>
+	   <pre><code>$(function() {
+var control = $("#field3").alpaca("A bit of text that is longer than 3 characters", {
+	"settings": {
+		"label": "Text Label",
+		"helper": "whazzzup",
+		"labelClass": "label-class",
+		"helperClass": "helper-class",
+		"templates": {
+			"edit":{
+				"fieldOuterEl":'&lt;span class="alpaca-field" id="${outerElId}" alpaca-field-id="${id}"&gt;&lt;div&gt;What is up&lt;/div&gt;{{html this.html}}&lt;/span&gt;',
+				"controlFieldHelper"   : '{{if settings.helper}}&lt;span class="{{if settings.helperClass}}${settings.helperClass}{{/if}}" id="${helperId}"&gt;${settings.helper}&lt;/span&gt;{{/if}}'
+		   	}
+		},
+		"messages": {
+			"stringTooLong":"Maximum length {0}"
+		},
+		"size": 60
+	},
+	"schema": {
+		"maxLength": 3
+	}		
+});
+control.render();	
+});</code></pre>	   
+	   <script type="text/javascript">	   	
+$(function() {
+	var control = $("#field3").alpaca("A bit of text that is longer than 3 characters", {
+		"type": "textarea",
+		"settings": {
+		   "label": "Text Label",
+		   "helper": "whazzzup",
+		   "labelClass": "label-class",
+		   "helperClass": "helper-class",
+		   "templates": {
+		   	"edit":{
+			   		"fieldOuterEl":'<span class="alpaca-field" id="${outerElId}" alpaca-field-id="${id}"><div>What is up</div>{{html this.html}}</span>',
+					"controlFieldHelper"   : '{{if settings.helper}}<span class="{{if settings.helperClass}}${settings.helperClass}{{/if}}" id="${helperId}">${settings.helper}</span>{{/if}}'
+		   		}
+		   },
+		   "messages": {
+		   		"stringTooLong":"Maximum length {0}"
+		   },
+		   "rols": 10,
+		   "cols": 50
+		},
+		"schema": {
+			"maxLength": 3
+		}		
+	});
+
+	control.render();
+	
+});
+       </script>		
+	   <hr/>
+	   <h4>Test Case 4: </h4>	   
+	   <div id="field4"></div>
+	   <h4>Code: </h4>
+	   <pre><code>$("#field4").alpaca("A bit of text that is longer than 3 characters").render('view');</code></pre>
+	   <script type="text/javascript">
+	   		$("#field4").alpaca("A bit of text that is longer than 3 characters").render('view');	   
+	   </script>
+	   <hr/>	
+	   <h4>Test Case 5: </h4>	   
+	   <div id="field5"></div>
+	   <h4>Code: </h4>
+	   <pre><code>$(function() {
+var control = $("#field3").alpaca("A bit of text that is longer than 3 characters", {
+	"settings": {
+		"label": "Text Label",
+		"helper": "whazzzup",
+		"templates": {
+			"view":{
+				"field"   : '&lt;div&gt;test:${data}&lt;/div&gt;'
+		   	}
+		}
+	}		
+});
+control.render('view');	
+});</code></pre>	   
+	   <script type="text/javascript">	   	
+$(function() {
+	var control = $("#field5").alpaca("A bit of text that is longer than 3 characters", {
+		"type": "textarea",
+		"settings": {
+		   "label": "Text Label",
+		   "helper": "whazzzup",
+		   "templates": {
+		   	"view":{
+					"field"   : '<div>test:${data}</div>'
+		   		}
+		   }
+		}		
+	});
+
+	control.render('view');
+	
+});
+       </script>	   
+	   <hr/>	
+	   <h4>Test Case 6: </h4>	   
+	   <div id="field6"></div>
+	   <h4>Code: </h4>
+	   <pre><code>$(function() {
+var control = $("#field6").alpaca("A bit of text that is longer than 3 characters", {
+	"settings": {
+		"label": "Text Label",
+		"helper": "whazzzup"
+	},
+	"template":"/alpaca/examples/templates/_template5.html"		
+});
+control.render('view');	
+});</code></pre>	   
+	   <script type="text/javascript">	   	
+$(function() {
+	var control = $("#field6").alpaca("A bit of text that is longer than 3 characters", {
+		"type": "textarea",
+		"settings": {
+		   "label": "Text Label",
+		   "helper": "whazzzup"
+		},
+		"template":'/alpaca/examples/templates/_template5.html'		
+	});
+
+	control.render('view');
+	
+});
+       </script>	
+	 </body>
+</html>
+
+

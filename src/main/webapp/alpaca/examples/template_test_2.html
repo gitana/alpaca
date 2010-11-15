@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="../js/alpaca.js"></script>
+		<link type="text/css" href="../css/alpaca.css" rel="stylesheet" />
+	</head>
+	<body>
+	
+	   <h3>Test1</h3>
+	   <div id="test1"></div>	   
+	   <h3>Test2</h3>
+	   <div id="test2"></div>
+	   <h3>Test3</h3>
+	   <div id="test3"></div>
+	   <h3>Test4</h3>
+	   <div id="test4"></div>
+	   <h3>Test5</h3>
+	   <div id="test5"></div>
+	   <h3>Test6</h3>
+	   <div id="test6"></div>
+	   <h3>Test7</h3>
+	   <div id="test7"></div>
+	   <h3>Test8</h3>
+	   <div id="test8"></div>
+	   <script type="text/javascript">	   	
+		var templates= {
+    				fieldOuterEl  : '<span class="alpaca-field" id="${outerElId}" alpaca-field-id="${id}">{{html this.html}}</span>',
+    				controlFieldLabel  : '{{if settings.label}}<div class="alpaca-field-label{{if settings.labelClass}} ${settings.labelClass}{{/if}}" id="${labelId}"><div>${settings.label}</div></div>{{/if}}',
+    				controlFieldHelper   : '{{if settings.helper}}<div class="alpaca-field-helper{{if settings.helperClass}} ${settings.helperClass}{{/if}}" id="${helperId}">${settings.helper}</div>{{/if}}',
+    				controlFieldMessage   : '<div class="alpaca-field-message">* ${message}</div>',
+    				controlFieldContainer   : '<div class="alpaca-field-container">{{html this.html}}</div>',
+    				controlText  : 
+    				{
+    					edit : '<input type="text" id="${id}" class="${class}"></input>',
+    					view : '<span id="${id}" class="${class}"></span>'
+    				},
+					field: '{{wrap(null, {}) templates.fieldOuterEl}}{{tmpl templates.controlFieldLabel}}{{wrap(null, {}) templates.controlFieldContainer}}{{tmpl templates.controlFieldHelper}}{{/wrap}}{{tmpl templates.controlFieldHelper}}{{/wrap}}'
+    			};
+		var dataObj= {
+		"settings": {
+		   "label": "Text Label",
+		   "helper": "whazzzup",
+		   "labelClass": "label-class",
+		   "helperClass": "helper-class",
+		   "templates": {
+		   		"fieldOuterEl":'<span class="alpaca-field" id="${outerElId}" alpaca-field-id="${id}"><div>What is up</div>{{html this.html}}</span>',
+				"controlFieldHelper"   : '{{if settings.helper}}<span class="{{if settings.helperClass}}${settings.helperClass}{{/if}}" id="${helperId}">${settings.helper}</span>{{/if}}'
+		   },
+		   "messages": {
+		   		"stringTooLong":"Maximum length {0}"
+		   },
+		   "size": 60
+		},
+		"schema": {
+			"maxLength": 3
+		}		
+	};		
+		// Test 1
+		$.tmpl( templates.field, dataObj).appendTo( "#test1" );
+		
+		$.tmpl( templates.controlText.edit, dataObj).appendTo( $(".alpaca-field-container",$("#test1")) );
+
+       </script>
+		
+	</body>
+</html>
+
+

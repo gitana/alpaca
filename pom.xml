@@ -54,6 +54,8 @@
 						<param>../../../../../lib/jquery.tmpl.js</param>
 						<param>../../../../../lib/base.js</param>
 
+						<param>../../../../../lib/DetectMobileBrowser.js</param>
+
 						<!-- alpaca core -->			
 						<param>../js_src/Alpaca.js</param>
 						<param>../js_src/Field.js</param>
@@ -71,11 +73,16 @@
 						<param>../js_src/fields/DateField.js</param>
 						<param>../js_src/fields/CheckBoxField.js</param>
 						<param>../js_src/fields/ArrayField.js</param>
-						
+
+						<!--  alpaca views -->
+						<param>../js_src/views/DefaultView.js</param>
+						<param>../js_src/views/MobileView.js</param>
+												
 					</jsSourceFiles>
 					<cssSourceDir>alpaca/css</cssSourceDir>
 					<cssSourceFiles>
 						<param>../css_src/alpaca.css</param>
+						<param>../css_src/example.css</param>
 					</cssSourceFiles>
 					<jsFinalFile>alpaca.js</jsFinalFile>
 					<cssFinalFile>alpaca.css</cssFinalFile>

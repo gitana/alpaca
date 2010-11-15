@@ -9,12 +9,27 @@
 	<body>
 	
 	   <div id="field"></div>
+
+	   <div id="field2"></div>
 	   
-	   <script type="text/javascript">
+	   <script type="text/javascript">	   	
 $(function() {
 	var control = $("#field").alpaca("A bit of text that is longer than 3 characters", {
 		"settings": {
 		   "label": "Text Label",
+		   "helper": "whazzzup",
+		   "labelClass": "label-class",
+		   "helperClass": "helper-class",
+		   "templates": {
+		   	"edit":
+				{
+			   		"fieldOuterEl":'<span class="alpaca-field" id="${outerElId}" alpaca-field-id="${id}"><div>What is up</div>{{html this.html}}</span>',
+					"controlFieldHelper"   : '{{if settings.helper}}<span class="{{if settings.helperClass}}${settings.helperClass}{{/if}}" id="${helperId}">${settings.helper}</span>{{/if}}'
+		   		}
+		   },
+		   "messages": {
+		   		"stringTooLong":"Maximum length {0}"
+		   },
 		   "size": 60
 		},
 		"schema": {
@@ -23,6 +38,7 @@ $(function() {
 	});
 
 	control.render();
+	
 });
        </script>
 		

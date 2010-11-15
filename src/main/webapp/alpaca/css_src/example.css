@@ -1,0 +1,45 @@
+body {
+    margin: 5px;
+    padding: 0;
+    font: 12px normal Verdana, Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font: 5em normal Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+h1 span {
+    color: #8fc1c7;
+}
+
+h1 small {
+    font: 0.2em normal Verdana, Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1.5em;
+    display: block;
+    color: #ccc;
+}
+
+.container {
+    margin: 0 auto;
+    width: 600px;
+}
+
+pre {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    line-height: 20px;
+    width: 1200px;
+    overflow: auto;
+    overflow-Y: hidden;
+}
+
+pre code {
+    margin: 0 0 0 40px;
+    padding: 5px 0;
+    display: block;
+}

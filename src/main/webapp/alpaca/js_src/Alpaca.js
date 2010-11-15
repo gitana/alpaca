@@ -14,6 +14,7 @@
     var _isArray = function( obj ) { return Object.prototype.toString.call(obj) === "[object Array]"; };
     var _isUndefined = function(obj) { return (typeof obj  == "undefined"); };
     var _isEmpty = function(obj) { return _isUndefined(obj) || obj == null; };
+	
     var _escapeHTML = function(s) {
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     };
@@ -94,13 +95,27 @@
      *    settings: settings            field configuration (optional)
      * });
      * 
-     * @return the alpaca field instance
+     * Alpaca(el, data, {               Binds a control to $(el) using the given data and config.
+     *    id: <id>                      field id (optional)
+     *    type: <type>                  field type (optional)
+     *    settings: settings            field configuration (optional)
+     * 	},
+     * 	schema							field schema (optional)
+     * );
+     * 
+     * Alpaca(el, data, {               Binds a control to $(el) using the given data and config.
+     *    id: <id>                      field id (optional)
+     *    type: <type>                  field type (optional)
+     *    settings: settings            field configuration (optional)
+     * 	},
+     * 	schema,							field schema (optional)
+     * 	callback						callback function 
+     * );
+     * * @return the alpaca field instance
      */
-	Alpaca = function()
-	{
+	Alpaca = function() {
 		var args = Alpaca.makeArray(arguments);
-    	if (args.length == 0)
-    	{
+    	if (args.length == 0) {
     		// illegal
     		alert("No arguments - no supported");
     		return;
@@ -112,35 +127,28 @@
     	// other arguments we may want to figure out
     	var data = null;
     	var options = null;
+    	var schema = null;
     	
-    	if (args.length == 1)
-    	{
+    	if (args.length == 1) {
     		// hands back the field instance that is bound directly under the specified element
     		// var field = Alpaca(el);
     		var domElements = $(el).find("SPAN:first");
     		
     		var field = null;
-    		for (var i = 0; i < domElements.length; i++)
-    		{
-    			var domElement = domElements[i];
-    			
+    		for (var i = 0; i < domElements.length; i++){
+    			var domElement = domElements[i];    			
     			var fieldId = $(domElement).attr("alpaca-field-id");
-    			if (fieldId)
-    			{
+    			if (fieldId){
     				var _field = Alpaca.fieldInstances[fieldId];
-    				if (_field)
-    				{
+    				if (_field){
     					field = _field;
     				}
     			}
     		}
     		
-    		if (field != null)
-    		{
+    		if (field != null){
     			return field;
-    		}
-    		else
-    		{
+    		} else {
     			// otherwise, grab the data inside the element and use that for the control
     			var domData = $(el).html();
     			$(el).html("");
@@ -149,49 +157,130 @@
     	}
 
     	// figure out the data and options to use
-    	if (args.length >= 2)
-    	{
+    	if (args.length >= 2) {
     		// "data" is the second argument
     		var data = args[1];
-    		if (Alpaca.isFunction(data))
-    		{
+    		if (Alpaca.isFunction(data)) {
     			alert("Function not supported as data argument");
     			return;
     		}
     		
-    		if (args.length == 3)
-    		{
+    		if (args.length >= 3) {
     			// "options" is the third argument
-    			options = args[2];
+    			if (!Alpaca.isFunction(args[2])) {
+					options = args[2];
+				}
+				if (args.length >= 4) {
+    				// "schema" is the forth argument
+    				if (!Alpaca.isFunction(args[3])) {
+						schema = args[3];
+					}
+    			}
     		}
     	}
+		// assume last parameter is a callback function
+		var callback = Alpaca.isFunction(args[args.length-1]) ? args[args.length-1] : null;
     	
 		// handle special case for null data
 		// we assume a text field
-    	if (Alpaca.isEmpty(data))
-    	{
-    		if (Alpaca.isEmpty(options))
-    		{
+    	if (Alpaca.isEmpty(data)){
+    		if (Alpaca.isEmpty(options)){
 				data = "";
 				options = "text";
-    		}
-    		else if (options && Alpaca.isObject(options))
-    		{
-    			if (options.config && Alpaca.isObject(options.config))
-    			{
+    		} else if (options && Alpaca.isObject(options)) {
+    			if (options.config && Alpaca.isObject(options.config)) {
     				data = "";
     				options.config.type = "text";
     			}
     		}
 		}
     	
-    	// instantiate field
-		var field = Alpaca.createFieldInstance(el, data, options);
+	 	// container can either be a dom id or a dom element
+        if (el) {
+            if (Alpaca.isString(el)) {
+            	el = $("#" + el);
+          	}
+        }
 		
-		Alpaca.fieldInstances[field.getId()] = field;
-		
-		return field;
+        var loadCounter = 0;
+            
+        // make parallel calls if needed
+		// load data                
+        if (data && Alpaca.isUri(data)) {
+            $.ajax({
+                url: data,
+                type: "get",
+                success: function(jsonDocument){
+                    data = jsonDocument;
+                    loadCounter++;
+                    if (loadCounter == 3) 
+                        Alpaca.init(el, data, options,schema,callback);
+                },
+                error: function(error){
+                }
+            });
+        }
+        else {
+            loadCounter++;
+            if (loadCounter == 3) 
+                Alpaca.init(el, data, options,schema,callback);
+        }
+		                        
+        // options
+        if (options && Alpaca.isUri(options)) {
+            $.ajax({
+                url: options,
+                type: "get",
+                dataType: "json",
+                success: function(jsonDocument){
+                    options = jsonDocument;
+                    loadCounter++;
+                    if (loadCounter == 3) 
+                        Alpaca.init(el, data, options,schema,callback);
+                },
+                error: function(error){
+                }
+            });
+        }
+        else {
+            loadCounter++;
+            if (loadCounter == 3) 
+                Alpaca.init(el, data, options,schema,callback);
+        }
+        
+        // schema 	
+        if (schema && Alpaca.isUri(schema)) {
+            $.ajax({
+                //async : false,
+                url: schema,
+                type: "get",
+                dataType: "json",
+                success: function(jsonDocument){
+                    schema = jsonDocument;
+                    loadCounter++;
+                    if (loadCounter == 3) 
+                        Alpaca.init(el, data, options,schema,callback);
+                },
+                error: function(error){
+                }
+            });
+        }
+        else {
+            loadCounter++;
+            if (loadCounter == 3) 
+                Alpaca.init(el, data, options,schema,callback);
+        }
 	};
+	
+	Alpaca.init = function(el, data, options,schema,callback) {
+		var field = Alpaca.createFieldInstance(el, data, options,schema);		
+		Alpaca.fieldInstances[field.getId()] = field;
+		if (callback != null ) {
+			callback(field);
+		} else {
+			field.render();
+		}		
+	}
 	
 	/**
 	 * Internal method for constructing a field instance.
@@ -200,79 +289,31 @@
 	 * @param data the data to be bound into the field
 	 * @param options the configuration for the field
 	 */
-	Alpaca.createFieldInstance = function(el, data, options)
-	{
-		// NOTE: config can be a string that identifies the kind of field to construct (i.e. "text")
-		if (options && Alpaca.isString(options))
-		{
+	Alpaca.createFieldInstance = function(el, data, options,schema) {
+		// make sure options and schema are not empty
+		if (options == null) options = {};
+		if (schema == null) schema = {};
+		// options can be a string that identifies the kind of field to construct (i.e. "text")
+		if (options && Alpaca.isString(options)) {
 			var fieldType = options;
 			options = {};
 			options.type = fieldType;
+		}		
+		if (!options.type) {		
+			// if nothing passed in, we can try to make a guess based on the type of data
+			if (!schema.type) {
+				schema.type = Alpaca.getSchemaType(data);
+			}
+			options.type = Alpaca.defaultSchemaFieldMapping[schema.type];	
 		}
-		
-		// if nothing passed in, we can try to make a guess based on the type of data
-		if (!options || !options.type)
-		{
-			var fieldType = null;
-
-			// TODO: make this configurable
-			// map data types to default field types
-			if (Alpaca.isEmpty(data))
-			{
-				// let's assume... text?
-				fieldType = "text";
-				if (!options)
-				{
-					options = {};
-				}
-				options.schema = {};
-				options.schema.optional = true;
-			}
-			else if (Alpaca.isObject(data))
-			{
-				fieldType = "object";
-			}
-			else if (Alpaca.isString(data))
-			{
-				fieldType = "text";
-			}
-			else if (Alpaca.isNumber(data))
-			{
-				fieldType = "number";
-			}
-			else if (Alpaca.isArray(data))
-			{
-				fieldType = "array";
-			}
-			else if (Alpaca.isBoolean(data))
-			{
-				fieldType = "checkbox";
-			}
-
-			if (!fieldType)
-			{
-				alert("Could not guess field type from data");
-				return null;
-			}
-			
-			if (!options)
-			{
-				options = {};
-			}
-			
-			options.type = fieldType;
-		}
-		
 		// find the field class registered for this field type
 		var fieldClass = Alpaca.getFieldClass(options.type);
-		if (!fieldClass)
-		{
+		if (!fieldClass) {
 			alert("Unable to find field class for type: " + options.type);
 			return null;
-		}
-		
+		}		
 		// if we have data, bind it in
-		return new fieldClass(el, data, options);
+		return new fieldClass(el, data, options,schema);
 	};
 	
 	Alpaca.Fields = { };
@@ -342,7 +383,328 @@
     		months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     		timeUnits: { SECOND: "seconds", MINUTE: "minutes", HOUR: "hours", DAY: "days", MONTH: "months", YEAR: "years" }    		
     	},
+		
+    	/**
+    	 * Default Field Type to Schema Type Mapping
+    	 */
+		defaultSchemaFieldMapping:
+		{			
+		},
+		/**
+    	 * Registers a view
+    	 */
+    	registerDefaultSchemaFieldMapping: function(schemaType,fieldType) {
+			if (schemaType && fieldType) {
+				this.defaultSchemaFieldMapping[schemaType] = fieldType;
+			}
+		},
+		/**
+		 * Gets schema type based on data type
+		 */
+		getSchemaType: function (data) {
+			// map data types to default field types
+			if (Alpaca.isEmpty(data)) {
+				return "string";
+			} 				
+			if (Alpaca.isObject(data)) {
+				return "object";
+			} 
+			if (Alpaca.isString(data)) {
+				return "string";
+			}						 
+			if (Alpaca.isNumber(data)) {
+				return "number";
+			}						 
+			if (Alpaca.isArray(data)) {
+				return "array";
+			}						 
+			if (Alpaca.isBoolean(data)) {
+				return "boolean";
+			}
+		},     	    	
+    	/**
+    	 * Views
+    	 */    	
+    	views:
+    	{
+    	},
     	
+    	/**
+    	 * Registers a view
+    	 */
+    	registerView: function(type, view)
+    	{
+    		if (this.views[type]) 
+			{
+				var oldView = this.views[type];
+				if (view.description) 
+				{
+					oldView[type] = view.description;
+				}
+				if (view.templates)
+				{
+					for (var templateKey in view.templates) 
+					{
+						if (!oldView.templates)
+						{
+							oldView.templates={};
+						}
+						if (!oldView.templates[templateKey]) 
+						{
+							oldView.templates[templateKey] = {};
+						}
+						Alpaca.merge(oldView.templates[templateKey],view.templates[templateKey]);	
+					}	
+				}	
+				if (view.messages)
+				{
+					if (!oldView.messages)
+					{
+						oldView.messages={};
+					}
+					Alpaca.merge(oldView.messages,view.messages);	
+				}
+			}
+			else
+			{
+				this.views[type] = view;				
+			}				
+    	},
+    	
+    	defaultView : "DEFAULT",
+		
+		defaultMode : "edit",
+    	
+    	/**
+    	 * Gets view with given type
+    	 */
+    	getView: function(type)
+    	{
+    		if (type && this.views.hasOwnProperty(type))
+    		{
+    			return this.views[type];
+    		}
+    		else
+    		{
+    			return this.views[this.defaultView];
+    		}	
+    	},
+    	
+    	/**
+    	 * Sets default template type
+    	 */
+    	setDefaultView: function(type)
+    	{
+    		if (type && this.views.hasOwnProperty(type))
+    		{
+    			this.defaultView = type;
+    		}
+    	},
+		
+		/**
+    	 * Returns the template for given id, type, mode and field
+    	 */
+    	getTemplate: function(templateId,field,viewType,mode)
+    	{
+    		if (!mode)
+			{
+				mode = this.defaultMode;
+			}
+			if (field && field.settings && field.settings.templates && field.settings.templates[mode] && field.settings.templates[mode][templateId]) 
+			{
+				return field.settings.templates[mode][templateId];
+			}
+			else 
+			{
+				var view = this.getView(viewType);
+				
+				var templates = view.templates[mode];
+				
+				if (templates && templates[templateId])
+				{
+					return templates[templateId];
+				}
+				else
+				{
+					if (view && view.parent) 
+					{
+						return this.getTemplate(templateId,field,view.parent,mode);
+					}
+					else 
+					{
+						return null;
+					}
+				}
+			}
+    	},
+		
+    	/**
+    	 * Registers a new template with given id, type and mode
+    	 */
+    	registerTemplate: function(templateId, template, viewType, mode)
+    	{
+    		var view = this.getView(viewType);
+			
+			if (!view) 
+			{
+				if (viewType) 
+				{
+					view = this.views[viewType] = {};
+				}
+				else
+				{
+					view = this.views[this.defaultView] = {};
+				}
+			}
+			if (view) 
+			{
+				if (!view.templates) 
+				{
+					view.templates = {};
+				}
+				if (!mode)
+				{
+					mode = this.defaultMode;
+				}
+				if (!view.templates[mode])
+				{
+					view.templates[mode] = {};
+				}
+				view.templates[mode][templateId] = template;
+			}
+    	},
+
+    	/**
+    	 * Registers templates with given type and mode
+    	 */
+    	registerTemplates: function(templates, viewType, mode)
+    	{
+			for (var templateId in templates) 
+			{
+				this.registerTemplate(templateId, templates[templateId], viewType, mode);
+			}    		
+    	},
+						
+    	/**
+    	 * Returns the message for given id, type and field
+    	 */
+    	getMessage: function(messageId,field,viewType)
+    	{
+    		if (field && field.settings && field.settings.messages && field.settings.messages[messageId]) 
+			{
+				return field.settings.messages[messageId];
+			}
+			else 
+			{
+				var view = this.getView(viewType);
+				if (view.messages[messageId]) 
+				{
+					return view.messages[messageId];
+				}
+				else
+				{
+					if (view && view.parent)
+					{
+						return this.getMessage(messageId,field,view.parent);
+					}
+					else
+					{
+						return null;
+					}
+				}
+			}
+    	},
+		
+    	/**
+    	 * Registers a message for for given id, type and field
+    	 */
+    	registerMessage: function(messageId, message, viewType, mode)
+    	{
+    		var view = this.getView(viewType);
+			
+			if (!view) 
+			{
+				if (viewType) 
+				{
+					this.views[viewType] = {};
+					view = this.views[viewType];
+				}
+				else
+				{
+					this.views[this.defaultView] = {};
+					view = this.views[this.defaultView];
+				}				
+			}
+			if (view) 
+			{
+				if (!view.messages) 
+				{
+					view.messages = {};
+				}
+				view.messages[messageId] = message;
+			}
+    	},
+    	/**
+    	 * Registers messages for given type and field
+    	 */
+		registerMessages: function(messages, viewType, mode)
+    	{
+			for (var messageId in messages) 
+			{
+				if (messages.hasOwnProperty(messageId)) {
+					this.registerMessage(messageId, messages[messageId], viewType, mode);
+				}
+			}
+    	},
+		
+		/**
+    	 * Default Class for Field Level Template
+    	 */
+		fieldTemplatePostfix: {
+			"controlFieldLabel" : "-field-label",
+			"controlFieldContainer":"-field-container",
+			"controlFieldHelper":"-field-helper",
+			"fieldOuterEl":"-field"
+		},
+		
+		/**
+    	 * Processes Field Level Template
+    	 */
+		fieldTemplate : function (object,name,wrap)
+		{
+			if (!name) name="controlFieldLabel";
+			var template = this.getTemplate(name,object.data);
+			if (wrap) 
+			{
+				if ($('.alpaca' + this.fieldTemplatePostfix[name], $(template)).length == 0) 
+				{
+					template=$(template).addClass("alpaca" + this.fieldTemplatePostfix[name]).outerHTML();
+				}
+				return template;
+			}
+			else {
+				var label = $.tmpl(template, object.data);
+				if (label) 
+				{
+					if (this.fieldTemplatePostfix[name]) 
+					{						
+						if ($('.alpaca' + this.fieldTemplatePostfix[name], label).length == 0) 
+						{
+							label.addClass("alpaca" + this.fieldTemplatePostfix[name]);
+						}
+						if (!label.attr("id")) 
+						{
+							label.attr("id", object.data.id + this.fieldTemplatePostfix[name]);
+						}
+					}
+					return label.outerHTML();
+				}
+				else 
+				{
+					return "";
+				}
+			}
+		},    	
     	/**
     	 * Date format
     	 */
@@ -532,6 +894,22 @@
     $.fn.outerHTML = function() {
     	return $("<div></div>").append(this.clone()).html();
     }
+	
+	Alpaca.isUri = function(obj) { 
+		return Alpaca.isString(obj) && (Alpaca.startsWith(obj, "http://") ||
+				Alpaca.startsWith(obj, "https://") ||
+				Alpaca.startsWith(obj, "/")); 
+	};
+	
+	$.fn.swapWith = function(to){
+		return this.each(function(){
+			var copy_to = $(to).clone();
+			var copy_from = $(this).clone();
+			$(to).replaceWith(copy_from);
+			$(this).replaceWith(copy_to);
+		});
+	};
+
     
     /**
      * Picks a subelement from the given object using the given keys array.
@@ -608,7 +986,11 @@
      */
     Alpaca.merge = function(obj1, obj2, validKeyFunction)
     {
-    	for (var key in obj2)
+    	if (!obj1)
+		{
+			obj1 = {};
+		}
+		for (var key in obj2)
     	{
     		var valid = true;
     		
@@ -627,7 +1009,11 @@
 				{
 	    			if (Alpaca.isObject(obj2[key]))
 	    			{
-	    				obj1[key] = Alpaca.merge(obj1[key], obj2[key]);
+	    				if (!obj1[key])
+						{
+							obj1[key] = {};
+						}
+						obj1[key] = Alpaca.merge(obj1[key], obj2[key]);
 	    			}
 	    			else
 	    			{
