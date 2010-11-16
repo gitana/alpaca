@@ -664,7 +664,11 @@
 			"controlFieldLabel" : "-field-label",
 			"controlFieldContainer":"-field-container",
 			"controlFieldHelper":"-field-helper",
-			"fieldOuterEl":"-field"
+			"fieldOuterEl":"-field",
+			"fieldSetLegend" : "-fieldset-legend",
+			"itemsContainer":"-items-container",
+			"fieldSetHelper":"-fieldset-helper",
+			"fieldSetOuterEl":"-fieldset"
 		},
 		
 		/**

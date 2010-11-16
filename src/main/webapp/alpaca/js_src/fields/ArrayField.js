@@ -61,12 +61,12 @@
                     $('#' + insertAfterId + '-item-container', this.outerEl).after(containerElem);
                 }
                 else {
-                    containerElem.appendTo(this.outerEl);
+                    containerElem.appendTo(this.fieldContainer);
                 }
                 return containerElem;
             }
             else {
-                return _this.outerEl;
+                return _this.fieldContainer;
             }
         },
         
@@ -197,6 +197,8 @@
          */
         renderField: function(onSuccess){
             var _this = this;
+			
+			this.prepItemsContainer();
             
             $.each(this.data, function(index, value){
                 var fieldSetting;

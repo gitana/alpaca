@@ -106,6 +106,17 @@
             if (!this.settings) {
                 this.settings = {};
             }
+            if (!this.settings.label) {
+                if (this.schema.title) {
+                    this.settings.label = this.schema.title;
+                }
+            }
+            if (!this.settings.helper) {
+                if (this.schema.description) {
+                    this.settings.helper = this.schema.description;
+                }
+            }
+            
             
             // data
             if (!this.data && this.schema["default"]) {
@@ -654,14 +665,14 @@
         },
         
         setMode: function(mode){
-			this.mode = mode;
-			if (this.optionTemplate) {
-				this.template = this.optionTemplate;
-			}
-			else {			
-				this.template = Alpaca.getTemplate("field", this, null, mode);
-			}
-		},
+            this.mode = mode;
+            if (this.optionTemplate) {
+                this.template = this.optionTemplate;
+            }
+            else {
+                this.template = Alpaca.getTemplate("field", this, null, mode);
+            }
+        },
         
         ///////////////////////////////////////////////////////////////////////////////////////////////
         //

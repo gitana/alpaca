@@ -166,7 +166,46 @@
                 onSuccess();
             }
         },
+ 
+        /**
+         * Injects Field Element into Field Container
+         */
+        prepItemsContainer: function(){
+            if ($('.alpaca-fieldset-legend', this.outerEl).length) {
+                this.labelDiv = $('.alpaca-fieldset-legend', this.outerEl);
+            }
+            
+            if ($('.alpaca-items-container', this.outerEl).length) {
+                this.fieldContainer = $('.alpaca-items-container', this.outerEl);
+            }
+            else {
+                this.fieldContainer = this.outerEl;
+            }
+		},            
         
+		/**
+         * Injects Field Element into Field Container
+         */
+        injectItems: function(element){
+            var parentNode = $('.alpaca-items-container-field', this.fieldContainer);
+            if (parentNode.length > 0) {
+                if (parentNode.attr('data-replace') == 'true') {
+                    parentNode.replaceWith(element);
+                }
+                else {
+                    $(element).appendTo(parentNode);
+                }
+            }
+            else {
+                if (this.fieldContainer.attr('data-replace') == 'true') {
+                    this.fieldContainer.replaceWith(element);
+                }
+                else {
+                    $(element).prependTo(this.fieldContainer);
+                }
+            }
+        },
+		        
         initEvents: function(){
             var _this = this;
             

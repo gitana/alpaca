@@ -26,7 +26,12 @@
         </div>
         <script type="text/javascript" id="field2-script">
             $(function(){
-                $("#field2").alpaca(["test1", "test2", "test3"], null, {
+                $("#field2").alpaca(["test1", "test2", "test3"], {
+                    "settings": {
+                        "label": "Text Label",
+                        "helper": "whazzzup",
+                    }
+                }, {
                     "description": "Example Contact Information Array JSON Schema",
                     "type": "array",
                     "items": {
