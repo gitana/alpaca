@@ -1,0 +1,38 @@
+<?xml version='1.0'?>
+<project name="Alpaca Forms" basedir=".">
+
+  <property name="version" value="1.0.0.SNAPSHOT"/>
+
+  <property file="../cloudcms.properties" />
+
+  <target name="unpublish">
+
+	<sshexec host="${code.cloudcms.host}"
+	    username="${code.cloudcms.username}"
+	    keyfile="${code.cloudcms.keyfile}"
+	    trust="true"
+	    command="rm -r ${code.cloudcms.basepath}/alpaca/*"
+	    failonerror="false" />	
+  	
+  </target>
+
+  <target name="publish" depends="unpublish">
+
+	<!-- Alpaca -->
+    <scp todir="${code.cloudcms.username}@${code.cloudcms.host}:${code.cloudcms.alpaca.basepath}" 
+	     keyfile="${code.cloudcms.keyfile}" 
+	     trust="true" 
+	     verbose="true" 
+	     passphrase="${code.cloudcms.passphrase}"
+	     failonerror="true">
+	
+		<fileset dir="target/alpaca-forms-${version}/alpaca">
+			<exclude name="css_src/**" />
+			<exclude name="js_src/**" />
+		</fileset>
+		
+	</scp>
+	
+  </target>
+
+</project>
