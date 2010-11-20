@@ -154,7 +154,7 @@
 				<version>7.0.1.v20091125</version>
 		        <configuration>
 				    <scanIntervalSeconds>1</scanIntervalSeconds>
-				    <stopPort>9966</stopPort>
+				    <stopPort>29966</stopPort>
 				    <stopKey>foo</stopKey>
 					<webAppConfig>
 						<contextPath>/</contextPath>
