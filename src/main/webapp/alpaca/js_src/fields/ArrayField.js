@@ -1,4 +1,4 @@
-(function($){
+(function($) {
 
     var Alpaca = $.alpaca;
     
@@ -14,13 +14,13 @@
          *
          * Data must be an array.
          */
-        setValue: function(data){
+        setValue: function(data) {
             if (!data || !Alpaca.isArray(data)) {
                 return;
             }
             
             // clear all controls
-            Alpaca.each(this.children, function(){
+            Alpaca.each(this.children, function() {
                 this.clear();
             });
             
@@ -38,7 +38,7 @@
          *
          * Reconstruct the data object from the child fields.
          */
-        getValue: function(){
+        getValue: function() {
             var o = [];
             
             for (var i = 0; i < this.children.length; i++) {
@@ -49,32 +49,23 @@
             return o;
         },
         
-        getSize: function(){
+        /**
+         * Returns number of children
+         */
+        getSize: function() {
             return this.children.length;
         },
         
-        renderItemContainer: function(insertAfterId){
-            var itemContainerTemplate = Alpaca.getTemplate("itemContainer", this, null, this.mode);
-            if (itemContainerTemplate) {
-                var containerElem = $.tmpl(itemContainerTemplate, {});
-                if (insertAfterId) {
-                    $('#' + insertAfterId + '-item-container', this.outerEl).after(containerElem);
-                }
-                else {
-                    containerElem.appendTo(this.fieldContainer);
-                }
-                return containerElem;
-            }
-            else {
-                return _this.fieldContainer;
-            }
-        },
-        
-        moveItem: function(fromId, isUp){
+        /**
+         * Moves item up or down
+         * @param {Object} fromId
+         * @param {Object} isUp
+         */
+        moveItem: function(fromId, isUp) {
             var _this = this;
             if (this.childrenById[fromId]) {
                 // do the loop
-                $.each(this.children, function(index, val){
+                $.each(this.children, function(index, val) {
                     if (val.getId() == fromId) {
                         var toIndex;
                         if (isUp == true) {
@@ -82,8 +73,7 @@
                             if (toIndex < 0) {
                                 toIndex = _this.children.length - 1;
                             }
-                        }
-                        else {
+                        } else {
                             toIndex = index + 1;
                             if (toIndex >= _this.children.length) {
                                 toIndex = 0;
@@ -105,8 +95,12 @@
             }
         },
         
-        removeItem: function(id){
-            this.children = $.grep(this.children, function(val, index){
+        /**
+         * Removes item
+         * @param {Object} id
+         */
+        removeItem: function(id) {
+            this.children = $.grep(this.children, function(val, index) {
                 return (val.getId() != id);
             });
             delete this.childrenById[id];
@@ -114,7 +108,11 @@
             this.renderValidationState();
         },
         
-        renderToolbar: function(containerElem){
+        /**
+         * Renders item toolbar
+         * @param {Object} containerElem
+         */
+        renderToolbar: function(containerElem) {
             var _this = this;
             var id = containerElem.attr('alpaca-id');
             var fieldControl = this.childrenById[id];
@@ -129,26 +127,24 @@
                 // add actions to toolbar buttons
                 if (_this._validateEqualMaxItems()) {
                     $('.alpaca-item-toolbar-add', toolbarElem).removeClass('alpaca-item-toolbar-disabled');
-                    $('.alpaca-item-toolbar-add', toolbarElem).click(function(){
+                    $('.alpaca-item-toolbar-add', toolbarElem).click(function() {
                         _this.addItem(containerElem.index() + 1, null, fieldControl.getValue(), id);
                     });
-                }
-                else {
+                } else {
                     $('.alpaca-item-toolbar-add', toolbarElem).addClass('alpaca-item-toolbar-disabled');
                 }
                 if (_this._validateEqualMinItems()) {
                     $('.alpaca-item-toolbar-remove', toolbarElem).removeClass('alpaca-item-toolbar-disabled');
-                    $('.alpaca-item-toolbar-remove', toolbarElem).click(function(){
+                    $('.alpaca-item-toolbar-remove', toolbarElem).click(function() {
                         _this.removeItem(id);
                     });
-                }
-                else {
+                } else {
                     $('.alpaca-item-toolbar-remove', toolbarElem).addClass('alpaca-item-toolbar-disabled');
                 }
-                $('.alpaca-item-toolbar-up', toolbarElem).click(function(){
+                $('.alpaca-item-toolbar-up', toolbarElem).click(function() {
                     _this.moveItem(id, true);
                 });
-                $('.alpaca-item-toolbar-down', toolbarElem).click(function(){
+                $('.alpaca-item-toolbar-down', toolbarElem).click(function() {
                     _this.moveItem(id, false);
                 });
                 toolbarElem.prependTo(containerElem);
@@ -156,62 +152,84 @@
             
         },
         
-        reRenderItem: function(fieldControl, newContainer){
+        /**
+         * Re-renders item
+         *
+         * @param {Object} fieldControl
+         * @param {Object} newContainer
+         */
+        reRenderItem: function(fieldControl, newContainer) {
             fieldControl.container = newContainer;
             fieldControl.render(this.getMode());
+			
             newContainer.attr("id", fieldControl.getId() + "-item-container");
             newContainer.attr("alpaca-id", fieldControl.getId());
             
             $(".alpaca-item-toolbar", newContainer).remove();
+			this.renderToolbar(newContainer);
+			
         },
         
-        addItem: function(index, fieldSetting, value, insertAfterId){
+        /**
+         * Adds item
+         *
+         * @param {Object} index
+         * @param {Object} fieldSetting
+         * @param {Object} value
+         * @param {Object} insertAfterId
+         */
+        addItem: function(index, fieldSetting, value, insertAfterId) {
             var _this = this;
             if (_this._validateEqualMaxItems()) {
-				var itemSchema;
-				if (_this.schema && _this.schema.items) {
-					itemSchema = _this.schema.items;
-				}
-				var containerElem = _this.renderItemContainer(insertAfterId);
-				Alpaca(containerElem, value, fieldSetting, itemSchema, function(fieldControl){
-					// render
-					fieldControl.render(_this.getMode());
-					containerElem.attr("id", fieldControl.getId() + "-item-container");
-					containerElem.attr("alpaca-id", fieldControl.getId());
-					// remember the control
-					_this.addChild(fieldControl, index);
-					
-					containerElem.hover(function(){
-						// add control toolbar
-						_this.renderToolbar(containerElem);
-					}, function(){
-						// remove control toolbar
-						$(".alpaca-item-toolbar", containerElem).remove();
-					});
-					_this.renderValidationState();
-				});
-			}
+                var itemSchema;
+                if (_this.schema && _this.schema.items) {
+                    itemSchema = _this.schema.items;
+                }
+                var containerElem = _this.renderItemContainer(insertAfterId);
+                Alpaca(containerElem, value, fieldSetting, itemSchema, function(fieldControl) {
+                    // render
+                    fieldControl.render(_this.getMode());
+                    containerElem.attr("id", fieldControl.getId() + "-item-container");
+                    containerElem.attr("alpaca-id", fieldControl.getId());
+                    // remember the control
+                    _this.addChild(fieldControl, index);
+                    
+                    /*
+                     containerElem.hover(function() {
+                     // add control toolbar
+                     _this.renderToolbar(containerElem);
+                     }, function() {
+                     // remove control toolbar
+                     $(".alpaca-item-toolbar", containerElem).remove();
+                     });
+                     */
+                    _this.renderToolbar(containerElem);
+                    _this.renderValidationState();
+                });
+            }
         },
+        
         /**
-         * To be overridden
+         * @Override
+         *
+         *
          */
-        renderField: function(onSuccess){
+        renderItems: function() {
             var _this = this;
-			
-			this.prepItemsContainer();
             
-            $.each(this.data, function(index, value){
+            $.each(this.data, function(index, value) {
                 var fieldSetting;
                 if (_this.settings && _this.settings.fields && _this.settings.fields[index]) {
                     fieldSetting = _this.settings.fields[index];
                 }
                 _this.addItem(index, fieldSetting, value);
             });
-            // call onSuccess handler
-            onSuccess();
         },
-
-        _validateEqualMaxItems: function(){
+        
+        /**
+         * Validates if the maxItem has been reached
+         */
+        _validateEqualMaxItems: function() {
             if (this.schema.items && this.schema.items.maxItems) {
                 if (this.getSize() >= this.schema.items.maxItems) {
                     return false;
@@ -219,8 +237,11 @@
             }
             return true;
         },
-
-        _validateEqualMinItems: function(){
+        
+        /**
+         * Validates if the minItem has been reached
+         */
+        _validateEqualMinItems: function() {
             if (this.schema.items && this.schema.items.minItems) {
                 if (this.getSize() <= this.schema.items.minItems) {
                     return false;
@@ -228,8 +249,11 @@
             }
             return true;
         },
-				        
-        _validateMinItems: function(){
+        
+        /**
+         * Validates minItems
+         */
+        _validateMinItems: function() {
             if (this.schema.items && this.schema.items.minItems) {
                 if (this.getSize() < this.schema.items.minItems) {
                     return false;
@@ -238,7 +262,10 @@
             return true;
         },
         
-        _validateMaxItems: function(){
+        /**
+         * Validates maxItems
+         */
+        _validateMaxItems: function() {
             if (this.schema.items && this.schema.items.maxItems) {
                 if (this.getSize() > this.schema.items.maxItems) {
                     return false;
@@ -247,14 +274,16 @@
             return true;
         },
         
-        _validateUniqueItems: function(){
+        /**
+         * Validates uniqueItems
+         */
+        _validateUniqueItems: function() {
             if (this.schema.items && this.schema.uniqueItems) {
                 var hash = {};
                 for (var i = 0, l = this.children.length; i < l; ++i) {
                     if (!hash.hasOwnProperty(this.children[i])) {
                         hash[this.children[i]] = true;
-                    }
-                    else {
+                    } else {
                         return false;
                     }
                 }
@@ -262,7 +291,12 @@
             return true;
         },
         
-        handleValidate: function(){
+        /**
+         * @Override
+         *
+         * Handles validations
+         */
+        handleValidate: function() {
             if (!this._validateMinItems()) {
                 return false;
             }
@@ -278,10 +312,11 @@
             // hand off to parent to validate
             return this.base();
         },
+        
         /**
          * @Override
          */
-        getValidationStateMessage: function(state){
+        getValidationStateMessage: function(state) {
             if (state == Alpaca.STATE_INVALID) {
                 if (!this._validateUniqueItems()) {
                     return Alpaca.getMessage("valueNotUnique", this);

@@ -1,4 +1,4 @@
-(function($){
+(function($) {
 
     var Alpaca = $.alpaca;
     
@@ -14,13 +14,13 @@
          *
          * Data must be an object.
          */
-        setValue: function(data, stopUpdateTrigger){
+        setValue: function(data, stopUpdateTrigger) {
             if (!data || !Alpaca.isObject(data)) {
                 return;
             }
             
             // clear all controls
-            Alpaca.each(this.children, function(){
+            Alpaca.each(this.children, function() {
                 this.clear();
             });
             
@@ -39,7 +39,7 @@
          *
          * Reconstruct the data object from the child fields.
          */
-        getValue: function(){
+        getValue: function() {
             var o = {};
             
             for (var i = 0; i < this.children.length; i++) {
@@ -52,49 +52,57 @@
             return o;
         },
         
-         renderItemContainer: function(insertAfterId){
-            var itemContainerTemplate = Alpaca.getTemplate("itemContainer", this, null, this.mode);
-            if (itemContainerTemplate) {
-                var containerElem = $.tmpl(itemContainerTemplate, {});
-                if (insertAfterId) {
-                    $('#' + insertAfterId + '-item-container', this.outerEl).after(containerElem);
-                }
-                else {
-                    containerElem.appendTo(this.fieldContainer);
-                }
-                return containerElem;
+        getValueWithPropertyId: function() {
+            var o = {};
+            
+            for (var i = 0; i < this.children.length; i++) {
+                var propertyId = this.children[i].propertyId;
+                
+                var fieldValue;
+				if (this.children[i].getValueWithPropertyId) {
+					fieldValue = this.children[i].getValueWithPropertyId();
+				} else {
+					fieldValue = this.children[i].getValue();
+				}
+                o[propertyId] = fieldValue;
             }
-            else {
-                return this.outerEl;
-            }
+            
+            return o;
         },
-		       
-        addItem: function(propertyId, fieldSetting, value, insertAfterId){
+        
+        /**
+         * @Override
+         *
+         * Adds item
+         */
+        addItem: function(propertyId, fieldSetting, value, insertAfterId) {
             var _this = this;
             var itemSchema;
             if (_this.schema && _this.schema.properties && _this.schema.properties[propertyId]) {
                 itemSchema = _this.schema.properties[propertyId];
             }
             var containerElem = _this.renderItemContainer(insertAfterId);
-            Alpaca(containerElem, value, fieldSetting, itemSchema, function(fieldControl){
+            Alpaca(containerElem, value, fieldSetting, itemSchema, function(fieldControl) {
                 // render
                 fieldControl.render(_this.getMode());
                 containerElem.attr("id", fieldControl.getId() + "-item-container");
                 containerElem.attr("alpaca-id", fieldControl.getId());
+                // add the property Id
+                fieldControl.propertyId = propertyId;
                 // remember the control
                 _this.addChild(fieldControl);
                 
                 _this.renderValidationState();
             });
         },
+        
         /**
-         * To be overridden
+         * @Override
+         *
+         * Renders all properties
          */
-        renderField: function(onSuccess){
+        renderItems: function() {
             var _this = this;
-            
-			this.prepItemsContainer();
-			
             for (var propertyId in _this.data) {
                 if (_this.data.hasOwnProperty(propertyId)) {
                     var fieldSetting;
@@ -104,9 +112,6 @@
                     _this.addItem(propertyId, fieldSetting, _this.data[propertyId]);
                 }
             }
-            
-            // call onSuccess handler
-            onSuccess();
         },
     });
     

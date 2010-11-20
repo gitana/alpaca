@@ -1,35 +1,217 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title>Welcome to Alpaca!</title>
-		
-		<!-- Alpaca -->
-		<link type="text/css" href="site/welcome.css" rel="stylesheet" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
-	</head>
-	<body>
+<!--  Version: Multiflex-3 Update-7 / Layout-2             -->
+<!--  Date:    January 15, 2007                            -->
+<!--  Author:  Wolfgang                                    -->
+<!--  License: Fully open source without restrictions.     -->
+<!--           Please keep footer credits with a link to   -->
+<!--           Wolfgang (www.1-2-3-4.info). Thank you!     -->
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="3600" />
+  <meta name="revisit-after" content="2 days" />
+  <meta name="robots" content="index,follow" />
+  <meta name="publisher" content="Your publisher infos here ..." />
+  <meta name="copyright" content="Your copyright infos here ..." />
+  <meta name="author" content="Design: Wolfgang (www.1-2-3-4.info) / Modified: Your Name" />
+  <meta name="distribution" content="global" />
+  <meta name="description" content="Your page description here ..." />
+  <meta name="keywords" content="Your keywords, keywords, keywords, here ..." />
+  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="site/css/layout2_setup.css" />
+  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="site/css/layout2_text.css" />
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
+  <title>Alpaca Project</title>
+</head>
+
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+
+<body>
+  <!-- Main Page Container -->
+  <div class="page-container">
+
+    <!-- For alternative headers START PASTE here -->
+
+    <!-- A. HEADER -->      
+    <div class="header">
+      
+      <!-- A.1 HEADER TOP -->
+      <div class="header-top">
+        
+        <!-- Sitelogo and sitename -->
+        <a class="sitelogo" href="#" title="Go to Start page"></a>
+        <div class="sitename">
+          <h1><a href="index.html" title="Go to Start page">ALPACA<span style="font-weight:normal;font-size:50%;">&nbsp;alpha</span></a></h1>
+          <h2>Form In The Cloud</h2>
+        </div>
+    
+        <!-- Navigation Level 0 -->
+        <div class="nav0">
+          <ul>
+          </ul>
+        </div>			
+
+        <!-- Navigation Level 1 -->
+        <div class="nav1">
+          <ul>
+            <li><a href="#" title="Go to Start page">Home</a></li>
+            <li><a href="#" title="Get to know who we are">About</a></li>
+            <li><a href="#" title="Get in touch with us">Contact</a></li>																		
+            <li><a href="#" title="Get an overview of website">Sitemap</a></li>
+          </ul>
+        </div>              
+      </div>
+      
+      <!-- A.2 HEADER MIDDLE -->
+      <div class="header-middle">    
+   
+        <!-- Site message -->
+        <div class="sitemessage">
+          <h1>EASY &bull; FLEXIBLE &bull; SCALABLE</h1>
+          <h2>The New Generation of Form Service</h2>
+        </div>        
+      </div>
+      
+      <!-- A.3 HEADER BOTTOM -->
+      <div class="header-bottom">
+      
+        <!-- Navigation Level 2 (Drop-down menus) -->
+        <div class="nav2">
 	
-	   <h1>Welcome to Alpaca</h1>
-	
-	   <br/>
-	   
-	   <img src="site/images/alpaca.jpg" />
-	   
-	   <br/>
-	   <br/>
-	   
-	   Alpaca is a browser-side JSON templating and forms engine for jQuery.
-	   <br/>
-	   It gives your web site the ability to render elegant content entry and presentation forms using jQuery-tmpl.
-	   
-	   <br/>
-	   <br/>
-	   
-	   
-	   Check out the <a href="examples">examples</a>!
-       
-    </body>
+          <!-- Navigation item -->
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+          </ul>          
+        </div>
+	  </div>
+
+      <!-- A.4 HEADER BREADCRUMBS -->
+
+      <!-- Breadcrumbs -->
+      <div class="header-breadcrumbs">
+        <ul>
+          <li><a href="#">Home</a></li>
+        </ul>
+
+        <!-- Search form -->                  
+        <div class="searchform">
+          <form action="index.html" method="get">
+            <fieldset>
+              <input name="field" class="field"  value=" Search..." />
+              <input type="submit" name="button" class="button" value="GO!" />
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- For alternative headers END PASTE here -->
+
+    <!-- B. MAIN -->
+    <div class="main">
+ 
+      <!-- B.1 MAIN NAVIGATION -->
+      <div class="main-navigation">
+
+        <!-- Navigation Level 3 -->
+        <div class="round-border-topright"></div>
+        <h1 class="first">Links</h1>
+
+        <!-- Navigation with grid style -->
+        <dl class="nav3-grid">
+          <dt><a href="#">Gitana Software</a></dt>
+          <dt><a href="#">Clound CMS</a></dt>
+            <dd><a href="#">Clound CMS</a></dd>
+            <dd><a href="#">Gitana Wiki</a></dd>
+            <dd><a href="#">Gitana Git</a></dd>		
+          <dt><a href="#">MongoDB</a></dt>
+        </dl>                        
+
+
+        <!-- Login -->
+        <h1>Login</h1>
+        <div class="loginform">
+          <form method="post" action="index.html"> 
+            <p><input type="hidden" name="rememberme" value="0" /></p>
+            <fieldset>
+              <p><label for="username_1" class="top">User:</label><br />
+                <input type="text" name="username_1" id="username_1" tabindex="1" class="field" onkeypress="return webLoginEnter(document.loginfrm.password);" value="" /></p>
+    	      <p><label for="password_1" class="top">Password:</label><br />
+                <input type="password" name="password_1" id="password_1" tabindex="2" class="field" onkeypress="return webLoginEnter(document.loginfrm.cmdweblogin);" value="" /></p>
+    	      <p><input type="checkbox" name="checkbox_1" id="checkbox_1" class="checkbox" tabindex="3" size="1" value="" onclick="webLoginCheckRemember()" /><label for="checkbox_1" class="right">Remember me</label></p>
+    	      <p><input type="submit" name="cmdweblogin" class="button" value="LOGIN"  /></p>
+	          <p><a href="#" onclick="webLoginShowForm(2);return false;" id="forgotpsswd_1">Password forgotten?</a></p>
+	        </fieldset>
+          </form>
+        </div>
+
+        <!-- Search form -->                  
+        <h1>Search</h1>
+        <div class="searchform">
+          <form action="index.html" method="get">
+            <fieldset>
+              <input name="field" class="field"  value=" Search..." />
+              <input type="submit" name="button" class="button" value="GO!" />
+            </fieldset>
+          </form>
+        </div>
+      </div> 
+      <!-- B.1 MAIN CONTENT -->
+      <div class="main-content">
+        
+        <!-- Pagetitle -->
+        <h1 class="pagetitle">Welcome to Alpaca Project!</h1>
+
+        <!-- Content unit - One column -->
+        <div class="column1-unit">
+          <h1>Introduction</h1>                            
+          <p>Alpaca is a browser-side JSON templating and forms engine for jQuery.</p>
+		  <p>It gives your web site the ability to render elegant content entry and presentation forms using jQuery-tmpl.</p>
+          <p>Check out the examples! ...  </p>
+        </div>          
+        <hr class="clear-contentunit" />
+		         
+         <!-- Content unit - One column -->
+        <h1 class="block">Examples</h1>
+        <div class="column1-unit">
+          <h1>Mobile</h1>
+          <p><img src="site/img/mobile.jpg" alt="Mobile Form" title="Mobile" />Sample Customer Profile Form with Mobile View.</p>
+		  <p><a href="/alpaca/examples/mobile-full-form.html" target="_blank">Launch the form...</a></p>              
+          <h1>Web</h1>
+          <p><img src="site/img/browser.png" alt="Image description" title="Image title" />Sample Customer Profile Form with Web View.</p>              
+		  <p><a href="/alpaca/examples/web-full-form.html" target="_blank">Launch the form...</a></p>              
+          <h1>Unit Test Cases</h1>
+          <p><img src="site/img/unittest.png" alt="Image description" title="Image title" />Alpaca Unit Testing Cases</p>
+		  <p>
+		  	<ul>
+            	<li><a href="/alpaca/examples/text-field.html" target="_blank">Text Field</a></li>
+            	<li><a href="/alpaca/examples/textarea-field.html" target="_blank">Text Area Field</a></li>
+            	<li><a href="/alpaca/examples/number-field.html" target="_blank">Number Field</a></li>
+            	<li><a href="/alpaca/examples/checkbox-field.html" target="_blank">Checkbox Field</a></li>
+            	<li><a href="/alpaca/examples/select-field.html" target="_blank">Select Field</a></li>
+            	<li><a href="/alpaca/examples/radio-field.html" target="_blank">Radio Button Field</a></li>
+            	<li><a href="/alpaca/examples/misc-field.html" target="_blank">Misc. Field</a></li>
+            	<li><a href="/alpaca/examples/array-field.html" target="_blank">Array Field</a></li>
+            	<li><a href="/alpaca/examples/object-field.html" target="_blank">Object Field</a></li>
+          	</ul
+		  </p>              
+         </div>          
+        <hr class="clear-contentunit" />                         
+      </div>
+    </div>
+      
+    <!-- C. FOOTER AREA -->      
+
+    <div class="footer">
+      <p>Copyright &copy; 2010 Gitana Software | All Rights Reserved</p>
+    </div>      
+  </div> 
+  
+</body>
 </html>
+
 
 

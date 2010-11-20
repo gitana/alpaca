@@ -1,4 +1,4 @@
-(function($){
+(function($) {
 
     var Alpaca = $.alpaca;
     
@@ -14,7 +14,11 @@
      */
     Alpaca.Fields.TextAreaField = Alpaca.Fields.TextField.extend({
     
-        setup: function(){
+        /**
+         * @Override
+         *
+         */
+        setup: function() {
             this.base();
             
             if (!this.settings.rows) {
@@ -27,9 +31,11 @@
         },
         
         /**
+         * @Override
+         *
          * Renders an INPUT control into the field container
          */
-        renderField: function(onSuccess){
+        renderField: function(onSuccess) {
             // decorate the field container with our class
             $(this.fieldContainer).addClass("alpaca-textareafield");
             
@@ -37,11 +43,11 @@
             var controlFieldTemplate = Alpaca.getTemplate("controlFieldTextarea", this, null, this.mode);
             
             if (controlFieldTemplate) {
-                this.textAreaElement = $.tmpl(controlFieldTemplate, {
+                this.inputElement = $.tmpl(controlFieldTemplate, {
                     "id": this.getId(),
                     "settings": this.settings
                 });
-                this.injectField(this.textAreaElement);
+                this.injectField(this.inputElement);
             }
             
             if (onSuccess) {
@@ -49,15 +55,23 @@
             }
         },
         
-        setValue: function(value, stopUpdateTrigger){
-            $(this.textAreaElement).val(value);
+        /**
+         * @Override
+         *
+         */
+        setValue: function(value, stopUpdateTrigger) {
+            $(this.inputElement).val(value);
             
             // be sure to call into base method
             this.base(value, stopUpdateTrigger);
         },
         
-        getValue: function(){
-            return $(this.textAreaElement).val();
+        /**
+         * @Override
+         *
+         */
+        getValue: function() {
+            return $(this.inputElement).val();
         }
         
     });

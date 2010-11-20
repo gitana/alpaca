@@ -74,6 +74,7 @@
 						<param>../js_src/ControlField.js</param>
 						<param>../js_src/ContainerField.js</param>
 						<param>../js_src/JsonSchema.js</param>
+						<param>../js_src/Form.js</param>
 						
 						<!-- alpaca fields -->
 						<param>../js_src/fields/TextField.js</param>
@@ -85,7 +86,11 @@
 						<param>../js_src/fields/DateField.js</param>
 						<param>../js_src/fields/CheckBoxField.js</param>
 						<param>../js_src/fields/ArrayField.js</param>
-
+						<param>../js_src/fields/ListField.js</param>
+						<param>../js_src/fields/SelectField.js</param>
+						<param>../js_src/fields/RadioField.js</param>
+						<param>../js_src/fields/ButtonField.js</param>
+						<param>../js_src/fields/GitanaButtonField.js</param>
 						<!--  alpaca views -->
 						<param>../js_src/views/DefaultView.js</param>
 						<param>../js_src/views/MobileView.js</param>

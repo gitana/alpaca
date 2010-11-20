@@ -22,8 +22,12 @@
 					fieldSetLegend:'{{if settings.label}}<legend class="{{if settings.labelClass}}${settings.labelClass}{{/if}}">${settings.label}</legend>{{/if}}',
 					fieldSetHelper:'{{if settings.helper}}<div class="{{if settings.helperClass}}${settings.helperClass}{{/if}}">${settings.helper}</div>{{/if}}',
     				itemsContainer:'<div>{{html this.html}}</div>',
-					fieldSet:'{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"fieldSetLegend")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"itemsContainer",true)}}{{/wrap}}{{html Alpaca.fieldTemplate(this,"fieldSetHelper")}}{{/wrap}}',
-					itemContainer:'<div></div>'
+					fieldSet:'{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"fieldSetLegend")}}{{html Alpaca.fieldTemplate(this,"fieldSetHelper")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"itemsContainer",true)}}{{/wrap}}{{/wrap}}',
+					itemContainer:'<div></div>',
+					// Templates for form
+					formFieldsContainer:'<div>{{html this.html}}</div>',
+					formButtonsContainer: '<div>{{html this.html}}</div>',
+					form:'<form>{{html Alpaca.fieldTemplate(this,"formFieldsContainer")}}{{html Alpaca.fieldTemplate(this,"formButtonsContainer")}}</form>'
 				},
 				view:
 				{

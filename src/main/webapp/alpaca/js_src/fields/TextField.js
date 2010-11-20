@@ -24,6 +24,20 @@
     Alpaca.Fields.TextField = Alpaca.ControlField.extend({
     
         /**
+         * @Override
+         *
+         */
+        setup: function() {
+            this.base();
+            
+            if (!this.settings.size) {
+                this.settings.size = 40;
+            }
+        },
+		
+		/**
+         * @Override
+         *
          * Renders an INPUT control into the field container
          */
         renderField: function(onSuccess){
@@ -43,42 +57,6 @@
             if (onSuccess) {
                 onSuccess();
             }
-        },
-        
-        /**
-         * @Override
-         *
-         * Sign up for events against the INPUT control
-         */
-        initEvents: function(){
-            this.base();
-            
-            var _this = this;
-            
-            $(this.inputElement).keypress(function(e){
-                _this.onKeyPress(e);
-            });
-            
-            $(this.inputElement).keyup(function(e){
-                _this.onKeyUp(e);
-            });
-            
-            $(this.inputElement).click(function(e){
-                _this.onClick(e);
-            });
-            
-            // trigger control level handlers for things that happen to input element
-            $(this.inputElement).change(function(e){
-                _this.onChange(e);
-            });
-            
-            $(this.inputElement).focus(function(e){
-                _this.onFocus(e);
-            });
-            
-            $(this.inputElement).blur(function(e){
-                _this.onBlur(e);
-            });
         },
         
         /**
@@ -200,25 +178,6 @@
             }
             
             return this.base(state);
-        },
-        
-        
-        ///////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // EVENT HANDLERS
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////////////		
-        
-        onKeyPress: function(e){
-            // EXTENSION POINT
-        },
-        
-        onKeyUp: function(e){
-            // EXTENSION POINT
-        },
-        
-        onClick: function(e){
-            // EXTENSION POINT
         }
         
     });

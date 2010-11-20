@@ -1,4 +1,4 @@
-(function($){
+(function($) {
 
     var Alpaca = $.alpaca;
     
@@ -24,12 +24,20 @@
      */
     Alpaca.Fields.NumberField = Alpaca.Fields.TextField.extend({
     
-        getValue: function(){
+        /**
+         * @Override
+         *
+         */
+        getValue: function() {
             var textValue = $(this.inputElement).val();
             return parseFloat(textValue);
         },
         
-        handleValidate: function(){
+        /**
+         * @Override
+         *
+         */
+        handleValidate: function() {
             // check to make sure this is a number
             if (!this._validateNumber()) {
                 return false;
@@ -54,7 +62,10 @@
             return this.base();
         },
         
-        _validateNumber: function(){
+        /**
+         * Validates if it is a number
+         */
+        _validateNumber: function() {
             var textValue = $(this.inputElement).val();
             var floatValue = this.getValue();
             
@@ -71,7 +82,10 @@
             return true;
         },
         
-        _validateDivisibleBy: function(){
+        /**
+         * Validates DivisibleBy
+         */
+        _validateDivisibleBy: function() {
             var floatValue = this.getValue();
             
             if (this.schema.divisibleBy) {
@@ -83,7 +97,10 @@
             return true;
         },
         
-        _validateMaximum: function(){
+        /**
+         * Validates Maximum
+         */
+        _validateMaximum: function() {
             var floatValue = this.getValue();
             
             if (this.schema.maximum) {
@@ -101,7 +118,10 @@
             return true;
         },
         
-        _validateMinimum: function(){
+        /**
+         * Validates Minimum
+         */
+        _validateMinimum: function() {
             var floatValue = this.getValue();
             
             if (this.schema.minimum) {
@@ -122,7 +142,7 @@
         /**
          * @Override
          */
-        getValidationStateMessage: function(state){
+        getValidationStateMessage: function(state) {
             if (state == Alpaca.STATE_INVALID) {
                 if (!this._validateNumber()) {
                     return Alpaca.getMessage("stringNotANumber", this);
@@ -146,6 +166,7 @@
     
     });
     
+    // Additional Registrations
     Alpaca.registerMessages({
         "stringValueTooSmall": "The minimum value for this field is {0}",
         "stringValueTooLarge": "The maximum value for this field is {0}",
@@ -153,5 +174,5 @@
         "stringNotANumber": "This value is not a number."
     });
     Alpaca.registerFieldClass("number", Alpaca.Fields.NumberField);
-    Alpaca.registerDefaultSchemaFieldMapping("number", "number");    
+    Alpaca.registerDefaultSchemaFieldMapping("number", "number");
 })(jQuery);

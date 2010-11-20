@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js">
+        </script>
+		<!--
+        <script type="text/javascript" src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js">
+        </script>
+		-->
+        <script type="text/javascript" src="../js/alpaca.js">
+        </script>
+    </head>
+    <body>
+        <div data-role="page" data-theme="b" id="field1">
+        </div>
+        <script type="text/javascript" id="field1-script">
+            $(function(){
+            Alpaca.setDefaultView('MOBILE');
+			$("#field1").hide();
+            $("#field1").alpaca("/alpaca/examples/data/full-form-data.json", "/alpaca/examples/data/full-form-settings.json", "/alpaca/examples/data/full-form-schema.json", function(control) {
+				control.render();
+				$.getScript('http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js');
+				$("#field1").show();
+			});
+			 });
+        </script>
+    </body>
+</html>

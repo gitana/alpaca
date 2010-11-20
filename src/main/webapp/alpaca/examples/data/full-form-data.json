@@ -1,0 +1,16 @@
+{
+    "name":"James Bond",
+    "age":45,
+    "gender":"Male",
+    "member":false,
+    "icecream":"Chocolate",
+    "address":{
+        "street":[
+            "100 Main Street",
+            "Suite 200"
+        ],
+        "city":"Burlington",
+        "state":"MA",
+        "zip":"18210"
+    }
+}

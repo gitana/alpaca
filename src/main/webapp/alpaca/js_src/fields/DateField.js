@@ -7,6 +7,10 @@
 	 */
 	Alpaca.Fields.DateField = Alpaca.Fields.TextField.extend({
 
+        /**
+         * @Override
+         *
+         */
 		setup: function()
 		{
 			this.base();
@@ -14,7 +18,7 @@
 			// override
 			if (!this.settings.messages.invalid)
 			{
-				this.settings.messages.invalid = "Invalid date, ex: 07/04/1776";
+				this.settings.messages.invalid = "Invalid date, ex: 1776-11-28";
 			}
 			
 			if (!this.settings.dateFormat)
@@ -24,6 +28,8 @@
     	},
     	
     	/**
+         * @Override
+         *
     	 * Renders an INPUT control into the field container
     	 */
     	renderField: function(onSuccess)
@@ -39,8 +45,24 @@
     		}
     	},    	
     	
+    	/**
+         * @Override
+         *
+    	 */
     	handleValidate: function()
     	{
+            if (!this._validateDateFormat()) {
+                return false;
+            }
+            
+            return this.base();
+    	},
+    	
+    	/**
+         * Validates date format
+         *
+    	 */
+    	_validateDateFormat: function () {
     		var value = $(this.inputElement).val();
     		
     		var separator = this.settings.dateFormat.match(/[^Ymd ]/g)[0];
@@ -55,6 +77,10 @@
     		{ 
     			return false; 
     		}
+    		
+    		if (!ladate[0].match(/^\d+$/) || !ladate[1].match(/^\d+$/) || !ladate[2].match(/^\d+$/) ) {
+                return false;
+            }
 
     		var formatSplit = this.settings.dateFormat.split(separator);
 
@@ -70,38 +96,44 @@
     		var unedate = new Date(Y,m,d);
     		var annee = unedate.getFullYear();
     		
-    		return ((unedate.getDate() == d) && (unedate.getMonth() == m) && (annee == Y));
+    		return ((unedate.getDate() == d) && (unedate.getMonth() == m) && (annee == Y));    		
     	},
     	
-    	setValue: function(val, stopUpdateTrigger)
-    	{
-    		// skip out if no date
-    		if (val == "")
-    		{
-    			this.base(val, stopUpdateTrigger);
-    			return;
-    		}
-    		
-    		var str = "";
-    		if (val instanceof Date)
-    		{
-    			str = Alpaca.Fields.DateField.formatDate(val, this.form.dateFormat);
-    		}
-    		else
-    		{
-    			if (this.settings.valueFormat)
-    			{
-    				var dateVal = Alpaca.Fields.DateField.parseWithFormat(val, this.settings.valueFormat);
-    				str = Alpaca.Fields.DateField.formatDate(dateVal, this.settings.valueFormat);
-    			}
-    			else
-    			{
-    				str = val;
-    			}
-    		}
-    			
-    		this.base(str, stopUpdateTrigger);
-    	}
+    	/**
+         * @Override
+         *
+    	 */
+    	setValue: function(val, stopUpdateTrigger) {
+			// skip out if no date
+			if (val == "") {
+				this.base(val, stopUpdateTrigger);
+				return;
+			}
+			
+			var str = "";
+			if (val instanceof Date) {
+				str = Alpaca.Fields.DateField.formatDate(val, this.form.dateFormat);
+			} else {
+				if (this.settings.valueFormat) {
+					var dateVal = Alpaca.Fields.DateField.parseWithFormat(val, this.settings.valueFormat);
+					str = Alpaca.Fields.DateField.formatDate(dateVal, this.settings.valueFormat);
+				} else {
+					str = val;
+				}
+			}
+			this.base(str, stopUpdateTrigger);
+		},
+    	
+        /**
+         * @Override
+         */
+        getValidationStateMessage: function(state){
+            if (state == Alpaca.STATE_INVALID) {
+               return Alpaca.substituteTokens(Alpaca.getMessage("invalidDate", this), [this.settings.dateFormat]);
+            }
+            
+            return this.base(state);
+        }    	
     	
 	});
 	
@@ -125,7 +157,10 @@
 		str = str.replace('d', ((day < 10)? '0':'')+day);
 		return str;
 	};
-	
-	Alpaca.registerFieldClass("date", Alpaca.Fields.DateField);
 
+    Alpaca.registerMessages({
+        "invalidDate": "Invalid date for format {0}"
+    });	
+	Alpaca.registerFieldClass("date", Alpaca.Fields.DateField);
+    Alpaca.registerDefaultFormatFieldMapping("date", "date");
 })(jQuery);

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js">
+        </script>
+        <script type="text/javascript" src="../js/alpaca.js">
+        </script>
+        <script type="text/javascript" src="../examples/js/example.js">
+        </script>
+        <link type="text/css" href="../css/alpaca.css" rel="stylesheet" />
+        <link type="text/css" href="../css/example.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h3>Mscellaneous Fields</h3>
+        <h4>Upper Case Field: </h4>
+        <div id="field1">
+        </div>
+        <script type="text/javascript" id="field1-script">
+            $("#field1").alpaca("Ice cream is wonderful.","uppercase");
+        </script>
+        <h4>IPv4 Field: </h4>
+        <div id="field2">
+        </div>
+        <script type="text/javascript" id="field2-script">
+            $("#field2").alpaca("100.60","ipv4");
+        </script>		
+        <h4>Date Field: </h4>
+        <div id="field3">
+        </div>
+        <script type="text/javascript" id="field3-script">
+            $("#field3").alpaca("2005-10-11",{},{
+				"format":"date"
+			});
+        </script>		
+	</body>
+</html>

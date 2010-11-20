@@ -27,8 +27,9 @@ DIV.alpaca-field {
 .alpaca-field-label {
     float: left;
     color: #505050;
-    text-align: right;
-    padding: 0.2em 0.5em 0 0;
+    text-align: left;
+    padding: 2px 5px 2px 0;
+	min-width: 75px;
 }
 
 .alpaca-field-helper {
@@ -743,6 +744,31 @@ div.alpaca-fieldWrapper div.availabilityDiv.available div.text{
 	color:#2C811D;
 }
 
+/**
+ * Fieldset
+ */
+.alpaca-form {
+	margin-top: 15px;
+	margin-left: 15px;
+}
+
+.alpaca-fieldset {
+	display: inline-block;
+}
+
+.alpaca-fieldset-legend {
+	font-weight: bold;
+}
+
+.alpaca-fieldset-helper {
+	padding-top: 5px;
+	padding-bottom:5px;
+}
+
+.alpaca-field-container {
+	padding-top: 2px;
+	padding-bottom:2px;	
+}
 /**
  * Item Toolbar 
  */

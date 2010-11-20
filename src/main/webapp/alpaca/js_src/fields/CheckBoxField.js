@@ -1,4 +1,4 @@
-(function($){
+(function($) {
 
     var Alpaca = $.alpaca;
     
@@ -14,7 +14,11 @@
      */
     Alpaca.Fields.CheckBoxField = Alpaca.ControlField.extend({
     
-        setup: function(){
+        /**
+         * @Override
+         *
+         */
+        setup: function() {
             this.base();
             
             if (!this.settings.rightLabel) {
@@ -22,86 +26,77 @@
             }
             
             // We force the optional schema setting since booleans either exist or they don't and both are valid values
-            this.schema.optional = true;
-            
-            // TODO
-            this.uncheckedValue = "";
-            this.checkedValue = "checked";
+            this.schema.optional = true;            
         },
         
-        renderField: function(onSuccess){
-            $(this.fieldContainer).addClass("gitana-checkboxfield");
-			
-			var controlFieldTemplate = Alpaca.getTemplate("controlFieldCheckbox",this,null,this.mode);
-
-			if (controlFieldTemplate) {
-				this.controlElement = $.tmpl(controlFieldTemplate, {
-					"id": this.getId(),
-					"settings": this.settings
-				});
-				this.injectField(this.controlElement);
-				this.inputElement = $('input[id="'+this.getId()+'"]',this.controlElement);
-			}
-                        
+        /**
+         * @Override
+         *
+         */
+        renderField: function(onSuccess) {
+            $(this.fieldContainer).addClass("alpaca-checkboxfield");
+            
+            var controlFieldTemplate = Alpaca.getTemplate("controlFieldCheckbox", this, null, this.mode);
+            
+            if (controlFieldTemplate) {
+                this.inputElement = $.tmpl(controlFieldTemplate, {
+                    "id": this.getId(),
+                    "settings": this.settings
+                });
+                this.injectField(this.inputElement);
+                this.inputElement = $('input[id="' + this.getId() + '"]', this.inputElement);
+            }
+            
             if (onSuccess) {
                 onSuccess();
             }
         },
-        
-        initEvents: function(){
-            var _this = this;
-            
-            $(this.inputElement).focus(function(e){
-                _this.onFocus(e);
-            });
-            $(this.inputElement).blur(function(e){
-                _this.onBlur(e);
-            });
-            $(this.inputElement).change(function(e){
-                _this.onChange(e);
-            });
+
+        /**
+         * @Override
+         *
+         */
+        getValue: function() {
+            return $(this.inputElement).attr("checked") ? $(this.inputElement).attr("checked") : false;
         },
         
-        getValue: function(){
-            return $(this.inputElement).attr("checked") ? this.checkedValue : this.uncheckedValue;
-        },
-        
-        setValue: function(value, sendUpdatedEvt){
-            var toCheck = false;
-            
-            if (value == this.checkedValue) {
-                toCheck = true;
-            }
-            
-            if (Alpaca.isBoolean(value) && value) {
-                toCheck = true;
-            }
-            
-            if (toCheck) {
+        /**
+         * @Override
+         *
+         */
+        setValue: function(value, stopUpdateTrigger) {          
+            if (value) {
                 this.inputElement.attr({
                     "checked": true
                 });
-               // this.hiddenElement.val(this.checkedValue);
-            }
-            else {
+            } else {
                 this.inputElement.attr({
                     "checked": false
                 });
-              //  this.hiddenElement.val(this.uncheckedValue);
             }
+            // be sure to call into base method
+            this.base(value, stopUpdateTrigger);
         },
         
-        disable: function(){
+        /**
+         * @Override
+         *
+         */
+        disable: function() {
             this.inputElement.disabled = true;
         },
         
-        enable: function(){
+        /**
+         * @Override
+         *
+         */
+        enable: function() {
             this.inputElement.disabled = false;
         }
         
     });
-
-	Alpaca.registerTemplate("controlFieldCheckbox",'<span><input type="checkbox" id="${id}" {{if settings.readonly}}readonly="on"{{/if}} {{if settings.formName}}name="${settings.formName}"{{/if}} {{each settings.data}}data-${fieldId}="${value}"{{/each}}/>{{if settings.rightLabel}}<label for="${id}">${settings.rightLabel}</label>{{/if}}</span>');
+    
+    Alpaca.registerTemplate("controlFieldCheckbox", '<span><input type="checkbox" id="${id}" {{if settings.readonly}}readonly="on"{{/if}} {{if settings.formName}}name="${settings.formName}"{{/if}} {{each settings.data}}data-${fieldId}="${value}"{{/each}}/>{{if settings.rightLabel}}<label for="${id}">${settings.rightLabel}</label>{{/if}}</span>');
     
     Alpaca.registerFieldClass("checkbox", Alpaca.Fields.CheckBoxField);
     Alpaca.registerDefaultSchemaFieldMapping("boolean", "checkbox");

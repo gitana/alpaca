@@ -1,4 +1,4 @@
-(function($){
+(function($) {
 
     var Alpaca = $.alpaca;
     
@@ -19,132 +19,81 @@
      * }
      */
     Alpaca.ControlField = Alpaca.Field.extend({
-    
-        /**
-         * Sets up any default values for this field.
-         */
-        setup: function(){
-            this.base();
-            
-            if (Alpaca.isUndefined(this.settings.showMessages)) {
-                this.settings.showMessages = true;
-            }
-        },
-        
-        /**
-         * @Override
-         *
-         * We manually set up the outer and use the template to define what goes into the "fieldContainer".
-         */
-        renderOuter: function(){
-            var _this = this;
-            
-            // render into the fieldContainer
-            this.processRender(this.fieldContainer, function(){
-            
-                // bind our field dom element into the container
-                $(_this.getEl()).appendTo(_this.container);
-                
-                // allow any post-rendering facilities to kick in
-                _this.postRender();
-            });
-        },
-        
-        /**
-         * @Override
-         *
-         * In most cases, a template isn't used to render the control (though it is an option).
-         * As such, we handle this default case and call through to a renderField method that can be
-         * overridden to generate the stuff that gets placed into "fieldContainer".
-         */
-        handleNoTemplateRender: function(parentEl, onSuccess){
-            this.renderField(onSuccess);
-        },
-        
+          
         /**
          * To be overridden
          */
-        renderField: function(onSuccess){
+        renderField: function(onSuccess) {
         
         },
         
         /**
          * Injects Field Element into Field Container
          */
-        injectField: function(element){
-            if ($('.alpaca-field-label', this.outerEl).length) {
-                this.labelDiv = $('.alpaca-field-label', this.outerEl);
-            }
-            
-            if ($('.alpaca-field-container', this.outerEl).length) {
+        injectField: function(element) {            
+            // find out the field container			
+			if ($('.alpaca-field-container', this.outerEl).length) {
                 this.fieldContainer = $('.alpaca-field-container', this.outerEl);
-            }
-            else {
+            } else {
                 this.fieldContainer = this.outerEl;
             }
-            
+            // now figure out where exactly we want to insert it
             var parentNode = $('.alpaca-field-container-field', this.fieldContainer);
             if (parentNode.length > 0) {
                 if (parentNode.attr('data-replace') == 'true') {
                     parentNode.replaceWith(element);
-                }
-                else {
+                } else {
                     $(element).appendTo(parentNode);
                 }
-            }
-            else {
+            } else {
                 if (this.fieldContainer.attr('data-replace') == 'true') {
                     this.fieldContainer.replaceWith(element);
-                }
-                else {
+                } else {
                     $(element).prependTo(this.fieldContainer);
                 }
             }
         },
+		
         /**
          * @Override
+         * 
+         * Finds labelDiv and helperDiv
          */
-        postRender: function(){
-            if ($('.alpaca-field-helper', this.outerEl)) {
-                this.helperDiv = $('.alpaca-field-helper', this.outerEl);
-            }
-            this.base();
-        },
-        
+        postRender: function() {
+			if ($('.alpaca-field-label', this.outerEl).length) {
+				this.labelDiv = $('.alpaca-field-label', this.outerEl);
+			}
+			if ($('.alpaca-field-helper', this.outerEl)) {
+				this.helperDiv = $('.alpaca-field-helper', this.outerEl);
+			}
+			this.base();
+		},
+		
         /**
-         * @Override
-         */
-        renderValidationState: function(){
-            this.base();
-            
-            var state = this.getValidationState();
-            
-            // Allow for the message to change
-            if (this.settings.showMessages) {
-                if (!this.initializing) {
-                    this.displayMessage(this.getValidationStateMessage(state));
-                }
-            }
-        },
-        
-        _validateEnum: function(){
+         * Validate against enum
+         */                
+        _validateEnum: function() {
             var val = this.getValue();
             
             // JSON SCHEMA - enum
             if (this.schema["enum"]) {
                 if ($.inArray(val, this.schema["enum"]) > -1) {
                     return true;
-                }
-                else {
+                } else {
                     return false;
                 }
-            }
-            else {
+            } else {
                 return true;
             }
         },
         
-        handleValidate: function(){
+        /**
+         * @Override
+         *
+         * Adds enum validation
+         */
+        handleValidate: function() {
+            this.base();
             if (!this._validateEnum()) {
                 return false;
             }
@@ -153,8 +102,10 @@
         
         /**
          * @Override
+         * 
+         * Adds enum validation message
          */
-        getValidationStateMessage: function(state){
+        getValidationStateMessage: function(state) {
             if (state == Alpaca.STATE_INVALID) {
                 if (!this._validateEnum()) {
                     var text = this.schema["enum"].join(',');
@@ -163,41 +114,45 @@
             }
             return this.base(state);
         },
-        ///////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // MESSAGES
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////////////		
         
+        // Additional event handlers
         /**
-         * Renders a validation state message below the field.
+         * @Override
+         *
+         * Sign up for events against the INPUT control
          */
-        displayMessage: function(message){
-            if (message && message.length > 0) {
-                if (this.messageElement) {
-                    $(this.messageElement).remove();
-                }
-                
-                var messageTemplate = Alpaca.getTemplate("controlFieldMessage", this);
-                if (messageTemplate) {
-                    this.messageElement = $.tmpl(messageTemplate, {
-                        "message": message
-                    });
-                    this.messageElement.addClass("alpaca-field-message");
-                    this.messageElement.appendTo(this.getEl());
-                }
-            }
-            else {
-                // remove the message element if it exists
-                if (this.messageElement) {
-                    $(this.messageElement).remove();
-                }
-            }
-        }
+        initEvents: function(){
+            this.base();
+            
+            var _this = this;
+            
+            $(this.inputElement).keypress(function(e){
+                _this.onKeyPress(e);
+            });
+            
+            $(this.inputElement).keyup(function(e){
+                _this.onKeyUp(e);
+            });
+            
+            $(this.inputElement).click(function(e){
+                _this.onClick(e);
+            });
+            
+        },
+		
+		onKeyPress: function(e) {
+		},
+        
+        onKeyUp: function(e){
+        },
+        
+        onClick: function(e){
+        }		
         
     });
     
-    Alpaca.registerMessages({
+    // Registers additonal messages
+	Alpaca.registerMessages({
         "invalidValueOfEnum": "This field should have one of the values in {0}."
     });
     

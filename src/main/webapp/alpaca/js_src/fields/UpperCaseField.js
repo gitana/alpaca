@@ -7,6 +7,9 @@
 	 */
 	Alpaca.Fields.UpperCaseField = Alpaca.Fields.TextField.extend({
 
+        /**
+         * @Override
+         */
 		setValue: function(val, stopUpdateTrigger)
 		{
 			var upperValue = val.toUpperCase();
@@ -17,6 +20,9 @@
 			}
 		},
 		
+        /**
+         * @Override
+         */
 		onKeyPress: function(e) 
 		{
 			this.base(e);
