@@ -22,8 +22,10 @@
          *
          */
         setMode: function(mode) {
-            this.base();
-            this.template = Alpaca.getTemplate("fieldSet", this, null, mode);
+            this.base(mode);
+			 if (!this.options.template) {
+			 	this.template = Alpaca.getTemplate("fieldSet", this, null, mode);
+			 }
         },
         /**
          * @Override
