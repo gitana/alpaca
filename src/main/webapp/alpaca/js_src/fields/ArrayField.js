@@ -100,12 +100,42 @@
          * @param {Object} id
          */
         removeItem: function(id) {
-            this.children = $.grep(this.children, function(val, index) {
-                return (val.getId() != id);
-            });
-            delete this.childrenById[id];
-            $('#' + id + "-item-container", this.outerEl).remove();
-            this.renderValidationState();
+            if (this._validateEqualMinItems()) {
+                this.children = $.grep(this.children, function(val, index) {
+                    return (val.getId() != id);
+                });
+                delete this.childrenById[id];
+                $('#' + id + "-item-container", this.outerEl).remove();
+                this.renderValidationState();
+                
+                this.updateToolbarItemsStatus();
+            }
+        },
+        
+        /**
+         * Updates status of toolbar item
+         */
+        updateToolbarItemsStatus: function() {
+            var _this = this;
+            // add actions to toolbar buttons
+            if (_this._validateEqualMaxItems()) {
+                $('.alpaca-item-toolbar-add', this.outerEl).each(function(index) {
+                    $(this).removeClass('alpaca-item-toolbar-disabled');
+                });
+            } else {
+                $('.alpaca-item-toolbar-add', this.outerEl).each(function(index) {
+                    $(this).addClass('alpaca-item-toolbar-disabled');
+                });
+            }
+            if (_this._validateEqualMinItems()) {
+                $('.alpaca-item-toolbar-remove', this.outerEl).each(function(index) {
+                    $(this).removeClass('alpaca-item-toolbar-disabled');
+                });
+            } else {
+                $('.alpaca-item-toolbar-remove', this.outerEl).each(function(index) {
+                    $(this).addClass('alpaca-item-toolbar-disabled');
+                });
+            }
         },
         
         /**
@@ -125,22 +155,14 @@
                     toolbarElem.attr("id", id + "-item-toolbar");
                 }
                 // add actions to toolbar buttons
-                if (_this._validateEqualMaxItems()) {
-                    $('.alpaca-item-toolbar-add', toolbarElem).removeClass('alpaca-item-toolbar-disabled');
-                    $('.alpaca-item-toolbar-add', toolbarElem).click(function() {
-                        _this.addItem(containerElem.index() + 1, null, fieldControl.getValue(), id);
-                    });
-                } else {
-                    $('.alpaca-item-toolbar-add', toolbarElem).addClass('alpaca-item-toolbar-disabled');
-                }
-                if (_this._validateEqualMinItems()) {
-                    $('.alpaca-item-toolbar-remove', toolbarElem).removeClass('alpaca-item-toolbar-disabled');
-                    $('.alpaca-item-toolbar-remove', toolbarElem).click(function() {
-                        _this.removeItem(id);
-                    });
-                } else {
-                    $('.alpaca-item-toolbar-remove', toolbarElem).addClass('alpaca-item-toolbar-disabled');
-                }
+                $('.alpaca-item-toolbar-add', toolbarElem).removeClass('alpaca-item-toolbar-disabled');
+                $('.alpaca-item-toolbar-add', toolbarElem).click(function() {
+                    _this.addItem(containerElem.index() + 1, null, fieldControl.getValue(), id);
+                });
+                $('.alpaca-item-toolbar-remove', toolbarElem).removeClass('alpaca-item-toolbar-disabled');
+                $('.alpaca-item-toolbar-remove', toolbarElem).click(function() {
+                    _this.removeItem(id);
+                });
                 $('.alpaca-item-toolbar-up', toolbarElem).click(function() {
                     _this.moveItem(id, true);
                 });
@@ -161,13 +183,13 @@
         reRenderItem: function(fieldControl, newContainer) {
             fieldControl.container = newContainer;
             fieldControl.render(this.getMode());
-			
+            
             newContainer.attr("id", fieldControl.getId() + "-item-container");
             newContainer.attr("alpaca-id", fieldControl.getId());
             
             $(".alpaca-item-toolbar", newContainer).remove();
-			this.renderToolbar(newContainer);
-			
+            this.renderToolbar(newContainer);
+            
         },
         
         /**
@@ -206,6 +228,8 @@
                     _this.renderToolbar(containerElem);
                     _this.renderValidationState();
                 });
+                
+                this.updateToolbarItemsStatus(this.outerEl);
             }
         },
         
@@ -224,6 +248,8 @@
                 }
                 _this.addItem(index, fieldSetting, value);
             });
+			
+			this.updateToolbarItemsStatus();
         },
         
         /**

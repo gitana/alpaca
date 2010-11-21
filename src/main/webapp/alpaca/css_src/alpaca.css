@@ -772,6 +772,14 @@ div.alpaca-fieldWrapper div.availabilityDiv.available div.text{
 /**
  * Item Toolbar 
  */
+.alpaca-item-toolbar {
+background-color: #DAE8EC;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+border: 1px solid #B8CB99;
+padding: 1px;
+}
+
 .alpaca-item-toolbar-icon {
     width: 16px;
     height: 16px;

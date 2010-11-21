@@ -1,0 +1,24 @@
+<table class="repository-list">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                Repository
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{if (data.rows.length > 0) }}
+		{{each data.rows}}
+        <tr class="repository-list-row">
+            <td class="repository-list-row-icon">
+            </td>
+            <td _href="#/${this._doc}">
+            ${this._doc}</a>
+        </td>
+        </tr>
+		{{/each}}
+		{{/if}}
+    </tbody>
+</table>
