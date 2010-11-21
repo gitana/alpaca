@@ -174,7 +174,9 @@
                 this.fieldContainer = this.outerEl;
             }
             
-            this.renderItems();
+			if (!this.options.template) {
+				this.renderItems();
+			}
             
             if (onSuccess) {
                 onSuccess();
