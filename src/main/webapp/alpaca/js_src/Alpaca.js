@@ -357,7 +357,7 @@
          */
         MODE_VIEW: "view",
         MODE_EDIT: "edit",
-        MODE_CRETE: "create",
+        MODE_CREATE: "create",
         
         /**
          * Field states
@@ -495,10 +495,28 @@
 			}
 		},
         
-        /**
-         * Returns the template for given id, type, mode and field
+       /**
+        * Returns the template for given id, type, mode and field
+        */
+	    getTemplate: function(templateId, field, viewType, mode) {
+			if (!mode) {
+				mode = this.defaultMode;
+			}
+			if (mode != Alpaca.MODE_CREATE) {
+				return this._getTemplate(templateId, field, viewType, mode);
+			} else {
+				var template = this._getTemplate(templateId, field, viewType, mode);
+				if (!template) {
+					template = this._getTemplate(templateId, field, viewType, Alpaca.MODE_EDIT);
+				}
+				return template;
+			}
+		},
+		
+		/**
+         * Internal methods for returing the template for given id, type, mode and field
          */
-        getTemplate: function(templateId, field, viewType, mode) {
+        _getTemplate: function(templateId, field, viewType, mode) {
 			if (!mode) {
 				mode = this.defaultMode;
 			}
@@ -513,7 +531,7 @@
 					return templates[templateId];
 				} else {
 					if (view && view.parent) {
-						return this.getTemplate(templateId, field, view.parent, mode);
+						return this._getTemplate(templateId, field, view.parent, mode);
 					} else {
 						return null;
 					}
@@ -541,10 +559,11 @@
 				if (!mode) {
 					mode = this.defaultMode;
 				}
+				
 				if (!view.templates[mode]) {
 					view.templates[mode] = {};
 				}
-				view.templates[mode][templateId] = template;
+				view.templates[mode][templateId] = template;								
 			}
 		},
 

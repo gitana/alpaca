@@ -46,6 +46,7 @@
                     "value": this.data,
                     "settings": this.settings
                 });
+				this.inputElement.addClass("alpaca-form-button");				 
                 this.injectField(this.inputElement);
             }
             

@@ -4,11 +4,13 @@
     "type":"object",
     "properties":{
         "name":{
-            "title":"Full Name",
+            "title":"Name",
+            "description":"Enter your full name.",
             "type":"string"
         },
         "age":{
             "title":"Age",
+            "description":"Enter your age.",
             "type":"number"
         },
         "gender":{
@@ -21,7 +23,8 @@
         },
         "member":{
             "title":"Member",
-            "type":"boolean"
+            "type":"boolean",
+            "description":"Are you a memeber?"
         },
         "icecream":{
             "title":"Favorite Ice Cream",

@@ -136,6 +136,13 @@
                     $(this).addClass('alpaca-item-toolbar-disabled');
                 });
             }
+			if ( this.getSize() == 0) {
+				this.renderArrayToolbar(this.outerEl);
+			} else {
+				if ($('.alpaca-array-toolbar', this.outerEl)) {
+					$('.alpaca-array-toolbar', this.outerEl).remove();
+				}	
+			}
         },
         
         /**
@@ -173,6 +180,29 @@
             }
             
         },
+		
+        /**
+         * Renders array toolbar
+         * @param {Object} containerElem
+         */
+        renderArrayToolbar: function(containerElem) {
+            var _this = this;
+            var id = containerElem.attr('alpaca-id');
+            var itemToolbarTemplate = Alpaca.getTemplate("arrayToolbar", this, null, this.mode);
+            if (itemToolbarTemplate) {
+                var toolbarElem = $.tmpl(itemToolbarTemplate, {
+                    "id": id
+                });
+                if (toolbarElem.attr("id") == null) {
+                    toolbarElem.attr("id", id + "-array-toolbar");
+                }
+                // add actions to toolbar buttons
+                $('.alpaca-array-toolbar-add', toolbarElem).click(function() {
+                    _this.addItem(0, null, "", id);
+                });
+                toolbarElem.prependTo(containerElem);
+            }            
+        },		
         
         /**
          * Re-renders item
@@ -361,6 +391,7 @@
         }
     });
     
+    Alpaca.registerTemplate("arrayToolbar", '<div class="alpaca-array-toolbar"><span class="alpaca-array-toolbar-icon alpaca-array-toolbar-add" title="Add"></div>');
     Alpaca.registerTemplate("arrayItemToolbar", '<div class="alpaca-item-toolbar"><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-add" title="Add"></span><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-remove" title="Remove"></span><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-up" title="Move Up"></span><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-down" title="Move Down"></span></div>');
     
     Alpaca.registerMessages({

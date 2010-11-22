@@ -41,9 +41,6 @@
          * Renders an INPUT control into the field container
          */
         renderField: function(onSuccess){
-            // decorate the field container with our class
-            $(this.fieldContainer).addClass("alpaca-textfield");
-            
             var controlFieldTemplate = Alpaca.getTemplate("controlFieldText", this, null, this.mode);
             
             if (controlFieldTemplate) {
@@ -51,6 +48,7 @@
                     "id": this.getId(),
                     "settings": this.settings
                 });
+				this.inputElement.addClass("alpaca-textfield");
                 this.injectField(this.inputElement);
             }
             

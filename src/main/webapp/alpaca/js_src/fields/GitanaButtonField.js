@@ -14,18 +14,49 @@
          */
         setup: function() {
             this.base();
-            if (! this.data) {
-				this.data = "Save";
-			}           
             this.buttonType = "button";
+           	if (this.options && this.options.action) {
+				this.action = this.options.action;
+			}			
+		   // sets defaults
+            if (!this.action) {
+                this.action = "save";                
+                if (!this.data) {
+                    this.data = "Save";
+                }
+            } else  if ( this.action == "reload") {
+                if (!this.data) {
+                    this.data = "Reload";
+                }
+            } else  if ( this.action == "create") {
+                if (!this.data) {
+                    this.data = "Create";
+                }
+            }
         },
         
         /**
          * @Override
          */
         onClick: function(e) {
-            var newValue = this.form.topField.getValueWithPropertyId();
-            alert(newValue);
+			switch (this.action) {
+				case 'save':
+		            var newValue = this.form.topField.getValueWithPropertyId();
+        		    alert(newValue);
+					break;
+				case 'reload':
+					this.form.topField.render();
+					break;
+				case 'create':
+					if (this.form.topField.options.form) {
+						delete this.form.topField.options.form;
+					}
+					this.form.topField.container = this.form.formFieldsContainer;
+					this.form.topField.render('create');
+					break;
+				default:
+					break;
+			}
         }
     });
     

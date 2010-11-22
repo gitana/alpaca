@@ -26,6 +26,9 @@
 			 if (!this.options.template) {
 			 	this.template = Alpaca.getTemplate("fieldSet", this, null, mode);
 			 }
+			 if (this.settings.collapsible != false ) {
+			 	this.settings.collapsible = true;
+			 }
         },
         /**
          * @Override
@@ -64,23 +67,18 @@
             var _this = this;
             
             // if collapsible
-            if (this.settings.collapsible) {
-                $(this.legend).click(function(e) {
-                    _this.toggleCollapse();
-                });
+            if (this.labelDiv) {
+				if (this.settings.collapsible) {
+					$('<b> >> </b>').prependTo(this.labelDiv);
+					this.labelDiv.click(function() {
+						$(this).children("b").toggleClass("alpaca-fieldset-legend-collapsed");
+						$(this).nextAll(".alpaca-fieldset-helper").slideToggle(500);
+						$(this).nextAll(".alpaca-items-container").slideToggle(500);
+					});
+				}
             }
         },
-        
-        toggleCollapse: function() {
-            if ($(this.fieldset).hasClass("alpaca-Expanded")) {
-                $(this.fieldset).removeClass("alpaca-Expanded");
-                $(this.fieldset).addClass("alpaca-Collapsed");
-            } else {
-                $(this.fieldset).removeClass("alpaca-Collapsed");
-                $(this.fieldset).addClass("alpaca-Expanded");
-            }
-        },
-        
+
         /**
          * @Override
          *
