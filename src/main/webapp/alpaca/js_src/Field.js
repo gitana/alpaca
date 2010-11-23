@@ -568,6 +568,16 @@
          * Converts the validation state into a message.
          */
         getValidationStateMessage: function(state) {
+
+            if (state == Alpaca.STATE_INVALID) {
+				if (!this._validateOptional()) {
+					return Alpaca.getMessage("notOptional", this);
+				}
+				if (!this._validateDisallow()) {
+					return Alpaca.getMessage("disallowValue", this);
+				}
+			}
+			
             var message = this.settings.messages[state];
             if (!message) {
                 message = "";
@@ -604,7 +614,9 @@
             if (!this._validateOptional()) {
                 return false;
             }
-            
+            if (!this._validateDisallow()) {
+                return false;
+            }            
             return true;
         },
         
@@ -612,13 +624,34 @@
          * Checks whether validation is optional
          */
         _validateOptional: function() {
+			var val = this.getValue();
+			
+			if ( this.isEmpty() && !this.schema.optional) {
+				return false;
+			}
+			return true;
+		},
+        
+        /**
+         * Checks whether validation is optional
+         */
+        _validateDisallow: function() {
             var val = this.getValue();
             
-            if (val === '') {
-                if (!this.schema.optional) {
-                    return false;
-                }
-            }
+			if (!Alpaca.isEmpty(this.schema.disallow)) {
+				var disallow = this.schema.disallow;				
+				if (Alpaca.isArray(disallow)) {
+					var isAllowed = true;
+					$.each(disallow, function (index,value) {
+						if ( Alpaca.compareObject(val,value) ) {
+							isAllowed = false;
+						}						
+					});
+					return isAllowed;
+				} else {
+					return !Alpaca.compareObject(val,disallow);
+				}
+			}
             
             return true;
         },
@@ -758,7 +791,13 @@
         }
         
     });
-    
+
+    // Registers additonal messages
+	Alpaca.registerMessages({
+        "disallowValue": "This value is disallowed.",
+        "notOptional": "This field is not optional."		
+    });
+	    
     /**
      * Information about the arguments for this field
      * This isn't used at runtime

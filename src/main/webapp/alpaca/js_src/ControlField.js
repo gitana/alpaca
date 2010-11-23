@@ -93,11 +93,10 @@
          * Adds enum validation
          */
         handleValidate: function() {
-            this.base();
             if (!this._validateEnum()) {
                 return false;
             }
-            return true;
+            return this.base();
         },
         
         /**

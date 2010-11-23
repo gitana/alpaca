@@ -180,7 +180,7 @@
         
     });
     
-    Alpaca.registerTemplate("controlFieldText", '<input type="text" id="${id}" {{if settings.size}}size="${settings.size}"{{/if}} {{if settings.readonly}}readonly="on"{{/if}} {{if settings.formName}}name="${settings.formName}"{{/if}} {{each settings.data}}data-${fieldId}="${value}"{{/each}}/>');
+    Alpaca.registerTemplate("controlFieldText", '<input type="text" id="${id}" {{if settings.size}}size="${settings.size}"{{/if}} {{if settings.readonly}}readonly="on"{{/if}} {{if settings.formName}}name="${settings.formName}"{{/if}} {{each(i,v) settings.data}}data-${i}="${v}"{{/each}}/>');
     Alpaca.registerMessages({
         "stringTooShort": "This field should contain at least {0} numbers or characters",
         "stringTooLong": "This field should contain at most {0} numbers or characters"

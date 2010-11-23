@@ -200,7 +200,7 @@
                 $('.alpaca-array-toolbar-add', toolbarElem).click(function() {
                     _this.addItem(0, null, "", id);
                 });
-                toolbarElem.prependTo(containerElem);
+                toolbarElem.appendTo(containerElem);
             }            
         },		
         
@@ -271,14 +271,15 @@
         renderItems: function() {
             var _this = this;
             
-            $.each(this.data, function(index, value) {
-                var fieldSetting;
-                if (_this.settings && _this.settings.fields && _this.settings.fields[index]) {
-                    fieldSetting = _this.settings.fields[index];
-                }
-                _this.addItem(index, fieldSetting, value);
-            });
-			
+            if (this.data) {
+				$.each(this.data, function(index, value) {
+					var fieldSetting;
+					if (_this.settings && _this.settings.fields && _this.settings.fields[index]) {
+						fieldSetting = _this.settings.fields[index];
+					}
+					_this.addItem(index, fieldSetting, value);
+				});
+			}
 			this.updateToolbarItemsStatus();
         },
         

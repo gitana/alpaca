@@ -166,18 +166,21 @@
         // assume last parameter is a callback function
         var callback = Alpaca.isFunction(args[args.length-1]) ? args[args.length-1] : null;
         
-        // handle special case for null data
+        // handle case for null data
+		// if schema exits, we will use the settings from the schema
         // we assume a text field
-        if (Alpaca.isEmpty(data)){
-            if (Alpaca.isEmpty(options)){
-                data = "";
-                options = "text";
-            } else if (options && Alpaca.isObject(options)) {
-                if (options.config && Alpaca.isObject(options.config)) {
-                    data = "";
-                    options.config.type = "text";
-                }
-            }
+        if (Alpaca.isEmpty(data)) {
+			if (!schema) {
+				if (Alpaca.isEmpty(options)) {
+					data = "";
+					options = "text";
+				} else if (options && Alpaca.isObject(options)) {
+					if (options.config && Alpaca.isObject(options.config)) {
+						data = "";
+						options.config.type = "text";
+					}
+				}
+			}
         }
         
          // container can either be a dom id or a dom element
@@ -980,5 +983,15 @@
 		
 		return text;
 	};
+	
+    /**
+     * Compares two objects with any type
+     * 
+     * @param {Object} obj1
+     * @param {Object} obj2
+     */
+	Alpaca.compareObject = function(obj1,obj2) {
+		return equiv(obj1,obj2);
+	};	
     
 })(jQuery);

@@ -39,4 +39,5 @@
     });	
 	Alpaca.registerFieldClass("ipv4", Alpaca.Fields.IPv4Field);
     Alpaca.registerDefaultSchemaFieldMapping("ip-address", "ipv4");
+    Alpaca.registerDefaultFormatFieldMapping("ip-address", "ipv4");
 })(jQuery);

@@ -87,6 +87,7 @@
                 var v = _this.getValue();
                 _this.setValue(v, false);
             });
+            this.renderValidationState();            
         },
         
     });

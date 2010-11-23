@@ -97,12 +97,12 @@ DIV.alpaca-field {
  **
  *********************************************************************************************/
 .alpaca-datefield {
-    background: transparent url(../images/calendar.gif) no-repeat scroll left center;
+    background: transparent url(../images/calendar.png) no-repeat scroll left center;
     padding-left: 20px;
 }
 
 .alpaca-datefield input {
-    width: 75px;
+    width: 100px;
 }
 
 /*********************************************************************************************
@@ -921,6 +921,16 @@ padding: 1px;
 	background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');	
 }
+
+.alpaca-form-button-gitana:before {
+	content: attr(data-icon);
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	background:#ff295b;
+	padding: 2px 5px 2px 5px;
+	margin-right:5px;
+}	
 
 /**
  * Input field

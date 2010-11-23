@@ -218,7 +218,16 @@
                 fieldControl.render(_this.getMode());
                 _this.buttons.push(fieldControl);
             });
-			
+
+            Alpaca(this.formButtonsContainer, "", {
+                "type": "gitanabutton",
+				"action":"validate",
+                "form": this
+            }, {}, function(fieldControl) {
+                fieldControl.render(_this.getMode());
+                _this.buttons.push(fieldControl);
+            });
+						
 			Alpaca(this.formButtonsContainer, "Reset", {
                 "type": "button",
                 "buttonType": "reset",

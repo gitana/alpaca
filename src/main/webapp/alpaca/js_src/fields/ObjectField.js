@@ -100,16 +100,28 @@
          * @Override
          *
          * Renders all properties
+         * 
+         * We need to validate data against schema before rendering if schema 
+         * is present. 
+         * 
          */
         renderItems: function() {
             var _this = this;
-            for (var propertyId in _this.data) {
-                if (_this.data.hasOwnProperty(propertyId)) {
+			var properties = _this.data;
+			if ( _this.schema && _this.schema.properties ) {
+				properties =  _this.schema.properties;
+			}
+            for (var propertyId in properties) {
+                if (properties.hasOwnProperty(propertyId)) {
                     var fieldSetting;
                     if (_this.settings && _this.settings.fields && _this.settings.properties[propertyId]) {
                         fieldSetting = _this.settings.properties[propertyId];
                     }
-                    _this.addItem(propertyId, fieldSetting, _this.data[propertyId]);
+					var itemData = null;
+					if (_this.data) {
+						itemData = _this.data[propertyId];
+					} 
+                    _this.addItem(propertyId, fieldSetting, itemData);
                 }
             }
         },
