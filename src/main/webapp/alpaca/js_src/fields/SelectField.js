@@ -16,7 +16,9 @@
          * Return the value of the input control
          */
         getValue: function() {
-            return this.inputElement.val();
+			if (this.inputElement) {
+				return this.inputElement.val();
+			}
         },
         
         /**

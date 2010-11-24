@@ -41,7 +41,7 @@
          * Renders an INPUT control into the field container
          */
         renderField: function(onSuccess){
-            var controlFieldTemplate = Alpaca.getTemplate("controlFieldText", this, null, this.mode);
+            var controlFieldTemplate = Alpaca.getTemplate("controlFieldText", this);
             
             if (controlFieldTemplate) {
                 this.inputElement = $.tmpl(controlFieldTemplate, {
@@ -117,26 +117,28 @@
         _validateMinLength: function(){
             var val = this.getValue();
             
-            // JSON SCHEMA - minLength
-            if (this.schema.minLength) {
-                if (val.length < this.schema.minLength) {
-                    return false;
-                }
-            }
-            
+            if (!Alpaca.isEmpty(val)) {
+				// JSON SCHEMA - minLength
+				if (this.schema.minLength) {
+					if (val.length < this.schema.minLength) {
+						return false;
+					}
+				}
+			}
             return true;
         },
         
         _validateMaxLength: function(){
             var val = this.getValue();
             
-            // JSON SCHEMA - maxLength
-            if (this.schema.maxLength) {
-                if (val.length > this.schema.maxLength) {
-                    return false;
-                }
-            }
-            
+            if (!Alpaca.isEmpty(val)) {
+				// JSON SCHEMA - maxLength
+				if (this.schema.maxLength) {
+					if (val.length > this.schema.maxLength) {
+						return false;
+					}
+				}
+			}            
             return true;
         },
         

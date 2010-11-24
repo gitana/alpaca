@@ -113,6 +113,7 @@
         var data = null;
         var options = null;
         var schema = null;
+		var view = null;
         
         if (args.length == 1) {
             // hands back the field instance that is bound directly under the specified element
@@ -156,11 +157,17 @@
                     options = args[2];
                 }
                 if (args.length >= 4) {
-                    // "schema" is the forth argument
-                    if (!Alpaca.isFunction(args[3])) {
-                        schema = args[3];
-                    }
-                }
+					// "schema" is the forth argument
+					if (!Alpaca.isFunction(args[3])) {
+						schema = args[3];
+					}
+					if (args.length >= 5) {
+						// "view" is the fifth argument
+						if (!Alpaca.isFunction(args[4])) {
+							view = args[4];
+						}
+					}
+				}
             }
         }
         // assume last parameter is a callback function
@@ -202,8 +209,8 @@
                 success: function(jsonDocument){
                     data = jsonDocument;
                     loadCounter++;
-                    if (loadCounter == 3) 
-                        Alpaca.init(el, data, options,schema,callback);
+                    if (loadCounter == 4) 
+                        Alpaca.init(el, data, options,schema, view,callback);
                 },
                 error: function(error){
                 }
@@ -211,8 +218,8 @@
         }
         else {
             loadCounter++;
-            if (loadCounter == 3) 
-                Alpaca.init(el, data, options,schema,callback);
+            if (loadCounter == 4) 
+                Alpaca.init(el, data, options,schema, view,callback);
         }
                                 
         // options
@@ -224,16 +231,16 @@
 				success: function(jsonDocument){
 					options = jsonDocument;
 					loadCounter++;
-					if (loadCounter == 3) 
-						Alpaca.init(el, data, options, schema, callback);
+					if (loadCounter == 4) 
+						Alpaca.init(el, data, options, schema, view, callback);
 				},
 				error: function(error){
 				}
 			});
 		} else {
 			loadCounter++;
-			if (loadCounter == 3) 
-				Alpaca.init(el, data, options, schema, callback);
+			if (loadCounter == 4) 
+				Alpaca.init(el, data, options, schema, view, callback);
 		}
         
         // schema     
@@ -246,21 +253,52 @@
 				success: function(jsonDocument){
 					schema = jsonDocument;
 					loadCounter++;
-					if (loadCounter == 3) 
-						Alpaca.init(el, data, options, schema, callback);
+					if (loadCounter == 4) 
+						Alpaca.init(el, data, options, schema, view, callback);
 				},
 				error: function(error){
 				}
 			});
 		} else {
 			loadCounter++;
-			if (loadCounter == 3) 
-				Alpaca.init(el, data, options, schema, callback);
+			if (loadCounter == 4) 
+				Alpaca.init(el, data, options, schema, view, callback);
+		}
+		
+		// view     
+        if (view && Alpaca.isUri(view)) {
+			$.ajax({
+				//async : false,
+				url: view,
+				type: "get",
+				dataType: "json",
+				success: function(jsonDocument) {
+					view = jsonDocument;
+					loadCounter++;
+					if (loadCounter == 4) 
+						Alpaca.init(el, data, options, schema, view, callback);
+				},
+				error: function(error) {
+				}
+			});
+		} else {
+			loadCounter++;
+			if (loadCounter == 4) 
+				Alpaca.init(el, data, options, schema, view, callback);
 		}
     };
     
-    Alpaca.init = function(el, data, options,schema,callback) {
-        var field = Alpaca.createFieldInstance(el, data, options,schema);        
+    /**
+     * 
+     * @param {Object} el
+     * @param {Object} data
+     * @param {Object} options
+     * @param {Object} schema
+     * @param {Object} view
+     * @param {Object} callback
+     */
+	Alpaca.init = function(el, data, options,schema,view, callback) {
+        var field = Alpaca.createFieldInstance(el, data, options,schema,view);        
         Alpaca.fieldInstances[field.getId()] = field;
         if (callback != null ) {
             callback(field);
@@ -276,7 +314,7 @@
      * @param data the data to be bound into the field
      * @param options the configuration for the field
      */
-    Alpaca.createFieldInstance = function(el, data, options,schema) {
+    Alpaca.createFieldInstance = function(el, data, options,schema,view) {
         // make sure options and schema are not empty
         if (options == null) options = {};
         if (schema == null) schema = {};
@@ -312,7 +350,7 @@
             return null;
         }        
         // if we have data, bind it in
-        return new fieldClass(el, data, options,schema);
+        return new fieldClass(el, data, options,schema,view);
     };
     
     Alpaca.Fields = { };
@@ -446,35 +484,40 @@
         /**
          * Registers a view
          */
-        registerView: function(type, view) {
-			if (this.views[type]) {
-				var oldView = this.views[type];
-				if (view.description) {
-					oldView[type] = view.description;
-				}
-				if (view.templates) {
-					for (var templateKey in view.templates) {
+        registerView: function(view) {
+			var type = view.id;
+			if (!Alpaca.isEmpty(type)) {
+				if (this.views[type]) {
+					var oldView = this.views[type];
+					if (view.description) {
+						oldView["description"] = view.description;
+					}
+					if (view.type) {
+						oldView["type"] = view.type;
+					}
+					if (view.id) {
+						oldView["id"] = view.id;
+					}
+					if (view.templates) {
 						if (!oldView.templates) {
 							oldView.templates = {};
 						}
-						if (!oldView.templates[templateKey]) {
-							oldView.templates[templateKey] = {};
+						Alpaca.merge(oldView.templates, view.templates);
+					}
+					if (view.messages) {
+						if (!oldView.messages) {
+							oldView.messages = {};
 						}
-						Alpaca.merge(oldView.templates[templateKey], view.templates[templateKey]);
+						Alpaca.merge(oldView.messages, view.messages);
 					}
+				} else {
+					this.views[type] = view;
 				}
-				if (view.messages) {
-					if (!oldView.messages) {
-						oldView.messages = {};
-					}
-					Alpaca.merge(oldView.messages, view.messages);
-				}
-			} else {
-				this.views[type] = view;
 			}
+			return type;
 		},
         
-        defaultView : "DEFAULT",
+        defaultView : "WEB_EDIT",
         
         defaultMode : "edit",
         
@@ -490,6 +533,24 @@
 		},
         
         /**
+         * Gets view with given type
+         */
+        getViewType: function(view){
+			if (Alpaca.isString(view)) {
+				view = this.getView(view);
+			}
+			if (Alpaca.isObject(view)) {
+				if (view.type) {
+					return view.type;
+				} else if (view.parent) {
+					return this.getViewType(view.parent);
+				} else {
+					return null;
+				}
+			}			
+		},
+		
+		/**
          * Sets default template type
          */
         setDefaultView: function(type){
@@ -499,58 +560,55 @@
 		},
         
        /**
-        * Returns the template for given id, type, mode and field
+        * Returns the field template for given id
         */
-	    getTemplate: function(templateId, field, viewType, mode) {
-			if (!mode) {
-				mode = this.defaultMode;
-			}
-			if (mode != Alpaca.MODE_CREATE) {
-				return this._getTemplate(templateId, field, viewType, mode);
-			} else {
-				var template = this._getTemplate(templateId, field, viewType, mode);
-				if (!template) {
-					template = this._getTemplate(templateId, field, viewType, Alpaca.MODE_EDIT);
+	    getTemplate: function(templateId, field) {
+			
+			var view = field.view;
+			
+			if (Alpaca.isObject(view)) {
+				var template = this._getTemplate(templateId, view);
+				if (!Alpaca.isEmpty(template)) {
+					return template;
 				}
-				return template;
+				// Try to see if we can pick up default template
+				view = this.defaultView;
 			}
+
+			if (Alpaca.isString(view)) {
+				view = this.getView(view);
+				return this._getTemplate(templateId, view);
+			}
+			return null;
 		},
 		
 		/**
-         * Internal methods for returing the template for given id, type, mode and field
-         */
-        _getTemplate: function(templateId, field, viewType, mode) {
-			if (!mode) {
-				mode = this.defaultMode;
-			}
-			if (field && field.settings && field.settings.templates && field.settings.templates[mode] && field.settings.templates[mode][templateId]) {
-				return field.settings.templates[mode][templateId];
+		 * Internal method for template lookup through view hierachy
+		 * 
+		 * @param {Object} templateId
+		 * @param {Object} view
+		 */
+		_getTemplate: function(templateId, view) {
+			if (view && view.templates && view.templates[templateId]) {
+				return view.templates[templateId];
 			} else {
-				var view = this.getView(viewType);
-				
-				var templates = view.templates[mode];
-				
-				if (templates && templates[templateId]) {
-					return templates[templateId];
+				if (view && view.parent) {
+					return this._getTemplate(templateId, this.views[view.parent]);
 				} else {
-					if (view && view.parent) {
-						return this._getTemplate(templateId, field, view.parent, mode);
-					} else {
-						return null;
-					}
+					return null;
 				}
 			}
 		},
         
         /**
-         * Registers a new template with given id, type and mode
+         * Registers a new template with given template id and view id 
          */
-        registerTemplate: function(templateId, template, viewType, mode) {
-			var view = this.getView(viewType);
+        registerTemplate: function(templateId, template, viewId) {
+			var view = this.getView(viewId);
 			
 			if (!view) {
-				if (viewType) {
-					view = this.views[viewType] = {};
+				if (viewId) {
+					view = this.views[viewId] = {};
 				} else {
 					view = this.views[this.defaultView] = {};
 				}
@@ -559,42 +617,56 @@
 				if (!view.templates) {
 					view.templates = {};
 				}
-				if (!mode) {
-					mode = this.defaultMode;
-				}
-				
-				if (!view.templates[mode]) {
-					view.templates[mode] = {};
-				}
-				view.templates[mode][templateId] = template;								
+				view.templates[templateId] = template;								
 			}
 		},
 
         /**
          * Registers templates with given type and mode
          */
-        registerTemplates: function(templates, viewType, mode) {
+        registerTemplates: function(templates, viewId) {
 			for (var templateId in templates) {
-				this.registerTemplate(templateId, templates[templateId], viewType, mode);
+				this.registerTemplate(templateId, templates[templateId], viewId);
 			}
 		},
                         
-        /**
-         * Returns the message for given id, type and field
-         */
-        getMessage: function(messageId, field, viewType) {
-			if (field && field.settings && field.settings.messages && field.settings.messages[messageId]) {
-				return field.settings.messages[messageId];
+       /**
+        * Returns the field message for given id
+        */
+	    getMessage: function(messageId, field) {
+			
+			var view = field.getView();
+			
+			if (Alpaca.isObject(view)) {
+				var message = this._getMessage(messageId, view);
+				if (!Alpaca.isEmpty(message)) {
+					return message;
+				}
+				// Try to see if we can pick up default message
+				view = this.defaultView;
+			}
+
+			if (Alpaca.isString(view)) {
+				view = this.getView(view);
+				return this._getMessage(messageId, view);
+			}
+			return null;
+		},
+		
+		/**
+		 * Internal method for message lookup through view hierachy
+		 * 
+		 * @param {Object} messageId
+		 * @param {Object} view
+		 */
+		_getMessage: function(messageId, view) {
+			if (view && view.messages && view.messages[messageId]) {
+				return view.messages[messageId];
 			} else {
-				var view = this.getView(viewType);
-				if (view.messages[messageId]) {
-					return view.messages[messageId];
+				if (view && view.parent) {
+					return this._getMessage(messageId, this.views[view.parent]);
 				} else {
-					if (view && view.parent) {
-						return this.getMessage(messageId, field, view.parent);
-					} else {
-						return null;
-					}
+					return null;
 				}
 			}
 		},
@@ -602,13 +674,13 @@
         /**
          * Registers a message for for given id, type and field
          */
-        registerMessage: function(messageId, message, viewType, mode) {
-			var view = this.getView(viewType);
+        registerMessage: function(messageId, message, viewId) {
+			var view = this.getView(viewId);
 			
 			if (!view) {
-				if (viewType) {
-					this.views[viewType] = {};
-					view = this.views[viewType];
+				if (viewId) {
+					this.views[viewId] = {};
+					view = this.views[viewId];
 				} else {
 					this.views[this.defaultView] = {};
 					view = this.views[this.defaultView];
@@ -624,10 +696,10 @@
         /**
          * Registers messages for given type and field
          */
-        registerMessages: function(messages, viewType, mode) {
+        registerMessages: function(messages, viewId) {
 			for (var messageId in messages) {
 				if (messages.hasOwnProperty(messageId)) {
-					this.registerMessage(messageId, messages[messageId], viewType, mode);
+					this.registerMessage(messageId, messages[messageId], viewId);
 				}
 			}
 		},
@@ -970,17 +1042,19 @@
 	};
     
     Alpaca.substituteTokens = function(text, args) {
-		for (var i = 0; i < args.length; i++) {
-			var token = "{" + i + "}";
-			
-			var x = text.indexOf(token);
-			if (x > -1) {
-				var nt = text.substring(0, x) + args[i] + text.substring(x + 3);
-				text = nt;
-			//text = Alpaca.replaceAll(text, token, args[i]);
+		
+		if (!Alpaca.isEmpty(text)) {
+			for (var i = 0; i < args.length; i++) {
+				var token = "{" + i + "}";
+				
+				var x = text.indexOf(token);
+				if (x > -1) {
+					var nt = text.substring(0, x) + args[i] + text.substring(x + 3);
+					text = nt;
+				//text = Alpaca.replaceAll(text, token, args[i]);
+				}
 			}
 		}
-		
 		return text;
 	};
 	

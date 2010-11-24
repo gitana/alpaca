@@ -25,8 +25,18 @@
             });
             
             // set fields
-            for (var fieldId in this.childrenById) {
+            /*
+			for (var fieldId in this.childrenById) {
                 var _data = Alpaca.traverseObject(data, fieldId);
+                if (_data) {
+                    var childField = this.childrenById[fieldId];
+                    childField.setValue(_data);
+                }
+            }
+            */
+			for (var fieldId in this.childrenById) {
+				var propertyId = this.childrenById[fieldId].propertyId;
+                var _data = Alpaca.traverseObject(data, propertyId);
                 if (_data) {
                     var childField = this.childrenById[fieldId];
                     childField.setValue(_data);
@@ -44,14 +54,15 @@
             
             for (var i = 0; i < this.children.length; i++) {
                 var fieldId = this.children[i].getId();
-                
+                var propertyId = this.children[i].propertyId;
                 var fieldValue = this.children[i].getValue();
-                o[fieldId] = fieldValue;
+                //o[fieldId] = fieldValue;
+				o[propertyId] = fieldValue;
             }
             
             return o;
         },
-        
+        /*
         getValueWithPropertyId: function() {
             var o = {};
             
@@ -69,7 +80,7 @@
             
             return o;
         },
-        
+        */
         /**
          * @Override
          *
@@ -82,17 +93,18 @@
                 itemSchema = _this.schema.properties[propertyId];
             }
             var containerElem = _this.renderItemContainer(insertAfterId);
-            Alpaca(containerElem, value, fieldSetting, itemSchema, function(fieldControl) {
+            Alpaca(containerElem, value, fieldSetting, itemSchema, this.getView(), function(fieldControl) {
                 // render
-                fieldControl.render(_this.getMode());
+                fieldControl.render();
                 containerElem.attr("id", fieldControl.getId() + "-item-container");
                 containerElem.attr("alpaca-id", fieldControl.getId());
                 // add the property Id
                 fieldControl.propertyId = propertyId;
                 // remember the control
                 _this.addChild(fieldControl);
-                
-                _this.renderValidationState();
+                if (insertAfterId) {
+					_this.renderValidationState();
+				}
             });
         },
         
@@ -124,6 +136,7 @@
                     _this.addItem(propertyId, fieldSetting, itemData);
                 }
             }
+			this.renderValidationState();
         },
     });
     

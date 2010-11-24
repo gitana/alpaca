@@ -17,32 +17,36 @@
      */
     Alpaca.ContainerField = Alpaca.Field.extend({
     
-        /**
-         * @Override
-         *
-         */
-        setMode: function(mode) {
-            this.base(mode);
-			 if (!this.options.template) {
-			 	this.template = Alpaca.getTemplate("fieldSet", this, null, mode);
-			 }
-			 if (this.settings.collapsible != false ) {
-			 	this.settings.collapsible = true;
-			 }
-        },
-        /**
+		/**
+		 * @Override
+		 */
+		setDefaultTemplate: function() {
+			// check if the full template has been provided
+			var fullTemplate = Alpaca.getTemplate("full", this);
+			if (fullTemplate) {
+				this.setTemplate(fullTemplate);
+				this.singleLevelRendering = true;
+			} else {
+				this.setTemplate(Alpaca.getTemplate("fieldSet", this));
+			}
+		},
+		
+		/**
          * @Override
          *
          * Override so that we can set up containers to hold subfields.
          * We also check for valid data type.
          */
         setup: function() {
-            this.base();
-            
-            // holders of references to children
-            this.children = [];
-            this.childrenById = [];
-        },
+			this.base();
+			
+			if (this.settings.collapsible != false) {
+				this.settings.collapsible = true;
+			}
+			// holders of references to children
+			this.children = [];
+			this.childrenById = [];
+		},
         
         /**
          * Helper method to register child fields of this field.
@@ -138,7 +142,7 @@
          */
         renderItemContainer: function(insertAfterId) {
 			var _this = this;
-            var itemContainerTemplate = Alpaca.getTemplate("itemContainer", this, null, this.mode);
+            var itemContainerTemplate = Alpaca.getTemplate("itemContainer", this);
             if (itemContainerTemplate) {
                 var containerElem = $.tmpl(itemContainerTemplate, {});
 				if (containerElem.attr('data-replace') == 'true') {
@@ -172,7 +176,7 @@
                 this.fieldContainer = this.outerEl;
             }
             
-			if (!this.options.template) {
+			if (!this.singleLevelRendering) {
 				this.renderItems();
 			}
             

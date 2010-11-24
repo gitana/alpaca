@@ -32,21 +32,6 @@
      *    }
      * }
      *
-     * MODE SETTINGS
-     *
-     * All of the properties above can be overridden for specific modes as shown here:
-     *
-     * {
-     *    ...
-     *    modes:
-     *    {
-     *       "<modeId>":
-     *       {
-     *          <property>:<key>
-     *       }
-     *    }
-     * }
-     *
      * JSON SCHEMA:
      *
      * This class obeys JSON schema for:
@@ -75,7 +60,7 @@
          *
          * @param schema field schema (optional)
          */
-        constructor: function(container, data, options, schema) {
+        constructor: function(container, data, options, schema,view) {
             // mark that we are initializing
             this.initializing = true;
             
@@ -87,6 +72,15 @@
             this.data = data;
             this.options = options;
             this.schema = schema;
+			
+			// check if this field rendering is single-level or not
+			this.singleLevelRendering = false;
+			 			
+			if (view) {
+				this.setView(view);
+			} else {
+				this.setView(Alpaca.defaultView);
+			}
             
             // things we can draw off the options
             if (!this.options) {
@@ -124,11 +118,41 @@
             // backup data
             this.backupData = Alpaca.cloneObject(this.data);
         },
+		
+		/**
+		 * Sets up default rendition template from view
+		 */
+		setDefaultTemplate: function () {
+            // check if the full template has been provided
+			var fullTemplate = Alpaca.getTemplate("full", this);
+            if (fullTemplate) {
+				this.setTemplate(fullTemplate);
+				this.singleLevelRendering = true;
+			} else {
+				this.setTemplate(Alpaca.getTemplate("field", this));
+			}			
+		},
         
         /**
          * Sets up any default values for this field.
          */
         setup: function() {
+ 
+            if (!this.initializing) {
+				this.data = this.getValue();
+            }
+            
+            // if we have already created backup settings, restore from them
+			/*
+            if (this.backupSettings) {
+                this.settings = Alpaca.cloneObject(this.backupSettings);
+            } else {
+                this.backupSettings = Alpaca.cloneObject(this.settings);
+            }
+            */
+                        
+			this.setDefaultTemplate();
+            
             // JSON SCHEMA
             if (Alpaca.isUndefined(this.schema.optional)) {
                 this.schema.optional = false;
@@ -161,65 +185,7 @@
                 this.settings.showMessages = true;
             }
         },
-        
-        /**
-         * Refreshes with new mode
-         */
-        _refresh: function(mode) {
-            // pull back data
-            if (!this.initializing && mode == Alpaca.MODE_VIEW) {
-                this.data = this.getValue();
-            }
-            
-            // if we have already created backup settings, restore from them
-            if (this.backupSettings) {
-                this.settings = Alpaca.cloneObject(this.backupSettings);
-            } else {
-                this.backupSettings = Alpaca.cloneObject(this.settings);
-            }
-            
-            // copy any mode specific settings back into the root settings object
-            if (this.settings.modes) {
-                var modeSettings = this.settings.modes[mode];
-                if (modeSettings) {
-                    for (var key in modeSettings) {
-                        this.settings = Alpaca.merge(this.settings, modeSettings, function(key) {
-                            var valid = true;
-                            // don't allow a few keys
-                            if (key == "modes") {
-                                valid = false;
-                            }
-                            return valid;
-                        });
-                    }
-                }
-            }
-            
-            // mark that we switched into the desired mode
-            this.setMode(mode);
-            
-            // perform setup based on settings
-            this.setup();
-        },
-        
-        /**
-         * Toggles between View and Edit views
-         */
-        toggleMode: function(mode) {
-            if (!mode) {
-                // toggle
-                mode = this.getMode();
-                if (mode == Alpaca.MODE_VIEW) {
-                    mode = Alpaca.MODE_EDIT;
-                } else if (mode == Alpaca.MODE_EDIT) {
-                    mode = Alpaca.MODE_VIEW;
-                }
-            }
-            
-            // re-render
-            this.render(mode);
-        },
-        
+                
         /**
          * Binds the data into the field.  Called at the very end of construction.
          */
@@ -228,38 +194,17 @@
                 this.setValue(this.data, true);
             }
         },
-        
-        /**
-         * Simple method for rendering display view
-         */
-        view: function() {
-            this.render(Alpaca.MODE_VIEW);
-        },
-        
-        /**
-         * Simple method for rendering edit view
-         */
-        edit: function() {
-            this.render(Alpaca.MODE_EDIT);
-        },
-        
-        /**
-         * Simple method for rendering create view
-         */
-        create: function() {
-            this.render(Alpaca.MODE_CREATE);
-        },
-        
+                
         /**
          * Renders this field into the container.
          * Creates an outerEl which is bound into the container.
          */
-        render: function(mode) {
-            if (!mode) {
-                mode = Alpaca.MODE_EDIT;
-            }
-            this._refresh(mode);
-            this._render();
+        render: function(view) {
+            if (view) {
+				this.setView(view);
+			}
+            this.setup();			
+			this._render();
         },
         
         /**
@@ -276,7 +221,7 @@
             // check if it needs to be wrapped in a form
             if (this.options.form) {
                 var form = new Alpaca.Form(this.container, this.options.form);
-                form.render(this.mode, function(form) {
+                form.render(function(form) {
                     // load the appropriate template and render it
                     _this._processRender(form.formFieldsContainer, function() {
                     
@@ -342,63 +287,62 @@
             var renderedDomElement = $.tmpl(templateString, {
                 "id": this.getId(),
                 "settings": this.settings,
-                "data": this.data
+                "data": this.data,
+				"view": this.getView()
             }, {});
             renderedDomElement.appendTo($(parentEl));
             this.setEl(renderedDomElement);
             
-            this.renderField(onSuccess);
+            if (!this.singleLevelRendering) {
+				this.renderField(onSuccess);
+			}
         },
-        
+
         /**
          * Called after the rendering is complete as a way to make final modifications to the
          * dom elements that were produced.
          */
         postRender: function() {
-            // for edit or create mode
-            if (this.getMode() != Alpaca.MODE_VIEW) {
-                // injects Ids
-                if (this.getEl().attr("id") == null) {
-                    this.getEl().attr("id", this.getId() + "-field-outer");
-                }
-                if (this.getEl().attr("alpaca-field-id") == null) {
-                    this.getEl().attr("alpaca-field-id", this.getId());
-                }
-                // Support for custom CSS class for the field
-                var fieldClass = this.settings["fieldClass"];
-                if (fieldClass) {
-                    $(this.getEl()).addClass(fieldClass);
-                }
-                
-                // optional
-                if (this.settings.optional) {
-                    $(this.getEl()).addClass("alpaca-field-optional");
-                } else {
-                    $(this.getEl()).addClass("alpaca-field-required");
-                }
-                
-                // after render
-                if (this.getMode() == Alpaca.MODE_EDIT) {
-                    if (this.settings.disabled) {
-                        this.disable();
-                    }
-                    
-                    // bind data
-                    this.bindData();
-                }
-                
-                // initialize events (after part of the dom)
-                this.initEvents();
-            }
-            
-            // finished initializing
-            this.initializing = false;
-            
-            if (this.getMode() == Alpaca.MODE_EDIT) {
-                // final call to update validation state
-                this.renderValidationState();
-            }
-        },
+			// for edit or create mode
+			// injects Ids
+			if (this.getEl().attr("id") == null) {
+				this.getEl().attr("id", this.getId() + "-field-outer");
+			}
+			if (this.getEl().attr("alpaca-field-id") == null) {
+				this.getEl().attr("alpaca-field-id", this.getId());
+			}
+			// Support for custom CSS class for the field
+			var fieldClass = this.settings["fieldClass"];
+			if (fieldClass) {
+				$(this.getEl()).addClass(fieldClass);
+			}			
+			// optional
+			if (this.settings.optional) {
+				$(this.getEl()).addClass("alpaca-field-optional");
+			} else {
+				$(this.getEl()).addClass("alpaca-field-required");
+			}
+			
+			// after render
+			if (this.settings.disabled) {
+				this.disable();
+			}			
+			// bind data
+			if (this.getViewType() && this.getViewType() == 'edit') {
+				this.bindData();
+			}
+			// initialize events (after part of the dom)
+			if (this.getViewType() && this.getViewType() != 'view') {
+				this.initEvents();
+			}
+			// finished initializing
+			this.initializing = false;
+			
+			// final call to update validation state
+			if (this.getViewType() && this.getViewType() != 'view') {
+				this.renderValidationState();
+			}
+		},
         
         /**
          * Retrieves the rendering element
@@ -473,24 +417,35 @@
             
             this.template = template;
         },
-        
+
         /**
-         * Gets current mode
+         * Gets current view
          */
-        getMode: function() {
-            return this.mode;
+        getView: function() {
+			return this.view;
         },
         
         /**
-         * Sets mode and reset template if needed
+         * Sets view
          */
-        setMode: function(mode) {
-            this.mode = mode;
-            if (!this.options.template) {
-                this.setTemplate(Alpaca.getTemplate("field", this, null, mode));
-            }
+        setView: function(view) {
+            if (Alpaca.isString(view) && !Alpaca.isEmpty(Alpaca.views[view])) {
+				// view id
+				this.view = view;
+			} else {
+				// actual view object
+				this.view = view;
+			}
+			this.viewType = Alpaca.getViewType(this.view);
         },
-        
+		
+		/**
+         * Gets current view type
+         */
+        getViewType: function() {
+			return this.viewType;
+        },
+		        
         /**
          * Renders a validation state message below the field.
          */
@@ -709,7 +664,24 @@
                 "display": "none"
             });
         },
-        
+
+        /**
+         * Hide the field
+         */
+        print: function() {
+			if (this.container.printArea) {
+				this.container.printArea();
+			}
+		},
+		
+		/**
+		 * Reload the field
+		 */
+		reload: function() {
+			this.initializing = true;
+			this.render();
+		},
+		        
         /**
          * Clear the field.
          *

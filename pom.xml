@@ -68,6 +68,7 @@
 
 						<param>../../../../../lib/DetectMobileBrowser.js</param>
 						<param>../../../../../lib/equiv_and_hoozit.js</param>
+						<param>../../../../../lib/jquery.PrintArea.js</param>
 
 						<!-- alpaca core -->			
 						<param>../js_src/Alpaca.js</param>
@@ -93,6 +94,7 @@
 						<param>../js_src/fields/SelectField.js</param>
 						<param>../js_src/fields/RadioField.js</param>
 						<param>../js_src/fields/ButtonField.js</param>
+						<param>../js_src/fields/AlpacaButtonField.js</param>
 						<param>../js_src/fields/GitanaButtonField.js</param>
 						<!--  alpaca views -->
 						<param>../js_src/views/DefaultView.js</param>

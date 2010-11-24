@@ -22,10 +22,10 @@
 .nav3-grid dt a:hover, .nav3-grid dd a:hover {background-color:rgb(225,225,225); color:rgb(42,90,138); text-decoration:none;}
 
 .nav3-bullet {width:170px; margin:10px 0 0 20px;}
-.nav3-bullet dt a, .nav3-bullet dt a:visited {line-height:2.0em; padding:0 0 0 10px; background:url(../img/bg_bullet_full_1.gif) no-repeat 0px 50%; text-decoration:none; color:rgb(70,122,167); font-weight:bold; font-size:120%;}
-.nav3-bullet dd a, .nav3-bullet dd a:visited {line-height:1.7em; margin:0 0 0 15px; padding:0 0 0 10px; background:url(../img/bg_bullet_half_1.gif) no-repeat 0px 50%; text-decoration:none; color:rgb(70,122,167); font-weight:normal; font-size:120%;}
-.nav3-bullet dt a:hover {background:url(../img/bg_bullet_full_2.gif) no-repeat 0px 50%; text-decoration:underline; color:rgb(42,90,138);}
-.nav3-bullet dd a:hover {background:url(../img/bg_bullet_half_2.gif) no-repeat 0px 50%; text-decoration:underline; color:rgb(42,90,138);}
+.nav3-bullet dt a, .nav3-bullet dt a:visited {line-height:2.0em; padding:0 0 0 10px; background:url(images/bg_bullet_full_1.gif) no-repeat 0px 50%; text-decoration:none; color:rgb(70,122,167); font-weight:bold; font-size:120%;}
+.nav3-bullet dd a, .nav3-bullet dd a:visited {line-height:1.7em; margin:0 0 0 15px; padding:0 0 0 10px; background:url(images/bg_bullet_half_1.gif) no-repeat 0px 50%; text-decoration:none; color:rgb(70,122,167); font-weight:normal; font-size:120%;}
+.nav3-bullet dt a:hover {background:url(images/bg_bullet_full_2.gif) no-repeat 0px 50%; text-decoration:underline; color:rgb(42,90,138);}
+.nav3-bullet dd a:hover {background:url(images/bg_bullet_half_2.gif) no-repeat 0px 50%; text-decoration:underline; color:rgb(42,90,138);}
 
 .nav3-nobullet {width:170px; margin:10px 0 0 20px;}
 .nav3-nobullet dt a, .nav3-nobullet dt a:visited {line-height:2.0em; text-decoration:none; color:rgb(70,122,167); font-weight:bold; font-size:120%;}
@@ -57,7 +57,7 @@
 .main-navigation p.right {text-align:right;}
 
 .main-navigation ul {list-style:none; margin:0.5em 10px 1.0em 20px;}
-.main-navigation ul li {margin:5px 0 0.2em 2px; padding:0px 0px 0 11px; background:url(../img/bg_bullet_full_1.gif) no-repeat 0 0.4em; line-height:1.2em; font-size:110%;}
+.main-navigation ul li {margin:5px 0 0.2em 2px; padding:0px 0px 0 11px; background:url(images/bg_bullet_full_1.gif) no-repeat 0 0.4em; line-height:1.2em; font-size:110%;}
 .main-navigation ol {margin:0.5em 10px 1.0em 40px !important /*Non-IE6*/; margin:0.5em 10px 1.0em 45px /*IE6*/;}
 .main-navigation ol li {list-style-position:outside; margin:0 0 0.4em 0; font-size:110%;}
 
@@ -87,7 +87,7 @@
 p.caption {clear:both; margin:0.5em 0 2.0em 20px; text-align:left; color:rgb(80,80,80); font-size:110%;}
 
 .main-content ul {list-style:none; margin:0.5em 0 1.0em 0;}
-.main-content ul li {margin:0 0 0.2em 2px; padding:0 0 0 12px; background:url(../img/bg_bullet_full_1.gif) no-repeat 0 0.5em; line-height:1.4em; font-size:120%;}
+.main-content ul li {margin:0 0 0.2em 2px; padding:0 0 0 12px; background:url(images/bg_bullet_full_1.gif) no-repeat 0 0.5em; line-height:1.4em; font-size:120%;}
 .main-content ol {margin:0.5em 0 1.0em 20px !important /*Non-IE6*/; margin:0.5em 0 1.0em 25px /*IE6*/;}
 .main-content ol li {list-style-position:outside; margin:0 0 0.2em 0; line-height:1.4em; font-size:120%;}
 

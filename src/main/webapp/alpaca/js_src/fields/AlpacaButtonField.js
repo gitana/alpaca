@@ -5,7 +5,7 @@
     /**
      * Abstract Button class
      */
-    Alpaca.Fields.GitanaButtonField = Alpaca.Fields.ButtonField.extend({
+    Alpaca.Fields.AlpacaButtonField = Alpaca.Fields.ButtonField.extend({
     
         /**
          * @Override
@@ -22,25 +22,25 @@
             if (!this.settings.data) {
                 this.settings.data = {};
             }
-            this.settings.data["icon"] = "G";
+            this.settings.data["icon"] = "A";
             
             // sets defaults
             if (!this.action) {
-                this.action = "save";
+                this.action = "print";
                 if (!this.data) {
-                    this.data = "Save";
+                    this.data = "Print";
                 }
-            } else if (this.action == "reload") {
+            } else if (this.action == "print") {
                 if (!this.data) {
-                    this.data = "Reload";
-                }
-            } else if (this.action == "create") {
-                if (!this.data) {
-                    this.data = "Create";
+                    this.data = "Print";
                 }
             } else if (this.action == "validate") {
                 if (!this.data) {
                     this.data = "Validate";
+                }
+            } else if (this.action == "preview") {
+                if (!this.data) {
+                    this.data = "Preview";
                 }
             }
         },
@@ -50,26 +50,27 @@
          */
         onClick: function(e) {
             switch (this.action) {
-                case 'save':
-                    var newValue = this.form.topField.getValue();
-                    alert(newValue);
-                    break;
-                case 'reload':
-                    if (this.form.topField.options.form) {
-                        delete this.form.topField.options.form;
-                    }
-                    this.form.topField.container = this.form.formFieldsContainer;
-					this.form.topField.reload();
-                    break;
                 case 'validate':
                     this.form.topField.renderValidationState();
                     break;
-                case 'create':
+                case 'print':
+					this.form.topField.print();
+                    break;
+                case 'preview':
                     if (this.form.topField.options.form) {
                         delete this.form.topField.options.form;
                     }
                     this.form.topField.container = this.form.formFieldsContainer;
-                    this.form.topField.render("WEB_CREATE");
+					if (this.form.topField.getView() == "WEB_EDIT") {
+						this.form.topField.render('WEB_DISPLAY');
+						this.inputElement.attr("value","Edit");
+						this.inputElement.text("Edit");
+					} else {
+						this.form.topField.initializing = true;
+						this.form.topField.render('WEB_EDIT');						
+						this.inputElement.attr("value","Preview");
+						this.inputElement.text("Preview");
+					}
                     break;
                 default:
                     break;
@@ -81,10 +82,10 @@
 		 */
 		postRender: function () {
 			this.base();
-			this.inputElement.addClass("alpaca-form-button-gitana");
+			this.inputElement.addClass("alpaca-form-button-alpaca");
 		}
     });
     
-    Alpaca.registerFieldClass("gitanabutton", Alpaca.Fields.GitanaButtonField);
+    Alpaca.registerFieldClass("alpacabutton", Alpaca.Fields.AlpacaButtonField);
     
 })(jQuery);

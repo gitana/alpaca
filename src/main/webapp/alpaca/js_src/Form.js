@@ -47,71 +47,52 @@
             if (!this.id) {
                 this.id = Alpaca.generateId();
             }
+			
+			// set a view
+			this.view = Alpaca.defaultView;
             
             // maintain a list for all buttons
             this.buttons = [];           
         },
         
         /**
-         * Simple method for rendering display view
-         */
-        view: function() {
-            this.render(Alpaca.MODE_VIEW);
-        },
-        
-        /**
-         * Simple method for rendering edit view
-         */
-        edit: function() {
-            this.render(Alpaca.MODE_EDIT);
-        },
-        
-        /**
-         * Simple method for rendering create view
-         */
-        create: function() {
-            this.render(Alpaca.MODE_CREATE);
-        },
-        
-        /**
          * Renders this field into the container.
          * Creates an outerEl which is bound into the container.
          */
-        render: function(mode, onSuccess) {
-            var _this = this;
-            
-            if (!mode) {
-                mode = Alpaca.MODE_EDIT;
-            }
-            this.setMode(mode);
-            
-            // remove the previous outerEl if it exists
-            if (this.outerEl) {
-                this.outerEl.remove();
-            }
-            
-            // load the appropriate template and render it
-            this.processRender(this.container, function() {
-            
-                // bind our field dom element into the container
-                $(_this.getEl()).appendTo(_this.container);
-                
+        render: function(onSuccess) {
+			var _this = this;
+			
+			if (!this.options.template) {
+				this.template = Alpaca.getTemplate("form", this);
+			}
+			
+			// remove the previous outerEl if it exists
+			if (this.outerEl) {
+				this.outerEl.remove();
+			}
+			
+			// load the appropriate template and render it
+			this.processRender(this.container, function() {
+			
+				// bind our field dom element into the container
+				$(_this.getEl()).appendTo(_this.container);
+				
 				$(_this.outerEl).addClass("alpaca-form");
 				
-                // allow any post-rendering facilities to kick in
-                // add buttons
-                _this.addButtons();
-                
-                if (_this.getMode() == Alpaca.MODE_EDIT) {
-                    // Support for custom CSS class for the form
-                    var fieldClass = _this.options["formClass"];
-                    if (fieldClass) {
-                        $(_this.outerEl).addClass(fieldClass);
-                    }
-                }
-                onSuccess(_this);
-            });
-        },
+				// allow any post-rendering facilities to kick in
+				// add buttons
+				_this.addButtons();
+				
+				// Support for custom CSS class for the form
+				var fieldClass = _this.options["formClass"];
+				if (fieldClass) {
+					$(_this.outerEl).addClass(fieldClass);
+				}
+				
+				if (onSuccess)
+					onSuccess(_this);
+			});
+		},
         
         /**
          * Responsible for fetching any templates needed so as to render the
@@ -153,7 +134,8 @@
         _renderLoadedTemplate: function(parentEl, templateString, onSuccess) {
             var context = {
                 id: this.getId(),
-                options: this.options
+                options: this.options,
+				view: this.view
             };
             var renderedDomElement = $.tmpl(templateString, context, {});
             renderedDomElement.appendTo($(parentEl));
@@ -197,7 +179,7 @@
                 "type": "gitanabutton",
                 "form": this
             }, {}, function(fieldControl) {
-                fieldControl.render(_this.getMode());
+                fieldControl.render();
                 _this.buttons.push(fieldControl);
             });
 			
@@ -206,7 +188,7 @@
 				"action":"reload",
                 "form": this
             }, {}, function(fieldControl) {
-                fieldControl.render(_this.getMode());
+                fieldControl.render();
                 _this.buttons.push(fieldControl);
             });			
 
@@ -215,26 +197,44 @@
 				"action":"create",
                 "form": this
             }, {}, function(fieldControl) {
-                fieldControl.render(_this.getMode());
+                fieldControl.render();
                 _this.buttons.push(fieldControl);
             });
 
             Alpaca(this.formButtonsContainer, "", {
-                "type": "gitanabutton",
+                "type": "alpacabutton",
 				"action":"validate",
                 "form": this
             }, {}, function(fieldControl) {
-                fieldControl.render(_this.getMode());
+                fieldControl.render();
                 _this.buttons.push(fieldControl);
             });
-						
+
+            Alpaca(this.formButtonsContainer, "", {
+                "type": "alpacabutton",
+				"action":"print",
+                "form": this
+            }, {}, function(fieldControl) {
+                fieldControl.render();
+                _this.buttons.push(fieldControl);
+            });
+									
+            Alpaca(this.formButtonsContainer, "", {
+                "type": "alpacabutton",
+				"action":"preview",
+                "form": this
+            }, {}, function(fieldControl) {
+                fieldControl.render();
+                _this.buttons.push(fieldControl);
+            });
+			
 			Alpaca(this.formButtonsContainer, "Reset", {
                 "type": "button",
                 "buttonType": "reset",
                 "form": this
             }, {}, function(fieldControl) {
                 // render
-                fieldControl.render(_this.getMode());
+                fieldControl.render();
                 _this.buttons.push(fieldControl);
             });
         },
@@ -372,25 +372,6 @@
             template = $.trim(template);
             
             this.template = template;
-        },
-        
-        /**
-         * Gets current mode
-         */
-		getMode: function() {
-            return this.mode;
-        },
-        
-		/**
-		 * Setups a new mode
-		 * 
-		 * @param {Object} mode
-		 */
-        setMode: function(mode) {
-            this.mode = mode;
-            if (!this.options.template) {
-                this.template = Alpaca.getTemplate("form", this, null, mode);
-            }
         }
     });
     

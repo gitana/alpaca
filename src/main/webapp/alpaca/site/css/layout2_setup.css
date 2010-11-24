@@ -19,24 +19,24 @@
 *{padding:0; margin:0;}
  body {font-size:62.5%; background-color:rgb(255,255,255); font-family:verdana,arial,sans-serif;} /*Font-size: 1.0em = 10px when browser default size is 16px*/
 .page-container {width:900px; margin:0px auto; margin-top:10px; margin-bottom:10px; border:solid 1px rgb(150,150,150); font-size:1.0em;}
-.main {clear:both; width:900px; padding-bottom:30px; background:transparent url(../img/bg_main_withnav.jpg) top left repeat-y;}
+.main {clear:both; width:900px; padding-bottom:30px; background:transparent url(images/bg_main_withnav.jpg) top left repeat-y;}
 .main-navigation {display:inline /*Fix IE floating margin bug*/; float:left; width:200px; overflow:visible !important /*Firefox*/; overflow:hidden /*IE6*/;}
 .main-content {display:inline; /*Fix IE floating margin bug*/; float:left; width:640px; margin:0 0 0 30px; overflow:visible !important /*Firefox*/; overflow:hidden /*IE6*/;}
-.footer {clear:both; width:900px; padding:1.0em 0 1.0em 0; background:rgb(225,225,225) url(../img/bg_foot.jpg) no-repeat; font-size:1.0em; overflow:visible !important /*Firefox*/; overflow:hidden /*IE6*/;}
+.footer {clear:both; width:900px; padding:1.0em 0 1.0em 0; background:rgb(225,225,225) url(images/bg_foot.jpg) no-repeat; font-size:1.0em; overflow:visible !important /*Firefox*/; overflow:hidden /*IE6*/;}
 
 /* --- For alternative headers START PASTE here --- */
 
 /* HEADER */
 .header {width:900px; font-family:"trebuchet ms",arial,sans-serif;}
-.header-top {width:900px; height:60px; background:rgb(240,240,240) url(../img/bg_head_top.jpg); overflow:visible !important /*Firefox*/; overflow:hidden /*IE6*/;}
-.header-middle {width:900px; height:100px; background:rgb(230,230,230) url(../img/bg_head_middle.jpg); overflow:visible !important /*Firefox*/; overflow:hidden /*IE6*/;}
-.header-bottom {width:900px; height:20px; background:rgb(255,255,255) url(../img/bg_head_breadcrumbs.jpg) repeat-y;}
-.header-breadcrumbs {clear:both; width:900px; padding:1.0em 0 1.5em 0; background:rgb(255,255,255) url(../img/bg_head_breadcrumbs.jpg) repeat-y;}
+.header-top {width:900px; height:60px; background:rgb(240,240,240) url(images/bg_head_top.jpg); overflow:visible !important /*Firefox*/; overflow:hidden /*IE6*/;}
+.header-middle {width:900px; height:100px; background:rgb(230,230,230) url(images/bg_head_middle.jpg); overflow:visible !important /*Firefox*/; overflow:hidden /*IE6*/;}
+.header-bottom {width:900px; height:20px; background:rgb(255,255,255) url(images/bg_head_breadcrumbs.jpg) repeat-y;}
+.header-breadcrumbs {clear:both; width:900px; padding:1.0em 0 1.5em 0; background:rgb(255,255,255) url(images/bg_head_breadcrumbs.jpg) repeat-y;}
 
 /********************/
 /*  HEADER SECTION  */
 /********************/
-.sitelogo {width:100px; height:100px; position:absolute; z-index:1; margin:22px 0 0 10px; background:url(../img/Alpaca-icon.png); }
+.sitelogo {width:100px; height:100px; position:absolute; z-index:1; margin:22px 0 0 10px; background:url(images/Alpaca-icon.png); }
 .sitename {width:300px; height:45px; position:absolute; z-index:1; margin:20px 0 0 90px; overflow:visible !important /*Firefox*/; overflow:hidden /*IE6*/;}
 .sitename h1 {font-size:240%;}
 .sitename h2 {margin:-4px 0 0 0; color:rgb(125,125,125); font-size:120%;}
@@ -64,7 +64,7 @@
 .sitemessage h3 a:hover {text-decoration:none; color:rgb(50,50,50);}
 
 /*Drop-down menu*/
-.nav2 {float:left; width:900px; border:none; background:rgb(220,220,220) url(../img/bg_head_bottom_nav.jpg) no-repeat; color:rgb(75,75,75); font-size:130%;} /*Color navigation bar normal mode*/
+.nav2 {float:left; width:900px; border:none; background:rgb(220,220,220) url(images/bg_head_bottom_nav.jpg) no-repeat; color:rgb(75,75,75); font-size:130%;} /*Color navigation bar normal mode*/
 .nav2 ul {list-style-type:none;}
 .nav2 ul li {float:left; position:relative; z-index:auto !important /*Non-IE6*/; z-index:1000 /*IE6*/; border-right:solid 1px rgb(175,175,175);}
 .nav2 ul li a {float:none !important /*Non-IE6*/; float:left /*IE-6*/; display:block; height:3.1em; line-height:3.1em; padding:0 16px 0 16px; text-decoration:none; font-weight:bold; color: rgb(100,100,100);}
@@ -84,7 +84,7 @@
 .nav2 ul li a:hover ul li a:hover {background-color:rgb(210,210,210); text-decoration:none;} /*Color subcells hovering mode*/
 
 .header-breadcrumbs ul {float:left; width:560px; list-style:none; padding:0 0 0 15px; font-family:verdana,arial,sans-serif;}
-.header-breadcrumbs ul li {display:inline; padding:0 0 0 10px; background:transparent url(../img/bg_bullet_arrow.gif) no-repeat 0 50%; font-weight:bold; color:rgb(125,125,125); font-size:100%;}
+.header-breadcrumbs ul li {display:inline; padding:0 0 0 10px; background:transparent url(images/bg_bullet_arrow.gif) no-repeat 0 50%; font-weight:bold; color:rgb(125,125,125); font-size:100%;}
 .header-breadcrumbs ul a {color:rgb(70,122,167); text-decoration:none;}
 .header-breadcrumbs ul a:hover {color:rgb(42,90,138); text-decoration:underline;}
 
@@ -101,7 +101,7 @@
 /******************/
 
 /* MAIN NAVIGATION */
-.main-navigation .round-border-topright {width:10px; height:10px; position:absolute; z-index:10; margin:0 0 0 190px; background:url(../img/bg_corner_topright.gif) no-repeat;}
+.main-navigation .round-border-topright {width:10px; height:10px; position:absolute; z-index:10; margin:0 0 0 190px; background:url(images/bg_corner_topright.gif) no-repeat;}
 
 /* MAIN CONTENT */
 .column1-unit {width:640px; margin-bottom:10px !important /*Non-IE6*/; margin-bottom:5px /*IE6*/;}

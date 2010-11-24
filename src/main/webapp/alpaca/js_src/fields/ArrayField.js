@@ -153,7 +153,7 @@
             var _this = this;
             var id = containerElem.attr('alpaca-id');
             var fieldControl = this.childrenById[id];
-            var itemToolbarTemplate = Alpaca.getTemplate("arrayItemToolbar", this, null, this.mode);
+            var itemToolbarTemplate = Alpaca.getTemplate("arrayItemToolbar", this);
             if (itemToolbarTemplate) {
                 var toolbarElem = $.tmpl(itemToolbarTemplate, {
                     "id": id
@@ -188,7 +188,7 @@
         renderArrayToolbar: function(containerElem) {
             var _this = this;
             var id = containerElem.attr('alpaca-id');
-            var itemToolbarTemplate = Alpaca.getTemplate("arrayToolbar", this, null, this.mode);
+            var itemToolbarTemplate = Alpaca.getTemplate("arrayToolbar", this);
             if (itemToolbarTemplate) {
                 var toolbarElem = $.tmpl(itemToolbarTemplate, {
                     "id": id
@@ -212,7 +212,7 @@
          */
         reRenderItem: function(fieldControl, newContainer) {
             fieldControl.container = newContainer;
-            fieldControl.render(this.getMode());
+            fieldControl.render();
             
             newContainer.attr("id", fieldControl.getId() + "-item-container");
             newContainer.attr("alpaca-id", fieldControl.getId());
@@ -238,9 +238,9 @@
                     itemSchema = _this.schema.items;
                 }
                 var containerElem = _this.renderItemContainer(insertAfterId);
-                Alpaca(containerElem, value, fieldSetting, itemSchema, function(fieldControl) {
+                Alpaca(containerElem, value, fieldSetting, itemSchema, this.getView(), function(fieldControl) {
                     // render
-                    fieldControl.render(_this.getMode());
+                    fieldControl.render();
                     containerElem.attr("id", fieldControl.getId() + "-item-container");
                     containerElem.attr("alpaca-id", fieldControl.getId());
                     // remember the control

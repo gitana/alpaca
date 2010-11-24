@@ -23,7 +23,7 @@
         <div id="field2">
         </div>
         <script type="text/javascript" id="field2-script">
-            $(function(){
+            $(function() {
                 $("#field2").alpaca("Sample String", {
                     "settings": {
                         "label": "Text Label",
@@ -39,19 +39,13 @@
         <div id="field3">
         </div>
         <script type="text/javascript" id="field3-script">
-            $(function(){
+            $(function() {
                 $("#field3").alpaca("A bit of text that is longer than 3 characters", {
                     "settings": {
                         "label": "Text Label",
                         "helper": "whazzzup",
                         "labelClass": "label-class",
                         "helperClass": "helper-class",
-                        "templates": {
-                            "edit": {
-                                "fieldOuterEl": '<span class="alpaca-field" id="${outerElId}" alpaca-field-id="${id}"><div>What is up</div>{{html this.html}}</span>',
-                                "controlFieldHelper": '{{if settings.helper}}<span class="{{if settings.helperClass}}${settings.helperClass}{{/if}}" id="${helperId}">${settings.helper}</span>{{/if}}'
-                            }
-                        },
                         "messages": {
                             "stringTooLong": "Maximum length {0}"
                         },
@@ -59,17 +53,21 @@
                     }
                 }, {
                     "maxLength": 3
+                }, {
+                    "templates": {
+                        "fieldOuterEl": '<span class="alpaca-field" id="${outerElId}" alpaca-field-id="${id}"><div>What is up</div>{{html this.html}}</span>',
+                        "controlFieldHelper": '{{if settings.helper}}<span class="{{if settings.helperClass}}${settings.helperClass}{{/if}}" id="${helperId}">${settings.helper}</span>{{/if}}'
+                    }
                 });
-                
             });
         </script>
         <h4>Test Case 4: </h4>
         <div id="field4">
         </div>
         <script type="text/javascript" id="field4-script">
-            $(function(){
-                var callback = function(field){
-                    field.render('view');
+            $(function() {
+                var callback = function(field) {
+                    field.render('WEB_DISPLAY');
                 };
                 $("#field4").alpaca("A bit of text that is longer than 3 characters", callback);
             });
@@ -78,19 +76,18 @@
         <div id="field5">
         </div>
         <script type="text/javascript" id="field5-script">
-            $(function(){
-                var callback = function(field){
-                    field.render('view');
+            $(function() {
+                var callback = function(field) {
+                    field.render();
                 };
                 $("#field5").alpaca("A bit of text that is longer than 3 characters", {
                     "settings": {
                         "label": "Text Label",
-                        "helper": "whazzzup",
-                        "templates": {
-                            "view": {
-                                "field": '<div>test:${data}</div>'
-                            }
-                        }
+                        "helper": "whazzzup"
+                    }
+                }, {}, {
+                    "templates": {
+                        "full": '<div>test:${data}</div>'
                     }
                 }, callback);
                 
@@ -100,16 +97,19 @@
         <div id="field6">
         </div>
         <script type="text/javascript"id="field6-script">
-            $(function(){
-                var callback = function(field){
-                    field.render('view');
+            $(function() {
+                var callback = function(field) {
+                    field.render();
                 };
                 $("#field6").alpaca('/alpaca/examples/data/data3.json', {
                     "settings": {
                         "label": "Text Label",
                         "helper": "whazzzup"
-                    },
-                    "template": '/alpaca/examples/templates/_template5.html'
+                    }
+                }, {}, {
+                    "templates": {
+                        "full": '/alpaca/examples/templates/_template5.html'
+                    }
                 }, callback);
                 
             });
@@ -118,17 +118,17 @@
         <div id="field7">
         </div>
         <script type="text/javascript"id="field7-script">
-            $(function(){
+            $(function() {
                 $("#field7").alpaca("Strawberry", {
                     "settings": {
                         "label": "Text Label",
                         "helper": "Guess my favorite ice cream?"
                     }
                 }, {
-					"enum":["Vanilla","Chocolate","Coffee"]
-				});
+                    "enum": ["Vanilla", "Chocolate", "Coffee"]
+                });
                 
             });
-        </script>    
-	</body>
+        </script>
+    </body>
 </html>

@@ -27,7 +27,7 @@
             "description":"Are you a memeber?"
         },
         "icecream":{
-            "title":"Favorite Ice Cream",
+            "title":"Favorite",
             "type":"string",
             "enum":[
                 "Vanilla",

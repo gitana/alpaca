@@ -37,7 +37,7 @@
             // decorate the field container with our class
             $(this.fieldContainer).addClass("alpaca-buttonfield");
             
-            var controlFieldTemplate = Alpaca.getTemplate("controlFieldButton", this, null, this.mode);
+            var controlFieldTemplate = Alpaca.getTemplate("controlFieldButton", this);
             
             if (controlFieldTemplate) {
                 this.inputElement = $.tmpl(controlFieldTemplate, {
