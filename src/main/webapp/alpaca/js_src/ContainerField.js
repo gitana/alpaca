@@ -73,9 +73,11 @@
             // if collapsible
             if (this.labelDiv) {
 				if (this.settings.collapsible) {
-					$('<b> >> </b>').prependTo(this.labelDiv);
+					this.labelDiv.addClass("legend-expanded");
+//					$('<b class="alpaca-fieldset-legend-collapsed">\u25B6</b>  ').prependTo(this.labelDiv);
 					this.labelDiv.click(function() {
-						$(this).children("b").toggleClass("alpaca-fieldset-legend-collapsed");
+						$(this).toggleClass("legend-collapsed");
+						$(this).toggleClass("legend-expanded");
 						$(this).nextAll(".alpaca-fieldset-helper").slideToggle(500);
 						$(this).nextAll(".alpaca-items-container").slideToggle(500);
 					});
@@ -102,7 +104,10 @@
                 }
             });
             
-            return response;
+            //return response;
+			
+			//TODO: Still need to think about how to better handle validation of container field.
+			return true;
         },
         
         /**

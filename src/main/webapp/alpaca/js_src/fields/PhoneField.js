@@ -3,9 +3,9 @@
 	var Alpaca = $.alpaca;	
 
 	/**
-	 * Email field
+	 * Phone field
 	 */
-	Alpaca.Fields.EmailField = Alpaca.Fields.TextField.extend({
+	Alpaca.Fields.PhoneField = Alpaca.Fields.TextField.extend({
 
         /**
          * @Override
@@ -16,9 +16,18 @@
 			
 			if (!this.schema.pattern)
 			{
-				this.schema.pattern = /^[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+(?:\.[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,6}$/i;
+				this.schema.pattern = /^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/;
 			}
-    	},
+            
+			if (Alpaca.isEmpty(this.settings.mask)) {
+                this.settings.mask = true;
+            }
+            
+            if (Alpaca.isEmpty(this.settings.maskString)) {
+                this.settings.maskString = "(999) 999-9999";
+            }
+            
+		},
 
         /**
          * @Override
@@ -29,8 +38,8 @@
             this.base();
             
             // apply additional css
-            $(this.fieldContainer).addClass("alpaca-emailfield");
-            
+            $(this.fieldContainer).addClass("alpaca-phonefield");
+             
             if (onSuccess) {
                 onSuccess();
             }
@@ -42,7 +51,7 @@
         getValidationStateMessage: function(state){
             if (state == Alpaca.STATE_INVALID) {
                 if (!this._validatePattern()) {
-                    return Alpaca.getMessage("invalidEmail", this);
+                    return Alpaca.getMessage("invalidPhone", this);
                 }
             }
             
@@ -51,8 +60,8 @@
 	});
 	
     Alpaca.registerMessages({
-        "invalidEmail": "Invalid Email address, ex: admin@gitanasoftware.com"
+        "invalidPhone": "Invalid Phone Number, ex: (123) 456-9999"
     });	
-	Alpaca.registerFieldClass("email", Alpaca.Fields.EmailField);
-    Alpaca.registerDefaultFormatFieldMapping("email", "email");
+	Alpaca.registerFieldClass("phone", Alpaca.Fields.PhoneField);
+    Alpaca.registerDefaultFormatFieldMapping("phone", "phone");
 })(jQuery);

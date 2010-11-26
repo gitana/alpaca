@@ -407,26 +407,7 @@
         STATE_REQUIRED: "required",
         STATE_VALID: "valid",
         STATE_INVALID: "invalid",
-        
-        /**
-         * Messages
-         */
-        messages: {
-			empty: "",
-			required: "This field is required",
-			valid: "",
-			invalid: "This field is invalid",
-			months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			timeUnits: {
-				SECOND: "seconds",
-				MINUTE: "minutes",
-				HOUR: "hours",
-				DAY: "days",
-				MONTH: "months",
-				YEAR: "years"
-			}
-		},
-        
+                
         /**
          * Default Field Type to Schema Type Mapping
          */

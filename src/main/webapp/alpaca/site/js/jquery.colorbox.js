@@ -28,7 +28,7 @@
 		rel: false,
 		opacity: 0.9,
 		preloading: true,
-		current: "image {current} of {total}",
+		current: "example {current} of {total}",
 		previous: "previous",
 		next: "next",
 		close: "close",

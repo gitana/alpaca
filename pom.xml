@@ -69,6 +69,7 @@
 						<param>../../../../../lib/DetectMobileBrowser.js</param>
 						<param>../../../../../lib/equiv_and_hoozit.js</param>
 						<param>../../../../../lib/jquery.PrintArea.js</param>
+						<param>../../../../../lib/jquery.maskedinput-1.2.2.min.js</param>
 
 						<!-- alpaca core -->			
 						<param>../js_src/Alpaca.js</param>
@@ -88,12 +89,14 @@
 						<param>../js_src/fields/DateField.js</param>
 						<param>../js_src/fields/PasswordField.js</param>
 						<param>../js_src/fields/EmailField.js</param>
+						<param>../js_src/fields/PhoneField.js</param>
 						<param>../js_src/fields/CheckBoxField.js</param>
 						<param>../js_src/fields/ArrayField.js</param>
 						<param>../js_src/fields/ListField.js</param>
 						<param>../js_src/fields/SelectField.js</param>
 						<param>../js_src/fields/RadioField.js</param>
 						<param>../js_src/fields/ButtonField.js</param>
+						<param>../js_src/fields/AddressField.js</param>
 						<param>../js_src/fields/AlpacaButtonField.js</param>
 						<param>../js_src/fields/GitanaButtonField.js</param>
 						<!--  alpaca views -->

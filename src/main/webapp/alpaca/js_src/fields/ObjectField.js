@@ -25,15 +25,6 @@
             });
             
             // set fields
-            /*
-			for (var fieldId in this.childrenById) {
-                var _data = Alpaca.traverseObject(data, fieldId);
-                if (_data) {
-                    var childField = this.childrenById[fieldId];
-                    childField.setValue(_data);
-                }
-            }
-            */
 			for (var fieldId in this.childrenById) {
 				var propertyId = this.childrenById[fieldId].propertyId;
                 var _data = Alpaca.traverseObject(data, propertyId);
@@ -62,25 +53,7 @@
             
             return o;
         },
-        /*
-        getValueWithPropertyId: function() {
-            var o = {};
-            
-            for (var i = 0; i < this.children.length; i++) {
-                var propertyId = this.children[i].propertyId;
-                
-                var fieldValue;
-				if (this.children[i].getValueWithPropertyId) {
-					fieldValue = this.children[i].getValueWithPropertyId();
-				} else {
-					fieldValue = this.children[i].getValue();
-				}
-                o[propertyId] = fieldValue;
-            }
-            
-            return o;
-        },
-        */
+
         /**
          * @Override
          *
@@ -126,8 +99,8 @@
             for (var propertyId in properties) {
                 if (properties.hasOwnProperty(propertyId)) {
                     var fieldSetting;
-                    if (_this.settings && _this.settings.fields && _this.settings.properties[propertyId]) {
-                        fieldSetting = _this.settings.properties[propertyId];
+                    if (_this.settings && _this.settings.fields && _this.settings.fields[propertyId]) {
+                        fieldSetting = _this.settings.fields[propertyId];
                     }
 					var itemData = null;
 					if (_this.data) {

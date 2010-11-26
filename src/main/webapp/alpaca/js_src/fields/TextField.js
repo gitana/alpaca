@@ -44,13 +44,18 @@
             var controlFieldTemplate = Alpaca.getTemplate("controlFieldText", this);
             
             if (controlFieldTemplate) {
-                this.inputElement = $.tmpl(controlFieldTemplate, {
-                    "id": this.getId(),
-                    "settings": this.settings
-                });
+				this.inputElement = $.tmpl(controlFieldTemplate, {
+					"id": this.getId(),
+					"settings": this.settings
+				});
 				this.inputElement.addClass("alpaca-textfield");
-                this.injectField(this.inputElement);
-            }
+				this.injectField(this.inputElement);
+				
+				// mask it
+				if (this.settings.mask && this.settings.maskString) {
+					$(this.inputElement).mask(this.settings.maskString);
+				}
+			}
             
             if (onSuccess) {
                 onSuccess();

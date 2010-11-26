@@ -98,11 +98,35 @@ DIV.alpaca-field {
  *********************************************************************************************/
 .alpaca-datefield {
     background: transparent url(../images/calendar.png) no-repeat scroll left center;
-    padding-left: 20px;
+    padding-left: 30px;
 }
 
 .alpaca-datefield input {
     width: 100px;
+}
+
+.alpaca-phonefield {
+    background: transparent url(../images/phone.png) no-repeat scroll left center;
+    padding-left: 30px;
+}
+
+.alpaca-phonefield input {
+    width: 200px;
+}
+
+.alpaca-emailfield {
+    background: transparent url(../images/email.png) no-repeat scroll left center;
+    padding-left: 30px;
+}
+
+.alpaca-phonefield input {
+    width: 120px;
+}
+
+.alpaca-map-canvas {
+    height: 300px;
+	width: 300px;
+	margin: 10px;
 }
 
 /*********************************************************************************************
@@ -794,13 +818,23 @@ legend.alpaca-fieldset-legend {
 	box-shadow:0 1px 2px rgba(0,0,0,.2);
 }
 
-legend.alpaca-fieldset-legend-collapsed {
+
+legend.legend-expanded:before {
+	content:"\25BC";	
+}
+
+/*
+.alpaca-fieldset-legend-collapsed {
 	display:inline-block;
 	-o-transform:rotate(90deg);
 	transform:rotate(90deg);
 	-webkit-transform:rotate(90deg);
 	-moz-transform:rotate(90deg);
-	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2); /*1, 2, or 3 which will rotate the element 0, 90, 180 or 270 degress respectively.*/
+	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2); 
+}
+*/
+legend.legend-collapsed:before {
+	content:"\25B6";	
 }
 
 .alpaca-fieldset-helper {

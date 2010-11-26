@@ -23,13 +23,10 @@
      *
      * SETTINGS
      * {
-     *    template: <string>						    optional - allows for override of template
      *    fieldClass: [<string>]                        optional - additional css classes to apply
      *    validate: <boolean>			        		optional - whether to validate on change (true)
      *    disabled: <boolean>                           optional - whether to initialize as disabled (false)
-     *    messages: {								    optional
-     *       <messageId>:<messageString>
-     *    }
+     *    displayMessages: <boolean>                    optional - whether to display message (true)
      * }
      *
      * JSON SCHEMA:
@@ -167,20 +164,7 @@
                 this.settings.disabled = false;
             }
             
-            // MESSAGES            
-            if (!this.settings.messages) {
-                this.settings.messages = {};
-            }
-            if (!this.settings.messages[Alpaca.STATE_REQUIRED]) {
-                this.settings.messages[Alpaca.STATE_REQUIRED] = Alpaca.messages[Alpaca.STATE_REQUIRED];
-            }
-            if (!this.settings.messages[Alpaca.STATE_INVALID]) {
-                this.settings.messages[Alpaca.STATE_INVALID] = Alpaca.messages[Alpaca.STATE_INVALID];
-            }
-            if (!this.settings.messages[Alpaca.STATE_VALID]) {
-                this.settings.messages[Alpaca.STATE_VALID] = Alpaca.messages[Alpaca.STATE_VALID];
-            }
-            
+            // MESSAGES                        
             if (Alpaca.isUndefined(this.settings.showMessages)) {
                 this.settings.showMessages = true;
             }
@@ -335,13 +319,15 @@
 			if (this.getViewType() && this.getViewType() != 'view') {
 				this.initEvents();
 			}
+			
 			// finished initializing
 			this.initializing = false;
-			
+
 			// final call to update validation state
-			if (this.getViewType() && this.getViewType() != 'view') {
+ 			if (this.getViewType() != 'view') {
 				this.renderValidationState();
 			}
+
 		},
         
         /**
@@ -533,7 +519,7 @@
 				}
 			}
 			
-            var message = this.settings.messages[state];
+            var message = Alpaca.getMessage(state, this);
             if (!message) {
                 message = "";
             }
