@@ -13,11 +13,12 @@
     </head>
     <body>
         <h3>Number Field</h3>
+		<hr/>
         <!-- test case 1 --><h4>Test Case 1: </h4>
         <div id="field1">
         </div>
         <script type="text/javascript" id="field1-script">
-            $(function(){
+            $(function() {
                 $("#field1").alpaca(15);
             });
         </script>
@@ -25,15 +26,34 @@
         <div id="field2">
         </div>
         <script type="text/javascript" id="field2-script">
-            $(function(){
-                $("#field2").alpaca(17.89, {
+            $(function() {
+                $("#field2").alpaca(3.55, {
                     settings: {
                         "label": "Gas Price:",
-                        "helper": "Enter Regular Gas Price"
+                        "helper": "Enter Gas Price in Your Neighborhood"
                     }
                 }, {
-                    minimum: 10,
-                    maximum: 15,
+                    minimum: 2.10,
+                    maximum: 3.25
+                });
+            });
+        </script>
+        <h4>Test Case 3: </h4>
+        <div id="field3">
+        </div>
+        <script type="text/javascript" id="field3-script">
+            $(function() {
+                $("#field3").alpaca(17, {
+                    "type": "integer",
+					settings: {
+                        "label": "Age:",
+                        "helper": "Guess Talyor Swift's Age"						
+                    }
+                }, {
+                    minimum: 18,
+                    maximum: 25,
+                    exclusiveMinimum: true,
+                    exclusiveMaximum: true,
                     divisibleBy: 2
                 });
             });

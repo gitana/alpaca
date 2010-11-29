@@ -17,8 +17,8 @@
      * {
      *    minimum: <number>,							[optional]
      *    maximum: <number>,							[optional]
-     *    minimumCanEqual: <boolean>,					[optional]
-     *    maximumCanEqual: <boolean>,					[optional]
+     *    exclusiveMinimum: <boolean>,					[optional]
+     *    exclusiveMaximum: <boolean>,					[optional]
      *    divisibleBy: <number>                         [optional]
      * }
      */
@@ -38,28 +38,46 @@
          *
          */
         handleValidate: function() {
-            // check to make sure this is a number
+            var baseStatus = this.base();
+            
+            var valInfo = this.validation;
+            valInfo["stringNotANumber"] = {
+                "message": "",
+                "status": this._validateNumber()
+            };
             if (!this._validateNumber()) {
-                return false;
+                valInfo["stringNotANumber"]["message"] = Alpaca.getMessage("stringNotANumber", this);
             }
-            
-            // JSON SCHEMA - does this break a min value constraint?
-            if (!this._validateMinimum()) {
-                return false;
-            }
-            
-            // JSON SCHEMA - does this break a max value constraint?
-            if (!this._validateMaximum()) {
-                return false;
-            }
-            
-            // JSON SCHEMA - divisible by
+            valInfo["stringDivisibleBy"] = {
+                "message": "",
+                "status": this._validateDivisibleBy()
+            };
             if (!this._validateDivisibleBy()) {
-                return false;
+                valInfo["stringDivisibleBy"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringDivisibleBy", this), [this.schema.divisibleBy]);
             }
-            
-            // hand off to parent to validate
-            return this.base();
+            valInfo["stringValueTooLarge"] = {
+                "message": "",
+                "status": this._validateMaximum()
+            };
+            if (!this._validateMaximum()) {
+				if (this.schema.exclusiveMaximum) {
+					valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooLargeExclusive", this), [this.schema.maximum]);
+				} else {
+					valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooLarge", this), [this.schema.maximum]);					
+				}
+            }
+            valInfo["stringValueTooSmall"] = {
+                "message": "",
+                "status": this._validateMinimum()
+            };
+            if (!this._validateMinimum()) {
+				if (this.schema.exclusiveMinimum) {
+					valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooSmallExclusive", this), [this.schema.minimum]);
+				} else {
+					valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooSmall", this), [this.schema.minimum]);
+				}
+            }
+            return baseStatus && valInfo["stringNotANumber"]["status"] && valInfo["stringDivisibleBy"]["status"] && valInfo["stringValueTooLarge"]["status"] && valInfo["stringValueTooSmall"]["status"];
         },
         
         /**
@@ -108,8 +126,8 @@
                     return false;
                 }
                 
-                if (!Alpaca.isEmpty(this.schema.maximumCanEqual)) {
-                    if (floatValue == this.schema.maximumm && !this.schema.maximumCanEqual) {
+                if (!Alpaca.isEmpty(this.schema.exclusiveMaximum)) {
+                    if (floatValue == this.schema.maximum && this.schema.exclusiveMaximum) {
                         return false;
                     }
                 }
@@ -129,47 +147,23 @@
                     return false;
                 }
                 
-                if (!Alpaca.isEmpty(this.schema.minimumCanEqual)) {
-                    if (floatValue == this.schema.minimum && !this.schema.minimumCanEqual) {
+                if (!Alpaca.isEmpty(this.schema.exclusiveMinimum)) {
+                    if (floatValue == this.schema.minimum && this.schema.exclusiveMinimum) {
                         return false;
                     }
                 }
             }
             
             return true;
-        },
-        
-        /**
-         * @Override
-         */
-        getValidationStateMessage: function(state) {
-            if (state == Alpaca.STATE_INVALID) {
-                if (!this._validateNumber()) {
-                    return Alpaca.getMessage("stringNotANumber", this);
-                }
-                
-                if (!this._validateDivisibleBy()) {
-                    return Alpaca.substituteTokens(Alpaca.getMessage("stringDivisibleBy", this), [this.schema.divisibleBy]);
-                }
-                
-                if (!this._validateMinimum()) {
-                    return Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooSmall", this), [this.schema.minimum]);
-                }
-                
-                if (!this._validateMaximum()) {
-                    return Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooLarge", this), [this.schema.maximum]);
-                }
-            }
-            
-            return this.base(state);
-        },
-    
+        }
     });
     
     // Additional Registrations
     Alpaca.registerMessages({
         "stringValueTooSmall": "The minimum value for this field is {0}",
         "stringValueTooLarge": "The maximum value for this field is {0}",
+        "stringValueTooSmallExclusive": "Value of this field must be greater than {0}",
+        "stringValueTooLargeExclusive": "Value of this field must be less than {0}",
         "stringDivisibleBy": "The value must be divisible by {0}",
         "stringNotANumber": "This value is not a number."
     });

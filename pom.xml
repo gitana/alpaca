@@ -79,26 +79,30 @@
 						<param>../js_src/JsonSchema.js</param>
 						<param>../js_src/Form.js</param>
 						
-						<!-- alpaca fields -->
+						<!-- alpaca basic fields -->
 						<param>../js_src/fields/TextField.js</param>
 						<param>../js_src/fields/NumberField.js</param>
+						<param>../js_src/fields/IntegerField.js</param>
 						<param>../js_src/fields/TextAreaField.js</param>
-						<param>../js_src/fields/UpperCaseField.js</param>						
+						<param>../js_src/fields/CheckBoxField.js</param>
+						<param>../js_src/fields/ListField.js</param>
+						<param>../js_src/fields/SelectField.js</param>
+						<param>../js_src/fields/RadioField.js</param>
+						<param>../js_src/fields/ButtonField.js</param>
 						<param>../js_src/fields/ObjectField.js</param>
+						<param>../js_src/fields/ArrayField.js</param>
+
+						<!-- alpaca advanced fields -->
+						<param>../js_src/fields/UpperCaseField.js</param>						
 						<param>../js_src/fields/IPv4Field.js</param>
 						<param>../js_src/fields/DateField.js</param>
 						<param>../js_src/fields/PasswordField.js</param>
 						<param>../js_src/fields/EmailField.js</param>
 						<param>../js_src/fields/PhoneField.js</param>
-						<param>../js_src/fields/CheckBoxField.js</param>
-						<param>../js_src/fields/ArrayField.js</param>
-						<param>../js_src/fields/ListField.js</param>
-						<param>../js_src/fields/SelectField.js</param>
-						<param>../js_src/fields/RadioField.js</param>
-						<param>../js_src/fields/ButtonField.js</param>
 						<param>../js_src/fields/AddressField.js</param>
 						<param>../js_src/fields/AlpacaButtonField.js</param>
 						<param>../js_src/fields/GitanaButtonField.js</param>
+						
 						<!--  alpaca views -->
 						<param>../js_src/views/DefaultView.js</param>
 						<param>../js_src/views/MobileView.js</param>

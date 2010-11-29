@@ -20,22 +20,21 @@
 			}
     	},
 
-    	/**
+        /**
          * @Override
          */
-        getValidationStateMessage: function(state){
-            if (state == Alpaca.STATE_INVALID) {
-                if (!this._validatePattern()) {
-                    return Alpaca.getMessage("invalidPassword", this);
-                }
-            }
-            
-            return this.base(state);
+    	handleValidate: function(){
+        	var baseStatus = this.base();
+			
+			var valInfo = this.validation;
+
+			if (!valInfo["invalidPattern"]["status"]) {
+				valInfo["invalidPattern"]["message"] = Alpaca.getMessage("invalidPassword", this);
+			}
+
+			return baseStatus;	            
         },
         
-		/**
-		 * @Override
-		 */
 		/**
          * @Override
          *

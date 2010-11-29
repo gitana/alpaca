@@ -13,6 +13,7 @@
     </head>
     <body>
         <h3>Array Field</h3>
+		<hr/>
         <h4>Test Case 1: </h4>
         <div id="field1">
         </div>
@@ -26,19 +27,20 @@
         </div>
         <script type="text/javascript" id="field2-script">
             $(function(){
-                $("#field2").alpaca(["test1", "test2", "test3"], {
+                $("#field2").alpaca(["Mint Chocolate"], {
                     "settings": {
-                        "label": "Text Label",
-                        "helper": "whazzzup",
+                        "label": "Ice Cream",
+                        "helper": "Favorite Ice Cream",
                     }
                 }, {
-                    "description": "Example Contact Information Array JSON Schema",
+                    "description": "My Favorite Ice Creams",
                     "type": "array",
                     "items": {
-                        "title": "A Contact Information object",
+                        "title": "Favorite Ice Cream",
                         "type": "string",
-                        "maxLength": 3,
-                        "minItems": 1,
+                        "minLength": 3,
+                        "maxLength": 8,
+                        "minItems": 2,
                         "maxItems": 5
                     }
                 });

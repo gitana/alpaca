@@ -111,6 +111,9 @@
             if (!this.data && this.schema["default"]) {
                 this.data = this.schema["default"];
             }
+			
+			// validation status
+			this.validation = {};
             
             // backup data
             this.backupData = Alpaca.cloneObject(this.data);
@@ -151,8 +154,8 @@
 			this.setDefaultTemplate();
             
             // JSON SCHEMA
-            if (Alpaca.isUndefined(this.schema.optional)) {
-                this.schema.optional = false;
+            if (Alpaca.isUndefined(this.schema.required)) {
+                this.schema.required = false;
             }
             
             // SETTINGS             
@@ -301,10 +304,10 @@
 				$(this.getEl()).addClass(fieldClass);
 			}			
 			// optional
-			if (this.settings.optional) {
-				$(this.getEl()).addClass("alpaca-field-optional");
-			} else {
+			if (this.settings.required) {
 				$(this.getEl()).addClass("alpaca-field-required");
+			} else {
+				$(this.getEl()).addClass("alpaca-field-optional");
 			}
 			
 			// after render
@@ -435,115 +438,80 @@
         /**
          * Renders a validation state message below the field.
          */
-        displayMessage: function(message) {
-            // remove the message element if it exists
-            if (this.messageElement) {
-                $(this.messageElement).remove();
-            }
-            // add message and generate it
-            if (message && message.length > 0) {
-                var messageTemplate = Alpaca.getTemplate("controlFieldMessage", this);
-                if (messageTemplate) {
-                    this.messageElement = $.tmpl(messageTemplate, {
-                        "message": message
-                    });
-                    this.messageElement.addClass("alpaca-field-message");
-                    // check to see if we have a message container rendered
-                    if ($('.alpaca-field-message-container', this.getEl()).length) {
-                        this.messageElement.appendTo($('.alpaca-field-message-container', this.getEl()));
-                    } else {
-                        this.messageElement.appendTo(this.getEl());
-                    }
-                }
-            }
-        },
+        displayMessage: function(messages) {
+			// remove the message element if it exists
+			var _this = this;
+			$("#[id^='"+_this.getId()+"-field-message']",_this.getEl()).remove();
+			// add message and generate it
+			if (messages) {
+				$.each(messages, function(index, message) {
+					if (message.length > 0) {					
+						var messageTemplate = Alpaca.getTemplate("controlFieldMessage", _this);
+						if (messageTemplate) {
+							_this.messageElement = $.tmpl(messageTemplate, {
+								"message": message
+							});
+							_this.messageElement.addClass("alpaca-field-message");
+							_this.messageElement.attr("id",_this.getId()+'-field-message-'+index);
+							// check to see if we have a message container rendered
+							if ($('.alpaca-field-message-container', _this.getEl()).length) {
+								_this.messageElement.appendTo($('.alpaca-field-message-container', _this.getEl()));
+							} else {
+								_this.messageElement.appendTo(_this.getEl());
+							}
+						}
+					}
+				});
+			}
+		},
         
         /**
          * Makes sure that the DOM of the rendered field reflects the validation state
          * of the field.
          */
         renderValidationState: function() {
-            // remove all previous markers
-            $(this.getEl()).removeClass("alpaca-field-invalid");
-            $(this.getEl()).removeClass("alpaca-field-valid");
-            $(this.getEl()).removeClass("alpaca-field-empty");
-            
-            // this runs validation
-            var state = this.getValidationState();
-            
-            if (state == Alpaca.STATE_INVALID) {
-                $(this.getEl()).addClass("alpaca-field-invalid");
-            }
-            if (state == Alpaca.STATE_VALID) {
-                $(this.getEl()).addClass("alpaca-field-valid");
-            }
-            if (state == Alpaca.STATE_EMPTY_OK) {
-                $(this.getEl()).addClass("alpaca-field-empty");
-            }
-            
-            // Allow for the message to change
-            if (this.settings.showMessages) {
-                if (!this.initializing) {
-                    this.displayMessage(this.getValidationStateMessage(state));
-                }
-            }
-        },
-        
-        /**
-         * Returns the validation state code for the field
-         */
-        getValidationState: function() {
-            var state = null;
-            
-            var validated = this.validate();
-            if (validated) {
-                state = Alpaca.STATE_VALID;
-            } else {
-                state = Alpaca.STATE_INVALID;
-            }
-            
-            return state;
-        },
-        
-        /**
-         * Converts the validation state into a message.
-         */
-        getValidationStateMessage: function(state) {
-
-            if (state == Alpaca.STATE_INVALID) {
-				if (!this._validateOptional()) {
-					return Alpaca.getMessage("notOptional", this);
+			if (this.settings.validate) {
+				// remove all previous markers
+				$(this.getEl()).removeClass("alpaca-field-invalid");
+				$(this.getEl()).removeClass("alpaca-field-valid");
+				
+				// this runs validation
+				if (this.validate()) {
+					$(this.getEl()).addClass("alpaca-field-valid");
+				} else {
+					$(this.getEl()).addClass("alpaca-field-invalid");
 				}
-				if (!this._validateDisallow()) {
-					return Alpaca.getMessage("disallowValue", this);
+				
+				// Allow for the message to change
+				if (this.settings.showMessages) {
+					if (!this.initializing) {
+						var messages = [];
+						for (var messageId in this.validation) {
+							if (!this.validation[messageId]["status"]) {
+								messages.push(this.validation[messageId]["message"]);
+							}
+						}
+						this.displayMessage(messages);
+					}
+				}
+				// Revalidate parents
+				if (this.parent && this.parent.renderValidationState) {
+					this.parent.renderValidationState();
 				}
 			}
-			
-            var message = Alpaca.getMessage(state, this);
-            if (!message) {
-                message = "";
-            }
-            
-            return message;
-        },
-        
+		},
+
         /**
          * Validates this field and returns whether it is in a valid state.
          */
         validate: function() {
             // skip out if we haven't yet bound any data into this control
             // the control can still be considered to be initializing
-            if (this.initializing) {
-                return true;
+			var status = true;
+            if (!this.initializing && this.settings.validate) {
+                status = this.handleValidate();
             }
-            
-            var isValid = true;
-            
-            if (this.settings.validate) {
-                isValid = this.handleValidate();
-            }
-            
-            return isValid;
+			return status;
         },
         
         /**
@@ -552,22 +520,29 @@
          * Performs validation
          */
         handleValidate: function() {
-            if (!this._validateOptional()) {
-                return false;
-            }
-            if (!this._validateDisallow()) {
-                return false;
-            }            
-            return true;
-        },
+			var valInfo = this.validation;
+			valInfo["notOptional"] = {
+				"message":"",
+				"status": this._validateOptional()
+			};
+			if (!this._validateOptional()) {
+				valInfo["notOptional"]["message"] = Alpaca.getMessage("notOptional", this);
+			}
+			valInfo["disallowValue"] = {
+				"message":"",
+				"status": this._validateDisallow()
+			};
+			if (!this._validateDisallow()) {
+				valInfo["disallowValue"]["message"] = Alpaca.getMessage("disallowValue", this);
+			}			
+        	return valInfo["notOptional"]["status"] && valInfo["disallowValue"]["status"];
+		},
         
         /**
          * Checks whether validation is optional
          */
         _validateOptional: function() {
-			var val = this.getValue();
-			
-			if ( this.isEmpty() && !this.schema.optional) {
+			if ( this.isEmpty() && this.schema.required) {
 				return false;
 			}
 			return true;
@@ -691,16 +666,15 @@
          * True if the field is empty
          */
         isEmpty: function() {
-            var empty = false;
-            
-            var val = this.getValue();
-            
-            if (!val || val == "") {
-                empty = true;
-            }
-            
-            return empty;
+            return Alpaca.isValEmpty(this.getValue());
         },
+		
+		/**
+		 * True if this field is valid.
+		 */
+		isValid: function() {
+			 return $.isEmptyObject(this.validation);
+		},
         
         /**
          * Initialize events

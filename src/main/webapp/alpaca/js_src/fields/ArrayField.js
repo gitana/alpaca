@@ -354,50 +354,40 @@
          * Handles validations
          */
         handleValidate: function() {
-            if (!this._validateMinItems()) {
-                return false;
-            }
-            
-            if (!this._validateMaxItems()) {
-                return false;
-            }
-            
-            if (!this._validateUniqueItems()) {
-                return false;
-            }
-            
-            // hand off to parent to validate
-            return this.base();
-        },
-        
-        /**
-         * @Override
-         */
-        getValidationStateMessage: function(state) {
-            if (state == Alpaca.STATE_INVALID) {
-                if (!this._validateUniqueItems()) {
-                    return Alpaca.getMessage("valueNotUnique", this);
-                }
-                
-                if (!this._validateMaxItems()) {
-                    return Alpaca.substituteTokens(Alpaca.getMessage("tooManyItems", this), [this.schema.maxItems]);
-                }
-                
-                if (!this._validateMinItems()) {
-                    return Alpaca.substituteTokens(Alpaca.getMessage("notEnoughItems", this), [this.schema.minItems]);
-                }
-            }
-            
-            return this.base(state);
-        }
+			var baseStatus =  this.base();
+			
+			var valInfo = this.validation;
+			valInfo["valueNotUnique"] = {
+				"message":"",
+				"status": this._validateUniqueItems()
+			};
+			if (!this._validateUniqueItems()) {
+				valInfo["invalidValueOfEnum"]["message"] = Alpaca.getMessage("valueNotUnique", this);
+			}			
+			valInfo["tooManyItems"] = {
+				"message":"",
+				"status": this._validateMaxItems()
+			};
+			if (!this._validateMaxItems()) {
+				valInfo["tooManyItems"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("tooManyItems", this), [this.schema.items.maxItems]);
+			}			
+			valInfo["notEnoughItems"] = {
+				"message":"",
+				"status": this._validateMinItems()
+			};
+			if (!this._validateMinItems()) {
+				valInfo["notEnoughItems"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("notEnoughItems", this), [this.schema.items.minItems]);
+			}			
+        	return baseStatus && valInfo["valueNotUnique"]["status"] && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"];							
+        }        
     });
     
     Alpaca.registerTemplate("arrayToolbar", '<div class="alpaca-array-toolbar"><span class="alpaca-array-toolbar-icon alpaca-array-toolbar-add" title="Add"></div>');
     Alpaca.registerTemplate("arrayItemToolbar", '<div class="alpaca-item-toolbar"><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-add" title="Add"></span><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-remove" title="Remove"></span><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-up" title="Move Up"></span><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-down" title="Move Down"></span></div>');
     
     Alpaca.registerMessages({
-        "notEnoughItems": "The minimum number of values is {0}",
-        "tooManyItems": "The maximum number of values is {0}",
+        "notEnoughItems": "The minimum number of items is {0}",
+        "tooManyItems": "The maximum number of items is {0}",
         "valueNotUnique": "Values are not unique",
         "notAnArray": "This value is not an Array"
     });

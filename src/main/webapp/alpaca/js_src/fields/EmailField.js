@@ -22,31 +22,26 @@
 
         /**
          * @Override
-         *
-         * Renders an INPUT control into the field container
          */
-        renderField: function(onSuccess) {
-            this.base();
-            
+    	postRender: function() {
+            this.base();            
             // apply additional css
             $(this.fieldContainer).addClass("alpaca-emailfield");
-            
-            if (onSuccess) {
-                onSuccess();
-            }
         },
         
         /**
          * @Override
          */
-        getValidationStateMessage: function(state){
-            if (state == Alpaca.STATE_INVALID) {
-                if (!this._validatePattern()) {
-                    return Alpaca.getMessage("invalidEmail", this);
-                }
-            }
-            
-            return this.base(state);
+        handleValidate: function(){
+        	var baseStatus = this.base();
+			
+			var valInfo = this.validation;
+
+			if (!valInfo["invalidPattern"]["status"]) {
+				valInfo["invalidPattern"]["message"] = Alpaca.getMessage("invalidEmail", this);
+			}
+
+			return baseStatus;	            
         }
 	});
 	

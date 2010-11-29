@@ -14,7 +14,7 @@
     var _isArray = function( obj ) { return Object.prototype.toString.call(obj) === "[object Array]"; };
     var _isUndefined = function(obj) { return (typeof obj  == "undefined"); };
     var _isEmpty = function(obj) { return _isUndefined(obj) || obj == null; };
-    
+
     var _escapeHTML = function(s) {
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     };
@@ -1048,5 +1048,25 @@
 	Alpaca.compareObject = function(obj1,obj2) {
 		return equiv(obj1,obj2);
 	};	
+	
+	
+	Alpaca.isValEmpty = function(val) {
+		var empty = false;
+		if (Alpaca.isEmpty(val)) {
+			empty = true;
+		} else {
+			if (Alpaca.isString(val) && val == "") {
+				empty = true;
+			}
+			if (Alpaca.isObject(val) && $.isEmptyObject(val)) {
+				empty = true;
+			}
+			if (Alpaca.isArray(val) && val.length == 0) {
+				empty = true;
+			}
+		}		
+		return empty;
+	};
+    
     
 })(jQuery);

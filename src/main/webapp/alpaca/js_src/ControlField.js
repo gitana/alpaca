@@ -93,25 +93,18 @@
          * Adds enum validation
          */
         handleValidate: function() {
-            if (!this._validateEnum()) {
-                return false;
-            }
-            return this.base();
-        },
-        
-        /**
-         * @Override
-         * 
-         * Adds enum validation message
-         */
-        getValidationStateMessage: function(state) {
-            if (state == Alpaca.STATE_INVALID) {
-                if (!this._validateEnum()) {
-                    var text = this.schema["enum"].join(',');
-                    return Alpaca.substituteTokens(Alpaca.getMessage("invalidValueOfEnum", this), [text]);
-                }
-            }
-            return this.base(state);
+			var baseStatus =  this.base();
+			
+			var valInfo = this.validation;
+			valInfo["invalidValueOfEnum"] = {
+				"message":"",
+				"status": this._validateEnum()
+			};
+			if (!this._validateEnum()) {
+                var text = this.schema["enum"].join(',');
+				valInfo["invalidValueOfEnum"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("invalidValueOfEnum", this), [text]);
+			}			
+        	return baseStatus && valInfo["invalidValueOfEnum"]["status"];			
         },
         
         // Additional event handlers

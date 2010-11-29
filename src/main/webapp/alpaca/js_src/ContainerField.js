@@ -46,6 +46,7 @@
 			// holders of references to children
 			this.children = [];
 			this.childrenById = [];
+			this.childrenByPropertyId = [];
 		},
         
         /**
@@ -58,7 +59,9 @@
                 this.children.push(child);
             }
             this.childrenById[child.getId()] = child;
-            
+ 			if (child.propertyId) {
+				this.childrenByPropertyId[child.propertyId] = child;
+			}           
             child.parent = this;
         },
         
@@ -74,7 +77,6 @@
             if (this.labelDiv) {
 				if (this.settings.collapsible) {
 					this.labelDiv.addClass("legend-expanded");
-//					$('<b class="alpaca-fieldset-legend-collapsed">\u25B6</b>  ').prependTo(this.labelDiv);
 					this.labelDiv.click(function() {
 						$(this).toggleClass("legend-collapsed");
 						$(this).toggleClass("legend-expanded");
@@ -90,26 +92,17 @@
          *
          * Handle validation
          */
+/*
         handleValidate: function() {
-            // validate all of the fields, one at a time
-            var response = true;
-            
-            Alpaca.each(this.children, function() {
-            
-                this.renderValidationState();
-                
-                var state = this.getValidationState();
-                if (state == Alpaca.STATE_REQUIRED || state == Alpaca.STATE_INVALID) {
-                    response = false;
-                }
+			
+            var baseStatus =  this.base();            
+            Alpaca.each(this.children, function() {            
+                baseStatus = this.validate() && baseStatus;                
             });
             
-            //return response;
-			
-			//TODO: Still need to think about how to better handle validation of container field.
-			return true;
+			return baseStatus;
         },
-        
+*/        
         /**
          * @Override
          *
@@ -146,12 +139,11 @@
          * Renders item container
          */
         renderItemContainer: function(insertAfterId) {
-			var _this = this;
             var itemContainerTemplate = Alpaca.getTemplate("itemContainer", this);
             if (itemContainerTemplate) {
                 var containerElem = $.tmpl(itemContainerTemplate, {});
 				if (containerElem.attr('data-replace') == 'true') {
-					return _this.fieldContainer;
+					return this.fieldContainer;
 				} else {
 					if (insertAfterId) {
 						$('#' + insertAfterId + '-item-container', this.outerEl).after(containerElem);
@@ -162,7 +154,7 @@
 				}
                 return containerElem;
             } else {
-                return _this.fieldContainer;
+                return this.fieldContainer;
             }
         },
         
@@ -194,7 +186,7 @@
          * To be overriden
          */
         renderItems: function(onSuccess) {
-        },
+        }
     
     });
     

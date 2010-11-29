@@ -29,30 +29,30 @@
         
         /**
          * @Override
-         *
-         * Renders an INPUT control into the field container
          */
-        renderField: function(onSuccess) {
-            this.base();
-            
+        postRender: function() {
+            this.base();            
             // apply additional css
             $(this.fieldContainer).addClass("alpaca-datefield");
-            
-            if (onSuccess) {
-                onSuccess();
-            }
         },
         
         /**
          * @Override
          *
          */
-        handleValidate: function() {
-            if (!this._validateDateFormat()) {
-                return false;
-            }
-            
-            return this.base();
+        handleValidate: function() {			
+			var baseStatus = this.base();
+			
+			var valInfo = this.validation;
+			valInfo["invalidDate"] = {
+				"message": "",
+				"status": this._validateDateFormat()
+			};
+			if (!this._validateMaxLength()) {
+				valInfo["invalidDate"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("invalidDate", this), [this.settings.dateFormat]);
+			}
+			
+			return baseStatus && valInfo["invalidDate"]["status"];			
         },
         
         /**
@@ -115,19 +115,7 @@
                 }
             }
             this.base(str, stopUpdateTrigger);
-        },
-        
-        /**
-         * @Override
-         */
-        getValidationStateMessage: function(state) {
-            if (state == Alpaca.STATE_INVALID) {
-                return Alpaca.substituteTokens(Alpaca.getMessage("invalidDate", this), [this.settings.dateFormat]);
-            }
-            
-            return this.base(state);
         }
-        
     });
     
     Alpaca.Fields.DateField.parseWithFormat = function(sDate, format) {

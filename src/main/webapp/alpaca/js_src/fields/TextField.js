@@ -1,4 +1,4 @@
-(function($){
+(function($) {
 
     var Alpaca = $.alpaca;
     
@@ -34,28 +34,28 @@
                 this.settings.size = 40;
             }
         },
-		
-		/**
+        
+        /**
          * @Override
          *
          * Renders an INPUT control into the field container
          */
-        renderField: function(onSuccess){
+        renderField: function(onSuccess) {
             var controlFieldTemplate = Alpaca.getTemplate("controlFieldText", this);
             
             if (controlFieldTemplate) {
-				this.inputElement = $.tmpl(controlFieldTemplate, {
-					"id": this.getId(),
-					"settings": this.settings
-				});
-				this.inputElement.addClass("alpaca-textfield");
-				this.injectField(this.inputElement);
-				
-				// mask it
-				if (this.settings.mask && this.settings.maskString) {
-					$(this.inputElement).mask(this.settings.maskString);
-				}
-			}
+                this.inputElement = $.tmpl(controlFieldTemplate, {
+                    "id": this.getId(),
+                    "settings": this.settings
+                });
+                this.inputElement.addClass("alpaca-textfield");
+                this.injectField(this.inputElement);
+                
+                // mask it
+                if (this.settings.mask && this.settings.maskString) {
+                    $(this.inputElement).mask(this.settings.maskString);
+                }
+            }
             
             if (onSuccess) {
                 onSuccess();
@@ -67,7 +67,7 @@
          *
          * Return the value of the input control
          */
-        getValue: function(){
+        getValue: function() {
             return $(this.inputElement).val();
         },
         
@@ -76,11 +76,10 @@
          *
          * Set value onto the input contorl
          */
-        setValue: function(value, stopUpdateTrigger){
+        setValue: function(value, stopUpdateTrigger) {
             if (value) {
                 $(this.inputElement).val(value);
-            }
-            else {
+            } else {
                 $(this.inputElement).val("");
             }
             
@@ -91,22 +90,38 @@
         /**
          * @Override
          */
-        handleValidate: function(){
+        handleValidate: function() {
+            var baseStatus = this.base();
+            
+            var valInfo = this.validation;
+            valInfo["invalidPattern"] = {
+                "message": "",
+                "status": this._validatePattern()
+            };
             if (!this._validatePattern()) {
-                return false;
+                valInfo["invalidPattern"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("invalidPattern", this), [this.schema.pattern]);
             }
-            
+            valInfo["stringTooLong"] = {
+                "message": "",
+                "status": this._validateMaxLength()
+            };
             if (!this._validateMaxLength()) {
-                return false;
+                valInfo["stringTooLong"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringTooLong", this), [this.schema.maxLength]);
             }
-            
+            valInfo["stringTooShort"] = {
+                "message": "",
+                "status": this._validateMinLength()
+            };
             if (!this._validateMinLength()) {
-                return false;
+                valInfo["stringTooShort"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringTooShort", this), [this.schema.minLength]);
             }
-            return this.base();
+            return baseStatus && valInfo["invalidPattern"]["status"] && valInfo["stringTooLong"]["status"] && valInfo["stringTooShort"]["status"];
         },
         
-        _validatePattern: function(){
+        /**
+         * validates against the pattern
+         */
+        _validatePattern: function() {
             var val = this.getValue();
             
             // JSON SCHEMA - regular expression pattern
@@ -119,76 +134,66 @@
             return true;
         },
         
-        _validateMinLength: function(){
+        /**
+         * validats against the minLength
+         */
+        _validateMinLength: function() {
             var val = this.getValue();
             
             if (!Alpaca.isEmpty(val)) {
-				// JSON SCHEMA - minLength
-				if (this.schema.minLength) {
-					if (val.length < this.schema.minLength) {
-						return false;
-					}
-				}
-			}
+                // JSON SCHEMA - minLength
+                if (this.schema.minLength) {
+                    if (val.length < this.schema.minLength) {
+                        return false;
+                    }
+                }
+            }
             return true;
         },
         
-        _validateMaxLength: function(){
+        /**
+         * validats against the maxLength
+         */
+        _validateMaxLength: function() {
             var val = this.getValue();
             
             if (!Alpaca.isEmpty(val)) {
-				// JSON SCHEMA - maxLength
-				if (this.schema.maxLength) {
-					if (val.length > this.schema.maxLength) {
-						return false;
-					}
-				}
-			}            
+                // JSON SCHEMA - maxLength
+                if (this.schema.maxLength) {
+                    if (val.length > this.schema.maxLength) {
+                        return false;
+                    }
+                }
+            }
             return true;
         },
         
         /**
          * @Override
          */
-        disable: function(){
+        disable: function() {
             this.inputElement.disabled = true;
         },
         
         /**
          * @Override
          */
-        enable: function(){
+        enable: function() {
             this.inputElement.disabled = false;
         },
         
         /**
          * @Override
          */
-        focus: function(){
+        focus: function() {
             this.inputElement.focus();
-        },
-        
-        /**
-         * @Override
-         */
-        getValidationStateMessage: function(state){
-            if (state == Alpaca.STATE_INVALID) {
-                if (!this._validateMinLength()) {
-                    return Alpaca.substituteTokens(Alpaca.getMessage("stringTooShort", this), [this.schema.minLength]);
-                }
-                
-                if (!this._validateMaxLength()) {
-                    return Alpaca.substituteTokens(Alpaca.getMessage("stringTooLong", this), [this.schema.maxLength]);
-                }
-            }
-            
-            return this.base(state);
         }
         
     });
     
     Alpaca.registerTemplate("controlFieldText", '<input type="text" id="${id}" {{if settings.size}}size="${settings.size}"{{/if}} {{if settings.readonly}}readonly="on"{{/if}} {{if settings.formName}}name="${settings.formName}"{{/if}} {{each(i,v) settings.data}}data-${i}="${v}"{{/each}}/>');
     Alpaca.registerMessages({
+        "invalidPattern": "This field should have pattern {0}",
         "stringTooShort": "This field should contain at least {0} numbers or characters",
         "stringTooLong": "This field should contain at most {0} numbers or characters"
     });
