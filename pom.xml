@@ -84,6 +84,7 @@
 						<param>../js_src/fields/NumberField.js</param>
 						<param>../js_src/fields/IntegerField.js</param>
 						<param>../js_src/fields/TextAreaField.js</param>
+						<param>../js_src/fields/WysiwygField.js</param>
 						<param>../js_src/fields/CheckBoxField.js</param>
 						<param>../js_src/fields/ListField.js</param>
 						<param>../js_src/fields/SelectField.js</param>
