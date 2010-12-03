@@ -30,19 +30,7 @@
                 if (!this.data) {
                     this.data = "Save";
                 }
-            } else if (this.action == "reload") {
-                if (!this.data) {
-                    this.data = "Reload";
-                }
-            } else if (this.action == "create") {
-                if (!this.data) {
-                    this.data = "Create";
-                }
-            } else if (this.action == "validate") {
-                if (!this.data) {
-                    this.data = "Validate";
-                }
-            }
+            } 
         },
         
         /**
@@ -54,24 +42,7 @@
                     var newValue = this.form.topField.getValue();
                     alert(newValue);
                     break;
-                case 'reload':
-                    if (this.form.topField.options.form) {
-                        delete this.form.topField.options.form;
-                    }
-                    this.form.topField.container = this.form.formFieldsContainer;
-					this.form.topField.reload();
-                    break;
-                case 'validate':
-                    this.form.topField.renderValidationState();
-                    break;
-                case 'create':
-                    if (this.form.topField.options.form) {
-                        delete this.form.topField.options.form;
-                    }
-                    this.form.topField.container = this.form.formFieldsContainer;
-                    this.form.topField.render("WEB_CREATE");
-                    break;
-                default:
+               default:
                     break;
             }
         },

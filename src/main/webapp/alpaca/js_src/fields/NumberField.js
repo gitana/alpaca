@@ -85,6 +85,10 @@
          */
         _validateNumber: function() {
             var textValue = $(this.inputElement).val();
+			// allow null
+			if (Alpaca.isValEmpty(textValue)) {
+				return true;
+			}
             var floatValue = this.getValue();
             
             // quick check to see if what they entered was a number

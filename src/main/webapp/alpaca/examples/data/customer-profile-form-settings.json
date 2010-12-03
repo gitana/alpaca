@@ -1,0 +1,15 @@
+{
+    "form":{
+        "action":"/endpoint"
+    },
+	"settings": {
+		"fields": {
+			"address":{
+                "type": "address",
+                "settings": {
+                    "addressValidation": true
+                }
+            }
+		}
+	}		
+}

@@ -1,0 +1,16 @@
+{
+    "name":"Betty Icecream Lover",
+    "age":10,
+    "gender":"Female",
+    "member":true,
+    "icecream":"Chocolate",
+    "address":{
+        "street":[
+            "100 Main Street",
+            "Suite 200"
+        ],
+        "city":"Burlington",
+        "state":"MA",
+        "zip":"18210"
+    }
+}

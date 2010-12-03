@@ -850,7 +850,7 @@ legend.legend-collapsed:before {
 }
 .alpaca-field-container {
 	padding-top: 2px;
-	padding-bottom:2px;	
+	padding-bottom:10px;
 }
 /**
  * Item Toolbar 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js">
+        </script>
+        <script type="text/javascript" src="../js/alpaca.js">
+        </script>
+        <script type="text/javascript" src="../examples/js/example.js">
+        </script>
+        <link type="text/css" href="../css/alpaca.css" rel="stylesheet" />
+        <link type="text/css" href="../css/example.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h3>I18N &#20363;&#23376; - &#20013;&#25991;</h3>
+        <hr/><h4>&#20363;&#23376; 1: </h4>
+        <div id="field1">
+        </div>
+        <script type="text/javascript"id="field1-script">
+            $(function() {
+                Alpaca.setDefaultLocale("zh_CN");
+				$("#field1").alpaca({}, {
+                    "settings": {
+                        "fields": {
+                            "icecream": {
+                                "settings": {
+                                    "optionLabels": ["&#39321;&#33609;", "&#24039;&#20811;&#21147;", "&#21654;&#21857;", "&#33609;&#33683;", "&#34180;&#33655;"]
+                                }
+                            }
+                        }
+                    }
+                }, {
+                    "title": "&#29992;&#25143;&#20449;&#24687;",
+                    "description": "&#38463;&#32819;&#24085;&#20811;&#20892;&#22330;&#20912;&#28608;&#20940;&#24215;&#29992;&#25143;&#20449;&#24687;",
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "title": "&#20840;&#21517;",
+                            "type": "string"
+                        },
+                        "age": {
+                            "title": "&#24180;&#40836;",
+                            "type": "number"
+                        },
+                        "icecream": {
+                            "title": "&#26368;&#21916;&#27426;&#30340;&#20912;&#28608;&#20940;",
+                            "type": "string",
+                            "enum": ["Vanilla","Chocolate","Coffee","Strawberry","Mint"]
+                        },
+                        "address": {
+                            "title": "&#23478;&#24237;&#20303;&#22336;",
+                            "type": "object",
+                            "properties": {
+                                "street": {
+                                    "title": "&#34903;&#36947;",
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "maxLength": 30,
+                                        "minItems": 1,
+                                        "maxItems": 3
+                                    }
+                                },
+                                "city": {
+                                    "title": "&#22478;&#24066;",
+                                    "type": "string"
+                                },
+                                "state": {
+                                    "title": "&#24030;&#30465;",
+                                    "type": "string"
+                                },
+                                "zip": {
+                                    "title": "&#37038;&#32534;",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -207,7 +207,11 @@
             
             // check if it needs to be wrapped in a form
             if (this.options.form) {
-                var form = new Alpaca.Form(this.container, this.options.form);
+				this.options.form.viewType = this.viewType;
+                var form =  this.form;				
+				if (!form) {
+					form = new Alpaca.Form(this.container, this.options.form);
+				}				
                 form.render(function(form) {
                     // load the appropriate template and render it
                     _this._processRender(form.formFieldsContainer, function() {
@@ -217,6 +221,8 @@
                         
                         // bind the top field to the form
                         form.topField = _this;
+						
+						_this.form = form;
                         
                         // allow any post-rendering facilities to kick in
                         _this.postRender();
@@ -533,7 +539,8 @@
 				"status": this._validateDisallow()
 			};
 			if (!this._validateDisallow()) {
-				valInfo["disallowValue"]["message"] = Alpaca.getMessage("disallowValue", this);
+                var text = this.schema["disallow"].join(',');
+				valInfo["disallowValue"]["message"] =  Alpaca.substituteTokens(Alpaca.getMessage("disallowValue", this), [text]);
 			}			
         	return valInfo["notOptional"]["status"] && valInfo["disallowValue"]["status"];
 		},
@@ -726,7 +733,7 @@
 
     // Registers additonal messages
 	Alpaca.registerMessages({
-        "disallowValue": "This value is disallowed.",
+        "disallowValue": "{0} are disallowed values.",
         "notOptional": "This field is not optional."		
     });
 	    

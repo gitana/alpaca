@@ -40,7 +40,7 @@
 					"zip": {
 						"title": "Zip Code",
 						"type": "string",
-						"pattern": /^\d{5}(-\d{4})?$/
+						"pattern": /^(\d{5}(-\d{4})?)?$/
 					}
 				}
 			};
@@ -71,6 +71,9 @@
 		 */
 		getAddress: function() {
 			var value = this.getValue();
+			if (this.viewType == "view") {
+				value = this.data;
+			}
 			var address = "";
 			if (value) {
 				if (value.street) {

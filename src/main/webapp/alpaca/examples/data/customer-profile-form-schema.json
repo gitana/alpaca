@@ -1,0 +1,50 @@
+{
+    "title":"Customer Profile",
+    "description":"Alpaca Farm Ice Cream Customer Profile Form.",
+    "type":"object",
+    "properties":{
+        "name":{
+            "title":"Name",
+            "description":"Enter your full name.",
+            "type":"string"
+        },
+        "age":{
+            "title":"Age",
+            "description":"Enter your age.",
+            "type":"number"
+        },
+        "gender":{
+            "title":"Gender",
+            "type":"string",
+            "enum":[
+                "Male",
+                "Female"
+            ]
+        },
+        "member":{
+            "title":"Member",
+            "type":"boolean",
+            "description":"Are you a memeber?"
+        },
+        "icecream":{
+            "title":"Favorite Ice Cream",
+            "type":"string",
+            "enum":[
+                "Vanilla",
+                "Chocolate",
+                "Coffee",
+                "Strawberry",
+                "Mint"
+            ]
+        },
+        "phone":{
+            "title":"Home Phone",
+            "type":"string",
+			"format":"phone"
+        },
+        "address":{
+            "title":"Home Address",
+            "type":"any"
+        }
+    }
+}

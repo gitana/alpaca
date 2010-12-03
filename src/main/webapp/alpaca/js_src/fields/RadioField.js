@@ -65,6 +65,9 @@
 					"formName": this.formName,
                     "data": this.data
                 });
+                if ($("input:radio:checked",this.inputElement).length == 0) {
+                	$("input:radio:first",this.inputElement).attr("checked","checked");
+                }
                 this.injectField(this.inputElement);
             }
             

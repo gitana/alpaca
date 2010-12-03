@@ -12,26 +12,15 @@
         <link type="text/css" href="../css/example.css" rel="stylesheet" />
     </head>
     <body>
-        <h3>Text Field</h3>
+        <h3>Any Field</h3>
 		<hr/>
         <h4>Example 1: </h4>
         <div id="field1">
         </div>
         <script type="text/javascript" id="field1-script">
-            $("#field1").alpaca("I Love Alpaca Ice Cream!");
-        </script>
-        <h4>Example 2: </h4>
-        <div id="field2">
-        </div>
-        <script type="text/javascript" id="field2-script">
-            $(function() {
-                $("#field2").alpaca("Mint Chocolate", {
-                    "settings": {
-                        "label": "Ice Cream",
-                        "helper": "Your favorite ice cream?",
-                        "size": 30
-                    }
-                }, "/alpaca/examples/data/schema1.json");
+            $("#field1").alpaca("", {}, {
+                "title": "Home Address",
+                "type": "any"
             });
         </script>
     </body>

@@ -76,7 +76,6 @@
      * Alpaca(el, data, {               Binds a control to $(el) using the given data and config.
      *    id: <id>                      field id (optional)
      *    type: <type>                  field type (optional)
-     *    schema: schema,               field schema (optional)
      *    settings: settings            field configuration (optional)
      * });
      * 
@@ -84,19 +83,30 @@
      *    id: <id>                      field id (optional)
      *    type: <type>                  field type (optional)
      *    settings: settings            field configuration (optional)
-     *     },
-     *     schema                            field schema (optional)
+     *  },
+     *  schema                          field schema (optional)
      * );
      * 
      * Alpaca(el, data, {               Binds a control to $(el) using the given data and config.
      *    id: <id>                      field id (optional)
      *    type: <type>                  field type (optional)
      *    settings: settings            field configuration (optional)
-     *     },
-     *     schema,                            field schema (optional)
-     *     callback                        callback function 
+     *  },
+     *  schema,                         field schema (optional)
+     *  view                           field view (object or id reference) (optional) 
      * );
-     * * @return the alpaca field instance
+     * 
+     * Alpaca(el, data, {               Binds a control to $(el) using the given data and config.
+     *    id: <id>                      field id (optional)
+     *    type: <type>                  field type (optional)
+     *    settings: settings            field configuration (optional)
+     *  },
+     *  schema,                         field schema (optional)
+     *  view,                           field view (object or id reference) (optional) 
+     *  callback                        callback function (optional)
+     * );
+     * 
+     * @return the alpaca field instance
      */
     Alpaca = function() {
         var args = Alpaca.makeArray(arguments);
@@ -182,10 +192,8 @@
 					data = "";
 					options = "text";
 				} else if (options && Alpaca.isObject(options)) {
-					if (options.config && Alpaca.isObject(options.config)) {
-						data = "";
-						options.config.type = "text";
-					}
+					data = "";
+					options.type = "text";
 				}
 			}
         }
@@ -289,6 +297,7 @@
     };
     
     /**
+     * Initial function for setting up field instance and execute callback.
      * 
      * @param {Object} el
      * @param {Object} data
@@ -310,10 +319,12 @@
     /**
      * Internal method for constructing a field instance.
      * 
-     * @param el the dom element to act as the container of the constructed field
-     * @param data the data to be bound into the field
-     * @param options the configuration for the field
-     */
+	 * @param {Object} el the dom element to act as the container of the constructed field
+	 * @param {Object} data the data to be bound into the field
+	 * @param {Object} options the configuration for the field
+	 * @param {Object} schema the schema for the field
+	 * @param {Object} view the view for the field
+	 */
     Alpaca.createFieldInstance = function(el, data, options,schema,view) {
         // make sure options and schema are not empty
         if (options == null) options = {};
@@ -407,6 +418,18 @@
         STATE_REQUIRED: "required",
         STATE_VALID: "valid",
         STATE_INVALID: "invalid",
+		
+		/**
+		 * Default Locale
+		 */
+		defaultLocale: "en_US",
+		
+		/**
+         * Sets default Locale
+         */
+        setDefaultLocale: function(locale) {
+			this.defaultLocale = locale;
+		},
                 
         /**
          * Default Field Type to Schema Type Mapping
@@ -642,7 +665,11 @@
 		 */
 		_getMessage: function(messageId, view) {
 			if (view && view.messages && view.messages[messageId]) {
-				return view.messages[messageId];
+				if (view.messages[this.defaultLocale] && view.messages[this.defaultLocale][messageId]) {
+					return view.messages[this.defaultLocale][messageId];
+				} else {
+					return view.messages[messageId];
+				}
 			} else {
 				if (view && view.parent) {
 					return this._getMessage(messageId, this.views[view.parent]);

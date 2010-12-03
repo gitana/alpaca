@@ -16,7 +16,7 @@
 			
 			if (!this.schema.pattern)
 			{
-				this.schema.pattern = /^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/;
+				this.schema.pattern = /^(\D?(\d{3})\D?\D?(\d{3})\D?(\d{4}))?$/;
 			}
             
 			if (Alpaca.isEmpty(this.settings.mask)) {

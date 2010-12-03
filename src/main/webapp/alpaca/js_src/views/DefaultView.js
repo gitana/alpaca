@@ -44,7 +44,7 @@
 			description: "default web display view",
 			type: "view",
 			templates: {
-				field: '<div class="alpaca-data-container">{{if settings.label}}<div class="alpaca-data-label">${settings.label}</div>{{/if}}<div class="alpaca-data">${data}</div></div>',
+				field: '<div class="alpaca-data-container">{{if settings.label}}<div class="alpaca-data-label">${settings.label}</div>{{/if}}<div class="alpaca-data">&nbsp;${data}</div></div>',
 				fieldSetOuterEl: '<div>{{html this.html}}</div>',
 				fieldSetLegend: '{{if settings.label}}<div class="{{if settings.labelClass}}${settings.labelClass}{{/if}}">${settings.label}</div>{{/if}}',
 				itemsContainer: '<div>{{html this.html}}</div>',
