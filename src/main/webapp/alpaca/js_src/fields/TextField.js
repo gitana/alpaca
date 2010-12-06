@@ -77,10 +77,10 @@
          * Set value onto the input contorl
          */
         setValue: function(value, stopUpdateTrigger) {
-            if (value) {
-                $(this.inputElement).val(value);
-            } else {
+            if (Alpaca.isEmpty(value)) {
                 $(this.inputElement).val("");
+            } else {
+                $(this.inputElement).val(value);
             }
             
             // be sure to call into base method

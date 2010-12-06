@@ -28,7 +28,7 @@
             for (var fieldId in this.childrenById) {
                 var propertyId = this.childrenById[fieldId].propertyId;
                 var _data = Alpaca.traverseObject(data, propertyId);
-                if (_data) {
+                if (!Alpaca.isEmpty(_data)) {
                     var childField = this.childrenById[fieldId];
                     childField.setValue(_data);
                 }

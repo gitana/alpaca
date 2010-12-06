@@ -1,0 +1,17 @@
+<div>
+	<table>
+		<caption>${schema.title}</caption>
+		<tbody>
+		<tr>
+			<th>${schema.properties.rows.items.properties._doc.title}</th>
+			<th>${schema.properties.rows.items.properties._ref.title}</th>
+		</tr>
+		{{each(i,v) data.rows}}
+			<tr>
+				<td>${v._doc}</td>
+				<td>${v._ref}</td>
+			</tr>
+		{{/each}}
+		</tbody>
+	</table>
+</div>

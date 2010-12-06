@@ -23,7 +23,7 @@
      * }
      */
     Alpaca.Fields.NumberField = Alpaca.Fields.TextField.extend({
-    
+    		
         /**
          * @Override
          *

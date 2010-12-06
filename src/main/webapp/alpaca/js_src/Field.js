@@ -102,9 +102,13 @@
             if (!this.options.helper && this.schema.description) {
                 this.options.helper = this.schema.description;
             }
+			
+			if (Alpaca.isEmpty(this.options.readonly) && this.schema.readonly) {
+                this.options.readonly = this.schema.readonly;
+            }
             
             // data
-            if (!this.data && this.schema["default"]) {
+            if (Alpaca.isEmpty(this.data) && this.schema["default"]) {
                 this.data = this.schema["default"];
             }
             
@@ -175,7 +179,7 @@
          * Binds the data into the field.  Called at the very end of construction.
          */
         bindData: function() {
-            if (this.data) {
+            if (!Alpaca.isEmpty(this.data)) {
                 this.setValue(this.data, true);
             }
         },
@@ -293,6 +297,7 @@
             var renderedDomElement = $.tmpl(templateString, {
                 "id": this.getId(),
                 "options": this.options,
+				"schema": this.schema,
                 "data": this.data,
                 "view": this.getView()
             }, {});

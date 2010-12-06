@@ -969,7 +969,7 @@
 			if (subprop && key == subprop) {
 				key = keys.shift();
 			}
-			if (current[key]) {
+			if (!Alpaca.isEmpty(current[key])) {
 				current = current[key];
 				if (keys.length == 0) {
 					element = current;
