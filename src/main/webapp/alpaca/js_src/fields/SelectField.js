@@ -46,7 +46,7 @@
             if (controlFieldTemplate) {
                 this.inputElement = $.tmpl(controlFieldTemplate, {
                     "id": this.getId(),
-                    "settings": this.settings,
+                    "options": this.options,
                     "selectOptions": this.selectOptions,
                     "data": this.data
                 });
@@ -78,7 +78,7 @@
     
     });
     
-    Alpaca.registerTemplate("controlFieldSelect", '<select id="${id}" {{if settings.readonly}}readonly="on"{{/if}} {{if settings.formName}}name="${settings.formName}"{{/if}}>{{each selectOptions}}<option value="${value}" {{if value == data}}selected="selected"{{/if}}>${text}</option>{{/each}}/></select>');
+    Alpaca.registerTemplate("controlFieldSelect", '<select id="${id}" {{if options.readonly}}readonly="on"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}}>{{each selectOptions}}<option value="${value}" {{if value == data}}selected="selected"{{/if}}>${text}</option>{{/each}}/></select>');
     Alpaca.registerFieldClass("select", Alpaca.Fields.SelectField);
     
 })(jQuery);

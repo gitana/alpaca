@@ -12,29 +12,26 @@
         <link type="text/css" href="../css/example.css" rel="stylesheet" />
     </head>
     <body>
-	   <h3>View Examples</h3>
-	   <hr/>
-        <h4>Example 1: </h4>
+        <h3>View Examples</h3>
+        <hr/><h4>Example 1: </h4>
         <div id="field1">
         </div>
         <script type="text/javascript" id="field1-script">
             $(function() {
                 $("#field1").alpaca("Vanilla", {
-                    "settings": {
-                        "label": "Ice Cream",
-                        "helper": "Your favorite ice cream?",
-                        "size": 10
-                    }
+                    "label": "Ice Cream",
+                    "helper": "Your favorite ice cream?",
+                    "size": 10
                 }, {
                     "maxLength": 5
                 }, {
                     "type": "edit",
-					"templates": {
+                    "templates": {
                         "fieldOuterEl": '<span class="alpaca-field" id="${outerElId}" alpaca-field-id="${id}"><div>Alpaca Farm Survey</div>{{html this.html}}</span>',
-                        "controlFieldHelper": '{{if settings.helper}}<span class="{{if settings.helperClass}}${settings.helperClass}{{/if}}" id="${helperId}">${settings.helper}</span>{{/if}}'
+                        "controlFieldHelper": '{{if options.helper}}<span class="{{if options.helperClass}}${options.helperClass}{{/if}}" id="${helperId}">${options.helper}</span>{{/if}}'
                     },
-					"messages": {
-                            "stringTooLong": "Input Maximum length {0}"
+                    "messages": {
+                        "stringTooLong": "Input Maximum length {0}"
                     }
                 });
             });
@@ -54,8 +51,7 @@
         </div>
         <script type="text/javascript" id="field3-script">
             $(function() {
-                $("#field3").alpaca("Alpaca Farm Offers Best Home Made Ice Cream!", {
-                }, {}, {
+                $("#field3").alpaca("Alpaca Farm Offers Best Home Made Ice Cream!", {}, {}, {
                     "templates": {
                         "full": '<div>Our Tagline: ${data}</div>'
                     }
@@ -69,15 +65,13 @@
         <script type="text/javascript"id="field4-script">
             $(function() {
                 $("#field4").alpaca('/alpaca/examples/data/data3.json', {
-                    "settings": {
-                        "label": "History Of Alpaca Farm",
-                        "helper": "Family Owned Business Since 1996!"
-                    }
+                    "label": "History Of Alpaca Farm",
+                    "helper": "Family Owned Business Since 1996!"
                 }, {}, {
                     "templates": {
                         "full": '/alpaca/examples/data/template3.html'
                     }
-                });                
+                });
             });
         </script>
     </body>

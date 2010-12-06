@@ -13,12 +13,11 @@
     </head>
     <body>
         <h3>Array Field</h3>
-		<hr/>
-        <h4>Example 1: </h4>
+        <hr/><h4>Example 1: </h4>
         <div id="field1">
         </div>
         <script type="text/javascript" id="field1-script">
-            $(function(){
+            $(function() {
                 $("#field1").alpaca(["test1", "test2", "test3"]);
             });
         </script>
@@ -26,12 +25,10 @@
         <div id="field2">
         </div>
         <script type="text/javascript" id="field2-script">
-            $(function(){
+            $(function() {
                 $("#field2").alpaca(["Mint Chocolate"], {
-                    "settings": {
-                        "label": "Ice Cream",
-                        "helper": "Favorite Ice Cream",
-                    }
+                    "label": "Ice Cream",
+                    "helper": "Favorite Ice Cream",
                 }, {
                     "description": "My Favorite Ice Creams",
                     "type": "array",

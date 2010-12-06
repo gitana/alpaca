@@ -19,12 +19,12 @@
 				this.schema.pattern = /^(\D?(\d{3})\D?\D?(\d{3})\D?(\d{4}))?$/;
 			}
             
-			if (Alpaca.isEmpty(this.settings.mask)) {
-                this.settings.mask = true;
+			if (Alpaca.isEmpty(this.options.mask)) {
+                this.options.mask = true;
             }
             
-            if (Alpaca.isEmpty(this.settings.maskString)) {
-                this.settings.maskString = "(999) 999-9999";
+            if (Alpaca.isEmpty(this.options.maskString)) {
+                this.options.maskString = "(999) 999-9999";
             }
             
 		},

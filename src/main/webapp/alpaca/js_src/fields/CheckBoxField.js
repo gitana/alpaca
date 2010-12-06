@@ -21,8 +21,8 @@
         setup: function() {
             this.base();
             
-            if (!this.settings.rightLabel) {
-                this.settings.rightLabel = "";
+            if (!this.options.rightLabel) {
+                this.options.rightLabel = "";
             }
             
             // We force the optional schema setting since booleans either exist or they don't and both are valid values
@@ -41,7 +41,7 @@
             if (controlFieldTemplate) {
                 this.inputElement = $.tmpl(controlFieldTemplate, {
                     "id": this.getId(),
-                    "settings": this.settings
+                    "options": this.options
                 });
                 this.injectField(this.inputElement);
                 this.inputElement = $('input[id="' + this.getId() + '"]', this.inputElement);
@@ -96,7 +96,7 @@
         
     });
     
-    Alpaca.registerTemplate("controlFieldCheckbox", '<span><input type="checkbox" id="${id}" {{if settings.readonly}}readonly="on"{{/if}} {{if settings.formName}}name="${settings.formName}"{{/if}} {{each settings.data}}data-${fieldId}="${value}"{{/each}}/>{{if settings.rightLabel}}<label for="${id}">${settings.rightLabel}</label>{{/if}}</span>');
+    Alpaca.registerTemplate("controlFieldCheckbox", '<span><input type="checkbox" id="${id}" {{if options.readonly}}readonly="on"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}} {{each options.data}}data-${fieldId}="${value}"{{/each}}/>{{if options.rightLabel}}<label for="${id}">${options.rightLabel}</label>{{/if}}</span>');
     
     Alpaca.registerFieldClass("checkbox", Alpaca.Fields.CheckBoxField);
     Alpaca.registerDefaultSchemaFieldMapping("boolean", "checkbox");

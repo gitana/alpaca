@@ -1,10 +1,7 @@
-/*********************************************************************************************
- **
- ** FIELD ABSTRACT CLASS
- **
- *********************************************************************************************/
-/** This gets wrapped around every Alpaca field's SPAN element **/
-DIV.alpaca-field {
+/**
+ *  Abstract Field
+ */
+.alpaca-field {
     display: inline-block;
 }
 
@@ -14,23 +11,22 @@ DIV.alpaca-field {
 .alpaca-field-optional {
 }
 
-/*********************************************************************************************
- **
- ** CONTROL FIELD ABSTRACT CLASS
- **
- *********************************************************************************************/
-/** #fieldContainer **/
+/**
+ *  Control Field
+ */
 .alpaca-field-container {
     display: inline-block;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .alpaca-field-label {
     color: #505050;
     text-align: left;
-    margin: 2px 0px 2px 0px;
+    margin: 4px 0px 2px 0px;
     min-width: 75px;
-	font-size: 100%;
-	font-weight: bold;
+    font-size: 100%;
+    font-weight: bold;
 }
 
 .alpaca-field-helper {
@@ -48,54 +44,67 @@ DIV.alpaca-field {
 }
 
 /**
- * VALID, INVALID, EMPTY states (and focused)
+ * Invalid Field
  */
-.alpaca-field-invalid > div.alpaca-field-message {
+.alpaca-field-invalid > div.alpaca-field-message, .alpaca-field-invalid > div.alpaca-field-label, .alpaca-field-invalid > label {
     color: #C00E0C;
     font-weight: bold;
 }
 
-.alpaca-field-invalid > div.alpaca-field-label {
-    color: #C00E0C;
-    font-weight: bold;
-}
-
-.alpaca-field-invalid > div.alpaca-field-label label {
-    background: transparent url(../images/error_bang.gif) no-repeat scroll 0 1px;
+.alpaca-field-invalid > div.alpaca-field-label, .alpaca-field-invalid > label {
+    background: transparent url(../images/error.png) no-repeat scroll left center;
     padding-left: 20px;
 }
 
+/**
+ * Valid Field
+ */
 .alpaca-field-valid > div.alpaca-field-message {
     color: #505050;
     font-weight: normal;
 }
 
-.alpaca-field-valid > div.alpaca-field-label {
+.alpaca-field-valid > div.alpaca-field-label, .alpaca-field-valid > label {
     color: #505050;
-    font-weight: normal;
+    font-weight: bold;
 }
 
 /* Properties set by an invalid higher hierarchy field are disabled for valid or empty subfields */
 .alpaca-field-valid > div.alpaca-field-label label, .alpaca-field-empty > div.alpaca-field-label label {
     background: none;
     padding-left: inherit;
-    font-weight: normal;
-    color: #505050;
 }
 
-/*********************************************************************************************
- **
- ** TEXTFIELD
- **
- *********************************************************************************************/
+/**
+ * Input field
+ */
+input, textarea, select {
+    border: 1px solid #555;
+    padding: 2px;
+    font-size: 100%;
+    border-radius: 2px;
+    -khtml-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border: 2px solid #058cf5;
+}
+
+/**
+ * Text Field
+ */
 .alpaca-textfield {
 }
 
-/*********************************************************************************************
- **
- ** DATEFIELD
- **
- *********************************************************************************************/
+/**
+ * Date Field
+ */
 .alpaca-datefield {
     background: transparent url(../images/calendar.png) no-repeat scroll left center;
     padding-left: 30px;
@@ -105,6 +114,9 @@ DIV.alpaca-field {
     width: 100px;
 }
 
+/**
+ * Phone Field
+ */
 .alpaca-phonefield {
     background: transparent url(../images/phone.png) no-repeat scroll left center;
     padding-left: 30px;
@@ -114,27 +126,30 @@ DIV.alpaca-field {
     width: 200px;
 }
 
+/**
+ * Email Field
+ */
 .alpaca-emailfield {
     background: transparent url(../images/email.png) no-repeat scroll left center;
     padding-left: 30px;
 }
 
-.alpaca-phonefield input {
-    width: 120px;
+.alpaca-emailfield input {
+    width: 200px;
 }
 
+/**
+ * Address Map Field
+ */
 .alpaca-map-canvas {
     height: 300px;
-	width: 300px;
-	margin: 10px;
+    width: 300px;
+    margin: 10px;
 }
 
-/*********************************************************************************************
- **
- ** CHECKBOXFIELD
- **
- *********************************************************************************************/
-/* Common css */
+/**
+ * Checkbox Field
+ */
 .alpaca-checkboxfield {
     padding-top: 0.2em;
 }
@@ -156,129 +171,26 @@ label.alpacaForm-checkboxfield-rightLabel {
     background-color: #FFFFCC;
 }
 
-/*
- span.alpaca-fieldWrapper
- {
- border: 2px red solid;
- }
- */
 div.alpaca-clear-div {
     clear: both;
 }
 
-/*
- div.alpaca-typeInvite > div.alpaca-Field input, div.alpaca-typeInvite > div.alpaca-Field textarea {
- color: #aaa;
- }
- div.alpaca-empty div.alpaca-valid div.alpaca-Field input, div.alpaca-empty div.alpaca-valid div.alpaca-Field textarea {
- color: black;
- }
- */
 /**
- * alpaca.Object
+ * Url Field
  */
-/*
- div.alpaca-Object div.alpaca-field-label
- {
- width: 130px;
- }
- 
- legend.alpaca-Object-legend {
- color:#63126B;
- font-weight: bold;
- }
- 
- div.alpaca-Object div.alpaca-Object-collapseImg {
- width: 14px;
- height: 14px;
- background-image: url(../images/sprite-menu.gif);
- background-color: transparent;
- background-repeat: no-repeat;
- background-attachment: scroll;
- float: left;
- }
- 
- div.alpaca-Object fieldset.alpaca-Expanded legend ,
- div.alpaca-Object fieldset.alpaca-Collapsed legend {
- cursor: pointer;
- }
- 
- div.alpaca-Object fieldset.alpaca-Expanded legend div.alpaca-Object-collapseImg {
- background-position: -8px 2px;
- }
- 
- div.alpaca-Object fieldset.alpaca-Expanded legend:hover div.alpaca-Object-collapseImg {
- background-position: -8px -78px;
- }
- 
- div.alpaca-Object fieldset.alpaca-Collapsed legend div.alpaca-Object-collapseImg {
- background-position: -8px -317px;
- }
- 
- div.alpaca-Object fieldset.alpaca-Collapsed legend:hover div.alpaca-Object-collapseImg {
- background-position: -8px -397px;
- }
- 
- div.alpaca-Object fieldset.alpaca-Collapsed div.alpaca-fieldWrapper {
- display: none;
- }
- */
-/**
- * alpaca.Form
- */
-div.alpaca-Form-buttonBar {
-    margin: 3px 0 0 137px;
-}
-
-.alpaca-Button {
-    margin: 0 4px 0 0;
-}
-
-div.alpaca-Form-Mask {
-    height: 275px;
-    left: 0pt;
-    position: absolute;
-    top: 0pt;
-    width: 180px;
-}
-
-div.alpaca-Form-Mask div.alpaca-Form-Mask-bg {
-    background-color: #FFFFFF;
-    height: 100%;
-    left: 0pt;
-    opacity: 0.9;
-    position: absolute;
-    top: 0pt;
-    width: 100%;
-}
-
-div.alpaca-Form-Mask div.alpaca-Form-Mask-spinner {
-    width: 36px;
-    height: 36px;
-    background-image: url(../images/spinner.gif);
-}
-
-div.alpaca-Form-Mask span {
-    color: #666666;
-}
-
-/**
- * UrlField
- */
-/* position relative to position:absolute favicon inside */
-div.alpaca-UrlField {
+div.alpaca-urlfield {
     position: relative;
 }
 
-div.alpaca-UrlField input {
+div.alpaca-urlfield input {
     padding-left: 20px;
 }
 
-div.alpaca-UrlField input.nofavicon {
+div.alpaca-urlfield input.nofavicon {
     padding-left: 0px;
 }
 
-div.alpaca-UrlField img {
+div.alpaca-urlfield img {
     position: absolute;
     top: 3px;
     left: 2px;
@@ -287,507 +199,24 @@ div.alpaca-UrlField img {
 }
 
 /**
- * alpaca-ListField
- */
-/* Buttons */
-img.alpaca-ListField-addButton {
-    background: transparent url(../images/add.png) no-repeat scroll 0%;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-}
-
-img.alpaca-ListField-delButton {
-    background: transparent url(../images/delete.png) no-repeat scroll 0%;
-    width: 16px;
-    height: 16px;
-    float: left;
-    cursor: pointer;
-}
-
-/* Arrows */
-div.alpaca-ListField-Arrow {
-    width: 16px;
-    height: 16px;
-    float: left;
-    cursor: pointer;
-}
-
-div.alpaca-ListField-ArrowUp {
-    background: transparent url(../images/bullet_arrow_up.png) no-repeat scroll 0%;
-}
-
-div.alpaca-ListField-ArrowDown {
-    background: transparent url(../images/bullet_arrow_down.png) no-repeat scroll 0%;
-}
-
-a.alpaca-List-link {
-    color: blue;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-a.alpaca-List-link:hover {
-    text-decoration: underline;
-}
-
-/**
- * alpaca.InPlaceEdit
- */
-div.alpaca-InPlaceEdit-visu {
-    cursor: pointer;
-    padding: 3px;
-}
-
-.alpaca-InPlaceEdit-editor .alpaca-InPlaceEdit-editorDiv {
-    float: left;
-    margin-bottom: 0; /* remove 0.2em bottom margin because no need to cumulate field and editor-field margins */
-}
-
-.alpaca-InPlaceEdit-OkButton {
-    margin-left: 5px;
-}
-
-/**
- * alpaca.AutoComplete
- */
-.yui-skin-sam div.alpaca-AutoComplete .yui-ac-input {
-    width: auto;
-    position: relative;
-}
-
-.yui-skin-sam div.alpaca-AutoComplete .yui-ac-content {
-    width: auto;
-}
-
-div.alpaca-AutoComplete div.yui-ac-container {
-    margin-bottom: 2em;
-    width: 25em;
-}
-
-/**
- * Picker fields
- */
-div.alpaca-PickerField, div.alpaca-PickerField input {
-    vertical-align: top;
-}
-
-div.alpaca-PickerField {
-    background: none;
-    padding-left: 0;
-}
-
-div.alpaca-PickerField .yui-menu-button button {
-    background-position: center center;
-    background-repeat: no-repeat;
-    padding: 0;
-    width: 20px;
-    height: 18px;
-    min-height: 0; /* reset "min-height:2em" that prevented "height:18px" to be applied */
-}
-
-div.alpaca-PickerField .yui-overlay {
-    -moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), -2px 2px 4px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), -2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/*
- * Date Picker
- */
-div.alpaca-DatePickerField .yui-menu-button button {
-    background-image: url(../images/calendar.gif);
-}
-
-/**
- * Color Field
- */
-div.alpaca-ColorField div.yui-overlay div.bd {
-    background: white no-repeat scroll 5px 5px;
-    border: 1px solid #AAAAAA;
-}
-
-div.alpaca-ColorField .yui-menu-button button {
-    background-image: url(../images/palette.png);
-}
-
-div.alpaca-ColorField-button {
-    height: 19px;
-    width: 100px;
-    border: 1px solid #B5B8C8;
-    margin-left: 0px;
-    cursor: pointer;
-    float: left; /* to display color picker icon on the right */
-}
-
-.alpaca-ColorField-square {
-    float: left;
-    cursor: pointer;
-    width: 15px;
-    height: 15px;
-    margin: 2px;
-}
-
-.alpaca-ColorField-square.selected {
-    width: 13px;
-    height: 13px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #666666;
-    border-color: rgba(0, 0, 0, 0.5);
-}
-
-.alpaca-ColorField-square:hover {
-    width: 13px;
-    height: 13px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #666666;
-    border-color: rgba(0, 0, 0, 0.5);
-}
-
-.alpaca-ColorField-Grid {
-    padding: 5px;
-}
-
-/**
- * ColorPicker Field (YUI ColorPicker)
- */
-.alpaca-ColorPicker-Button {
-    vertical-align: baseline;
-}
-
-.alpaca-ColorPicker-Button button {
-    outline: none; /* Safari */
-    line-height: 1.5;
-}
-
-/* Style the Button instance's label as a square whose background color
- represents the current value of the ColorPicker instance. */
-.alpaca-ColorPicker-Label {
-    display: block;
-    display: inline-block;
-    *display:block; /* For IE */ * margin:
-    .25em 0; /* For IE */
-width:
-    1em;
-    height:
-    1em;
-    overflow: hidden;
-    text-indent:
-    1em;
-    background-color:
-    #fff;
-    white-space: nowrap;
-    border: solid
-    1px #000;
-}
-
-/* Hide default colors for the ColorPicker instance. */
-.alpaca-ColorPicker-Container-nocontrols .yui-picker-controls, .alpaca-ColorPicker-Container-nocontrols .yui-picker-swatch, .alpaca-ColorPicker-Container-nocontrols .yui-picker-websafe-swatch {
-    display: none;
-}
-
-/* Size the body element of the Menu instance to match the dimensions of the ColorPicker instance. */
-.alpaca-ColorPicker-Container {
-    width: 370px;
-    height: 190px;
-}
-
-.alpaca-ColorPicker-Container-nocontrols {
-    width: 220px;
-    height: 190px;
-}
-
-/**
- * SliderField
- */
-div.alpaca-SliderField {
-}
-
-div.alpaca-SliderField div.alpaca-SliderField-bg {
-    position: relative;
-    background: url('../images/slider-bg-h.gif') 5px 0 no-repeat;
-    height: 28px;
-    width: 112px;
-    float: left;
-}
-
-div.alpaca-SliderField div.alpaca-SliderField-thumb {
-    background: url('../images/thumb-n.gif') 0px 0px no-repeat;
-    cursor: pointer;
-    position: absolute;
-    top: 4px;
-    width: 17px;
-    height: 21px;
-}
-
-div.alpaca-SliderField div.alpaca-SliderField-value {
-    float: left;
-    margin-top: 6px;
-    margin-left: 5px;
-}
-
-/**
- * Password Field
- */
-div.alpaca-PasswordField input {
-    float: left;
-}
-
-div.alpaca-PasswordField div.capsLockWarning {
-    float: left;
-    margin: 3px 4px;
-    color: #505050;
-    font-size: 85%;
-}
-
-div.alpaca-Password-StrengthIndicator {
-    float: left;
-    color: #505050;
-    font-size: 70%;
-    margin-left: 10px;
-    width: 83px;
-}
-
-div.alpaca-Password-StrengthIndicator div.alpaca-Password-StrengthIndicatorBlock {
-    background-color: white;
-    width: 1.4em;
-    height: 7px;
-    border: 1px solid #aaaaaa;
-    float: left;
-    margin-left: 2px;
-}
-
-/* Awful hack to target webkit */
-@media screen and (-webkit-min-device-pixel-ratio:0) { div.alpaca-CheckBox input {position:relative; top:1px;} }
-
-
-/**
- * Radio Field
- */
-label.alpaca-RadioField-rightLabel { cursor: pointer; }
-
-div.alpaca-RadioField-choice { float: left; margin-right: 10px; padding-top:0.2em; }
-div.alpaca-RadioField-choice input[type="radio"] { margin-right:0.2em; }
-
-/* Vertical display */
-.alpaca-RadioField-Vertically .alpaca-RadioField-choice { float: none; }
-
-/**
- * CombineField
- */
-
-div.alpaca-CombineField-separator {
-   float: left;
-   margin-top:2px;
-}
-
-/**
- * DDList
- */
-.alpaca-DDList-item {
-   padding: 5px;
-   background-color: #DDDDDD;
-   cursor: move;
-   border: 1px solid #BBBBBB;
-   width: 300px;
-   position: relative;
-}
-
-.alpaca-DDList-item span.alpaca-DDList-label {
-}
-
-.alpaca-DDList-item a {
-   color:#D05D00;
-   padding: 3px 5px;
-   position:absolute;
-   right:0;
-   top:0;
-   cursor: pointer;
-}
-
-.alpaca-DDList-item a:hover {
-   text-decoration: underline;
-}
-
-
-/**
- * alpaca.TypeField
- */
-div.alpaca-TypeField-EditButton {
-   width: 16px;
-   height: 16px;
-   background-image: url(../images/pencil.png);
-   cursor: pointer;
-   float: left;
-   margin-left:4px;
-   position: relative;
-}
-
-div.alpaca-TypeField-EditButton.opened {
-   background-image: url(../images/pencil_delete.png);
-}
-
-div.alpaca-TypeField-FieldValueWrapper {
-   float: left;
-   margin-left: 4px;
-}
-
-div.alpaca-TypeField-PropertiesPanel {
-   border: 1px solid #aaa;
-   padding: 3px;
-   background-color: white;
-   position: absolute;
-   top: 0px;
-   left: 16px;
-   z-index:1;
-   width: 380px;
-}
-
-/**
- * alpaca.MenuField
- */
-
-div.alpaca-MenuField div.alpaca-Result {background-color:#FFFFFF; border:1px solid #CCCCCC; padding:2px 25px 2px 5px; cursor:pointer}
-div.alpaca-MenuField div.alpaca-RightArrow {background-image:url(../images/menu-right-arrow.png);background-position:right center;background-repeat:no-repeat;}
-div.alpaca-MenuField div.alpaca-DownArrow {background-image:url(../images/menu-down-arrow.png);background-position:right center;background-repeat:no-repeat;}
-
-
-/**
- * alpaca-JsonTreeInspector
- */
-ul.alpaca-JsonTreeInspector li {
-   padding-left: 20px;
-   list-style-type: none;
-}
- 
-ul.alpaca-JsonTreeInspector li.collapsed {
-   background:transparent url(../images/plus.gif) no-repeat scroll 0 0;
-   cursor: pointer;
-}
-
-ul.alpaca-JsonTreeInspector li.expanded {
-   background:transparent url(../images/minus.gif) no-repeat scroll 0 0;
-   cursor: pointer;
-}
-
-ul.alpaca-JsonTreeInspector li span {
-   padding-left: 20px;
-   color: green;
-}
-
-ul.alpaca-JsonTreeInspector li span.type-number,
-ul.alpaca-JsonTreeInspector li span.type-boolean {
-   color: blue;
-}
-
-ul.alpaca-JsonTreeInspector li span.type-null {
-   color: red;
-}
-
-
-/**
- * Datatable
- */
-.yui-skin-sam .alpaca-datatable-columnsDlg {visibility:hidden;border:1px solid #808080;background-color:#E3E3E3;}
-.yui-skin-sam .alpaca-datatable-columnsDlg .hd {font-weight:bold;padding:1em;background:none;background-color:#E3E3E3;border-bottom:0;}
-.yui-skin-sam .alpaca-datatable-columnsDlg .ft {text-align:right;padding:.5em;background-color:#E3E3E3;}
-.yui-skin-sam .alpaca-datatable-columnsDlg .bd {height:10em;margin:0 1em;overflow:auto;border:1px solid black;background-color:white;}
-.yui-skin-sam .alpaca-datatable-columnsDlg .dt-dlg-pickercol {clear:both;padding:.5em 1em 3em;border-bottom:1px solid gray;}
-.yui-skin-sam .alpaca-datatable-columnsDlg .dt-dlg-pickerkey {float:left;}
-.yui-skin-sam .alpaca-datatable-columnsDlg .dt-dlg-pickerbtns {float:right;}
-/* Container workarounds for Mac Gecko scrollbar issues */
-.yui-skin-sam .yui-panel-container.hide-scrollbars .alpaca-datatable-columnsDlg .bd {
-    /* Hide scrollbars by default for Gecko on OS X */
-    overflow: hidden;
-}
-.yui-skin-sam .yui-panel-container.show-scrollbars .alpaca-datatable-columnsDlg .bd {
-    /* Show scrollbars for Gecko on OS X when the Panel is visible  */
-    overflow: auto;
-}
-
-/**
- * alpaca-dtInPlaceEdit
- */
-tbody.yui-dt-data td.yui-dt-editable div.alpaca-dtInPlaceEdit-onModifyItem{
-	background-color: #FFAFAF;
-}
-
-tbody.yui-dt-data div.alpaca-dtInPlaceEdit-deleteLinkSpinner{
-	width:16px;
-	height:16px;
-	background:transparent url(../images/ajax-loader.gif) no-repeat scroll 20px 4px;
-}
-
-/**
- * StringAvailability
- */
-div.alpaca-fieldWrapper div.availabilityDiv { 
-	display:none;
-	float:left;
-	height:20px;
-}
-
-div.alpaca-fieldWrapper div.availabilityDiv div.icon {
-	float:left;
-	display:none;
-	height:20px;
-	width:16px;
-	margin-left:5px;
-}
-
-div.alpaca-fieldWrapper div.availabilityDiv.loading div.icon {
-	display:block;
-	background: transparent url(../images/ajax-loader.gif) no-repeat 0 3px;
-}
-
-div.alpaca-fieldWrapper div.availabilityDiv.available div.icon {
-	display:block;
-	background: transparent url(../images/tick.gif) no-repeat 0 3px;
-}
-
-div.alpaca-fieldWrapper div.availabilityDiv.unavailable div.icon {
-	display:block;
-	background: transparent url(../images/exclamation.gif) no-repeat 0 3px;
-}
-
-
-div.alpaca-fieldWrapper div.availabilityDiv div.text {
-	float:left;
-	height:20px;
-	padding:4px 5px 0;
-	font-size:85%;
-	font-weight:bold;
-}
-
-div.alpaca-fieldWrapper div.availabilityDiv.unavailable div.text,
-div.alpaca-fieldWrapper div.availabilityDiv.required div.text{
-	color:#C00E0C;
-}
-
-div.alpaca-fieldWrapper div.availabilityDiv.available div.text{
-	color:#2C811D;
-}
-
-/**
  * Fieldset
  */
 .alpaca-form {
-	margin-top: 15px;
-	margin-left: 15px;
+    margin-top: 15px;
+    margin-left: 15px;
 }
 
 fieldset.alpaca-fieldset {
-	display: inline-block;
-	margin:25px auto;
-	border-bottom-right-radius:10px;
-	-khtml-border-bottom-right-radius:10px;
-	-moz-border-radius-bottomright:10px;
-	-webkit-border-bottom-right-radius:10px;
-	color:#606060;
-	border:solid 1px #b7b7b7;
-	background:#fff;
-	background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+    display: inline-block;
+    margin: 15px 10px 10px 0px;
+    border-bottom-right-radius: 10px;
+    -khtml-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    color: #606060;
+    border: solid 1px #b7b7b7;
+    background: #fff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
 	background:-moz-linear-gradient(top, #fff, #ededed);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
 	text-shadow:0 1px 1px rgba(255,255,255,1);
@@ -823,22 +252,12 @@ legend.legend-expanded:before {
 	content:"\25BC";	
 }
 
-/*
-.alpaca-fieldset-legend-collapsed {
-	display:inline-block;
-	-o-transform:rotate(90deg);
-	transform:rotate(90deg);
-	-webkit-transform:rotate(90deg);
-	-moz-transform:rotate(90deg);
-	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2); 
-}
-*/
 legend.legend-collapsed:before {
 	content:"\25B6";	
 }
 
 .alpaca-fieldset-helper {
-	padding-top: 5px;
+	padding-top: 10px;
 	padding-bottom:5px;
 	clear:both;
 }
@@ -848,31 +267,28 @@ legend.legend-collapsed:before {
 	padding-bottom:5px;
 	clear:both;
 }
-.alpaca-field-container {
-	padding-top: 2px;
-	padding-bottom:10px;
-}
+
 /**
  * Item Toolbar 
  */
 .alpaca-item-toolbar {
-background-color: #DAE8EC;
-border-bottom-right-radius:10px;
--khtml-border-bottom-right-radius:10px;
--moz-border-radius-bottomright:10px;
--webkit-border-bottom-right-radius:10px;
-border: 1px solid #B8CB99;
-padding: 1px;
+	background-color: #DAE8EC;
+	border-bottom-right-radius:10px;
+	-khtml-border-bottom-right-radius:10px;
+	-moz-border-radius-bottomright:10px;
+	-webkit-border-bottom-right-radius:10px;
+	border: 1px solid #B8CB99;
+	padding: 1px;
 }
 
 .alpaca-array-toolbar {
-background-color: #DAE8EC;
-border-bottom-right-radius:10px;
--khtml-border-bottom-right-radius:10px;
--moz-border-radius-bottomright:10px;
--webkit-border-bottom-right-radius:10px;
-border: 1px solid #B8CB99;
-padding: 1px;
+	background-color: #DAE8EC;
+	border-bottom-right-radius:10px;
+	-khtml-border-bottom-right-radius:10px;
+	-moz-border-radius-bottomright:10px;
+	-webkit-border-bottom-right-radius:10px;
+	border: 1px solid #B8CB99;
+	padding: 1px;
 }
 
 .alpaca-item-toolbar-icon {
@@ -916,15 +332,19 @@ padding: 1px;
 /**
  * Butons
  */
+.alpaca-form-buttons-container {
+	clear:both;
+}
+
 .alpaca-form-button {
 	display: inline-block;
-	margin: 2px;
+	margin: 4px;
 	outline: none;
 	cursor: pointer;
 	text-align: center;
 	text-decoration: none;
 	font: 14px/100% Arial, Helvetica, sans-serif;
-	padding: 2px;
+	padding: 4px;
 	text-shadow: 0 1px 1px rgba(0,0,0,.3);
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -946,7 +366,12 @@ padding: 1px;
 	background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));
 	background: -moz-linear-gradient(top,  #f88e11,  #f06015);
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');	
+	-webkit-transform:  scale(1.3);
+	-moz-transform: scale(1.3);
+	text-shadow: 0px 0px 4px rgba(0,0,0,.5);
+	color:#fff !important;
 }
+
 .alpaca-form-button:active {
 	position: relative;
 	top: 1px;
@@ -954,13 +379,6 @@ padding: 1px;
 	background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
 	background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');	
-}
-
-.alpaca-form-button:hover {
-	-webkit-transform:  scale(1.3);
-	-moz-transform: scale(1.3);
-	text-shadow: 0px 0px 4px rgba(0,0,0,.5);
-	color:#fff !important;
 }
 
 .alpaca-form-button-gitana:before {
@@ -984,27 +402,6 @@ padding: 1px;
 	padding: 2px 5px 2px 5px;
 	margin-right:5px;
 }	
-
-/**
- * Input field
- */
-input, textarea, select {
-	 border: 1px solid #555;
-	 padding: 2px;
-	 font-size: 100%;	 
-	 border-radius:2px;
-	 -khtml-border-radius:2px;
-	 -moz-border-radius:2px;
-	 -webkit-border-radius:2px;
-	 -webkit-box-shadow:0 1px 2px rgba(0,0,0,.2);
-	 -moz-box-shadow:0 1px 2px rgba(0,0,0,.2);
-	 box-shadow:0 1px 2px rgba(0,0,0,.2);
-}
-	 
-input:focus, textarea:focus {
-	 outline: none;
-	 border: 2px solid #058cf5;
-}   
 
 /**
  * Data
@@ -1058,4 +455,146 @@ div.alpaca-fieldset-legend {
 	font-weight: bold;
 	clear: both;
 }
- 
+
+/**
+ * Wizard
+ */
+.alpaca-wizard-status-bar { 
+	list-style:none; 
+	width:100%; 
+	overflow:hidden; 
+	margin:10px 0 10px 0; 
+	padding:0px;
+	background:#7b8d77;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	text-shadow:none;
+	-webkit-box-shadow:0;
+	-moz-box-shadow:0;
+	box-shadow:none;	
+	color:#ffffff;
+	counter-reset:step;
+	float:left;
+}
+
+.alpaca-wizard-status-bar li {
+	font-size:11px; 
+	float:left; 
+	padding:5px; 
+	color:#ffffff;
+	min-width:120px;
+	text-shadow:none;
+	font-style:italic;
+}
+
+.alpaca-wizard-status-bar li span {
+	font-size:18px; 
+	display:block;
+	text-shadow:none;
+	font-style:normal;	
+}
+
+.alpaca-wizard-status-bar li div {
+	display:block;
+	text-decoration:none;
+	position:relative;
+	padding:2px 25px 2px 30px;
+}	
+
+.alpaca-wizard-status-bar li div:before {
+	font-size:11px;
+
+	position:absolute;
+	top:50%;
+	left:5px;
+	margin-top:-8px;
+	
+	counter-increment:step;
+	content:counter(step);
+	text-align:center;
+	font-weight:bold;
+	padding:2px 6px;
+	background:rgba(0,0,0,0.25);
+	
+	-moz-border-radius:20px;
+	-webkit-border-radius:20px;
+	border-radius:20px;
+}
+
+
+.alpaca-wizard-status-bar li div strong {
+	font-weight:normal
+}
+
+.alpaca-wizard-status-bar li.current { 
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	text-shadow:none;
+	color:#ffffff;
+	background:#a49d4d;	
+}
+
+.alpaca-wizard-status-bar li.current-has-next { 
+	background:url(../images/splitter.gif) right center no-repeat #a49d4d;
+}
+
+.alpaca-wizard-title {
+	font-size:120%; 
+	margin:0px; 
+	padding:10px 0px; 
+	font-weight:bold;
+}
+
+.alpaca-wizard-desc {
+	font-size:90%; 
+	margin:0px; 
+	padding:5px 0px; 
+}
+
+.alpaca-wizard-step-title {
+	font-size:100%; 
+	margin:0px; 
+	padding:10px 0px; 
+	text-decoration:underline; 
+	font-weight:bold;
+}
+
+.alpaca-wizard-nav-bar {
+	clear:both;
+}
+
+.alpaca-wizard-button {
+	display: inline-block;
+	margin: 4px;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	padding: 4px;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	
+	color: #fef4e9;
+	border: solid 1px #000;
+	background: #7b8d77;
+}
+
+.alpaca-wizard-button:hover {
+	background: #a49d4d;
+}
+
+.alpaca-wizard-button-back {
+	float:left;
+}
+
+.alpaca-wizard-button-next {
+	float:right;
+}

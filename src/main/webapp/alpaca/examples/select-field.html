@@ -13,37 +13,32 @@
     </head>
     <body>
         <h3>Select Field</h3>
-		<hr/>
-        <h4>Example 1: </h4>
+        <hr/><h4>Example 1: </h4>
         <div id="field1">
         </div>
         <script type="text/javascript"id="field1-script">
-            $(function(){
+            $(function() {
                 $("#field1").alpaca("Coffee", {
-                    "settings": {
-                        "label": "Ice cream",
-                        "helper": "Guess my favorite ice cream?"
-                    }
+                    "label": "Ice cream",
+                    "helper": "Guess my favorite ice cream?"
                 }, {
-					"enum":["Vanilla","Chocolate","Coffee","Strawberry","Mint"]
-				});                
+                    "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+                });
             });
-        </script>    
+        </script>
         <h4>Example 2: </h4>
         <div id="field2">
         </div>
         <script type="text/javascript"id="field2-script">
-            $(function(){
+            $(function() {
                 $("#field2").alpaca("Coffee", {
-                    "settings": {
-                        "label": "Ice cream",
-                        "helper": "Guess my favorite ice cream?",
-						optionLabels: ["Vanilla Flavor","Chocolate Flavor","Coffee Flavor"]
-                    }
+                    "label": "Ice cream",
+                    "helper": "Guess my favorite ice cream?",
+                    "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"]
                 }, {
-					"enum":["Vanilla","Chocolate","Coffee","Strawberry","Mint"]
-				});                
+                    "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+                });
             });
-        </script>    
-	</body>
+        </script>
+    </body>
 </html>

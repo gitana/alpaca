@@ -21,12 +21,12 @@
         setup: function() {
             this.base();
             
-            if (!this.settings.rows) {
-                this.settings.rows = 5;
+            if (!this.options.rows) {
+                this.options.rows = 5;
             }
             
-            if (!this.settings.cols) {
-                this.settings.cols = 40;
+            if (!this.options.cols) {
+                this.options.cols = 40;
             }
         },
         
@@ -45,7 +45,7 @@
             if (controlFieldTemplate) {
                 this.inputElement = $.tmpl(controlFieldTemplate, {
                     "id": this.getId(),
-                    "settings": this.settings
+                    "options": this.options
                 });
                 this.injectField(this.inputElement);
             }
@@ -76,7 +76,7 @@
         
     });
     
-    Alpaca.registerTemplate("controlFieldTextarea", '<textarea id="${id}" {{if settings.rows}}rows="${settings.rows}"{{/if}} {{if settings.cols}}cols="${settings.cols}"{{/if}} {{if settings.readonly}}readonly="on"{{/if}} {{if settings.formName}}name="${settings.formName}"{{/if}} {{each settings.data}}data-${fieldId}="${value}"{{/each}}/>');
+    Alpaca.registerTemplate("controlFieldTextarea", '<textarea id="${id}" {{if options.rows}}rows="${options.rows}"{{/if}} {{if options.cols}}cols="${options.cols}"{{/if}} {{if options.readonly}}readonly="on"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}} {{each options.data}}data-${fieldId}="${value}"{{/each}}/>');
     Alpaca.registerFieldClass("textarea", Alpaca.Fields.TextAreaField);
     
 })(jQuery);

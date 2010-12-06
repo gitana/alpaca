@@ -240,7 +240,8 @@
                 var containerElem = _this.renderItemContainer(insertAfterId);
                 Alpaca(containerElem, value, fieldSetting, itemSchema, this.getView(), function(fieldControl) {
                     // render
-                    fieldControl.render();
+					fieldControl.parent = _this;
+				    fieldControl.render();
                     containerElem.attr("id", fieldControl.getId() + "-item-container");
                     containerElem.attr("alpaca-id", fieldControl.getId());
                     // remember the control
@@ -274,8 +275,8 @@
             if (this.data) {
 				$.each(this.data, function(index, value) {
 					var fieldSetting;
-					if (_this.settings && _this.settings.fields && _this.settings.fields[index]) {
-						fieldSetting = _this.settings.fields[index];
+					if (_this.options && _this.options.fields && _this.options.fields[index]) {
+						fieldSetting = _this.options.fields[index];
 					}
 					_this.addItem(index, fieldSetting, value);
 				});

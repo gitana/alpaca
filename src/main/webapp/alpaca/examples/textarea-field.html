@@ -13,28 +13,25 @@
     </head>
     <body>
         <h3>Textarea Field</h3>
-		<hr/>
-        <h4>Example 1: </h4>
+        <hr/><h4>Example 1: </h4>
         <div id="field1">
         </div>
         <script type="text/javascript" id="field1-script">
-            $("#field1").alpaca("Ice cream or ice-cream is a frozen dessert usually made from dairy products, such as milk and cream, and often combined with fruits or other ingredients and flavours.","textarea");
+            $("#field1").alpaca("Ice cream or ice-cream is a frozen dessert usually made from dairy products, such as milk and cream, and often combined with fruits or other ingredients and flavours.", "textarea");
         </script>
         <h4>Example 2: </h4>
         <div id="field2">
         </div>
         <script type="text/javascript" id="field2-script">
-            $(function(){
+            $(function() {
                 $("#field2").alpaca("Ice cream or ice-cream is a frozen dessert usually made from dairy products, such as milk and cream, and often combined with fruits or other ingredients and flavours.", {
-					"type":"textarea",
-                    "settings": {
-                        "label": "Receipt",
-                        "helper": "Receipt for Best Homemade Ice Cream",
-						"rows": 6,
-						"cols":80
-                    }
+                    "type": "textarea",
+                    "label": "Receipt",
+                    "helper": "Receipt for Best Homemade Ice Cream",
+                    "rows": 6,
+                    "cols": 80
                 });
             });
         </script>
-	</body>
+    </body>
 </html>

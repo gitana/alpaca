@@ -13,8 +13,7 @@
     </head>
     <body>
         <h3>Text Field</h3>
-		<hr/>
-        <h4>Example 1: </h4>
+        <hr/><h4>Example 1: </h4>
         <div id="field1">
         </div>
         <script type="text/javascript" id="field1-script">
@@ -26,11 +25,9 @@
         <script type="text/javascript" id="field2-script">
             $(function() {
                 $("#field2").alpaca("Mint Chocolate", {
-                    "settings": {
-                        "label": "Ice Cream",
-                        "helper": "Your favorite ice cream?",
-                        "size": 30
-                    }
+                    "label": "Ice Cream",
+                    "helper": "Your favorite ice cream?",
+                    "size": 30
                 }, "/alpaca/examples/data/schema1.json");
             });
         </script>

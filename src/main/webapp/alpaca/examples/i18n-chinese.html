@@ -19,14 +19,10 @@
         <script type="text/javascript"id="field1-script">
             $(function() {
                 Alpaca.setDefaultLocale("zh_CN");
-				$("#field1").alpaca({}, {
-                    "settings": {
-                        "fields": {
-                            "icecream": {
-                                "settings": {
-                                    "optionLabels": ["&#39321;&#33609;", "&#24039;&#20811;&#21147;", "&#21654;&#21857;", "&#33609;&#33683;", "&#34180;&#33655;"]
-                                }
-                            }
+                $("#field1").alpaca({}, {
+                    "fields": {
+                        "icecream": {
+                            "optionLabels": ["&#39321;&#33609;", "&#24039;&#20811;&#21147;", "&#21654;&#21857;", "&#33609;&#33683;", "&#34180;&#33655;"]
                         }
                     }
                 }, {
@@ -45,7 +41,7 @@
                         "icecream": {
                             "title": "&#26368;&#21916;&#27426;&#30340;&#20912;&#28608;&#20940;",
                             "type": "string",
-                            "enum": ["Vanilla","Chocolate","Coffee","Strawberry","Mint"]
+                            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
                         },
                         "address": {
                             "title": "&#23478;&#24237;&#20303;&#22336;",

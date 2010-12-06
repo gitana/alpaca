@@ -2,14 +2,13 @@
     "form":{
         "action":"/endpoint"
     },
-	"settings": {
-		"fields": {
-			"address":{
-                "type": "address",
-                "settings": {
-                    "addressValidation": true
-                }
-            }
-		}
-	}		
+	"fields": {
+		"member":{
+            "rightLabel": "Alpaca Club Member"
+        },
+		"address":{
+        	"type": "address",
+            "addressValidation": true
+        }
+	}
 }

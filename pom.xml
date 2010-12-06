@@ -108,7 +108,7 @@
 						<param>../js_src/views/DefaultView.js</param>
 						<param>../js_src/views/MobileView.js</param>
 						<param>../js_src/views/DefaultViewLanguagePacks.js</param>
-												
+
 					</jsSourceFiles>
 					<cssSourceDir>alpaca/css</cssSourceDir>
 					<cssSourceFiles>

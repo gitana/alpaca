@@ -57,7 +57,7 @@
          *
          * @param schema field schema (optional)
          */
-        constructor: function(container, data, options, schema,view) {
+        constructor: function(container, data, options, schema, view) {
             // mark that we are initializing
             this.initializing = true;
             
@@ -69,15 +69,15 @@
             this.data = data;
             this.options = options;
             this.schema = schema;
-			
-			// check if this field rendering is single-level or not
-			this.singleLevelRendering = false;
-			 			
-			if (view) {
-				this.setView(view);
-			} else {
-				this.setView(Alpaca.defaultView);
-			}
+            
+            // check if this field rendering is single-level or not
+            this.singleLevelRendering = false;
+            
+            if (view) {
+                this.setView(view);
+            } else {
+                this.setView(Alpaca.defaultView);
+            }
             
             // things we can draw off the options
             if (!this.options) {
@@ -85,7 +85,6 @@
             }
             this.id = this.options.id;
             this.type = this.options.type;
-            this.settings = this.options.settings;
             if (this.options.template) {
                 this.setTemplate(this.options.template);
             }
@@ -97,61 +96,60 @@
             if (!this.schema) {
                 this.schema = {};
             }
-            if (!this.settings) {
-                this.settings = {};
+            if (!this.options.label && this.schema.title) {
+                this.options.label = this.schema.title;
             }
-            if (!this.settings.label && this.schema.title) {
-                this.settings.label = this.schema.title;
-            }
-            if (!this.settings.helper && this.schema.description) {
-                this.settings.helper = this.schema.description;
+            if (!this.options.helper && this.schema.description) {
+                this.options.helper = this.schema.description;
             }
             
             // data
             if (!this.data && this.schema["default"]) {
                 this.data = this.schema["default"];
             }
-			
-			// validation status
-			this.validation = {};
+            
+            // validation status
+            this.validation = {};
             
             // backup data
             this.backupData = Alpaca.cloneObject(this.data);
         },
-		
-		/**
-		 * Sets up default rendition template from view
-		 */
-		setDefaultTemplate: function () {
+        
+        /**
+         * Sets up default rendition template from view
+         */
+        setDefaultTemplate: function() {
             // check if the full template has been provided
-			var fullTemplate = Alpaca.getTemplate("full", this);
+            var fullTemplate = Alpaca.getTemplate("full", this);
+            var layoutTemplate = Alpaca.getTemplate("layout", this);
             if (fullTemplate) {
-				this.setTemplate(fullTemplate);
-				this.singleLevelRendering = true;
-			} else {
-				this.setTemplate(Alpaca.getTemplate("field", this));
-			}			
-		},
+                this.setTemplate(fullTemplate);
+                this.singleLevelRendering = true;
+            } else if (layoutTemplate && this.isTopLevel()) {
+                this.setTemplate(layoutTemplate);
+            } else {
+                this.setTemplate(Alpaca.getTemplate("field", this));
+            }
+        },
         
         /**
          * Sets up any default values for this field.
          */
         setup: function() {
- 
+        
             if (!this.initializing) {
-				this.data = this.getValue();
+                this.data = this.getValue();
             }
             
             // if we have already created backup settings, restore from them
-			/*
-            if (this.backupSettings) {
-                this.settings = Alpaca.cloneObject(this.backupSettings);
-            } else {
-                this.backupSettings = Alpaca.cloneObject(this.settings);
-            }
-            */
-                        
-			this.setDefaultTemplate();
+            /*
+             if (this.backupSettings) {
+             this.settings = Alpaca.cloneObject(this.backupSettings);
+             } else {
+             this.backupSettings = Alpaca.cloneObject(this.settings);
+             }
+             */
+            this.setDefaultTemplate();
             
             // JSON SCHEMA
             if (Alpaca.isUndefined(this.schema.required)) {
@@ -159,20 +157,20 @@
             }
             
             // SETTINGS             
-            if (Alpaca.isUndefined(this.settings.validate)) {
-                this.settings.validate = true;
+            if (Alpaca.isUndefined(this.options.validate)) {
+                this.options.validate = true;
             }
             
-            if (Alpaca.isUndefined(this.settings.disabled)) {
-                this.settings.disabled = false;
+            if (Alpaca.isUndefined(this.options.disabled)) {
+                this.options.disabled = false;
             }
             
             // MESSAGES                        
-            if (Alpaca.isUndefined(this.settings.showMessages)) {
-                this.settings.showMessages = true;
+            if (Alpaca.isUndefined(this.options.showMessages)) {
+                this.options.showMessages = true;
             }
         },
-                
+        
         /**
          * Binds the data into the field.  Called at the very end of construction.
          */
@@ -181,17 +179,17 @@
                 this.setValue(this.data, true);
             }
         },
-                
+        
         /**
          * Renders this field into the container.
          * Creates an outerEl which is bound into the container.
          */
         render: function(view) {
             if (view) {
-				this.setView(view);
-			}
-            this.setup();			
-			this._render();
+                this.setView(view);
+            }
+            this.setup();
+            this._render();
         },
         
         /**
@@ -207,11 +205,11 @@
             
             // check if it needs to be wrapped in a form
             if (this.options.form) {
-				this.options.form.viewType = this.viewType;
-                var form =  this.form;				
-				if (!form) {
-					form = new Alpaca.Form(this.container, this.options.form);
-				}				
+                this.options.form.viewType = this.viewType;
+                var form = this.form;
+                if (!form) {
+                    form = new Alpaca.Form(this.container, this.options.form);
+                }
                 form.render(function(form) {
                     // load the appropriate template and render it
                     _this._processRender(form.formFieldsContainer, function() {
@@ -221,8 +219,8 @@
                         
                         // bind the top field to the form
                         form.topField = _this;
-						
-						_this.form = form;
+                        
+                        _this.form = form;
                         
                         // allow any post-rendering facilities to kick in
                         _this.postRender();
@@ -279,64 +277,63 @@
             // render field template
             var renderedDomElement = $.tmpl(templateString, {
                 "id": this.getId(),
-                "settings": this.settings,
+                "options": this.options,
                 "data": this.data,
-				"view": this.getView()
+                "view": this.getView()
             }, {});
             renderedDomElement.appendTo($(parentEl));
             this.setEl(renderedDomElement);
             
             if (!this.singleLevelRendering) {
-				this.renderField(onSuccess);
-			}
+                this.renderField(onSuccess);
+            }
         },
-
+        
         /**
          * Called after the rendering is complete as a way to make final modifications to the
          * dom elements that were produced.
          */
         postRender: function() {
-			// for edit or create mode
-			// injects Ids
-			if (this.getEl().attr("id") == null) {
-				this.getEl().attr("id", this.getId() + "-field-outer");
-			}
-			if (this.getEl().attr("alpaca-field-id") == null) {
-				this.getEl().attr("alpaca-field-id", this.getId());
-			}
-			// Support for custom CSS class for the field
-			var fieldClass = this.settings["fieldClass"];
-			if (fieldClass) {
-				$(this.getEl()).addClass(fieldClass);
-			}			
-			// optional
-			if (this.settings.required) {
-				$(this.getEl()).addClass("alpaca-field-required");
-			} else {
-				$(this.getEl()).addClass("alpaca-field-optional");
-			}
-			
-			// after render
-			if (this.settings.disabled) {
-				this.disable();
-			}			
-			// bind data
-			if (this.getViewType() && this.getViewType() == 'edit') {
-				this.bindData();
-			}
-			// initialize events (after part of the dom)
-			if (this.getViewType() && this.getViewType() != 'view') {
-				this.initEvents();
-			}
-			
-			// finished initializing
-			this.initializing = false;
-
-			// final call to update validation state
- 			if (this.getViewType() != 'view') {
-				this.renderValidationState();
-			}
-
+            // for edit or create mode
+            // injects Ids
+            if (this.getEl().attr("id") == null) {
+                this.getEl().attr("id", this.getId() + "-field-outer");
+            }
+            if (this.getEl().attr("alpaca-field-id") == null) {
+                this.getEl().attr("alpaca-field-id", this.getId());
+            }
+            // Support for custom CSS class for the field
+            var fieldClass = this.options["fieldClass"];
+            if (fieldClass) {
+                $(this.getEl()).addClass(fieldClass);
+            }
+            // optional
+            if (this.options.required) {
+                $(this.getEl()).addClass("alpaca-field-required");
+            } else {
+                $(this.getEl()).addClass("alpaca-field-optional");
+            }
+            
+            // after render
+            if (this.options.disabled) {
+                this.disable();
+            }
+            // bind data
+            if (this.getViewType() && this.getViewType() == 'edit') {
+                this.bindData();
+            }
+            // initialize events (after part of the dom)
+            if (this.getViewType() && this.getViewType() != 'view') {
+                this.initEvents();
+            }
+            
+            // finished initializing
+            this.initializing = false;
+            
+            // final call to update validation state
+            if (this.getViewType() != 'view') {
+                this.renderValidationState();
+            }
 		},
         
         /**
@@ -371,6 +368,12 @@
             return this.parent;
         },
         
+        /**
+         * Returns true if this field is the top level one.
+         */
+        isTopLevel: function() {
+            return Alpaca.isEmpty(this.parent);
+        },
         /**
          * Returns the value of the field
          */
@@ -412,12 +415,12 @@
             
             this.template = template;
         },
-
+        
         /**
          * Gets current view
          */
         getView: function() {
-			return this.view;
+            return this.view;
         },
         
         /**
@@ -425,99 +428,99 @@
          */
         setView: function(view) {
             if (Alpaca.isString(view) && !Alpaca.isEmpty(Alpaca.views[view])) {
-				// view id
-				this.view = view;
-			} else {
-				// actual view object
-				this.view = view;
-			}
-			this.viewType = Alpaca.getViewType(this.view);
+                // view id
+                this.view = view;
+            } else {
+                // actual view object
+                this.view = view;
+            }
+            this.viewType = Alpaca.getViewType(this.view);
         },
-		
-		/**
+        
+        /**
          * Gets current view type
          */
         getViewType: function() {
-			return this.viewType;
+            return this.viewType;
         },
-		        
+        
         /**
          * Renders a validation state message below the field.
          */
         displayMessage: function(messages) {
-			// remove the message element if it exists
-			var _this = this;
-			$("#[id^='"+_this.getId()+"-field-message']",_this.getEl()).remove();
-			// add message and generate it
-			if (messages) {
-				$.each(messages, function(index, message) {
-					if (message.length > 0) {					
-						var messageTemplate = Alpaca.getTemplate("controlFieldMessage", _this);
-						if (messageTemplate) {
-							_this.messageElement = $.tmpl(messageTemplate, {
-								"message": message
-							});
-							_this.messageElement.addClass("alpaca-field-message");
-							_this.messageElement.attr("id",_this.getId()+'-field-message-'+index);
-							// check to see if we have a message container rendered
-							if ($('.alpaca-field-message-container', _this.getEl()).length) {
-								_this.messageElement.appendTo($('.alpaca-field-message-container', _this.getEl()));
-							} else {
-								_this.messageElement.appendTo(_this.getEl());
-							}
-						}
-					}
-				});
-			}
-		},
+            // remove the message element if it exists
+            var _this = this;
+            $("#[id^='" + _this.getId() + "-field-message']", _this.getEl()).remove();
+            // add message and generate it
+            if (messages) {
+                $.each(messages, function(index, message) {
+                    if (message.length > 0) {
+                        var messageTemplate = Alpaca.getTemplate("controlFieldMessage", _this);
+                        if (messageTemplate) {
+                            _this.messageElement = $.tmpl(messageTemplate, {
+                                "message": message
+                            });
+                            _this.messageElement.addClass("alpaca-field-message");
+                            _this.messageElement.attr("id", _this.getId() + '-field-message-' + index);
+                            // check to see if we have a message container rendered
+                            if ($('.alpaca-field-message-container', _this.getEl()).length) {
+                                _this.messageElement.appendTo($('.alpaca-field-message-container', _this.getEl()));
+                            } else {
+                                _this.messageElement.appendTo(_this.getEl());
+                            }
+                        }
+                    }
+                });
+            }
+        },
         
         /**
          * Makes sure that the DOM of the rendered field reflects the validation state
          * of the field.
          */
         renderValidationState: function() {
-			if (this.settings.validate) {
-				// remove all previous markers
-				$(this.getEl()).removeClass("alpaca-field-invalid");
-				$(this.getEl()).removeClass("alpaca-field-valid");
-				
-				// this runs validation
-				if (this.validate()) {
-					$(this.getEl()).addClass("alpaca-field-valid");
-				} else {
-					$(this.getEl()).addClass("alpaca-field-invalid");
-				}
-				
-				// Allow for the message to change
-				if (this.settings.showMessages) {
-					if (!this.initializing) {
-						var messages = [];
-						for (var messageId in this.validation) {
-							if (!this.validation[messageId]["status"]) {
-								messages.push(this.validation[messageId]["message"]);
-							}
-						}
-						this.displayMessage(messages);
-					}
-				}
-				// Revalidate parents
-				if (this.parent && this.parent.renderValidationState) {
-					this.parent.renderValidationState();
-				}
-			}
-		},
-
+            if (this.options.validate) {
+                // remove all previous markers
+                $(this.getEl()).removeClass("alpaca-field-invalid");
+                $(this.getEl()).removeClass("alpaca-field-valid");
+                
+                // this runs validation
+                if (this.validate()) {
+                    $(this.getEl()).addClass("alpaca-field-valid");
+                } else {
+                    $(this.getEl()).addClass("alpaca-field-invalid");
+                }
+                
+                // Allow for the message to change
+                if (this.options.showMessages) {
+                    if (!this.initializing) {
+                        var messages = [];
+                        for (var messageId in this.validation) {
+                            if (!this.validation[messageId]["status"]) {
+                                messages.push(this.validation[messageId]["message"]);
+                            }
+                        }
+                        this.displayMessage(messages);
+                    }
+                }
+                // Revalidate parents
+                if (this.parent && this.parent.renderValidationState) {
+                    this.parent.renderValidationState();
+                }
+            }
+        },
+        
         /**
          * Validates this field and returns whether it is in a valid state.
          */
         validate: function() {
             // skip out if we haven't yet bound any data into this control
             // the control can still be considered to be initializing
-			var status = true;
-            if (!this.initializing && this.settings.validate) {
+            var status = true;
+            if (!this.initializing && this.options.validate) {
                 status = this.handleValidate();
             }
-			return status;
+            return status;
         },
         
         /**
@@ -526,34 +529,34 @@
          * Performs validation
          */
         handleValidate: function() {
-			var valInfo = this.validation;
-			valInfo["notOptional"] = {
-				"message":"",
-				"status": this._validateOptional()
-			};
-			if (!this._validateOptional()) {
-				valInfo["notOptional"]["message"] = Alpaca.getMessage("notOptional", this);
-			}
-			valInfo["disallowValue"] = {
-				"message":"",
-				"status": this._validateDisallow()
-			};
-			if (!this._validateDisallow()) {
+            var valInfo = this.validation;
+            valInfo["notOptional"] = {
+                "message": "",
+                "status": this._validateOptional()
+            };
+            if (!this._validateOptional()) {
+                valInfo["notOptional"]["message"] = Alpaca.getMessage("notOptional", this);
+            }
+            valInfo["disallowValue"] = {
+                "message": "",
+                "status": this._validateDisallow()
+            };
+            if (!this._validateDisallow()) {
                 var text = this.schema["disallow"].join(',');
-				valInfo["disallowValue"]["message"] =  Alpaca.substituteTokens(Alpaca.getMessage("disallowValue", this), [text]);
-			}			
-        	return valInfo["notOptional"]["status"] && valInfo["disallowValue"]["status"];
-		},
+                valInfo["disallowValue"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("disallowValue", this), [text]);
+            }
+            return valInfo["notOptional"]["status"] && valInfo["disallowValue"]["status"];
+        },
         
         /**
          * Checks whether validation is optional
          */
         _validateOptional: function() {
-			if ( this.isEmpty() && this.schema.required) {
-				return false;
-			}
-			return true;
-		},
+            if (this.isEmpty() && this.schema.required) {
+                return false;
+            }
+            return true;
+        },
         
         /**
          * Checks whether validation is optional
@@ -561,20 +564,20 @@
         _validateDisallow: function() {
             var val = this.getValue();
             
-			if (!Alpaca.isEmpty(this.schema.disallow)) {
-				var disallow = this.schema.disallow;				
-				if (Alpaca.isArray(disallow)) {
-					var isAllowed = true;
-					$.each(disallow, function (index,value) {
-						if ( Alpaca.compareObject(val,value) ) {
-							isAllowed = false;
-						}						
-					});
-					return isAllowed;
-				} else {
-					return !Alpaca.compareObject(val,disallow);
-				}
-			}
+            if (!Alpaca.isEmpty(this.schema.disallow)) {
+                var disallow = this.schema.disallow;
+                if (Alpaca.isArray(disallow)) {
+                    var isAllowed = true;
+                    $.each(disallow, function(index, value) {
+                        if (Alpaca.compareObject(val, value)) {
+                            isAllowed = false;
+                        }
+                    });
+                    return isAllowed;
+                } else {
+                    return !Alpaca.compareObject(val, disallow);
+                }
+            }
             
             return true;
         },
@@ -632,24 +635,24 @@
                 "display": "none"
             });
         },
-
+        
         /**
          * Hide the field
          */
         print: function() {
-			if (this.container.printArea) {
-				this.container.printArea();
-			}
-		},
-		
-		/**
-		 * Reload the field
-		 */
-		reload: function() {
-			this.initializing = true;
-			this.render();
-		},
-		        
+            if (this.container.printArea) {
+                this.container.printArea();
+            }
+        },
+        
+        /**
+         * Reload the field
+         */
+        reload: function() {
+            this.initializing = true;
+            this.render();
+        },
+        
         /**
          * Clear the field.
          *
@@ -675,13 +678,13 @@
         isEmpty: function() {
             return Alpaca.isValEmpty(this.getValue());
         },
-		
-		/**
-		 * True if this field is valid.
-		 */
-		isValid: function() {
-			 return $.isEmptyObject(this.validation);
-		},
+        
+        /**
+         * True if this field is valid.
+         */
+        isValid: function() {
+            return $.isEmptyObject(this.validation);
+        },
         
         /**
          * Initialize events
@@ -727,16 +730,15 @@
             // store back into data element
             this.data = this.getValue();
             this.triggerUpdate();
-        }
-        
+        }        
     });
-
+    
     // Registers additonal messages
-	Alpaca.registerMessages({
+    Alpaca.registerMessages({
         "disallowValue": "{0} are disallowed values.",
-        "notOptional": "This field is not optional."		
+        "notOptional": "This field is not optional."
     });
-	    
+    
     /**
      * Information about the arguments for this field
      * This isn't used at runtime

@@ -18,8 +18,8 @@
         setup: function(){
             this.base();
             
-            if (this.settings.formName) {
-				this.formName = this.settings.formName;
+            if (this.options.formName) {
+				this.formName = this.options.formName;
 			}
 			else {
 				this.formName = this.getId()+"-form-name";
@@ -60,7 +60,7 @@
             if (controlFieldTemplate) {
                 this.inputElement = $.tmpl(controlFieldTemplate, {
                     "id": this.getId(),
-                    "settings": this.settings,
+                    "options": this.options,
                     "selectOptions": this.selectOptions,
 					"formName": this.formName,
                     "data": this.data
@@ -95,7 +95,7 @@
         
     });
     
-    Alpaca.registerTemplate("controlFieldRadio", '<div id="${id}">{{each selectOptions}}<input type="radio" {{if settings.readonly}}readonly="on"{{/if}} name="${formName}" value="${value}" {{if value == data}}checked="checked"{{/if}}/>${text}{{/each}}</div>');
+    Alpaca.registerTemplate("controlFieldRadio", '<div id="${id}">{{each selectOptions}}<input type="radio" {{if options.readonly}}readonly="on"{{/if}} name="${formName}" value="${value}" {{if value == data}}checked="checked"{{/if}}/>${text}{{/each}}</div>');
     Alpaca.registerFieldClass("radio", Alpaca.Fields.RadioField);
     
 })(jQuery);

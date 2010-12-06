@@ -218,7 +218,7 @@
                     data = jsonDocument;
                     loadCounter++;
                     if (loadCounter == 4) 
-                        Alpaca.init(el, data, options,schema, view,callback);
+                        return Alpaca.init(el, data, options,schema, view,callback);
                 },
                 error: function(error){
                 }
@@ -227,7 +227,7 @@
         else {
             loadCounter++;
             if (loadCounter == 4) 
-                Alpaca.init(el, data, options,schema, view,callback);
+                return Alpaca.init(el, data, options,schema, view,callback);
         }
                                 
         // options
@@ -240,7 +240,7 @@
 					options = jsonDocument;
 					loadCounter++;
 					if (loadCounter == 4) 
-						Alpaca.init(el, data, options, schema, view, callback);
+						return Alpaca.init(el, data, options, schema, view, callback);
 				},
 				error: function(error){
 				}
@@ -248,7 +248,7 @@
 		} else {
 			loadCounter++;
 			if (loadCounter == 4) 
-				Alpaca.init(el, data, options, schema, view, callback);
+				return Alpaca.init(el, data, options, schema, view, callback);
 		}
         
         // schema     
@@ -262,7 +262,7 @@
 					schema = jsonDocument;
 					loadCounter++;
 					if (loadCounter == 4) 
-						Alpaca.init(el, data, options, schema, view, callback);
+						return Alpaca.init(el, data, options, schema, view, callback);
 				},
 				error: function(error){
 				}
@@ -270,7 +270,7 @@
 		} else {
 			loadCounter++;
 			if (loadCounter == 4) 
-				Alpaca.init(el, data, options, schema, view, callback);
+				return Alpaca.init(el, data, options, schema, view, callback);
 		}
 		
 		// view     
@@ -284,7 +284,7 @@
 					view = jsonDocument;
 					loadCounter++;
 					if (loadCounter == 4) 
-						Alpaca.init(el, data, options, schema, view, callback);
+						return Alpaca.init(el, data, options, schema, view, callback);
 				},
 				error: function(error) {
 				}
@@ -292,7 +292,7 @@
 		} else {
 			loadCounter++;
 			if (loadCounter == 4) 
-				Alpaca.init(el, data, options, schema, view, callback);
+				return Alpaca.init(el, data, options, schema, view, callback);
 		}
     };
     
@@ -313,7 +313,8 @@
             callback(field);
         } else {
             field.render();
-        }        
+        }
+		return field;        
     }
     
     /**

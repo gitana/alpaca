@@ -12,22 +12,17 @@
         <link type="text/css" href="../css/example.css" rel="stylesheet" />
     </head>
     <body>
-	   <h3>I18N Ejemplos - Espa&#241;oles</h3>
-	   <hr/>
-        <h4>Ejemplo 1: </h4>
+        <h3>I18N Ejemplos - Espa&#241;oles</h3>
+        <hr/><h4>Ejemplo 1: </h4>
         <div id="field1">
         </div>
         <script type="text/javascript"id="field1-script">
             $(function() {
-				Alpaca.setDefaultLocale("es_ES");
+                Alpaca.setDefaultLocale("es_ES");
                 $("#field1").alpaca({}, {
-                    "settings": {
-                        "fields": {
-                            "icecream": {
-                                "settings": {
-                                    "optionLabels": ["Vainilla", "Chocolate", "Café", "Fresa", "Menta"]
-                                }
-                            }
+                    "fields": {
+                        "icecream": {
+                            "optionLabels": ["Vainilla", "Chocolate", "Café", "Fresa", "Menta"]
                         }
                     }
                 }, {
@@ -46,7 +41,7 @@
                         "icecream": {
                             "title": "Helado preferido",
                             "type": "string",
-                            "enum": ["Vanilla","Chocolate","Coffee","Strawberry","Mint"]
+                            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
                         },
                         "address": {
                             "title": "Direcci&#243;n de comienzo de la pista en disco",
@@ -80,5 +75,5 @@
                 });
             });
         </script>
-	</body>
+    </body>
 </html>

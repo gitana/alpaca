@@ -1,0 +1,18 @@
+/* column container */
+.colmask {
+    clear: both;
+    float: left;
+    width: 100%; /* width of whole page */
+}
+
+.col1 {
+    float: left;
+    position: relative;
+    padding: 10px;
+}
+
+.col2 {
+    float: right;
+    position: relative;
+    padding: 10px;
+}

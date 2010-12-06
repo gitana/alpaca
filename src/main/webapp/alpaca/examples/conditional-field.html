@@ -13,55 +13,48 @@
     </head>
     <body>
         <h3>Conditional Fields</h3>
-      	<hr/>
-		<h4>Ice Cream Picker Field: </h4>
+        <hr/><h4>Ice Cream Picker Field: </h4>
         <div id="field1">
         </div>
         <script type="text/javascript" id="field1-script">
-            $("#field1").alpaca({},{
-				"settings": {
-					"fields": {
-						"flavour": {
-							"settings": {
-								"dependencies": {
-									"choice": "Flavour"
-								}
-							}
-						},
-						"topping": {
-							"settings": {
-								"dependencies": {
-									"choice": "Topping"
-								}
-							}
-						}
-					}
-				}
-			},{
-				"title": "Ice Cream Picker",
-				"description": "Select Your Favorite Ice Cream",
-				"type": "object",
-				"properties": {
-					"choice": {
-						"title": "Flavour or Topping?",
-						"type": "String",
-						"description": "What do you want to choose?",
-						"enum":["Flavour","Topping"],
-					},
-					"flavour": {
-						"title": "Favorite Flavour",
-						"type": "String",
-						"enum":["Vanilla","Chocolate","Coffee","Strawberry","Mint"],
-						"dependencies":"choice"
-					},
-					"topping": {
-						"title": "Favorite Topping",
-						"type": "String",
-						"enum":["Marshmelllow","Chocolate Chip","Caramel","Cookie Dough"],
-						"dependencies":"choice"
-					}
-				}
-			});
+            $("#field1").alpaca({}, {
+                "fields": {
+                    "flavour": {
+                        "dependencies": {
+                            "choice": "Flavour"
+                        }
+                    },
+                    "topping": {
+                        "dependencies": {
+                            "choice": "Topping"
+                        }
+                    }
+                }
+            }, {
+                "title": "Ice Cream Picker",
+                "description": "Select Your Favorite Ice Cream",
+                "type": "object",
+                "properties": {
+                    "choice": {
+                        "title": "Flavour or Topping?",
+                        "type": "String",
+                        "description": "What do you want to choose?",
+                        "enum": ["Flavour", "Topping"],
+                    },
+                    "flavour": {
+                        "title": "Favorite Flavour",
+                        "type": "String",
+                        "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
+                        "dependencies": "choice"
+                    },
+                    "topping": {
+                        "title": "Favorite Topping",
+                        "type": "String",
+                        "enum": ["Marshmelllow", "Chocolate Chip", "Caramel", "Cookie Dough"],
+                        "dependencies": "choice"
+                    }
+                }
+            });
         </script>
-	</body>
+    </body>
 </html>

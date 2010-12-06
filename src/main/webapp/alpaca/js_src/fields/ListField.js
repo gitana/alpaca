@@ -36,8 +36,8 @@
             if (_this.getEnum()) {
                 $.each(_this.getEnum(), function(index, value) {
                     var text = _this.getEnum()[index];
-                    if (_this.settings.optionLabels && _this.settings.optionLabels[index]) {
-                        text = _this.settings.optionLabels[index];
+                    if (_this.options.optionLabels && _this.options.optionLabels[index]) {
+                        text = _this.options.optionLabels[index];
                     }
                     _this.selectOptions.push({
                         "value": _this.getEnum()[index],

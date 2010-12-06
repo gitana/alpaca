@@ -14,16 +14,16 @@
         setup: function() {
             this.base();
             
-            if (Alpaca.isEmpty(this.settings.mask)) {
-                this.settings.mask = true;
+            if (Alpaca.isEmpty(this.options.mask)) {
+                this.options.mask = true;
             }
             
-            if (Alpaca.isEmpty(this.settings.maskString)) {
-                this.settings.maskString = "9999-99-99";
+            if (Alpaca.isEmpty(this.options.maskString)) {
+                this.options.maskString = "9999-99-99";
             }
             
-            if (!this.settings.dateFormat) {
-                this.settings.dateFormat = Alpaca.defaultDateFormat;
+            if (!this.options.dateFormat) {
+                this.options.dateFormat = Alpaca.defaultDateFormat;
             }
         },
         
@@ -49,7 +49,7 @@
 				"status": this._validateDateFormat()
 			};
 			if (!this._validateMaxLength()) {
-				valInfo["invalidDate"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("invalidDate", this), [this.settings.dateFormat]);
+				valInfo["invalidDate"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("invalidDate", this), [this.options.dateFormat]);
 			}
 			
 			return baseStatus && valInfo["invalidDate"]["status"];			
@@ -62,7 +62,7 @@
         _validateDateFormat: function() {
             var value = $(this.inputElement).val();
             
-            var separator = this.settings.dateFormat.match(/[^Ymd ]/g)[0];
+            var separator = this.options.dateFormat.match(/[^Ymd ]/g)[0];
             
             var ladate = value.split(separator);
             if (ladate.length != 3) {
@@ -77,7 +77,7 @@
                 return false;
             }
             
-            var formatSplit = this.settings.dateFormat.split(separator);
+            var formatSplit = this.options.dateFormat.split(separator);
             
             var yearIndex = Alpaca.indexOf("Y", formatSplit);
             if (ladate[yearIndex].length != 4) {
@@ -107,9 +107,9 @@
             if (val instanceof Date) {
                 str = Alpaca.Fields.DateField.formatDate(val, this.form.dateFormat);
             } else {
-                if (this.settings.valueFormat) {
-                    var dateVal = Alpaca.Fields.DateField.parseWithFormat(val, this.settings.valueFormat);
-                    str = Alpaca.Fields.DateField.formatDate(dateVal, this.settings.valueFormat);
+                if (this.options.valueFormat) {
+                    var dateVal = Alpaca.Fields.DateField.parseWithFormat(val, this.options.valueFormat);
+                    str = Alpaca.Fields.DateField.formatDate(dateVal, this.options.valueFormat);
                 } else {
                     str = val;
                 }

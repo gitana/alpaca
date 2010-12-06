@@ -30,8 +30,8 @@
         setup: function() {
             this.base();
             
-            if (!this.settings.size) {
-                this.settings.size = 40;
+            if (!this.options.size) {
+                this.options.size = 40;
             }
         },
         
@@ -46,14 +46,14 @@
             if (controlFieldTemplate) {
                 this.inputElement = $.tmpl(controlFieldTemplate, {
                     "id": this.getId(),
-                    "settings": this.settings
+                    "options": this.options
                 });
                 this.inputElement.addClass("alpaca-textfield");
                 this.injectField(this.inputElement);
                 
                 // mask it
-                if (this.settings.mask && this.settings.maskString) {
-                    $(this.inputElement).mask(this.settings.maskString);
+                if (this.options.mask && this.options.maskString) {
+                    $(this.inputElement).mask(this.options.maskString);
                 }
             }
             
@@ -191,7 +191,7 @@
         
     });
     
-    Alpaca.registerTemplate("controlFieldText", '<input type="text" id="${id}" {{if settings.size}}size="${settings.size}"{{/if}} {{if settings.readonly}}readonly="on"{{/if}} {{if settings.formName}}name="${settings.formName}"{{/if}} {{each(i,v) settings.data}}data-${i}="${v}"{{/each}}/>');
+    Alpaca.registerTemplate("controlFieldText", '<input type="text" id="${id}" {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="on"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
     Alpaca.registerMessages({
         "invalidPattern": "This field should have pattern {0}",
         "stringTooShort": "This field should contain at least {0} numbers or characters",

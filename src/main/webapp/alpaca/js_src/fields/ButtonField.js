@@ -44,7 +44,7 @@
                     "id": this.getId(),
                     "type": this.buttonType,
                     "value": this.data,
-                    "settings": this.settings
+                    "options": this.options
                 });
 				this.inputElement.addClass("alpaca-form-button");				 
                 this.injectField(this.inputElement);
@@ -108,7 +108,7 @@
         }
     });
     
-    Alpaca.registerTemplate("controlFieldButton", '<button type="${type}" id="${id}" {{if settings.readonly}}readonly="on"{{/if}} {{if settings.formName}}name="${settings.formName}"{{/if}} {{if value}}value="${value}"{{/if}} {{each(i,v) settings.data}}data-${i}="${v}"{{/each}}>{{if value}}${value}{{/if}}</button>');
+    Alpaca.registerTemplate("controlFieldButton", '<button type="${type}" id="${id}" {{if options.readonly}}readonly="on"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}} {{if value}}value="${value}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}>{{if value}}${value}{{/if}}</button>');
     Alpaca.registerFieldClass("button", Alpaca.Fields.ButtonField);
     
 })(jQuery);

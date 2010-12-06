@@ -19,10 +19,10 @@
                 this.action = this.options.action;
             }
             
-            if (!this.settings.data) {
-                this.settings.data = {};
+            if (!this.options.data) {
+                this.options.data = {};
             }
-            this.settings.data["icon"] = "A";
+            this.options.data["icon"] = "A";
             
             // sets defaults
             if (!this.action) {

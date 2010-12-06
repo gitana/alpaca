@@ -21,14 +21,17 @@
 		 * @Override
 		 */
 		setDefaultTemplate: function() {
-			// check if the full template has been provided
+            // check if the full template has been provided
 			var fullTemplate = Alpaca.getTemplate("full", this);
-			if (fullTemplate) {
+			var layoutTemplate = Alpaca.getTemplate("layout", this);
+            if (fullTemplate) {
 				this.setTemplate(fullTemplate);
 				this.singleLevelRendering = true;
+			} else if (layoutTemplate && this.isTopLevel()) {
+				this.setTemplate(layoutTemplate);				
 			} else {
 				this.setTemplate(Alpaca.getTemplate("fieldSet", this));
-			}
+			}	
 		},
 		
 		/**
@@ -40,8 +43,8 @@
         setup: function() {
 			this.base();
 			
-			if (this.settings.collapsible != false) {
-				this.settings.collapsible = true;
+			if (this.options.collapsible != false) {
+				this.options.collapsible = true;
 			}
 			// holders of references to children
 			this.children = [];
@@ -75,7 +78,7 @@
             
             // if collapsible
             if (this.labelDiv) {
-				if (this.settings.collapsible) {
+				if (this.options.collapsible) {
 					this.labelDiv.addClass("legend-expanded");
 					this.labelDiv.click(function() {
 						$(this).toggleClass("legend-collapsed");
@@ -138,7 +141,7 @@
         /**
          * Renders item container
          */
-        renderItemContainer: function(insertAfterId) {
+        renderItemContainer: function(insertAfterId,parent,propertyId) {
             var itemContainerTemplate = Alpaca.getTemplate("itemContainer", this);
             if (itemContainerTemplate) {
                 var containerElem = $.tmpl(itemContainerTemplate, {});
@@ -147,9 +150,19 @@
 				} else {
 					if (insertAfterId) {
 						$('#' + insertAfterId + '-item-container', this.outerEl).after(containerElem);
-
 					} else {
-						containerElem.appendTo(this.fieldContainer);
+					
+						var appendToContainer = this.fieldContainer;
+						
+						// Only deals with second level elements
+						if (parent && parent.isTopLevel() && parent.view.templates && parent.view.templates.bindings) {
+							var binding = parent.view.templates.bindings[propertyId];
+							if (binding && $('#' + binding, appendToContainer).length > 0) {
+								appendToContainer = $('#' + binding, appendToContainer);
+							}
+						}
+												
+						containerElem.appendTo(appendToContainer);
 					}
 				}
                 return containerElem;
