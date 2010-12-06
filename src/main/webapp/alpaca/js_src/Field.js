@@ -184,18 +184,22 @@
          * Renders this field into the container.
          * Creates an outerEl which is bound into the container.
          */
-        render: function(view) {
-            if (view) {
+        render: function(view,callback) {
+            if (view && (Alpaca.isString(view) || Alpaca.isObject(view))) {
                 this.setView(view);
-            }
+            } else {
+				if (Alpaca.isEmpty(callback) && Alpaca.isFunction(view) ) {
+					callback = view;
+				}
+			}
             this.setup();
-            this._render();
+            this._render(callback);
         },
         
         /**
          * Internal method for processing the render.
          */
-        _render: function() {
+        _render: function(callback) {
             var _this = this;
             
             // remove the previous outerEl if it exists
@@ -224,18 +228,29 @@
                         
                         // allow any post-rendering facilities to kick in
                         _this.postRender();
+						
+						// callback
+						if (callback && Alpaca.isFunction(callback)) {
+							callback(_this);
+						}
+						
                     });
                 });
             } else {
                 // load the appropriate template and render it
                 this._processRender(this.container, function() {
-                
-                    // bind our field dom element into the container
-                    $(_this.getEl()).appendTo(_this.container);
-                    
-                    // allow any post-rendering facilities to kick in
-                    _this.postRender();
-                });
+				
+					// bind our field dom element into the container
+					$(_this.getEl()).appendTo(_this.container);
+					
+					// allow any post-rendering facilities to kick in
+					_this.postRender();
+					
+					// callback
+					if (callback && Alpaca.isFunction(callback)) {
+						callback(_this);
+					}
+				});
             }
         },
         
