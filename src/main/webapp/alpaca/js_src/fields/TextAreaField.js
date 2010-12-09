@@ -28,31 +28,17 @@
             if (!this.options.cols) {
                 this.options.cols = 40;
             }
+			
+			this.controlFieldTemplate = Alpaca.getTemplate("controlFieldTextarea", this);
         },
         
         /**
          * @Override
-         *
-         * Renders an INPUT control into the field container
          */
-        renderField: function(onSuccess) {
-            // decorate the field container with our class
+        postRender: function() {
+            this.base();
+            // apply additional css
             $(this.fieldContainer).addClass("alpaca-textareafield");
-            
-            
-            var controlFieldTemplate = Alpaca.getTemplate("controlFieldTextarea", this, null, this.mode);
-            
-            if (controlFieldTemplate) {
-                this.inputElement = $.tmpl(controlFieldTemplate, {
-                    "id": this.getId(),
-                    "options": this.options
-                });
-                this.injectField(this.inputElement);
-            }
-            
-            if (onSuccess) {
-                onSuccess();
-            }
         },
         
         /**

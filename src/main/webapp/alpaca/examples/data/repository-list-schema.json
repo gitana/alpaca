@@ -11,6 +11,7 @@
         },
         "rows":{
             "type":"array",
+            "readonly":true,
             "items":{
     	        "title":"Row",
 	            "type":"object",
@@ -23,7 +24,8 @@
                     "_ref":{
                         "title":"Reference",
                         "type":"string",
-                        "readonly":true
+                        "readonly":true,
+                        "format":"uri"
                     }
                 }
             }

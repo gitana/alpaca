@@ -1,0 +1,142 @@
+{
+    "total":8,
+    "customers":[
+        {
+            "name":"Betty Icecream Lover",
+            "age":10,
+            "gender":"Female",
+            "photo":"/alpaca/examples/data/betty-girl.jpg",
+            "member":true,
+            "icecream":"Chocolate",
+            "phone":"(123)456-7890",
+            "address":{
+                "street":[
+                    "100 Main Street",
+                    "Suite 200"
+                ],
+                "city":"Burlington",
+                "state":"MA",
+                "zip":"18210"
+            }
+        },
+        {
+            "name":"Zack Cone",
+            "age":8,
+            "gender":"Male",
+            "photo":"/alpaca/examples/data/zack-boy.jpg",
+            "member":false,
+            "icecream":"Mint",
+            "phone":"(123)456-7081",
+            "address":{
+                "street":[
+                    "100 North Ocean Avenue"
+                ],
+                "city":"Lexington",
+                "state":"MA",
+                "zip":"18330"
+            }
+        },
+        {
+            "name":"Amy Farmer",
+            "age":12,
+            "gender":"Female",
+            "photo":"/alpaca/examples/data/amy-girl.jpg",
+            "member":true,
+            "icecream":"Vanilla",
+            "phone":"(123)412-2423",
+            "address":{
+                "street":[
+                    "12 Old School Rd"
+                ],
+                "city":"Lowell",
+                "state":"MA",
+                "zip":"18221"
+            }
+        },
+        {
+            "name":"Jason Creamer",
+            "age":6,
+            "gender":"Male",
+            "photo":"/alpaca/examples/data/jason-boy.jpg",
+            "member":false,
+            "icecream":"Chocolate",
+            "phone":"(123)116-5460",
+            "address":{
+                "street":[
+                    "6 Waltham Street"
+                ],
+                "city":"Newton",
+                "state":"MA",
+                "zip":"18770"
+            }
+        },
+        {
+            "name":"Lily Fudge",
+            "age":10,
+            "gender":"Female",
+            "photo":"/alpaca/examples/data/lily-girl.jpg",
+            "member":true,
+            "icecream":"Coffee",
+            "phone":"(123)091-3390",
+            "address":{
+                "street":[
+                    "1 Rosemary Ln"
+                ],
+                "city":"Andover",
+                "state":"MA",
+                "zip":"18998"
+            }
+        },
+        {
+            "name":"Mike Lamb",
+            "age":9,
+            "gender":"Male",
+            "photo":"/alpaca/examples/data/mike-boy.jpg",
+            "member":true,
+            "icecream":"Strawberry",
+            "phone":"(123)256-1134",
+            "address":{
+                "street":[
+                    "100 Franklin Street"
+                ],
+                "city":"Reading",
+                "state":"MA",
+                "zip":"18334"
+            }
+        },
+        {
+            "name":"Nikki Burger",
+            "age":3,
+            "gender":"Female",
+            "photo":"/alpaca/examples/data/nikki-girl.jpg",
+            "member":false,
+            "icecream":"Mint",
+            "phone":"(123)545-1123",
+            "address":{
+                "street":[
+                    "456 Canton Ln"
+                ],
+                "city":"Littleton",
+                "state":"MA",
+                "zip":"1223"
+            }
+        },
+        {
+            "name":"Joe Pony",
+            "age":10,
+            "gender":"Male",
+            "photo":"/alpaca/examples/data/joe-boy.jpg",
+            "member":true,
+            "icecream":"Strawberry",
+            "phone":"(123)456-1234",
+            "address":{
+                "street":[
+                    "100 Wonder Ave"
+                ],
+                "city":"Nashua",
+                "state":"NH",
+                "zip":"111234"
+            }
+        }
+    ]
+}

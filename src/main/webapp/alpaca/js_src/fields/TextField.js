@@ -33,6 +33,8 @@
             if (!this.options.size) {
                 this.options.size = 40;
             }
+			
+			this.controlFieldTemplate = Alpaca.getTemplate("controlFieldText", this);
         },
         
         /**
@@ -41,25 +43,31 @@
          * Renders an INPUT control into the field container
          */
         renderField: function(onSuccess) {
-            var controlFieldTemplate = Alpaca.getTemplate("controlFieldText", this);
-            
-            if (controlFieldTemplate) {
-                this.inputElement = $.tmpl(controlFieldTemplate, {
+                        
+            if (this.controlFieldTemplate) {
+                this.inputElement = $.tmpl(this.controlFieldTemplate, {
                     "id": this.getId(),
                     "options": this.options
                 });
-                this.inputElement.addClass("alpaca-textfield");
                 this.injectField(this.inputElement);
-                
-                // mask it
-                if (this.options.mask && this.options.maskString) {
-                    $(this.inputElement).mask(this.options.maskString);
-                }
             }
             
             if (onSuccess) {
                 onSuccess();
             }
+        },
+        
+        /**
+         * @Override
+         */
+        postRender: function() {
+            this.base();
+            // mask it
+            if (this.options.mask && this.options.maskString) {
+                $(this.inputElement).mask(this.options.maskString);
+            }
+            // apply additional css
+            $(this.fieldContainer).addClass("alpaca-textfield");
         },
         
         /**

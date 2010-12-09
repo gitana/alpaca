@@ -73,6 +73,11 @@
 
 						<!-- alpaca core -->			
 						<param>../js_src/Alpaca.js</param>
+
+						<!--  alpaca views -->
+						<param>../js_src/views/DefaultView.js</param>
+						<param>../js_src/views/MobileView.js</param>
+
 						<param>../js_src/Field.js</param>
 						<param>../js_src/ControlField.js</param>
 						<param>../js_src/ContainerField.js</param>
@@ -85,6 +90,7 @@
 						<param>../js_src/fields/IntegerField.js</param>
 						<param>../js_src/fields/TextAreaField.js</param>
 						<param>../js_src/fields/WysiwygField.js</param>
+						<param>../js_src/fields/FileField.js</param>
 						<param>../js_src/fields/CheckBoxField.js</param>
 						<param>../js_src/fields/ListField.js</param>
 						<param>../js_src/fields/SelectField.js</param>
@@ -104,9 +110,7 @@
 						<param>../js_src/fields/AlpacaButtonField.js</param>
 						<param>../js_src/fields/GitanaButtonField.js</param>
 						
-						<!--  alpaca views -->
-						<param>../js_src/views/DefaultView.js</param>
-						<param>../js_src/views/MobileView.js</param>
+						<!--  alpaca views language packs -->
 						<param>../js_src/views/DefaultViewLanguagePacks.js</param>
 
 					</jsSourceFiles>
@@ -125,6 +129,36 @@
 					<bufferSize>4096</bufferSize>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>maven-minify-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<id>minify-themes</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<cssSourceDir>alpaca/css</cssSourceDir>
+					<cssSourceFiles>
+						<param>../css_src/alpaca-black.css</param>
+						<param>../css_src/example.css</param>
+					</cssSourceFiles>
+					<cssFinalFile>alpaca-black.css</cssFinalFile>
+					<linebreak>-1</linebreak>
+					<nomunge>false</nomunge>
+					<verbose>true</verbose>
+					<preserveAllSemiColons>false</preserveAllSemiColons>
+					<disableOptimizations>false</disableOptimizations>
+					<bufferSize>4096</bufferSize>
+				</configuration>
+			</plugin>
+			
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.6</version>

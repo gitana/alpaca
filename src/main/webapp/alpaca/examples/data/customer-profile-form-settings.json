@@ -3,6 +3,9 @@
         "action":"/endpoint"
     },
 	"fields": {
+		"photo":{
+			"type":"file"
+		},
 		"member":{
             "rightLabel": "Alpaca Club Member"
         },

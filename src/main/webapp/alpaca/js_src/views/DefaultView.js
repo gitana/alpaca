@@ -3,10 +3,11 @@
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({
-			id:"WEB_EDIT",
-    		description:"Default web edit view",
-			type:"edit",
-    		templates: {
+			"id":"WEB_EDIT",
+    		"description":"Default Web Edit View",
+			"type":"edit",
+			"displayReadonly":true,
+    		"templates": {
 				// Templates for control fields
 				fieldOuterEl: '<span>{{html this.html}}</span>',
 				controlFieldMessage: '<div>* ${message}</div>',
@@ -33,7 +34,7 @@
 				wizardNextButton : '<div>Next \u25B6</div>',
 				wizardStatusBar : '<ol id="${id}">{{each(i,v) titles}}<li id="stepDesc${i}"><div><strong><span>${v.title}</span>${v.description}</strong></div></li>{{/each}}</ol>'
 			},
-    	    messages: 
+    	    "messages": 
     	    {
     	    	empty: "",
     	    	required: "This field is required",
@@ -49,6 +50,7 @@
 			//parent: 'WEB_EDIT',
 			description: "default web display view",
 			type: "view",
+			displayReadonly:true,
 			templates: {
 				field: '<div class="alpaca-data-container">{{if options.label}}<div class="alpaca-data-label">${options.label}</div>{{/if}}<div class="alpaca-data">&nbsp;${data}</div></div>',
 				fieldSetOuterEl: '<div>{{html this.html}}</div>',
@@ -63,6 +65,7 @@
 			parent: 'WEB_EDIT',
 			description: "Default web create view",
 			type: "create",
+			displayReadonly:false,
 			templates: {
 			}
 		});		

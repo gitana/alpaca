@@ -21,7 +21,7 @@
 }
 
 .alpaca-field-label {
-    color: #505050;
+    color: #ffffff;
     text-align: left;
     margin: 4px 0px 2px 0px;
     min-width: 75px;
@@ -31,7 +31,7 @@
 
 .alpaca-field-helper {
     clear: both;
-    color: #505050;
+    color: #ffffff;
     font-size: 75%;
     margin-top: 2px;
 }
@@ -47,7 +47,7 @@
  * Invalid Field
  */
 .alpaca-field-invalid > div.alpaca-field-message, .alpaca-field-invalid > div.alpaca-field-label, .alpaca-field-invalid > label {
-    color: #C00E0C;
+    color: #ffc73d;
     font-weight: bold;
 }
 
@@ -60,12 +60,12 @@
  * Valid Field
  */
 .alpaca-field-valid > div.alpaca-field-message {
-    color: #505050;
+    color: #ffffff;
     font-weight: normal;
 }
 
 .alpaca-field-valid > div.alpaca-field-label, .alpaca-field-valid > label {
-    color: #505050;
+    color: #ffffff;
     font-weight: bold;
 }
 
@@ -237,13 +237,13 @@ fieldset.alpaca-fieldset {
     -khtml-border-bottom-right-radius: 10px;
     -moz-border-radius-bottomright: 10px;
     -webkit-border-bottom-right-radius: 10px;
-    color: #606060;
-    border: solid 1px #b7b7b7;
-    background: #fff;
-    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
-	background:-moz-linear-gradient(top, #fff, #ededed);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
-	text-shadow:0 1px 1px rgba(255,255,255,1);
+    color: #ffffff;
+    border: solid 1px #ffffff;
+    background: #000000;
+    background: -webkit-gradient(linear, left top, left bottom, from(#7c7d7d), to(#4c4c4c));
+	background:-moz-linear-gradient(top, #7c7d7d, #4c4c4c);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c7d7d', endColorstr='#4c4c4c');
+	text-shadow:0 0px 0px rgba(255,255,255,1);
 	-webkit-box-shadow:0 1px 2px rgba(0,0,0,.4);
 	-moz-box-shadow:0 1px 2px rgba(0,0,0,.4);
 	box-shadow:0 1px 2px rgba(0,0,0,.4);
@@ -257,10 +257,10 @@ legend.alpaca-fieldset-legend {
 	cursor:pointer;
 	color:#e8f0de;
 	border:solid 1px #538312;
-	background:#64991e;
-	background:-webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
-	background:-moz-linear-gradient(top, #7db72f, #4e7d0e);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
+	background:#f78d1d;
+	background:-webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
+	background:-moz-linear-gradient(top, #f47a20, #faa51a);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
 	text-shadow:0 1px 1px rgba(0,0,0,.3);
 	border-bottom-right-radius:10px;
 	-khtml-border-bottom-right-radius:10px;
@@ -296,7 +296,7 @@ legend.legend-collapsed:before {
  * Item Toolbar 
  */
 .alpaca-item-toolbar {
-	background-color: #DAE8EC;
+	background-color: #94761f;
 	border-bottom-right-radius:10px;
 	-khtml-border-bottom-right-radius:10px;
 	-moz-border-radius-bottomright:10px;
@@ -378,18 +378,18 @@ legend.legend-collapsed:before {
 	box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	
 	color: #fef4e9;
-	border: solid 1px #da7c0c;
-	background: #f78d1d;
-	background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
-	background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+	border: solid 1px #000000;
+	background: #333333;
+	background: -webkit-gradient(linear, left top, left bottom, from(#7c7d7d), to(#000000));
+	background: -moz-linear-gradient(top,  #7c7d7d,  #000000);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c7d7d', endColorstr='#000000');
 }
 .alpaca-form-button:hover {
 	text-decoration: none;	
-	background: #f47c20;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));
-	background: -moz-linear-gradient(top,  #f88e11,  #f06015);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');	
+	background: #0078a3;
+	background: -webkit-gradient(linear, left top, left bottom, from(#0f9aea), to(#0078a3));
+	background: -moz-linear-gradient(top,  #0f9aea,  #0078a3);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0f9aea', endColorstr='#0078a3');	
 	-webkit-transform:  scale(1.3);
 	-moz-transform: scale(1.3);
 	text-shadow: 0px 0px 4px rgba(0,0,0,.5);

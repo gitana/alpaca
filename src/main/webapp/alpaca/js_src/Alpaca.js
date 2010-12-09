@@ -209,7 +209,7 @@
             
         // make parallel calls if needed
         // load data                
-        if (data && Alpaca.isUri(data)) {
+        if (data && Alpaca.isUri(data) && (!(schema && schema.format && schema.format == 'uri'))) {
             $.ajax({
                 url: data,
                 type: "get",
@@ -220,8 +220,11 @@
                     if (loadCounter == 4) 
                         return Alpaca.init(el, data, options,schema, view,callback);
                 },
-                error: function(error){
-                }
+                error: function(error) {
+					loadCounter++;
+					if (loadCounter == 4) 
+						return Alpaca.init(el, data, options, schema, view, callback);
+				}
             });
         }
         else {
@@ -565,6 +568,47 @@
 		},
         
        /**
+        * Returns the view parameter
+        */
+	    getViewParam: function(configId, field) {
+			
+			var view = field.view;
+			
+			if (Alpaca.isObject(view)) {
+				var param = this._getViewParam(configId, view);
+				if (!Alpaca.isEmpty(param)) {
+					return param;
+				}
+				// Try to see if we can pick up default template
+				view = this.defaultView;
+			}
+
+			if (Alpaca.isString(view)) {
+				view = this.getView(view);
+				return this._getViewParam(configId, view);
+			}
+			return null;
+		},
+		
+		/**
+		 * Internal method for parameter lookup through view hierachy
+		 * 
+		 * @param {Object} configId
+		 * @param {Object} view
+		 */
+		_getViewParam: function(configId, view) {
+			if (view && !Alpaca.isEmpty(view[configId])) {
+				return view[configId];
+			} else {
+				if (view && view.parent) {
+					return this._getViewParam(configId, this.views[view.parent]);
+				} else {
+					return null;
+				}
+			}
+		},
+		
+		/**
         * Returns the field template for given id
         */
 	    getTemplate: function(templateId, field) {
@@ -1096,5 +1140,66 @@
 		return empty;
 	};
     
+/*
+ * Style File - jQuery plugin for styling file input elements
+ *  
+ * Copyright (c) 2007-2009 Mika Tuupola
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * Based on work by Shaun Inman
+ *   http://www.shauninman.com/archive/2007/09/10/styling_file_inputs_with_css_and_the_dom
+ *
+ */
+	
+    $.fn.filestyle = function(options) {
+                
+        /* TODO: This should not override CSS. */
+        var settings = {
+            width : 250
+        };
+                
+        if(options) {
+            $.extend(settings, options);
+        };
+                        
+        return this.each(function() {
+            
+            var self = this;
+            var wrapper = $("<div>").addClass('alpaca-filefield-button');
+       
+            var filename = $('<input>').addClass('alpaca-filefield-control')
+                             .addClass($(self).attr("class"));
+			var filenameWidth = filename.width;				 
+
+            $(self).before(filename);
+            $(self).wrap(wrapper);
+
+            $(self).css({
+                        "position": "relative",
+                        "height": wrapper.css('height'),
+                        "width": settings.width + "px",
+                        "display": "inline",
+                        "cursor": "pointer",
+                        "opacity": "0.0"
+                    });
+
+            if ($.browser.mozilla) {
+                if (/Win/.test(navigator.platform)) {
+                    $(self).css("margin-left", "-142px");                    
+                } else {
+                    $(self).css("margin-left", "-168px");                    
+                };
+            } else {
+                $(self).css("margin-left", wrapper.width - filenameWidth + "px");                
+            };
+
+            $(self).bind("change", function() {
+                filename.val($(self).val());
+            });
+      
+        });
+    };
     
 })(jQuery);

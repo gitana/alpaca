@@ -1,0 +1,34 @@
+{
+    "form":{
+        "action":"/endpoint"
+    },
+	"fields": {
+        "name":{
+            "fieldClass":"customer-profile-name"
+        },
+        "icecream":{
+            "fieldClass":"customer-profile-icecream"
+        },
+        "photo":{
+            "readonly":true
+        },
+		"age":{
+            "readonly":true
+        },
+        "gender":{
+            "readonly":true
+        },
+        "phone":{
+            "readonly":true
+        },	
+		"member":{
+            "rightLabel": "Alpaca Club Member",
+            "readonly":true
+        },
+		"address":{
+        	"type": "address",
+            "addressValidation": true,
+            "readonly":true
+        }
+	}
+}

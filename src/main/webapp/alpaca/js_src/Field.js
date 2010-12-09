@@ -103,12 +103,12 @@
                 this.options.helper = this.schema.description;
             }
 			
-			if (Alpaca.isEmpty(this.options.readonly) && this.schema.readonly) {
+			if (Alpaca.isEmpty(this.options.readonly) && !Alpaca.isEmpty(this.schema.readonly)) {
                 this.options.readonly = this.schema.readonly;
             }
             
             // data
-            if (Alpaca.isEmpty(this.data) && this.schema["default"]) {
+            if (Alpaca.isValEmpty(this.data) && this.schema["default"]) {
                 this.data = this.schema["default"];
             }
             
@@ -306,7 +306,11 @@
             
             if (!this.singleLevelRendering) {
                 this.renderField(onSuccess);
-            }
+            } else {
+				if (onSuccess) {
+					onSuccess(this);
+				}
+			}
         },
         
         /**
@@ -322,18 +326,28 @@
             if (this.getEl().attr("alpaca-field-id") == null) {
                 this.getEl().attr("alpaca-field-id", this.getId());
             }
-            // Support for custom CSS class for the field
-            var fieldClass = this.options["fieldClass"];
-            if (fieldClass) {
-                $(this.getEl()).addClass(fieldClass);
-            }
             // optional
             if (this.options.required) {
                 $(this.getEl()).addClass("alpaca-field-required");
             } else {
                 $(this.getEl()).addClass("alpaca-field-optional");
             }
-            
+ 
+            // readonly
+			if (this.options.readonly) {
+                $(this.getEl()).addClass("alpaca-field-readonly");
+				$(':input',this.getEl()).attr('readonly','on');
+				$('select',this.getEl()).attr('disabled','on');
+				$(':radio',this.getEl()).attr('disabled','on');
+				$(':checkbox',this.getEl()).attr('disabled','on');
+            }
+			
+            // Support for custom CSS class for the field
+            var fieldClass = this.options["fieldClass"];
+            if (fieldClass) {
+                $(this.getEl()).addClass(fieldClass);
+            }
+						           
             // after render
             if (this.options.disabled) {
                 this.disable();
@@ -354,6 +368,12 @@
             if (this.getViewType() != 'view') {
                 this.renderValidationState();
             }
+			
+			// for create view, hide all readonly fields
+            if (!Alpaca.getViewParam('displayReadonly',this)) {
+                $('.alpaca-field-readonly',this.getEl()).hide();
+            }
+			
 		},
         
         /**

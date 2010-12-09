@@ -1,0 +1,37 @@
+<div>
+    <div class="profile-name">${data.name}</div>
+    <div class="profile-photo">
+        <img src="${data.photo}"/>
+    </div>
+    <div class="profile-data">
+        <div class="item">
+            <span class="item-name">Age</span>
+            <span class="item-value">${data.age}</span>
+        </div>
+        <div class="item">
+            <span class="item-name">Gender</span>
+            <span class="item-value">${data.gender}</span>
+        </div>
+        <div class="item">
+            <span class="item-name">Member</span>
+            <span class="item-value">{{if data.member}}Yes{{else}}No{{/if}}</span>
+        </div>
+        <div class="item">
+            <span class="item-name">Favorite</span>
+            <span class="item-value">${data.icecream}</span>
+        </div>
+        <div class="item">
+            <span class="item-name">Phone</span>
+            <span class="item-value">${data.phone}</span>
+        </div>
+        <div class="item">
+            <span class="item-name">Address</span>
+            <span class="item-value">{{each(i,v) data.address.street}}
+                ${v}&nbsp;
+                {{/each}}
+                <br/>
+                ${data.address.city}&nbsp;${data.address.state}&nbsp;${data.address.zip}&nbsp;
+            </span>
+        </div>
+    </div>
+</div>

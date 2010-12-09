@@ -15,20 +15,24 @@
         <link type="text/css" href="../css/alpaca.css" rel="stylesheet" />
         <link type="text/css" href="../css/example.css" rel="stylesheet" />
 		<link rel="stylesheet" href="http://akzhan.github.com/jwysiwyg/jwysiwyg/jquery.wysiwyg.css" type="text/css" />
-		<link rel="stylesheet" href="http://www.datatables.net/release-datatables/media/css/demo_table.css" type="text/css" />
+		<link rel="stylesheet" href="http://www.datatables.net/release-datatables/media/css/demo_table_jui.css" type="text/css" />
+		<link rel="stylesheet" href="http://www.datatables.net/examples/examples_support/themes/smoothness/jquery-ui-1.7.2.custom.css" type="text/css" />
     </head>
     <body>
-        <h2>Gitana Repository List</h2>
+        <h2>Alpaca Farm Ice Cream Customer List</h2>
 		<div id="field1">
         </div>
         <script type="text/javascript" id="field1-script">
-            $("#field1").alpaca("/alpaca/examples/data/repository-list-data.json", {} , "/alpaca/examples/data/repository-list-schema.json",{
+            $("#field1").alpaca("/alpaca/examples/data/customer-list-data.json", {} , "/alpaca/examples/data/customer-list-schema.json",{
 				"templates" : {
-					"full" : "/alpaca/examples/templates/repository-list-table-template.html"
+					"full" : "/alpaca/examples/templates/customer-list-table-template.html"
 				}
 			}, function(field) {
 				field.render(function(renderedField) {
-					$('table',renderedField.getEl()).dataTable();
+					$('table',renderedField.getEl()).dataTable({
+					"bJQueryUI": true,
+					"sPaginationType": "full_numbers"
+				});
 				});
 			});
         </script>

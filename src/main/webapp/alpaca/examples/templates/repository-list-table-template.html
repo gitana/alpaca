@@ -1,17 +1,36 @@
 <div>
-	<table>
-		<caption>${schema.title}</caption>
-		<tbody>
-		<tr>
-			<th>${schema.properties.rows.items.properties._doc.title}</th>
-			<th>${schema.properties.rows.items.properties._ref.title}</th>
-		</tr>
-		{{each(i,v) data.rows}}
-			<tr>
-				<td>${v._doc}</td>
-				<td>${v._ref}</td>
-			</tr>
-		{{/each}}
-		</tbody>
-	</table>
+    <table cellpadding="0" cellspacing="0" border="0" class="display">
+        <thead>
+            <tr>
+                <th>
+                    ${schema.properties.rows.items.properties._doc.title}
+                </th>
+                <th>
+                    ${schema.properties.rows.items.properties._ref.title}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {{each(i,v) data.rows}}
+            <tr class="gradeA"s>
+                <td>
+                    ${v._doc}
+                </td>
+                <td>
+                    ${v._ref}
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                    ${schema.properties.rows.items.properties._doc.title}
+                </th>
+                <th>
+                    ${schema.properties.rows.items.properties._ref.title}
+                </th>
+            </tr>
+        </tfoot>
+		    </table>
 </div>

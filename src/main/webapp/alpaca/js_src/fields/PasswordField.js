@@ -18,6 +18,8 @@
 			{
 				this.schema.pattern = /^[0-9a-zA-Z\x20-\x7E]*$/;
 			}
+			
+			this.controlFieldTemplate = Alpaca.getTemplate("controlFieldPassword", this);
     	},
 
         /**
@@ -35,27 +37,14 @@
 			return baseStatus;	            
         },
         
-		/**
+        /**
          * @Override
-         *
-         * Renders an INPUT control into the field container
          */
-        renderField: function(onSuccess){
-            var controlFieldTemplate = Alpaca.getTemplate("controlFieldPassword", this, null, this.mode);
-            
-            if (controlFieldTemplate) {
-                this.inputElement = $.tmpl(controlFieldTemplate, {
-                    "id": this.getId(),
-                    "options": this.options
-                });
-				this.inputElement.addClass("alpaca-textfield");
-                this.injectField(this.inputElement);
-            }
-            
-            if (onSuccess) {
-                onSuccess();
-            }
-        }        
+        postRender: function() {
+            this.base();
+            // apply additional css
+            $(this.fieldContainer).addClass("alpaca-passwordfield");
+        }       
 	});
 	
     Alpaca.registerTemplate("controlFieldPassword", '<input type="password" id="${id}" {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="on"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');

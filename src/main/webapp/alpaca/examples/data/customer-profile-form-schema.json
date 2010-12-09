@@ -21,6 +21,12 @@
                 "Female"
             ]
         },
+        "photo":{
+            "title":"Photo",
+            "description":"Upload your profile picture.",
+            "type":"string",
+            "format":"uri"
+        },
         "member":{
             "title":"Member",
             "type":"boolean",
