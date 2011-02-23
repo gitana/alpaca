@@ -10,19 +10,47 @@
         /**
          * @Override
          *
+         */
+        setup: function() {
+            this.base();
+            if (Alpaca.isEmpty(this.data)) {
+                return;
+            }
+            if (!Alpaca.isArray(this.data)) {
+                if (!Alpaca.isString(this.data)) {
+                    return;
+                } else {
+                    try {
+                        this.data = $.parseJSON(this.data);
+                        if (!Alpaca.isArray(this.data)) {
+                            return;
+                        }
+                    } catch (e) {
+                        this.data = [this.data];
+                    }
+                }
+            }
+          
+            this.options.toolbarStyle = Alpaca.isEmpty(Alpaca.getViewParam('toolbarStyle', this))?"button":Alpaca.getViewParam('toolbarStyle', this);			
+        },
+        
+        /**
+         * @Override
+         *
          * Pick apart the array and set onto child fields.
          *
          * Data must be an array.
          */
         setValue: function(data) {
+        
             if (!data || !Alpaca.isArray(data)) {
                 return;
             }
             
             // clear all controls
-            Alpaca.each(this.children, function() {
-                this.clear();
-            });
+            //Alpaca.each(this.children, function() {
+            //    this.clear();
+            //});
             
             // set fields
             for (var i = 0; i < this.children.length; i++) {
@@ -119,30 +147,38 @@
             var _this = this;
             // add actions to toolbar buttons
             if (_this._validateEqualMaxItems()) {
-                $('.alpaca-item-toolbar-add', this.outerEl).each(function(index) {
-                    $(this).removeClass('alpaca-item-toolbar-disabled');
+                $('.alpaca-fieldset-array-item-toolbar-add', this.outerEl).each(function(index) {
+                    //$(this).removeClass('alpaca-fieldset-array-item-toolbar-disabled');
+                    $(this).button("enable");
                 });
             } else {
-                $('.alpaca-item-toolbar-add', this.outerEl).each(function(index) {
-                    $(this).addClass('alpaca-item-toolbar-disabled');
+                $('.alpaca-fieldset-array-item-toolbar-add', this.outerEl).each(function(index) {
+                    //$(this).addClass('alpaca-fieldset-array-item-toolbar-disabled');
+                    $(this).button("disable");
                 });
             }
             if (_this._validateEqualMinItems()) {
-                $('.alpaca-item-toolbar-remove', this.outerEl).each(function(index) {
-                    $(this).removeClass('alpaca-item-toolbar-disabled');
+                $('.alpaca-fieldset-array-item-toolbar-remove', this.outerEl).each(function(index) {
+                    //$(this).removeClass('alpaca-fieldset-array-item-toolbar-disabled');
+                    $(this).button("enable");
                 });
             } else {
-                $('.alpaca-item-toolbar-remove', this.outerEl).each(function(index) {
-                    $(this).addClass('alpaca-item-toolbar-disabled');
+                $('.alpaca-fieldset-array-item-toolbar-remove', this.outerEl).each(function(index) {
+                    //$(this).addClass('alpaca-fieldset-array-item-toolbar-disabled');
+                    $(this).button("disable");
                 });
             }
-			if ( this.getSize() == 0) {
-				this.renderArrayToolbar(this.outerEl);
-			} else {
-				if ($('.alpaca-array-toolbar', this.outerEl)) {
-					$('.alpaca-array-toolbar', this.outerEl).remove();
-				}	
-			}
+            if (this.getSize() == 0) {
+                this.renderArrayToolbar(this.outerEl);
+            } else {
+                if ($('.alpaca-fieldset-array-toolbar', this.outerEl)) {
+                    $('.alpaca-fieldset-array-toolbar', this.outerEl).remove();
+                }
+            }
+            // update counter
+            $('.alpaca-item-label-counter', this.outerEl).each(function(index) {
+                $(this).html(index + 1);
+            });
         },
         
         /**
@@ -162,25 +198,70 @@
                     toolbarElem.attr("id", id + "-item-toolbar");
                 }
                 // add actions to toolbar buttons
-                $('.alpaca-item-toolbar-add', toolbarElem).removeClass('alpaca-item-toolbar-disabled');
-                $('.alpaca-item-toolbar-add', toolbarElem).click(function() {
-                    _this.addItem(containerElem.index() + 1, null, fieldControl.getValue(), id);
+                /*
+                 $('.alpaca-fieldset-array-item-toolbar-add', toolbarElem).removeClass('alpaca-fieldset-array-item-toolbar-disabled');
+                 $('.alpaca-fieldset-array-item-toolbar-add', toolbarElem).click(function() {
+                 var newContainerElem= _this.addItem(containerElem.index() + 1, null, fieldControl.getValue(), id);
+                 _this.enrichElements(newContainerElem);
+                 });
+                 $('.alpaca-fieldset-array-item-toolbar-remove', toolbarElem).removeClass('alpaca-fieldset-array-item-toolbar-disabled');
+                 $('.alpaca-fieldset-array-item-toolbar-remove', toolbarElem).click(function() {
+                 _this.removeItem(id);
+                 });
+                 $('.alpaca-fieldset-array-item-toolbar-up', toolbarElem).click(function() {
+                 _this.moveItem(id, true);
+                 });
+                 $('.alpaca-fieldset-array-item-toolbar-down', toolbarElem).click(function() {
+                 _this.moveItem(id, false);
+                 });
+                 */
+                $('.alpaca-fieldset-array-item-toolbar-add', toolbarElem).button({
+                    text: false,
+                    icons: {
+                        primary: "ui-icon-circle-plus"
+                    }
+                }).click(function() {
+                    var newContainerElem = _this.addItem(containerElem.index() + 1, null, fieldControl.getValue(), id);
+                    _this.enrichElements(newContainerElem);
+                    return false;
                 });
-                $('.alpaca-item-toolbar-remove', toolbarElem).removeClass('alpaca-item-toolbar-disabled');
-                $('.alpaca-item-toolbar-remove', toolbarElem).click(function() {
+                $('.alpaca-fieldset-array-item-toolbar-remove', toolbarElem).button({
+                    text: false,
+                    icons: {
+                        primary: "ui-icon-circle-minus"
+                    }
+                }).click(function() {
                     _this.removeItem(id);
+                    return false;
                 });
-                $('.alpaca-item-toolbar-up', toolbarElem).click(function() {
+                $('.alpaca-fieldset-array-item-toolbar-up', toolbarElem).button({
+                    text: false,
+                    icons: {
+                        primary: "ui-icon-circle-arrow-n"
+                    }
+                }).click(function() {
                     _this.moveItem(id, true);
+                    return false;
                 });
-                $('.alpaca-item-toolbar-down', toolbarElem).click(function() {
+                $('.alpaca-fieldset-array-item-toolbar-down', toolbarElem).button({
+                    text: false,
+                    icons: {
+                        primary: "ui-icon-circle-arrow-s"
+                    }
+                }).click(function() {
                     _this.moveItem(id, false);
+                    return false;
                 });
-                toolbarElem.prependTo(containerElem);
+                toolbarElem.hide().prependTo(containerElem);
+                containerElem.hover(function() {
+                    $('.alpaca-fieldset-array-item-toolbar', this).show();
+                }, function() {
+                    $('.alpaca-fieldset-array-item-toolbar', this).hide();
+                });
             }
             
         },
-		
+        
         /**
          * Renders array toolbar
          * @param {Object} containerElem
@@ -197,12 +278,24 @@
                     toolbarElem.attr("id", id + "-array-toolbar");
                 }
                 // add actions to toolbar buttons
-                $('.alpaca-array-toolbar-add', toolbarElem).click(function() {
-                    _this.addItem(0, null, "", id);
-                });
+				if (this.options.toolbarStyle == "link") {				
+					$('.alpaca-fieldset-array-toolbar-add', toolbarElem).click(function() {
+						var newContainerElem = _this.addItem(0, null, "", id);
+						 _this.enrichElements(newContainerElem);
+					});					
+				} else {
+					$('.alpaca-fieldset-array-toolbar-add', toolbarElem).button({
+						icons: {
+							primary: "ui-icon-circle-plus"
+						}
+					}).click(function() {
+						_this.addItem(0, null, "", id);
+						return false;
+					}).wrap('<small></small>');
+				}
                 toolbarElem.appendTo(containerElem);
-            }            
-        },		
+            }
+        },
         
         /**
          * Re-renders item
@@ -217,9 +310,9 @@
             newContainer.attr("id", fieldControl.getId() + "-item-container");
             newContainer.attr("alpaca-id", fieldControl.getId());
             
-            $(".alpaca-item-toolbar", newContainer).remove();
+            $(".alpaca-fieldset-array-item-toolbar", newContainer).remove();
             this.renderToolbar(newContainer);
-            
+            this.enrichElements(newContainer);
         },
         
         /**
@@ -240,27 +333,51 @@
                 var containerElem = _this.renderItemContainer(insertAfterId);
                 Alpaca(containerElem, value, fieldSetting, itemSchema, this.getView(), function(fieldControl) {
                     // render
-					fieldControl.parent = _this;
-				    fieldControl.render();
+                    fieldControl.parent = _this;
+                    // setup item path
+                    fieldControl.path = _this.path + "[" + index + "]";
+                    fieldControl.render();
                     containerElem.attr("id", fieldControl.getId() + "-item-container");
                     containerElem.attr("alpaca-id", fieldControl.getId());
+                    // render item label if needed
+                    if (_this.options && _this.options.itemLabel) {
+                        var itemLabelTemplate = Alpaca.getTemplate("itemLabel", _this);
+                        var itemLabelElem = $.tmpl(itemLabelTemplate, {
+                            "options": _this.options,
+                            "index": index ? index + 1 : 1,
+                            "id": _this.id
+                        });
+                        itemLabelElem.prependTo(containerElem);
+                    }
                     // remember the control
                     _this.addChild(fieldControl, index);
-                    
-                    /*
-                     containerElem.hover(function() {
-                     // add control toolbar
-                     _this.renderToolbar(containerElem);
-                     }, function() {
-                     // remove control toolbar
-                     $(".alpaca-item-toolbar", containerElem).remove();
-                     });
-                     */
                     _this.renderToolbar(containerElem);
                     _this.renderValidationState();
                 });
                 
                 this.updateToolbarItemsStatus(this.outerEl);
+                return containerElem;
+            }
+        },
+        
+        /**
+         * Enriches styles for dynamic elements (jQuery Mobile only)
+         *
+         * @param {Object} containerElem
+         */
+        enrichElements: function(containerElem) {
+            // for jQuery Mobile only
+            if (containerElem) {
+                if (containerElem.find('[data-role="fieldcontain"]').fieldcontain) {
+                    containerElem.find('[data-role="fieldcontain"]').fieldcontain();
+                    containerElem.find('[data-role="fieldcontain"]').find("[type='radio'], [type='checkbox']").checkboxradio();
+                    containerElem.find('[data-role="fieldcontain"]').find("button, [type='button'], [type='submit'], [type='reset'], [type='image']").not(".ui-nojs").button();
+                    containerElem.find('[data-role="fieldcontain"]').find("input, textarea").not("[type='radio'], [type='checkbox'], button, [type='button'], [type='submit'], [type='reset'], [type='image']").textinput();
+                    containerElem.find('[data-role="fieldcontain"]').find("input, select").filter("[data-role='slider'], [data-type='range']").slider();
+                    containerElem.find('[data-role="fieldcontain"]').find("select:not([data-role='slider'])").selectmenu();
+                    //containerElem.find('[data-role="button"]').buttonMarkup();
+                    //containerElem.find('[data-role="controlgroup"]').controlgroup();
+                }
             }
         },
         
@@ -273,15 +390,15 @@
             var _this = this;
             
             if (this.data) {
-				$.each(this.data, function(index, value) {
-					var fieldSetting;
-					if (_this.options && _this.options.fields && _this.options.fields[index]) {
-						fieldSetting = _this.options.fields[index];
-					}
-					_this.addItem(index, fieldSetting, value);
-				});
-			}
-			this.updateToolbarItemsStatus();
+                $.each(this.data, function(index, value) {
+                    var fieldSetting;
+                    if (_this.options && _this.options.fields && _this.options.fields["item"]/*[index]*/) {
+                        fieldSetting = _this.options.fields["item"]/*[index]*/;
+                    }
+                    _this.addItem(index, fieldSetting, value);
+                });
+            }
+            this.updateToolbarItemsStatus();
         },
         
         /**
@@ -355,36 +472,130 @@
          * Handles validations
          */
         handleValidate: function() {
-			var baseStatus =  this.base();
+            var baseStatus = this.base();
+            
+            var valInfo = this.validation;
+            
+            var status = this._validateUniqueItems();
+            valInfo["valueNotUnique"] = {
+                "message": status ? "" : Alpaca.getMessage("valueNotUnique", this),
+                "status": status
+            };
+            
+            status = this._validateMaxItems();
+            valInfo["tooManyItems"] = {
+                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("tooManyItems", this), [this.schema.items.maxItems]),
+                "status": status
+            };
+            
+            status = this._validateMinItems();
+            valInfo["notEnoughItems"] = {
+                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("notEnoughItems", this), [this.schema.items.minItems]),
+                "status": status
+            };
+            
+            return baseStatus && valInfo["valueNotUnique"]["status"] && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"];
+        },
+        
+        /**
+         * @Override
+         */
+        getSchemaOfSchema: function() {
+			var properties = {
+				"properties": {
+					"items": {
+						"title": "Array Items",
+						"description": "Schema of array items",
+						"type": "object",
+						"properties": {
+							"minItems": {
+								"title": "Minimum Items",
+								"description": "Minimum number of items",
+								"type": "number"
+							},
+							"maxItems": {
+								"title": "Maximum Items",
+								"description": "Maximum number of items",
+								"type": "number"
+							},
+							"uniqueItems": {
+								"title": "Items Unique",
+								"description": "Item values should be unique if true",
+								"type": "boolean",
+								"default": false
+							}
+						}
+					}
+				}
+			};
 			
-			var valInfo = this.validation;
-			valInfo["valueNotUnique"] = {
-				"message":"",
-				"status": this._validateUniqueItems()
-			};
-			if (!this._validateUniqueItems()) {
-				valInfo["invalidValueOfEnum"]["message"] = Alpaca.getMessage("valueNotUnique", this);
-			}			
-			valInfo["tooManyItems"] = {
-				"message":"",
-				"status": this._validateMaxItems()
-			};
-			if (!this._validateMaxItems()) {
-				valInfo["tooManyItems"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("tooManyItems", this), [this.schema.items.maxItems]);
-			}			
-			valInfo["notEnoughItems"] = {
-				"message":"",
-				"status": this._validateMinItems()
-			};
-			if (!this._validateMinItems()) {
-				valInfo["notEnoughItems"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("notEnoughItems", this), [this.schema.items.minItems]);
-			}			
-        	return baseStatus && valInfo["valueNotUnique"]["status"] && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"];							
-        }        
+            if (this.children && this.children[0]) {					
+					Alpaca.merge(properties.properties.items.properties,this.children[0].getSchemaOfSchema())					
+            }
+            
+            return Alpaca.merge(this.base(), properties);			
+		},
+        
+        /**
+         * @Override
+         */
+        getOptionsForSchema: function() {
+			return Alpaca.merge(this.base(), {
+				"fields": {
+					"items": {
+						"type": "object",
+						"fields": {
+							"minItems": {
+								"type": "integer"
+							},
+							"maxItems": {
+								"type": "integer"
+							},
+							"uniqueItems": {
+								"type": "checkbox"
+							}
+						}
+					}
+				}
+			});
+		},
+        /**
+         * @Override
+         */
+        getTitle: function() {
+            return "Array Field";
+        },
+        
+        /**
+         * @Override
+         */
+        getDescription: function() {
+            return "Array Field.";
+        },
+        
+        /**
+         * @Override
+         */
+        getType: function() {
+            return "array";
+        },
+        
+        /**
+         * @Override
+         */
+        getFieldType: function() {
+            return "array";
+        }
     });
     
-    Alpaca.registerTemplate("arrayToolbar", '<div class="alpaca-array-toolbar"><span class="alpaca-array-toolbar-icon alpaca-array-toolbar-add" title="Add"></div>');
-    Alpaca.registerTemplate("arrayItemToolbar", '<div class="alpaca-item-toolbar"><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-add" title="Add"></span><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-remove" title="Remove"></span><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-up" title="Move Up"></span><span class="alpaca-item-toolbar-icon alpaca-item-toolbar-down" title="Move Down"></span></div>');
+    Alpaca.registerTemplate("itemLabel", '{{if options.itemLabel}}<div class="alpaca-controlfield-label"><div>${options.itemLabel}{{if index}} <span class="alpaca-item-label-counter">${index}</span>{{/if}}</div></div>{{/if}}');
+    
+    
+    //    Alpaca.registerTemplate("arrayToolbar", '<div class="alpaca-fieldset-array-toolbar"><span class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add" title="Add"></div>');
+    Alpaca.registerTemplate("arrayToolbar", '<span class="ui-widget ui-corner-all alpaca-fieldset-array-toolbar"><button class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">Add Item</button></span>');
+    
+    //    Alpaca.registerTemplate("arrayItemToolbar", '<div class="alpaca-fieldset-array-item-toolbar"><span class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add" title="Add"></span><span class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove" title="Remove"></span><span class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up" title="Move Up"></span><span class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down" title="Move Down"></span></div>');
+    Alpaca.registerTemplate("arrayItemToolbar", '<div class="ui-widget-header ui-corner-all alpaca-fieldset-array-item-toolbar"><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add">Add Item</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove">Remove Item</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up">Move Up</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down">Move Down</button></div>');
     
     Alpaca.registerMessages({
         "notEnoughItems": "The minimum number of items is {0}",

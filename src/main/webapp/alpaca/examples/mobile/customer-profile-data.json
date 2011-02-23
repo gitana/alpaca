@@ -1,0 +1,14 @@
+{
+    "name":"Taylor Swift",
+    "age":"18x",
+    "gender":"Female",
+    "member":false,
+    "icecream":"Chocolate",
+    "address":{
+        "street":[
+        ],
+        "city":"Burlington",
+        "state":"MA",
+        "zip":"18210"
+    }
+}

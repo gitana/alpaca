@@ -46,7 +46,10 @@
                     "value": this.data,
                     "options": this.options
                 });
-				this.inputElement.addClass("alpaca-form-button");				 
+				this.inputElement.addClass("alpaca-form-button");
+				this.button = this.inputElement.button({
+					text: true
+				});					
                 this.injectField(this.inputElement);
             }
             
@@ -105,6 +108,27 @@
          * @Override
          */
         onClick: function(e) {
+        },
+		
+		/**
+         * @Override
+		 */
+		getTitle: function() {
+			return "Button Field";
+		},
+		
+		/**
+         * @Override
+		 */
+		getDescription: function() {
+			return "Common Button Field.";
+		},
+
+		/**
+         * @Override
+         */
+        getType: function() {
+            return "any";
         }
     });
     

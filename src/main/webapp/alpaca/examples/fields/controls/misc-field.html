@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Alpaca > Component Gallery > Miscellaneous Field</title>
+        <meta name="keywords" content="alpaca,forms,miscellaneous,gitana" />
+        <meta name="description" content="Miscellaneous Field Examples for Alpaca Forms." />
+        <meta name="author" content="Gitana Software Inc." />
+        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js">
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+        </script>
+        <script type="text/javascript" src="../../../js/alpaca-${project.version}.js">
+        </script>
+        <script type="text/javascript" src="../../js/example.js">
+        </script>
+        <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css" rel="stylesheet">
+        <link type="text/css" href="../../../css/alpaca-${project.version}.css" rel="stylesheet" />
+        <link type="text/css" href="../../../css/example.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class='alpaca-example-container'>
+            <div class='alpaca-example-header' id='misc-field' alpaca-types='uppercase,ipv4,data,password,email,phone'>
+                <h2>Miscellaneous Fields</h2>
+            </div>
+            <div class='alpaca-example-body'>
+                <div class='alpaca-example-case'>
+                    <h3>Upper Case Field: </h3>
+                    <h4>Upper case field.</h4>
+                    <div id="field1">
+                    </div>
+                    <script type="text/javascript" id="field1-script">
+                        $("#field1").alpaca({
+                            "data": "Ice cream is wonderful.",
+                            "schema": {
+                                "format": "uppercase"
+                            }
+                        });
+                    </script>
+                    <h3>IPv4 Field: </h3>
+                    <h4>IP address field.</h4>
+                    <div id="field2">
+                    </div>
+                    <script type="text/javascript" id="field2-script">
+                        $("#field2").alpaca({
+                            "data": "100.60",
+                            "schema": {
+                                "format": "ipv4"
+                            }
+                        });
+                    </script>
+                    <h3>Date Field: </h3>
+                    <h4>Date field</h4>
+                    <div id="field3">
+                    </div>
+                    <script type="text/javascript" id="field3-script">
+                        $("#field3").alpaca({
+                            "data": "10/105/2001",
+                            "schema": {
+                                "format": "date"
+                            }
+                        });
+                    </script>
+                    <h3>Password Field: </h3>
+                    <h4>Password field.</h4>
+                    <div id="field4">
+                    </div>
+                    <script type="text/javascript" id="field4-script">
+                        $("#field4").alpaca({
+                            "data": "password",
+                            "schema": {
+                                "format": "password"
+                            }
+                        });
+                    </script>
+                    <h3>Email Field: </h3>
+					<h4>Email field.</h4>
+                    <div id="field5">
+                    </div>
+                    <script type="text/javascript" id="field5-script">
+                        $("#field5").alpaca({
+                            "data": "support",
+                            "schema": {
+                                "format": "email"
+                            }
+                        });
+                    </script>
+                    <h3>Phone Field: </h3>
+					<h4>Phone field with input mask.</h4>
+                    <div id="field6">
+                    </div>
+                    <script type="text/javascript" id="field6-script">
+                        $("#field6").alpaca({
+                            "data": "",
+                            "schema": {
+                                "format": "phone"
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="alpaca-example-footer">
+                <center class="copyright">
+                    Copyright &copy; 2011 Gitana Software | All Rights Reserved
+                </center>
+            </div>
+        </div>
+    </body>
+</html>

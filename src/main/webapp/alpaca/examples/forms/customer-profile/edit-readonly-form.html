@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Alpaca > Component Gallery > Forms > Customer Profile > Edit</title>
+        <meta name="keywords" content="alpaca,forms,create,gitana" />
+        <meta name="description" content="Customer Profile Form with Custom View Template." />
+        <meta name="author" content="Gitana Software Inc." />
+        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <script src="http://maps.google.com/maps/api/js?sensor=false">
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js">
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+        </script>
+        <script type="text/javascript" src="../../../js/alpaca-${project.version}.js">
+        </script>
+        <script type="text/javascript" src="../../js/example.js">
+        </script>
+        <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css" rel="stylesheet">
+        <link type="text/css" href="../../../css/alpaca-${project.version}.css" rel="stylesheet" />
+        <link type="text/css" href="../../../css/example.css" rel="stylesheet" />	
+        <style type="text/css">
+            .customer-profile-name .alpaca-field-label, .customer-profile-icecream .alpaca-field-label {
+                float: left;
+                min-width: 150px;
+            }
+            
+            .customer-profile-name .alpaca-field-container, .customer-profile-icecream .alpaca-field-container {
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='alpaca-example-container'>
+            <div class='alpaca-example-header' id='customer-profile-edit-readonly' alpaca-types=''>
+                <h2>Alpaca Farm Ice Cream Customer Profile</h2>
+            </div>
+            <div class='alpaca-example-body'>
+                <div class='alpaca-example-case'>
+                    <h3>Edit Form for Existing Customer (with Readonly Fields)</h3>
+                    <h4>This example loads <a href="./data.json" target="_source">data</a>, <a href="./simple-options.json" target="_source">options</a> and <a href="./schema.json" target="_source">schema</a> parameters through ajax calls.</h4>
+                    <div id="field1">
+                    </div>
+                    <script type="text/javascript" id="field1-script">
+                        $(function() {
+                            $("#field1").alpaca({
+                                "data": "./data.json",
+                                "options": "./simple-options.json",
+                                "schema": "./schema.json",
+                                "view": {
+                                    "parent": "WEB_EDIT",
+                                    "displayReadonly": true
+                                
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="alpaca-example-footer">
+                <center class="copyright">
+                    Copyright &copy; 2011 Gitana Software | All Rights Reserved
+                </center>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Alpaca > Component Gallery > I18n > Spanish</title>
+        <meta name="keywords" content="alpaca,forms,i18n,spanish,gitana" />
+        <meta name="description" content="I18N Examples for Alpaca Forms." />
+        <meta name="author" content="Gitana Software Inc." />
+        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <script src="http://maps.google.com/maps/api/js?sensor=false">
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js">
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+        </script>
+        <script type="text/javascript" src="../../../js/alpaca-${project.version}.js">
+        </script>
+        <script type="text/javascript" src="../../js/example.js">
+        </script>
+        <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css" rel="stylesheet">
+        <link type="text/css" href="../../../css/alpaca-${project.version}.css" rel="stylesheet" />
+        <link type="text/css" href="../../../css/example.css" rel="stylesheet" />	
+    </head>
+    <body>
+        <div class='alpaca-example-container'>
+            <div class='alpaca-example-header' id='i18n-spanish' alpaca-types=''>
+                <h2>I18N Ejemplos - Espa&#241;oles</h2>
+            </div>
+            <div class='alpaca-example-body'>
+                <div class='alpaca-example-case'>
+                    <h3>Ejemplo 1: </h3>
+                    <div id="field1">
+                    </div>
+                    <script type="text/javascript"id="field1-script">
+                        $(function() {
+                            Alpaca.setDefaultLocale("es_ES");
+                            $("#field1").alpaca({
+                                "data": {},
+                                "options": {
+                                    "fields": {
+                                        "icecream": {
+                                            "optionLabels": ["Vainilla", "Chocolate", "CafŽ", "Fresa", "Menta"]
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "title": "Perfil de cliente",
+                                    "description": "Perfil de cliente del helado de la alpaca",
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "title": "Nombre completo",
+                                            "type": "string"
+                                        },
+                                        "age": {
+                                            "title": "Edad",
+                                            "type": "number"
+                                        },
+                                        "icecream": {
+                                            "title": "Helado preferido",
+                                            "type": "string",
+                                            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+                                        },
+                                        "address": {
+                                            "title": "Direcci&#243;n de comienzo de la pista en disco",
+                                            "type": "object",
+                                            "properties": {
+                                                "street": {
+                                                    "title": "Direcci&#243;n de calle",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "maxLength": 30,
+                                                        "minItems": 1,
+                                                        "maxItems": 3
+                                                    }
+                                                },
+                                                "city": {
+                                                    "title": "Ciudad",
+                                                    "type": "string"
+                                                },
+                                                "state": {
+                                                    "title": "Estado",
+                                                    "type": "string"
+                                                },
+                                                "zip": {
+                                                    "title": "C&#243;digo postal",
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="alpaca-example-footer">
+                <center class="copyright">
+                    Copyright &copy; 2011 Gitana Software | All Rights Reserved
+                </center>
+            </div>
+        </div>
+    </body>
+</html>

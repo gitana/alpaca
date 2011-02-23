@@ -45,15 +45,36 @@
          * @Override
          */
         postRender: function() {
-            // apply additional css
-            $(this.fieldContainer).addClass("alpaca-filefield");
-            
             // make it stylable
             if (this.inputElement) {
-            	this.inputElement.filestyle({});
-            	this.fieldContainer.width(this.fieldContainer.width() + 26);
+				this.inputElement.customFileInput();
             }
             this.base();
+            // apply additional css
+			if (this.fieldContainer) {
+				this.fieldContainer.addClass("alpaca-controlfield-file");
+			}            			
+        },
+		
+		/**
+         * @Override
+		 */
+		getTitle: function() {
+			return "File Field";
+		},
+		
+		/**
+         * @Override
+		 */
+		getDescription: function() {
+			return "Field for uploading files.";
+		},
+
+		/**
+         * @Override
+         */
+        getFieldType: function() {
+            return "file";
         }
     });
     

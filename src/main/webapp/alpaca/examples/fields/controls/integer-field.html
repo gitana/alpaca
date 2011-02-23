@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Alpaca > Component Gallery > Integer Field</title>
+        <meta name="keywords" content="alpaca,forms,integer,gitana" />
+        <meta name="description" content="Integer Field Examples for Alpaca Forms." />
+        <meta name="author" content="Gitana Software Inc." />
+        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js">
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+        </script>
+        <script type="text/javascript" src="../../../js/alpaca-${project.version}.js">
+        </script>
+        <script type="text/javascript" src="../../js/example.js">
+        </script>
+        <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css" rel="stylesheet">
+        <link type="text/css" href="../../../css/alpaca-${project.version}.css" rel="stylesheet" />
+        <link type="text/css" href="../../../css/example.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class='alpaca-example-container'>
+            <div class='alpaca-example-header' id='integer-field' alpaca-types='integer'>
+                <h2>Integer Field</h2>
+            </div>
+            <div class='alpaca-example-body'>
+                <div class='alpaca-example-case'>
+                    <h3>Example 1: </h3>
+					<h4>Integer field with data,options and schema parameters.</h4>
+                    <div id="field1">
+                    </div>
+                    <script type="text/javascript" id="field1-script">
+                        $(function() {
+							$("#field1").alpaca({
+								"data": 17,
+								"options": {
+									"type": "integer",
+									"label": "Age:",
+									"helper": "Guess Talyor Swift's Age"
+								},
+								"schema": {
+									minimum: 18,
+									maximum: 25,
+									exclusiveMinimum: true,
+									exclusiveMaximum: true,
+									divisibleBy: 2
+								}
+							});
+						});
+                    </script>
+                    <h3>Example 2: </h3>
+					<h4>Integer field with slider control.</h4>
+                    <div id="field2">
+                    </div>
+                    <script type="text/javascript" id="field2-script">
+                        $(function() {
+                            $("#field2").alpaca({
+                                "data": 18,
+                                "options": {
+                                    "type": "integer",
+                                    "label": "Snow Days:",
+                                    "helper": "Number of Snow Days in January 2011",
+                                    "slider": true
+                                },
+                                "schema": {
+                                    minimum: 1,
+                                    maximum: 31
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="alpaca-example-footer">
+                <center class="copyright">
+                    Copyright &copy; 2011 Gitana Software | All Rights Reserved
+                </center>
+            </div>
+        </div>
+    </body>
+</html>

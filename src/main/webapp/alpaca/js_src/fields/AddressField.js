@@ -83,7 +83,7 @@
                     address += value.state + " ";
                 }
                 if (value.zip) {
-                    address += value.zip + " ";
+                    address += value.zip;
                 }
             }
             return address;
@@ -101,7 +101,10 @@
             $(this.fieldContainer).addClass("alpaca-addressfield");
             
             if (this.options.addressValidation) {
-                $('<div class="alpaca-form-button">Map It ! </div>').appendTo(this.fieldContainer).click(function() {
+				$('<div style="clear:both;"></div>').appendTo(this.fieldContainer);
+                $('<div class="alpaca-form-button">Google Map</div>').appendTo(this.fieldContainer).button({
+                    text: true
+                }).click(function() {
                     if (google && google.maps) {
                         var geocoder = new google.maps.Geocoder();
                         var address = _this.getAddress();
@@ -112,7 +115,7 @@
                                 if (status == google.maps.GeocoderStatus.OK) {
                                     var mapCanvasId = _this.getId() + "-map-canvas";
                                     if ($('#' + mapCanvasId).length == 0) {
-                                        $("<div id='" + mapCanvasId + "' class='alpaca-map-canvas'></div>").appendTo(_this.fieldContainer);
+                                        $("<div id='" + mapCanvasId + "' class='alpaca-controlfield-address-mapcanvas'></div>").appendTo(_this.fieldContainer);
                                     }
                                     var map = new google.maps.Map(document.getElementById(_this.getId() + "-map-canvas"), {
                                         "zoom": 10,
@@ -129,15 +132,80 @@
                             });
                         }
                     } else {
-                        _this.displayMessage("Google Map API is not installed.");
+                        _this.displayMessage("Google Map API is not installed.");						
                     }
-                });
+                }).wrap('<small/>');
             }
             
             if (onSuccess) {
                 onSuccess();
             }
         },
+		
+		/**
+		 * @Override
+		 */
+		isContainer: function() {
+        	return false;
+        },		
+		
+        /**
+         * @Override
+         */
+		getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"properties": {
+					"validateAddress": {
+						"title": "Address Validation",
+						"description": "Enable address validation if true",
+						"type": "boolean",
+						"default": true
+					}
+				}
+			});
+		},
+
+        /**
+         * @Override
+         */
+		getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"validateAddress": {
+						"helper": "Address validation if checked",
+						"rightLabel": "Enable Google Map for address validation?",
+						"type": "checkbox"
+					}
+				}
+			});
+		},						
+		/**
+         * @Override
+		 */
+		getTitle: function() {
+			return "Address";
+		},
+		
+		/**
+         * @Override
+		 */
+		getDescription: function() {
+			return "Standard US Address with Street, City, State and Zip. Also comes with support for Google map.";
+		},
+		
+		/**
+         * @Override
+         */
+        getType: function() {
+            return "any";
+        },
+
+		/**
+         * @Override
+         */
+        getFieldType: function() {
+            return "address";
+        }				
     });
     
     Alpaca.registerFieldClass("address", Alpaca.Fields.AddressField);

@@ -23,16 +23,26 @@
      * }
      */
     Alpaca.Fields.NumberField = Alpaca.Fields.TextField.extend({
-    		
+    
         /**
          * @Override
          *
          */
         getValue: function() {
-            var textValue = $(this.inputElement).val();
+            var textValue = this.inputElement.val();
             return parseFloat(textValue);
         },
         
+        /**
+         * @Override
+         */
+        postRender: function() {
+            this.base();
+			if (this.fieldContainer) {
+				this.fieldContainer.addClass('alpaca-controlfield-number');
+			}
+        },		
+				
         /**
          * @Override
          *
@@ -41,41 +51,43 @@
             var baseStatus = this.base();
             
             var valInfo = this.validation;
+			
+			var status = this._validateNumber();
             valInfo["stringNotANumber"] = {
-                "message": "",
-                "status": this._validateNumber()
+                "message": status ? "" : Alpaca.getMessage("stringNotANumber", this),
+                "status": status
             };
-            if (!this._validateNumber()) {
-                valInfo["stringNotANumber"]["message"] = Alpaca.getMessage("stringNotANumber", this);
-            }
-            valInfo["stringDivisibleBy"] = {
-                "message": "",
-                "status": this._validateDivisibleBy()
+
+            status = this._validateDivisibleBy();
+			valInfo["stringDivisibleBy"] = {
+                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("stringDivisibleBy", this), [this.schema.divisibleBy]),
+                "status": status
             };
-            if (!this._validateDivisibleBy()) {
-                valInfo["stringDivisibleBy"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringDivisibleBy", this), [this.schema.divisibleBy]);
-            }
-            valInfo["stringValueTooLarge"] = {
+
+            status = this._validateMaximum();
+			valInfo["stringValueTooLarge"] = {
                 "message": "",
-                "status": this._validateMaximum()
+                "status": status
             };
-            if (!this._validateMaximum()) {
-				if (this.schema.exclusiveMaximum) {
-					valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooLargeExclusive", this), [this.schema.maximum]);
-				} else {
-					valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooLarge", this), [this.schema.maximum]);					
-				}
+            if (!status) {
+                if (this.schema.exclusiveMaximum) {
+                    valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooLargeExclusive", this), [this.schema.maximum]);
+                } else {
+                    valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooLarge", this), [this.schema.maximum]);
+                }
             }
+			
+			status = this._validateMinimum();
             valInfo["stringValueTooSmall"] = {
                 "message": "",
-                "status": this._validateMinimum()
+                "status": status
             };
-            if (!this._validateMinimum()) {
-				if (this.schema.exclusiveMinimum) {
-					valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooSmallExclusive", this), [this.schema.minimum]);
-				} else {
-					valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooSmall", this), [this.schema.minimum]);
-				}
+            if (!status) {
+                if (this.schema.exclusiveMinimum) {
+                    valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooSmallExclusive", this), [this.schema.minimum]);
+                } else {
+                    valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooSmall", this), [this.schema.minimum]);
+                }
             }
             return baseStatus && valInfo["stringNotANumber"]["status"] && valInfo["stringDivisibleBy"]["status"] && valInfo["stringValueTooLarge"]["status"] && valInfo["stringValueTooSmall"]["status"];
         },
@@ -84,11 +96,11 @@
          * Validates if it is a number
          */
         _validateNumber: function() {
-            var textValue = $(this.inputElement).val();
-			// allow null
-			if (Alpaca.isValEmpty(textValue)) {
-				return true;
-			}
+            var textValue = this.inputElement.val();
+            // allow null
+            if (Alpaca.isValEmpty(textValue)) {
+                return true;
+            }
             var floatValue = this.getValue();
             
             // quick check to see if what they entered was a number
@@ -159,6 +171,94 @@
             }
             
             return true;
+        },
+        /**
+         * @Override
+         */
+        getSchemaOfSchema: function() {
+            return Alpaca.merge(this.base(), {
+				"properties": {
+					"minimum": {
+						"title": "Minimum",
+						"description": "Minimum value of the property",
+						"type": "number"
+					},
+					"maximum": {
+						"title": "Maximum",
+						"description": "Maximum value of the property",
+						"type": "number"
+					},
+					"exclusiveMinimum": {
+						"title": "Exclusive Minimum",
+						"description": "Field value can not equal the number defined by the minimum attribute",
+						"type": "boolean",
+						"default": false
+					},
+					"exclusiveMaximum": {
+						"title": "Exclusive Maximum",
+						"description": "Field value can not equal the number defined by the maxinum attribute",
+						"type": "boolean",
+						"default": false
+					}
+				}				
+            });
+        },
+
+        /**
+         * @Override
+         */
+        getOptionsForSchema: function() {
+			return Alpaca.merge(this.base(), {
+				"fields": {
+					"minimum": {
+						"title": "Minimum",
+						"description": "Minimum value of the property",
+						"type": "number"
+					},
+					"maximum": {
+						"title": "Maximum",
+						"description": "Maximum value of the property",
+						"type": "number"
+					},
+					"exclusiveMinimum": {
+						"rightLabel": "Exclusive minimum ?",
+						"helper": "Field value must be greater than but not equal to this number if checked",
+						"type": "checkbox"
+					},
+					"exclusiveMaximum": {
+						"rightLabel": "Exclusive Maximum ?",
+						"helper": "Field value must be less than but not equal to this number if checked",
+						"type": "checkbox"
+					}
+				}
+			});
+		},		
+		/**
+         * @Override
+		 */
+		getTitle: function() {
+			return "Number Field";
+		},
+		
+		/**
+         * @Override
+		 */
+		getDescription: function() {
+			return "Field for float numbers.";
+		},
+
+		/**
+         * @Override
+         */
+        getType: function() {
+            return "number";
+        },
+
+		/**
+         * @Override
+         */
+        getFieldType: function() {
+            return "number";
         }
     });
     

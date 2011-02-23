@@ -1,0 +1,14 @@
+{
+    "fields":{
+        "photo":{
+            "type":"file"
+        },
+        "member":{
+            "rightLabel":"Alpaca Club Member"
+        },
+        "address":{
+            "type":"address",
+            "addressValidation":true
+        }       
+    }
+}

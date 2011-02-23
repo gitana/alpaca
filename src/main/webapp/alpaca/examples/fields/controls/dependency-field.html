@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Alpaca > Component Gallery > Dependency Field</title>
+        <meta name="keywords" content="alpaca,forms,dependency field,gitana" />
+        <meta name="description" content="Dependency Field Examples for Alpaca Forms." />
+        <meta name="author" content="Gitana Software Inc." />
+        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js">
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+        </script>
+        <script type="text/javascript" src="../../../js/alpaca-${project.version}.js">
+        </script>
+        <script type="text/javascript" src="../../js/example.js">
+        </script>
+        <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css" rel="stylesheet">
+        <link type="text/css" href="../../../css/alpaca-${project.version}.css" rel="stylesheet" />
+        <link type="text/css" href="../../../css/example.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class='alpaca-example-container'>
+            <div class='alpaca-example-header' id='dependency-field' alpaca-types=''>
+                <h2>Dependency Fields</h2>
+            </div>
+            <div class='alpaca-example-body'>
+                <div class='alpaca-example-case'>
+                    <h3>Ice Cream Picker Field: </h3>
+					<h4>Field dependecy through schema dependency properties.</h4>
+                    <div id="field1">
+                    </div>
+                    <script type="text/javascript" id="field1-script">
+                        $(function() {
+                            $("#field1").alpaca({
+                                "data": {},
+                                "schema": {
+                                    "title": "Ice Cream Picker",
+                                    "description": "Select Your Favorite Ice Cream",
+                                    "type": "object",
+                                    "properties": {
+                                        "fan": {
+                                            "title": "Alpaca Ice Cream Lover?",
+                                            "type": "boolean",
+                                            "description": "Say YES If You Are Truly An Alpaca Ice Cream Lover."
+                                        },
+                                        "icecream": {
+                                            "title": "Favorite Ice Cream",
+                                            "type": "String",
+                                            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
+                                            "dependencies": "fan"
+                                        },
+                                        "topping": {
+                                            "title": "Favorite Topping",
+                                            "type": "String",
+                                            "enum": ["Marshmelllow", "Chocolate Chip", "Caramel", "Cookie Dough"],
+                                            "dependencies": ["icecream"]
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="alpaca-example-footer">
+                <center class="copyright">
+                    Copyright &copy; 2011 Gitana Software | All Rights Reserved
+                </center>
+            </div>
+        </div>
+    </body>
+</html>

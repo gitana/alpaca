@@ -23,10 +23,7 @@
             
             if (!this.options.rightLabel) {
                 this.options.rightLabel = "";
-            }
-            
-            // We force the optional schema setting since booleans either exist or they don't and both are valid values
-            this.schema.optional = true;            
+            }           
         },
         
         /**
@@ -34,30 +31,38 @@
          *
          */
         renderField: function(onSuccess) {
-            $(this.fieldContainer).addClass("alpaca-checkboxfield");
-            
             var controlFieldTemplate = Alpaca.getTemplate("controlFieldCheckbox", this, null, this.mode);
             
             if (controlFieldTemplate) {
-                this.inputElement = $.tmpl(controlFieldTemplate, {
-                    "id": this.getId(),
-                    "options": this.options
-                });
-                this.injectField(this.inputElement);
-                this.inputElement = $('input[id="' + this.getId() + '"]', this.inputElement);
-            }
+				this.inputElement = $.tmpl(controlFieldTemplate, {
+					"id": this.getId(),
+					"options": this.options
+				});
+				this.injectField(this.inputElement);
+				this.inputElement = $('input[id="' + this.getId() + '"]', this.inputElement);
+			}
             
             if (onSuccess) {
                 onSuccess();
             }
         },
+		
+        /**
+         * @Override
+         */
+        postRender: function() {
+            this.base();
+			if (this.fieldContainer) {
+				this.fieldContainer.addClass('alpaca-controlfield-checkbox');
+			}
+        },		
 
         /**
          * @Override
          *
          */
         getValue: function() {
-            return $(this.inputElement).attr("checked") ? $(this.inputElement).attr("checked") : false;
+            return this.inputElement.attr("checked") ? this.inputElement.attr("checked") : false;
         },
         
         /**
@@ -92,6 +97,62 @@
          */
         enable: function() {
             this.inputElement.disabled = false;
+        },
+		
+        /**
+         * @Override
+         */
+		getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"properties": {
+					"rightLabel": {
+						"title": "Option Label",
+						"description": "Option label",
+						"type": "string"
+					}
+				}
+			});
+		},
+
+        /**
+         * @Override
+         */
+		getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"rightLabel": {
+						"type": "text"
+					}
+				}
+			});
+		},
+				
+		/**
+         * @Override
+		 */
+		getTitle: function() {
+			return "Checkbox Field";
+		},
+		
+		/**
+         * @Override
+		 */
+		getDescription: function() {
+			return "Checkbox Field.";
+		},
+
+		/**
+         * @Override
+         */
+        getType: function() {
+            return "boolean";
+        },
+
+		/**
+         * @Override
+         */
+        getFieldType: function() {
+            return "checkbox";
         }
         
     });

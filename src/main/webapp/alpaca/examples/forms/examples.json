@@ -1,0 +1,39 @@
+{
+	"title":"Form Gallery",
+	"examples" : [{
+		"title": "Customer Profile",
+		"examples": [{
+			"id":"customer-profile-create",
+		    "title":"Create",
+			"link":"../customer-profile/create-form.html"
+		},{
+			"id":"customer-profile-create-simple",
+		    "title":"Create (Simplified)",
+			"link":"../customer-profile/create-simple-form.html"
+		},{
+			"id":"customer-profile-edit",
+		    "title":"Edit",
+			"link":"../customer-profile/edit-form.html"
+		},{
+			"id":"customer-profile-edit-simple",
+		    "title":"Edit (Simplified)",
+			"link":"../customer-profile/edit-simple-form.html"
+		},{
+			"id":"customer-profile-edit-custom",
+		    "title":"Edit (Customized)",
+			"link":"../customer-profile/edit-custom-view-form.html"
+		},{
+			"id":"customer-profile-edit-readonly",
+		    "title":"Edit (Readonly)",
+			"link":"../customer-profile/edit-readonly-form.html"
+		},{
+			"id":"customer-profile-view-custom",
+		    "title":"View (Customized)",
+			"link":"../customer-profile/custom-view-form.html"
+		},{
+			"id":"customer-list",
+		    "title":"Customer List",
+			"link":"../customer-profile/list-table-form.html"
+		}]			
+	}] 
+}

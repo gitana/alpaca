@@ -18,11 +18,11 @@
         setup: function(){
             this.base();
             
-            if (this.options.formName) {
-				this.formName = this.options.formName;
+            if (this.options.name) {
+				this.name = this.options.name;
 			}
 			else {
-				this.formName = this.getId()+"-form-name";
+				this.name = this.getId()+"-name";
 			}
         },
 		        
@@ -32,7 +32,7 @@
          * Return the value of the input control
          */
         getValue: function(){
-            return $('input:radio[name='+this.formName+']:checked',this.inputElement).val();
+            return $('input:radio[name='+this.name+']:checked',this.inputElement).val();
         },
         
         /**
@@ -51,10 +51,7 @@
          *
          * Render list control into the field container
          */
-        renderField: function(onSuccess){
-            // decorate the field container with our class
-            $(this.fieldContainer).addClass("alpaca-listfield");
-            
+        renderField: function(onSuccess){            
             var controlFieldTemplate = Alpaca.getTemplate("controlFieldRadio", this, null, this.mode);
             
             if (controlFieldTemplate) {
@@ -62,7 +59,8 @@
                     "id": this.getId(),
                     "options": this.options,
                     "selectOptions": this.selectOptions,
-					"formName": this.formName,
+                    "required":this.schema.required,
+					"name": this.name,
                     "data": this.data
                 });
                 if ($("input:radio:checked",this.inputElement).length == 0) {
@@ -78,6 +76,16 @@
         
         /**
          * @Override
+         */
+        postRender: function() {
+            this.base();
+			if (this.fieldContainer) {
+				this.fieldContainer.addClass('alpaca-controlfield-radio');
+			}
+        },        
+        
+        /**
+         * @Override
          *
          * Handler for click event
          */
@@ -89,13 +97,50 @@
             Alpaca.later(25, this, function(){
                 var v = _this.getValue();
                 _this.setValue(v, false);
+                _this.renderValidationState();
             });
-            this.renderValidationState();            
         },
+		
+        /**
+         * @Override
+         */
+		getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"properties": {
+					"name": {
+						"title": "Field name",
+						"description": "Field name",
+						"type": "string",
+						"readonly": true
+					}
+				}
+			});
+        },
+        
+		/**
+         * @Override
+		 */
+		getTitle: function() {
+			return "Radio Group Field";
+		},
+		
+		/**
+         * @Override
+		 */
+		getDescription: function() {
+			return "Radio Group Field.";
+		},
+
+		/**
+         * @Override
+         */
+        getFieldType: function() {
+            return "radio";
+        }	
         
     });
     
-    Alpaca.registerTemplate("controlFieldRadio", '<div id="${id}">{{each selectOptions}}<input type="radio" {{if options.readonly}}readonly="on"{{/if}} name="${formName}" value="${value}" {{if value == data}}checked="checked"{{/if}}/>${text}{{/each}}</div>');
+    Alpaca.registerTemplate("controlFieldRadio", '<div id="${id}" class="alpaca-controlfield-radio">{{if !required}}<input type="radio" {{if options.readonly}}readonly="on"{{/if}} name="${name}" value=""/><span class="alpaca-controlfield-radio-label">None</span>{{/if}}{{each selectOptions}}<input type="radio" {{if options.readonly}}readonly="on"{{/if}} name="${name}" value="${value}" {{if value == data}}checked="checked"{{/if}}/><span class="alpaca-controlfield-radio-label">${text}</span>{{/each}}</div>');
     Alpaca.registerFieldClass("radio", Alpaca.Fields.RadioField);
     
 })(jQuery);

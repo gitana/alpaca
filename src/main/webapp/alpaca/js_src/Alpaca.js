@@ -124,6 +124,8 @@
         var options = null;
         var schema = null;
 		var view = null;
+		var callback = null;
+		var renderedCallback = null;
         
         if (args.length == 1) {
             // hands back the field instance that is bound directly under the specified element
@@ -152,42 +154,54 @@
             }
         }
 
-        // figure out the data and options to use
-        if (args.length >= 2) {
-            // "data" is the second argument
-            var data = args[1];
-            if (Alpaca.isFunction(data)) {
-                alert("Function not supported as data argument");
-                return;
-            }
-            
-            if (args.length >= 3) {
-                // "options" is the third argument
-                if (!Alpaca.isFunction(args[2])) {
-                    options = args[2];
-                }
-                if (args.length >= 4) {
-					// "schema" is the forth argument
-					if (!Alpaca.isFunction(args[3])) {
-						schema = args[3];
+		if (args.length == 2 && Alpaca.isObject(args[1])) {
+			
+			data = args[1].data;
+			schema = args[1].schema;
+			options = args[1].options;
+			view = args[1].view;
+			callback = args[1].render;
+			renderedCallback = args[1].postRender;
+		
+		} else {
+		
+			// figure out the data and options to use
+			if (args.length >= 2) {
+				// "data" is the second argument
+				var data = args[1];
+				if (Alpaca.isFunction(data)) {
+					alert("Function not supported as data argument");
+					return;
+				}
+				
+				if (args.length >= 3) {
+					// "options" is the third argument
+					if (!Alpaca.isFunction(args[2])) {
+						options = args[2];
 					}
-					if (args.length >= 5) {
-						// "view" is the fifth argument
-						if (!Alpaca.isFunction(args[4])) {
-							view = args[4];
+					if (args.length >= 4) {
+						// "schema" is the forth argument
+						if (!Alpaca.isFunction(args[3])) {
+							schema = args[3];
+						}
+						if (args.length >= 5) {
+							// "view" is the fifth argument
+							if (!Alpaca.isFunction(args[4])) {
+								view = args[4];
+							}
 						}
 					}
 				}
-            }
-        }
-        // assume last parameter is a callback function
-        var callback = Alpaca.isFunction(args[args.length-1]) ? args[args.length-1] : null;
+			}
+			// assume last parameter is a callback function
+			callback = Alpaca.isFunction(args[args.length - 1]) ? args[args.length - 1] : null;
+		}
         
         // handle case for null data
 		// if schema exits, we will use the settings from the schema
         // we assume a text field
         if (Alpaca.isEmpty(data)) {
-			if (!schema) {
+			if (Alpaca.isEmpty(schema) && (Alpaca.isEmpty(options)||Alpaca.isEmpty(options.type))) {
 				if (Alpaca.isEmpty(options)) {
 					data = "";
 					options = "text";
@@ -196,7 +210,7 @@
 					options.type = "text";
 				}
 			}
-        }
+		}
         
          // container can either be a dom id or a dom element
         if (el) {
@@ -218,19 +232,19 @@
                     data = jsonDocument;
                     loadCounter++;
                     if (loadCounter == 4) 
-                        return Alpaca.init(el, data, options,schema, view,callback);
+                        return Alpaca.init(el, data, options,schema, view,callback,renderedCallback);
                 },
                 error: function(error) {
 					loadCounter++;
 					if (loadCounter == 4) 
-						return Alpaca.init(el, data, options, schema, view, callback);
+						return Alpaca.init(el, data, options, schema, view, callback,renderedCallback);
 				}
             });
         }
         else {
             loadCounter++;
             if (loadCounter == 4) 
-                return Alpaca.init(el, data, options,schema, view,callback);
+                return Alpaca.init(el, data, options,schema, view,callback,renderedCallback);
         }
                                 
         // options
@@ -243,7 +257,7 @@
 					options = jsonDocument;
 					loadCounter++;
 					if (loadCounter == 4) 
-						return Alpaca.init(el, data, options, schema, view, callback);
+						return Alpaca.init(el, data, options, schema, view, callback,renderedCallback);
 				},
 				error: function(error){
 				}
@@ -251,7 +265,7 @@
 		} else {
 			loadCounter++;
 			if (loadCounter == 4) 
-				return Alpaca.init(el, data, options, schema, view, callback);
+				return Alpaca.init(el, data, options, schema, view, callback,renderedCallback);
 		}
         
         // schema     
@@ -265,7 +279,7 @@
 					schema = jsonDocument;
 					loadCounter++;
 					if (loadCounter == 4) 
-						return Alpaca.init(el, data, options, schema, view, callback);
+						return Alpaca.init(el, data, options, schema, view, callback,renderedCallback);
 				},
 				error: function(error){
 				}
@@ -273,7 +287,7 @@
 		} else {
 			loadCounter++;
 			if (loadCounter == 4) 
-				return Alpaca.init(el, data, options, schema, view, callback);
+				return Alpaca.init(el, data, options, schema, view, callback,renderedCallback);
 		}
 		
 		// view     
@@ -287,7 +301,7 @@
 					view = jsonDocument;
 					loadCounter++;
 					if (loadCounter == 4) 
-						return Alpaca.init(el, data, options, schema, view, callback);
+						return Alpaca.init(el, data, options, schema, view, callback,renderedCallback);
 				},
 				error: function(error) {
 				}
@@ -295,7 +309,7 @@
 		} else {
 			loadCounter++;
 			if (loadCounter == 4) 
-				return Alpaca.init(el, data, options, schema, view, callback);
+				return Alpaca.init(el, data, options, schema, view, callback,renderedCallback);
 		}
     };
     
@@ -309,13 +323,22 @@
      * @param {Object} view
      * @param {Object} callback
      */
-	Alpaca.init = function(el, data, options,schema,view, callback) {
+	Alpaca.init = function(el, data, options,schema,view, callback,renderedCallback) {
         var field = Alpaca.createFieldInstance(el, data, options,schema,view);        
         Alpaca.fieldInstances[field.getId()] = field;
+		
+		// allow callbacks defined through view
+		if (Alpaca.isEmpty(callback)) {
+			callback = Alpaca.getViewParam("render", field);
+		}
+		if (Alpaca.isEmpty(renderedCallback)) {
+			renderedCallback = Alpaca.getViewParam("postRender", field);
+		}		
+		
         if (callback != null ) {
-            callback(field);
+            callback(field,renderedCallback);
         } else {
-            field.render();
+            field.render(renderedCallback);
         }
 		return field;        
     }
@@ -331,8 +354,8 @@
 	 */
     Alpaca.createFieldInstance = function(el, data, options,schema,view) {
         // make sure options and schema are not empty
-        if (options == null) options = {};
-        if (schema == null) schema = {};
+        if (Alpaca.isValEmpty(options)) options = {};
+        if (Alpaca.isValEmpty(schema)) schema = {};
         // options can be a string that identifies the kind of field to construct (i.e. "text")
         if (options && Alpaca.isString(options)) {
             var fieldType = options;
@@ -402,11 +425,6 @@
     $.extend(Alpaca, 
     {
         uniqueIdCounter: 0,
-        
-        /**
-         * URL to the spacer image.
-         */
-        spacerUrl: "../images/spacer.gif",
         
         /**
          * Render modes
@@ -521,6 +539,31 @@
 				} else {
 					this.views[type] = view;
 				}
+				
+				// Compile Top-Level Templates
+				/*				
+				for (var templateId in view.templates) {
+					var template = view.templates[templateId];
+					if (!Alpaca.startsWith(template, view.id) && (templateId != "fieldOuterEl" && templateId != "controlFieldContainer" && templateId != "fieldSetOuterEl" && templateId != "itemsContainer")) {
+						$.template(view.id + "_" + templateId, template);
+						view.templates[templateId] = view.id + "_" + templateId;
+					}
+				}
+				*/
+				
+				for (var templateId in view.templates) {
+					var template = view.templates[templateId];
+					if (Alpaca.isString(template) &&!Alpaca.startsWith(template, view.id)) {
+						view.templates[view.id + "_" +templateId+"_src"] = template;
+						if (template && !Alpaca.isUri(template)) {
+							$.template(view.id + "_" + templateId, template);
+							view.templates[templateId] = view.id + "_" + templateId;
+						} else {
+							view.templates[templateId] = template;							
+						}
+					}
+				}
+												
 			}
 			return type;
 		},
@@ -612,11 +655,11 @@
         * Returns the field template for given id
         */
 	    getTemplate: function(templateId, field) {
-			
+
 			var view = field.view;
 			
 			if (Alpaca.isObject(view)) {
-				var template = this._getTemplate(templateId, view);
+				var template = this._getTemplate(templateId, view, field.path);
 				if (!Alpaca.isEmpty(template)) {
 					return template;
 				}
@@ -626,7 +669,7 @@
 
 			if (Alpaca.isString(view)) {
 				view = this.getView(view);
-				return this._getTemplate(templateId, view);
+				return this._getTemplate(templateId, view, field.path);
 			}
 			return null;
 		},
@@ -637,12 +680,90 @@
 		 * @param {Object} templateId
 		 * @param {Object} view
 		 */
-		_getTemplate: function(templateId, view) {
+		_getTemplate: function(templateId, view, path) {
+			if (view && view.fields && view.fields[path] && view.fields[path].templates && view.fields[path].templates[templateId]) {
+				return view.fields[path].templates[templateId];
+			}
 			if (view && view.templates && view.templates[templateId]) {
 				return view.templates[templateId];
 			} else {
 				if (view && view.parent) {
-					return this._getTemplate(templateId, this.views[view.parent]);
+					return this._getTemplate(templateId, this.views[view.parent],path);
+				} else {
+					return null;
+				}
+			}
+		},
+
+	    getStyles: function(field) {
+
+			var view = field.view;
+			
+			if (Alpaca.isObject(view)) {
+				var template = this._getStyles(view, field.path);
+				if (!Alpaca.isEmpty(template)) {
+					return template;
+				}
+				// Try to see if we can pick up default template
+				view = this.defaultView;
+			}
+
+			if (Alpaca.isString(view)) {
+				view = this.getView(view);
+				return this._getStyles(view, field.path);
+			}
+			return null;
+		},
+		
+		_getStyles: function(view, path) {
+			if (view && view.fields && view.fields[path] && view.fields[path].styles) {
+				return view.fields[path].styles;
+			}
+			if (view && view.styles) {
+				return view.styles;
+			} else {
+				if (view && view.parent) {
+					return this._getStyles(this.views[view.parent],path);
+				} else {
+					return null;
+				}
+			}
+		},
+
+		
+		getLayout: function(templateId, field) {
+					
+			var view = field.view;
+			
+			if (Alpaca.isObject(view)) {
+				var template = this._getLayout(templateId, view, field.path);
+				if (!Alpaca.isEmpty(template)) {
+					return template;
+				}
+				// Try to see if we can pick up default template
+				view = this.defaultView;
+			}
+			
+			if (Alpaca.isString(view)) {
+				view = this.getView(view);
+				return this._getLayout(templateId, view, field.path);
+			}
+			return null;
+		},
+		
+		_getLayout: function(templateId, view, path) {
+			if (path && path != '/') {
+				if (view && view.fields && view.fields[path] && view.fields[path].templates && view.fields[path].templates[templateId]) {
+					return view.fields[path].templates[templateId];
+				} else {
+					return null;
+				}
+			}
+			if (view && view.templates && view.templates[templateId]) {
+				return view.templates[templateId];
+			} else {
+				if (view && view.parent) {
+					return this._getTemplate(templateId, this.views[view.parent],path);
 				} else {
 					return null;
 				}
@@ -666,7 +787,16 @@
 				if (!view.templates) {
 					view.templates = {};
 				}
-				view.templates[templateId] = template;								
+				//view.templates[templateId] = template;
+				// Compile Template
+				
+				if (template && !Alpaca.isUri(template)) {
+					$.template(view.id + "_" + templateId, template);
+					view.templates[templateId] = view.id + "_" + templateId;
+				} else {
+					view.templates[templateId] = template;
+				}
+												
 			}
 		},
 
@@ -687,7 +817,7 @@
 			var view = field.getView();
 			
 			if (Alpaca.isObject(view)) {
-				var message = this._getMessage(messageId, view);
+				var message = this._getMessage(messageId, view, field.path);
 				if (!Alpaca.isEmpty(message)) {
 					return message;
 				}
@@ -697,7 +827,7 @@
 
 			if (Alpaca.isString(view)) {
 				view = this.getView(view);
-				return this._getMessage(messageId, view);
+				return this._getMessage(messageId, view, field.path);
 			}
 			return null;
 		},
@@ -708,7 +838,14 @@
 		 * @param {Object} messageId
 		 * @param {Object} view
 		 */
-		_getMessage: function(messageId, view) {
+		_getMessage: function(messageId, view, path) {
+			if (view && view.fields && view.fields[path] && view.fields[path].messages && view.fields[path].messages[messageId]) {
+				if (view.fields[path].messages[this.defaultLocale] && view.fields[path].messages[this.defaultLocale][messageId]) {
+					return view.fields[path].messages[this.defaultLocale][messageId];
+				} else {
+					return view.fields[path].messages[messageId];
+				}
+			}
 			if (view && view.messages && view.messages[messageId]) {
 				if (view.messages[this.defaultLocale] && view.messages[this.defaultLocale][messageId]) {
 					return view.messages[this.defaultLocale][messageId];
@@ -717,7 +854,7 @@
 				}
 			} else {
 				if (view && view.parent) {
-					return this._getMessage(messageId, this.views[view.parent]);
+					return this._getMessage(messageId, this.views[view.parent],path);
 				} else {
 					return null;
 				}
@@ -761,13 +898,15 @@
          * Default Class for Field Level Template
          */
         fieldTemplatePostfix: {
-			"fieldMessageContainer" : "-field-message-container",
-            "controlFieldLabel" : "-field-label",
-            "controlFieldContainer":"-field-container",
-            "controlFieldHelper":"-field-helper",
-            "fieldOuterEl":"-field",
+			"controlFieldMessageContainer" : "-controlfield-message-container",
+            "controlFieldLabel" : "-controlfield-label",
+            "controlFieldContainer":"-controlfield-container",
+            "controlFieldHelper":"-controlfield-helper",
+            /*
+"controlFieldOuterEl":"-controlfield",
+*/
             "fieldSetLegend" : "-fieldset-legend",
-            "itemsContainer":"-items-container",
+            "fieldSetItemsContainer":"-fieldset-items-container",
             "fieldSetHelper":"-fieldset-helper",
             "fieldSetOuterEl":"-fieldset",
             "formButtonsContainer":"-form-buttons-container",
@@ -782,10 +921,17 @@
 				name = "controlFieldLabel";
 			var template = this.getTemplate(name, object.data);
 			if (wrap) {
-				if ($('.alpaca' + this.fieldTemplatePostfix[name], $(template)).length == 0) {
-					template = $(template).addClass("alpaca" + this.fieldTemplatePostfix[name]).outerHTML();
+				if (this.getTemplate(template + "_src", object.data)) {
+					template = this.getTemplate(template+"_src", object.data);
 				}
-				return template;
+				if ($('.alpaca' + this.fieldTemplatePostfix[name], $(template)).length == 0) {
+					if (this.fieldTemplatePostfix[name]) {
+						template = $(template).addClass("alpaca" + this.fieldTemplatePostfix[name]).outerHTML(true);
+					} else {
+						template = $(template).outerHTML(true);						
+					}
+				}
+				return template;							
 			} else {
 				var label = $.tmpl(template, object.data);
 				if (label) {
@@ -797,7 +943,7 @@
 							label.attr("id", object.data.id + this.fieldTemplatePostfix[name]);
 						}
 					}
-					return label.outerHTML();
+					return label.outerHTML(true);
 				} else {
 					return "";
 				}
@@ -807,7 +953,8 @@
          * Date format
          */
         //defaultDateFormat: "m/d/Y",
-        defaultDateFormat: "Y-m-d",
+        //defaultDateFormat: "Y-m-d",
+		defaultDateFormat: "mm/dd/yy",
         
         /**
          * Useful regular expressions
@@ -968,18 +1115,24 @@
 	};
     
     Alpaca.startsWith = function(text, prefix) {
-		return (text.match("^" + prefix) == prefix);
+		//return (text.match("^" + prefix) == prefix);
+		return text.substr(0, prefix.length) === prefix;
 	};
     
-    $.fn.outerHTML = function() {
-        return $("<div></div>").append(this.clone()).html();
+    $.fn.outerHTML = function(nocloning) {
+		if (nocloning) {
+			return $("<div></div>").append(this).html();
+		} else {
+			return $("<div></div>").append(this.clone()).html();
+		}
     }
-    
+ 
     Alpaca.isUri = function(obj) { 
         return Alpaca.isString(obj) && (Alpaca.startsWith(obj, "http://") ||
                 Alpaca.startsWith(obj, "https://") ||
                 Alpaca.startsWith(obj, "/") ||
-                Alpaca.startsWith(obj, "./")); 
+                Alpaca.startsWith(obj, "./")||
+                Alpaca.startsWith(obj, "../")); 
     };
     
     $.fn.swapWith = function(to) {
@@ -1079,6 +1232,32 @@
 		
 		return obj1;
 	}
+	
+	 /**
+     * Merges json obj2 into obj1 using a recursive approach
+     */
+    Alpaca.mergeWithNullChecking = function(obj1, obj2) {
+		if (!obj1) {
+			obj1 = {};
+		}
+		for (var key in obj2) {
+			if (Alpaca.isValEmpty(obj2[key]) ) {
+				if (!Alpaca.isEmpty(obj1[key])) {
+					obj1[key] = obj2[key];
+				}
+			} else {
+				if (Alpaca.isObject(obj2[key])) {
+					if (!obj1[key]) {
+						obj1[key] = {};
+					}
+					obj1[key] = Alpaca.mergeWithNullChecking(obj1[key], obj2[key]);
+				} else {
+					obj1[key] = obj2[key];
+				}
+			}			
+		}		
+		return obj1;
+	}
     
     Alpaca.cloneObject = function(obj) {
 		var clone = {};
@@ -1121,6 +1300,28 @@
 		return equiv(obj1,obj2);
 	};	
 	
+	/**
+	 * Compares content of two arrays
+	 * 
+	 * @param {Object} arr_1
+	 * @param {Object} arr_2
+	 */
+	Alpaca.compareArrayContent = function(arr_1, arr_2) {
+		var equal = arr_1.length == arr_2.length;
+		if (equal) {
+			$.each(arr_1, function(foo, val) {
+				if (!equal) 
+					return false;
+				if ($.inArray(val, arr_2) == -1) {
+					equal = false;
+				} else {
+					equal = true;
+				}
+			});
+		}
+		return equal;
+	};
+
 	
 	Alpaca.isValEmpty = function(val) {
 		var empty = false;
@@ -1134,6 +1335,9 @@
 				empty = true;
 			}
 			if (Alpaca.isArray(val) && val.length == 0) {
+				empty = true;
+			}
+			if (Alpaca.isNumber(val) && isNaN(val)) {
 				empty = true;
 			}
 		}		
@@ -1154,52 +1358,127 @@
  */
 	
     $.fn.filestyle = function(options) {
-                
-        /* TODO: This should not override CSS. */
-        var settings = {
-            width : 250
-        };
-                
-        if(options) {
-            $.extend(settings, options);
-        };
-                        
-        return this.each(function() {
-            
-            var self = this;
-            var wrapper = $("<div>").addClass('alpaca-filefield-button');
-       
-            var filename = $('<input>').addClass('alpaca-filefield-control')
-                             .addClass($(self).attr("class"));
-			var filenameWidth = filename.width;				 
-
-            $(self).before(filename);
-            $(self).wrap(wrapper);
-
-            $(self).css({
-                        "position": "relative",
-                        "height": wrapper.css('height'),
-                        "width": settings.width + "px",
-                        "display": "inline",
-                        "cursor": "pointer",
-                        "opacity": "0.0"
-                    });
-
-            if ($.browser.mozilla) {
-                if (/Win/.test(navigator.platform)) {
-                    $(self).css("margin-left", "-142px");                    
-                } else {
-                    $(self).css("margin-left", "-168px");                    
-                };
-            } else {
-                $(self).css("margin-left", wrapper.width - filenameWidth + "px");                
-            };
-
-            $(self).bind("change", function() {
-                filename.val($(self).val());
-            });
-      
-        });
-    };
+	
+		/* TODO: This should not override CSS. */
+		var settings = {
+			width: 250
+		};
+		
+		if (options) {
+			$.extend(settings, options);
+		};
+		
+		return this.each(function() {
+		
+			var self = this;
+			var wrapper = $("<div>").addClass('alpaca-filefield-button');
+			
+			var filename = $('<input/>').addClass('alpaca-filefield-control').addClass($(self).attr("class"));
+			var filenameWidth = filename.width;
+			
+			$(self).before(filename);
+			$(self).wrap(wrapper);
+			
+			$(self).css({
+				"position": "relative",
+				"height": wrapper.css('height'),
+				"width": settings.width + "px",
+				"display": "inline",
+				"cursor": "pointer",
+				"opacity": "0.0"
+			});
+			
+			if ($.browser.mozilla) {
+				if (/Win/.test(navigator.platform)) {
+					$(self).css("margin-left", "-142px");
+				} else {
+					$(self).css("margin-left", "-168px");
+				};
+							} else {
+				$(self).css("margin-left", wrapper.width - filenameWidth + "px");
+			};
+			
+			$(self).bind("change", function() {
+				filename.val($(self).val());
+			});
+			
+		});
+	};
+	
+	/**
+ * --------------------------------------------------------------------
+ * jQuery customfileinput plugin
+ * Author: Scott Jehl, scott@filamentgroup.com
+ * Copyright (c) 2009 Filament Group 
+ * licensed under MIT (filamentgroup.com/examples/mit-license.txt)
+ * --------------------------------------------------------------------
+ */
+$.fn.customFileInput = function() {
+	return $(this).each(function() {
+		//apply events and styles for file input element
+		var fileInput = $(this).addClass('alpaca-controlfield-file-custom-input').focus(function() {
+			fileInput.data('val', fileInput.val());
+		}).blur(function() {
+			$(this).trigger('checkChange');
+		}).bind('disable', function() {
+			fileInput.attr('disabled', true);
+			upload.addClass('alpaca-controlfield-file-custom-disabled');
+		}).bind('enable', function() {
+			fileInput.removeAttr('disabled');
+			upload.removeClass('alpaca-controlfield-file-custom-disabled');
+		}).bind('checkChange', function() {
+			if (fileInput.val() && fileInput.val() != fileInput.data('val')) {
+				fileInput.trigger('change');
+			}
+		}).bind('change', function() {
+			//get file name
+			var fileName = $(this).val().split(/\\/).pop();
+			//get file extension
+			var fileExt = 'customfile-ext-' + fileName.split('.').pop().toLowerCase();
+			//update the feedback
+			uploadFeedback.text(fileName).data('fileExt', fileExt); //store file extension for class removal on next change			
+			$('.ui-icon',uploadFeedback.parent()).remove();
+			var fileType = fileName.split('.').pop().toLowerCase();
+			var iconClass = 'ui-icon-document';
+			if (fileType == 'jpg' || fileType == 'gif' || fileType == 'png' || fileType == 'jpeg' || fileType == 'bmp') {
+				iconClass = 'ui-icon-image';
+			}
+			if (fileType == 'mp3' || fileType == 'mp4' || fileType == 'swf' || fileType == 'mov' || fileType == 'wav' || fileType == 'm4v') {
+				iconClass = 'ui-icon-video';
+			}
+			if (fileType == 'json' || fileType == 'js') {
+				iconClass = 'ui-icon-script';
+			}						
+			uploadFeedback.before('<span class="ui-icon '+iconClass+'" style="float:left;margin-top:0.3em"></span>');
+		}).click(function() { //for IE and Opera, make sure change fires after choosing a file, using an async callback
+			fileInput.data('val', fileInput.val());
+			setTimeout(function() {
+				fileInput.trigger('checkChange');
+			}, 100);
+		});
+		
+		//create custom control container
+		var upload = $('<div class="ui-widget-header ui-corner-all alpaca-controlfield-file-custom"></div>');
+		//create custom control button
+		var uploadButton = $('<span class="" aria-hidden="true" style="float:right">Browse...</span>').button({text:true}).appendTo(upload);
+		//create custom control feedback
+		var uploadFeedback = $('<span class="alpaca-controlfield-file-custom-feedback" aria-hidden="true">No file selected...</span>').appendTo(upload);
+		
+		//match disabled state
+		if (fileInput.is('[disabled]')) {
+			fileInput.trigger('disable');
+		}
+				
+		//on mousemove, keep file input under the cursor to steal click
+		upload.mousemove(function(e) {
+			fileInput.css({
+				'left': e.pageX - upload.offset().left - fileInput.outerWidth() + 20, //position right side 20px right of cursor X)
+				'top': e.pageY - upload.offset().top - $(window).scrollTop() - 3
+			});
+		}).insertAfter(fileInput); //insert after the input
+		fileInput.appendTo(upload);
+		upload.wrap('<small/>');
+	});
+};
     
 })(jQuery);

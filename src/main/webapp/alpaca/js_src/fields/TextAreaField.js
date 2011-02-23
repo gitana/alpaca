@@ -37,8 +37,9 @@
          */
         postRender: function() {
             this.base();
-            // apply additional css
-            $(this.fieldContainer).addClass("alpaca-textareafield");
+			if (this.fieldContainer) {
+				this.fieldContainer.addClass('alpaca-controlfield-textarea');
+			}
         },
         
         /**
@@ -58,7 +59,66 @@
          */
         getValue: function() {
             return $(this.inputElement).val();
-        }
+        },
+		
+		/**
+         * @Override
+		 */
+		getTitle: function() {
+			return "Multi-Line Text";
+		},
+		
+		/**
+         * @Override
+		 */
+		getDescription: function() {
+			return "Textare field for multiple line text.";
+		},
+		
+        /**
+         * @Override
+         */
+		getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"properties": {
+					"rows": {
+						"title": "Rows",
+						"description": "Number of rows",
+						"type": "number",
+						"default": 5
+					},
+					"cols": {
+						"title": "Columns",
+						"description": "Number of columns",
+						"type": "number",
+						"default": 40
+					}
+				}
+			});
+		},
+
+        /**
+         * @Override
+         */
+		getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"rows": {
+						"type": "integer"
+					},
+					"cols": {
+						"type": "integer"
+					}
+				}
+			});
+		},
+		
+		/**
+         * @Override
+         */
+        getFieldType: function() {
+            return "textarea";
+        }	
         
     });
     

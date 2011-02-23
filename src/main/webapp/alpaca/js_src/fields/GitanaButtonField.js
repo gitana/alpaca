@@ -15,36 +15,16 @@
         setup: function() {
             this.base();
             this.buttonType = "button";
-            if (this.options && this.options.action) {
-                this.action = this.options.action;
-            }
-            
             if (!this.options.data) {
                 this.options.data = {};
             }
             this.options.data["icon"] = "G";
-            
-            // sets defaults
-            if (!this.action) {
-                this.action = "save";
-                if (!this.data) {
-                    this.data = "Save";
-                }
-            } 
         },
         
         /**
          * @Override
          */
         onClick: function(e) {
-            switch (this.action) {
-                case 'save':
-                    var newValue = this.form.topField.getValue();
-                    alert(newValue);
-                    break;
-               default:
-                    break;
-            }
         },
 		
 		/**
@@ -53,7 +33,21 @@
 		postRender: function () {
 			this.base();
 			this.inputElement.addClass("alpaca-form-button-gitana");
-		}
+		},
+		
+		/**
+         * @Override
+		 */
+		getTitle: function() {
+			return "Gitana Button";
+		},
+		
+		/**
+         * @Override
+		 */
+		getDescription: function() {
+			return "Button with Gitana style";
+		}    
     });
     
     Alpaca.registerFieldClass("gitanabutton", Alpaca.Fields.GitanaButtonField);

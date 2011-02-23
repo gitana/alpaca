@@ -7,7 +7,32 @@
      */
     Alpaca.Fields.ObjectField = Alpaca.ContainerField.extend({
     
-        /**
+         /**
+         * @Override
+         *
+         */
+        setup: function() {
+            this.base();
+            if (Alpaca.isEmpty(this.data)) {
+                return;
+            }
+            if (!Alpaca.isObject(this.data)) {
+                if (!Alpaca.isString(this.data)) {
+                    return;
+                } else {
+                    try {
+                        this.data = $.parseJSON(this.data);
+                        if (!Alpaca.isObject(this.data)) {
+                            return;
+                        }
+                    } catch (e) {
+                        return;
+                    }
+                }
+            }
+        },
+		
+		       /**
          * @Override
          *
          * Pick apart the data object and set onto child fields.
@@ -15,14 +40,13 @@
          * Data must be an object.
          */
         setValue: function(data, stopUpdateTrigger) {
-            if (!data || !Alpaca.isObject(data)) {
-                return;
-            }
-            
+             if (!data || !Alpaca.isObject(data)) {
+			 	return;
+			 }
             // clear all controls
-            Alpaca.each(this.children, function() {
-                this.clear();
-            });
+            //Alpaca.each(this.children, function() {
+            //    this.clear();
+            //});
             
             // set fields
             for (var fieldId in this.childrenById) {
@@ -62,16 +86,39 @@
             
             // Generates wizard if requested
             if (this.isTopLevel()) {
-                if (this.view && this.view.wizard && this.view.wizard.renderWizard) {
-					if (this.view.templates && this.view.templates.layout) {
-		                //Wizard based on layout
-						this.wizard();
-					} else {
-						//Wizard based on injections
-						this.autoWizard();
-					}
-				}
+                //if (this.view && this.wizardConfigs && this.wizardConfigs.renderWizard) {               
+                if (this.view) {
+                    this.wizardConfigs = Alpaca.getViewParam('wizard', this);
+                    this.templatesConfigs = Alpaca.getViewParam('templates', this);
+                    if (this.wizardConfigs && this.wizardConfigs.renderWizard) {
+                        if (this.templatesConfigs && this.templatesConfigs.layout) {
+                            //Wizard based on layout
+                            this.wizard();
+                        } else {
+                            //Wizard based on injections
+                            this.autoWizard();
+                        }
+                    }
+                }
             }
+        },
+        
+        /**
+         * Gets child index
+         *
+         * @param {Object} propertyId
+         */
+        getIndex: function(propertyId) {
+            if (Alpaca.isEmpty(propertyId)) {
+                return -1;
+            }
+            for (var i = 0; i < this.children.length; i++) {
+                var pid = this.children[i].propertyId;
+                if (pid == propertyId) {
+                    return i;
+                }
+            }
+            return -1;
         },
         
         /**
@@ -91,11 +138,26 @@
                 fieldControl.parent = _this;
                 // add the property Id
                 fieldControl.propertyId = propertyId;
+                // setup item path
+                if (_this.path != "/") {
+                    fieldControl.path = _this.path + "/" + propertyId;
+                } else {
+                    fieldControl.path = _this.path + propertyId;
+                }
                 fieldControl.render();
                 containerElem.attr("id", fieldControl.getId() + "-item-container");
                 containerElem.attr("alpaca-id", fieldControl.getId());
                 // remember the control
-                _this.addChild(fieldControl);
+                if (Alpaca.isEmpty(insertAfterId)) {
+                    _this.addChild(fieldControl);
+                } else {
+                    var index = _this.getIndex(insertAfterId);
+                    if (index != -1) {
+                        _this.addChild(fieldControl, index + 1);
+                    } else {
+                        _this.addChild(fieldControl);
+                    }
+                }
                 if (insertAfterId) {
                     _this.renderValidationState();
                 }
@@ -205,7 +267,7 @@
                 this.renderDependency(propertyId);
                 // do the binding
                 var _this = this;
-                $(this.childrenByPropertyId[dependency].getEl()).bind("fieldupdate", function(event) {
+                this.childrenByPropertyId[dependency].getEl().bind("fieldupdate", function(event) {
                     _this.renderDependency(propertyId);
                 });
             }
@@ -225,31 +287,31 @@
             
             var _this = this;
             var stepTitles = [];
-			if (this.view.wizard.stepTitles) {
-				stepTitles = this.view.wizard.stepTitles;
-			} else {
-				// Prepare step titles
-				steps.each(function(i) {
-					var stepTitle = {
-						"title": "",
-						"description": ""
-					};
-					if ($('.alpaca-wizard-step-title', this)) {
-						stepTitle.title = $('.alpaca-wizard-step-title', this).html();
-						$('.alpaca-wizard-step-title', this).hide();
-					}
-					if ($('.alpaca-wizard-step-description', this)) {
-						stepTitle.description = $('.alpaca-wizard-step-description', this).html();
-						$('.alpaca-wizard-step-description', this).hide();
-					}
-					stepTitles.push(stepTitle);
-				});
-			}
-			var  wizardStatusBarElement = this._renderWizardStatusBar (stepTitles);
-			if (wizardStatusBarElement) {
-				$(element).before(wizardStatusBarElement);
-			}
-			            
+            if (this.wizardConfigs.stepTitles) {
+                stepTitles = this.wizardConfigs.stepTitles;
+            } else {
+                // Prepare step titles
+                steps.each(function(i) {
+                    var stepTitle = {
+                        "title": "",
+                        "description": ""
+                    };
+                    if ($('.alpaca-wizard-step-title', this)) {
+                        stepTitle.title = $('.alpaca-wizard-step-title', this).html();
+                        $('.alpaca-wizard-step-title', this).hide();
+                    }
+                    if ($('.alpaca-wizard-step-description', this)) {
+                        stepTitle.description = $('.alpaca-wizard-step-description', this).html();
+                        $('.alpaca-wizard-step-description', this).hide();
+                    }
+                    stepTitles.push(stepTitle);
+                });
+            }
+            var wizardStatusBarElement = this._renderWizardStatusBar(stepTitles);
+            if (wizardStatusBarElement) {
+                $(element).before(wizardStatusBarElement);
+            }
+            
             steps.each(function(i) {
             
                 var stepId = 'step' + i;
@@ -280,6 +342,7 @@
                     _this._createPrevButton(i);
                     _this._createNextButton(i);
                 }
+                $("#step" + i + "-nav-bar").buttonset();
             });
         },
         
@@ -288,7 +351,7 @@
          */
         autoWizard: function() {
         
-            var totalSteps = this.view.wizard.steps;
+            var totalSteps = this.wizardConfigs.steps;
             
             if (!totalSteps) {
                 totalSteps = 1;
@@ -296,7 +359,7 @@
             
             this.totalSteps = totalSteps;
             
-            var stepBindings = this.view.wizard.bindings;
+            var stepBindings = this.wizardConfigs.bindings;
             
             if (!stepBindings) {
                 stepBindings = {};
@@ -307,6 +370,8 @@
                     stepBindings[propertyId] = 1;
                 }
             }
+            
+            this.stepBindings = stepBindings;
             
             for (var i = 0; i < totalSteps; i++) {
                 var step = i + 1;
@@ -337,10 +402,10 @@
                 }
             }
             
-			var  wizardStatusBarElement = this._renderWizardStatusBar (this.view.wizard.stepTitles);
-			if (wizardStatusBarElement) {
-				wizardStatusBarElement.prependTo(this.fieldContainer);
-			}
+            var wizardStatusBarElement = this._renderWizardStatusBar(this.wizardConfigs.stepTitles);
+            if (wizardStatusBarElement) {
+                wizardStatusBarElement.prependTo(this.fieldContainer);
+            }
             
             for (var i = 0; i < totalSteps; i++) {
                 if (i == 0) {
@@ -354,16 +419,17 @@
                     this._createPrevButton(i);
                     this._createNextButton(i);
                 }
+                $("#step" + i + "-nav-bar").buttonset();
             }
         },
         
         /**
          * Renders wizard status bar
-         * 
+         *
          * @param {Object} stepTitles
          */
-		_renderWizardStatusBar: function(stepTitles) {
-            var wizardStatusBar = this.view.wizard.statusBar;
+        _renderWizardStatusBar: function(stepTitles) {
+            var wizardStatusBar = this.wizardConfigs.statusBar;
             if (wizardStatusBar && stepTitles) {
                 var wizardStatusBarTemplate = Alpaca.getTemplate("wizardStatusBar", this);
                 if (wizardStatusBarTemplate) {
@@ -371,7 +437,7 @@
                         "id": this.getId() + "-wizard-status-bar",
                         "titles": stepTitles
                     });
-                    wizardStatusBarElement.addClass("alpaca-wizard-status-bar");
+                    wizardStatusBarElement.addClass("alpaca-wizard-status-bar ui-widget-header ui-corner-all");
                     return wizardStatusBarElement;
                 }
             }
@@ -386,19 +452,39 @@
             var stepName = "step" + i;
             var _this = this;
             
+            /*
+             var wizardPreButtonTemplate = Alpaca.getTemplate("wizardPreButton", this);
+             if (wizardPreButtonTemplate) {
+             var wizardPreButtonElement = $.tmpl(wizardPreButtonTemplate, {});
+             wizardPreButtonElement.attr("id", stepName + '-button-pre');
+             wizardPreButtonElement.addClass('alpaca-wizard-button alpaca-wizard-button-back');
+             $("#" + stepName + "-nav-bar").append(wizardPreButtonElement);
+             }
+             
+             $("#" + stepName + "-button-pre").bind("click", function(e) {
+             $("#" + stepName).hide();
+             $("#step" + (i - 1)).show();
+             _this._selectStep(i - 1);
+             });
+             */
             var wizardPreButtonTemplate = Alpaca.getTemplate("wizardPreButton", this);
             if (wizardPreButtonTemplate) {
                 var wizardPreButtonElement = $.tmpl(wizardPreButtonTemplate, {});
                 wizardPreButtonElement.attr("id", stepName + '-button-pre');
-                wizardPreButtonElement.addClass('alpaca-wizard-button alpaca-wizard-button-back');
+                wizardPreButtonElement.button({
+                    text: true,
+                    icons: {
+                        primary: "ui-icon-triangle-1-w"
+                    }
+                }).click(function() {
+                    $("#" + stepName).hide();
+                    $("#step" + (i - 1)).show();
+                    _this._selectStep(i - 1);
+                    return false;
+                });
                 $("#" + stepName + "-nav-bar").append(wizardPreButtonElement);
             }
             
-            $("#" + stepName + "-button-pre").bind("click", function(e) {
-                $("#" + stepName).hide();
-                $("#step" + (i - 1)).show();
-                _this._selectStep(i - 1);
-            });
         },
         
         /**
@@ -410,20 +496,51 @@
             var stepName = "step" + i;
             var _this = this;
             
+            /*
+             var wizardNextButtonTemplate = Alpaca.getTemplate("wizardNextButton", this);
+             if (wizardNextButtonTemplate) {
+             var wizardNextButtonElement = $.tmpl(wizardNextButtonTemplate, {});
+             wizardNextButtonElement.attr("id", stepName + '-button-next');
+             wizardNextButtonElement.addClass('alpaca-wizard-button alpaca-wizard-button-next');
+             $("#" + stepName + "-nav-bar").append(wizardNextButtonElement);
+             }
+             
+             $("#" + stepName + "-button-next").bind("click", function(e) {
+             $("#" + stepName).hide();
+             $("#step" + (i + 1)).show();
+             
+             _this._selectStep(i + 1);
+             });
+             */
             var wizardNextButtonTemplate = Alpaca.getTemplate("wizardNextButton", this);
             if (wizardNextButtonTemplate) {
                 var wizardNextButtonElement = $.tmpl(wizardNextButtonTemplate, {});
                 wizardNextButtonElement.attr("id", stepName + '-button-next');
-                wizardNextButtonElement.addClass('alpaca-wizard-button alpaca-wizard-button-next');
+                wizardNextButtonElement.button({
+                    text: true,
+                    icons: {
+                        secondary: "ui-icon-triangle-1-e"
+                    }
+                }).click(function() {
+                    var valid = true;
+                    
+                    if (_this.view && _this.wizardConfigs && _this.wizardConfigs.validation) {
+                        $.each(_this.stepBindings, function(propertyId, step) {
+                            if (step == i + 1 && valid) {
+                                valid = _this.childrenByPropertyId[propertyId].validate();
+                            }
+                        });
+                    }
+                    if (valid) {
+                        $("#" + stepName).hide();
+                        $("#step" + (i + 1)).show();
+                        _this._selectStep(i + 1);
+                    }
+                    return false;
+                });
+                
                 $("#" + stepName + "-nav-bar").append(wizardNextButtonElement);
             }
-            
-            $("#" + stepName + "-button-next").bind("click", function(e) {
-                $("#" + stepName).hide();
-                $("#step" + (i + 1)).show();
-                
-                _this._selectStep(i + 1);
-            });
         },
         
         /**
@@ -432,11 +549,102 @@
          * @param {Object} i
          */
         _selectStep: function(i) {
-            $("#" + this.getId() + "-wizard-status-bar" + " li").removeClass("current current-has-next");
-            $("#stepDesc" + i).addClass("current");
+            $("#" + this.getId() + "-wizard-status-bar" + " li").removeClass("current current-has-next ui-state-highlight ui-corner-all");
+            $("#stepDesc" + i).addClass("current ui-state-highlight ui-corner-all");
             if (i < this.totalSteps - 1) {
                 $("#stepDesc" + i).addClass("current-has-next");
             }
+        },
+        
+        /**
+         * @Override
+         */
+        getSchemaOfSchema: function() {
+            var properties = {
+                "properties": {
+                    "properties": {
+                        "title": "Field Properties",
+                        "description": "List of Field Properties",
+                        "type": "object"
+                    }
+                }
+            };
+            
+            var fieldsProperties = properties.properties.properties;
+            
+            fieldsProperties.properties = {};
+            
+            if (this.children) {
+                for (var i = 0; i < this.children.length; i++) {
+                    var propertyId = this.children[i].propertyId;
+                    fieldsProperties.properties[propertyId] = this.children[i].getSchemaOfSchema();
+                    fieldsProperties.properties[propertyId].title = propertyId + " :: " + fieldsProperties.properties[propertyId].title;
+                }
+            }
+            
+            return Alpaca.merge(this.base(), properties);
+        },
+        
+        /**
+         * @Override
+         */
+        getTitle: function() {
+            return "Composite Field";
+        },
+        
+        /**
+         * @Override
+         */
+        getDescription: function() {
+            return "Composite field for containing other fields";
+        },
+        
+        /**
+         * @Override
+         */
+        getType: function() {
+            return "object";
+        },
+        
+        /**
+         * @Override
+         */
+        getSchemaOfOptions: function() {
+            var schemaOfOptions = Alpaca.merge(this.base(), {
+                "properties": {
+                }
+            });
+            
+            var properties = {
+                "properties": {
+                    "properties": {
+                        "title": "Field Option Properties",
+                        "description": "List of field option properties",
+                        "type": "object"
+                    }
+                }
+            };
+            
+            var fieldsProperties = properties.properties.properties;
+            
+            fieldsProperties.properties = {};
+            
+            if (this.children) {
+                for (var i = 0; i < this.children.length; i++) {
+                    var propertyId = this.children[i].propertyId;
+                    fieldsProperties.properties[propertyId] = this.children[i].getSchemaOfOptions();
+                    fieldsProperties.properties[propertyId].title = propertyId + " :: " + fieldsProperties.properties[propertyId].title;
+                }
+            }
+            
+            return Alpaca.merge(schemaOfOptions, properties);
+        },
+        
+        /**
+         * @Override
+         */
+        getFieldType: function() {
+            return "object";
         }
         
     });

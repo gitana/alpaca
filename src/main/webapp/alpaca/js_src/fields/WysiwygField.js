@@ -27,12 +27,34 @@
          */
     	postRender: function() {
             this.base();            
-            // apply additional css
-            $(this.fieldContainer).addClass("alpaca-wysiwygfield");
 			// see if we can render jWysiwyg
 			if (this.inputElement.wysiwyg) {
 				this.inputElement.wysiwyg();
 			}
+			if (this.fieldContainer) {
+				this.fieldContainer.addClass('alpaca-controlfield-wysiwyg');
+			}			
+        },
+		
+		/**
+         * @Override
+		 */
+		getTitle: function() {
+			return "Wysiwyg Editor";
+		},
+		
+		/**
+         * @Override
+		 */
+		getDescription: function() {
+			return "Wysiwyd editor for multi-line text.";
+		},
+
+		/**
+         * @Override
+         */
+        getFieldType: function() {
+            return "wysiwyg";
         }       
     });
     

@@ -19,7 +19,7 @@
      * }
      */
     Alpaca.ControlField = Alpaca.Field.extend({
-          
+    
         /**
          * To be overridden
          */
@@ -30,10 +30,11 @@
         /**
          * Injects Field Element into Field Container
          */
-        injectField: function(element) {            
-            // find out the field container			
-			if ($('.alpaca-field-container', this.outerEl).length) {
-                this.fieldContainer = $('.alpaca-field-container', this.outerEl);
+        injectField: function(element) {
+            // find out the field container
+			var containerElem = $('.alpaca-controlfield-container', this.outerEl);			
+            if (containerElem.length) {
+                this.fieldContainer = containerElem;
             } else {
                 this.fieldContainer = this.outerEl;
             }
@@ -43,49 +44,54 @@
                 if (parentNode.attr('data-replace') == 'true') {
                     parentNode.replaceWith(element);
                 } else {
-                    $(element).appendTo(parentNode);
+                    element.appendTo(parentNode);
                 }
             } else {
                 if (this.fieldContainer.attr('data-replace') == 'true') {
                     this.fieldContainer.replaceWith(element);
                 } else {
-                    $(element).prependTo(this.fieldContainer);
+                    element.prependTo(this.fieldContainer);
                 }
             }
         },
-		
+        
         /**
          * @Override
-         * 
+         *
          * Finds labelDiv and helperDiv
          */
         postRender: function() {
-			if ($('.alpaca-field-label', this.outerEl).length) {
-				this.labelDiv = $('.alpaca-field-label', this.outerEl);
-			}
-			if ($('.alpaca-field-helper', this.outerEl)) {
-				this.helperDiv = $('.alpaca-field-helper', this.outerEl);
-			}
-			this.base();
-		},
-		
+			var labelDiv = $('.alpaca-controlfield-label', this.outerEl);
+            if (labelDiv.length) {
+                this.labelDiv = labelDiv;
+            }
+			var helperDiv = $('.alpaca-controlfield-helper', this.outerEl); 
+            if (helperDiv.length) {
+                this.helperDiv = helperDiv;
+            }            
+			this.base();			
+			// add additional classes
+			this.outerEl.addClass('alpaca-controlfield');			
+        },
+	
         /**
          * Validate against enum
-         */                
+         */
         _validateEnum: function() {
-            var val = this.getValue();
-            
-            // JSON SCHEMA - enum
-            if (this.schema["enum"]) {
-                if ($.inArray(val, this.schema["enum"]) > -1) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
-            }
-        },
+			if (this.schema["enum"]) {
+				var val = this.data;/*this.getValue();*/
+				if (!this.schema.required && Alpaca.isValEmpty(val)) {
+					return true;
+				}
+				if ($.inArray(val, this.schema["enum"]) > -1) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return true;
+			}
+		},
         
         /**
          * @Override
@@ -93,18 +99,17 @@
          * Adds enum validation
          */
         handleValidate: function() {
-			var baseStatus =  this.base();
+            var baseStatus = this.base();
+            
+            var valInfo = this.validation;
 			
-			var valInfo = this.validation;
-			valInfo["invalidValueOfEnum"] = {
-				"message":"",
-				"status": this._validateEnum()
-			};
-			if (!this._validateEnum()) {
-                var text = this.schema["enum"].join(',');
-				valInfo["invalidValueOfEnum"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("invalidValueOfEnum", this), [text]);
-			}			
-        	return baseStatus && valInfo["invalidValueOfEnum"]["status"];			
+			var status = this._validateEnum();
+            valInfo["invalidValueOfEnum"] = {
+                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("invalidValueOfEnum", this), [this.schema["enum"].join(',')]),
+                "status": status
+            };
+
+            return baseStatus && valInfo["invalidValueOfEnum"]["status"];
         },
         
         // Additional event handlers
@@ -113,38 +118,95 @@
          *
          * Sign up for events against the INPUT control
          */
-        initEvents: function(){
+        initEvents: function() {
             this.base();
             
             var _this = this;
             
-            $(this.inputElement).keypress(function(e){
+            this.inputElement.keypress(function(e) {
                 _this.onKeyPress(e);
             });
             
-            $(this.inputElement).keyup(function(e){
+            this.inputElement.keyup(function(e) {
                 _this.onKeyUp(e);
             });
             
-            $(this.inputElement).click(function(e){
+            this.inputElement.click(function(e) {
                 _this.onClick(e);
             });
             
         },
-		
-		onKeyPress: function(e) {
-		},
         
-        onKeyUp: function(e){
+        onKeyPress: function(e) {
         },
         
-        onClick: function(e){
-        }		
+        onKeyUp: function(e) {
+        },
         
+        onClick: function(e) {
+        },
+        
+        /**
+         * @Override
+         */
+		getSchemaOfSchema: function() {
+            return Alpaca.merge(this.base(),{
+				"properties": {
+					"enum": {
+						"title": "Enumeration",
+						"description": "List of property value options",
+						"type": "array"
+					}
+				}
+			});
+        },
+		
+        /**
+         * @Override
+         */
+		getOptionsForSchema: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"enum": {
+						"itemLabel":"Value",
+						"type": "array"
+					}
+				}
+			});
+        },
+		
+        /**
+         * @Override
+         */
+		getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"properties": {
+					"name": {
+						"title": "Field name",
+						"description": "Field name",
+						"type": "string"
+					}
+				}
+			});
+        },
+		
+        /**
+         * @Override
+         */
+		getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"name": {
+						"type": "text"
+					}
+				}
+			});
+        } 		 
+		 		        
     });
     
     // Registers additonal messages
-	Alpaca.registerMessages({
+    Alpaca.registerMessages({
         "invalidValueOfEnum": "This field should have one of the values in {0}."
     });
     

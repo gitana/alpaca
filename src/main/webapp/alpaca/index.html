@@ -16,29 +16,13 @@
   <meta name="revisit-after" content="2 days" />
   <meta name="robots" content="index,follow" />
   <meta name="publisher" content="Gitana Software, Inc." />
-  <meta name="copyright" content="Copyright 2010 Gitana Software, Inc" />
+  <meta name="copyright" content="Copyright 2011Gitana Software, Inc" />
   <meta name="author" content="Design: Wolfgang (www.1-2-3-4.info) / Modified: Your Name" />
   <meta name="distribution" content="global" />
-  <meta name="description" content="Your page description here ..." />
-  <meta name="keywords" content="Your keywords, keywords, keywords, here ..." />
-  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="site/css/layout2_setup.css" />
-
-  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="site/css/layout2_text.css" />
-  <link rel="icon" type="image/x-icon" href="css/images/favicon.ico" />
-  
-	<link media="screen" rel="stylesheet" href="site/css/colorbox.css" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-
-	<script src="site/js/jquery.colorbox.js"></script>
-	<script>
-		$(document).ready(function(){
-			//Examples of how to assign the ColorBox event to elements
-			$("a[rel='unittest']").colorbox({width:"90%", height:"90%", iframe:true});
-			$("a[rel='web']").colorbox({width:"90%", height:"90%", iframe:true});
-		});
-	</script>
-  
-  
+  <meta name="description" content="Alpaca Forms Project" />
+  <meta name="keywords" content="Forms,Mobile,jQuery,Gitana,Cloud" />
+  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="site/css/layout1.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
   
   <title>Alpaca Project</title>
 </head>
@@ -100,8 +84,8 @@
 	
           <!-- Navigation item -->
           <ul>
-
             <li><a href="index.html">Overview</a></li>
+			<li><a href="examples/index.html" title="Demo">Demos</a></li>
           </ul>          
         </div>
 	  </div>
@@ -109,11 +93,12 @@
       <!-- A.4 HEADER BREADCRUMBS -->
 
       <!-- Breadcrumbs -->
+<!--
       <div class="header-breadcrumbs">
         <ul>
           <li><a href="#">Home</a></li>
         </ul>
-
+-->
         <!-- Search form                  
         <div class="searchform">
           <form action="index.html" method="get">
@@ -125,34 +110,16 @@
           </form>
         </div>
 		 -->
+<!--
       </div>
     </div>
-
+-->
     <!-- For alternative headers END PASTE here -->
-
+	<div class="header-spacer">
+	</div>	
     <!-- B. MAIN -->
     <div class="main">
 
- 
-      <!-- B.1 MAIN NAVIGATION -->
-      <div class="main-navigation">
-
-        <!-- Navigation Level 3 -->
-        <div class="round-border-topright"></div>
-        <h1 class="first">Links</h1>
-
-        <!-- Navigation with grid style -->
-        <dl class="nav3-grid">
-
-          <dt><a href="#">Gitana Software, Inc.</a></dt>
-          <dt><a href="http://www.cloudcms.com">Cloud CMS</a></dt>
-            <dd><a href="http://www.cloudcms.com">Cloud CMS</a></dd>
-            <dd><a href="http://www.gitanasoftware.com/wiki">Gitana Wiki</a></dd>
-            <dd><a href="http://www.github.com/gitana">Gitana on Github</a></dd>		
-          <dt><a href="#">MongoDB</a></dt>
-
-        </dl>                        
-      </div> 
       <!-- B.1 MAIN CONTENT -->
       <div class="main-content">
         
@@ -162,101 +129,71 @@
         <!-- Content unit - One column -->
         <div class="column1-unit">
           <h1>Introduction</h1>                            
-          <p>Alpaca is a browser-side forms and templating engine which gives your web site the ability to render elegant content entry and presentation forms.</p>
-		  <p>Designed for rendering forms based on JSON data or JSON schema, a universal lightweight data-interchange format, Alpaca can be easily embedded into your web page or web application no matter what platform or device you are using.</p>  
-		  <p>Alpaca also provides optional components for storing, retrieving, versioning and auditing JSON data and schema to or from Gitana Cloud Repository.</p>
+          <p>
+          	Alpaca is a client-side forms and templating engine which gives your application the ability to render elegant content entry and presentation forms with minimal development effort.
+			Designed for rendering forms based on JSON data format, Alpaca can be easily embedded into or integrated with your application no matter what platform or device you are using.
+		  </p>
+		  <p>
+		  	With comprehensive control library and out of the box support for validation, wizard, layout, templating, preview, internationalization etc., Alpaca is a full-blown forms service for your project.
+		    Built upon jQuery library, jQuery UI framework and jQuery Mobile framework, Alpaca can be easily extended for additonal form controls and can work seamlessly with any jQuery UI compliant theme.
+		  </p>   
+		  <p>
+		  	Alpaca is also part of highly scalable Gitana Cloud Repository, an online-service for modeling, storing, retrieving and versioning content.
+		  </p>
         </div>          
         <hr class="clear-contentunit" />
-
 		         
          <!-- Content unit - One column -->
+        <h1 class="block">Downloads</h1>
+        <div class="column1-unit">
+          <h1>Alpaca Library</h1>
+          <div class="column-img">
+		  	<img src="site/css/images/download.png" alt="Alpaca Download" title="Alpaca Download"/>
+		  </div>
+		  <p class="column-p">
+				Alpaca core library download contains both Alpaca JavaScript library and its supporting stylesheet. 
+				It is available in both minified format and uncompressed format.
+				<br/><br/>
+				Download for Alpaca examples is a self-contained zip which includes everything you need to run Alpaca examples locally. 		   		  
+		  </p>		  
+		  <h2>Current Release Candidate</h2>
+		  	<p>
+		  		<ul>
+            		<li>
+            			<span class="list-item-header">Core</span>&nbsp;<a href="/alpaca/examples/customer-profile-edit-form.html" rel='web' target="_blank">Minified</a>&nbsp;|&nbsp;<a href="/alpaca/examples/two-column-layout.html" rel='web' target="_blank">Uncompressed</a>
+            		</li>
+            		<li>
+            			<span class="list-item-header">Examples</span>&nbsp;<a href="/alpaca/examples/customer-profile-edit-form.html" rel='web' target="_blank">Zip</a>
+            		</li>
+				</ul>
+			</p>
+		  <h2>Alpaca on GIT</h2>
+		  <p>
+		  	All Alpaca source code is kept under Git revision control, which you can <a href="https://github.com/gitana/alpaca">browse  online</a>.
+		  </p>
+		  <p>		
+			If you have access to Git, you can connect to the repository here:
+			<pre>
+				<code>git@github.com:gitana/alpaca.git</code>
+			</pre>	
+		  </p>		
+		</div>      
+
         <h1 class="block">Demos</h1>
         <div class="column1-unit">
-          <h1>Mobile</h1>
-          <p><img src="site/css/images/mobile.jpg" alt="Mobile Form" title="Mobile" />Full Customer Profile Form for Mobile Devices.</p>
-		  <p><a href="/alpaca/examples/mobile-full-form.html" target="_blank">Launch the Form...</a></p>              
-          <h1>Web</h1>
-
-          <p><img src="site/css/images/browser.png" alt="Image description" title="Image title" />Sample Forms for General Web Browsers.</p> 
-		  <h2>Customer Profile Form</h2>             
-		  <p>
-		  	<ul>
-            	<li>
-            		<span class="list-item-header">Edit</span>&nbsp;<a href="/alpaca/examples/customer-profile-edit-form.html" rel='web' target="_blank">Single-Column</a>&nbsp;|&nbsp;<a href="/alpaca/examples/two-column-layout.html" rel='web' target="_blank">Two-Column</a>&nbsp;|&nbsp;<a href="/alpaca/examples/auto-wizard.html" rel='web' target="_blank">Wizard</a> 
-				</li>
-            	<li>
-            		<span class="list-item-header">Create</span>&nbsp;<a href="/alpaca/examples/customer-profile-create-form.html" rel='web' target="_blank">Full Form</a>&nbsp;|&nbsp;<a href="/alpaca/examples/customer-profile-create-simple-form.html" rel='web' target="_blank">Simplified Form</a>
-				</li>
-            	<li>
-            		<span class="list-item-header">View</span>&nbsp;<a href="/alpaca/examples/customer-profile-view-form.html" rel='web' target="_blank">Default</a>&nbsp;|&nbsp;<a href="/alpaca/examples/customer-profile-custom-view-form.html" rel='web' target="_blank">Custom Template</a>&nbsp;|&nbsp;<a href="/alpaca/examples/customer-list-table-form.html" rel='web' target="_blank">Customer List</a>
-				</li>
-			</ul>
-		  </p>		
+          <h1>Alpaca Mobile</h1>
+          <p><img src="site/css/images/mobile.jpg" alt="Mobile Form" title="Mobile" />Alpaca provides full support for static and dynamic forms on mobile devices through jQuery Mobile framework.</p>
+		  <p>Launch Alpaca Mobile in <a href="/alpaca/examples/mobile/mobile-examples.html" target="_mobile">new tab</a>&nbsp;|&nbsp;<a href="http://ipadpeek.com/?url=localhost:8180/alpaca/examples/mobile/mobile-examples.html&portrait" target="_mobile">iPad Simulator</a>&nbsp;|&nbsp;<a href="http://testiphone.com/?url=http://localhost:8180/alpaca/examples/mobile/mobile-examples.html" target="_mobile">iPhone Simulator</a></p>              
+          
+		  <h1>Form Gallery</h1>
+          <p><img src="site/css/images/browser.png" alt="Image description" title="Image title" />Alpaca Form Gallery includes various forms for general web applications.</p> 
+		  <p><a href="/alpaca/examples/forms/customer-profile/create-form.html" target="_forms">Launch Alpaca Form Gallery...</a></p> 
 
           <h1>Component Gallery</h1>
-          <p><img src="site/css/images/components.png" alt="Image description" title="Image title" />This section includes various Alpaca component examples.</p>
-		  <h2>Basic Fields</h2>
-		  <p>
-		  	<ul>
-            	<li><a href="/alpaca/examples/text-field.html" rel='unittest' target="_blank">Text Field</a></li>
-            	<li><a href="/alpaca/examples/textarea-field.html" rel='unittest' target="_blank">Text Area Field</a></li>
-            	<li><a href="/alpaca/examples/number-field.html" rel='unittest' target="_blank">Number Field (Integer and Float)</a></li>
-            	<li><a href="/alpaca/examples/checkbox-field.html" rel='unittest' target="_blank">Checkbox Field</a></li>
-            	<li><a href="/alpaca/examples/select-field.html" rel='unittest' target="_blank">Select Field</a></li>
-            	<li><a href="/alpaca/examples/radio-field.html" rel='unittest' target="_blank">Radio Button Field</a></li>
-            	<li><a href="/alpaca/examples/file-field.html" rel='unittest' target="_blank">File Field</a></li>
-            	<li><a href="/alpaca/examples/array-field.html" rel='unittest' target="_blank">Array Field</a></li>
-            	<li><a href="/alpaca/examples/object-field.html" rel='unittest' target="_blank">Object Field</a></li>
-            	<li><a href="/alpaca/examples/any-field.html" rel='unittest' target="_blank">Any Field</a></li>
-          	</ul>
-		  </p>              
-		  <h2>Advanced Fields</h2>
-		  <p>
-		  	<ul>
-            	<li><a href="/alpaca/examples/wysiwyg-field.html" rel='unittest' target="_blank">WYSIWYG Field</a></li>
-            	<li><a href="/alpaca/examples/misc-field.html" rel='unittest' target="_blank">Misc. Field (Upper Case, Date, IP, Email, Phone etc.)</a></li>
-            	<li><a href="/alpaca/examples/combo-field.html" rel='unittest' target="_blank">Combo Field</a></li>
- 				<li><a href="/alpaca/examples/dependency-field.html" rel='unittest' target="_blank">Dependency Field</a></li>
-            	<li><a href="/alpaca/examples/conditional-field.html" rel='unittest' target="_blank">Conditional Field</a></li>
-          	</ul>
-		  </p>              
-		  <h2>Presentation</h2>
-		  <p>
-		  	<ul>
-            	<li><a href="/alpaca/examples/view-examples.html" rel='unittest' target="_blank">Custom Views</a></li>
-            	<li><a href="/alpaca/examples/two-column-layout.html" rel='unittest' target="_blank">Two-Column Layout</a></li>
-            	<li><a href="/alpaca/examples/customer-profile-edit-readonly-form.html" rel='unittest' target="_blank">Form with Readonly Fields</a></li>
-            	<li><a href="/alpaca/examples/customer-profile-edit-simple-form.html" rel='unittest' target="_blank">Form with Injected Styles and Hidden Readonly Fields</a></li>
-            	<li><a href="/alpaca/examples/wizard.html" rel='unittest' target="_blank">Wizard (Layout)</a></li>
-            	<li><a href="/alpaca/examples/auto-wizard.html" rel='unittest' target="_blank">Wizard (Injection)</a></li>
-			</ul>
-		  </p>              
-		  <h2>Themes</h2>
-		  <p>
-		  	<ul>
-            	<li><a href="/alpaca/examples/customer-profile-edit-form-black.html" rel='unittest' target="_blank">Black Theme</a></li>
-			</ul>
-		  </p> 		  
-		  <h2>I18N</h2>
-		  <p>
-		  	<ul>
-            	<li><a href="/alpaca/examples/i18n-spanish.html" rel='unittest' target="_blank">Spanish</a></li>
-            	<li><a href="/alpaca/examples/i18n-chinese.html" rel='unittest' target="_blank">Chinese</a></li>
-          	</ul>
-		  </p>              
-		  <h2>Validation</h2>
-		  <p>
-		  	<ul>
-            	<li><a href="/alpaca/examples/validation-examples.html" rel='unittest' target="_blank">Validation Examples</a></li>
-          	</ul>
-		  </p>              
-		  <h2>Callback</h2>
-		  <p>
-		  	<ul>
-            	<li><a href="/alpaca/examples/customer-list-table-form.html" rel='unittest' target="_blank">Data Table</a></li>
-          	</ul>
-		  </p>              
-         </div> 
+          <p><img src="site/css/images/components.png" alt="Image description" title="Image title" />Alpaca Component Gallery provides examples for all alpaca field controls, wizard support, layout support, i18n support etc.</p>
+		  <p><a href="/alpaca/examples/fields/controls/text-field.html" target="_components">Launch Alpaca Component Gallery...</a></p>              
+         
+		 </div> 
 		 <hr class="clear-contentunit" />                         
       </div>
     </div>
@@ -264,7 +201,7 @@
     <!-- C. FOOTER AREA -->      
 
     <div class="footer">
-      <p>Copyright &copy; 2010 Gitana Software | All Rights Reserved</p>
+      <p>Copyright &copy; 2011 Gitana Software | All Rights Reserved</p>
 
     </div>      
   </div> 

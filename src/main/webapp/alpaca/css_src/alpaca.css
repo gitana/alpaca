@@ -1,8 +1,18 @@
 /**
+ *  General
+ */
+.alpaca-hover {
+    background-color: #FFFFCC;
+}
+
+.alpaca-clear {
+    clear: both;
+}
+
+/**
  *  Abstract Field
  */
 .alpaca-field {
-    display: inline-block;
 }
 
 .alpaca-field-required {
@@ -11,77 +21,65 @@
 .alpaca-field-optional {
 }
 
+.alpaca-field-valid {	
+}
+
+.alpaca-field-invalid {	
+}
+
+.alpaca-field-readonly {	
+}
+
 /**
  *  Control Field
  */
-.alpaca-field-container {
+.alpaca-controlfield {
     display: inline-block;
+    padding: 2px;
+    margin: 2px;
+}
+
+.alpaca-controlfield-container {
+	display: inline-block;
     padding-top: 4px;
     padding-bottom: 4px;
 }
 
-.alpaca-field-label {
-    color: #505050;
-    text-align: left;
-    margin: 4px 0px 2px 0px;
-    min-width: 75px;
-    font-size: 100%;
+.alpaca-controlfield-label {
+    font-size: 1.0em;
     font-weight: bold;
+    text-align: left;
 }
 
-.alpaca-field-helper {
-    clear: both;
-    color: #505050;
-    font-size: 75%;
+.alpaca-controlfield-helper {
+    font-size: 0.75em;
     margin-top: 2px;
 }
 
-.alpaca-field-message {
-    clear: both;
-    float: none;
-    margin: 4px;
-    font-size: 85%;
+.alpaca-controlfield-message {
+    font-size: 0.85em;
+}
+
+.alpaca-field-message-container {	
+}
+
+.alpaca-field-required span.ui-icon-star{
+    float: left;
+    margin-right: 0.3em;
+}
+
+.alpaca-controlfield-helper > span.ui-icon, .alpaca-controlfield-message > span.ui-icon {
+    float: left;
+    margin-right: .3em;
 }
 
 /**
- * Invalid Field
- */
-.alpaca-field-invalid > div.alpaca-field-message, .alpaca-field-invalid > div.alpaca-field-label, .alpaca-field-invalid > label {
-    color: #C00E0C;
-    font-weight: bold;
-}
-
-.alpaca-field-invalid > div.alpaca-field-label, .alpaca-field-invalid > label {
-    background: transparent url(../images/error.png) no-repeat scroll left center;
-    padding-left: 20px;
-}
-
-/**
- * Valid Field
- */
-.alpaca-field-valid > div.alpaca-field-message {
-    color: #505050;
-    font-weight: normal;
-}
-
-.alpaca-field-valid > div.alpaca-field-label, .alpaca-field-valid > label {
-    color: #505050;
-    font-weight: bold;
-}
-
-/* Properties set by an invalid higher hierarchy field are disabled for valid or empty subfields */
-.alpaca-field-valid > div.alpaca-field-label label, .alpaca-field-empty > div.alpaca-field-label label {
-    background: none;
-    padding-left: inherit;
-}
-
-/**
- * Input field
+ * Form Controls
  */
 input, textarea, select {
     border: 1px solid #555;
     padding: 2px;
-    font-size: 100%;
+    font-size: 1em;
     border-radius: 2px;
     -khtml-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -91,81 +89,55 @@ input, textarea, select {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
 }
 
+select {
+	min-width :150px;
+}
+
 input:focus, textarea:focus {
     outline: none;
     border: 2px solid #058cf5;
 }
 
-.alpaca-field-readonly input, .alpaca-field-readonly textarea, input[readonly] , textarea[readonly]  {
-	background-color: #dcdcdc;
-	cursor: default; 
+.alpaca-field-readonly input, .alpaca-field-readonly textarea, input[readonly], textarea[readonly] {
+    background-color: #dcdcdc;
+    cursor: default;
 }
 
-/**
- * File Field
- */
-.alpaca-filefield {
-}
-
-.alpaca-filefield-button {
-	width: 30px; 
-	height: 22px; 
-	background: url("../images/upload.png") no-repeat scroll right center transparent; 
-	display: inline; 
-	position: absolute; 
-	overflow: hidden;
-}
-
-.alpaca-filefield-control {
-	 display: inline;
-     width: 300px;	
-}
 /**
  * Text Field
  */
-.alpaca-textfield {
+.alpaca-controlfield-text {
 }
 
 /**
- * Date Field
+ * Date Field , Phone Field and Email Field
  */
-.alpaca-datefield {
-    background: transparent url(../images/calendar.png) no-repeat scroll left center;
-    padding-left: 30px;
+.alpaca-controlfield-date {
 }
 
-.alpaca-datefield input {
-    width: 100px;
+.alpaca-controlfield-phone {
 }
 
+.alpaca-controlfield-email {
+}
+
+.alpaca-controlfield-email > span.ui-icon, .alpaca-controlfield-date > span.ui-icon, .alpaca-controlfield-phone > span.ui-icon{
+    float: right;
+    margin-left: .3em;
+}
+
+.alpaca-controlfield-helper .alpaca-controlfield-helper-text, .alpaca-controlfield-message .alpaca-controlfield-message-text , .alpaca-controlfield-email > input , .alpaca-controlfield-date > input , .alpaca-controlfield-phone > input{
+    line-height: 16px;
+}
 /**
- * Phone Field
+ * Fix for jQuery datepicker initial state issue.
  */
-.alpaca-phonefield {
-    background: transparent url(../images/phone.png) no-repeat scroll left center;
-    padding-left: 30px;
-}
-
-.alpaca-phonefield input {
-    width: 200px;
-}
-
-/**
- * Email Field
- */
-.alpaca-emailfield {
-    background: transparent url(../images/email.png) no-repeat scroll left center;
-    padding-left: 30px;
-}
-
-.alpaca-emailfield input {
-    width: 200px;
-}
+#ui-datepicker-div { display: none; }
 
 /**
  * Address Map Field
  */
-.alpaca-map-canvas {
+.alpaca-controlfield-address-mapcanvas {
     height: 300px;
     width: 300px;
     margin: 10px;
@@ -174,311 +146,247 @@ input:focus, textarea:focus {
 /**
  * Checkbox Field
  */
-.alpaca-checkboxfield {
-    padding-top: 0.2em;
+.alpaca-controlfield-checkbox {
+    padding-top: 0.4em;
 }
 
-.alpaca-checkboxfield input {
-    margin-right: 0.2em;
-}
-
-label.alpacaForm-checkboxfield-rightLabel {
-    cursor: pointer;
+.alpaca-controlfield-checkbox input {
+    margin-right: 1em;
 }
 
 /* IE < 8 */
-.alpaca-checkboxfield { *padding-top:
-    0;
+.alpaca-controlfield-checkbox { 
+	*padding-top:0;
 }
 
-.alpaca-hover {
-    background-color: #FFFFCC;
+/**
+ * Radio Field
+ */
+.alpaca-controlfield-radio {
+    padding-top: 0.5em;
 }
 
-div.alpaca-clear-div {
+.alpaca-controlfield-radio input {
+    margin-right: 0.3em;
+}
+
+/**
+ * Select Field
+ */
+.alpaca-controlfield-select {
+}
+
+/**
+ * Number Field
+ */
+.alpaca-controlfield-number {
+}
+
+/**
+ * Integer Field
+ */
+.alpaca-controlfield-integer {
+}
+
+/**
+ * Textarea Field
+ */
+.alpaca-controlfield-textarea {
+}
+
+/**
+ * WYSIWYG Field
+ */
+.alpaca-controlfield-wysiwyg {
+}
+
+/**
+ * File Field
+ */
+.alpaca-controlfield-file {
+}
+
+.alpaca-controlfield-file-custom-input { 
+	position: absolute; 
+	height: 100px; 
+	cursor: pointer; 
+	background: transparent; 
+	border: 0; 
+	opacity: 0; 
+	-moz-opacity: 0; 
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0); 
+	z-index: 999;  
+}
+
+.alpaca-controlfield-file-custom { 
+	width: 350px; 
+	cursor: pointer; 
+	overflow: hidden; 
+	padding: 2px; 
+	position: relative; 
+}
+
+.alpaca-controlfield-file-custom-disabled { 
+	opacity: .5; 
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);  
+	cursor: default;   
+}
+
+.alpaca-controlfield-file-custom-feedback {  
+	display: block;  
+	margin: 1px 1px 1px 5px;  
+	font-style: italic;  
+	padding: .3em .6em;  
+}
+	
+.alpaca-controlfield-file-custom-feedback-populated {  
+	font-style: normal;  
+	font-weight: bold;  
+	padding-left: 20px;  
+	left 4px no-repeat;  
+}
+
+/**
+ * Container Field (Fieldset)
+ */
+.alpaca-fieldset {
+    /*
+		display: inherit;
+	*/
+    padding: 4px;
+    margin: 4px;
+}
+
+fieldset.alpaca-fieldset {
+    display: inline-block;
+    margin: 0.5em 1em 1em 0px;
+}
+
+legend.alpaca-fieldset-legend {
+    font-size: 1.1em;
+}
+
+.alpaca-fieldset-legend {
+    font-size: 1.0em;
+    font-weight: bold;
+    text-align: left;
+}
+
+.alpaca-fieldset-helper {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    clear: both;
+}
+
+.alpaca-fieldset-items-container {
+    padding-top: 5px;
+    padding-bottom: 5px;
     clear: both;
 }
 
 /**
- * Url Field
+ * Array
  */
-div.alpaca-urlfield {
-    position: relative;
+.alpaca-fieldset-array-item-toolbar {
+    padding: 1px;
+    margin: 0px 2px 0px 2px;
+    font-size: 0.75em;
 }
 
-div.alpaca-urlfield input {
-    padding-left: 20px;
+.alpaca-fieldset-array-toolbar {
+    padding: 10px 4px;
 }
 
-div.alpaca-urlfield input.nofavicon {
-    padding-left: 0px;
+.alpaca-fieldset-array-item-toolbar-disabled {
+    opacity: .5;
 }
 
-div.alpaca-urlfield img {
-    position: absolute;
-    top: 3px;
-    left: 2px;
-    width: 16px;
-    height: 16px;
+.alpaca-fieldset-array-item-toolbar-add {	
+}
+
+.alpaca-fieldset-array-item-toolbar-remove {	
+}
+
+.alpaca-fieldset-array-item-toolbar-up {	
+}
+
+.alpaca-fieldset-array-item-toolbar-down {	
 }
 
 /**
- * Fieldset
+ * Form
  */
 .alpaca-form {
     margin-top: 15px;
     margin-left: 15px;
 }
 
-fieldset.alpaca-fieldset {
-    display: inline-block;
-    margin: 15px 10px 10px 0px;
-    border-bottom-right-radius: 10px;
-    -khtml-border-bottom-right-radius: 10px;
-    -moz-border-radius-bottomright: 10px;
-    -webkit-border-bottom-right-radius: 10px;
-    color: #606060;
-    border: solid 1px #b7b7b7;
-    background: #fff;
-    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
-	background:-moz-linear-gradient(top, #fff, #ededed);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
-	text-shadow:0 1px 1px rgba(255,255,255,1);
-	-webkit-box-shadow:0 1px 2px rgba(0,0,0,.4);
-	-moz-box-shadow:0 1px 2px rgba(0,0,0,.4);
-	box-shadow:0 1px 2px rgba(0,0,0,.4);
-}
-
-legend.alpaca-fieldset-legend {
-	margin: -15px 0px 0px -10px;
-	float:left;
-	font-size:110%;
-	padding:2px 8px 2px 3px;
-	cursor:pointer;
-	color:#e8f0de;
-	border:solid 1px #538312;
-	background:#64991e;
-	background:-webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
-	background:-moz-linear-gradient(top, #7db72f, #4e7d0e);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
-	text-shadow:0 1px 1px rgba(0,0,0,.3);
-	border-bottom-right-radius:10px;
-	-khtml-border-bottom-right-radius:10px;
-	-moz-border-radius-bottomright:10px;
-	-webkit-border-bottom-right-radius:10px;
-	-webkit-box-shadow:0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow:0 1px 2px rgba(0,0,0,.2);
-	box-shadow:0 1px 2px rgba(0,0,0,.2);
-}
-
-
-legend.legend-expanded:before {
-	content:"\25BC";	
-}
-
-legend.legend-collapsed:before {
-	content:"\25B6";	
-}
-
-.alpaca-fieldset-helper {
-	padding-top: 10px;
-	padding-bottom:5px;
-	clear:both;
-}
-
-.alpaca-items-container {
-	padding-top: 5px;
-	padding-bottom:5px;
-	clear:both;
-}
-
 /**
- * Item Toolbar 
- */
-.alpaca-item-toolbar {
-	background-color: #DAE8EC;
-	border-bottom-right-radius:10px;
-	-khtml-border-bottom-right-radius:10px;
-	-moz-border-radius-bottomright:10px;
-	-webkit-border-bottom-right-radius:10px;
-	border: 1px solid #B8CB99;
-	padding: 1px;
-}
-
-.alpaca-array-toolbar {
-	background-color: #DAE8EC;
-	border-bottom-right-radius:10px;
-	-khtml-border-bottom-right-radius:10px;
-	-moz-border-radius-bottomright:10px;
-	-webkit-border-bottom-right-radius:10px;
-	border: 1px solid #B8CB99;
-	padding: 1px;
-}
-
-.alpaca-item-toolbar-icon {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-	padding-left:20px;
-}
-
-.alpaca-array-toolbar-icon {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-	padding-left:20px;
-}
-
-.alpaca-item-toolbar-disabled {
-	opacity: .5;
-}
-
-.alpaca-item-toolbar-add {
-    background: transparent url(../images/add.png) no-repeat scroll 0%;
- }
- 
-.alpaca-item-toolbar-remove {
-    background: transparent url(../images/remove.png) no-repeat scroll 0%;
- }
- 
-.alpaca-item-toolbar-up {
-    background: transparent url(../images/up.png) no-repeat scroll 0%;
- }
- 
-.alpaca-item-toolbar-down {
-    background: transparent url(../images/down.png) no-repeat scroll 0%;
- }
- 
-.alpaca-array-toolbar-add {
-    background: transparent url(../images/add.png) no-repeat scroll 0%;
- } 
- 
-/**
- * Butons
+ * Form Butons
  */
 .alpaca-form-buttons-container {
-	clear:both;
+    clear: both;
+    display: inline-block;
+    margin: 5px 0 5px 0;
 }
 
 .alpaca-form-button {
-	display: inline-block;
-	margin: 4px;
-	outline: none;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	font: 14px/100% Arial, Helvetica, sans-serif;
-	padding: 4px;
-	text-shadow: 0 1px 1px rgba(0,0,0,.3);
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	
-	color: #fef4e9;
-	border: solid 1px #da7c0c;
-	background: #f78d1d;
-	background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
-	background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
-}
-.alpaca-form-button:hover {
-	text-decoration: none;	
-	background: #f47c20;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));
-	background: -moz-linear-gradient(top,  #f88e11,  #f06015);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');	
-	-webkit-transform:  scale(1.3);
-	-moz-transform: scale(1.3);
-	text-shadow: 0px 0px 4px rgba(0,0,0,.5);
-	color:#fff !important;
 }
 
-.alpaca-form-button:active {
-	position: relative;
-	top: 1px;
-	color: #fcd3a5;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
-	background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');	
+.alpaca-form-button-view-switcher {
+	position: absolute;
+	float: left;
+	font-size: 1em;
+	padding: 8px 3px 3px;
+	zIndex: 999999;
 }
 
-.alpaca-form-button-gitana:before {
-	content: attr(data-icon);
-	font-style:italic;
-	-webkit-border-radius: 20px;
-	-moz-border-radius: 20px;
-	border-radius: 20px;
-	background:#ff295b;
-	padding: 2px 5px 2px 5px;
-	margin-right:5px;
-}
+.alpaca-form-button-view-switcher ul{
+	listStyle: none;
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+}		
 
-.alpaca-form-button-alpaca:before {
-	content: attr(data-icon);
-	font-style:italic;
-	-webkit-border-radius: 20px;
-	-moz-border-radius: 20px;
-	border-radius: 20px;
-	background:#13c9ff;
-	padding: 2px 5px 2px 5px;
-	margin-right:5px;
+.alpaca-form-button-view-switcher ul li{
+	padding: 2px;
+	margin: 1px;
+	clear: left;
+	float: left;
+}		
+
+.alpaca-form-button-view-switcher ul li a{
+	text-decoration : none;
 }	
-
 /**
- * Data
+ * Display View
  */
 div.alpaca-fieldset {
-	display: inline-block;   
-	margin:5px 5px 5px 10px;
-	padding-left:20px;
-	padding-right:5px;
-	background:#fff;
-	background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
-	background:-moz-linear-gradient(top, #fff, #ededed);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
-	text-shadow:0 1px 1px rgba(255,255,255,1);
-	-webkit-box-shadow:0 1px 2px rgba(0,0,0,.4);
-	-moz-box-shadow:0 1px 2px rgba(0,0,0,.4);
-	box-shadow:0 1px 2px rgba(0,0,0,.4);
-	float:left;
-	clear:both;	
+    display: block;
+	border:none;
+    margin: 1.5em 1em 1em 0px;
 }
 
 div.alpaca-fieldset-legend {
-	margin-left:-10px;
-	margin-top:10px;
-	font-size:110%;
-	text-shadow:0 1px 1px rgba(0,0,0,.3);
-	text-decoration: underline;
 }
 
 .alpaca-data-container {
-    min-width: 200px;
 	margin:5px 5px 5px 5px;
 	padding:5px 5px 5px 5px;
-	-webkit-box-shadow:0 1px 2px rgba(0,0,0,.4);
-	-moz-box-shadow:0 1px 2px rgba(0,0,0,.4);
-	box-shadow:0 1px 2px rgba(0,0,0,.4);	
+	display:block;
 }
    
 .alpaca-data {
-    color: #505050;
     text-align: left;
-	font-size: 100%;
 	padding-left:10px;
 }
 
 .alpaca-data-label {
     float: left;
-	color: #505050;
-    text-align: left;
-    min-width: 75px;
-	font-size: 100%;
-	font-weight: bold;
+	min-width: 100px;
 	clear: both;
+	font-weight: bold;
+	display:inline-block;
 }
 
 /**
@@ -486,100 +394,66 @@ div.alpaca-fieldset-legend {
  */
 .alpaca-wizard-status-bar { 
 	list-style:none; 
-	width:100%; 
 	overflow:hidden; 
-	margin:10px 0 10px 0; 
+	margin:10px 0px 10px 0px; 
 	padding:0px;
-	background:#7b8d77;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-	text-shadow:none;
-	-webkit-box-shadow:0;
-	-moz-box-shadow:0;
-	box-shadow:none;	
-	color:#ffffff;
 	counter-reset:step;
-	float:left;
+	float:left;	
 }
 
 .alpaca-wizard-status-bar li {
-	font-size:11px; 
-	float:left; 
-	padding:5px; 
-	color:#ffffff;
-	min-width:120px;
-	text-shadow:none;
-	font-style:italic;
+	float:left;
 }
 
 .alpaca-wizard-status-bar li span {
-	font-size:18px; 
 	display:block;
-	text-shadow:none;
-	font-style:normal;	
+	font-size:1.2em; 
 }
 
 .alpaca-wizard-status-bar li div {
 	display:block;
-	text-decoration:none;
 	position:relative;
 	padding:2px 25px 2px 30px;
 }	
 
 .alpaca-wizard-status-bar li div:before {
-	font-size:11px;
-
+	font-size:1em;
 	position:absolute;
 	top:50%;
 	left:5px;
 	margin-top:-8px;
-	
-	counter-increment:step;
-	content:counter(step);
 	text-align:center;
 	font-weight:bold;
-	padding:2px 6px;
-	background:rgba(0,0,0,0.25);
-	
-	-moz-border-radius:20px;
-	-webkit-border-radius:20px;
-	border-radius:20px;
+	padding:2px 6px;	
+	counter-increment:step;
+	content:counter(step);
 }
-
 
 .alpaca-wizard-status-bar li div strong {
 	font-weight:normal
 }
 
 .alpaca-wizard-status-bar li.current { 
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-	text-shadow:none;
-	color:#ffffff;
-	background:#a49d4d;	
 }
 
 .alpaca-wizard-status-bar li.current-has-next { 
-	background:url(../images/splitter.gif) right center no-repeat #a49d4d;
 }
 
 .alpaca-wizard-title {
-	font-size:120%; 
+	font-size:1.2em; 
 	margin:0px; 
 	padding:10px 0px; 
 	font-weight:bold;
 }
 
 .alpaca-wizard-desc {
-	font-size:90%; 
+	font-size:0.9em; 
 	margin:0px; 
 	padding:5px 0px; 
 }
 
 .alpaca-wizard-step-title {
-	font-size:100%; 
+	font-size:1em; 
 	margin:0px; 
 	padding:10px 0px; 
 	text-decoration:underline; 
@@ -588,38 +462,38 @@ div.alpaca-fieldset-legend {
 
 .alpaca-wizard-nav-bar {
 	clear:both;
+	float:right;
 }
 
 .alpaca-wizard-button {
-	display: inline-block;
-	margin: 4px;
-	outline: none;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	font: 14px/100% Arial, Helvetica, sans-serif;
-	padding: 4px;
-	text-shadow: 0 1px 1px rgba(0,0,0,.3);
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	
-	color: #fef4e9;
-	border: solid 1px #000;
-	background: #7b8d77;
 }
 
 .alpaca-wizard-button:hover {
-	background: #a49d4d;
 }
 
 .alpaca-wizard-button-back {
-	float:left;
 }
 
 .alpaca-wizard-button-next {
-	float:right;
 }
+
+/**
+ * Layout
+ */
+.alpaca-layout-two-column-mask {
+    overflow: hidden;
+    width: 100%;
+	clear: both;
+}
+
+.alpaca-layout-two-column-left {
+    float: left;
+	padding: 5px;
+}
+
+.alpaca-layout-two-column-right {
+    overflow: hidden;
+	padding: 5px;
+}
+
+

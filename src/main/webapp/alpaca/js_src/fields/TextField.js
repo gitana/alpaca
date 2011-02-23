@@ -33,8 +33,8 @@
             if (!this.options.size) {
                 this.options.size = 40;
             }
-			
-			this.controlFieldTemplate = Alpaca.getTemplate("controlFieldText", this);
+            
+            this.controlFieldTemplate = Alpaca.getTemplate("controlFieldText", this);
         },
         
         /**
@@ -43,7 +43,7 @@
          * Renders an INPUT control into the field container
          */
         renderField: function(onSuccess) {
-                        
+        
             if (this.controlFieldTemplate) {
                 this.inputElement = $.tmpl(this.controlFieldTemplate, {
                     "id": this.getId(),
@@ -63,12 +63,14 @@
         postRender: function() {
             this.base();
             // mask it
-            if (this.options.mask && this.options.maskString) {
-                $(this.inputElement).mask(this.options.maskString);
+            if ( this.inputElement && this.options.mask && this.options.maskString) {
+                this.inputElement.mask(this.options.maskString);
             }
-            // apply additional css
-            $(this.fieldContainer).addClass("alpaca-textfield");
+			if (this.fieldContainer) {
+				this.fieldContainer.addClass('alpaca-controlfield-text');
+			}			
         },
+
         
         /**
          * @Override
@@ -76,7 +78,7 @@
          * Return the value of the input control
          */
         getValue: function() {
-            return $(this.inputElement).val();
+            return this.inputElement.val();
         },
         
         /**
@@ -86,9 +88,9 @@
          */
         setValue: function(value, stopUpdateTrigger) {
             if (Alpaca.isEmpty(value)) {
-                $(this.inputElement).val("");
+                this.inputElement.val("");
             } else {
-                $(this.inputElement).val(value);
+                this.inputElement.val(value);
             }
             
             // be sure to call into base method
@@ -102,27 +104,25 @@
             var baseStatus = this.base();
             
             var valInfo = this.validation;
+			
+			var status =  this._validatePattern();
             valInfo["invalidPattern"] = {
-                "message": "",
-                "status": this._validatePattern()
+                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("invalidPattern", this), [this.schema.pattern]),
+                "status": status
             };
-            if (!this._validatePattern()) {
-                valInfo["invalidPattern"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("invalidPattern", this), [this.schema.pattern]);
-            }
-            valInfo["stringTooLong"] = {
-                "message": "",
-                "status": this._validateMaxLength()
+ 
+            status = this._validateMaxLength();
+			valInfo["stringTooLong"] = {
+                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("stringTooLong", this), [this.schema.maxLength]),
+                "status": status
             };
-            if (!this._validateMaxLength()) {
-                valInfo["stringTooLong"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringTooLong", this), [this.schema.maxLength]);
-            }
-            valInfo["stringTooShort"] = {
-                "message": "",
-                "status": this._validateMinLength()
+
+            status = this._validateMinLength();
+			valInfo["stringTooShort"] = {
+                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("stringTooShort", this), [this.schema.minLength]),
+                "status": status
             };
-            if (!this._validateMinLength()) {
-                valInfo["stringTooShort"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringTooShort", this), [this.schema.minLength]);
-            }
+
             return baseStatus && valInfo["invalidPattern"]["status"] && valInfo["stringTooLong"]["status"] && valInfo["stringTooShort"]["status"];
         },
         
@@ -130,10 +130,8 @@
          * validates against the pattern
          */
         _validatePattern: function() {
-            var val = this.getValue();
-            
-            // JSON SCHEMA - regular expression pattern
             if (this.schema.pattern) {
+	            var val = this.getValue();
                 if (!val.match(this.schema.pattern)) {
                     return false;
                 }
@@ -143,36 +141,33 @@
         },
         
         /**
-         * validats against the minLength
+         * validates against the minLength
          */
         _validateMinLength: function() {
-            var val = this.getValue();
-            
-            if (!Alpaca.isEmpty(val)) {
-                // JSON SCHEMA - minLength
-                if (this.schema.minLength) {
-                    if (val.length < this.schema.minLength) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        },
+			if (!Alpaca.isEmpty(this.schema.minLength)) {
+				var val = this.getValue();
+				if (!Alpaca.isEmpty(val)) {
+					if (val.length < this.schema.minLength) {
+						return false;
+					}
+				}
+			}
+			return true;
+		},
         
         /**
-         * validats against the maxLength
+         * validates against the maxLength
          */
         _validateMaxLength: function() {
-            var val = this.getValue();
-            
-            if (!Alpaca.isEmpty(val)) {
-                // JSON SCHEMA - maxLength
-                if (this.schema.maxLength) {
-                    if (val.length > this.schema.maxLength) {
-                        return false;
-                    }
-                }
-            }
+			if (!Alpaca.isEmpty(this.schema.maxLength)) {
+				var val = this.getValue();
+				if (!Alpaca.isEmpty(val)) {
+					if (val.length > this.schema.maxLength) {
+						return false;
+					}
+				}
+			}
+
             return true;
         },
         
@@ -195,11 +190,131 @@
          */
         focus: function() {
             this.inputElement.focus();
-        }
+        },
+        
+        /**
+         * @Override
+         */
+        getSchemaOfSchema: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {                
+                    "minLength": {
+                        "title": "Minimal Length",
+                        "description": "Property value minimal length",
+                        "type": "number"
+                    },
+                    "maxLength": {
+                        "title": "Maximum Length",
+                        "description": "Property value maximum length",
+                        "type": "number"
+                    },
+                    "pattern": {
+                        "title": "Pattern",
+                        "description": "Property value pattern in regular expression",
+                        "type": "string"
+                    }
+                }
+            });
+        },
+
+        /**
+         * @Override
+         */
+        getOptionsForSchema: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {                
+                    "minLength": {
+                        "type": "integer"
+                    },
+                    "maxLength": {
+                        "type": "integer"
+                    },
+                    "pattern": {
+                        "type": "text"
+                    }
+                }
+            });
+        },
+		
+        /**
+         * @Override
+         */
+        getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {                
+                    "size": {
+                        "title": "Field Size",
+                        "description": "Field size",
+                        "type": "number",
+						"default":40
+                    },
+                    "mask": {
+                        "title": "Mask",
+                        "description": "Enable field mask if true",
+                        "type": "boolean"
+                    },
+                    "maskString": {
+                        "title": "Mask Expression",
+                        "description": "Expression for field mask",
+                        "type": "string"
+                    }
+                }
+            });
+        },    
+		
+        /**
+         * @Override
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {                
+                    "size": {
+                        "type": "integer"
+                    },
+                    "mask": {
+                        "helper": "Enable field mask if checked",
+						"rightLabel": "Enable field mask?",
+                        "type": "checkbox"
+                    },
+                    "maskString": {
+                        "helper": "a - an alpha character;9 - a numeric character;* - an alphanumeric character",
+                        "type": "text"
+                    }
+                }
+            });
+        },    
+				    
+        /**
+         * @Override
+         */
+        getTitle: function() {
+            return "Single-Line Text";
+        },
+        
+        /**
+         * @Override
+         */
+        getDescription: function() {
+            return "Text field for single-line text.";
+        },
+        
+        /**
+         * @Override
+         */
+        getType: function() {
+            return "string";
+        },
+		
+        /**
+         * @Override
+         */
+        getFieldType: function() {
+            return "text";
+        }		
         
     });
     
-    Alpaca.registerTemplate("controlFieldText", '<input type="text" id="${id}" {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="on"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
+    Alpaca.registerTemplate("controlFieldText", '<input type="text" id="${id}" {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="on"{{/if}} {{if options.name}}name="${options.name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
     Alpaca.registerMessages({
         "invalidPattern": "This field should have pattern {0}",
         "stringTooShort": "This field should contain at least {0} numbers or characters",

@@ -1,0 +1,28 @@
+{
+    "form":{
+        "attributes":{
+            "action":"/endpoint",
+            "method":"post"
+        },
+        "buttons":{
+            "hideSaveButton":false,
+            "hidePrintButton":false,
+            "hideSwitchViewButton":false,            
+            "hideResetButton":false,
+            "hideReloadButton":false,
+            "hideSubmitButton":false            
+        }
+    },
+    "fields":{
+        "photo":{
+            "type":"file"
+        },
+        "member":{
+            "rightLabel":"Alpaca Club Member"
+        },
+        "address":{
+            "type":"address",
+            "addressValidation":true
+        }       
+    }
+}

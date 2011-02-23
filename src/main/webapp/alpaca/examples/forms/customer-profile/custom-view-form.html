@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Alpaca > Component Gallery > Forms > Customer Profile > Custom View</title>
+        <meta name="keywords" content="alpaca,forms,create,gitana" />
+        <meta name="description" content="Customer Profile Form with Custom View Template." />
+        <meta name="author" content="Gitana Software Inc." />
+        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <script src="http://maps.google.com/maps/api/js?sensor=false">
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js">
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+        </script>
+        <script type="text/javascript" src="../../../js/alpaca-${project.version}.js">
+        </script>
+        <script type="text/javascript" src="../../js/example.js">
+        </script>
+        <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css" rel="stylesheet">
+        <link type="text/css" href="../../../css/alpaca-${project.version}.css" rel="stylesheet" />
+        <link type="text/css" href="../../../css/example.css" rel="stylesheet" />	
+		<style type="text/css">
+			.profile-name {
+				float:left;
+				display: inline-block;
+				font-weight:bold;
+				font-size:140%;
+				margin:5px;
+				padding-left:30px;
+				background: transparent url(../images/user.png) no-repeat scroll left center;
+			}
+			.profile-photo {
+				display: inline-block;
+				float:left;
+				margin:5px;
+				clear:both;
+			}
+			.profile-photo img {
+				padding: 2px;
+			}
+			.profile-data {
+				display: inline-block;
+				margin:5px;
+     			padding: 6px;
+			}
+			.item {
+				margin:5px 0 15px 0;
+			}
+			.item-name {
+				font-weight:bold;
+				font-size:120%;
+				float:left;
+				width:80px;
+			}
+			.item-value {
+				display: inline-block;
+				font-size:120%;
+			}
+		</style>
+    </head>
+    <body>
+        <div class='alpaca-example-container'>
+            <div class='alpaca-example-header' id='customer-profile-view-custom' alpaca-types=''>    	
+			<h2>Alpaca Ice Cream Customer Profile</h2>
+		</div>
+            <div class='alpaca-example-body'>
+                <div class='alpaca-example-case'>		
+                    <h3>Customer Profile with a Custom Display Template</h3>
+					<h4>This example loads <a href="./custom-view-template.html" target="_source">template</a>, <a href="./options.json" target="_source">options</a> and <a href="./schema.json" target="_source">schema</a> parameters through ajax calls.</h4>
+		<div id="field1">
+        </div>
+        <script type="text/javascript" id="field1-script">
+            $("#field1").alpaca({
+				"data": "./data.json",
+				"schema": "./schema.json",
+				"view": {
+					"templates": {
+						"full": "./custom-view-template.html"
+					}
+				}
+			});
+        </script>
+                </div>
+            </div>
+            <div class="alpaca-example-footer">
+                <center class="copyright">
+                    Copyright &copy; 2011 Gitana Software | All Rights Reserved
+                </center>
+            </div>
+        </div>		
+    </body>
+</html>

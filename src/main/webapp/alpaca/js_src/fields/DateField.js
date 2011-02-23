@@ -14,14 +14,6 @@
         setup: function() {
             this.base();
             
-            if (Alpaca.isEmpty(this.options.mask)) {
-                this.options.mask = true;
-            }
-            
-            if (Alpaca.isEmpty(this.options.maskString)) {
-                this.options.maskString = "9999-99-99";
-            }
-            
             if (!this.options.dateFormat) {
                 this.options.dateFormat = Alpaca.defaultDateFormat;
             }
@@ -32,10 +24,23 @@
          */
         postRender: function() {
             this.base();            
-            // apply additional css
-            $(this.fieldContainer).addClass("alpaca-datefield");
+			$('<span class="ui-icon ui-icon-calendar"></span>').prependTo(this.fieldContainer);
+			this.inputElement.datepicker({
+				"dateFormat":  this.options.dateFormat
+			});
+			if (this.fieldContainer) {
+				this.fieldContainer.addClass('alpaca-controlfield-date');
+			}			
         },
-        
+		
+        /**
+         * @Override
+         */
+        onChange: function(e) {
+            this.base();
+			this.renderValidationState();
+        },
+                
         /**
          * @Override
          *
@@ -44,13 +49,12 @@
 			var baseStatus = this.base();
 			
 			var valInfo = this.validation;
+			
+			var status = this._validateDateFormat();
 			valInfo["invalidDate"] = {
-				"message": "",
-				"status": this._validateDateFormat()
+				"message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("invalidDate", this), [this.options.dateFormat]),
+				"status": status
 			};
-			if (!this._validateMaxLength()) {
-				valInfo["invalidDate"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("invalidDate", this), [this.options.dateFormat]);
-			}
 			
 			return baseStatus && valInfo["invalidDate"]["status"];			
         },
@@ -60,8 +64,16 @@
          *
          */
         _validateDateFormat: function() {
-            var value = $(this.inputElement).val();
+            var value = this.inputElement.val();
             
+			try {
+				$.datepicker.parseDate(this.options.dateFormat, value);
+				return true;
+			} catch(e) {
+				return false;
+			}
+
+/*
             var separator = this.options.dateFormat.match(/[^Ymd ]/g)[0];
             
             var ladate = value.split(separator);
@@ -90,6 +102,7 @@
             var annee = unedate.getFullYear();
             
             return ((unedate.getDate() == d) && (unedate.getMonth() == m) && (annee == Y));
+*/
         },
         
         /**
@@ -103,6 +116,7 @@
                 return;
             }
             
+/*
             var str = "";
             if (val instanceof Date) {
                 str = Alpaca.Fields.DateField.formatDate(val, this.form.dateFormat);
@@ -115,7 +129,76 @@
                 }
             }
             this.base(str, stopUpdateTrigger);
-        }
+*/
+            this.base(val, stopUpdateTrigger);
+        },
+		
+        /**
+         * @Override
+         */
+        getSchemaOfSchema: function() {
+            return Alpaca.merge(this.base(), {
+				"properties": {
+                    "format": {
+                        "title": "Format",
+                        "description": "Property data format",
+                        "type": "string",
+						"default":"date",
+						"readonly":true
+                    }			
+				}
+            });
+        },
+
+		/**
+         * @Override
+		 */
+		getTitle: function() {
+			return "Date Field";
+		},
+		
+		/**
+         * @Override
+		 */
+		getDescription: function() {
+			return "Date Field.";
+		},
+		
+        /**
+         * @Override
+         */
+		getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"properties": {
+					"dateFormat": {
+						"title": "Date Format",
+						"description": "Date format",
+						"type": "string",
+						"default": Alpaca.defaultDateFormat
+					}
+				}
+			});
+		},
+
+        /**
+         * @Override
+         */
+		getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"dateFormat": {
+						"type": "text"
+					}
+				}
+			});
+		},
+		
+		/**
+         * @Override
+         */
+        getFieldType: function() {
+            return "date";
+        }		
     });
     
     Alpaca.Fields.DateField.parseWithFormat = function(sDate, format) {
