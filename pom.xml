@@ -28,9 +28,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<build>
+	<build>	
 		<plugins>
-
 			<!-- Eclipse Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -62,19 +61,21 @@
 								<!--
 									<param>../../../../../lib/jquery-1.4.2.min.js</param>
 								-->
-								<param>../../../../../lib/jquery.tmpl.js</param>
+								<param>../../../../../lib/jquery.tmpl-beta.js</param>
 								<param>../../../../../lib/base.js</param>
 
 								<param>../../../../../lib/DetectMobileBrowser.js</param>
 								<param>../../../../../lib/equiv_and_hoozit.js</param>
 								<param>../../../../../lib/jquery.PrintArea.js</param>
 								<param>../../../../../lib/jquery.maskedinput-1.2.2.min.js</param>
+								<param>../../../../../lib/jquery.wysiwyg.js</param>
 
 								<!-- alpaca core -->
 								<param>../js_src/Alpaca.js</param>
 
 								<!--  alpaca views -->
 								<param>../js_src/views/DefaultView.js</param>
+								<param>../js_src/views/ListView.js</param>
 								<param>../js_src/views/MobileView.js</param>
 
 								<param>../js_src/Field.js</param>
@@ -107,7 +108,11 @@
 								<param>../js_src/fields/PhoneField.js</param>
 								<param>../js_src/fields/AddressField.js</param>
 								<param>../js_src/fields/AlpacaButtonField.js</param>
+								<param>../js_src/fields/AlpacaPrintButtonField.js</param>
+								<param>../js_src/fields/AlpacaReloadButtonField.js</param>
+								<param>../js_src/fields/AlpacaSwitchViewButtonField.js</param>
 								<param>../js_src/fields/GitanaButtonField.js</param>
+								<param>../js_src/fields/GitanaSaveButtonField.js</param>
 
 								<!--  alpaca views language packs -->
 								<param>../js_src/views/DefaultViewLanguagePacks.js</param>
@@ -116,10 +121,10 @@
 							<cssSourceDir>alpaca/css</cssSourceDir>
 							<cssSourceFiles>
 								<param>../css_src/alpaca.css</param>
-								<param>../css_src/example.css</param>
+								<param>../../../../../lib/jquery.wysiwyg.css</param>
 							</cssSourceFiles>
-							<jsFinalFile>alpaca.js</jsFinalFile>
-							<cssFinalFile>alpaca.css</cssFinalFile>
+							<jsFinalFile>alpaca-${project.version}.js</jsFinalFile>
+							<cssFinalFile>alpaca-${project.version}.css</cssFinalFile>
 							<linebreak>-1</linebreak>
 							<nomunge>false</nomunge>
 							<verbose>true</verbose>
@@ -137,10 +142,9 @@
 						<configuration>
 							<cssSourceDir>alpaca/css</cssSourceDir>
 							<cssSourceFiles>
-								<param>../css_src/alpaca-black.css</param>
 								<param>../css_src/example.css</param>
 							</cssSourceFiles>
-							<cssFinalFile>alpaca-black.css</cssFinalFile>
+							<cssFinalFile>example.css</cssFinalFile>
 							<linebreak>-1</linebreak>
 							<nomunge>false</nomunge>
 							<verbose>true</verbose>
@@ -168,18 +172,18 @@
 
 						<!-- Update the minified file to include license information -->
 						<concat
-							destfile="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.updated.js"
+							destfile="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.min.updated.js"
 							fixlastline="yes">
 							<filelist dir="."
-								files="src/main/webapp/alpaca/js/license.js ${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.js" />
+								files="src/main/webapp/alpaca/js_src/license.js ${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.min.js" />
 						</concat>
 						<delete
-							file="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.js" />
+							file="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.min.js" />
 						<move
-							file="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.updated.js"
-							tofile="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca.min.js" />
+							file="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.min.updated.js"
+							tofile="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.min.js" />
 
-						<!-- Copy other directories into place -->
+						<!-- Copy other directories into place 
 						<copy
 							todir="${project.build.directory}/${project.build.finalName}/alpaca">
 							<fileset dir="src/main/webapp/alpaca">
@@ -189,10 +193,28 @@
 								<exclude name="js_src/**" />
 							</fileset>
 						</copy>
-
+-->
 					</target>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-war-plugin</artifactId>
+  				<version>2.1.1</version>
+  				<configuration>
+    				<webResources>
+      					<resource>
+        					<filtering>true</filtering>
+        					<directory>src/main/webapp</directory>
+        					<includes>
+          						<include>**/*.html</include>
+        					</includes>
+      					</resource>
+   	 				</webResources>
+  				</configuration>
+			</plugin> 			
+			
 			<!-- Jetty Plugin for smoke screen tests -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -215,10 +237,31 @@
 					</scanTargets>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assemble/alpaca-examples.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>			
 		</plugins>
 	</build>
 
 	<dependencies>
 	</dependencies>
-
+	<properties>
+		<jquery.version>1.5</jquery.version>
+		<jquery.ui.version>1.8.8</jquery.ui.version>
+		<jquery.mobile.version>1.0a3</jquery.mobile.version>
+	</properties>
 </project>
