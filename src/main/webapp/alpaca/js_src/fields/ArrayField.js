@@ -371,13 +371,14 @@
                 if (containerElem.find('[data-role="fieldcontain"]').fieldcontain) {
                     containerElem.find('[data-role="fieldcontain"]').fieldcontain();
                     containerElem.find('[data-role="fieldcontain"]').find("[type='radio'], [type='checkbox']").checkboxradio();
-                    containerElem.find('[data-role="fieldcontain"]').find("button, [type='button'], [type='submit'], [type='reset'], [type='image']").not(".ui-nojs").button();
+                    containerElem.find('[data-role="fieldcontain"]').find("button, [data-role='button'], [type='button'], [type='submit'], [type='reset'], [type='image']").not(".ui-nojs").button();
                     containerElem.find('[data-role="fieldcontain"]').find("input, textarea").not("[type='radio'], [type='checkbox'], button, [type='button'], [type='submit'], [type='reset'], [type='image']").textinput();
                     containerElem.find('[data-role="fieldcontain"]').find("input, select").filter("[data-role='slider'], [data-type='range']").slider();
                     containerElem.find('[data-role="fieldcontain"]').find("select:not([data-role='slider'])").selectmenu();
-                    //containerElem.find('[data-role="button"]').buttonMarkup();
+                    containerElem.find('[data-role="button"]').buttonMarkup();
                     //containerElem.find('[data-role="controlgroup"]').controlgroup();
                 }
+
             }
         },
         

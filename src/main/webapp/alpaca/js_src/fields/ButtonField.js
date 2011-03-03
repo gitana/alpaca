@@ -26,6 +26,8 @@
             } else {
                 this.buttonType = "button";
             }
+            
+            this.buttonStyle = Alpaca.isEmpty(Alpaca.getViewParam('buttonStyle', this))?"button":Alpaca.getViewParam('buttonStyle', this);
         },
         
         /**
@@ -47,9 +49,11 @@
                     "options": this.options
                 });
 				this.inputElement.addClass("alpaca-form-button");
-				this.button = this.inputElement.button({
-					text: true
-				});					
+				if (this.buttonStyle == 'button') {
+					this.button = this.inputElement.button({
+						text: true
+					});
+				}
                 this.injectField(this.inputElement);
             }
             

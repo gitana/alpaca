@@ -23,12 +23,16 @@
         
         switcherPaneShow: function() {
 			var _this = this;
-            this.switcherPane.css({
-                top: _this.button.offset().top + 30,
-                left: _this.button.offset().left
-            }).slideDown(50);
-            //this.button.css(button_active);
-        },
+			
+			this.switcherPane.css({
+/*
+				top: _this.button.offset().top - _this.switcherPane.height() - 15,
+				left: _this.button.offset().left
+*/
+			}).slideDown(50);
+			
+		//this.button.css(button_active);
+		},
         
         switcherPaneHide: function() {
             this.switcherPane.slideUp(50, function() {
@@ -83,8 +87,15 @@
 				return false;
 			});
 			
+/*
 			this.switcherPane.hover(function() {
 			}, function() {
+				if (_this.switcherPane.is(':visible')) {
+					_this.switcherPaneHide();
+				}
+			});
+*/
+			this.switcherPane.click(function() {
 				if (_this.switcherPane.is(':visible')) {
 					_this.switcherPaneHide();
 				}

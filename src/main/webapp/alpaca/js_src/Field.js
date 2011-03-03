@@ -668,7 +668,7 @@
         triggerUpdate: function() {
             this.getEl().trigger("fieldupdate");
         },
-        
+		
         /**
          * Disable the field
          */
@@ -729,9 +729,17 @@
          * Reload the field
          */
         reload: function() {
-            this.initializing = true;
-            this.render();
-        },
+			this.initializing = true;
+			
+			
+			if (this.callback != null) {
+				this.callback(this, this.renderedCallback);
+			} else {
+				this.render(this.renderedCallback);
+			}
+			
+		//this.render();
+		},
         
         /**
          * Clear the field.
@@ -1111,7 +1119,7 @@
 									"description": "Hide form print if true",
 									"type": "boolean"
 								},							
-								"hideViewSwitchButton": {
+								"hideSwitchViewButton": {
 									"title": "Hide Form View Switch Button",
 									"description": "Hide form switch button if true",
 									"type": "boolean"

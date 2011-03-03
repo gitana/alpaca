@@ -340,6 +340,10 @@
         } else {
             field.render(renderedCallback);
         }
+		
+		field.callback = callback;
+		field.renderedCallback = renderedCallback;
+		
 		return field;        
     }
     

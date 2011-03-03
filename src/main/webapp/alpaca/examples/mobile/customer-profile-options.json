@@ -1,2 +1,9 @@
 {
+	"form" : {
+	},
+	"fields" : {
+		"icecream" : {
+			"name":"icecream"
+		}
+	}
 }
