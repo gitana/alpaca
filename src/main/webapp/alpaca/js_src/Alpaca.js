@@ -554,8 +554,8 @@
 					}
 				}
 				*/
-				
-				for (var templateId in view.templates) {
+				var tmpTemplates = Alpaca.cloneObject(view.templates);
+				for (var templateId in tmpTemplates) {
 					var template = view.templates[templateId];
 					if (Alpaca.isString(template) &&!Alpaca.startsWith(template, view.id)) {
 						view.templates[view.id + "_" +templateId+"_src"] = template;

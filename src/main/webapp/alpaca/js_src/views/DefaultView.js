@@ -28,7 +28,7 @@
 				formButtonsContainer: '<div>{{html this.html}}</div>',
 				form: '<form>{{html Alpaca.fieldTemplate(this,"formFieldsContainer")}}{{html Alpaca.fieldTemplate(this,"formButtonsContainer")}}</form>',
 				// Templates for wizard
-				wizardStep : '<div></div>',
+				wizardStep : '<div class="alpaca-clear"></div>',
 				wizardNavBar : '<div></div>',
 /*
 				wizardPreButton : '<div>\u25C0 Back</div>',

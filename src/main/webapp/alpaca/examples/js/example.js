@@ -18,7 +18,8 @@ $(function() {
 				primary: "ui-icon-circle-arrow-e"
 			}
 		}).click(function() {
-			$('#' + currentId + '-code').html($('#' + currentId + '-script').html().trim().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+			var code = $.trim( $('#' + currentId + '-script').html() );
+			$('#' + currentId + '-code').html(code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
 			$('#' + currentId + '-pre').toggle();
 			$('.ui-icon', this).toggleClass("ui-icon-circle-arrow-e").toggleClass("ui-icon-circle-arrow-s");
 		});

@@ -3,6 +3,7 @@ html,body {
     padding: 0;
     font: 12px normal Verdana, Arial, Helvetica, sans-serif;
 	height:100%;
+	min-width:1000px;
 }
 
 h3 {
@@ -11,7 +12,7 @@ h3 {
 }
 
 h4 {
-	width:1000px;
+	width:500px;
 	font-weight:normal;	
 }
 
@@ -47,7 +48,9 @@ h4 {
 }
 .alpaca-example-sidebar {
 	display:inline-block;
+/*
 	float:left;
+*/
 	width:200px;
 	margin:10px 20px 10px 10px;
 	padding:4px;
@@ -72,6 +75,7 @@ h4 {
 
 .alpaca-example-case {
 	display:inline-block;
+	vertical-align:top;
 }
 
 .alpaca-example-footer {
@@ -90,7 +94,7 @@ pre {
     background: #f0f0f0;
     border: 1px solid #ccc;
     line-height: 20px;
-    width: 800px;
+    width: 600px;
     overflow: auto;
     overflow-Y: hidden;
 }
