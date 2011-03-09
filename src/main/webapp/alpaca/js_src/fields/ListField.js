@@ -44,46 +44,6 @@
 						"text": text
 					});
 				});
-			} else {
-				if (this.options.dataSource) {
-					if (Alpaca.isFunction(this.options.dataSource)) {
-						this.options.dataSource(this);
-					}
-					if (Alpaca.isUri(this.options.dataSource)) {
-						var _this = this;
-						$.ajax({
-							url: this.options.dataSource,
-							type: "get",
-							dataType: "json",
-							success: function(jsonDocument) {
-								var ds = jsonDocument;
-								if (_this.options.dsTransformer && Alpaca.isFunction(_this.options.dsTransformer)) {
-									ds = _this.options.dsTransformer(ds);
-									if (ds) {
-										if (Alpaca.isArray(ds)) {
-											$.each(ds, function(index, value) {
-												_this.selectOptions.push({
-													"value": value,
-													"text": value
-												});
-											});
-										}
-										if (Alpaca.isObject(ds)) {
-											$.each(ds, function(index, value) {
-												_this.selectOptions.push({
-													"value": index,
-													"text": value
-												});
-											});
-										}
-									}
-								}
-							},
-							error: function(error) {
-							}
-						});
-					}					
-				}
 			}
 		},
         
@@ -96,6 +56,53 @@
             }
         },
 		
+		renderField: function(onSuccess) {
+			var _this = this;
+			if (this.options.dataSource) {
+				if (Alpaca.isFunction(this.options.dataSource)) {
+					this.options.dataSource(this);
+				}
+				if (Alpaca.isUri(this.options.dataSource)) {
+					var _this = this;
+					$.ajax({
+						url: this.options.dataSource,
+						type: "get",
+						dataType: "json",
+						success: function(jsonDocument) {
+							var ds = jsonDocument;
+							if (_this.options.dsTransformer && Alpaca.isFunction(_this.options.dsTransformer)) {
+								ds = _this.options.dsTransformer(ds);
+							}
+							if (ds) {
+								if (Alpaca.isArray(ds)) {
+									$.each(ds, function(index, value) {
+										_this.selectOptions.push({
+											"value": value,
+											"text": value
+										});
+									});
+								}
+								if (Alpaca.isObject(ds)) {
+									$.each(ds, function(index, value) {
+										_this.selectOptions.push({
+											"value": index,
+											"text": value
+										});
+									});
+								}
+							}
+							
+							_this._renderField(onSuccess);
+						},
+						error: function(error) {
+						}
+					});
+				}
+			} else {
+				this._renderField(onSuccess);
+			}
+		},
+				
         /**
          * @Override
          */

@@ -994,6 +994,7 @@
 									}
 								}
 							}
+							field._renderField(field.renderedCallback);
 						}
                     }
                 }
