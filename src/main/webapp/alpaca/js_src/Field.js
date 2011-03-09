@@ -984,15 +984,16 @@
 						"size":3,
                         "type": "select",
 						"dataSource": function (field) {
-							var siblings = [];
 							if (field.parent && field.parent.schemaParent && field.parent.schemaParent.parent) {
 								for (var key in field.parent.schemaParent.parent.childrenByPropertyId) {
 									if (key != field.parent.schemaParent.propertyId) {
-										siblings.push(key);
+										field.selectOptions.push({
+											"value": key,
+											"text": key
+										});
 									}
 								}
 							}
-							return siblings;
 						}
                     }
                 }

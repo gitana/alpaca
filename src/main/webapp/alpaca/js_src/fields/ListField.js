@@ -46,45 +46,43 @@
 				});
 			} else {
 				if (this.options.dataSource) {
-					var ds;
 					if (Alpaca.isFunction(this.options.dataSource)) {
-						ds = this.options.dataSource(this);
+						this.options.dataSource(this);
 					}
 					if (Alpaca.isUri(this.options.dataSource)) {
 						var _this = this;
 						$.ajax({
-							async: false,
 							url: this.options.dataSource,
 							type: "get",
 							dataType: "json",
 							success: function(jsonDocument) {
-								ds = jsonDocument;
-								if ( _this.options.dsTransformer && Alpaca.isFunction(_this.options.dsTransformer)) {
+								var ds = jsonDocument;
+								if (_this.options.dsTransformer && Alpaca.isFunction(_this.options.dsTransformer)) {
 									ds = _this.options.dsTransformer(ds);
+									if (ds) {
+										if (Alpaca.isArray(ds)) {
+											$.each(ds, function(index, value) {
+												_this.selectOptions.push({
+													"value": value,
+													"text": value
+												});
+											});
+										}
+										if (Alpaca.isObject(ds)) {
+											$.each(ds, function(index, value) {
+												_this.selectOptions.push({
+													"value": index,
+													"text": value
+												});
+											});
+										}
+									}
 								}
 							},
 							error: function(error) {
 							}
 						});
-					}
-					if (ds) {
-						if (Alpaca.isArray(ds)) {
-							$.each(ds, function(index, value) {
-								_this.selectOptions.push({
-									"value": value,
-									"text": value
-								});
-							});
-						}
-						if (Alpaca.isObject(ds)) {
-							$.each(ds, function(index, value) {
-								_this.selectOptions.push({
-									"value": index,
-									"text": value
-								});
-							});
-						}
-					}
+					}					
 				}
 			}
 		},
