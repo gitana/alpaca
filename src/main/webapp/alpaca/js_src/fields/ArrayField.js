@@ -171,9 +171,14 @@
             if (this.getSize() == 0) {
                 this.renderArrayToolbar(this.outerEl);
             } else {
-                if ($('.alpaca-fieldset-array-toolbar', this.outerEl)) {
+                /*
+				if ($('.alpaca-fieldset-array-toolbar', this.outerEl)) {
                     $('.alpaca-fieldset-array-toolbar', this.outerEl).remove();
                 }
+                */
+				if (this.arrayToolbar) {
+					this.arrayToolbar.remove();
+				}
             }
             // update counter
             $('.alpaca-item-label-counter', this.outerEl).each(function(index) {
@@ -221,7 +226,8 @@
                         primary: "ui-icon-circle-plus"
                     }
                 }).click(function() {
-                    var newContainerElem = _this.addItem(containerElem.index() + 1, null, fieldControl.getValue(), id);
+					var currentItemVal = fieldControl.getValue();
+                    var newContainerElem = _this.addItem(containerElem.index() + 1, null, Alpaca.isValEmpty(currentItemVal)?null:fieldControl.getValue(), id);
                     _this.enrichElements(newContainerElem);
                     return false;
                 });
@@ -294,6 +300,7 @@
 					}).wrap('<small></small>');
 				}
                 toolbarElem.appendTo(containerElem);
+				this.arrayToolbar = toolbarElem;
             }
         },
         

@@ -138,6 +138,28 @@
                             });
                         });
                     </script>
+                    <h3>Example 6: </h3>
+					<h4>Nested array field.</h4>					
+                    <div id="field6">
+                    </div>
+                    <script type="text/javascript" id="field4-script">
+                        $(function() {
+                            $("#field6").alpaca({
+                                "schema": {
+                                    "description": "Ice Cream Prices",
+                                    "type": "array",
+                                    "items": {
+                                        "title": "Flavor Price",
+                                        "type": "array",
+										"items": {
+											"title": "Price",
+											"type": "number"
+										}
+                                    }
+                                }
+                            });
+                        });
+                    </script>					
                 </div>
             </div>
 			<div class="alpaca-clear"></div>

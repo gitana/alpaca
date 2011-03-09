@@ -51,6 +51,7 @@
 						ds = this.options.dataSource(this);
 					}
 					if (Alpaca.isUri(this.options.dataSource)) {
+						var _this = this;
 						$.ajax({
 							async: false,
 							url: this.options.dataSource,
@@ -58,6 +59,9 @@
 							dataType: "json",
 							success: function(jsonDocument) {
 								ds = jsonDocument;
+								if ( _this.options.dsTransformer && Alpaca.isFunction(_this.options.dsTransformer)) {
+									ds = _this.options.dsTransformer(ds);
+								}
 							},
 							error: function(error) {
 							}
