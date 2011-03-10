@@ -966,11 +966,13 @@
                     "format": {
 						"type": "select",
 						"dataSource": function(field) {
-							var formats = [];
 							for (var key in Alpaca.defaultFormatFieldMapping) {
-								formats.push(key);
+								field.selectOptions.push({
+									"value": key,
+									"text": key
+								});
 							}
-							return formats;
+							field._renderField(field.renderedCallback);
 						}
 					},
 					"disallow": {
