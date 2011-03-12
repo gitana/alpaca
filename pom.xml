@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.gitana.sdk</groupId>
 	<artifactId>alpaca-forms</artifactId>
-	<version>1.0.0.SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>Alpaca Forms</name>
 	<packaging>war</packaging>
 	<url>http://www.gitanasoftware.org/</url>
