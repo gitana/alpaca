@@ -85,6 +85,7 @@
 								<param>../js_src/Form.js</param>
 
 								<!-- alpaca basic fields -->
+								<param>../js_src/fields/AnyField.js</param>
 								<param>../js_src/fields/TextField.js</param>
 								<param>../js_src/fields/NumberField.js</param>
 								<param>../js_src/fields/IntegerField.js</param>

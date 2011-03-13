@@ -63,7 +63,6 @@
 					this.options.dataSource(this);
 				}
 				if (Alpaca.isUri(this.options.dataSource)) {
-					var _this = this;
 					$.ajax({
 						url: this.options.dataSource,
 						type: "get",
@@ -141,7 +140,7 @@
 						"title": "Option Datasource",
 						"description": "Datasource for generating options",
 						"type": "string"
-					},
+					}
 				}
 			});
 		},
@@ -158,7 +157,7 @@
 					},
 					"dataSource": {
 						"type": "text"
-					},
+					}
 				}
 			});
 		}			             
