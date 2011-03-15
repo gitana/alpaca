@@ -114,7 +114,7 @@ input:focus, textarea:focus {
 }
 
 /**
- * Date Field , Phone Field and Email Field
+ * Date Field , Phone Field , Password Field and Email Field
  */
 .alpaca-controlfield-date {
 }
@@ -123,6 +123,9 @@ input:focus, textarea:focus {
 }
 
 .alpaca-controlfield-email {
+}
+
+.alpaca-controlfield-password {
 }
 
 .alpaca-controlfield-email > span.ui-icon, .alpaca-controlfield-date > span.ui-icon, .alpaca-controlfield-phone > span.ui-icon{
@@ -246,8 +249,10 @@ input:focus, textarea:focus {
 .alpaca-controlfield-file-custom-feedback-populated {  
 	font-style: normal;  
 	font-weight: bold;  
-	padding-left: 20px;  
-	left 4px no-repeat;  
+	padding-left: 20px;
+    /*
+	left 4px no-repeat;
+	*/
 }
 
 /**

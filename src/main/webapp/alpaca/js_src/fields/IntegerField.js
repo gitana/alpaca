@@ -214,4 +214,5 @@
         "stringNotAnInteger": "This value is not an integer."
     });
     Alpaca.registerFieldClass("integer", Alpaca.Fields.IntegerField);
+    Alpaca.registerDefaultSchemaFieldMapping("integer", "integer");
 })(jQuery);

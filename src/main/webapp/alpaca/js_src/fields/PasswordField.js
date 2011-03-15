@@ -51,7 +51,7 @@
         postRender: function() {
             this.base();
             // apply additional css
-            this.fieldContainer.addClass("alpaca-passwordfield");
+            this.fieldContainer.addClass("alpaca-controlfield-password");
         },
         
         /**

@@ -1,105 +1,158 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Validation</title>
-        <meta name="keywords" content="alpaca,forms,validation,gitana" />
-        <meta name="description" content="Validation Examples for Alpaca Forms." />
-        <meta name="author" content="Gitana Software Inc." />
-        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
-        </script>
-        <script type="text/javascript" src="../../js/themeswitchertool.js">
-        </script>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
-        </script>
-        <script type="text/javascript" src="../../../js/alpaca-${project.version}.js">
-        </script>
-        <script type="text/javascript" src="../../js/example.js">
-        </script>
-        <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css" rel="stylesheet">
-        <link type="text/css" href="../../../css/alpaca-${project.version}.css" rel="stylesheet" />
-        <link type="text/css" href="../../../css/example.css" rel="stylesheet" />	
-    </head>
-    <body>
-        <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='validation' alpaca-types=''>
-                <h2>Validation Examples</h2>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Alpaca > Component Gallery > Validation</title>
+    <meta name="keywords" content="alpaca,forms,validation,gitana"/>
+    <meta name="description" content="Validation Examples for Alpaca Forms."/>
+    <meta name="author" content="Gitana Software Inc."/>
+    <link rel="icon" type="image/x-icon" href="../../../favicon.ico"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+    </script>
+    <script type="text/javascript" src="../../js/themeswitchertool.js">
+    </script>
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+    </script>
+    <script type="text/javascript" src="../../../js/alpaca-${project.version}.js">
+    </script>
+    <script type="text/javascript" src="../../js/example.js">
+    </script>
+    <link type="text/css"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css"
+          rel="stylesheet">
+    <link type="text/css" href="../../../css/alpaca-${project.version}.css" rel="stylesheet"/>
+    <link type="text/css" href="../../../css/example.css" rel="stylesheet"/>
+</head>
+<body>
+<div class='alpaca-example-container'>
+    <div class='alpaca-example-header' id='validation' alpaca-types=''>
+        <h2>Validation Examples</h2>
+    </div>
+    <div class='alpaca-example-body'>
+        <div class='alpaca-example-case'>
+            <h3>Example 1: </h3>
+            <h4>Required field.</h4>
+
+            <div id="field1">
             </div>
-            <div class='alpaca-example-body'>
-                <div class='alpaca-example-case'>
-                    <h3>Example 1: </h3>
-					<h4>Required field.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript"id="field1-script">
-                        $(function() {
-                            $("#field1").alpaca({
-								"data": "",
-								"schema": {
-									"title": "Required field",
-									"type": "string",
-									"required": true
-								}
-							});
+            <script type="text/javascript" id="field1-script">
+                $(function() {
+                    $("#field1").alpaca({
+                        "data": "",
+                        "schema": {
+                            "title": "Required field",
+                            "type": "string",
+                            "required": true
+                        }
+                    });
+                });
+            </script>
+            <h3>Example 2: </h3>
+            <h4>Field with disallowed values.</h4>
+
+            <div id="field2">
+            </div>
+            <script type="text/javascript" id="field2-script">
+                $(function() {
+                    $("#field2").alpaca({
+                        "data": "book",
+                        "schema": {
+                            "title": "Diallowed value",
+                            "type": "string",
+                            "disallow": ["book", "pencil"]
+                        }
+                    });
+                });
+            </script>
+            <h3>Example 3: </h3>
+            <h4>Field with default value.</h4>
+
+            <div id="field3">
+            </div>
+            <script type="text/javascript" id="field3-script">
+                $(function() {
+                    $("#field3").alpaca({
+                        "data": "",
+                        "schema": {
+                            "title": "Default value",
+                            "type": "string",
+                            "default": "book"
+                        }
+                    });
+                });
+            </script>
+            <h3>Example 4: </h3>
+            <h4>Field with schema enum properties.</h4>
+
+            <div id="field4">
+            </div>
+            <script type="text/javascript" id="field4-script">
+                $(function() {
+                    $("#field4").alpaca({
+                        "data": "laptop",
+                        "schema": {
+                            "title": "Enum field",
+                            "type": "string",
+                            "enum": ["book", "pen", "eraser"]
+                        }
+                    });
+                });
+            </script>
+            <h3>Example 5: </h3>
+            <h4>JSon Schema validation (valid).</h4>
+
+            <div id="field5">
+            </div>
+            <script type="text/javascript" id="field5-script">
+                $(function() {
+                    var data = "book";
+                    var schema = {
+                        "title": "Enum field",
+                        "type": "string",
+                        "enum": ["book", "pen", "eraser"]
+                    };
+                    if (Validator.validate(data, schema).valid) {
+                        $("#field5").alpaca({
+                            "data": data,
+                            "schema": schema
                         });
-                    </script>
-                    <h3>Example 2: </h3>
-					<h4>Field with disallowed values.</h4>
-                    <div id="field2">
-                    </div>
-                    <script type="text/javascript"id="field2-script">
-                        $(function() {
-                            $("#field2").alpaca({
-								"data": "book",
-								"schema": {
-									"title": "Diallowed value",
-									"type": "string",
-									"disallow": ["book", "pencil"]
-								}
-							});
+                    } else {
+                        $("#field5").html('Failed the schema validation');
+                    }
+                });
+            </script>
+            <h3>Example 6: </h3>
+            <h4>JSon Schema validation (invalid).</h4>
+
+            <div id="field6">
+            </div>
+            <script type="text/javascript" id="field6-script">
+                $(function() {
+                    var data = "laptop";
+                    var schema = {
+                        "title": "Enum field",
+                        "type": "string",
+                        "enum": ["book", "pen", "eraser"]
+                    };
+                    if (Validator.validate(data, schema).valid) {
+                        $("#field6").alpaca({
+                            "data": data,
+                            "schema": schema
                         });
-                    </script>
-                    <h3>Example 3: </h3>
-					<h4>Field with default value.</h4>
-                    <div id="field3">
-                    </div>
-                    <script type="text/javascript"id="field3-script">
-                        $(function() {
-							$("#field3").alpaca({
-								"data": "",
-								"schema": {
-									"title": "Default value",
-									"type": "string",
-									"default": "book"
-								}
-							});
-						});
-                    </script>
-                    <h3>Example 4: </h3>
-					<h4>Field with schema enum properties.</h4>
-                    <div id="field4">
-                    </div>
-                    <script type="text/javascript"id="field4-script">
-                        $(function() {
-							$("#field4").alpaca({
-								"data": "laptop",
-								"schema": {
-									"title": "Enum field",
-									"type": "string",
-									"enum": ["book", "pen", "eraser"]
-								}
-							});
-						});
-                    </script>
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2011 Gitana Software | All Rights Reserved
-                </center>
-            </div>
+                    } else {
+                        $("#field6").append('<strong>Failed the schema validation</strong>');
+                    }
+                });
+            </script>
         </div>
-    </body>
+    </div>
+    <div class="alpaca-clear"></div>
+    <div class="alpaca-example-footer">
+        <center class="copyright">
+            Copyright &copy; 2011 Gitana Software | All Rights Reserved
+        </center>
+    </div>
+</div>
+</body>
 </html>

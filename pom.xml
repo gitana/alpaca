@@ -63,7 +63,7 @@
 								-->
 								<param>../../../../../lib/jquery.tmpl-beta.js</param>
 								<param>../../../../../lib/base.js</param>
-
+								<param>../../../../../lib/validator.js</param>
 								<param>../../../../../lib/DetectMobileBrowser.js</param>
 								<param>../../../../../lib/equiv_and_hoozit.js</param>
 								<param>../../../../../lib/jquery.PrintArea.js</param>

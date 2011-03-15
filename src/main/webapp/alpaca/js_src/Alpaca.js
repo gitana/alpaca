@@ -113,7 +113,7 @@
         if (args.length == 0) {
             // illegal
             alert("No arguments - no supported");
-            return;
+            return null;
         }
 
         // element is the first argument
@@ -171,7 +171,7 @@
 				var data = args[1];
 				if (Alpaca.isFunction(data)) {
 					alert("Function not supported as data argument");
-					return;
+					return null;
 				}
 				
 				if (args.length >= 3) {
