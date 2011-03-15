@@ -46,24 +46,39 @@
          * @Override
          */
         getSchemaOfSchema: function() {
+            var pattern = (this.schema && this.schema.pattern)? this.schema.pattern : /^(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)(?:\.(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)){3}$/;
             return Alpaca.merge(this.base(), {
                 "properties": {
                     "pattern": {
                         "title": "Pattern",
                         "description": "Field Pattern in Regular Expression",
                         "type": "string",
-                        "default": this.schema.pattern,
+                        "default": pattern,
                         "readonly": true
                     },                    
 					"format": {
                         "title": "Format",
                         "description": "Property data format",
                         "type": "string",
+                        "enum": ["ipv4"],
 						"default":"ipv4",
 						"readonly":true
                     }
                 }
             });
+        },
+
+        /**
+         * @Override
+         */
+		getOptionsForSchema: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"format": {
+						"type": "text"
+					}
+				}
+			});
         },
         
         /**

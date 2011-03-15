@@ -200,6 +200,13 @@
         getDescription: function() {
             return "Integer Field.";
         },
+
+		/**
+         * @Override
+         */
+        getType: function() {
+            return "integer";
+        },
         
         /**
          * @Override

@@ -144,10 +144,24 @@
                         "description": "Property data format",
                         "type": "string",
 						"default":"date",
+                        "enum" : ["date"],
 						"readonly":true
                     }			
 				}
             });
+        },
+
+        /**
+         * @Override
+         */
+		getOptionsForSchema: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"format": {
+						"type": "text"
+					}
+				}
+			});
         },
 
 		/**

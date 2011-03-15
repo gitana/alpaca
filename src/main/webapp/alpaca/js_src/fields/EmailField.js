@@ -55,13 +55,15 @@
          * @Override
          */
         getSchemaOfSchema: function() {
+            var pattern = (this.schema && this.schema.pattern)? this.schema.pattern :/^[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+(?:\.[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,6}$/i;
             return Alpaca.merge(this.base(), {
                 "properties": {
                     "pattern": {
                         "title": "Pattern",
                         "description": "Field Pattern in Regular Expression",
                         "type": "string",
-                        "default": this.schema.pattern,
+                        "default": pattern,
+                        "enum":[pattern],
                         "readonly": true
                     },                    
 					"format": {
@@ -69,10 +71,24 @@
                         "description": "Property data format",
                         "type": "string",
 						"default":"email",
+                        "enum":["email"],
 						"readonly":true
                     }
                 }
             });
+        },
+
+        /**
+         * @Override
+         */
+		getOptionsForSchema: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"format": {
+						"type": "text"
+					}
+				}
+			});
         },
         
         /**

@@ -873,7 +873,7 @@
          * Returns schema of the schema
          */
         getSchemaOfSchema: function() {
-            return {
+            var schemaOfSchema = {
                 "title": this.getTitle(),
                 "description": this.getDescription(),
                 "type": "object",
@@ -909,7 +909,6 @@
                         "title": "Type",
                         "description": "Property data type",
                         "type": "string",
-                        "default": this.getType(),
                         "readonly": true
                     },
                     "format": {
@@ -928,7 +927,12 @@
                         "type": "array"
                     }
                 }
+            };
+            if (this.getType && !Alpaca.isValEmpty(this.getType())) {
+                schemaOfSchema.properties.type['default'] = this.getType();
+                schemaOfSchema.properties.type['enum'] = [this.getType()];
             }
+            return schemaOfSchema;
         },
 
         /**
@@ -961,7 +965,7 @@
                     },
                     "type": {
 						"helper": "Field data type",
-                        "type": "text",
+                        "type": "text"
                     },
                     "format": {
 						"type": "select",
@@ -1090,7 +1094,7 @@
 									"title": "Name",
 									"description": "Form name",
 									"type": "string"
-								},							
+								}
 							}
 						},						
 						"buttons": {
@@ -1151,7 +1155,7 @@
 						"readonly": true
                     },
                     "type": {
-                        "type": "text",
+                        "type": "text"
                     },
                     "validate": {
 						"rightLabel":"Is validation enforced ?",

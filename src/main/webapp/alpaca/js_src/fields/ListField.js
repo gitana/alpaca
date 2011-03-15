@@ -121,13 +121,6 @@
         /**
          * @Override
          */
-        getType: function() {
-            return "any";
-        },
-		
-        /**
-         * @Override
-         */
 		getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(),{
 				"properties": {

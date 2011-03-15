@@ -58,6 +58,7 @@
          * @Override
          */
         getSchemaOfSchema: function() {
+            var pattern = (this.schema && this.schema.pattern)? this.schema.pattern : /^[0-9a-zA-Z\x20-\x7E]*$/;
             return Alpaca.merge(this.base(), {
                 "properties": {
                     "pattern": {
@@ -65,6 +66,7 @@
                         "description": "Field Pattern in Regular Expression",
                         "type": "string",
                         "default": this.schema.pattern,
+                        "enum":[pattern],
                         "readonly": true
                     },                    
 					"format": {
@@ -72,10 +74,24 @@
                         "description": "Property data format",
                         "type": "string",
 						"default":"password",
+                        "enum":["password"],
 						"readonly":true
                     }
                 }
             });
+        },
+
+        /**
+         * @Override
+         */
+		getOptionsForSchema: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"format": {
+						"type": "text"
+					}
+				}
+			});
         },
         
         /**

@@ -57,13 +57,15 @@
          * @Override
          */
         getSchemaOfSchema: function() {
+            var pattern = (this.schema && this.schema.pattern)? this.schema.pattern :/^(\D?(\d{3})\D?\D?(\d{3})\D?(\d{4}))?$/;
             return Alpaca.merge(this.base(), {
                 "properties": {
                     "pattern": {
                         "title": "Pattern",
                         "description": "Field Pattern in Regular Expression",
                         "type": "string",
-                        "default": this.schema.pattern,
+                        "default": pattern,
+                        "enum":[pattern],
                         "readonly": true
                     },                    
 					"format": {
@@ -71,12 +73,26 @@
                         "description": "Property data format",
                         "type": "string",
 						"default":"phone",
+                        "enum":["phone"],
 						"readonly":true
                     }
                 }
             });
         },
-        
+
+        /**
+         * @Override
+         */
+		getOptionsForSchema: function() {
+            return Alpaca.merge(this.base(),{
+				"fields": {
+					"format": {
+						"type": "text"
+					}
+				}
+			});
+        },
+
         /**
          * @Override
          */
