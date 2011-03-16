@@ -79,7 +79,7 @@
          * Helper method to register child fields of this field.
          */
         addChild: function(child, index) {
-            if (index) {
+            if (!Alpaca.isEmpty(index)) {
                 this.children.splice(index, 0, child);
             } else {
                 this.children.push(child);

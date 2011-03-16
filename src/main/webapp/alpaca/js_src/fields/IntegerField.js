@@ -30,7 +30,11 @@
          */
         getValue: function() {
             var textValue = this.inputElement.val();
-            return parseInt(textValue);
+            if (Alpaca.isValEmpty(textValue)) {
+                return "";
+            } else {
+                return parseInt(textValue);
+            }
         },
 		
 		/**
