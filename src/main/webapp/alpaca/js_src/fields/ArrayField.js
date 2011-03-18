@@ -229,7 +229,7 @@
 					var currentItemVal = fieldControl.getValue();
                     var newContainerElem = _this.addItem(containerElem.index() + 1, null, Alpaca.isValEmpty(currentItemVal)?null:fieldControl.getValue(), id);
                     _this.enrichElements(newContainerElem);
-                    return false;
+                    //return false;
                 });
                 $('.alpaca-fieldset-array-item-toolbar-remove', toolbarElem).button({
                     text: false,
@@ -238,7 +238,7 @@
                     }
                 }).click(function() {
                     _this.removeItem(id);
-                    return false;
+                    //return false;
                 });
                 $('.alpaca-fieldset-array-item-toolbar-up', toolbarElem).button({
                     text: false,
@@ -247,7 +247,7 @@
                     }
                 }).click(function() {
                     _this.moveItem(id, true);
-                    return false;
+                    //return false;
                 });
                 $('.alpaca-fieldset-array-item-toolbar-down', toolbarElem).button({
                     text: false,
@@ -256,7 +256,7 @@
                     }
                 }).click(function() {
                     _this.moveItem(id, false);
-                    return false;
+                    //return false;
                 });
                 toolbarElem.hide().prependTo(containerElem);
                 containerElem.hover(function() {
