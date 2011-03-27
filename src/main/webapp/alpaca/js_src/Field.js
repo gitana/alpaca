@@ -1,7 +1,7 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
     /**
      * Abstract Field class
      *
@@ -13,10 +13,10 @@
      * This takes in an options block which look like this:
      *
      * {
-     *    id: <id>,                     				field id (optional)
-     *    type: <type>,                 				field type (optional) - "text" if not specified
-     *    schema: schema,              					field schema (optional)
-     *    settings: settings            				field settings (optional) - {} if not specified
+     *    id: <id>,                                     field id (optional)
+     *    type: <type>,                                 field type (optional) - "text" if not specified
+     *    schema: schema,                                  field schema (optional)
+     *    settings: settings                            field settings (optional) - {} if not specified
      * }
      *
      * The settings block consists of the following:
@@ -24,7 +24,7 @@
      * SETTINGS
      * {
      *    fieldClass: [<string>]                        optional - additional css classes to apply
-     *    validate: <boolean>			        		optional - whether to validate on change (true)
+     *    validate: <boolean>                            optional - whether to validate on change (true)
      *    disabled: <boolean>                           optional - whether to initialize as disabled (false)
      *    displayMessages: <boolean>                    optional - whether to display message (true)
      * }
@@ -34,12 +34,12 @@
      * This class obeys JSON schema for:
      *
      * {
-     *    optional: <boolean>							[optional] (false)
+     *    optional: <boolean>                            [optional] (false)
      *    default: <any>                                [optional]
      * }
      */
     Alpaca.Field = Base.extend({
-    
+
         /**
          * Constructor
          *
@@ -60,37 +60,37 @@
         constructor: function(container, data, options, schema, view) {
             // mark that we are initializing
             this.initializing = true;
-            
+
             // container
             this.container = container;
-            
+
             // parent
             this.parent = null;
             this.data = data;
             this.options = options;
             this.schema = schema;
-            
+
             // check if this field rendering is single-level or not
             this.singleLevelRendering = false;
-            
+
             if (view) {
                 this.setView(view);
             } else {
                 this.setView(Alpaca.defaultView);
             }
-            
+
             // things we can draw off the options
             if (!this.options) {
                 this.options = {};
             }
             this.id = this.options.id;
             this.type = this.options.type;
-            
+
             //TODO: this needs to be removed.
             if (this.options.template) {
                 this.setTemplate(this.options.template);
             }
-            
+
             // setup defaults
             if (!this.id) {
                 this.id = Alpaca.generateId();
@@ -104,26 +104,26 @@
             if (!this.options.helper && this.schema.description) {
                 this.options.helper = this.schema.description;
             }
-            
+
             if (Alpaca.isEmpty(this.options.readonly) && !Alpaca.isEmpty(this.schema.readonly)) {
                 this.options.readonly = this.schema.readonly;
             }
-            
+
             // data
             if (Alpaca.isValEmpty(this.data) && this.schema["default"]) {
                 this.data = this.schema["default"];
             }
-            
+
             // default path
             this.path = "/";
-            
+
             // validation status
             this.validation = {};
-            
+
             // backup data
             this.backupData = Alpaca.cloneObject(this.data);
         },
-        
+
         /**
          * Sets up default rendition template from view
          */
@@ -140,16 +140,16 @@
                 this.setTemplate(Alpaca.getTemplate("controlField", this));
             }
         },
-        
+
         /**
          * Sets up any default values for this field.
          */
         setup: function() {
-        
+
             if (!this.initializing) {
                 this.data = this.getValue();
             }
-            
+
             // if we have already created backup settings, restore from them
             /*
              if (this.backupSettings) {
@@ -159,27 +159,27 @@
              }
              */
             this.setDefaultTemplate();
-            
+
             // JSON SCHEMA
             if (Alpaca.isUndefined(this.schema.required)) {
                 this.schema.required = false;
             }
-            
+
             // SETTINGS             
             if (Alpaca.isUndefined(this.options.validate)) {
                 this.options.validate = true;
             }
-            
+
             if (Alpaca.isUndefined(this.options.disabled)) {
                 this.options.disabled = false;
             }
-            
+
             // MESSAGES                        
             if (Alpaca.isUndefined(this.options.showMessages)) {
                 this.options.showMessages = true;
             }
         },
-        
+
         /**
          * Binds the data into the field.  Called at the very end of construction.
          */
@@ -188,7 +188,7 @@
                 this.setValue(this.data, true);
             }
         },
-        
+
         /**
          * Renders this field into the container.
          * Creates an outerEl which is bound into the container.
@@ -204,18 +204,18 @@
             this.setup();
             this._render(callback);
         },
-        
+
         /**
          * Internal method for processing the render.
          */
         _render: function(callback) {
             var _this = this;
-            
+
             // remove the previous outerEl if it exists
             if (this.getEl()) {
                 this.getEl().remove();
             }
-            
+
             // check if it needs to be wrapped in a form
             if (this.options.form) {
                 this.options.form.viewType = this.viewType;
@@ -226,39 +226,39 @@
                 form.render(function(form) {
                     // load the appropriate template and render it
                     _this._processRender(form.formFieldsContainer, function() {
-                    
+
                         // bind our field dom element into the container
                         _this.getEl().appendTo(form.formFieldsContainer);
-                        
+
                         // bind the top field to the form
                         form.topField = _this;
-                        
+
                         if (_this.viewType && _this.viewType != 'view') {
                             form.initEvents();
                         }
-                        
+
                         _this.form = form;
-                        
+
                         // allow any post-rendering facilities to kick in
                         _this.postRender();
-                        
+
                         // callback
                         if (callback && Alpaca.isFunction(callback)) {
                             callback(_this);
                         }
-                        
+
                     });
                 });
             } else {
                 // load the appropriate template and render it
                 this._processRender(this.container, function() {
-                
+
                     // bind our field dom element into the container
                     _this.getEl().appendTo(_this.container);
-                    
+
                     // allow any post-rendering facilities to kick in
                     _this.postRender();
-                    
+
                     // callback
                     if (callback && Alpaca.isFunction(callback)) {
                         callback(_this);
@@ -266,7 +266,7 @@
                 });
             }
         },
-        
+
         /**
          * Responsible for fetching any templates needed so as to render the
          * current mode for this field.
@@ -275,10 +275,10 @@
          */
         _processRender: function(parentEl, onSuccess) {
             var _this = this;
-            
+
             // lookup the template we should use to render
             var template = this.getTemplate();
-            
+
             // if we have a template to load, load it and then render
             if (Alpaca.isUri(template)) {
                 // load template from remote location
@@ -297,7 +297,7 @@
                 this._renderLoadedTemplate(parentEl, template, onSuccess);
             }
         },
-        
+
         /**
          * Renders the loaded template
          */
@@ -313,7 +313,7 @@
             }, {});
             renderedDomElement.appendTo(parentEl);
             this.setEl(renderedDomElement);
-            
+
             if (!this.singleLevelRendering) {
                 this.renderField(onSuccess);
             } else {
@@ -322,15 +322,15 @@
                 }
             }
         },
-        
+
         /**
          * Called after the rendering is complete as a way to make final modifications to the
          * dom elements that were produced.
          */
-        postRender: function() {			
-			// add classes
-			this.getEl().addClass("ui-widget alpaca-field");
-			
+        postRender: function() {
+            // add classes
+            this.getEl().addClass("ui-widget alpaca-field");
+
             // for edit or create mode
             // injects Ids
             if (this.getEl().attr("id") == null) {
@@ -345,7 +345,7 @@
             } else {
                 this.getEl().addClass("alpaca-field-optional");
             }
-						
+
             // readonly
             if (this.options.readonly) {
                 this.getEl().addClass("alpaca-field-readonly");
@@ -354,27 +354,27 @@
                 $(':radio', this.getEl()).attr('disabled', 'on');
                 $(':checkbox', this.getEl()).attr('disabled', 'on');
             }
-            
+
             // Support for custom CSS class for the field
             var fieldClass = this.options["fieldClass"];
             if (fieldClass) {
                 this.getEl().addClass(fieldClass);
             }
-            
+
             // Support for custom styles provided by custom view
             var customStyles = Alpaca.getStyles(this);
-            
+
             if (customStyles) {
                 for (var styleClass in customStyles) {
                     $(styleClass, this.container).css(customStyles[styleClass]);
                 }
             }
-			
-			// add required field style
-			if (this.labelDiv && this.schema.required) {
-				$('<span class="ui-icon ui-icon-star"></span>').prependTo(this.labelDiv);
-			}
-            
+
+            // add required field style
+            if (this.labelDiv && this.schema.required) {
+                $('<span class="ui-icon ui-icon-star"></span>').prependTo(this.labelDiv);
+            }
+
             // after render
             if (this.options.disabled) {
                 this.disable();
@@ -387,54 +387,59 @@
             if (this.getViewType() && this.getViewType() != 'view') {
                 this.initEvents();
             }
-            
+
             // finished initializing
             this.initializing = false;
-            
+
             // final call to update validation state
             if (this.getViewType() != 'view') {
                 this.renderValidationState();
             }
-            
+
             // for create view, hide all readonly fields
             if (!Alpaca.getViewParam('displayReadonly', this)) {
                 $('.alpaca-field-readonly', this.getEl()).hide();
             }
-            
+
+            // field level post render
+            if (this.options.postRender) {
+                this.options.postRender(this);
+            }
+
         },
-        
+
         /**
          * Retrieves the rendering element
          */
         getEl: function() {
             return this.outerEl;
         },
-        
+
         /**
          * Sets the rendering element
          */
         setEl: function(outerEl) {
             this.outerEl = outerEl;
         },
-        
+
         /**
          * Returns the id of the field
          */
         getId: function() {
             return this.id;
         },
-        
+
         getType: function() {
             return this.type;
         },
-        
+
         /**
          * Returns this field's parent field.
          */
         getParent: function() {
             return this.parent;
         },
-        
+
         /**
          * Returns true if this field is the top level one.
          */
@@ -447,13 +452,13 @@
         getValue: function() {
             return this.data;
         },
-        
+
         /**
          * Sets the value of the field
          */
         setValue: function(value, stopUpdateTrigger) {
             this.data = value;
-            
+
             // set corresponding style
             //this.renderValidationState();
             /*
@@ -462,14 +467,14 @@
              }
              */
         },
-        
+
         /**
          * Returns the field template
          */
         getTemplate: function() {
             return this.template;
         },
-        
+
         /**
          * Sets the field template
          */
@@ -480,17 +485,17 @@
             }
             // trim for good measure
             template = $.trim(template);
-            
+
             this.template = template;
         },
-        
+
         /**
          * Gets current view
          */
         getView: function() {
             return this.view;
         },
-        
+
         /**
          * Sets view
          */
@@ -504,14 +509,14 @@
             }
             this.viewType = Alpaca.getViewType(this.view);
         },
-        
+
         /**
          * Gets current view type
          */
         getViewType: function() {
             return this.viewType;
         },
-        
+
         /**
          * Renders a validation state message below the field.
          */
@@ -531,7 +536,7 @@
                                 "message": message
                             });
                             //_this.messageElement.addClass("alpaca-field-message");
-							_this.messageElement.addClass("ui-state-error-text alpaca-controlfield-message");
+                            _this.messageElement.addClass("ui-state-error-text alpaca-controlfield-message");
                             _this.messageElement.attr("id", _this.getId() + '-field-message-' + index);
                             // check to see if we have a message container rendered
                             if ($('.alpaca-controlfield-message-container', _this.getEl()).length) {
@@ -544,7 +549,7 @@
                 });
             }
         },
-        
+
         /**
          * Makes sure that the DOM of the rendered field reflects the validation state
          * of the field.
@@ -555,9 +560,9 @@
                 this.getEl().removeClass("alpaca-field-invalid ui-state-error");
                 //this.getEl().removeClass("alpaca-field-invalid");
                 this.getEl().removeClass("alpaca-field-valid");
-                
+
                 var beforeStatus = this.isValid();
-                
+
                 // this runs validation
                 if (this.validate()) {
                     this.getEl().addClass("alpaca-field-valid");
@@ -565,9 +570,9 @@
                     //this.getEl().addClass("alpaca-field-invalid");
                     this.getEl().addClass("ui-state-error alpaca-field-invalid");
                 }
-                
+
                 var afterStatus = this.isValid();
-                
+
                 // Allow for the message to change
                 if (this.options.showMessages) {
                     if (!this.initializing) {
@@ -584,9 +589,54 @@
                 if (beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) {
                     this.parent.renderValidationState();
                 }
+
+                this._validateCustomValidator();
             }
         },
-        
+
+        /**
+         * Updates validation based on provide valinfo. This function is for user provided validator.
+         *
+         * @param valId
+         * @param valInfo
+         */
+        updateValidationState: function(valId, valInfo) {
+            if (this.options.validate) {
+
+                var beforeStatus = this.isValid();
+                // Push the message
+                this.validation[valId] = valInfo;
+
+                if (valInfo && !valInfo.status) {
+                    this.getEl().removeClass("alpaca-field-valid");
+                    this.getEl().addClass("ui-state-error alpaca-field-invalid");
+                }
+
+                // Push the message
+                this.validation[valId] = valInfo;
+
+                // Allow for the message to change
+                if (this.options.showMessages) {
+                    if (!this.initializing) {
+                        var messages = [];
+                        for (var messageId in this.validation) {
+                            if (!this.validation[messageId]["status"]) {
+                                messages.push(this.validation[messageId]["message"]);
+                            }
+                        }
+                        this.displayMessage(messages, beforeStatus);
+                    }
+                }
+                // Revalidate parents if validation state changed
+
+                if (this.isValid() && this.parent && this.parent.renderValidationState) {
+                    this.parent.renderValidationState();
+                }
+
+
+            }
+        },
+
         /**
          * Validates this field and returns whether it is in a valid state.
          */
@@ -599,7 +649,7 @@
             }
             return status;
         },
-        
+
         /**
          * To be overridden for additional validations
          *
@@ -607,22 +657,36 @@
          */
         handleValidate: function() {
             var valInfo = this.validation;
-            
+
             var status = this._validateOptional();
             valInfo["notOptional"] = {
                 "message": status ? "" : Alpaca.getMessage("notOptional", this),
                 "status": status
             };
-            
+
             status = this._validateDisallow();
             valInfo["disallowValue"] = {
                 "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("disallowValue", this), [this.schema["disallow"].join(',')]),
                 "status": status
             };
-            
+
+            //this._validateCustomValidator();
+
             return valInfo["notOptional"]["status"] && valInfo["disallowValue"]["status"];
         },
-        
+
+        /**
+         * Validates user provided validator.
+         */
+        _validateCustomValidator: function() {
+            var _this = this;
+            if (this.options.validator && Alpaca.isFunction(this.options.validator)) {
+                this.options.validator(this, function(valInfo) {
+                    _this.updateValidationState('customValidator', valInfo);
+                });
+            }
+        },
+
         /**
          * Checks whether validation is optional
          */
@@ -632,64 +696,64 @@
             }
             return true;
         },
-        
+
         /**
          * Checks whether the value is allowed
          */
         _validateDisallow: function() {
-			if (!Alpaca.isValEmpty(this.schema.disallow)) {
-				var val = this.getValue();
-				var disallow = this.schema.disallow;
-				if (Alpaca.isArray(disallow)) {
-					var isAllowed = true;
-					$.each(disallow, function(index, value) {
-						if ((Alpaca.isObject(val) || Alpaca.isArray(val)) && Alpaca.isString(value)) {
-							value = $.parseJSON(value);
-						}
-						if (Alpaca.compareObject(val, value)) {
-							isAllowed = false;
-						}
-					});
-					return isAllowed;
-				} else {
-					if ((Alpaca.isObject(val) || Alpaca.isArray(val)) && Alpaca.isString(disallow)) {
-						disallow = $.parseJSON(disallow);
-					}
-					return !Alpaca.compareObject(val, disallow);
-				}
-			}
-			
-			return true;
-		},
-        
+            if (!Alpaca.isValEmpty(this.schema.disallow)) {
+                var val = this.getValue();
+                var disallow = this.schema.disallow;
+                if (Alpaca.isArray(disallow)) {
+                    var isAllowed = true;
+                    $.each(disallow, function(index, value) {
+                        if ((Alpaca.isObject(val) || Alpaca.isArray(val)) && Alpaca.isString(value)) {
+                            value = $.parseJSON(value);
+                        }
+                        if (Alpaca.compareObject(val, value)) {
+                            isAllowed = false;
+                        }
+                    });
+                    return isAllowed;
+                } else {
+                    if ((Alpaca.isObject(val) || Alpaca.isArray(val)) && Alpaca.isString(disallow)) {
+                        disallow = $.parseJSON(disallow);
+                    }
+                    return !Alpaca.compareObject(val, disallow);
+                }
+            }
+
+            return true;
+        },
+
         /**
          * Triggers any event handlers that want to listen to an update event for this field
          */
         triggerUpdate: function() {
             this.getEl().trigger("fieldupdate");
         },
-		
+
         /**
          * Disable the field
          */
         disable: function() {
             // OVERRIDE
         },
-        
+
         /**
          * Enable the field
          */
         enable: function() {
             // OVERRIDE
         },
-        
+
         /**
          * Focus the field
          */
         focus: function() {
             // OVERRIDE
         },
-        
+
         /**
          * Purge any event listeners
          * Remove the field from the DOM
@@ -697,7 +761,7 @@
         destroy: function() {
             this.getEl().remove();
         },
-        
+
         /**
          * Show the field
          */
@@ -706,7 +770,7 @@
                 "display": ""
             });
         },
-        
+
         /**
          * Hide the field
          */
@@ -715,7 +779,7 @@
                 "display": "none"
             });
         },
-        
+
         /**
          * Hide the field
          */
@@ -724,23 +788,23 @@
                 this.container.printArea();
             }
         },
-        
+
         /**
          * Reload the field
          */
         reload: function() {
-			this.initializing = true;
-			
-			
-			if (this.callback != null) {
-				this.callback(this, this.renderedCallback);
-			} else {
-				this.render(this.renderedCallback);
-			}
-			
-		//this.render();
-		},
-        
+            this.initializing = true;
+
+
+            if (this.callback != null) {
+                this.callback(this, this.renderedCallback);
+            } else {
+                this.render(this.renderedCallback);
+            }
+
+            //this.render();
+        },
+
         /**
          * Clear the field.
          *
@@ -748,21 +812,21 @@
          */
         clear: function(stopUpdateTrigger) {
             var newValue = null;
-            
+
             if (this.data) {
                 newValue = this.data;
             }
-            
+
             this.setValue(newValue, stopUpdateTrigger);
         },
-        
+
         /**
          * True if the field is empty
          */
         isEmpty: function() {
             return Alpaca.isValEmpty(this.getValue());
         },
-        
+
         /**
          * True if this field is valid.
          */
@@ -775,18 +839,18 @@
                         return false;
                     }
                 }
-				if (this.children && checkChildren) {
-					for (var i = 0 ; i < this.children.length; i++) {
-						var child = this.children[i];
-						if (!child.isValid(checkChildren)) {
-							return false;
-						}
-					}
-				}
+                if (this.children && checkChildren) {
+                    for (var i = 0; i < this.children.length; i++) {
+                        var child = this.children[i];
+                        if (!child.isValid(checkChildren)) {
+                            return false;
+                        }
+                    }
+                }
                 return true;
             }
         },
-        
+
         /**
          * Initialize events
          */
@@ -796,16 +860,16 @@
             this.inputElement.change(function(e) {
                 _this.onChange(e);
             });
-            
+
             this.inputElement.focus(function(e) {
                 _this.onFocus(e);
             });
-            
+
             this.inputElement.blur(function(e) {
                 _this.onBlur(e);
             });
         },
-        
+
         /**
          * Highlights the entire field
          */
@@ -813,17 +877,17 @@
             this.getEl().removeClass("alpaca-field-empty");
             this.getEl().addClass("alpaca-field-focused");
         },
-        
+
         /**
          * Unhighlights the entire field
          */
         onBlur: function(e) {
             this.getEl().removeClass("alpaca-field-focused");
-            
+
             // set class from state
             this.renderValidationState();
         },
-        
+
         /**
          * Field value changed
          */
@@ -832,43 +896,43 @@
             this.data = this.getValue();
             this.triggerUpdate();
         },
-        
+
         // Utility Functions for Form Builder		
         /**
          * Returns field type
          */
         getFieldType: function() {
-        
+
         },
-        
+
         /**
          * Returns schema type
          */
         getType: function() {
-        
+
         },
-        
+
         /**
          * Returns true if it is a container
          */
         isContainer: function() {
-        	return false;
+            return false;
         },
-				
+
         /**
          * Returns field title
          */
         getTitle: function() {
-        
+
         },
-        
+
         /**
          * Returns field description
          */
         getDescription: function() {
-        
+
         },
-        
+
         /**
          * Returns schema of the schema
          */
@@ -916,11 +980,11 @@
                         "description": "Property data format",
                         "type": "string"
                     },
-					"disallow": {
+                    "disallow": {
                         "title": "Disallow",
                         "description": "Disallowed values for the property",
                         "type": "array"
-                    },					
+                    },
                     "dependencies": {
                         "title": "Dependencies",
                         "description": "Property Dependencies",
@@ -943,69 +1007,73 @@
                 "fields": {
                     "title": {
                         "helper": "Field short description",
-						"type": "text"
+                        "type": "text"
                     },
                     "description": {
-						"helper": "Field detailed description",
+                        "helper": "Field detailed description",
                         "type": "textarea"
                     },
                     "readonly": {
-						"helper": "Field will be read only if checked",
-						"rightLabel":"Is this field read only ?",
+                        "helper": "Field will be read only if checked",
+                        "rightLabel":"Is this field read only ?",
                         "type": "checkbox"
                     },
                     "required": {
-						"helper": "Field value must be set if checked",
-						"rightLabel":"Is this field required ?",
+                        "helper": "Field value must be set if checked",
+                        "rightLabel":"Is this field required ?",
                         "type": "checkbox"
                     },
                     "default": {
                         "helper": "Field default value",
-						"type": "textarea"
+                        "type": "textarea"
                     },
                     "type": {
-						"helper": "Field data type",
+                        "helper": "Field data type",
                         "type": "text"
                     },
                     "format": {
-						"type": "select",
-						"dataSource": function(field) {
-							for (var key in Alpaca.defaultFormatFieldMapping) {
-								field.selectOptions.push({
-									"value": key,
-									"text": key
-								});
-							}
-							field._renderField(field.renderedCallback);
-						}
-					},
-					"disallow": {
-						"helper": "Disallowed values for the field",
-						"itemLabel":"Value",
-                        "type": "array"
-                    },					
-                    "dependencies": {
-						"helper": "Field Dependencies",
-						"multiple":true,
-						"size":3,
                         "type": "select",
-						"dataSource": function (field) {
-							if (field.parent && field.parent.schemaParent && field.parent.schemaParent.parent) {
-								for (var key in field.parent.schemaParent.parent.childrenByPropertyId) {
-									if (key != field.parent.schemaParent.propertyId) {
-										field.selectOptions.push({
-											"value": key,
-											"text": key
-										});
-									}
-								}
-							}
-							field._renderField(field.renderedCallback);
-						}
+                        "dataSource": function(field, callback) {
+                            for (var key in Alpaca.defaultFormatFieldMapping) {
+                                field.selectOptions.push({
+                                    "value": key,
+                                    "text": key
+                                });
+                            }
+                            if (callback) {
+                                callback();
+                            }
+                        }
+                    },
+                    "disallow": {
+                        "helper": "Disallowed values for the field",
+                        "itemLabel":"Value",
+                        "type": "array"
+                    },
+                    "dependencies": {
+                        "helper": "Field Dependencies",
+                        "multiple":true,
+                        "size":3,
+                        "type": "select",
+                        "dataSource": function (field, callback) {
+                            if (field.parent && field.parent.schemaParent && field.parent.schemaParent.parent) {
+                                for (var key in field.parent.schemaParent.parent.childrenByPropertyId) {
+                                    if (key != field.parent.schemaParent.propertyId) {
+                                        field.selectOptions.push({
+                                            "value": key,
+                                            "text": key
+                                        });
+                                    }
+                                }
+                            }
+                            if (callback) {
+                                callback();
+                            }
+                        }
                     }
                 }
             }
-        },        
+        },
         /**
          * Returns schema of the options
          */
@@ -1015,7 +1083,7 @@
                 "description": this.getDescription() + " (Options)",
                 "type": "object",
                 "properties": {
-					"form":{},
+                    "form":{},
                     "id": {
                         "title": "Field Id",
                         "description": "Unique field id. Auto-generated if not provided.",
@@ -1064,85 +1132,85 @@
                 }
             };
             if (this.isTopLevel()) {
-				schemaOfOptions.properties.form = {
-					"title": "Form",
-					"description": "Options for form",
-					"type": "object",
-					"properties": {
-						"attributes": {
-							"title": "Form Attributes",
-							"description": "Form attributes",
-							"type": "object",
-							"properties": {
-								"id": {
-									"title": "Id",
-									"description": "Unique form id. Auto-generated if not provided.",
-									"type": "string"
-								},
-								"action": {
-									"title": "Action",
-									"description": "Form submission endpoint",
-									"type": "string"
-								},								
-								"method": {
-									"title": "Method",
-									"description": "Form submission method",
-									"enum":["post","get"],
-									"type": "string"
-								},								
-								"name": {
-									"title": "Name",
-									"description": "Form name",
-									"type": "string"
-								}
-							}
-						},						
-						"buttons": {
-							"title": "Button Options",
-							"description": "Button options",
-							"type": "object",
-							"properties": {
-								"hideSubmitButton": {
-									"title": "Hide Submit Button",
-									"description": "Hide submit button if true",
-									"type": "boolean"
-								},							
-								"hideResetButton": {
-									"title": "Hide Reset Button",
-									"description": "Hide Reset button if true",
-									"type": "boolean"
-								},							
-								"hideSaveButton": {
-									"title": "Hide Save Button",
-									"description": "Hide Gitana save button if true",
-									"type": "boolean"
-								},							
-								"hideReloadButton": {
-									"title": "Hide Reload Button",
-									"description": "Hide form reload button if true",
-									"type": "boolean"
-								},							
-								"hidePrintButton": {
-									"title": "Hide Print Button",
-									"description": "Hide form print if true",
-									"type": "boolean"
-								},							
-								"hideSwitchViewButton": {
-									"title": "Hide Form View Switch Button",
-									"description": "Hide form switch button if true",
-									"type": "boolean"
-								}							
-							}
-						}
-					}
-				}
-			} else {
-				delete schemaOfOptions.properties.form;
-			}
-            
+                schemaOfOptions.properties.form = {
+                    "title": "Form",
+                    "description": "Options for form",
+                    "type": "object",
+                    "properties": {
+                        "attributes": {
+                            "title": "Form Attributes",
+                            "description": "Form attributes",
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "title": "Id",
+                                    "description": "Unique form id. Auto-generated if not provided.",
+                                    "type": "string"
+                                },
+                                "action": {
+                                    "title": "Action",
+                                    "description": "Form submission endpoint",
+                                    "type": "string"
+                                },
+                                "method": {
+                                    "title": "Method",
+                                    "description": "Form submission method",
+                                    "enum":["post","get"],
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "title": "Name",
+                                    "description": "Form name",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "buttons": {
+                            "title": "Button Options",
+                            "description": "Button options",
+                            "type": "object",
+                            "properties": {
+                                "hideSubmitButton": {
+                                    "title": "Hide Submit Button",
+                                    "description": "Hide submit button if true",
+                                    "type": "boolean"
+                                },
+                                "hideResetButton": {
+                                    "title": "Hide Reset Button",
+                                    "description": "Hide Reset button if true",
+                                    "type": "boolean"
+                                },
+                                "hideSaveButton": {
+                                    "title": "Hide Save Button",
+                                    "description": "Hide Gitana save button if true",
+                                    "type": "boolean"
+                                },
+                                "hideReloadButton": {
+                                    "title": "Hide Reload Button",
+                                    "description": "Hide form reload button if true",
+                                    "type": "boolean"
+                                },
+                                "hidePrintButton": {
+                                    "title": "Hide Print Button",
+                                    "description": "Hide form print if true",
+                                    "type": "boolean"
+                                },
+                                "hideSwitchViewButton": {
+                                    "title": "Hide Form View Switch Button",
+                                    "description": "Hide form switch button if true",
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                delete schemaOfOptions.properties.form;
+            }
+
             return schemaOfOptions;
         },
-		
+
         /**
          * Returns options for the options
          */
@@ -1152,21 +1220,21 @@
                 "fields": {
                     "id": {
                         "type": "text",
-						"readonly": true
+                        "readonly": true
                     },
                     "type": {
                         "type": "text"
                     },
                     "validate": {
-						"rightLabel":"Is validation enforced ?",
+                        "rightLabel":"Is validation enforced ?",
                         "type": "checkbox"
                     },
                     "showMessages": {
-						"rightLabel":"Show validation messages ?",
+                        "rightLabel":"Show validation messages ?",
                         "type": "checkbox"
                     },
                     "disabled": {
-						"rightLabel":"Disable this field ?",
+                        "rightLabel":"Disable this field ?",
                         "type": "checkbox"
                     },
                     "label": {
@@ -1181,80 +1249,80 @@
                 }
             };
             if (this.isTopLevel()) {
-				optionsForOptions.fields.form = {
-					"type": "object",
-					"fields": {
-						"attributes": {
-							"type": "object",
-							"fields": {
-								"id": {
-									"type": "text",
-									"readonly": true
-								},
-								"action": {
-									"type": "text"
-								},
-								"method": {
-									"type": "select"
-								},
-								"name": {
-									"type": "text"
-								}
-							}
-						},						
-						"buttons": {
-							"type": "object",
-							"fields": {
-								"hideSubmitButton": {
-									"label": "Submit",
-									"helper": "Hide form submit button if checked",
-									"rightLabel": "Hide form submit button?",
-									"type": "checkbox"
-								},							
-								"hideResetButton": {
-									"label": "Reset",
-									"helper": "Hide form reset button if checked",
-									"rightLabel": "Hide form reset button?",
-									"type": "checkbox"
-								},							
-								"hideSaveButton": {
-									"label": "Save",
-									"helper": "Hide Gitana save button if checked",
-									"rightLabel": "Hide Gitana save button?",
-									"type": "checkbox"
-								},							
-								"hideReloadButton": {
-									"label": "Reload",
-									"helper": "Hide form reload button if checked",
-									"rightLabel": "Hide form reload button?",
-									"type": "checkbox"
-								},							
-								"hidePrintButton": {
-									"label": "Print",
-									"helper": "Hide form print button if checked",
-									"rightLabel": "Hide form print button?",
-									"type": "checkbox"
-								},							
-								"hideViewSwitchButton": {
-									"label": "View Switch",
-									"helper": "Hide form view switch button if checked",
-									"rightLabel": "Hide form view switch button?",
-									"type": "checkbox"
-								}							
-							}
-						}
-					}
-				}
-			}
-            
+                optionsForOptions.fields.form = {
+                    "type": "object",
+                    "fields": {
+                        "attributes": {
+                            "type": "object",
+                            "fields": {
+                                "id": {
+                                    "type": "text",
+                                    "readonly": true
+                                },
+                                "action": {
+                                    "type": "text"
+                                },
+                                "method": {
+                                    "type": "select"
+                                },
+                                "name": {
+                                    "type": "text"
+                                }
+                            }
+                        },
+                        "buttons": {
+                            "type": "object",
+                            "fields": {
+                                "hideSubmitButton": {
+                                    "label": "Submit",
+                                    "helper": "Hide form submit button if checked",
+                                    "rightLabel": "Hide form submit button?",
+                                    "type": "checkbox"
+                                },
+                                "hideResetButton": {
+                                    "label": "Reset",
+                                    "helper": "Hide form reset button if checked",
+                                    "rightLabel": "Hide form reset button?",
+                                    "type": "checkbox"
+                                },
+                                "hideSaveButton": {
+                                    "label": "Save",
+                                    "helper": "Hide Gitana save button if checked",
+                                    "rightLabel": "Hide Gitana save button?",
+                                    "type": "checkbox"
+                                },
+                                "hideReloadButton": {
+                                    "label": "Reload",
+                                    "helper": "Hide form reload button if checked",
+                                    "rightLabel": "Hide form reload button?",
+                                    "type": "checkbox"
+                                },
+                                "hidePrintButton": {
+                                    "label": "Print",
+                                    "helper": "Hide form print button if checked",
+                                    "rightLabel": "Hide form print button?",
+                                    "type": "checkbox"
+                                },
+                                "hideViewSwitchButton": {
+                                    "label": "View Switch",
+                                    "helper": "Hide form view switch button if checked",
+                                    "rightLabel": "Hide form view switch button?",
+                                    "type": "checkbox"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             return optionsForOptions;
-        }		
+        }
     });
-    
+
     // Registers additonal messages
     Alpaca.registerMessages({
         "disallowValue": "{0} are disallowed values.",
         "notOptional": "This field is not optional."
     });
-    
+
 })(jQuery);

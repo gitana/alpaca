@@ -60,7 +60,9 @@
 			var _this = this;
 			if (this.options.dataSource) {
 				if (Alpaca.isFunction(this.options.dataSource)) {
-					this.options.dataSource(this);
+					this.options.dataSource(this, function() {
+                        _this._renderField(onSuccess);
+                    });
 				}
 				if (Alpaca.isUri(this.options.dataSource)) {
 					$.ajax({

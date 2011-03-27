@@ -145,6 +145,39 @@
                     }
                 });
             </script>
+            <h3>Example 7: </h3>
+            <h4>Custom validator.</h4>
+
+            <div id="field7">
+            </div>
+            <script type="text/javascript" id="field7-script">
+                $(function() {
+                    $("#field7").alpaca({
+                        "data": "book",
+                        "schema": {
+                            "title": "Diallowed value",
+                            "type": "string",
+                            "disallow": ["book", "pencil"]
+                        },
+                        "options": {
+                            "validator" : function(control, callback) {
+                                var controlVal = control.getValue();
+                                if (controlVal == "pen" || controlVal == "book") {
+                                    callback({
+                                        "message": "Invalid value (custom validator)",
+                                        "status": false
+                                    });
+                                } else {
+                                    callback({
+                                        "message": "Valid value (custom validator)",
+                                        "status": true
+                                    });
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
         </div>
     </div>
     <div class="alpaca-clear"></div>
