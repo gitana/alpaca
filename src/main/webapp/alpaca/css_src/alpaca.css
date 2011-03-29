@@ -208,6 +208,12 @@ input:focus, textarea:focus {
 }
 
 /**
+ * Button Field
+ */
+.alpaca-controlfield-button {
+}
+
+/**
  * File Field
  */
 .alpaca-controlfield-file {
@@ -335,7 +341,7 @@ legend.alpaca-fieldset-legend {
 }
 
 /**
- * Form Butons
+ * Form Buttons
  */
 .alpaca-form-buttons-container {
     clear: both;
@@ -344,6 +350,15 @@ legend.alpaca-fieldset-legend {
 }
 
 .alpaca-form-button {
+}
+
+.alpaca-form-button-print {
+}
+
+.alpaca-form-button-reload {
+}
+
+.alpaca-form-button-save {
 }
 
 .alpaca-form-button-view-switcher {

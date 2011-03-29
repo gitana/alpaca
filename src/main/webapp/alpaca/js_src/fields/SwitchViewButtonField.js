@@ -5,7 +5,7 @@
     /**
      * Switch View Button class
      */
-    Alpaca.Fields.AlpacaSwitchViewButtonField = Alpaca.Fields.AlpacaButtonField.extend({
+    Alpaca.Fields.SwitchViewButtonField = Alpaca.Fields.ButtonField.extend({
     
         /**
          * @Override
@@ -45,7 +45,7 @@
          */
         onClick: function(e) {
 			// prepare view list
-			var currentView = this.form.topField.view;
+			var currentView = this.form.topControl.view;
 			if (Alpaca.isEmpty(this.viewList)) {
 				// back up current view
 				if (Alpaca.isObject(currentView)) {
@@ -81,8 +81,8 @@
 			var _this = this;
 			this.switcherPane.find('a').click(function() {
 				var viewId = $(this).attr('id');
-				_this.form.topField.initializing = true;
-				_this.form.topField.render(viewId);
+				_this.form.topControl.initializing = true;
+				_this.form.topControl.render(viewId);
 				_this.switcherPaneHide();
 				return false;
 			});
@@ -111,7 +111,8 @@
          */
         postRender: function() {
             this.base();
-            this.button = this.inputElement.button({
+            this.field.addClass("alpaca-form-button-switchview");
+            this.button = this.field.button({
                 text: true,
                 icons: {
                     primary: "ui-icon-shuffle"
@@ -140,6 +141,6 @@
         "currentView": "Current Custom View"
     });
     
-    Alpaca.registerFieldClass("alpacaswitchviewbutton", Alpaca.Fields.AlpacaSwitchViewButtonField);
+    Alpaca.registerFieldClass("switchviewbutton", Alpaca.Fields.SwitchViewButtonField);
     
 })(jQuery);

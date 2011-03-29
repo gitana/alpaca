@@ -1,16 +1,15 @@
 {
+    "renderForm": true,
     "form":{
         "attributes":{
             "action":"/endpoint",
             "method":"post"
         },
         "buttons":{
-            "hideSaveButton":false,
-            "hidePrintButton":false,
-            "hideSwitchViewButton":false,            
-            "hideResetButton":false,
-            "hideReloadButton":false,
-            "hideSubmitButton":false            
+            "save":true,
+            "print":true,
+            "switchView":true,
+            "reload":true
         }
     },
     "fields":{

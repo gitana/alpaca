@@ -28,8 +28,8 @@
     	postRender: function() {
             this.base();            
 			// see if we can render jWysiwyg
-			if (this.inputElement.wysiwyg) {
-				this.inputElement.wysiwyg();
+			if (this.field.wysiwyg) {
+				this.field.wysiwyg();
 			}
 			if (this.fieldContainer) {
 				this.fieldContainer.addClass('alpaca-controlfield-wysiwyg');

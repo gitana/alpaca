@@ -25,11 +25,11 @@
         renderField: function(onSuccess) {
 
             if (this.controlFieldTemplate) {
-                this.inputElement = $.tmpl(this.controlFieldTemplate, {
+                this.field = $.tmpl(this.controlFieldTemplate, {
                     "id": this.getId(),
                     "options": this.options
                 });
-                this.injectField(this.inputElement);
+                this.injectField(this.field);
             }
 
             if (onSuccess) {
@@ -51,7 +51,7 @@
          * Return the value of the input control
          */
         getValue: function() {
-            return this.inputElement.val();
+            return this.field.val();
         },
 
         /**
@@ -61,9 +61,9 @@
          */
         setValue: function(value, stopUpdateTrigger) {
             if (Alpaca.isEmpty(value)) {
-                this.inputElement.val("");
+                this.field.val("");
             } else {
-                this.inputElement.val(value);
+                this.field.val(value);
             }
 
             // be sure to call into base method
@@ -82,21 +82,21 @@
          * @Override
          */
         disable: function() {
-            this.inputElement.disabled = true;
+            this.field.disabled = true;
         },
 
         /**
          * @Override
          */
         enable: function() {
-            this.inputElement.disabled = false;
+            this.field.disabled = false;
         },
 
         /**
          * @Override
          */
         focus: function() {
-            this.inputElement.focus();
+            this.field.focus();
         },
 
         /**

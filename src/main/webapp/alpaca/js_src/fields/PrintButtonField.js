@@ -3,9 +3,9 @@
     var Alpaca = $.alpaca;
     
     /**
-     * Gitana Save Button class
+     * Abstract Button class
      */
-    Alpaca.Fields.GitanaSaveButtonField = Alpaca.Fields.GitanaButtonField.extend({
+    Alpaca.Fields.PrintButtonField = Alpaca.Fields.ButtonField.extend({
     
         /**
          * @Override
@@ -13,20 +13,18 @@
          * Sets up any default values for this field.
          */
         setup: function() {
-			this.base();
-			this.buttonType = "button";
-			
+			this.base();			
+			// sets defaults
 			if (!this.data) {
-				this.data = Alpaca.getMessage("save", this);;
-			}
+				this.data = Alpaca.getMessage("print", this);
+			}			
 		},
         
         /**
          * @Override
          */
         onClick: function(e) {
-			var newValue = this.form.topField.getValue();
-			alert(newValue);
+			this.form.topControl.print();
 		},
 		
 		/**
@@ -34,35 +32,35 @@
 		 */
 		postRender: function () {
 			this.base();
-			this.inputElement.addClass("alpaca-form-button-gitana-save");
-			this.inputElement.button({
+			this.field.addClass("alpaca-form-button-print");
+			this.field.button({
 				text: true,
 				icons: {
-					primary: "ui-icon-disk"
+					primary: "ui-icon-print"
 				}
-			});
+			});			
 		},
 		
 		/**
          * @Override
 		 */
 		getTitle: function() {
-			return "Gitana Save Button";
+			return "Alpaca Screen Print Button";
 		},
 		
 		/**
          * @Override
 		 */
 		getDescription: function() {
-			return "Button for storing data to Gitana Repository";
-		}
+			return "Alpaca button for screen printing.";
+		}		
     });
 
     // Registers additonal messages
     Alpaca.registerMessages({
-        "save": "Save"
+        "print": "Print Screen"
     });
 	    
-    Alpaca.registerFieldClass("gitanasavebutton", Alpaca.Fields.GitanaSaveButtonField);
+    Alpaca.registerFieldClass("printbutton", Alpaca.Fields.PrintButtonField);
     
 })(jQuery);

@@ -3,9 +3,9 @@
     var Alpaca = $.alpaca;
     
     /**
-     * Abstract Button class
+     * Gitana Save Button class
      */
-    Alpaca.Fields.AlpacaReloadButtonField = Alpaca.Fields.AlpacaButtonField.extend({
+    Alpaca.Fields.SaveButtonField = Alpaca.Fields.ButtonField.extend({
     
         /**
          * @Override
@@ -13,18 +13,20 @@
          * Sets up any default values for this field.
          */
         setup: function() {
-			this.base();			
-			// sets defaults
+			this.base();
+			this.buttonType = "button";
+			
 			if (!this.data) {
-				this.data = Alpaca.getMessage("reload", this);
-			}			
+				this.data = Alpaca.getMessage("save", this);;
+			}
 		},
         
         /**
          * @Override
          */
         onClick: function(e) {
-			this.form.topField.reload();
+			var newValue = this.form.topControl.getValue();
+			alert(newValue);
 		},
 		
 		/**
@@ -32,35 +34,35 @@
 		 */
 		postRender: function () {
 			this.base();
-			this.inputElement.addClass("alpaca-form-button-alpaca-reload");
-			this.inputElement.button({
+			this.field.addClass("alpaca-form-button-save");
+			this.field.button({
 				text: true,
 				icons: {
-					primary: "ui-icon-refresh"
+					primary: "ui-icon-disk"
 				}
-			});				
+			});
 		},
 		
 		/**
          * @Override
 		 */
 		getTitle: function() {
-			return "Alpaca Reload Button";
+			return "Save Button";
 		},
 		
 		/**
          * @Override
 		 */
 		getDescription: function() {
-			return "Alpaca button for reloading data.";
-		}		
+			return "Button for storing data.";
+		}
     });
 
     // Registers additonal messages
     Alpaca.registerMessages({
-        "reload": "Reload"
+        "save": "Save"
     });
 	    
-    Alpaca.registerFieldClass("alpacareloadbutton", Alpaca.Fields.AlpacaReloadButtonField);
+    Alpaca.registerFieldClass("savebutton", Alpaca.Fields.SaveButtonField);
     
 })(jQuery);

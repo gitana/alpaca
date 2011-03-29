@@ -47,7 +47,7 @@
          *
          */
         setValue: function(value, stopUpdateTrigger) {
-            $(this.inputElement).val(value);
+            $(this.field).val(value);
             
             // be sure to call into base method
             this.base(value, stopUpdateTrigger);
@@ -58,7 +58,7 @@
          *
          */
         getValue: function() {
-            return $(this.inputElement).val();
+            return $(this.field).val();
         },
 		
 		/**

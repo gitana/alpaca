@@ -217,7 +217,7 @@
             }
 
             // check if it needs to be wrapped in a form
-            if (this.options.form) {
+            if (this.options.renderForm) {
                 this.options.form.viewType = this.viewType;
                 var form = this.form;
                 if (!form) {
@@ -231,7 +231,7 @@
                         _this.getEl().appendTo(form.formFieldsContainer);
 
                         // bind the top field to the form
-                        form.topField = _this;
+                        form.topControl = _this;
 
                         if (_this.viewType && _this.viewType != 'view') {
                             form.initEvents();
@@ -857,15 +857,15 @@
         initEvents: function() {
             var _this = this;
             // trigger control level handlers for things that happen to input element
-            this.inputElement.change(function(e) {
+            this.field.change(function(e) {
                 _this.onChange(e);
             });
 
-            this.inputElement.focus(function(e) {
+            this.field.focus(function(e) {
                 _this.onFocus(e);
             });
 
-            this.inputElement.blur(function(e) {
+            this.field.blur(function(e) {
                 _this.onBlur(e);
             });
         },
@@ -895,6 +895,35 @@
             // store back into data element
             this.data = this.getValue();
             this.triggerUpdate();
+        },
+
+        /**
+         * Gets field control via path
+         *
+         * @param path
+         */
+        getControlByPath: function(path) {
+            var parentControl = this;
+            if (path) {
+                var pathArray = path.split('/');
+                for (var i = 0; i < pathArray.length; i++) {
+                    if (!Alpaca.isValEmpty(pathArray[i])) {
+                        if (parentControl && parentControl.childrenByPropertyId) {
+                            //check to see if we need to add the properties field
+                            if (parentControl.childrenByPropertyId[pathArray[i]]) {
+                                parentControl = parentControl.childrenByPropertyId[pathArray[i]];
+                            } else {
+                                return null;
+                            }
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        return null;
+                    }
+                }
+                return parentControl;
+            }
         },
 
         // Utility Functions for Form Builder		
@@ -1083,6 +1112,7 @@
                 "description": this.getDescription() + " (Options)",
                 "type": "object",
                 "properties": {
+                    "renderForm": {},
                     "form":{},
                     "id": {
                         "title": "Field Id",
@@ -1132,10 +1162,18 @@
                 }
             };
             if (this.isTopLevel()) {
+                schemaOfOptions.properties.renderForm = {
+                    "title": "Render Form",
+                    "description": "Render form tag as container for rest of fields.",
+                    "type": "boolean",
+                    "default": false
+                };
+
                 schemaOfOptions.properties.form = {
                     "title": "Form",
                     "description": "Options for form",
                     "type": "object",
+                    "dependencies" : "renderForm",
                     "properties": {
                         "attributes": {
                             "title": "Form Attributes",
@@ -1170,34 +1208,36 @@
                             "description": "Button options",
                             "type": "object",
                             "properties": {
-                                "hideSubmitButton": {
-                                    "title": "Hide Submit Button",
-                                    "description": "Hide submit button if true",
+                                "submit": {
+                                    "title": "Submit Button",
+                                    "description": "Render submit button.",
+                                    "type": "boolean",
+                                    "default": true
+                                },
+                                "reset": {
+                                    "title": "Reset Button",
+                                    "description": "Render reset button.",
+                                    "type": "boolean",
+                                    "default": true
+                                },
+                                "save": {
+                                    "title": "Save Button",
+                                    "description": "Render save button.",
                                     "type": "boolean"
                                 },
-                                "hideResetButton": {
-                                    "title": "Hide Reset Button",
-                                    "description": "Hide Reset button if true",
+                                "reload": {
+                                    "title": "Reload Button",
+                                    "description": "Render reload button.",
                                     "type": "boolean"
                                 },
-                                "hideSaveButton": {
-                                    "title": "Hide Save Button",
-                                    "description": "Hide Gitana save button if true",
+                                "print": {
+                                    "title": "Print Button",
+                                    "description": "Render print button.",
                                     "type": "boolean"
                                 },
-                                "hideReloadButton": {
-                                    "title": "Hide Reload Button",
-                                    "description": "Hide form reload button if true",
-                                    "type": "boolean"
-                                },
-                                "hidePrintButton": {
-                                    "title": "Hide Print Button",
-                                    "description": "Hide form print if true",
-                                    "type": "boolean"
-                                },
-                                "hideSwitchViewButton": {
-                                    "title": "Hide Form View Switch Button",
-                                    "description": "Hide form switch button if true",
+                                "switchView": {
+                                    "title": "View Switch Button",
+                                    "description": "Render view switch button.",
                                     "type": "boolean"
                                 }
                             }
@@ -1205,6 +1245,7 @@
                     }
                 }
             } else {
+                delete schemaOfOptions.properties.renderForm;
                 delete schemaOfOptions.properties.form;
             }
 
@@ -1249,8 +1290,15 @@
                 }
             };
             if (this.isTopLevel()) {
+                optionsForOptions.fields.renderForm = {
+                    "type": "checkbox",
+                    "rightLabel": "Yes"
+                };
                 optionsForOptions.fields.form = {
                     "type": "object",
+                    "dependencies" : {
+                        "renderForm" : true
+                    },
                     "fields": {
                         "attributes": {
                             "type": "object",
@@ -1273,40 +1321,28 @@
                         "buttons": {
                             "type": "object",
                             "fields": {
-                                "hideSubmitButton": {
-                                    "label": "Submit",
-                                    "helper": "Hide form submit button if checked",
-                                    "rightLabel": "Hide form submit button?",
+                                "submit": {
+                                    "rightLabel": "Yes",
                                     "type": "checkbox"
                                 },
-                                "hideResetButton": {
-                                    "label": "Reset",
-                                    "helper": "Hide form reset button if checked",
-                                    "rightLabel": "Hide form reset button?",
+                                "reset": {
+                                    "rightLabel": "Yes",
                                     "type": "checkbox"
                                 },
-                                "hideSaveButton": {
-                                    "label": "Save",
-                                    "helper": "Hide Gitana save button if checked",
-                                    "rightLabel": "Hide Gitana save button?",
+                                "save": {
+                                    "rightLabel": "Yes",
                                     "type": "checkbox"
                                 },
-                                "hideReloadButton": {
-                                    "label": "Reload",
-                                    "helper": "Hide form reload button if checked",
-                                    "rightLabel": "Hide form reload button?",
+                                "reload": {
+                                    "rightLabel": "Yes",
                                     "type": "checkbox"
                                 },
-                                "hidePrintButton": {
-                                    "label": "Print",
-                                    "helper": "Hide form print button if checked",
-                                    "rightLabel": "Hide form print button?",
+                                "print": {
+                                    "rightLabel": "Yes",
                                     "type": "checkbox"
                                 },
-                                "hideViewSwitchButton": {
-                                    "label": "View Switch",
-                                    "helper": "Hide form view switch button if checked",
-                                    "rightLabel": "Hide form view switch button?",
+                                "viewSwitch": {
+                                    "rightLabel": "Yes",
                                     "type": "checkbox"
                                 }
                             }

@@ -29,7 +29,7 @@
          *
          */
         getValue: function() {
-            var textValue = this.inputElement.val();
+            var textValue = this.field.val();
             if (Alpaca.isValEmpty(textValue)) {
                 return "";
             } else {
@@ -55,8 +55,8 @@
 			var _this = this;
             if (this.options.slider) {
                 if (this.schema.maximum && this.schema.minimum) {
-                    this.inputElement.after('<div id="slider"></div>');
-					this.slider =$('#slider',this.inputElement.parent()).slider({
+                    this.field.after('<div id="slider"></div>');
+					this.slider =$('#slider',this.field.parent()).slider({
                         value: this.getValue(),
                         min: this.schema.minimum,
                         max: this.schema.maximum,
@@ -93,7 +93,7 @@
          * Validates if it is a number
          */
         _validateNumber: function() {
-            var textValue = this.inputElement.val();
+            var textValue = this.field.val();
 			
 			if (Alpaca.isValEmpty(textValue)) {
                 return true;

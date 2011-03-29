@@ -71,8 +71,8 @@
 		"title": "Form",
 		"examples": [{
 			"id":"form-controls",
-		    "title":"Form Controls",
-			"link":"../form-controls/auto-wizard.html"
+		    "title":"Buttons",
+			"link":"../form-controls/buttons.html"
 		}]			
 	},{
 		"title": "Validation",

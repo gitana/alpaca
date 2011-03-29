@@ -34,12 +34,12 @@
             var controlFieldTemplate = Alpaca.getTemplate("controlFieldCheckbox", this, null, this.mode);
             
             if (controlFieldTemplate) {
-				this.inputElement = $.tmpl(controlFieldTemplate, {
+				this.field = $.tmpl(controlFieldTemplate, {
 					"id": this.getId(),
 					"options": this.options
 				});
-				this.injectField(this.inputElement);
-				this.inputElement = $('input[id="' + this.getId() + '"]', this.inputElement);
+				this.injectField(this.field);
+				this.field = $('input[id="' + this.getId() + '"]', this.field);
 			}
             
             if (onSuccess) {
@@ -62,7 +62,7 @@
          *
          */
         getValue: function() {
-            return this.inputElement.attr("checked") ? this.inputElement.attr("checked") : false;
+            return this.field.attr("checked") ? this.field.attr("checked") : false;
         },
         
         /**
@@ -71,11 +71,11 @@
          */
         setValue: function(value, stopUpdateTrigger) {          
             if (value) {
-                this.inputElement.attr({
+                this.field.attr({
                     "checked": true
                 });
             } else {
-                this.inputElement.attr({
+                this.field.attr({
                     "checked": false
                 });
             }
@@ -88,7 +88,7 @@
          *
          */
         disable: function() {
-            this.inputElement.disabled = true;
+            this.field.disabled = true;
         },
         
         /**
@@ -96,7 +96,7 @@
          *
          */
         enable: function() {
-            this.inputElement.disabled = false;
+            this.field.disabled = false;
         },
 		
         /**

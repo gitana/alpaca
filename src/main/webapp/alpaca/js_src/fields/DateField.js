@@ -25,7 +25,7 @@
         postRender: function() {
             this.base();            
 			$('<span class="ui-icon ui-icon-calendar"></span>').prependTo(this.fieldContainer);
-			this.inputElement.datepicker({
+			this.field.datepicker({
 				"dateFormat":  this.options.dateFormat
 			});
 			if (this.fieldContainer) {
@@ -64,7 +64,7 @@
          *
          */
         _validateDateFormat: function() {
-            var value = this.inputElement.val();
+            var value = this.field.val();
             
 			try {
 				$.datepicker.parseDate(this.options.dateFormat, value);

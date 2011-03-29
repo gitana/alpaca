@@ -81,7 +81,6 @@
 								<param>../js_src/Field.js</param>
 								<param>../js_src/ControlField.js</param>
 								<param>../js_src/ContainerField.js</param>
-								<param>../js_src/JsonSchema.js</param>
 								<param>../js_src/Form.js</param>
 
 								<!-- alpaca basic fields -->
@@ -108,12 +107,10 @@
 								<param>../js_src/fields/EmailField.js</param>
 								<param>../js_src/fields/PhoneField.js</param>
 								<param>../js_src/fields/AddressField.js</param>
-								<param>../js_src/fields/AlpacaButtonField.js</param>
-								<param>../js_src/fields/AlpacaPrintButtonField.js</param>
-								<param>../js_src/fields/AlpacaReloadButtonField.js</param>
-								<param>../js_src/fields/AlpacaSwitchViewButtonField.js</param>
-								<param>../js_src/fields/GitanaButtonField.js</param>
-								<param>../js_src/fields/GitanaSaveButtonField.js</param>
+								<param>../js_src/fields/PrintButtonField.js</param>
+								<param>../js_src/fields/ReloadButtonField.js</param>
+								<param>../js_src/fields/SwitchViewButtonField.js</param>
+								<param>../js_src/fields/SaveButtonField.js</param>
 
 								<!--  alpaca views language packs -->
 								<param>../js_src/views/DefaultViewLanguagePacks.js</param>

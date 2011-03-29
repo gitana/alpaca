@@ -1260,18 +1260,20 @@
             obj1 = {};
         }
         for (var key in obj2) {
-            if (Alpaca.isValEmpty(obj2[key])) {
-                if (!Alpaca.isEmpty(obj1[key])) {
-                    obj1[key] = obj2[key];
-                }
-            } else {
-                if (Alpaca.isObject(obj2[key])) {
-                    if (!obj1[key]) {
-                        obj1[key] = {};
+            if (!Alpaca.isFunction(obj2[key])) {
+                if (Alpaca.isValEmpty(obj2[key])) {
+                    if (!Alpaca.isEmpty(obj1[key])) {
+                        obj1[key] = obj2[key];
                     }
-                    obj1[key] = Alpaca.mergeWithNullChecking(obj1[key], obj2[key]);
                 } else {
-                    obj1[key] = obj2[key];
+                    if (Alpaca.isObject(obj2[key])) {
+                        if (!obj1[key]) {
+                            obj1[key] = {};
+                        }
+                        obj1[key] = Alpaca.mergeWithNullChecking(obj1[key], obj2[key]);
+                    } else {
+                        obj1[key] = obj2[key];
+                    }
                 }
             }
         }

@@ -1,12 +1,12 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
     /**
      * Form Field class
      */
     Alpaca.Form = Base.extend({
-    
+
         /**
          * Constructor
          *
@@ -23,95 +23,84 @@
          */
         constructor: function(container, options) {
             var _this = this;
-            
+
             // container
             this.container = container;
-            
+
             // parent
             this.parent = null;
-            
+
             // options
             this.options = options;
-            
+
             if (this.options.attributes) {
                 this.attributes = this.options.attributes;
             } else {
                 this.attributes = {};
             }
-            
+
             if (this.attributes.id) {
                 this.id = this.attributes.id;
             } else {
                 this.id = Alpaca.generateId();
                 this.attributes.id = this.id;
             }
-            
+
             this.viewType = options.viewType;
-            
+
             // set default options for buttons
             if (this.options.buttons) {
                 this.buttonOptions = this.options.buttons;
             } else {
                 this.buttonOptions = {};
             }
-            
-            if (Alpaca.isEmpty(this.buttonOptions.hideSubmitButton)) {
-                this.buttonOptions.hideSubmitButton = false;
+
+            if (Alpaca.isEmpty(this.buttonOptions.submit)) {
+                this.buttonOptions.submit = true;
             }
-            if (Alpaca.isEmpty(this.buttonOptions.hideSaveButton)) {
-                this.buttonOptions.hideSaveButton = false;
+
+            if (Alpaca.isEmpty(this.buttonOptions.reset)) {
+                this.buttonOptions.reset = true;
             }
-            if (Alpaca.isEmpty(this.buttonOptions.hideReloadButton)) {
-                this.buttonOptions.hideReloadButton = false;
-            }
-            if (Alpaca.isEmpty(this.buttonOptions.hidePrintButton)) {
-                this.buttonOptions.hidePrintButton = false;
-            }
-            if (Alpaca.isEmpty(this.buttonOptions.hideResetButton)) {
-                this.buttonOptions.hideResetButton = false;
-            }
-            if (Alpaca.isEmpty(this.buttonOptions.hideSwitchViewButton)) {
-                this.buttonOptions.hideSwitchViewButton = false;
-            }
-			            
+
             // set a view
             this.view = Alpaca.defaultView;
-            
+
             // maintain a list for all buttons
             this.buttons = [];
         },
-        
+
         /**
          * Renders this field into the container.
          * Creates an outerEl which is bound into the container.
          */
         render: function(onSuccess) {
             var _this = this;
-            
+
             this.template = Alpaca.getTemplate("form", this);
-            
+
             // remove the previous outerEl if it exists
             if (this.outerEl) {
                 this.outerEl.remove();
             }
-            
+
             // load the appropriate template and render it
             this.processRender(this.container, function() {
                 // bind our field dom element into the container
                 _this.outerEl.appendTo(_this.container);
-                
+
                 // add default class
                 _this.outerEl.addClass("alpaca-form");
-                
+
                 // add buttons
                 _this.addButtons();
-                                
+
                 // execute callback
-                if (onSuccess) 
+                if (onSuccess)
                     onSuccess(_this);
             });
         },
-        
+
         /**
          * Responsible for fetching any templates needed so as to render the
          * current mode for this field.
@@ -120,10 +109,10 @@
          */
         processRender: function(parentEl, onSuccess) {
             var _this = this;
-            
+
             // lookup the template we should use to render
             var template = this.getTemplate();
-            
+
             // if we have a template to load, load it and then render
             if (Alpaca.isUri(template)) {
                 // load template from remote location
@@ -141,47 +130,72 @@
                 // we already have the template, so just render it
                 this._renderLoadedTemplate(parentEl, template, onSuccess);
             }
-            
-            if (onSuccess) 
+
+            if (onSuccess)
                 onSuccess();
         },
-        
+
         /**
          * Renders the loaded template
          */
         _renderLoadedTemplate: function(parentEl, templateString, onSuccess) {
-			var context = {
-				id: this.getId(),
-				options: this.options,
-				view: this.view
-			};
-			var renderedDomElement = $.tmpl(templateString, context, {});
-			renderedDomElement.appendTo(parentEl);
-			
-			this.outerEl = renderedDomElement;
-			
-			if (Alpaca.isEmpty(this.outerEl.attr("id"))) {
-				this.outerEl.attr("id", this.getId() + "-form-outer");
-			}
-			if (Alpaca.isEmpty(this.outerEl.attr("alpaca-field-id"))) {
-				this.outerEl.attr("alpaca-field-id", this.getId());
-			}
-			
-			// get container for forms
-			if ($('.alpaca-form-fields-container', this.outerEl)) {
-				this.formFieldsContainer = $('.alpaca-form-fields-container', this.outerEl);
-			} else {
-				this.formFieldsContainer = this.outerEl;
-			}
-			
-			// add all provided attributes
-			this.formField = $('form', this.container);
-			if (this.formField) {
-				this.formField.attr(this.attributes);
-			}
-			
-		},
-        
+            var context = {
+                id: this.getId(),
+                options: this.options,
+                view: this.view
+            };
+            var renderedDomElement = $.tmpl(templateString, context, {});
+            renderedDomElement.appendTo(parentEl);
+
+            this.outerEl = renderedDomElement;
+
+            if (Alpaca.isEmpty(this.outerEl.attr("id"))) {
+                this.outerEl.attr("id", this.getId() + "-form-outer");
+            }
+            if (Alpaca.isEmpty(this.outerEl.attr("alpaca-field-id"))) {
+                this.outerEl.attr("alpaca-field-id", this.getId());
+            }
+
+            // get container for forms
+            if ($('.alpaca-form-fields-container', this.outerEl)) {
+                this.formFieldsContainer = $('.alpaca-form-fields-container', this.outerEl);
+            } else {
+                this.formFieldsContainer = this.outerEl;
+            }
+
+            // add all provided attributes
+            this.field = $('form', this.container);
+            if (this.field) {
+                this.field.attr(this.attributes);
+            }
+
+        },
+
+        /**
+         * Adds a single button
+         *
+         * @param parameters
+         */
+        addButton: function (parameters) {
+            var _this = this;
+            if (parameters) {
+                var options = parameters.options ? parameters.options : {};
+                options.form = this;
+                var callback = parameters.callback;
+                options.type = options.type ? options.type : "button";
+                this.formButtonsContainer.alpaca({
+                    "data" : parameters.data,
+                    "options" : options,
+                    "postRender": function(fieldControl) {
+                        _this.buttons.push(fieldControl);
+                        if (callback && Alpaca.isFunction(callback)) {
+                            callback(fieldControl);
+                        }
+                    }
+                });
+            }
+        },
+
         /**
          * Adds buttons
          */
@@ -192,176 +206,183 @@
             } else {
                 this.formButtonsContainer = this.outerEl;
             }
-							
-            if (!this.buttonOptions.hidePrintButton) {            
-                Alpaca(this.formButtonsContainer, "", {
-                    "type": "alpacaprintbutton",
-                    "form": this
-                }, {}, function(fieldControl) {
-                    fieldControl.render();
-                    _this.buttons.push(fieldControl);
+
+            if (this.buttonOptions.print) {
+                this.addButton({
+                    "options":{
+                        "type": "printbutton"
+                    },
+                    "callback": function (renderedButton){
+                        _this.printButton = renderedButton;
+                    }
                 });
             }
 
-            if (!this.buttonOptions.hideSwitchViewButton) {            
-                Alpaca(this.formButtonsContainer, "", {
-                    "type": "alpacaswitchviewbutton",
-                    "form": this
-                }, {}, function(fieldControl) {
-                    fieldControl.render();
-                    _this.buttons.push(fieldControl);
+            if (this.buttonOptions.switchView) {
+                this.addButton({
+                    "options":{
+                        "type": "switchviewbutton"
+                    },
+                    "callback": function (renderedButton){
+                        _this.switchViewButton = renderedButton;
+                    }
                 });
-            }			          
-                        
-             if (!this.options.hideReloadButton && this.viewType != 'view') {
-			 	Alpaca(this.formButtonsContainer, "", {
-			 		"type": "alpacareloadbutton",
-			 		"form": this
-			 	}, {}, function(fieldControl) {
-			 		fieldControl.render();
-			 		_this.buttons.push(fieldControl);
-			 	});
-			 }
+            }
 
-            if (!this.buttonOptions.hideSaveButton && this.viewType != 'view') {
-                Alpaca(this.formButtonsContainer, "", {
-                    "type": "gitanasavebutton",
-                    "form": this
-                }, {}, function(fieldControl) {
-                    fieldControl.render();
-                    _this.buttons.push(fieldControl);
+            if (this.buttonOptions.reload && this.viewType != 'view') {
+                this.addButton({
+                    "options":{
+                        "type": "reloadbutton"
+                    },
+                    "callback": function (renderedButton){
+                        _this.reloadButton = renderedButton;
+                    }
                 });
             }
-			
-            if (!this.buttonOptions.hideSubmitButton && this.viewType != 'view') {
-				Alpaca(this.formButtonsContainer, "Submit", {
-					"type": "button",
-					"buttonType": "submit",
-					"form": this
-				}, {}, function(fieldControl) {
-					fieldControl.render();
-					_this.buttons.push(fieldControl);
-				});
-			}
-			
-            if (!this.buttonOptions.hideResetButton && this.viewType != 'view') {
-                Alpaca(this.formButtonsContainer, "Reset", {
-                    "type": "button",
-                    "buttonType": "reset",
-                    "form": this
-                }, {}, function(fieldControl) {
-                    // render
-                    fieldControl.render();
-                    _this.buttons.push(fieldControl);
+
+            if (this.buttonOptions.save && this.viewType != 'view') {
+                this.addButton({
+                    "options":{
+                        "type": "savebutton"
+                    },
+                    "callback": function (renderedButton){
+                        _this.saveButton = renderedButton;
+                    }
                 });
             }
-			
-			this.formButtonsContainer.addClass("ui-widget-header ui-corner-all");
+
+            if (this.buttonOptions.submit && this.viewType != 'view') {
+                this.addButton({
+                    "options":{
+                        "type": "button",
+                        "buttonType": "submit"
+                    },
+                    "data":"Submit",
+                    "callback": function (renderedButton){
+                        _this.submitButton = renderedButton;
+                    }
+                });
+            }
+
+            if (this.buttonOptions.reset && this.viewType != 'view') {
+                this.addButton({
+                    "options":{
+                        "type": "button",
+                        "buttonType": "reset"
+                    },
+                    "data":"Reset",
+                    "callback": function (renderedButton){
+                        _this.resetButton = renderedButton;
+                    }
+                });
+            }
+
+            this.formButtonsContainer.addClass("ui-widget-header ui-corner-all");
         },
-        
+
         /**
          * Retrieve the rendering element
          */
         getEl: function() {
             return this.outerEl;
         },
-        
+
         /**
          * Returns the id of the field
          */
         getId: function() {
             return this.id;
         },
-        
+
         getType: function() {
             return this.type;
         },
-        
+
         /**
          * Returns this field's parent field.
          */
         getParent: function() {
             return this.parent;
         },
-        
+
         /**
          * Return the value of the field
          */
         getValue: function() {
-            return this.topField.getValue();
+            return this.topControl.getValue();
         },
-        
+
         /**
          * Sets the value of the field
          */
         setValue: function(value, stopUpdateTrigger) {
-            this.topField.setValue(value, stopUpdateTrigger);
+            this.topControl.setValue(value, stopUpdateTrigger);
         },
-        
+
         /**
          * Initializes events
          */
         initEvents: function() {
             var _this = this;
-			if (this.formField) {
-				var v = this.getValue();				
-				$(this.formField).submit(v,function(e) {
-					_this.onSubmit(e);
-				});
-			}
+            if (this.field) {
+                var v = this.getValue();
+                $(this.field).submit(v, function(e) {
+                    return _this.onSubmit(e);
+                });
+            }
         },
-		
-		/**
-		 * Handles form submit events
-		 * 
-		 * @param {Object} e
-		 */
-		onSubmit: function(e) {
-			if (this.submitHandler) {
-				this.submitHandler(e);
-			}
-		},
-		
-		/**
-		 * Registers custom submit handler
-		 * 
-		 * @param {Object} func
-		 */
-		registerSubmitHandler: function (func) {
-			if (Alpaca.isFunction(func)) {
-				this.submitHandler = func;
-			}
-		},
-        
+
+        /**
+         * Handles form submit events
+         *
+         * @param {Object} e
+         */
+        onSubmit: function(e) {
+            if (this.submitHandler) {
+                return this.submitHandler(e);
+            }
+        },
+
+        /**
+         * Registers custom submit handler
+         *
+         * @param {Object} func
+         */
+        registerSubmitHandler: function (func) {
+            if (Alpaca.isFunction(func)) {
+                this.submitHandler = func;
+            }
+        },
+
         /**
          * Makes sure that the DOM of the rendered field reflects the validation state
          * of the field.
          */
         renderValidationState: function() {
-            this.topField.renderValidationState();
+            this.topControl.renderValidationState();
         },
-        
+
         /**
          * Disable the field
          */
         disable: function() {
-            this.topField.disable();
+            this.topControl.disable();
         },
-        
+
         /**
          * Enable the field
          */
         enable: function() {
-            this.topField.enable();
+            this.topControl.enable();
         },
-        
+
         /**
          * Focus the field
          */
         focus: function() {
-            this.topField.forcus();
+            this.topControl.focus();
         },
-        
+
         /**
          * Purge any event listeners
          * Remove the field from the DOM
@@ -369,7 +390,7 @@
         destroy: function() {
             this.getEl().remove();
         },
-        
+
         /**
          * Show the field
          */
@@ -378,7 +399,7 @@
                 "display": ""
             });
         },
-        
+
         /**
          * Hides the field
          */
@@ -387,30 +408,30 @@
                 "display": "none"
             });
         },
-        
+
         /**
          * Clears the field.
          *
          * This resets the field to its original value (this.data)
          */
         clear: function(stopUpdateTrigger) {
-            this.topField.clear(stopUpdateTrigger);
+            this.topControl.clear(stopUpdateTrigger);
         },
-        
+
         /**
          * Checks if top field is empty
          */
-		isEmpty: function() {
-            return this.topField.isEmpty();
+        isEmpty: function() {
+            return this.topControl.isEmpty();
         },
-        
+
         /**
          * Returns the field template
          */
         getTemplate: function() {
             return this.template;
         },
-        
+
         /**
          * Sets the field template
          */
@@ -421,9 +442,9 @@
             }
             // trim for good measure
             template = $.trim(template);
-            
+
             this.template = template;
         }
     });
-    
+
 })(jQuery);

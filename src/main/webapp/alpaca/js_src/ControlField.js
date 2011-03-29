@@ -123,15 +123,15 @@
             
             var _this = this;
             
-            this.inputElement.keypress(function(e) {
+            this.field.keypress(function(e) {
                 _this.onKeyPress(e);
             });
             
-            this.inputElement.keyup(function(e) {
+            this.field.keyup(function(e) {
                 _this.onKeyUp(e);
             });
             
-            this.inputElement.click(function(e) {
+            this.field.click(function(e) {
                 _this.onClick(e);
             });
             

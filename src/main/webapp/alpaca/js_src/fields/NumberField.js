@@ -29,7 +29,7 @@
          *
          */
         getValue: function() {
-            var textValue = this.inputElement.val();
+            var textValue = this.field.val();
             if (Alpaca.isValEmpty(textValue)) {
                 return "";
             } else {
@@ -100,7 +100,7 @@
          * Validates if it is a number
          */
         _validateNumber: function() {
-            var textValue = this.inputElement.val();
+            var textValue = this.field.val();
             // allow null
             if (Alpaca.isValEmpty(textValue)) {
                 return true;

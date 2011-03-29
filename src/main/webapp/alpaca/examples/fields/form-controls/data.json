@@ -2,7 +2,7 @@
     "name":"Betty Icecream Lover",
     "age":10,
     "gender":"Female",
-	"photo":"/alpaca/examples/data/betty-girl.jpg",
+	"photo":"./betty-girl.jpg",
     "member":true,
     "icecream":"Chocolate",
 	"phone":"(123)456-7890",

@@ -16,8 +16,8 @@
          * Return the value of the input control
          */
         getValue: function() {
-			if (this.inputElement) {
-				return this.inputElement.val();
+			if (this.field) {
+				return this.field.val();
 			}
         },
         
@@ -54,14 +54,14 @@
 			}
             
             if (controlFieldTemplate) {
-                this.inputElement = $.tmpl(controlFieldTemplate, {
+                this.field = $.tmpl(controlFieldTemplate, {
                     "id": this.getId(),
                     "options": this.options,
 					"required": this.schema.required,
                     "selectOptions": this.selectOptions,
                     "data": this.data
                 });
-                this.injectField(this.inputElement);
+                this.injectField(this.field);
             }
             
             if (onSuccess) {

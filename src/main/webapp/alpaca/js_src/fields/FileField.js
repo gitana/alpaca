@@ -34,11 +34,11 @@
         setValue: function(value, stopUpdateTrigger) {            
             // be sure to call into base method
         	// We won't be able to actually set the value for file input field so we use the mask input
-        	var tmp = this.inputElement;
-        	this.inputElement = $('.alpaca-filefield-control',this.fieldContainer);
+        	var tmp = this.field;
+        	this.field = $('.alpaca-filefield-control',this.fieldContainer);
             this.base(value, stopUpdateTrigger);
             // switch it back to actual file input
-        	this.inputElement = tmp;
+        	this.field = tmp;
         },
         
         /**
@@ -46,8 +46,8 @@
          */
         postRender: function() {
             // make it stylable
-            if (this.inputElement) {
-				this.inputElement.customFileInput();
+            if (this.field) {
+				this.field.customFileInput();
             }
             this.base();
             // apply additional css

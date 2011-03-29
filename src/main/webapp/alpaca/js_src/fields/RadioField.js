@@ -32,7 +32,7 @@
          * Return the value of the input control
          */
         getValue: function(){
-            return $('input:radio[name='+this.name+']:checked',this.inputElement).val();
+            return $('input:radio[name='+this.name+']:checked',this.field).val();
         },
         
         /**
@@ -55,7 +55,7 @@
             var controlFieldTemplate = Alpaca.getTemplate("controlFieldRadio", this, null, this.mode);
             
             if (controlFieldTemplate) {
-                this.inputElement = $.tmpl(controlFieldTemplate, {
+                this.field = $.tmpl(controlFieldTemplate, {
                     "id": this.getId(),
                     "options": this.options,
                     "selectOptions": this.selectOptions,
@@ -63,10 +63,10 @@
 					"name": this.name,
                     "data": this.data
                 });
-                if ($("input:radio:checked",this.inputElement).length == 0) {
-                	$("input:radio:first",this.inputElement).attr("checked","checked");
+                if ($("input:radio:checked",this.field).length == 0) {
+                	$("input:radio:first",this.field).attr("checked","checked");
                 }
-                this.injectField(this.inputElement);
+                this.injectField(this.field);
             }
             
             if (onSuccess) {

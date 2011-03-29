@@ -5,7 +5,7 @@
     /**
      * Abstract Button class
      */
-    Alpaca.Fields.AlpacaPrintButtonField = Alpaca.Fields.AlpacaButtonField.extend({
+    Alpaca.Fields.ReloadButtonField = Alpaca.Fields.ButtonField.extend({
     
         /**
          * @Override
@@ -16,7 +16,7 @@
 			this.base();			
 			// sets defaults
 			if (!this.data) {
-				this.data = Alpaca.getMessage("print", this);
+				this.data = Alpaca.getMessage("reload", this);
 			}			
 		},
         
@@ -24,7 +24,7 @@
          * @Override
          */
         onClick: function(e) {
-			this.form.topField.print();
+			this.form.topControl.reload();
 		},
 		
 		/**
@@ -32,35 +32,35 @@
 		 */
 		postRender: function () {
 			this.base();
-			this.inputElement.addClass("alpaca-form-button-alpaca-print");
-			this.inputElement.button({
+			this.field.addClass("alpaca-form-button-reload");
+			this.field.button({
 				text: true,
 				icons: {
-					primary: "ui-icon-print"
+					primary: "ui-icon-refresh"
 				}
-			});			
+			});				
 		},
 		
 		/**
          * @Override
 		 */
 		getTitle: function() {
-			return "Alpaca Screen Print Button";
+			return "Alpaca Reload Button";
 		},
 		
 		/**
          * @Override
 		 */
 		getDescription: function() {
-			return "Alpaca button for screen printing.";
+			return "Alpaca button for reloading data.";
 		}		
     });
 
     // Registers additonal messages
     Alpaca.registerMessages({
-        "print": "Print Screen"
+        "reload": "Reload"
     });
 	    
-    Alpaca.registerFieldClass("alpacaprintbutton", Alpaca.Fields.AlpacaPrintButtonField);
+    Alpaca.registerFieldClass("reloadbutton", Alpaca.Fields.ReloadButtonField);
     
 })(jQuery);
