@@ -3,8 +3,8 @@
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({
-		id: "WEB_EDIT",
-		messages: {
+		"id": "WEB_EDIT",
+		"messages": {
 			"zh_CN": {
 				required: "&#27492;&#22495;&#24517;&#39035;",
 				invalid: "&#27492;&#22495;&#19981;&#21512;&#26684;",
@@ -43,38 +43,38 @@
 			},
 			"es_ES": {
 				required: "Este campo es required",
-				invalid: "Este campo es inv‡lido",
+				invalid: "Este campo es invï¿½lido",
 				months: ["Enero", "Febrero", "Marzo", "Abril", "Puede", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
 				timeUnits: {
 					SECOND: "segundos",
 					MINUTE: "minutos",
 					HOUR: "horas",
-					DAY: "d’as",
+					DAY: "dï¿½as",
 					MONTH: "meses",
-					YEAR: "a–os"
+					YEAR: "aï¿½os"
 				},
 				"notOptional": "Este campo no es opcional.",
 				"disallowValue": "{0} son los valores rechazados.",
 				"invalidValueOfEnum": "Este campo debe tener uno de los valores adentro {0}.",
-				"notEnoughItems": "El nœmero m’nimo de art’culos es {0}",
-				"tooManyItems": "El nœmero m‡ximo de art’culos es {0}",
-				"valueNotUnique": "Los valores no son œnicos",
+				"notEnoughItems": "El nï¿½mero mï¿½nimo de artï¿½culos es {0}",
+				"tooManyItems": "El nï¿½mero mï¿½ximo de artï¿½culos es {0}",
+				"valueNotUnique": "Los valores no son ï¿½nicos",
 				"notAnArray": "Este valor no es un arsenal",
-				"invalidDate": "Fecha inv‡lida para el formato {0}",
-				"invalidEmail": "Email address inv‡lido, ex: admin@gitanasoftware.com",
-				"stringNotAnInteger": "Este valor no es un nœmero entero.",
-				"invalidIPv4": "Direcci&#243;n inv‡lida IPv4, ex: 192.168.0.1",
-				"stringValueTooSmall": "El valor m’nimo para este campo es {0}",
-				"stringValueTooLarge": "El valor m‡ximo para este campo es {0}",
+				"invalidDate": "Fecha invï¿½lida para el formato {0}",
+				"invalidEmail": "Email address invï¿½lido, ex: admin@gitanasoftware.com",
+				"stringNotAnInteger": "Este valor no es un nï¿½mero entero.",
+				"invalidIPv4": "Direcci&#243;n invï¿½lida IPv4, ex: 192.168.0.1",
+				"stringValueTooSmall": "El valor mï¿½nimo para este campo es {0}",
+				"stringValueTooLarge": "El valor mï¿½ximo para este campo es {0}",
 				"stringValueTooSmallExclusive": "El valor de este campo debe ser mayor que {0}",
 				"stringValueTooLargeExclusive": "El valor de este campo debe ser menos que {0}",
 				"stringDivisibleBy": "El valor debe ser divisible cerca {0}",
-				"stringNotANumber": "Este valor no es un nœmero.",
-				"invalidPassword": "Contrase–a inv‡lida",
-				"invalidPhone": "Nœmero de telŽfono inv‡lido, ex: (123) 456-9999",
+				"stringNotANumber": "Este valor no es un nï¿½mero.",
+				"invalidPassword": "Contraseï¿½a invï¿½lida",
+				"invalidPhone": "Nï¿½mero de telï¿½fono invï¿½lido, ex: (123) 456-9999",
 				"invalidPattern": "Este campo debe tener patr&#243;n {0}",
-				"stringTooShort": "Este campo debe contener por lo menos {0} nœmeros o caracteres",
-				"stringTooLong": "Este campo debe contener a lo m‡s {0} nœmeros o caracteres"
+				"stringTooShort": "Este campo debe contener por lo menos {0} nï¿½meros o caracteres",
+				"stringTooLong": "Este campo debe contener a lo mï¿½s {0} nï¿½meros o caracteres"
 			}
 		}
 	});

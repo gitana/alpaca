@@ -41,9 +41,7 @@
                                 "data": "./list-data.json",
                                 "schema": "./list-schema.json",
                                 "view": {
-                                    "templates": {
-                                        "full": "./list-table-template.html"
-                                    }
+                                    "globalTemplate": "./list-table-template.html"
                                 },
                                 "postRender": function(renderedField) {
                                     $('table', renderedField.getEl()).dataTable({

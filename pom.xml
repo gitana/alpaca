@@ -77,6 +77,7 @@
 								<param>../js_src/views/DefaultView.js</param>
 								<param>../js_src/views/ListView.js</param>
 								<param>../js_src/views/MobileView.js</param>
+                                <param>../js_src/views/LayoutView.js</param>
 
 								<param>../js_src/Field.js</param>
 								<param>../js_src/ControlField.js</param>

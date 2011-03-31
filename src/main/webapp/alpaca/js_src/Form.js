@@ -181,7 +181,7 @@
             if (parameters) {
                 var options = parameters.options ? parameters.options : {};
                 options.form = this;
-                var callback = parameters.callback;
+                var callback = parameters.postRender;
                 options.type = options.type ? options.type : "button";
                 this.formButtonsContainer.alpaca({
                     "data" : parameters.data,
@@ -212,7 +212,7 @@
                     "options":{
                         "type": "printbutton"
                     },
-                    "callback": function (renderedButton){
+                    "postRender": function (renderedButton){
                         _this.printButton = renderedButton;
                     }
                 });
@@ -223,7 +223,7 @@
                     "options":{
                         "type": "switchviewbutton"
                     },
-                    "callback": function (renderedButton){
+                    "postRender": function (renderedButton){
                         _this.switchViewButton = renderedButton;
                     }
                 });
@@ -234,7 +234,7 @@
                     "options":{
                         "type": "reloadbutton"
                     },
-                    "callback": function (renderedButton){
+                    "postRender": function (renderedButton){
                         _this.reloadButton = renderedButton;
                     }
                 });
@@ -245,7 +245,7 @@
                     "options":{
                         "type": "savebutton"
                     },
-                    "callback": function (renderedButton){
+                    "postRender": function (renderedButton){
                         _this.saveButton = renderedButton;
                     }
                 });
@@ -258,7 +258,7 @@
                         "buttonType": "submit"
                     },
                     "data":"Submit",
-                    "callback": function (renderedButton){
+                    "postRender": function (renderedButton){
                         _this.submitButton = renderedButton;
                     }
                 });
@@ -271,7 +271,7 @@
                         "buttonType": "reset"
                     },
                     "data":"Reset",
-                    "callback": function (renderedButton){
+                    "postRender": function (renderedButton){
                         _this.resetButton = renderedButton;
                     }
                 });

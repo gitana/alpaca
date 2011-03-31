@@ -90,8 +90,9 @@
                 if (this.view) {
                     this.wizardConfigs = Alpaca.getViewParam('wizard', this);
                     this.templatesConfigs = Alpaca.getViewParam('templates', this);
+                    var layoutTemplate = Alpaca.getLayout("template", this);
                     if (this.wizardConfigs && this.wizardConfigs.renderWizard) {
-                        if (this.templatesConfigs && this.templatesConfigs.layout) {
+                        if (layoutTemplate/*this.templatesConfigs && this.templatesConfigs.layout*/) {
                             //Wizard based on layout
                             this.wizard();
                         } else {

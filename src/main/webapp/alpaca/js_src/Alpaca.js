@@ -773,17 +773,17 @@
 
         _getLayout: function(templateId, view, path) {
             if (path && path != '/') {
-                if (view && view.fields && view.fields[path] && view.fields[path].templates && view.fields[path].templates[templateId]) {
-                    return view.fields[path].templates[templateId];
+                if (view && view.fields && view.fields[path] && view.fields[path].layout && view.fields[path].layout[templateId]) {
+                    return view.fields[path].layout[templateId];
                 } else {
                     return null;
                 }
             }
-            if (view && view.templates && view.templates[templateId]) {
-                return view.templates[templateId];
+            if (view && view.layout && view.layout[templateId]) {
+                return view.layout[templateId];
             } else {
                 if (view && view.parent) {
-                    return this._getTemplate(templateId, this.views[view.parent], path);
+                    return this._getLayout(templateId, this.views[view.parent], path);
                 } else {
                     return null;
                 }

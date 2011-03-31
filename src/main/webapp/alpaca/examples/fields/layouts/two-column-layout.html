@@ -43,8 +43,66 @@
                                 "options": "./customer-profile-options.json",
                                 "view": {
                                     "parent": "WEB_EDIT_LIST",
-                                    "templates": {
-                                        "layout": './two-column-layout-template.html',
+                                    "layout": {
+                                        "template": './two-column-layout-template.html',
+                                        "bindings": {
+                                            "name": "leftcolumn",
+                                            "age": "leftcolumn",
+                                            "gender": "leftcolumn",
+                                            "member": "leftcolumn",
+                                            "photo": "leftcolumn",
+                                            "phone": "leftcolumn",
+                                            "icecream": "leftcolumn",
+                                            "address": "rightcolumn"
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                    <h3>Example 2: </h3>
+                    <h4>Field to template region bindings are defined by the templates properties of the view parameter.
+                        This example loades <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a href="./customer-profile-data.json" target="_source">data</a>, <a href="./customer-profile-schema.json" target="_source">schema</a> and <a href="./customer-profile-options.json" target="_source">options</a> parameters through ajax calls.</h4>
+                    <div id="field2">
+                    </div>
+                    <script type="text/javascript"id="field2-script">
+                        $(function() {
+                            $("#field2").alpaca({
+                                "data": "./customer-profile-data.json",
+                                "schema": "./customer-profile-schema.json",
+                                "options": "./customer-profile-options.json",
+                                "view": {
+                                    "parent": "WEB_EDIT_LIST_LAYOUT_TWO_COLUMN",
+                                    "layout": {
+                                        "bindings": {
+                                            "name": "leftcolumn",
+                                            "age": "leftcolumn",
+                                            "gender": "leftcolumn",
+                                            "member": "leftcolumn",
+                                            "photo": "leftcolumn",
+                                            "phone": "leftcolumn",
+                                            "icecream": "leftcolumn",
+                                            "address": "rightcolumn"
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                    <h3>Example 3: </h3>
+                    <h4>Field to template region bindings are defined by the templates properties of the view parameter.
+                        This example loades <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a href="./customer-profile-data.json" target="_source">data</a>, <a href="./customer-profile-schema.json" target="_source">schema</a> and <a href="./customer-profile-options.json" target="_source">options</a> parameters through ajax calls.</h4>
+                    <div id="field3">
+                    </div>
+                    <script type="text/javascript"id="field3-script">
+                        $(function() {
+                            $("#field3").alpaca({
+                                "data": "./customer-profile-data.json",
+                                "schema": "./customer-profile-schema.json",
+                                "options": "./customer-profile-options.json",
+                                "view": {
+                                    "parent": "WEB_EDIT_LAYOUT_TWO_COLUMN",
+                                    "layout": {
                                         "bindings": {
                                             "name": "leftcolumn",
                                             "age": "leftcolumn",

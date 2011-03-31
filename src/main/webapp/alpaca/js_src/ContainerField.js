@@ -1,7 +1,7 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
     /**
      * Abstract Container Field
      *
@@ -16,24 +16,8 @@
      * }
      */
     Alpaca.ContainerField = Alpaca.Field.extend({
-    
-        /**
-         * @Override
-         */
-        setDefaultTemplate: function() {
-            // check if the full template has been provided
-            var fullTemplate = Alpaca.getLayout("full", this);
-            var layoutTemplate = Alpaca.getLayout("layout", this);
-            if (fullTemplate) {
-                this.setTemplate(fullTemplate);
-                this.singleLevelRendering = true;
-            } else if (layoutTemplate /*&& this.isTopLevel()*/) {
-                this.setTemplate(layoutTemplate);
-            } else {
-                this.setTemplate(Alpaca.getTemplate("fieldSet", this));
-            }
-        },
-        
+
+
         /**
          * @Override
          *
@@ -42,39 +26,54 @@
          */
         setup: function() {
             this.base();
-            
+
             var collapsible = true;
-            
+
             if (!Alpaca.isEmpty(Alpaca.getViewParam('collapsible', this))) {
                 collapsible = Alpaca.getViewParam('collapsible', this);
             }
-            
+
             if (!Alpaca.isEmpty(this.options.collapsible)) {
                 collapsible = this.options.collapsible;
             }
-            
+
             this.options.collapsible = collapsible;
-            
+
             var legendStyle = "button";
-            
+
             if (!Alpaca.isEmpty(Alpaca.getViewParam('legendStyle', this))) {
                 legendStyle = Alpaca.getViewParam('legendStyle', this);
             }
-            
-/*
-            if (!Alpaca.isEmpty(this.options.legendStyle)) {
-                legendStyle = this.options.legendStyle;
-            }
-*/
-            
+
+            /*
+             if (!Alpaca.isEmpty(this.options.legendStyle)) {
+             legendStyle = this.options.legendStyle;
+             }
+             */
+
             this.options.legendStyle = legendStyle;
-            
+
             // holders of references to children
             this.children = [];
             this.childrenById = [];
             this.childrenByPropertyId = [];
+
         },
-        
+
+        /**
+         * @Override
+         */
+        getDefaultFieldTemplateId : function () {
+            return "fieldSet";
+        },
+
+        /**
+         * @Override
+         */
+        setDefaultTemplate: function() {
+            this.base();
+        },
+
         /**
          * Helper method to register child fields of this field.
          */
@@ -90,7 +89,7 @@
             }
             child.parent = this;
         },
-        
+
         /**
          * @Override
          *
@@ -98,21 +97,21 @@
          */
         initEvents: function() {
             var _this = this;
-            
+
             // if collapsible
             if (this.labelDiv) {
                 if (this.options.collapsible) {
-                
+
                     this.labelDiv.addClass("legend-expanded");
-                    
+
                     var initIcon = 'ui-icon-circle-arrow-s';
-                    
+
                     if (!Alpaca.isEmpty(this.options.collapsed) && this.options.collapsed) {
                         initIcon = 'ui-icon-circle-arrow-e';
                         this.labelDiv.nextAll(".alpaca-fieldset-helper").slideToggle(500);
                         this.labelDiv.nextAll(".alpaca-fieldset-items-container").slideToggle(500);
                     }
-                    
+
                     if (this.options.legendStyle == 'link') {
                         $('<span class="ui-icon ' + initIcon + '" style="float:left;margin-right:0.3em;"></span>').prependTo(this.labelDiv);
                         this.labelDiv.click(function() {
@@ -123,9 +122,9 @@
                             $(this).nextAll(".alpaca-fieldset-items-container").slideToggle(500);
                         });
                     }
-                    
+
                     if (this.options.legendStyle == 'button') {
-                    
+
                         this.labelDiv.button({
                             icons: {
                                 primary: initIcon
@@ -141,20 +140,20 @@
                 }
             }
         },
-        
-        /**
-         * @Override
-         *
-         * Handle validation
-         */
+
+    /**
+     * @Override
+     *
+     * Handle validation
+     */
         /*
          handleValidate: function() {
-         
+
          var baseStatus =  this.base();
          Alpaca.each(this.children, function() {
          baseStatus = this.validate() && baseStatus;
          });
-         
+
          return baseStatus;
          },
          */
@@ -168,13 +167,13 @@
             Alpaca.each(this.children, function() {
                 this.clear(false);
             });
-            
+
             // trigger update all at once
             if (!stopUpdateTrigger) {
                 this.triggerUpdate();
             }
         },
-        
+
         /**
          * @Override
          *
@@ -184,12 +183,12 @@
             Alpaca.each(this.children, function() {
                 this.destroy();
             });
-            
+
             // destroy ourselves
             this.base();
         },
-        
-        
+
+
         /**
          * Renders item container
          */
@@ -203,9 +202,9 @@
                     if (insertAfterId) {
                         $('#' + insertAfterId + '-item-container', this.outerEl).after(containerElem);
                     } else {
-                    
+
                         var appendToContainer = this.fieldContainer;
-                        
+
                         var bindings = Alpaca.getLayout("bindings", this);
                         if (bindings) {
                             var binding = bindings[propertyId];
@@ -213,7 +212,7 @@
                                 appendToContainer = $('#' + binding, appendToContainer);
                             }
                         }
-                        
+
                         /*
                          if (parent && parent.isTopLevel() && parent.view.templates && parent.view.templates.bindings) {
                          var binding = parent.view.templates.bindings[propertyId];
@@ -230,50 +229,50 @@
                 return this.fieldContainer;
             }
         },
-        
+
         /**
          * @Override
          *
          */
         renderField: function(onSuccess) {
-        
+
             this.outerEl.addClass('ui-widget-content');
-            
+
             var labelDiv = $('.alpaca-fieldset-legend', this.outerEl);
-            
+
             if (labelDiv.length) {
                 this.labelDiv = labelDiv;
             }
-            
+
             var fieldContainer = $('.alpaca-fieldset-items-container', this.outerEl);
             if (fieldContainer.length) {
                 this.fieldContainer = fieldContainer;
             } else {
                 this.fieldContainer = this.outerEl;
             }
-            
+
             if (!this.singleLevelRendering) {
                 this.renderItems();
             }
-            
+
             if (onSuccess) {
                 onSuccess();
             }
         },
-        
+
         /**
          * To be overriden
          */
         renderItems: function(onSuccess) {
         },
-        
-		/**
-		 * @Override
-		 */
-		isContainer: function() {
-        	return true;
+
+        /**
+         * @Override
+         */
+        isContainer: function() {
+            return true;
         },
-		
+
         /**
          * @Override
          */
@@ -296,7 +295,7 @@
                         "title": "Legend Style",
                         "description": "Field set legend style",
                         "type": "string",
-						"enum":["button","link"],
+                        "enum":["button","link"],
                         "default": "button"
                     }
                 }
@@ -319,13 +318,13 @@
                         "description": "Field set is initially collapsed if checked",
                         "type": "checkbox"
                     },
-					"legendStyle": {
-						"type":"select"
-					}
+                    "legendStyle": {
+                        "type":"select"
+                    }
                 }
             });
-        }		
-        
+        }
+
     });
-    
+
 })(jQuery);

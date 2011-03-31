@@ -40,9 +40,8 @@
                             "options": "./options.json",
                             "schema": "./schema.json",
                             "view": {
-                                "parent": "WEB_EDIT",
-                                "templates": {
-                                    "layout": './two-column-layout-template.html',
+                                "parent": "WEB_EDIT_LAYOUT_TWO_COLUMN",
+                                "layout": {
                                     "bindings": {
                                         "name": "leftcolumn",
                                         "age": "leftcolumn",
@@ -110,8 +109,8 @@
                                         }
                                     },
                                     "/address": {
-                                        "templates": {
-                                            "layout": './two-column-layout-template.html',
+                                        "layout": {
+                                            "template": 'twoColumnLayout',
                                             "bindings": {
                                                 "street": "leftcolumn",
                                                 "city": "rightcolumn",

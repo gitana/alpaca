@@ -122,22 +122,36 @@
 
             // backup data
             this.backupData = Alpaca.cloneObject(this.data);
+
+        },
+
+        /**
+         *
+         */
+        getDefaultFieldTemplateId : function () {
+            return "controlField";
         },
 
         /**
          * Sets up default rendition template from view
          */
         setDefaultTemplate: function() {
-            // check if the full template has been provided
-            var fullTemplate = Alpaca.getLayout("full", this);
-            var layoutTemplate = Alpaca.getLayout("layout", this);
-            if (fullTemplate) {
-                this.setTemplate(fullTemplate);
+            var globalTemplate = Alpaca.getViewParam('globalTemplate', this);
+            if (Alpaca.getTemplate(globalTemplate, this)) {
+                globalTemplate = Alpaca.getTemplate(globalTemplate, this);
+            }
+            var layoutTemplate = Alpaca.getLayout("template", this);
+            // Check to see if it is a template reference
+            if (Alpaca.getTemplate(layoutTemplate, this)) {
+                layoutTemplate = Alpaca.getTemplate(layoutTemplate, this);
+            }
+            if (globalTemplate) {
+                this.setTemplate(globalTemplate);
                 this.singleLevelRendering = true;
-            } else if (layoutTemplate /*&& this.isTopLevel()*/) {
+            } else if (layoutTemplate) {
                 this.setTemplate(layoutTemplate);
             } else {
-                this.setTemplate(Alpaca.getTemplate("controlField", this));
+                this.setTemplate(Alpaca.getTemplate(this.getDefaultFieldTemplateId(), this));
             }
         },
 

@@ -38,7 +38,7 @@
 								</div>	
 								<div style="display:inline-block;margin:10px">
 									Alpaca provides full support for static and dynamic forms on mobile devices through jQuery Mobile framework.
-		  							<p>Launch Alpaca Mobile in <a href="mobile/mobile-examples.html" target="_mobile">new tab</a>&nbsp;|&nbsp;<a href="http://ipadpeek.com/?url=localhost:8180/alpaca/examples/mobile/mobile-examples.html&portrait" target="_mobile">iPad Simulator</a>&nbsp;|&nbsp;<a href="http://testiphone.com/?url=http://localhost:8180/alpaca/examples/mobile/mobile-examples.html" target="_mobile">iPhone Simulator</a></p>
+		  							<p>Launch Alpaca Mobile in <a href="mobile/mobile-examples.html" target="_mobile">new tab</a>&nbsp;|&nbsp;<a id="ipad-link" href="" target="_mobile">iPad Simulator</a>&nbsp;|&nbsp;<a id="iphone-link" href="" target="_mobile">iPhone Simulator</a></p>
 								</div>
 								</div>              
 							</div>
@@ -81,4 +81,10 @@
             </div>
         </div>
     </body>
+            <script type="text/javascript" id="field1-script">
+                $(function() {
+                     $("#ipad-link").attr('href','http://ipadpeek.com/?url='+window.location.hostname +':'+window.location.port+'/alpaca/examples/mobile/mobile-examples.html&portrait');
+                     $("#iphone-link").attr('href','http://testiphone.com/?url=http://'+window.location.hostname +':'+window.location.port+'/alpaca/examples/mobile/mobile-examples.html');
+                });
+            </script>
 </html>

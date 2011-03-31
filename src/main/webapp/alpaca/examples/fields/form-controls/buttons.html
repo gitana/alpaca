@@ -59,7 +59,7 @@
                             cityControl.setValue("Lexington");
                             form.addButton({
                                 "data" : "Custom Button",
-                                "callback" : function(buttonControl) {
+                                "postRender" : function(buttonControl) {
                                     buttonControl.field.button({
                                         text: true,
                                         icons: {
@@ -77,9 +77,7 @@
                                                 }
                                             ],
                                             "view": {
-                                                "templates": {
-                                                    "full": '<div id="source-view-alpaca-field">{{each data}}<div><h3 style="text-decoration:underline;">${title}</h3><div><pre><code>${text}</pre></code></div></div>{{/each}}</div>'
-                                                }
+                                                "globalTemplate": '<div id="source-view-alpaca-field">{{each data}}<div><h3 style="text-decoration:underline;">${title}</h3><div><pre><code>${text}</pre></code></div></div>{{/each}}</div>'
                                             },
                                             "postRender": function(renderedNewFieldControl) {
                                                 sourceViewDialog.dialog({
