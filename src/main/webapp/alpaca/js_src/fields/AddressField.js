@@ -66,7 +66,7 @@
          */
         getAddress: function() {
             var value = this.getValue();
-            if (this.viewType == "view") {
+            if (this.view.type == "view") {
                 value = this.data;
             }
             var address = "";

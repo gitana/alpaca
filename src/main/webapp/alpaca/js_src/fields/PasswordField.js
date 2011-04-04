@@ -17,7 +17,7 @@
                 this.schema.pattern = /^[0-9a-zA-Z\x20-\x7E]*$/;
             }
             
-            this.controlFieldTemplate = Alpaca.getTemplate("controlFieldPassword", this);
+            this.controlFieldTemplate = this.view.getTemplate("controlFieldPassword");
         },
 
         /**
@@ -39,7 +39,7 @@
             var valInfo = this.validation;
             
             if (!valInfo["invalidPattern"]["status"]) {
-                valInfo["invalidPattern"]["message"] = Alpaca.getMessage("invalidPassword", this);
+                valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidPassword");
             }
             
             return baseStatus;

@@ -21,7 +21,7 @@
          *    buttons: <object>             form button options (optional)
          * }
          */
-        constructor: function(container, options) {
+        constructor: function(container, options, view, connector) {
             var _this = this;
 
             // container
@@ -29,6 +29,8 @@
 
             // parent
             this.parent = null;
+
+            this.connector = connector;
 
             // options
             this.options = options;
@@ -64,7 +66,7 @@
             }
 
             // set a view
-            this.view = Alpaca.defaultView;
+            this.view = new Alpaca.View(view, this);
 
             // maintain a list for all buttons
             this.buttons = [];
@@ -77,7 +79,7 @@
         render: function(onSuccess) {
             var _this = this;
 
-            this.template = Alpaca.getTemplate("form", this);
+            this.template = this.view.getTemplate("form");
 
             // remove the previous outerEl if it exists
             if (this.outerEl) {
@@ -113,23 +115,11 @@
             // lookup the template we should use to render
             var template = this.getTemplate();
 
-            // if we have a template to load, load it and then render
-            if (Alpaca.isUri(template)) {
-                // load template from remote location
-                $.ajax({
-                    url: template,
-                    type: 'get',
-                    success: function(templateString) {
-                        _this._renderLoadedTemplate(parentEl, templateString, onSuccess);
-                    },
-                    error: function(error) {
-                        alert(error);
-                    }
-                });
-            } else {
-                // we already have the template, so just render it
-                this._renderLoadedTemplate(parentEl, template, onSuccess);
-            }
+            this.connector.loadTemplate(template, function(loadedTemplate) {
+                _this._renderLoadedTemplate(parentEl, loadedTemplate, onSuccess);
+            }, function(error) {
+                alert(error);
+            });
 
             if (onSuccess)
                 onSuccess();
@@ -142,7 +132,7 @@
             var context = {
                 id: this.getId(),
                 options: this.options,
-                view: this.view
+                view: this.view.viewObject
             };
             var renderedDomElement = $.tmpl(templateString, context, {});
             renderedDomElement.appendTo(parentEl);
@@ -212,7 +202,7 @@
                     "options":{
                         "type": "printbutton"
                     },
-                    "postRender": function (renderedButton){
+                    "postRender": function (renderedButton) {
                         _this.printButton = renderedButton;
                     }
                 });
@@ -223,7 +213,7 @@
                     "options":{
                         "type": "switchviewbutton"
                     },
-                    "postRender": function (renderedButton){
+                    "postRender": function (renderedButton) {
                         _this.switchViewButton = renderedButton;
                     }
                 });
@@ -234,7 +224,7 @@
                     "options":{
                         "type": "reloadbutton"
                     },
-                    "postRender": function (renderedButton){
+                    "postRender": function (renderedButton) {
                         _this.reloadButton = renderedButton;
                     }
                 });
@@ -245,7 +235,7 @@
                     "options":{
                         "type": "savebutton"
                     },
-                    "postRender": function (renderedButton){
+                    "postRender": function (renderedButton) {
                         _this.saveButton = renderedButton;
                     }
                 });
@@ -258,7 +248,7 @@
                         "buttonType": "submit"
                     },
                     "data":"Submit",
-                    "postRender": function (renderedButton){
+                    "postRender": function (renderedButton) {
                         _this.submitButton = renderedButton;
                     }
                 });
@@ -271,7 +261,7 @@
                         "buttonType": "reset"
                     },
                     "data":"Reset",
-                    "postRender": function (renderedButton){
+                    "postRender": function (renderedButton) {
                         _this.resetButton = renderedButton;
                     }
                 });

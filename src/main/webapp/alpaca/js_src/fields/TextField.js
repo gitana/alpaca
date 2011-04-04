@@ -34,7 +34,7 @@
                 this.options.size = 40;
             }
             
-            this.controlFieldTemplate = Alpaca.getTemplate("controlFieldText", this);
+            this.controlFieldTemplate = this.view.getTemplate("controlFieldText");
         },
         
         /**
@@ -107,19 +107,19 @@
 			
 			var status =  this._validatePattern();
             valInfo["invalidPattern"] = {
-                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("invalidPattern", this), [this.schema.pattern]),
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("invalidPattern"), [this.schema.pattern]),
                 "status": status
             };
  
             status = this._validateMaxLength();
 			valInfo["stringTooLong"] = {
-                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("stringTooLong", this), [this.schema.maxLength]),
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("stringTooLong"), [this.schema.maxLength]),
                 "status": status
             };
 
             status = this._validateMinLength();
 			valInfo["stringTooShort"] = {
-                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("stringTooShort", this), [this.schema.minLength]),
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("stringTooShort"), [this.schema.minLength]),
                 "status": status
             };
 
@@ -322,7 +322,4 @@
     });
     Alpaca.registerFieldClass("text", Alpaca.Fields.TextField);
     Alpaca.registerDefaultSchemaFieldMapping("string", "text");
-    /*
-    Alpaca.registerDefaultSchemaFieldMapping("any", "text");
-    */
 })(jQuery);

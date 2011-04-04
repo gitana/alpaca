@@ -17,7 +17,7 @@
 			this.buttonType = "button";
 			
 			if (!this.data) {
-				this.data = Alpaca.getMessage("save", this);;
+				this.data = this.view.getMessage("save");
 			}
 		},
         

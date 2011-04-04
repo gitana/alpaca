@@ -1,13 +1,13 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
     /**
      * Default control for the treatment of a JSON object.
      */
     Alpaca.Fields.ObjectField = Alpaca.ContainerField.extend({
-    
-         /**
+
+        /**
          * @Override
          *
          */
@@ -31,8 +31,8 @@
                 }
             }
         },
-		
-		       /**
+
+        /**
          * @Override
          *
          * Pick apart the data object and set onto child fields.
@@ -40,14 +40,14 @@
          * Data must be an object.
          */
         setValue: function(data, stopUpdateTrigger) {
-             if (!data || !Alpaca.isObject(data)) {
-			 	return;
-			 }
+            if (!data || !Alpaca.isObject(data)) {
+                return;
+            }
             // clear all controls
             //Alpaca.each(this.children, function() {
             //    this.clear();
             //});
-            
+
             // set fields
             for (var fieldId in this.childrenById) {
                 var propertyId = this.childrenById[fieldId].propertyId;
@@ -58,7 +58,7 @@
                 }
             }
         },
-        
+
         /**
          * @Override
          *
@@ -66,7 +66,7 @@
          */
         getValue: function() {
             var o = {};
-            
+
             for (var i = 0; i < this.children.length; i++) {
                 var fieldId = this.children[i].getId();
                 var propertyId = this.children[i].propertyId;
@@ -74,23 +74,23 @@
                 //o[fieldId] = fieldValue;
                 o[propertyId] = fieldValue;
             }
-            
+
             return o;
         },
-        
+
         /**
          * Override
          */
         postRender: function() {
             this.base();
-            
+
             // Generates wizard if requested
             if (this.isTopLevel()) {
                 //if (this.view && this.wizardConfigs && this.wizardConfigs.renderWizard) {               
                 if (this.view) {
-                    this.wizardConfigs = Alpaca.getViewParam('wizard', this);
-                    this.templatesConfigs = Alpaca.getViewParam('templates', this);
-                    var layoutTemplate = Alpaca.getLayout("template", this);
+                    this.wizardConfigs = this.view.getWizard()/*Alpaca.getViewParam('wizard', this)*/;
+                    /*this.templatesConfigs = Alpaca.getViewParam('templates', this);*/
+                    var layoutTemplate = this.view.getLayout().template/*Alpaca.getLayout("template", this)*/;
                     if (this.wizardConfigs && this.wizardConfigs.renderWizard) {
                         if (layoutTemplate/*this.templatesConfigs && this.templatesConfigs.layout*/) {
                             //Wizard based on layout
@@ -103,7 +103,7 @@
                 }
             }
         },
-        
+
         /**
          * Gets child index
          *
@@ -121,7 +121,7 @@
             }
             return -1;
         },
-        
+
         /**
          * @Override
          *
@@ -134,37 +134,80 @@
                 itemSchema = _this.schema.properties[propertyId];
             }
             var containerElem = _this.renderItemContainer(insertAfterId, this, propertyId);
-            Alpaca(containerElem, value, fieldSetting, itemSchema, this.getView(), function(fieldControl) {
-                // render
-                fieldControl.parent = _this;
-                // add the property Id
-                fieldControl.propertyId = propertyId;
-                // setup item path
-                if (_this.path != "/") {
-                    fieldControl.path = _this.path + "/" + propertyId;
-                } else {
-                    fieldControl.path = _this.path + propertyId;
-                }
-                fieldControl.render();
-                containerElem.attr("id", fieldControl.getId() + "-item-container");
-                containerElem.attr("alpaca-id", fieldControl.getId());
-                // remember the control
-                if (Alpaca.isEmpty(insertAfterId)) {
-                    _this.addChild(fieldControl);
-                } else {
-                    var index = _this.getIndex(insertAfterId);
-                    if (index != -1) {
-                        _this.addChild(fieldControl, index + 1);
+
+            containerElem.alpaca({
+                "data" : value,
+                "options": fieldSetting,
+                "schema" : itemSchema,
+                "view" : this.view.viewObject.id ? this.view.viewObject.id : this.view.viewObject,
+                "connector": this.connector,
+                "notTopLevel":true,
+                "render" : function(fieldControl) {
+                    // render
+                    fieldControl.parent = _this;
+                    // add the property Id
+                    fieldControl.propertyId = propertyId;
+                    // setup item path
+                    if (_this.path != "/") {
+                        fieldControl.path = _this.path + "/" + propertyId;
                     } else {
+                        fieldControl.path = _this.path + propertyId;
+                    }
+                    fieldControl.render();
+                    containerElem.attr("id", fieldControl.getId() + "-item-container");
+                    containerElem.attr("alpaca-id", fieldControl.getId());
+                    // remember the control
+                    if (Alpaca.isEmpty(insertAfterId)) {
                         _this.addChild(fieldControl);
+                    } else {
+                        var index = _this.getIndex(insertAfterId);
+                        if (index != -1) {
+                            _this.addChild(fieldControl, index + 1);
+                        } else {
+                            _this.addChild(fieldControl);
+                        }
+                    }
+                    if (insertAfterId) {
+                        _this.renderValidationState();
                     }
                 }
-                if (insertAfterId) {
-                    _this.renderValidationState();
-                }
             });
+
+
+            /*            Alpaca(containerElem, value, fieldSetting, itemSchema, */
+            /*this.getView()*/
+            /*this.view.viewObject.id? this.view.viewObject.id : this.view.viewObject, function(fieldControl) {
+             // render
+             fieldControl.parent = _this;
+             // add the property Id
+             fieldControl.propertyId = propertyId;
+             // setup item path
+             if (_this.path != "/") {
+             fieldControl.path = _this.path + "/" + propertyId;
+             } else {
+             fieldControl.path = _this.path + propertyId;
+             }
+             fieldControl.render();
+             containerElem.attr("id", fieldControl.getId() + "-item-container");
+             containerElem.attr("alpaca-id", fieldControl.getId());
+             // remember the control
+             if (Alpaca.isEmpty(insertAfterId)) {
+             _this.addChild(fieldControl);
+             } else {
+             var index = _this.getIndex(insertAfterId);
+             if (index != -1) {
+             _this.addChild(fieldControl, index + 1);
+             } else {
+             _this.addChild(fieldControl);
+             }
+             }
+             if (insertAfterId) {
+             _this.renderValidationState();
+             }
+             });*/
+
         },
-        
+
         /**
          * @Override
          *
@@ -209,7 +252,7 @@
             }
             this.renderValidationState();
         },
-        
+
         /**
          *
          * @param {Object} propertyId
@@ -225,7 +268,7 @@
             }
             return shouldShow;
         },
-        
+
         /**
          * Displays or hides item depending on status of its dependencies
          *
@@ -242,13 +285,13 @@
                         item.hide();
                     }
                 } else if (Alpaca.isArray(itemDependencies)) {
-                
+
                     var shouldShow = true;
                     var _this = this;
                     $.each(itemDependencies, function(index, value) {
                         shouldShow = shouldShow && _this.getDependencyStatus(propertyId, value);
                     });
-                    
+
                     if (shouldShow) {
                         item.show();
                     } else {
@@ -257,7 +300,7 @@
                 }
             }
         },
-        
+
         /**
          * Enable item dependency
          *
@@ -273,19 +316,19 @@
                 });
             }
         },
-        
+
         /**
          * Renders wizard
          */
         wizard: function() {
-        
+
             var element = this.outerEl;
-            
+
             var steps = $('.alpaca-wizard-step', element);
             var count = steps.size();
-            
+
             this.totalSteps = count;
-            
+
             var _this = this;
             var stepTitles = [];
             if (this.wizardConfigs.stepTitles) {
@@ -312,26 +355,26 @@
             if (wizardStatusBarElement) {
                 $(element).before(wizardStatusBarElement);
             }
-            
+
             steps.each(function(i) {
-            
+
                 var stepId = 'step' + i;
-                var wizardStepTemplate = Alpaca.getTemplate("wizardStep", _this);
+                var wizardStepTemplate = _this.view.getTemplate("wizardStep");
                 if (wizardStepTemplate) {
                     var wizardStepElement = $.tmpl(wizardStepTemplate, {});
                     wizardStepElement.attr("id", stepId);
                     $(this).wrap(wizardStepElement);
                 }
-                
+
                 var navBarId = stepId + '-nav-bar';
-                var wizardNavBarTemplate = Alpaca.getTemplate("wizardNavBar", _this);
+                var wizardNavBarTemplate = _this.view.getTemplate("wizardNavBar");
                 if (wizardNavBarTemplate) {
                     var wizardNavBarElement = $.tmpl(wizardNavBarTemplate, {});
                     wizardNavBarElement.attr("id", navBarId);
                     wizardNavBarElement.addClass('alpaca-wizard-nav-bar');
                     $(this).append(wizardNavBarElement);
                 }
-                
+
                 if (i == 0) {
                     _this._createNextButton(i);
                     _this._selectStep(i);
@@ -346,34 +389,34 @@
                 $("#step" + i + "-nav-bar").buttonset();
             });
         },
-        
+
         /**
          * Renders wizard without layout
          */
         autoWizard: function() {
-        
+
             var totalSteps = this.wizardConfigs.steps;
-            
+
             if (!totalSteps) {
                 totalSteps = 1;
             }
-            
+
             this.totalSteps = totalSteps;
-            
+
             var stepBindings = this.wizardConfigs.bindings;
-            
+
             if (!stepBindings) {
                 stepBindings = {};
             }
-            
+
             for (var propertyId in this.childrenByPropertyId) {
                 if (!stepBindings.hasOwnProperty(propertyId)) {
                     stepBindings[propertyId] = 1;
                 }
             }
-            
+
             this.stepBindings = stepBindings;
-            
+
             for (var i = 0; i < totalSteps; i++) {
                 var step = i + 1;
                 var tmpArray = [];
@@ -384,17 +427,17 @@
                         }
                     }
                 }
-                
+
                 var stepId = 'step' + i;
-                var wizardStepTemplate = Alpaca.getTemplate("wizardStep", this);
+                var wizardStepTemplate = this.view.getTemplate("wizardStep");
                 if (wizardStepTemplate) {
                     var wizardStepElement = $.tmpl(wizardStepTemplate, {});
                     wizardStepElement.attr("id", stepId);
                     $(tmpArray.join(',')).wrapAll(wizardStepElement);
                 }
-                
+
                 var navBarId = stepId + '-nav-bar';
-                var wizardNavBarTemplate = Alpaca.getTemplate("wizardNavBar", this);
+                var wizardNavBarTemplate = this.view.getTemplate("wizardNavBar");
                 if (wizardNavBarTemplate) {
                     var wizardNavBarElement = $.tmpl(wizardNavBarTemplate, {});
                     wizardNavBarElement.attr("id", navBarId);
@@ -402,12 +445,12 @@
                     $('#' + stepId, this.outerEl).append(wizardNavBarElement);
                 }
             }
-            
+
             var wizardStatusBarElement = this._renderWizardStatusBar(this.wizardConfigs.stepTitles);
             if (wizardStatusBarElement) {
                 wizardStatusBarElement.prependTo(this.fieldContainer);
             }
-            
+
             for (var i = 0; i < totalSteps; i++) {
                 if (i == 0) {
                     this._createNextButton(i);
@@ -423,7 +466,7 @@
                 $("#step" + i + "-nav-bar").buttonset();
             }
         },
-        
+
         /**
          * Renders wizard status bar
          *
@@ -432,7 +475,7 @@
         _renderWizardStatusBar: function(stepTitles) {
             var wizardStatusBar = this.wizardConfigs.statusBar;
             if (wizardStatusBar && stepTitles) {
-                var wizardStatusBarTemplate = Alpaca.getTemplate("wizardStatusBar", this);
+                var wizardStatusBarTemplate = this.view.getTemplate("wizardStatusBar");
                 if (wizardStatusBarTemplate) {
                     var wizardStatusBarElement = $.tmpl(wizardStatusBarTemplate, {
                         "id": this.getId() + "-wizard-status-bar",
@@ -443,7 +486,7 @@
                 }
             }
         },
-        
+
         /**
          * Creates prev button
          *
@@ -452,7 +495,7 @@
         _createPrevButton: function(i) {
             var stepName = "step" + i;
             var _this = this;
-            
+
             /*
              var wizardPreButtonTemplate = Alpaca.getTemplate("wizardPreButton", this);
              if (wizardPreButtonTemplate) {
@@ -461,14 +504,14 @@
              wizardPreButtonElement.addClass('alpaca-wizard-button alpaca-wizard-button-back');
              $("#" + stepName + "-nav-bar").append(wizardPreButtonElement);
              }
-             
+
              $("#" + stepName + "-button-pre").bind("click", function(e) {
              $("#" + stepName).hide();
              $("#step" + (i - 1)).show();
              _this._selectStep(i - 1);
              });
              */
-            var wizardPreButtonTemplate = Alpaca.getTemplate("wizardPreButton", this);
+            var wizardPreButtonTemplate = this.view.getTemplate("wizardPreButton");
             if (wizardPreButtonTemplate) {
                 var wizardPreButtonElement = $.tmpl(wizardPreButtonTemplate, {});
                 wizardPreButtonElement.attr("id", stepName + '-button-pre');
@@ -485,9 +528,9 @@
                 });
                 $("#" + stepName + "-nav-bar").append(wizardPreButtonElement);
             }
-            
+
         },
-        
+
         /**
          * Creates next button
          *
@@ -496,7 +539,7 @@
         _createNextButton: function(i) {
             var stepName = "step" + i;
             var _this = this;
-            
+
             /*
              var wizardNextButtonTemplate = Alpaca.getTemplate("wizardNextButton", this);
              if (wizardNextButtonTemplate) {
@@ -505,15 +548,15 @@
              wizardNextButtonElement.addClass('alpaca-wizard-button alpaca-wizard-button-next');
              $("#" + stepName + "-nav-bar").append(wizardNextButtonElement);
              }
-             
+
              $("#" + stepName + "-button-next").bind("click", function(e) {
              $("#" + stepName).hide();
              $("#step" + (i + 1)).show();
-             
+
              _this._selectStep(i + 1);
              });
              */
-            var wizardNextButtonTemplate = Alpaca.getTemplate("wizardNextButton", this);
+            var wizardNextButtonTemplate = this.view.getTemplate("wizardNextButton");
             if (wizardNextButtonTemplate) {
                 var wizardNextButtonElement = $.tmpl(wizardNextButtonTemplate, {});
                 wizardNextButtonElement.attr("id", stepName + '-button-next');
@@ -524,7 +567,7 @@
                     }
                 }).click(function() {
                     var valid = true;
-                    
+
                     if (_this.view && _this.wizardConfigs && _this.wizardConfigs.validation) {
                         $.each(_this.stepBindings, function(propertyId, step) {
                             if (step == i + 1 && valid) {
@@ -539,11 +582,11 @@
                     }
                     return false;
                 });
-                
+
                 $("#" + stepName + "-nav-bar").append(wizardNextButtonElement);
             }
         },
-        
+
         /**
          * Selects wizard step
          *
@@ -556,7 +599,7 @@
                 $("#stepDesc" + i).addClass("current-has-next");
             }
         },
-        
+
         /**
          * @Override
          */
@@ -570,11 +613,11 @@
                     }
                 }
             };
-            
+
             var fieldsProperties = properties.properties.properties;
-            
+
             fieldsProperties.properties = {};
-            
+
             if (this.children) {
                 for (var i = 0; i < this.children.length; i++) {
                     var propertyId = this.children[i].propertyId;
@@ -582,31 +625,31 @@
                     fieldsProperties.properties[propertyId].title = propertyId + " :: " + fieldsProperties.properties[propertyId].title;
                 }
             }
-            
+
             return Alpaca.merge(this.base(), properties);
         },
-        
+
         /**
          * @Override
          */
         getTitle: function() {
             return "Composite Field";
         },
-        
+
         /**
          * @Override
          */
         getDescription: function() {
             return "Composite field for containing other fields";
         },
-        
+
         /**
          * @Override
          */
         getType: function() {
             return "object";
         },
-        
+
         /**
          * @Override
          */
@@ -615,7 +658,7 @@
                 "properties": {
                 }
             });
-            
+
             var properties = {
                 "properties": {
                     "properties": {
@@ -625,11 +668,11 @@
                     }
                 }
             };
-            
+
             var fieldsProperties = properties.properties.properties;
-            
+
             fieldsProperties.properties = {};
-            
+
             if (this.children) {
                 for (var i = 0; i < this.children.length; i++) {
                     var propertyId = this.children[i].propertyId;
@@ -637,19 +680,19 @@
                     fieldsProperties.properties[propertyId].title = propertyId + " :: " + fieldsProperties.properties[propertyId].title;
                 }
             }
-            
+
             return Alpaca.merge(schemaOfOptions, properties);
         },
-        
+
         /**
          * @Override
          */
         getFieldType: function() {
             return "object";
         }
-        
+
     });
-    
+
     Alpaca.registerFieldClass("object", Alpaca.Fields.ObjectField);
     Alpaca.registerDefaultSchemaFieldMapping("object", "object");
 })(jQuery);

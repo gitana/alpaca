@@ -16,7 +16,7 @@
 			this.base();			
 			// sets defaults
 			if (!this.data) {
-				this.data = Alpaca.getMessage("print", this);
+				this.data = this.view.getMessage("print");
 			}			
 		},
         

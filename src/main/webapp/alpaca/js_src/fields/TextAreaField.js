@@ -29,7 +29,7 @@
                 this.options.cols = 40;
             }
 			
-			this.controlFieldTemplate = Alpaca.getTemplate("controlFieldTextarea", this);
+			this.controlFieldTemplate = this.view.getTemplate("controlFieldTextarea");
         },
         
         /**

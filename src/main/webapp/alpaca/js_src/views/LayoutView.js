@@ -3,7 +3,7 @@
     var Alpaca = $.alpaca;
 
     Alpaca.registerView({
-        "id": "WEB_EDIT",
+        "id": "VIEW::WEB_EDIT",
         "templates": {
             "twoColumnLayout":'<div class="alpaca-layout-two-column-mask">'
                     + '{{if options.label}}<h3>${options.label}</h3>{{/if}}'
@@ -15,8 +15,8 @@
     });
 
     Alpaca.registerView({
-        "id": "WEB_EDIT_LAYOUT_TWO_COLUMN",
-        "parent": "WEB_EDIT",
+        "id": "VIEW::WEB_EDIT_LAYOUT_TWO_COLUMN",
+        "parent": "VIEW::WEB_EDIT",
         "title": "Web Edit View with Two-Column Layout",
         "description": "Web edit default view with two-column layout.",
         "layout" : {
@@ -25,8 +25,8 @@
     });
 
     Alpaca.registerView({
-        "id": "WEB_EDIT_LIST_LAYOUT_TWO_COLUMN",
-        "parent": "WEB_EDIT_LIST",
+        "id": "VIEW::WEB_EDIT_LIST_LAYOUT_TWO_COLUMN",
+        "parent": "VIEW::WEB_EDIT_LIST",
         "title": "Web List Edit View with Two-Column Layout",
         "description": "Web edit list view with two-column layout.",
         "layout" : {

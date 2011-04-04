@@ -29,8 +29,8 @@
 
             var collapsible = true;
 
-            if (!Alpaca.isEmpty(Alpaca.getViewParam('collapsible', this))) {
-                collapsible = Alpaca.getViewParam('collapsible', this);
+            if (!Alpaca.isEmpty(this.view.collapsible/*Alpaca.getViewParam('collapsible', this)*/)) {
+                collapsible = this.view.collapsible/*Alpaca.getViewParam('collapsible', this)*/;
             }
 
             if (!Alpaca.isEmpty(this.options.collapsible)) {
@@ -41,8 +41,8 @@
 
             var legendStyle = "button";
 
-            if (!Alpaca.isEmpty(Alpaca.getViewParam('legendStyle', this))) {
-                legendStyle = Alpaca.getViewParam('legendStyle', this);
+            if (!Alpaca.isEmpty(this.view.legendStyle/*Alpaca.getViewParam('legendStyle', this)*/)) {
+                legendStyle = this.view.legendStyle/*Alpaca.getViewParam('legendStyle', this)*/;
             }
 
             /*
@@ -193,7 +193,7 @@
          * Renders item container
          */
         renderItemContainer: function(insertAfterId, parent, propertyId) {
-            var itemContainerTemplate = Alpaca.getTemplate("fieldSetItemContainer", this);
+            var itemContainerTemplate = this.view.getTemplate("fieldSetItemContainer")/*Alpaca.getTemplate("fieldSetItemContainer", this)*/;
             if (itemContainerTemplate) {
                 var containerElem = $.tmpl(itemContainerTemplate, {});
                 if (containerElem.attr('data-replace') == 'true') {
@@ -205,7 +205,7 @@
 
                         var appendToContainer = this.fieldContainer;
 
-                        var bindings = Alpaca.getLayout("bindings", this);
+                        var bindings = this.view.getLayout().bindings/*Alpaca.getLayout("bindings", this)*/;
                         if (bindings) {
                             var binding = bindings[propertyId];
                             if (binding && $('#' + binding, appendToContainer).length > 0) {

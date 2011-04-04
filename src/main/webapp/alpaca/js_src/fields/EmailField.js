@@ -46,7 +46,7 @@
             var valInfo = this.validation;
             
             if (!valInfo["invalidPattern"]["status"]) {
-                valInfo["invalidPattern"]["message"] = Alpaca.getMessage("invalidEmail", this);
+                valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidEmail");
             }
             
             return baseStatus;

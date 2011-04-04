@@ -14,7 +14,7 @@
         setup: function() {
             this.base();
 
-            this.controlFieldTemplate = Alpaca.getTemplate("controlFieldAny", this);
+            this.controlFieldTemplate = this.view.getTemplate("controlFieldAny");
         },
 
         /**

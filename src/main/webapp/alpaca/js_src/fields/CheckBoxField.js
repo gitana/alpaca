@@ -31,7 +31,7 @@
          *
          */
         renderField: function(onSuccess) {
-            var controlFieldTemplate = Alpaca.getTemplate("controlFieldCheckbox", this, null, this.mode);
+            var controlFieldTemplate = this.view.getTemplate("controlFieldCheckbox");
             
             if (controlFieldTemplate) {
 				this.field = $.tmpl(controlFieldTemplate, {

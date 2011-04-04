@@ -3,7 +3,7 @@
     var Alpaca = $.alpaca;
 
     Alpaca.registerView({
-        "id": "WEB_DISPLAY",
+        "id": "VIEW::WEB_DISPLAY",
         "title": "Default Web Display View",
         "description":"Default web edit view which goes though field hierarchy.",
         "type": "view",
@@ -19,7 +19,7 @@
     });
 
     Alpaca.registerView({
-        "id":"WEB_EDIT",
+        "id":"VIEW::WEB_EDIT",
         "title":"Default Web Edit View",
         "description":"Default web edit view which goes though field hierarchy.",
         "type":"edit",
@@ -64,8 +64,8 @@
     });
 
     Alpaca.registerView({
-        "id": "WEB_CREATE",
-        "parent": 'WEB_EDIT',
+        "id": "VIEW::WEB_CREATE",
+        "parent": 'VIEW::WEB_EDIT',
         "title": "Default Web Create View",
         "description":"Default web create view which doesn't bind initial data.",
         "type": "create",

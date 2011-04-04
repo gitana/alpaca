@@ -57,7 +57,7 @@
          *
          * @param schema field schema (optional)
          */
-        constructor: function(container, data, options, schema, view) {
+        constructor: function(container, data, options, schema, view, connector) {
             // mark that we are initializing
             this.initializing = true;
 
@@ -69,15 +69,12 @@
             this.data = data;
             this.options = options;
             this.schema = schema;
+            this.connector = connector;
 
             // check if this field rendering is single-level or not
             this.singleLevelRendering = false;
 
-            if (view) {
-                this.setView(view);
-            } else {
-                this.setView(Alpaca.defaultView);
-            }
+            this.view = new Alpaca.View(view, this);
 
             // things we can draw off the options
             if (!this.options) {
@@ -85,11 +82,6 @@
             }
             this.id = this.options.id;
             this.type = this.options.type;
-
-            //TODO: this needs to be removed.
-            if (this.options.template) {
-                this.setTemplate(this.options.template);
-            }
 
             // setup defaults
             if (!this.id) {
@@ -136,22 +128,15 @@
          * Sets up default rendition template from view
          */
         setDefaultTemplate: function() {
-            var globalTemplate = Alpaca.getViewParam('globalTemplate', this);
-            if (Alpaca.getTemplate(globalTemplate, this)) {
-                globalTemplate = Alpaca.getTemplate(globalTemplate, this);
-            }
-            var layoutTemplate = Alpaca.getLayout("template", this);
-            // Check to see if it is a template reference
-            if (Alpaca.getTemplate(layoutTemplate, this)) {
-                layoutTemplate = Alpaca.getTemplate(layoutTemplate, this);
-            }
+            var globalTemplate = this.view.getGlobalTemplate();
+            var layoutTemplate = this.view.getLayout().template;
             if (globalTemplate) {
                 this.setTemplate(globalTemplate);
                 this.singleLevelRendering = true;
             } else if (layoutTemplate) {
                 this.setTemplate(layoutTemplate);
             } else {
-                this.setTemplate(Alpaca.getTemplate(this.getDefaultFieldTemplateId(), this));
+                this.setTemplate(this.view.getTemplate(this.getDefaultFieldTemplateId())/*Alpaca.getTemplate(this.getDefaultFieldTemplateId(), this)*/);
             }
         },
 
@@ -164,14 +149,6 @@
                 this.data = this.getValue();
             }
 
-            // if we have already created backup settings, restore from them
-            /*
-             if (this.backupSettings) {
-             this.settings = Alpaca.cloneObject(this.backupSettings);
-             } else {
-             this.backupSettings = Alpaca.cloneObject(this.settings);
-             }
-             */
             this.setDefaultTemplate();
 
             // JSON SCHEMA
@@ -209,7 +186,10 @@
          */
         render: function(view, callback) {
             if (view && (Alpaca.isString(view) || Alpaca.isObject(view))) {
-                this.setView(view);
+                /*
+                 this.setView(view);
+                 */
+                this.view.setView(view);
             } else {
                 if (Alpaca.isEmpty(callback) && Alpaca.isFunction(view)) {
                     callback = view;
@@ -232,10 +212,10 @@
 
             // check if it needs to be wrapped in a form
             if (this.options.renderForm) {
-                this.options.form.viewType = this.viewType;
+                this.options.form.viewType = /*this.viewType*/this.view.type;
                 var form = this.form;
                 if (!form) {
-                    form = new Alpaca.Form(this.container, this.options.form);
+                    form = new Alpaca.Form(this.container, this.options.form, this.view.viewObject, this.connector);
                 }
                 form.render(function(form) {
                     // load the appropriate template and render it
@@ -247,7 +227,7 @@
                         // bind the top field to the form
                         form.topControl = _this;
 
-                        if (_this.viewType && _this.viewType != 'view') {
+                        if ( _this.view.type && _this.view.type != 'view') {
                             form.initEvents();
                         }
 
@@ -294,22 +274,11 @@
             var template = this.getTemplate();
 
             // if we have a template to load, load it and then render
-            if (Alpaca.isUri(template)) {
-                // load template from remote location
-                $.ajax({
-                    url: template,
-                    type: 'get',
-                    success: function(templateString) {
-                        _this._renderLoadedTemplate(parentEl, templateString, onSuccess);
-                    },
-                    error: function(error) {
-                        alert(error);
-                    }
-                });
-            } else {
-                // we already have the template, so just render it
-                this._renderLoadedTemplate(parentEl, template, onSuccess);
-            }
+            this.connector.loadTemplate(template, function(loadedTemplate) {
+                _this._renderLoadedTemplate(parentEl, loadedTemplate, onSuccess);
+            }, function(error) {
+                alert(error);
+            });
         },
 
         /**
@@ -322,7 +291,7 @@
                 "options": this.options,
                 "schema": this.schema,
                 "data": this.data,
-                "view": this.getView(),
+                "view": /*this.getView()*/this.view.viewObject,
                 "path": this.path
             }, {});
             renderedDomElement.appendTo(parentEl);
@@ -376,7 +345,7 @@
             }
 
             // Support for custom styles provided by custom view
-            var customStyles = Alpaca.getStyles(this);
+            var customStyles = this.view.getStyles()/*Alpaca.getStyles(this)*/;
 
             if (customStyles) {
                 for (var styleClass in customStyles) {
@@ -394,11 +363,11 @@
                 this.disable();
             }
             // bind data
-            if (this.getViewType() && this.getViewType() == 'edit') {
+            if (this.view.type && this.view.type == 'edit') {
                 this.bindData();
             }
             // initialize events (after part of the dom)
-            if (this.getViewType() && this.getViewType() != 'view') {
+            if (this.view.type && this.view.type != 'view') {
                 this.initEvents();
             }
 
@@ -406,12 +375,12 @@
             this.initializing = false;
 
             // final call to update validation state
-            if (this.getViewType() != 'view') {
+            if (this.view.type != 'view') {
                 this.renderValidationState();
             }
 
             // for create view, hide all readonly fields
-            if (!Alpaca.getViewParam('displayReadonly', this)) {
+            if (!this.view.displayReadonly) {
                 $('.alpaca-field-readonly', this.getEl()).hide();
             }
 
@@ -504,34 +473,6 @@
         },
 
         /**
-         * Gets current view
-         */
-        getView: function() {
-            return this.view;
-        },
-
-        /**
-         * Sets view
-         */
-        setView: function(view) {
-            if (Alpaca.isString(view) && !Alpaca.isEmpty(Alpaca.views[view])) {
-                // view id
-                this.view = view;
-            } else {
-                // actual view object
-                this.view = view;
-            }
-            this.viewType = Alpaca.getViewType(this.view);
-        },
-
-        /**
-         * Gets current view type
-         */
-        getViewType: function() {
-            return this.viewType;
-        },
-
-        /**
          * Renders a validation state message below the field.
          */
         displayMessage: function(messages, beforeStatus) {
@@ -544,12 +485,11 @@
             if (messages && messages.length > 0) {
                 $.each(messages, function(index, message) {
                     if (message.length > 0) {
-                        var messageTemplate = Alpaca.getTemplate("controlFieldMessage", _this);
+                        var messageTemplate = _this.view.getTemplate("controlFieldMessage")/*Alpaca.getTemplate("controlFieldMessage", _this)*/;
                         if (messageTemplate) {
                             _this.messageElement = $.tmpl(messageTemplate, {
                                 "message": message
                             });
-                            //_this.messageElement.addClass("alpaca-field-message");
                             _this.messageElement.addClass("ui-state-error-text alpaca-controlfield-message");
                             _this.messageElement.attr("id", _this.getId() + '-field-message-' + index);
                             // check to see if we have a message container rendered
@@ -572,7 +512,6 @@
             if (this.options.validate) {
                 // remove all previous markers
                 this.getEl().removeClass("alpaca-field-invalid ui-state-error");
-                //this.getEl().removeClass("alpaca-field-invalid");
                 this.getEl().removeClass("alpaca-field-valid");
 
                 var beforeStatus = this.isValid();
@@ -581,7 +520,6 @@
                 if (this.validate()) {
                     this.getEl().addClass("alpaca-field-valid");
                 } else {
-                    //this.getEl().addClass("alpaca-field-invalid");
                     this.getEl().addClass("ui-state-error alpaca-field-invalid");
                 }
 
@@ -603,7 +541,6 @@
                 if (beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) {
                     this.parent.renderValidationState();
                 }
-
                 this._validateCustomValidator();
             }
         },
@@ -674,17 +611,15 @@
 
             var status = this._validateOptional();
             valInfo["notOptional"] = {
-                "message": status ? "" : Alpaca.getMessage("notOptional", this),
+                "message": status ? "" : this.view.getMessage("notOptional"),
                 "status": status
             };
 
             status = this._validateDisallow();
             valInfo["disallowValue"] = {
-                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("disallowValue", this), [this.schema["disallow"].join(',')]),
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("disallowValue"), [this.schema["disallow"].join(',')]),
                 "status": status
             };
-
-            //this._validateCustomValidator();
 
             return valInfo["notOptional"]["status"] && valInfo["disallowValue"]["status"];
         },
@@ -777,7 +712,7 @@
         },
 
         /**
-         * Show the field
+         * Shows the field
          */
         show: function() {
             this.getEl().css({
@@ -786,7 +721,7 @@
         },
 
         /**
-         * Hide the field
+         * Hides the field
          */
         hide: function() {
             this.getEl().css({
@@ -795,7 +730,7 @@
         },
 
         /**
-         * Hide the field
+         * Prints the field
          */
         print: function() {
             if (this.container.printArea) {
@@ -804,7 +739,7 @@
         },
 
         /**
-         * Reload the field
+         * Reloads the field
          */
         reload: function() {
             this.initializing = true;

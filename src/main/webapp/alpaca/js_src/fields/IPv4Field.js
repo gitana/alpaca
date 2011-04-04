@@ -37,7 +37,7 @@
             var valInfo = this.validation;
             
             if (!valInfo["invalidPattern"]["status"]) {
-                valInfo["invalidPattern"]["message"] = Alpaca.getMessage("invalidIPv4", this);
+                valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidIPv4");
             }
             
             return baseStatus;

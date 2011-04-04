@@ -31,7 +31,7 @@
                 this.label = this.options.label;
             }
 
-            this.buttonStyle = Alpaca.isEmpty(Alpaca.getViewParam('buttonStyle', this)) ? "button" : Alpaca.getViewParam('buttonStyle', this);
+            this.buttonStyle = Alpaca.isEmpty(this.view.buttonStyle) ? "button" : this.view.buttonStyle;
         },
 
         /**
@@ -43,7 +43,7 @@
             // decorate the field container with our class
             $(this.fieldContainer).addClass("alpaca-controlfield-button");
 
-            var controlFieldTemplate = Alpaca.getTemplate("controlFieldButton", this);
+            var controlFieldTemplate = this.view.getTemplate("controlFieldButton");
 
             if (controlFieldTemplate) {
                 this.field = $.tmpl(controlFieldTemplate, {

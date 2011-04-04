@@ -52,7 +52,7 @@
          * Render list control into the field container
          */
         _renderField: function(onSuccess){            
-            var controlFieldTemplate = Alpaca.getTemplate("controlFieldRadio", this, null, this.mode);
+            var controlFieldTemplate = this.view.getTemplate("controlFieldRadio");
             
             if (controlFieldTemplate) {
                 this.field = $.tmpl(controlFieldTemplate, {

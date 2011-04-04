@@ -47,7 +47,7 @@
             var valInfo = this.validation;
             
             if (!valInfo["invalidPattern"]["status"]) {
-                valInfo["invalidPattern"]["message"] = Alpaca.getMessage("invalidPhone", this);
+                valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidPhone");
             }
             
             return baseStatus;

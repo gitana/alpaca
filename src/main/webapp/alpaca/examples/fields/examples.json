@@ -124,5 +124,12 @@
 		    "title":"View",
 			"link":"../views/view-examples.html"
 		}]			
-	}] 
+	},{
+		"title": "Connectors",
+		"examples": [{
+			"id":"simple-connector",
+		    "title":"Simple",
+			"link":"../connectors/simple-connector.html"
+		}]
+	}]
 }

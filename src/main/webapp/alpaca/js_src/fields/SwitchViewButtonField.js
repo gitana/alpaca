@@ -16,7 +16,7 @@
             this.base();
             
             if (!this.data) {
-                this.data = Alpaca.getMessage("switchView", this);
+                this.data = this.view.getMessage("switchView");
             }
             
         },
@@ -45,15 +45,15 @@
          */
         onClick: function(e) {
 			// prepare view list
-			var currentView = this.form.topControl.view;
+			var currentView = this.form.topControl.view.viewObject;
 			if (Alpaca.isEmpty(this.viewList)) {
 				// back up current view
-				if (Alpaca.isObject(currentView)) {
+				if (Alpaca.isEmpty(Alpaca.views[currentView.id])) {
 					if (Alpaca.isEmpty(currentView.id)) {
-						currentView.id = "VIEW_" + Alpaca.generateId();
+						currentView.id = Alpaca.generateViewId();
 					}
 					if (Alpaca.isEmpty(currentView.description)) {
-						currentView.description = Alpaca.getMessage("currentView", this);
+						currentView.title = this.view.getMessage("currentView");
 					}
 					Alpaca.registerView(currentView);
 				}
@@ -61,7 +61,7 @@
 				for (var viewId in Alpaca.views) {
 					viewList.push({
 						"id": viewId,
-						"desc": Alpaca.views[viewId].description
+						"desc": Alpaca.views[viewId].title
 					});
 				}
 				this.viewList = viewList;

@@ -3,8 +3,8 @@
     var Alpaca = $.alpaca;
 
     Alpaca.registerView({
-        "id": "MOBILE_DISPLAY",
-        "parent": "WEB_DISPLAY",
+        "id": "VIEW::MOBILE_DISPLAY",
+        "parent": "VIEW::WEB_DISPLAY",
         "title": "Mobile DISPLAY View",
         "description": "Mobile display view using JQuery Mobile Library",
         "type": "view",
@@ -46,8 +46,8 @@
     });
 
     Alpaca.registerView({
-        "id": "MOBILE_EDIT",
-        "parent": "WEB_EDIT",
+        "id": "VIEW::MOBILE_EDIT",
+        "parent": "VIEW::WEB_EDIT",
         "title": "Mobile Edit View",
         "description": "Mobile edit view using JQuery Mobile Library",
         "type": "edit",

@@ -83,7 +83,7 @@
             var valInfo = this.validation;
             
             if (!valInfo["stringNotANumber"]["status"]) {
-                valInfo["stringNotANumber"]["message"] = Alpaca.getMessage("stringNotAnInteger", this);
+                valInfo["stringNotANumber"]["message"] = this.view.getMessage("stringNotAnInteger");
             }
             
             return baseStatus;

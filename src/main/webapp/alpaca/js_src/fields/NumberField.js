@@ -58,13 +58,13 @@
 			
 			var status = this._validateNumber();
             valInfo["stringNotANumber"] = {
-                "message": status ? "" : Alpaca.getMessage("stringNotANumber", this),
+                "message": status ? "" : this.view.getMessage("stringNotANumber"),
                 "status": status
             };
 
             status = this._validateDivisibleBy();
 			valInfo["stringDivisibleBy"] = {
-                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("stringDivisibleBy", this), [this.schema.divisibleBy]),
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("stringDivisibleBy"), [this.schema.divisibleBy]),
                 "status": status
             };
 
@@ -75,9 +75,9 @@
             };
             if (!status) {
                 if (this.schema.exclusiveMaximum) {
-                    valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooLargeExclusive", this), [this.schema.maximum]);
+                    valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueTooLargeExclusive"), [this.schema.maximum]);
                 } else {
-                    valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooLarge", this), [this.schema.maximum]);
+                    valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueTooLarge"), [this.schema.maximum]);
                 }
             }
 			
@@ -88,9 +88,9 @@
             };
             if (!status) {
                 if (this.schema.exclusiveMinimum) {
-                    valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooSmallExclusive", this), [this.schema.minimum]);
+                    valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueTooSmallExclusive"), [this.schema.minimum]);
                 } else {
-                    valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(Alpaca.getMessage("stringValueTooSmall", this), [this.schema.minimum]);
+                    valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueTooSmall"), [this.schema.minimum]);
                 }
             }
             return baseStatus && valInfo["stringNotANumber"]["status"] && valInfo["stringDivisibleBy"]["status"] && valInfo["stringValueTooLarge"]["status"] && valInfo["stringValueTooSmall"]["status"];

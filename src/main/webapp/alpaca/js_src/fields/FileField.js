@@ -23,7 +23,7 @@
          */
         setup: function() {
             this.base();            
-            this.controlFieldTemplate = Alpaca.getTemplate("controlFieldFile", this);
+            this.controlFieldTemplate = this.view.getTemplate("controlFieldFile");
         },
                 
         /**

@@ -48,9 +48,9 @@
             var controlFieldTemplate;
 			
 			if (this.options.multiple && Alpaca.isArray(this.data)) {
-				controlFieldTemplate = Alpaca.getTemplate("controlFieldSelectMultiple", this);
+				controlFieldTemplate = this.view.getTemplate("controlFieldSelectMultiple");
 			} else {
-				controlFieldTemplate = Alpaca.getTemplate("controlFieldSelect", this);
+				controlFieldTemplate = this.view.getTemplate("controlFieldSelect");
 			}
             
             if (controlFieldTemplate) {

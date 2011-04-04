@@ -1,12 +1,12 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
     /**
      * Default control for the treatment of a JSON array.
      */
     Alpaca.Fields.ArrayField = Alpaca.ContainerField.extend({
-    
+
         /**
          * @Override
          *
@@ -30,10 +30,10 @@
                     }
                 }
             }
-          
-            this.options.toolbarStyle = Alpaca.isEmpty(Alpaca.getViewParam('toolbarStyle', this))?"button":Alpaca.getViewParam('toolbarStyle', this);			
+
+            this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle/*Alpaca.getViewParam('toolbarStyle', this)*/) ? "button" : this.view.toolbarStyle/*Alpaca.getViewParam('toolbarStyle', this)*/;
         },
-        
+
         /**
          * @Override
          *
@@ -42,16 +42,16 @@
          * Data must be an array.
          */
         setValue: function(data) {
-        
+
             if (!data || !Alpaca.isArray(data)) {
                 return;
             }
-            
+
             // clear all controls
             //Alpaca.each(this.children, function() {
             //    this.clear();
             //});
-            
+
             // set fields
             for (var i = 0; i < this.children.length; i++) {
                 var childField = this.children[i];
@@ -60,7 +60,7 @@
                 }
             }
         },
-        
+
         /**
          * @Override
          *
@@ -68,22 +68,22 @@
          */
         getValue: function() {
             var o = [];
-            
+
             for (var i = 0; i < this.children.length; i++) {
                 var v = this.children[i].getValue();
                 o.push(v);
             }
-            
+
             return o;
         },
-        
+
         /**
          * Returns number of children
          */
         getSize: function() {
             return this.children.length;
         },
-        
+
         /**
          * Moves item up or down
          * @param {Object} fromId
@@ -122,7 +122,7 @@
                 });
             }
         },
-        
+
         /**
          * Removes item
          * @param {Object} id
@@ -135,11 +135,11 @@
                 delete this.childrenById[id];
                 $('#' + id + "-item-container", this.outerEl).remove();
                 this.renderValidationState();
-                
+
                 this.updateToolbarItemsStatus();
             }
         },
-        
+
         /**
          * Updates status of toolbar item
          */
@@ -172,20 +172,20 @@
                 this.renderArrayToolbar(this.outerEl);
             } else {
                 /*
-				if ($('.alpaca-fieldset-array-toolbar', this.outerEl)) {
-                    $('.alpaca-fieldset-array-toolbar', this.outerEl).remove();
+                 if ($('.alpaca-fieldset-array-toolbar', this.outerEl)) {
+                 $('.alpaca-fieldset-array-toolbar', this.outerEl).remove();
+                 }
+                 */
+                if (this.arrayToolbar) {
+                    this.arrayToolbar.remove();
                 }
-                */
-				if (this.arrayToolbar) {
-					this.arrayToolbar.remove();
-				}
             }
             // update counter
             $('.alpaca-item-label-counter', this.outerEl).each(function(index) {
                 $(this).html(index + 1);
             });
         },
-        
+
         /**
          * Renders item toolbar
          * @param {Object} containerElem
@@ -194,7 +194,7 @@
             var _this = this;
             var id = containerElem.attr('alpaca-id');
             var fieldControl = this.childrenById[id];
-            var itemToolbarTemplate = Alpaca.getTemplate("arrayItemToolbar", this);
+            var itemToolbarTemplate = this.view.getTemplate("arrayItemToolbar");
             if (itemToolbarTemplate) {
                 var toolbarElem = $.tmpl(itemToolbarTemplate, {
                     "id": id
@@ -226,8 +226,8 @@
                         primary: "ui-icon-circle-plus"
                     }
                 }).click(function() {
-					var currentItemVal = fieldControl.getValue();
-                    var newContainerElem = _this.addItem(containerElem.index() + 1, null, Alpaca.isValEmpty(currentItemVal)?null:fieldControl.getValue(), id);
+                    var currentItemVal = fieldControl.getValue();
+                    var newContainerElem = _this.addItem(containerElem.index() + 1, null, Alpaca.isValEmpty(currentItemVal) ? null : fieldControl.getValue(), id);
                     _this.enrichElements(newContainerElem);
                     //return false;
                 });
@@ -265,9 +265,9 @@
                     $('.alpaca-fieldset-array-item-toolbar', this).hide();
                 });
             }
-            
+
         },
-        
+
         /**
          * Renders array toolbar
          * @param {Object} containerElem
@@ -275,7 +275,7 @@
         renderArrayToolbar: function(containerElem) {
             var _this = this;
             var id = containerElem.attr('alpaca-id');
-            var itemToolbarTemplate = Alpaca.getTemplate("arrayToolbar", this);
+            var itemToolbarTemplate = this.view.getTemplate("arrayToolbar")/*Alpaca.getTemplate("arrayToolbar", this)*/;
             if (itemToolbarTemplate) {
                 var toolbarElem = $.tmpl(itemToolbarTemplate, {
                     "id": id
@@ -284,26 +284,27 @@
                     toolbarElem.attr("id", id + "-array-toolbar");
                 }
                 // add actions to toolbar buttons
-				if (this.options.toolbarStyle == "link") {				
-					$('.alpaca-fieldset-array-toolbar-add', toolbarElem).click(function() {
-						var newContainerElem = _this.addItem(0, null, "", id);
-						 _this.enrichElements(newContainerElem);
-					});					
-				} else {
-					$('.alpaca-fieldset-array-toolbar-add', toolbarElem).button({
-						icons: {
-							primary: "ui-icon-circle-plus"
-						}
-					}).click(function() {
-						_this.addItem(0, null, "", id);
-						return false;
-					}).wrap('<small></small>');
-				}
+                if (this.options.toolbarStyle == "link") {
+                    $('.alpaca-fieldset-array-toolbar-add', toolbarElem).click(function() {
+                        var newContainerElem = _this.addItem(0, null, "", id);
+                        _this.enrichElements(newContainerElem);
+                    });
+                } else {
+                    $('.alpaca-fieldset-array-toolbar-add', toolbarElem).button({
+                        icons: {
+                            primary: "ui-icon-circle-plus"
+                        }
+                    }).click(
+                            function() {
+                                _this.addItem(0, null, "", id);
+                                return false;
+                            }).wrap('<small></small>');
+                }
                 toolbarElem.appendTo(containerElem);
-				this.arrayToolbar = toolbarElem;
+                this.arrayToolbar = toolbarElem;
             }
         },
-        
+
         /**
          * Re-renders item
          *
@@ -313,15 +314,15 @@
         reRenderItem: function(fieldControl, newContainer) {
             fieldControl.container = newContainer;
             fieldControl.render();
-            
+
             newContainer.attr("id", fieldControl.getId() + "-item-container");
             newContainer.attr("alpaca-id", fieldControl.getId());
-            
+
             $(".alpaca-fieldset-array-item-toolbar", newContainer).remove();
             this.renderToolbar(newContainer);
             this.enrichElements(newContainer);
         },
-        
+
         /**
          * Adds item
          *
@@ -338,35 +339,72 @@
                     itemSchema = _this.schema.items;
                 }
                 var containerElem = _this.renderItemContainer(insertAfterId);
-                Alpaca(containerElem, value, fieldSetting, itemSchema, this.getView(), function(fieldControl) {
-                    // render
-                    fieldControl.parent = _this;
-                    // setup item path
-                    fieldControl.path = _this.path + "[" + index + "]";
-                    fieldControl.render();
-                    containerElem.attr("id", fieldControl.getId() + "-item-container");
-                    containerElem.attr("alpaca-id", fieldControl.getId());
-                    // render item label if needed
-                    if (_this.options && _this.options.itemLabel) {
-                        var itemLabelTemplate = Alpaca.getTemplate("itemLabel", _this);
-                        var itemLabelElem = $.tmpl(itemLabelTemplate, {
-                            "options": _this.options,
-                            "index": index ? index + 1 : 1,
-                            "id": _this.id
-                        });
-                        itemLabelElem.prependTo(containerElem);
+
+                containerElem.alpaca({
+                    "data" : value,
+                    "options": fieldSetting,
+                    "schema" : itemSchema,
+                    "view" : this.view.viewObject.id ? this.view.viewObject.id : this.view.viewObject,
+                    "connector": this.connector,
+                    "notTopLevel":true,
+                    "render" : function(fieldControl) {
+                        // render
+                        fieldControl.parent = _this;
+                        // setup item path
+                        fieldControl.path = _this.path + "[" + index + "]";
+                        fieldControl.render();
+                        containerElem.attr("id", fieldControl.getId() + "-item-container");
+                        containerElem.attr("alpaca-id", fieldControl.getId());
+                        // render item label if needed
+                        if (_this.options && _this.options.itemLabel) {
+                            var itemLabelTemplate = _this.view.getTemplate("itemLabel");
+                            var itemLabelElem = $.tmpl(itemLabelTemplate, {
+                                "options": _this.options,
+                                "index": index ? index + 1 : 1,
+                                "id": _this.id
+                            });
+                            itemLabelElem.prependTo(containerElem);
+                        }
+                        // remember the control
+                        _this.addChild(fieldControl, index);
+                        _this.renderToolbar(containerElem);
+                        _this.renderValidationState();
                     }
-                    // remember the control
-                    _this.addChild(fieldControl, index);
-                    _this.renderToolbar(containerElem);
-                    _this.renderValidationState();
                 });
-                
+
+                /*                Alpaca(containerElem, value, fieldSetting, itemSchema, */
+                /*this.getView()*/
+                /*this.view.viewObject.id? this.view.viewObject.id : this.view.viewObject, function(fieldControl) {
+                 // render
+                 fieldControl.parent = _this;
+                 // setup item path
+                 fieldControl.path = _this.path + "[" + index + "]";
+                 fieldControl.render();
+                 containerElem.attr("id", fieldControl.getId() + "-item-container");
+                 containerElem.attr("alpaca-id", fieldControl.getId());
+                 // render item label if needed
+                 if (_this.options && _this.options.itemLabel) {
+                 var itemLabelTemplate = _this.view.getTemplate("itemLabel")*/
+                /*Alpaca.getTemplate("itemLabel", _this)*/
+                /*;
+                 var itemLabelElem = $.tmpl(itemLabelTemplate, {
+                 "options": _this.options,
+                 "index": index ? index + 1 : 1,
+                 "id": _this.id
+                 });
+                 itemLabelElem.prependTo(containerElem);
+                 }
+                 // remember the control
+                 _this.addChild(fieldControl, index);
+                 _this.renderToolbar(containerElem);
+                 _this.renderValidationState();
+                 });*/
+
                 this.updateToolbarItemsStatus(this.outerEl);
                 return containerElem;
             }
         },
-        
+
         /**
          * Enriches styles for dynamic elements (jQuery Mobile only)
          *
@@ -388,7 +426,7 @@
 
             }
         },
-        
+
         /**
          * @Override
          *
@@ -396,7 +434,7 @@
          */
         renderItems: function() {
             var _this = this;
-            
+
             if (this.data) {
                 $.each(this.data, function(index, value) {
                     var fieldSetting;
@@ -408,7 +446,7 @@
             }
             this.updateToolbarItemsStatus();
         },
-        
+
         /**
          * Validates if the maxItem has been reached
          */
@@ -420,7 +458,7 @@
             }
             return true;
         },
-        
+
         /**
          * Validates if the minItem has been reached
          */
@@ -432,7 +470,7 @@
             }
             return true;
         },
-        
+
         /**
          * Validates minItems
          */
@@ -444,7 +482,7 @@
             }
             return true;
         },
-        
+
         /**
          * Validates maxItems
          */
@@ -456,7 +494,7 @@
             }
             return true;
         },
-        
+
         /**
          * Validates uniqueItems
          */
@@ -473,7 +511,7 @@
             }
             return true;
         },
-        
+
         /**
          * @Override
          *
@@ -481,113 +519,113 @@
          */
         handleValidate: function() {
             var baseStatus = this.base();
-            
+
             var valInfo = this.validation;
-            
+
             var status = this._validateUniqueItems();
             valInfo["valueNotUnique"] = {
-                "message": status ? "" : Alpaca.getMessage("valueNotUnique", this),
+                "message": status ? "" : this.view.getMessage("valueNotUnique")/*Alpaca.getMessage("valueNotUnique", this)*/,
                 "status": status
             };
-            
+
             status = this._validateMaxItems();
             valInfo["tooManyItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("tooManyItems", this), [this.schema.items.maxItems]),
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("tooManyItems")/*Alpaca.getMessage("tooManyItems", this)*/, [this.schema.items.maxItems]),
                 "status": status
             };
-            
+
             status = this._validateMinItems();
             valInfo["notEnoughItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(Alpaca.getMessage("notEnoughItems", this), [this.schema.items.minItems]),
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("notEnoughItems")/*Alpaca.getMessage("notEnoughItems", this)*/, [this.schema.items.minItems]),
                 "status": status
             };
-            
+
             return baseStatus && valInfo["valueNotUnique"]["status"] && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"];
         },
-        
+
         /**
          * @Override
          */
         getSchemaOfSchema: function() {
-			var properties = {
-				"properties": {
-					"items": {
-						"title": "Array Items",
-						"description": "Schema of array items",
-						"type": "object",
-						"properties": {
-							"minItems": {
-								"title": "Minimum Items",
-								"description": "Minimum number of items",
-								"type": "number"
-							},
-							"maxItems": {
-								"title": "Maximum Items",
-								"description": "Maximum number of items",
-								"type": "number"
-							},
-							"uniqueItems": {
-								"title": "Items Unique",
-								"description": "Item values should be unique if true",
-								"type": "boolean",
-								"default": false
-							}
-						}
-					}
-				}
-			};
-			
-            if (this.children && this.children[0]) {					
-					Alpaca.merge(properties.properties.items.properties,this.children[0].getSchemaOfSchema())					
+            var properties = {
+                "properties": {
+                    "items": {
+                        "title": "Array Items",
+                        "description": "Schema of array items",
+                        "type": "object",
+                        "properties": {
+                            "minItems": {
+                                "title": "Minimum Items",
+                                "description": "Minimum number of items",
+                                "type": "number"
+                            },
+                            "maxItems": {
+                                "title": "Maximum Items",
+                                "description": "Maximum number of items",
+                                "type": "number"
+                            },
+                            "uniqueItems": {
+                                "title": "Items Unique",
+                                "description": "Item values should be unique if true",
+                                "type": "boolean",
+                                "default": false
+                            }
+                        }
+                    }
+                }
+            };
+
+            if (this.children && this.children[0]) {
+                Alpaca.merge(properties.properties.items.properties, this.children[0].getSchemaOfSchema())
             }
-            
-            return Alpaca.merge(this.base(), properties);			
-		},
-        
+
+            return Alpaca.merge(this.base(), properties);
+        },
+
         /**
          * @Override
          */
         getOptionsForSchema: function() {
-			return Alpaca.merge(this.base(), {
-				"fields": {
-					"items": {
-						"type": "object",
-						"fields": {
-							"minItems": {
-								"type": "integer"
-							},
-							"maxItems": {
-								"type": "integer"
-							},
-							"uniqueItems": {
-								"type": "checkbox"
-							}
-						}
-					}
-				}
-			});
-		},
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "items": {
+                        "type": "object",
+                        "fields": {
+                            "minItems": {
+                                "type": "integer"
+                            },
+                            "maxItems": {
+                                "type": "integer"
+                            },
+                            "uniqueItems": {
+                                "type": "checkbox"
+                            }
+                        }
+                    }
+                }
+            });
+        },
         /**
          * @Override
          */
         getTitle: function() {
             return "Array Field";
         },
-        
+
         /**
          * @Override
          */
         getDescription: function() {
             return "Array Field.";
         },
-        
+
         /**
          * @Override
          */
         getType: function() {
             return "array";
         },
-        
+
         /**
          * @Override
          */
@@ -595,16 +633,16 @@
             return "array";
         }
     });
-    
+
     Alpaca.registerTemplate("itemLabel", '{{if options.itemLabel}}<div class="alpaca-controlfield-label"><div>${options.itemLabel}{{if index}} <span class="alpaca-item-label-counter">${index}</span>{{/if}}</div></div>{{/if}}');
-    
-    
+
+
     //    Alpaca.registerTemplate("arrayToolbar", '<div class="alpaca-fieldset-array-toolbar"><span class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add" title="Add"></div>');
     Alpaca.registerTemplate("arrayToolbar", '<span class="ui-widget ui-corner-all alpaca-fieldset-array-toolbar"><button class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">Add Item</button></span>');
-    
+
     //    Alpaca.registerTemplate("arrayItemToolbar", '<div class="alpaca-fieldset-array-item-toolbar"><span class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add" title="Add"></span><span class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove" title="Remove"></span><span class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up" title="Move Up"></span><span class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down" title="Move Down"></span></div>');
     Alpaca.registerTemplate("arrayItemToolbar", '<div class="ui-widget-header ui-corner-all alpaca-fieldset-array-item-toolbar"><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add">Add Item</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove">Remove Item</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up">Move Up</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down">Move Down</button></div>');
-    
+
     Alpaca.registerMessages({
         "notEnoughItems": "The minimum number of items is {0}",
         "tooManyItems": "The maximum number of items is {0}",
@@ -613,5 +651,5 @@
     });
     Alpaca.registerFieldClass("array", Alpaca.Fields.ArrayField);
     Alpaca.registerDefaultSchemaFieldMapping("array", "array");
-    
+
 })(jQuery);

@@ -144,6 +144,8 @@
         var view = null;
         var callback = null;
         var renderedCallback = null;
+        var connector = null;
+        var notTopLevel = false;
 
         if (args.length == 1) {
             // hands back the field instance that is bound directly under the specified element
@@ -172,47 +174,30 @@
             }
         }
 
-        if (args.length == 2 && Alpaca.isObject(args[1])) {
-
-            data = args[1].data;
-            schema = args[1].schema;
-            options = args[1].options;
-            view = args[1].view;
-            callback = args[1].render;
-            renderedCallback = args[1].postRender;
-
-        } else {
-
-            // figure out the data and options to use
-            if (args.length >= 2) {
-                // "data" is the second argument
-                var data = args[1];
-                if (Alpaca.isFunction(data)) {
-                    alert("Function not supported as data argument");
-                    return null;
+        if (args.length >= 2) {
+            if (Alpaca.isObject(args[1])) {
+                data = args[1].data;
+                schema = args[1].schema;
+                options = args[1].options;
+                view = args[1].view;
+                callback = args[1].render;
+                renderedCallback = args[1].postRender;
+                connector = args[1].connector;
+                if (!Alpaca.isEmpty(args[1].notTopLevel)) {
+                   notTopLevel = args[1].notTopLevel;
                 }
-
-                if (args.length >= 3) {
-                    // "options" is the third argument
-                    if (!Alpaca.isFunction(args[2])) {
-                        options = args[2];
-                    }
-                    if (args.length >= 4) {
-                        // "schema" is the forth argument
-                        if (!Alpaca.isFunction(args[3])) {
-                            schema = args[3];
-                        }
-                        if (args.length >= 5) {
-                            // "view" is the fifth argument
-                            if (!Alpaca.isFunction(args[4])) {
-                                view = args[4];
-                            }
-                        }
-                    }
+            } else {
+                // "data" is the second argument
+                data = args[1];
+                if (Alpaca.isFunction(data)) {
+                    data = data();
                 }
             }
-            // assume last parameter is a callback function
-            callback = Alpaca.isFunction(args[args.length - 1]) ? args[args.length - 1] : null;
+        }
+
+        if (Alpaca.isEmpty(connector)) {
+            connector = new Alpaca.Connector('default');
+            connector.connect();
         }
 
         // handle case for null data
@@ -237,98 +222,28 @@
             }
         }
 
-        var loadCounter = 0;
+        // For second or deeper level of fields, default loader should be the one to do loadAll
+        // since schema, data, options and view should have already been loaded.
+        // Unless we want to load individual fields (other than the templates) using the provided
+        // loader, this should be good enough. The benefit is saving time on loader format checking.
 
-        // make parallel calls if needed
-        // load data                
-        if (data && Alpaca.isUri(data) && (!(schema && schema.format && schema.format == 'uri'))) {
-            $.ajax({
-                url: data,
-                type: "get",
-                dataType: "json",
-                success: function(jsonDocument) {
-                    data = jsonDocument;
-                    loadCounter++;
-                    if (loadCounter == 4)
-                        return Alpaca.init(el, data, options, schema, view, callback, renderedCallback);
-                },
-                error: function(error) {
-                    loadCounter++;
-                    if (loadCounter == 4)
-                        return Alpaca.init(el, data, options, schema, view, callback, renderedCallback);
-                }
-            });
-        }
-        else {
-            loadCounter++;
-            if (loadCounter == 4)
-                return Alpaca.init(el, data, options, schema, view, callback, renderedCallback);
+        var loadAllConnector = connector;
+
+        if (notTopLevel) {
+           loadAllConnector = new Alpaca.Connector('default');
         }
 
-        // options
-        if (options && Alpaca.isUri(options)) {
-            $.ajax({
-                url: options,
-                type: "get",
-                dataType: "json",
-                success: function(jsonDocument) {
-                    options = jsonDocument;
-                    loadCounter++;
-                    if (loadCounter == 4)
-                        return Alpaca.init(el, data, options, schema, view, callback, renderedCallback);
-                },
-                error: function(error) {
-                }
-            });
-        } else {
-            loadCounter++;
-            if (loadCounter == 4)
-                return Alpaca.init(el, data, options, schema, view, callback, renderedCallback);
-        }
-
-        // schema     
-        if (schema && Alpaca.isUri(schema)) {
-            $.ajax({
-                //async : false,
-                url: schema,
-                type: "get",
-                dataType: "json",
-                success: function(jsonDocument) {
-                    schema = jsonDocument;
-                    loadCounter++;
-                    if (loadCounter == 4)
-                        return Alpaca.init(el, data, options, schema, view, callback, renderedCallback);
-                },
-                error: function(error) {
-                }
-            });
-        } else {
-            loadCounter++;
-            if (loadCounter == 4)
-                return Alpaca.init(el, data, options, schema, view, callback, renderedCallback);
-        }
-
-        // view
-        if (view && Alpaca.isUri(view)) {
-            $.ajax({
-                //async : false,
-                url: view,
-                type: "get",
-                dataType: "json",
-                success: function(jsonDocument) {
-                    view = jsonDocument;
-                    loadCounter++;
-                    if (loadCounter == 4)
-                        return Alpaca.init(el, data, options, schema, view, callback, renderedCallback);
-                },
-                error: function(error) {
-                }
-            });
-        } else {
-            loadCounter++;
-            if (loadCounter == 4)
-                return Alpaca.init(el, data, options, schema, view, callback, renderedCallback);
-        }
+        loadAllConnector.loadAll({
+            "data":data,
+            "options": options,
+            "schema": schema,
+            "view": view
+        }, function(loadedData, loadedOptions, loadedSchema, loadedView) {
+            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, callback, renderedCallback, connector);
+        }, function (loadError) {
+            alert(loadError);
+            return null;
+        });
     };
 
     /**
@@ -341,16 +256,16 @@
      * @param {Object} view
      * @param {Object} callback
      */
-    Alpaca.init = function(el, data, options, schema, view, callback, renderedCallback) {
-        var field = Alpaca.createFieldInstance(el, data, options, schema, view);
+    Alpaca.init = function(el, data, options, schema, view, callback, renderedCallback, connector) {
+        var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector);
         Alpaca.fieldInstances[field.getId()] = field;
 
         // allow callbacks defined through view
         if (Alpaca.isEmpty(callback)) {
-            callback = Alpaca.getViewParam("render", field);
+            callback = field.view.render/*Alpaca.getViewParam("render", field)*/;
         }
         if (Alpaca.isEmpty(renderedCallback)) {
-            renderedCallback = Alpaca.getViewParam("postRender", field);
+            renderedCallback = field.view.postRender/*Alpaca.getViewParam("postRender", field)*/;
         }
 
         if (callback != null) {
@@ -374,7 +289,7 @@
      * @param {Object} schema the schema for the field
      * @param {Object} view the view for the field
      */
-    Alpaca.createFieldInstance = function(el, data, options, schema, view) {
+    Alpaca.createFieldInstance = function(el, data, options, schema, view, connector) {
         // make sure options and schema are not empty
         if (Alpaca.isValEmpty(options)) options = {};
         if (Alpaca.isValEmpty(schema)) schema = {};
@@ -410,10 +325,12 @@
             return null;
         }
         // if we have data, bind it in
-        return new fieldClass(el, data, options, schema, view);
+        return new fieldClass(el, data, options, schema, view, connector);
     };
 
     Alpaca.Fields = { };
+
+    Alpaca.Connectors = { };
 
     // core statics
     $.extend(Alpaca, {
@@ -528,11 +445,31 @@
         views: {},
 
         /**
+         *
+         */
+        viewIdPrefix: "VIEW::",
+
+        /**
+         *
+         * @param id
+         */
+        isValidViewId : function (id) {
+            return Alpaca.startsWith(id,this.viewIdPrefix);
+        },
+
+        /**
+         *
+         */
+        generateViewId : function () {
+          return this.viewIdPrefix+"VIEW_"+this.generateId();
+        },
+
+        /**
          * Registers a view
          */
         registerView: function(view) {
             var type = view.id;
-            if (!Alpaca.isEmpty(type)) {
+            if (!Alpaca.isEmpty(type) && this.isValidViewId(type)) {
                 if (this.views[type]) {
                     var oldView = this.views[type];
                     if (view.description) {
@@ -584,11 +521,13 @@
                     }
                 }
 
+            } else {
+                alert("Invalid View ID (must starts with "+this.viewIdPrefix+")");
             }
             return type;
         },
 
-        defaultView : "WEB_EDIT",
+        defaultView : "VIEW::WEB_EDIT",
 
         defaultMode : "edit",
 
@@ -1023,6 +962,25 @@
             }
 
             return null;
+        },
+
+        /**
+         * Maps connector types to connector class implementations
+         */
+        connectorClassRegistry: {},
+
+        /**
+         * Registers an implementation class for a type of connector
+         */
+        registerConnectorClass: function(type, connectorClass) {
+            this.connectorClassRegistry[type] = connectorClass;
+        },
+
+        /**
+         * Returns the implementation class for a type of field
+         */
+        getConnectorClass: function(type) {
+            return this.connectorClassRegistry[type];
         },
 
         replaceAll: function(text, replace, with_this) {
