@@ -130,6 +130,10 @@
 			"id":"simple-connector",
 		    "title":"Simple",
 			"link":"../connectors/simple-connector.html"
+		},{
+			"id":"gitana-connector",
+		    "title":"Gitana",
+			"link":"../connectors/gitana-connector.html"
 		}]
 	}]
 }

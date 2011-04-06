@@ -18,7 +18,7 @@
     </script>
     <script type="text/javascript" src="../../../js/alpaca-${project.version}.js">
     </script>
-    <script type="text/javascript" src="http://localhost:8280/console/js/gitana.js">
+    <script type="text/javascript" src="../../../js/gitana.js">
     </script>
     <script type="text/javascript" src="../../js/example.js">
     </script>
@@ -43,18 +43,35 @@
             <div id="field1">
             </div>
             <script type="text/javascript" id="field1-script">
+            </script>
+            <h3>Customized Form for Creating New Customer</h3>
+            <h4>This example loads <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a
+                    href="./data.json" target="_source">data</a>, <a href="./options.json" target="_source">options</a>
+                and <a href="./schema.json" target="_source">schema</a> parameters through ajax calls.</h4>
+
+            <div id="field2">
+            </div>
+            <script type="text/javascript" id="field2-script">
                 var connector = new Alpaca.Connectors.GitanaConnector('gitana', {
                     "userName": "admin",
                     "password": "admin",
                     "repositoryId": "f329d77247e4826f2e92e957c451ab1c",
-                    "branchId":"181b93403dec9f13aaf392423689453b"
+                    "branchId":"d551cbe0a3e56172e0ff2d9bda50db8a"
                 });
                 connector.connect(function (success) {
                     $("#field1").alpaca({
-                        "options": "gitana:form0",
-                        "schema": "gitana:custom:profile",
+                        "data": "o:577341d7ee48e58cf90666dffdff90cc",
+                        "options": "form0",
+                        "schema": "custom:userprofile",
+                        "view":"VIEW::WEB_EDIT_LIST",
                         "connector": connector
-                    })
+                    });
+                    $("#field2").alpaca({
+                        "options": "form0",
+                        "schema": "custom:userprofile",
+                        "view":"VIEW::WEB_EDIT_LIST",
+                        "connector": connector
+                    });
                 });
             </script>
         </div>

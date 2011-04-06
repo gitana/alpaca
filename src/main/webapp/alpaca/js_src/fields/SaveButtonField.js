@@ -25,8 +25,23 @@
          * @Override
          */
         onClick: function(e) {
-			var newValue = this.form.topControl.getValue();
-			alert(newValue);
+			var control = this.form.topControl;
+            var newValue = control.getValue();
+            if (Alpaca.isEmpty(control.data)) {
+                control.data = {};
+            }
+            Alpaca.mergeWithNullChecking(control.data,newValue);
+            // if we have a template to load, load it and then render
+            control.connector.saveData({
+                "data":control.data,
+                "schema":control.schema
+            }, function(updatedData) {
+               //TODO: add something nice here
+                Alpaca.merge(control.data,updatedData);
+                alert("Data Saved!");
+            }, function(error) {
+                alert(error);
+            });
 		},
 		
 		/**

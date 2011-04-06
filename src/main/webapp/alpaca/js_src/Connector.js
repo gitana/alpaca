@@ -48,6 +48,91 @@
         /**
          *
          * @param dataSource
+         * @param successCallback
+         * @param errorCallback
+         */
+        loadData : function (dataSource, successCallback, errorCallback) {
+            var data = dataSource.data;
+            var schema = dataSource.schema;
+            var isValidData = function () {
+                return !Alpaca.isEmpty(data) && Alpaca.isUri(data) && (!(schema && schema.format && schema.format == 'uri'));
+            };
+            if (isValidData()) {
+                this.loadJson(data, function(loadedData) {
+                    dataSource.data = loadedData;
+                    successCallback(dataSource);
+                }, errorCallback);
+            } else {
+                successCallback(dataSource);
+            }
+        },
+
+        /**
+         *
+         * @param dataSource
+         * @param successCallback
+         * @param errorCallback
+         */
+        loadSchema : function (dataSource, successCallback, errorCallback) {
+            var schema = dataSource.schema;
+            var isValidSchema = function () {
+                return !Alpaca.isEmpty(schema) && Alpaca.isUri(schema);
+            };
+            if (isValidSchema()) {
+                this.loadJson(schema, function(loadedSchema) {
+                    dataSource.schema = loadedSchema;
+                    successCallback(dataSource);
+                }, errorCallback);
+            } else {
+                successCallback(dataSource);
+            }
+        },
+
+        /**
+         *
+         * @param dataSource
+         * @param successCallback
+         * @param errorCallback
+         */
+        loadOptions : function (dataSource, successCallback, errorCallback) {
+            var options = dataSource.options;
+            var isValidOptions = function () {
+                return !Alpaca.isEmpty(options) && Alpaca.isUri(options);
+            };
+            if (isValidOptions()) {
+                this.loadJson(options, function(loadedOptions) {
+                    dataSource.options = loadedOptions;
+                    successCallback(dataSource);
+                }, errorCallback);
+            } else {
+                successCallback(dataSource);
+            }
+        },
+
+        /**
+         *
+         * @param dataSource
+         * @param successCallback
+         * @param errorCallback
+         */
+        loadView : function (dataSource, successCallback, errorCallback) {
+            var view = dataSource.view;
+            var isValidView = function () {
+                return !Alpaca.isEmpty(view) && Alpaca.isUri(view);
+            };
+            if (isValidView()) {
+                this.loadJson(view, function(loadedView) {
+                    dataSource.view = loadedView;
+                    successCallback(dataSource);
+                }, errorCallback);
+            } else {
+                successCallback(dataSource);
+            }
+        },
+
+        /**
+         *
+         * @param dataSource
          * @param onSuccess
          * @param onError
          */
@@ -58,11 +143,11 @@
             var schema = dataSource.schema;
             var view = dataSource.view;
 
-            var successCallback = function (data, options, schema, view) {
+            var successCallback = function (dataSource) {
                 loadCounter ++;
                 if (loadCounter == 4) {
                     if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                        onSuccess(data, options, schema, view);
+                        onSuccess(dataSource.data, dataSource.options, dataSource.schema, dataSource.view);
                     }
                 }
             };
@@ -73,46 +158,11 @@
                 }
             };
 
-            // make parallel calls if needed
-            // load data
-            if (data && Alpaca.isUri(data) && (!(schema && schema.format && schema.format == 'uri'))) {
-                this.loadJson(data, function(loadedData) {
-                    data = loadedData;
-                    successCallback(data, options, schema, view);
-                }, errorCallback);
-            } else {
-                successCallback(data, options, schema, view);
-            }
+            this.loadData(dataSource, successCallback, errorCallback);
+            this.loadSchema(dataSource, successCallback, errorCallback);
+            this.loadOptions(dataSource, successCallback, errorCallback);
+            this.loadView(dataSource, successCallback, errorCallback);
 
-            // options
-            if (options && Alpaca.isUri(options)) {
-                this.loadJson(options, function(loadedData) {
-                    options = loadedData;
-                    successCallback(data, options, schema, view);
-                }, errorCallback);
-            } else {
-                successCallback(data, options, schema, view);
-            }
-
-            // schema
-            if (schema && Alpaca.isUri(schema)) {
-                this.loadJson(schema, function(loadedData) {
-                    schema = loadedData;
-                    successCallback(data, options, schema, view);
-                }, errorCallback);
-            } else {
-                successCallback(data, options, schema, view);
-            }
-
-            // view
-            if (view && Alpaca.isUri(view)) {
-                this.loadJson(view, function(loadedData) {
-                    view = loadedData;
-                    successCallback(data, options, schema, view);
-                }, errorCallback);
-            } else {
-                successCallback(data, options, schema, view);
-            }
         },
 
         /**
@@ -135,7 +185,7 @@
          *
          * @param callback
          */
-        save : function (onSuccess, onError) {
+        saveData : function (data, successCallback, errorCallback) {
 
         },
 

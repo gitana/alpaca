@@ -28,6 +28,44 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	<repositories>
+		<repository>
+		    <id>maven.springframework.org.release</id>
+		    <name>Spring Framework Maven Repository - Releases</name>
+		    <url>http://maven.springframework.org/release</url>
+		</repository>
+		<repository>
+		    <id>maven.springframework.org.milestone</id>
+		    <name>Spring Framework Maven Repository - Milestone Releases</name>
+		    <url>http://maven.springframework.org/milestone</url>
+		</repository>
+		<repository>
+		    <id>maven.springframework.org.snapshot</id>
+		    <name>Spring Framework Maven Repository - Nightly Snapshots</name>
+		    <url>http://maven.springframework.org/snapshot</url>
+		</repository>
+        <repository>
+            <id>apache-snapshot</id>
+            <name>Apache snapshot repository</name>
+            <url>https://repository.apache.org/content/repositories/snapshots/</url>
+        </repository>
+
+		<!-- needed for now to resolve tuckey url rewrite filter 3.2.0 -->
+		<repository>
+			<id>carbonfive</id>
+			<name>carbonfive</name>
+			<url>http://mvn.carbonfive.com/nexus/content/groups/public</url>
+		</repository>
+
+		<repository>
+		  <id>terracotta-releases</id>
+		  <url>http://www.terracotta.org/download/reflector/releases</url>
+		  <releases><enabled>true</enabled></releases>
+		  <snapshots><enabled>false</enabled></snapshots>
+		</repository>
+
+	</repositories>
+
 	<build>	
 		<plugins>
 			<!-- Eclipse Plugin -->
@@ -201,7 +239,35 @@
 					</target>
 				</configuration>
 			</plugin>
-			
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+                                <!-- gitana javascript driver -->
+								<artifactItem>
+									<groupId>org.gitana</groupId>
+									<artifactId>gitana-javascript-driver</artifactId>
+									<version>${gitana.driver.version}</version>
+									<type>war</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${basedir}/target/${project.build.finalName}/alpaca</outputDirectory>
+									<includes>js/gitana*.js</includes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
   				<groupId>org.apache.maven.plugins</groupId>
   				<artifactId>maven-war-plugin</artifactId>
@@ -262,10 +328,128 @@
 	</build>
 
 	<dependencies>
+        <!-- Jackson for JSON/POJO mapping -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+
+		<!-- dom4j -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<!-- XOM (xml serialization) -->
+		<dependency>
+			<groupId>xom</groupId>
+			<artifactId>xom</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<!-- HTTP Client -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+        </dependency>
+
+        <!-- Apache Commons Lang -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+        </dependency>
+
+		<!-- Spring Framework Project libraries -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- EhCache and Terracotta -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+		<dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-terracotta</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+		<dependency>
+			<groupId>org.terracotta</groupId>
+			<artifactId>terracotta-toolkit-1.0-runtime</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<!-- Core -->
+		<dependency>
+			<groupId>org.gitana</groupId>
+			<artifactId>gitana-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Servlet API -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Spring Framework Project libraries -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Spring Security Web -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.2.1</version>
+		</dependency>
+        <!-- Gitana Proxy Servlet -->
+        <dependency>
+            <groupId>org.gitana</groupId>
+            <artifactId>gitana-servlets</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
 	</dependencies>
 	<properties>
 		<jquery.version>1.5</jquery.version>
 		<jquery.ui.version>1.8.8</jquery.ui.version>
 		<jquery.mobile.version>1.0a3</jquery.mobile.version>
+        <gitana.driver.version>1.0.0-SNAPSHOT</gitana.driver.version>
+		<spring.version>3.0.5.RELEASE</spring.version>
+		<spring.security.version>3.1.0.RC1</spring.security.version>
 	</properties>
 </project>

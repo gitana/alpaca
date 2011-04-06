@@ -17,7 +17,6 @@
 
         constructor: function(id, configs) {
             this.base(id, configs);
-            this.namespace = "gitana";
         },
 
         /**
@@ -44,19 +43,172 @@
             });
         },
 
+        /**
+         *
+         * @param dataSource
+         * @param successCallback
+         * @param errorCallback
+         */
+        saveData : function (dataSource, successCallback, errorCallback) {
+            var _this = this;
+            var data = dataSource.data;
+            var schema = dataSource.schema;
+            if (!Alpaca.isEmpty(data) && !Alpaca.isEmpty(data._doc)) {
+                // Update
+                data.update(function(status) {
+                    var nodeId = status.getId();
+                    _this.branch.nodes().read(nodeId, successCallback);
+                }, function(saveError) {
+                    errorCallback(saveError);
+                });
+            } else {
+                if (!Alpaca.isEmpty(schema) && !Alpaca.isEmpty(schema._qname)) {
+                    data._type = schema._qname;
+                    // Create
+                    this.branch.nodes().create(data, function(status) {
+                        var nodeId = status.getId();
+                        _this.branch.nodes().read(nodeId, successCallback);
+                    }, function(saveError) {
+                        errorCallback(saveError);
+                    });
+                }
+            }
+
+        },
 
         /**
          *
          * @param dataSource
+         * @param successCallback
+         * @param errorCallback
          */
-        processDataSource: function (dataSource) {
-            // options
-            for (var key in dataSource) {
-                if (this.isConnectorFormat(dataSource[key])) {
-                    dataSource[key] = Alpaca.replaceAll(dataSource[key], this.namespace + ":", '');
-                }
+        loadData : function (dataSource, successCallback, errorCallback) {
+            var _this = this;
+            var base = this.base;
+            var data = dataSource.data;
+            var branch = this.branch;
+
+            var isValidData = function () {
+                return !Alpaca.isEmpty(data) && Alpaca.isString(data) && !Alpaca.isUri(data)
+                        && (_this.isValidGitanaId(data) || _this.isValidQName(data));
+            };
+
+            if (isValidData()) {
+                branch.nodes().read(data, function(loadedData) {
+                    dataSource.data = loadedData;
+                    successCallback(dataSource);
+                }, function(loadedError) {
+                    base(dataSource, function(dataSource) {
+                        successCallback(dataSource);
+                    }, function(error) {
+                        errorCallback(error);
+                    });
+                });
+            } else {
+                this.base(dataSource, function(dataSource) {
+                    successCallback(dataSource);
+                }, function(error) {
+                    errorCallback(error);
+                });
             }
-            return dataSource;
+        },
+
+        /**
+         *
+         * @param dataSource
+         * @param successCallback
+         * @param errorCallback
+         */
+        loadView : function (dataSource, successCallback, errorCallback) {
+            var _this = this;
+            var base = this.base;
+            var view = dataSource.view;
+            var branch = this.branch;
+
+            var isValidView = function () {
+                return !Alpaca.isEmpty(view) && Alpaca.isString(view) && !Alpaca.isUri(view) && !Alpaca.isValidViewId(view);
+            };
+            if (isValidView()) {
+                //TODO: need to add view handling piece
+                this.loadData(dataSource, successCallback, errorCallback);
+            } else {
+                this.base(dataSource, function(dataSource) {
+                    _this.loadData(dataSource, successCallback, errorCallback);
+                }, function(error) {
+                    _this.loadData(dataSource, successCallback, errorCallback);
+                });
+            }
+        },
+
+        /**
+         *
+         * @param dataSource
+         * @param successCallback
+         * @param errorCallback
+         */
+        loadOptions : function (dataSource, successCallback, errorCallback) {
+            var _this = this;
+            var base = this.base;
+            var schema = dataSource.schema;
+            var options = dataSource.options;
+            var branch = this.branch;
+
+            var isValidOptions = function () {
+                return !Alpaca.isEmpty(options) && Alpaca.isString(options) && !Alpaca.isUri(options);
+            };
+            if (isValidOptions()) {
+                schema.forms().read(options, function(loadedOptions) {
+                    dataSource.options = loadedOptions;
+                    _this.loadView(dataSource, successCallback, errorCallback);
+                }, function(loadedError) {
+                    base(dataSource, function(dataSource) {
+                        _this.loadView(dataSource, successCallback, errorCallback);
+                    }, function(error) {
+                        _this.loadView(dataSource, successCallback, errorCallback);
+                    });
+                });
+            } else {
+                this.base(dataSource, function(dataSource) {
+                    _this.loadView(dataSource, successCallback, errorCallback);
+                }, function(error) {
+                    _this.loadView(dataSource, successCallback, errorCallback);
+                });
+            }
+        },
+
+        /**
+         *
+         * @param dataSource
+         * @param successCallback
+         * @param errorCallback
+         */
+        loadSchema : function (dataSource, successCallback, errorCallback) {
+            var _this = this;
+            var base = this.base;
+            var schema = dataSource.schema;
+            var branch = this.branch;
+            var isValidSchema = function () {
+                return !Alpaca.isEmpty(schema) && Alpaca.isString(schema) && !Alpaca.isUri(schema)
+                        && (_this.isValidGitanaId(schema) || _this.isValidQName(schema));
+            };
+            if (isValidSchema()) {
+                branch.definitions().read(schema, function(loadedSchema) {
+                    dataSource.schema = loadedSchema;
+                    _this.loadOptions(dataSource, successCallback, errorCallback);
+                }, function(loadedError) {
+                    base(dataSource, function(dataSource) {
+                        _this.loadOptions(dataSource, successCallback, errorCallback);
+                    }, function(error) {
+                        _this.loadOptions(dataSource, successCallback, errorCallback);
+                    });
+                });
+            } else {
+                this.base(dataSource, function(dataSource) {
+                    _this.loadOptions(dataSource, successCallback, errorCallback);
+                }, function(error) {
+                    _this.loadOptions(dataSource, successCallback, errorCallback);
+                });
+            }
         },
 
         /**
@@ -67,19 +219,10 @@
          */
         loadAll : function (dataSource, onSuccess, onError) {
             var _this = this;
-            dataSource = this.processDataSource(dataSource);
-            var loadCounter = 0;
-            var data = dataSource.data;
-            var options = dataSource.options;
-            var schema = dataSource.schema;
-            var view = dataSource.view;
 
-            var successCallback = function (data, options, schema, view) {
-                loadCounter ++;
-                if (loadCounter == 3/*4*/) {
-                    if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                        onSuccess(data, options, schema, view);
-                    }
+            var successCallback = function (dataSource) {
+                if (onSuccess && Alpaca.isFunction(onSuccess)) {
+                    onSuccess(dataSource.data, dataSource.options, dataSource.schema, dataSource.view);
                 }
             };
 
@@ -92,59 +235,38 @@
             this.gitanaDriver.repositories().read(this.repositoryId, function(repository) {
                 _this.repository = repository;
                 repository.branches().read(_this.branchId, function(branch) {
-
-                    branch.definitions().read(schema, function(schemaNode) {
-                        schema = schemaNode;
-                        loadCounter ++;
-                        schema.forms().read(options, function(formNode) {
-                            options = formNode;
-                            successCallback(data, options, schema, view);
-                        }, errorCallback);
-                    });
-
-                    if (data) {
-                        if (_this.isConnectorFormat(data)) {
-                            data = Alpaca.replaceAll(data, _this.namespace + ":", '');
-                            _this.getBranch().nodes().read(data, function(contentNode) {
-                                data = contentNode;
-                                successCallback(data, options, schema, view);
-                            }, errorCallback);
-
-                        } else {
-                            if (Alpaca.isUri(data)) {
-                                this.loadJson(data, function(loadedData) {
-                                    data = loadedData;
-                                    successCallback(data, options, schema, view);
-                                }, errorCallback);
-                            } else {
-                                successCallback(data, options, schema, view);
-                            }
-                        }
-                    } else {
-                        successCallback(data, options, schema, view);
-                    }
-
+                    _this.branch = branch;
+                    _this.loadSchema(dataSource, successCallback, errorCallback);
                 }, function(error) {
-
+                    errorCallback(error);
                 })
             }, function(error) {
-
+                errorCallback(error);
             });
-        }
-        ,
+        },
 
         /**
          *
          * @param callback
          */
-        load : function (dataSource, onSuccess, onError) {
-            var key = dataSource.key;
-            if (key && this.prefixMappings[key]) {
-                if (this.isConnectorFormat(dataSource.dataSource)) {
-                    dataSource.dataSource = this.prefixMappings[key] + "/" + Alpaca.replaceAll(dataSource.dataSource, this.namespace + ":", '') + this.postfixMappings[key];
-                }
-            }
+        loadTemplate : function (dataSource, onSuccess, onError) {
             this.base(dataSource, onSuccess, onError);
+        },
+
+        /**
+         *
+         * @param data
+         */
+        isValidQName: function (data) {
+            return !Alpaca.isEmpty(data) && Alpaca.isString(data) && data.match(/^[0-9a-zA-Z-_]+:[0-9a-zA-Z-_]+$/);
+        },
+
+        /**
+         *
+         * @param data
+         */
+        isValidGitanaId: function (data) {
+            return !Alpaca.isEmpty(data) && Alpaca.isString(data) && data.match(/^[0-9a-z]{32}$/);
         }
     });
 

@@ -5,5 +5,22 @@
 	<display-name>Alpaca Forms Application</display-name>
 	<welcome-file-list>
 		<welcome-file>alpaca/index.html</welcome-file>
-	</welcome-file-list>	
+	</welcome-file-list>
+    <!-- Gitana Repository Proxy Servlet -->
+	<servlet>
+		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
+		<servlet-class>org.gitana.repo.servlet.GitanaProxyServlet</servlet-class>
+        <init-param>
+            <param-name>host</param-name>
+            <param-value>api.cloudcms.com</param-value>
+        </init-param>
+        <init-param>
+            <param-name>port</param-name>
+            <param-value>80</param-value>
+        </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
+		<url-pattern>/proxy/*</url-pattern>
+	</servlet-mapping>
 </web-app>	
