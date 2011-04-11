@@ -1,25 +1,42 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.IPv4Field = Alpaca.Fields.TextField.extend(
     /**
-     * IPv4 field
+     * @lends Alpaca.Fields.IPv4Field.prototype
      */
-    Alpaca.Fields.IPv4Field = Alpaca.Fields.TextField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.TextField
+         *
+         * @class Control for JSON schema ip-address format.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#setup
          */
         setup: function() {
             this.base();
             
             if (!this.schema.pattern) {
-                this.schema.pattern = /^(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)(?:\.(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)){3}$/;
+                this.schema.pattern = Alpaca.regexps.ipv4;
             }
         },
 
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#postRender
          */
         postRender: function() {
             this.base();
@@ -29,7 +46,7 @@
         },
 		        
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#handleValidate
          */
         handleValidate: function() {
             var baseStatus = this.base();
@@ -42,11 +59,13 @@
             
             return baseStatus;
         },
+
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.TextField#getSchemaOfSchema
          */
         getSchemaOfSchema: function() {
-            var pattern = (this.schema && this.schema.pattern)? this.schema.pattern : /^(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)(?:\.(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)){3}$/;
+            var pattern = (this.schema && this.schema.pattern)? this.schema.pattern : Alpaca.regexps.ipv4;
             return Alpaca.merge(this.base(), {
                 "properties": {
                     "pattern": {
@@ -60,8 +79,8 @@
                         "title": "Format",
                         "description": "Property data format",
                         "type": "string",
-                        "enum": ["ipv4"],
-						"default":"ipv4",
+                        "enum": ["ip-address"],
+						"default":"ip-address",
 						"readonly":true
                     }
                 }
@@ -69,7 +88,8 @@
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.TextField#getOptionsForSchema
          */
 		getOptionsForSchema: function() {
             return Alpaca.merge(this.base(),{
@@ -82,21 +102,21 @@
         },
         
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#getTitle
          */
         getTitle: function() {
             return "IP Address Field";
         },
         
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
             return "IP Address Field.";
         },
 
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextField#getFieldType
          */
         getFieldType: function() {
             return "ipv4";
@@ -104,7 +124,7 @@
     });
     
     Alpaca.registerMessages({
-        "invalidIPv4": "Invalid IPv4 address, ex: 192.168.0.1"
+        "invalidIPv4": "Invalid IPv4 address, e.g. 192.168.0.1"
     });
     Alpaca.registerFieldClass("ipv4", Alpaca.Fields.IPv4Field);
     Alpaca.registerDefaultFormatFieldMapping("ip-address", "ipv4");

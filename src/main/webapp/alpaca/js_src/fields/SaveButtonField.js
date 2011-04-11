@@ -1,16 +1,31 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.SaveButtonField = Alpaca.Fields.ButtonField.extend(
     /**
-     * Gitana Save Button class
+     * @lends Alpaca.Fields.SaveButtonField.prototype
      */
-    Alpaca.Fields.SaveButtonField = Alpaca.Fields.ButtonField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.ButtonField
          *
-         * Sets up any default values for this field.
+         * @class Button control for saving form data through connector.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.ButtonField#setup
          */
         setup: function() {
 			this.base();
@@ -22,7 +37,7 @@
 		},
         
         /**
-         * @Override
+         * @see Alpaca.Fields.ButtonField#onClick
          */
         onClick: function(e) {
 			var control = this.form.topControl;
@@ -45,7 +60,7 @@
 		},
 		
 		/**
-		 * @Override
+		 * @see Alpaca.ControlField#postRender
 		 */
 		postRender: function () {
 			this.base();
@@ -59,14 +74,14 @@
 		},
 		
 		/**
-         * @Override
+         * @see Alpaca.Fields.ButtonField#getTitle
 		 */
 		getTitle: function() {
 			return "Save Button";
 		},
 		
 		/**
-         * @Override
+         * @see Alpaca.Fields.ButtonField#getDescription
 		 */
 		getDescription: function() {
 			return "Button for storing data.";

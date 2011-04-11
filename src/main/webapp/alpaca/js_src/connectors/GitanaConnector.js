@@ -2,25 +2,39 @@
 
     var Alpaca = $.alpaca;
 
+    Alpaca.Connectors.GitanaConnector = Alpaca.Connector.extend(
     /**
-     * Gitana Connector
-     *
-     *  {
-     *   "data": [data_key],
-     *   "schema": gitana:repository:branch,
-     *   "options": [form_key],
-     *   "view": [view_key]
-     *  }
-     *
+     * @lends Alpaca.Connectors.GitanaConnector.prototype
      */
-    Alpaca.Connectors.GitanaConnector = Alpaca.Connector.extend({
-
+    {
+        /**
+         * @constructs
+         * @augments Alpaca.Connector
+         *
+         * @class Connector that loads JSONs from or stores data to a remote Gitana repository though Gitana JavaScript
+         * driver APIs.
+         *<p>
+         * The dataSource parameters for load/save methods take following format
+         *</p>
+         *<code>
+         *     <pre>
+         *  {
+         *   "data": [Gitana ID | Gitana QName Reference],
+         *   "schema": [Gitana ID | Gitana QName Reference],
+         *   "options": [Gitana Form Key],
+         *   "view": [Gitana View Key]
+         *  }
+         *  </pre>
+         *</code>
+         * @param {String} id Connector ID.
+         * @param {Object} configs Connector Configurations.
+         */
         constructor: function(id, configs) {
             this.base(id, configs);
         },
 
         /**
-         *
+         * @see Alpaca.Connector#connect
          */
         connect: function (onSuccess, onError) {
             var _this = this;
@@ -44,10 +58,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @see Alpaca.Connector#saveData
          */
         saveData : function (dataSource, successCallback, errorCallback) {
             var _this = this;
@@ -77,10 +88,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @see Alpaca.Connector#loadData
          */
         loadData : function (dataSource, successCallback, errorCallback) {
             var _this = this;
@@ -114,10 +122,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @see Alpaca.Connector#loadView
          */
         loadView : function (dataSource, successCallback, errorCallback) {
             var _this = this;
@@ -141,10 +146,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @see Alpaca.Connector#loadOptions
          */
         loadOptions : function (dataSource, successCallback, errorCallback) {
             var _this = this;
@@ -177,10 +179,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @see Alpaca.Connector#loadSchema
          */
         loadSchema : function (dataSource, successCallback, errorCallback) {
             var _this = this;
@@ -212,10 +211,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param onSuccess
-         * @param onError
+         * @see Alpaca.Connector#loadAll
          */
         loadAll : function (dataSource, onSuccess, onError) {
             var _this = this;
@@ -246,24 +242,27 @@
         },
 
         /**
-         *
-         * @param callback
+         * @see Alpaca.Connector#loadTemplate
          */
         loadTemplate : function (dataSource, onSuccess, onError) {
             this.base(dataSource, onSuccess, onError);
         },
 
         /**
+         * Finds if a variable is a valid Gitana QName.
          *
-         * @param data
+         * @param {String} data The variable to be evaluated.
+         * @returns {Boolean} True if the variable is a valid Gitana QName, false otherwise.
          */
         isValidQName: function (data) {
             return !Alpaca.isEmpty(data) && Alpaca.isString(data) && data.match(/^[0-9a-zA-Z-_]+:[0-9a-zA-Z-_]+$/);
         },
 
         /**
+         * Finds if a variable is a valid Gitana ID.
          *
-         * @param data
+         * @param {String} data The variable to be evaluated.
+         * @returns {Boolean} True if the variable is a valid Gitana ID, false otherwise.
          */
         isValidGitanaId: function (data) {
             return !Alpaca.isEmpty(data) && Alpaca.isString(data) && data.match(/^[0-9a-z]{32}$/);

@@ -1,66 +1,83 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.ReloadButtonField = Alpaca.Fields.ButtonField.extend(
     /**
-     * Abstract Button class
+     * @lends Alpaca.Fields.ReloadButtonField.prototype
      */
-    Alpaca.Fields.ReloadButtonField = Alpaca.Fields.ButtonField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.ButtonField
          *
-         * Sets up any default values for this field.
+         * @class Button control for reloading form.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.ButtonField#setup
          */
         setup: function() {
-			this.base();			
-			// sets defaults
-			if (!this.data) {
-				this.data = this.view.getMessage("reload");
-			}			
-		},
-        
+            this.base();
+            // sets defaults
+            if (!this.data) {
+                this.data = this.view.getMessage("reload");
+            }
+        },
+
         /**
-         * @Override
+         * @see Alpaca.Fields.ButtonField#onClick
          */
         onClick: function(e) {
-			this.form.topControl.reload();
-		},
-		
-		/**
-		 * @Override
-		 */
-		postRender: function () {
-			this.base();
-			this.field.addClass("alpaca-form-button-reload");
-			this.field.button({
-				text: true,
-				icons: {
-					primary: "ui-icon-refresh"
-				}
-			});				
-		},
-		
-		/**
-         * @Override
-		 */
-		getTitle: function() {
-			return "Alpaca Reload Button";
-		},
-		
-		/**
-         * @Override
-		 */
-		getDescription: function() {
-			return "Alpaca button for reloading data.";
-		}		
+            this.form.topControl.reload();
+        },
+
+        /**
+         * @see Alpaca.ControlField#postRender
+         */
+        postRender: function () {
+            this.base();
+            this.field.addClass("alpaca-form-button-reload");
+            if (this.field.button) {
+                this.field.button({
+                    text: true,
+                    icons: {
+                        primary: "ui-icon-refresh"
+                    }
+                });
+            }
+        },
+
+        /**
+         * @see Alpaca.Fields.ButtonField#getTitle
+         */
+        getTitle: function() {
+            return "Alpaca Reload Button";
+        },
+
+        /**
+         * @see Alpaca.Fields.ButtonField#getDescription
+         */
+        getDescription: function() {
+            return "Alpaca button for reloading data.";
+        }
     });
 
-    // Registers additonal messages
+    // Registers additional messages
     Alpaca.registerMessages({
         "reload": "Reload"
     });
-	    
+
     Alpaca.registerFieldClass("reloadbutton", Alpaca.Fields.ReloadButtonField);
-    
+
 })(jQuery);

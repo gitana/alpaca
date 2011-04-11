@@ -1,29 +1,38 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.WysiwygField = Alpaca.Fields.TextAreaField.extend(
     /**
-     * Text area field
-     *
-     * The following additional settings are permitted:
-     *
-     * {
-     *    rows: <number>
-     *    cols: <number>
-     * }
+     * @lends Alpaca.Fields.WysiwygField.prototype
      */
-    Alpaca.Fields.WysiwygField = Alpaca.Fields.TextAreaField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.TextAreaField
          *
+         * @class WYSIWYG control for chunk of text.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#setup
          */
         setup: function() {
             this.base();
         },
         
         /**
-         * @Override
+         * @see Alpaca.Fields.TextAreaField#postRender
          */
     	postRender: function() {
             this.base();            
@@ -37,21 +46,21 @@
         },
 		
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextAreaField#getTitle
 		 */
 		getTitle: function() {
 			return "Wysiwyg Editor";
 		},
 		
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextAreaField#getDescription
 		 */
 		getDescription: function() {
 			return "Wysiwyd editor for multi-line text.";
 		},
 
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextAreaField#getFieldType
          */
         getFieldType: function() {
             return "wysiwyg";

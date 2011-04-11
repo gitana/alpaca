@@ -1,70 +1,86 @@
 (function($) {
-	
-	var Alpaca = $.alpaca;	
 
-	/**
-	 * Upper case field
-	 */
-	Alpaca.Fields.UpperCaseField = Alpaca.Fields.TextField.extend({
-		
+    var Alpaca = $.alpaca;
+
+    Alpaca.Fields.UpperCaseField = Alpaca.Fields.TextField.extend(
+    /**
+     * @lends Alpaca.Fields.UpperCaseField.prototype
+     */
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.TextField
+         *
+         * @class Control for upper case text.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#postRender
          */
         postRender: function() {
             this.base();
-			if (this.fieldContainer) {
-				this.fieldContainer.addClass('alpaca-controlfield-uppercase');
-			}	
+            if (this.fieldContainer) {
+                this.fieldContainer.addClass('alpaca-controlfield-uppercase');
+            }
         },
 
-		/**
-		 * @Override
-		 */
-		setValue: function(val, stopUpdateTrigger) {
-			var upperValue = val.toUpperCase();
-			
-			if (upperValue != this.getValue()) {
-				this.base(upperValue, stopUpdateTrigger);
-			}
-		},
-		
-		/**
-	 	 * @Override
-	 	 */
-		onKeyPress: function(e) {
-			this.base(e);
-			
-			var _this = this;
-			
-			Alpaca.later(25, this, function() {
-				var v = _this.getValue();
-				_this.setValue(v, false);
-			});
-		},
-		
-		/**
-         * @Override
-		 */
-		getTitle: function() {
-			return "Uppercase Text";
-		},
-		
-		/**
-         * @Override
-		 */
-		getDescription: function() {
-			return "Text Field for uppercase text.";
-		},
+        /**
+         * @see Alpaca.Fields.TextField#setValue
+         */
+        setValue: function(val) {
+            var upperValue = val.toUpperCase();
 
-		/**
-         * @Override
+            if (upperValue != this.getValue()) {
+                this.base(upperValue);
+            }
+        },
+
+        /**
+         * @see Alpaca.ControlField#onKeyPress
+         */
+        onKeyPress: function(e) {
+            this.base(e);
+
+            var _this = this;
+
+            Alpaca.later(25, this, function() {
+                var v = _this.getValue();
+                _this.setValue(v);
+            });
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#getTitle
+         */
+        getTitle: function() {
+            return "Uppercase Text";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#getDescription
+         */
+        getDescription: function() {
+            return "Text Field for uppercase text.";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#getFieldType
          */
         getFieldType: function() {
             return "uppercase";
         }
-		
-	});
-	
-	Alpaca.registerFieldClass("uppercase", Alpaca.Fields.UpperCaseField);
+    });
+
+    Alpaca.registerFieldClass("uppercase", Alpaca.Fields.UpperCaseField);
 
 })(jQuery);

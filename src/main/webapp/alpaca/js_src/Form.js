@@ -2,24 +2,20 @@
 
     var Alpaca = $.alpaca;
 
+    Alpaca.Form = Base.extend(
     /**
-     * Form Field class
+     * @lends Alpaca.Form.prototype
      */
-    Alpaca.Form = Base.extend({
-
+    {
         /**
-         * Constructor
+         * @constructs
          *
-         * @param container The DOM element to which this form field is bound.
-         * @param options (optional)
+         * @class This class is for managing HTML form control and button control.
          *
-         * Options consists of:
-         *
-         * {
-         *    viewType: <string>,           view type (auto-populated)
-         *    attributes: <object>,         form options (optional)
-         *    buttons: <object>             form button options (optional)
-         * }
+         * @param {Object} container Field container.
+         * @param {Object} options Field options.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
          */
         constructor: function(container, options, view, connector) {
             var _this = this;
@@ -73,8 +69,9 @@
         },
 
         /**
-         * Renders this field into the container.
-         * Creates an outerEl which is bound into the container.
+         * Renders this form into the container.
+         *
+         * @param {Function} onSuccess onSuccess callback.
          */
         render: function(onSuccess) {
             var _this = this;
@@ -108,6 +105,9 @@
          * current mode for this field.
          *
          * Once completed, the onSuccess method is called.
+         *
+         * @param {Object} parentEl Field container.
+         * @param {Function} onSuccess onSuccess callback.
          */
         processRender: function(parentEl, onSuccess) {
             var _this = this;
@@ -126,7 +126,13 @@
         },
 
         /**
-         * Renders the loaded template
+         * Renders the loaded template.
+         *
+         * @private
+         *
+         * @param {Object} parentEl Field container.
+         * @param {String} templateString Template.
+         * @param {Function} onSuccess onSuccess callback.
          */
         _renderLoadedTemplate: function(parentEl, templateString, onSuccess) {
             var context = {
@@ -162,9 +168,9 @@
         },
 
         /**
-         * Adds a single button
+         * Adds a button.
          *
-         * @param parameters
+         * @param {Object} parameters Button parameters.
          */
         addButton: function (parameters) {
             var _this = this;
@@ -187,7 +193,7 @@
         },
 
         /**
-         * Adds buttons
+         * Adds buttons.
          */
         addButtons: function() {
             var _this = this;
@@ -271,46 +277,61 @@
         },
 
         /**
-         * Retrieve the rendering element
+         * Retrieve the form container.
+         *
+         * @returns {Object} Form container.
          */
         getEl: function() {
             return this.outerEl;
         },
 
         /**
-         * Returns the id of the field
+         * Returns the id of the form.
+         *
+         * @returns {String} Form id
          */
         getId: function() {
             return this.id;
         },
 
+        /**
+         * Returns form type.
+         *
+         * @returns {String} Form type.
+         */
         getType: function() {
             return this.type;
         },
 
         /**
-         * Returns this field's parent field.
+         * Returns this form's parent.
+         *
+         * @returns {Object} Form parent.
          */
         getParent: function() {
             return this.parent;
         },
 
         /**
-         * Return the value of the field
+         * Returns the value of the JSON rendered by this form.
+         *
+         * @returns {Any} Value of the JSON rendered by this form.
          */
         getValue: function() {
             return this.topControl.getValue();
         },
 
         /**
-         * Sets the value of the field
+         * Sets the value of the JSON to be rendered by this form.
+         *
+         * @param {Any} value Value to be set.
          */
-        setValue: function(value, stopUpdateTrigger) {
-            this.topControl.setValue(value, stopUpdateTrigger);
+        setValue: function(value) {
+            this.topControl.setValue(value);
         },
 
         /**
-         * Initializes events
+         * Initializes events handling (Form Submission) for this form.
          */
         initEvents: function() {
             var _this = this;
@@ -323,9 +344,9 @@
         },
 
         /**
-         * Handles form submit events
+         * Handles form submit events.
          *
-         * @param {Object} e
+         * @param {Object} e Submit event.
          */
         onSubmit: function(e) {
             if (this.submitHandler) {
@@ -334,9 +355,9 @@
         },
 
         /**
-         * Registers custom submit handler
+         * Registers a custom submit handler.
          *
-         * @param {Object} func
+         * @param {Object} func Submit handler to be registered.
          */
         registerSubmitHandler: function (func) {
             if (Alpaca.isFunction(func)) {
@@ -345,44 +366,44 @@
         },
 
         /**
-         * Makes sure that the DOM of the rendered field reflects the validation state
-         * of the field.
+         * Displays validation information of all fields of this form.
+         *
+         * @returns {Object} Form validation state.
          */
         renderValidationState: function() {
             this.topControl.renderValidationState();
         },
 
         /**
-         * Disable the field
+         * Disables this form.
          */
         disable: function() {
             this.topControl.disable();
         },
 
         /**
-         * Enable the field
+         * Enables this form.
          */
         enable: function() {
             this.topControl.enable();
         },
 
         /**
-         * Focus the field
+         * Focuses on this form.
          */
         focus: function() {
             this.topControl.focus();
         },
 
         /**
-         * Purge any event listeners
-         * Remove the field from the DOM
+         * Purge any event listeners and remove the form from the DOM.
          */
         destroy: function() {
             this.getEl().remove();
         },
 
         /**
-         * Show the field
+         * Shows the form.
          */
         show: function() {
             this.getEl().css({
@@ -391,7 +412,7 @@
         },
 
         /**
-         * Hides the field
+         * Hides the form.
          */
         hide: function() {
             this.getEl().css({
@@ -400,30 +421,36 @@
         },
 
         /**
-         * Clears the field.
+         * Clears the form and resets values of its fields.
          *
-         * This resets the field to its original value (this.data)
+         * @param stopUpdateTrigger If false, triggers the update event of this event.
          */
         clear: function(stopUpdateTrigger) {
             this.topControl.clear(stopUpdateTrigger);
         },
 
         /**
-         * Checks if top field is empty
+         * Checks if form is empty.
+         *
+         * @returns {Boolean} True if the form is empty, false otherwise.
          */
         isEmpty: function() {
             return this.topControl.isEmpty();
         },
 
         /**
-         * Returns the field template
+         * Returns the form template.
+         *
+         * @returns {Object|String} template Form template.
          */
         getTemplate: function() {
             return this.template;
         },
 
         /**
-         * Sets the field template
+         * Sets the form template.
+         *
+         * @param {String} template Template to be set
          */
         setTemplate: function(template) {
             // if template is a function, evaluate it to get a string

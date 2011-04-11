@@ -2,72 +2,69 @@
 
     var Alpaca = $.alpaca;
 
+    Alpaca.Connectors.SimpleConnector = Alpaca.Connector.extend(
     /**
-     * Simple Local File System Connector that loads files from local file systems.
-     *
-     * Files are placed and named according to following conventions
-     *
-     * root
-     *  |
-     *  |---- schema    [schema_key].json (e.g. profile.json)
-     *  |
-     *  |---- forms     [schema_key]-[form_key].json (e.g. profile-simple.json)
-     *  |
-     *  |---- views     [view_key].json (e.g. mobile.json)
-     *  |
-     *  |---- templates [template_key].tmpl (e.g. two_column.tmpl)
-     *  |
-     *  |---- data      [data_key].json (e.g. taylor_swift.json)
-     *
-     * The connector takes a single configuration variable, root, for root folder.
-     * The default value for root folder is "/".
-     *
-     *
-     * The loadAll method is for loading schema, form, view and data in a single call.
-     * Its dataSource parameter should have following format
-     *
-     *  {
-     *   "data": [data_key],
-     *   "schema": [schema_key],
-     *   "options": [form_key],
-     *   "view": [view_key]
-     *  }
-     *
-     *  e.g.
-     *
-     *  {
-     *   "data": "taylor_swift",
-     *   "schema": "profile",
-     *   "options": "profile-simple",
-     *   "view": "mobile"
-     *  }
-     *
-     *
-     * The load method is for loading single item such as schema, form, view , data or template.
-     * Its dataSource parameter should have following format
-     *
-     *  {
-     *   "key":"data|schema|options|view|template",
-     *   "dataSource":dataSource,
-     *   "isJson":true|false
-     *  }
-     *
-     *  e.g.
-     *
-     *  {
-     *      "key": template,
-     *      "dataSource" : "two_column"
-     *  }
-     *
+     * @lends Alpaca.Connectors.SimpleConnector.prototype
      */
-    Alpaca.Connectors.SimpleConnector = Alpaca.Connector.extend({
-
+    {
+        /**
+         * @constructs
+         * @augments Alpaca.Connector
+         *
+         * @class Simple Connector that loads files from local web server directories.
+         * <p>
+         * Files are placed and named according to following conventions:
+         * </p>
+         * <p>
+         * root -- Root directory<br/>
+         *  |<br/>
+         *  |---- schema    [schema_key].json (e.g. profile.json)<br/>
+         *  |<br/>
+         *  |---- forms     [schema_key]-[form_key].json (e.g. profile-simple.json)<br/>
+         *  |<br/>
+         *  |---- views     [view_key].json (e.g. mobile.json)<br/>
+         *  |<br/>
+         *  |---- templates [template_key].tmpl (e.g. two_column.tmpl)<br/>
+         *  |<br/>
+         *  |---- data      [data_key].json (e.g. taylor_swift.json)<br/>
+         *
+         * </p>
+         * <p>
+         * The connector takes a single configuration variable, root, for root folder.
+         * The default value for the root folder is "/".
+         * </p>
+         *
+         * <p>
+         * The dataSource parameters for load/save methods take following format:
+         * </p>
+         * <code>
+         *     <pre>
+         * {
+         *   "data": [data_key],
+         *   "schema": [schema_key],
+         *   "options": [form_key],
+         *   "view": [view_key]
+         *  }
+         *
+         * e.g.
+         *
+         *  {
+         *   "data": "taylor_swift",
+         *   "schema": "profile",
+         *   "options": "profile-simple",
+         *   "view": "mobile"
+         *  }
+         *  </pre>
+         *</code>
+         * @param {String} id Connector ID.
+         * @param {Object} configs Connector Configurations.
+         */
         constructor: function(id, configs) {
             this.base(id, configs);
         },
 
         /**
-         *
+         * @see Alpaca.Connector#connect
          */
         connect: function (onSuccess, onError) {
             var _this = this;
@@ -106,10 +103,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @see Alpaca.Connector#loadData
          */
         loadData : function (dataSource, successCallback, errorCallback) {
             var _this = this;
@@ -126,14 +120,14 @@
                     successCallback(dataSource);
                 }, function(loadedError) {
                     base(dataSource, function(dataSource) {
-                       successCallback(dataSource);
+                        successCallback(dataSource);
                     }, function(error) {
                         errorCallback(error);
                     });
                 });
             } else {
                 this.base(dataSource, function(dataSource) {
-                   successCallback(dataSource);
+                    successCallback(dataSource);
                 }, function(error) {
                     errorCallback(error);
                 });
@@ -141,10 +135,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @see Alpaca.Connector#loadView
          */
         loadView : function (dataSource, successCallback, errorCallback) {
             var _this = this;
@@ -175,10 +166,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @see Alpaca.Connector#loadOptions
          */
         loadOptions : function (dataSource, successCallback, errorCallback) {
             var _this = this;
@@ -209,10 +197,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @see Alpaca.Connector#loadSchema
          */
         loadSchema : function (dataSource, successCallback, errorCallback) {
             var _this = this;
@@ -243,10 +228,7 @@
         },
 
         /**
-         *
-         * @param dataSource
-         * @param onSuccess
-         * @param onError
+         * @see Alpaca.Connector#loadAll
          */
         loadAll : function (dataSource, onSuccess, onError) {
             var loadCounter = 0;
@@ -272,8 +254,7 @@
         },
 
         /**
-         *
-         * @param callback
+         * @see Alpaca.Connector#loadTemplate
          */
         loadTemplate : function (dataSource, onSuccess, onError) {
 

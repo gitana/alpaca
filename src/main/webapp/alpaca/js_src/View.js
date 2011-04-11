@@ -2,19 +2,28 @@
 
     var Alpaca = $.alpaca;
 
+    Alpaca.View = Base.extend(
     /**
-     * View class
+     * @lends Alpaca.View.prototype
      */
-    Alpaca.View = Base.extend({
-
+    {
+        /**
+         * @constructs
+         *
+         * @class Class for managing view components such as layout, template, message etc.
+         *
+         * @param {Object} filed Field control.
+         * @param {Object|String} view Field view.
+         */
         constructor: function(view, field) {
             this.field = field;
             this.setView(view);
         },
 
         /**
+         * Sets field control.
          *
-         * @param view
+         * @param {Object|String} view View to be set.
          */
         setView : function (view) {
 
@@ -44,14 +53,18 @@
         },
 
         /**
+         * Gets view wizard settings.
          *
+         * @returns {Object} View wizard settings.
          */
         getWizard : function () {
             return this.getViewParam("wizard");
         },
 
         /**
+         * Gets global template.
          *
+         * @returns {Object|String} Global template setting of the view.
          */
         getGlobalTemplate : function () {
             var globalTemplate = this.getViewParam("globalTemplate");
@@ -64,7 +77,9 @@
         },
 
         /**
+         * Gets layout template and bindings.
          *
+         * @returns {Object} Layout template and bindings setting of the view.
          */
         getLayout : function () {
             var layoutTemplate = this.getViewParam(["layout","template"],true);
@@ -80,7 +95,9 @@
         },
 
         /**
+         * Gets style injection lists.
          *
+         * @returns {Object} styles style injection list settings of the view.
          */
         getStyles : function () {
             var parents = [];
@@ -102,16 +119,22 @@
         },
 
         /**
+         * Gets template for the given id.
          *
-         * @param templateId
+         * @param {String} templateId template id.
+         *
+         * @returns {Object|String} The template mapped to the given id.
          */
         getTemplate : function (templateId) {
             return this.getViewParam(["templates",templateId]);
         },
 
         /**
+         * Gets message for the given id.
          *
-         * @param messageId
+         * @param {String} messageId Message id.
+         *
+         * @returns {String} Message mapped to the given id.
          */
         getMessage : function (messageId) {
             var messageForLocale = this.getViewParam(["messages",Alpaca.defaultLocale,messageId]);
@@ -119,9 +142,11 @@
         },
 
         /**
-         * Retrieves view parameter based on configuration Id or Id array
+         * Retrieves view parameter based on configuration Id or Id array.
          *
-         * @param configId
+         * @param {String|Array} configId Configuration id or array.
+         *
+         * @returns {Any} View parameter mapped to configuration Id or Id array.
          */
         getViewParam : function (configId,topLevelOnly) {
             // Try the fields
@@ -142,8 +167,11 @@
         /**
          * Internal method for retrieving view parameter
          *
-         * @param configId
-         * @param viewObject
+         * @private
+         * @param {String}configId Configuration id.
+         * @param {Object|String}viewObject View object.
+         *
+         * @returns {Any} parameter view parameter mapping to given id of the given view object.
          */
         _getViewParam : function (viewObject, configId) {
             var configVal = this._getConfigVal(viewObject, configId);
@@ -161,8 +189,12 @@
         /**
          * Internal method for getting configuration.
          *
-         * @param configVal
-         * @param configId
+         * @private
+         *
+         * @param {Any} configVal configuration value.
+         * @param {String} configId configuration id.
+         *
+         * @returns {Any} configuration mapping to the given id
          */
         _getConfigVal : function (configVal, configId) {
             if (Alpaca.isArray(configId)) {
@@ -174,6 +206,5 @@
             }
             return configVal;
         }
-
     });
 })(jQuery);

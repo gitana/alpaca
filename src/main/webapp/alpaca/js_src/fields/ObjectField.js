@@ -2,14 +2,30 @@
 
     var Alpaca = $.alpaca;
 
+    Alpaca.Fields.ObjectField = Alpaca.ContainerField.extend(
     /**
-     * Default control for the treatment of a JSON object.
+     * @lends Alpaca.Fields.ObjectField.prototype
      */
-    Alpaca.Fields.ObjectField = Alpaca.ContainerField.extend({
+    {
+        /**
+         * @constructs
+         * @augments Alpaca.ContainerField
+         *
+         * @class Control for JSON Schema object type.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
 
         /**
-         * @Override
-         *
+         * @see Alpaca.ContainerField#setup
          */
         setup: function() {
             this.base();
@@ -33,13 +49,11 @@
         },
 
         /**
-         * @Override
+         * Picks apart the data object and set onto child fields.
          *
-         * Pick apart the data object and set onto child fields.
-         *
-         * Data must be an object.
+         * @see Alpaca.Field#setValue
          */
-        setValue: function(data, stopUpdateTrigger) {
+        setValue: function(data) {
             if (!data || !Alpaca.isObject(data)) {
                 return;
             }
@@ -60,9 +74,8 @@
         },
 
         /**
-         * @Override
-         *
-         * Reconstruct the data object from the child fields.
+         * Reconstructs the data object from the child fields.
+         * @see Alpaca.Field#getValue
          */
         getValue: function() {
             var o = {};
@@ -79,20 +92,17 @@
         },
 
         /**
-         * Override
+         * @see Alpaca.Field#postRender
          */
         postRender: function() {
             this.base();
-
             // Generates wizard if requested
             if (this.isTopLevel()) {
-                //if (this.view && this.wizardConfigs && this.wizardConfigs.renderWizard) {               
                 if (this.view) {
-                    this.wizardConfigs = this.view.getWizard()/*Alpaca.getViewParam('wizard', this)*/;
-                    /*this.templatesConfigs = Alpaca.getViewParam('templates', this);*/
-                    var layoutTemplate = this.view.getLayout().template/*Alpaca.getLayout("template", this)*/;
+                    this.wizardConfigs = this.view.getWizard();
+                    var layoutTemplate = this.view.getLayout().template;
                     if (this.wizardConfigs && this.wizardConfigs.renderWizard) {
-                        if (layoutTemplate/*this.templatesConfigs && this.templatesConfigs.layout*/) {
+                        if (layoutTemplate) {
                             //Wizard based on layout
                             this.wizard();
                         } else {
@@ -105,9 +115,9 @@
         },
 
         /**
-         * Gets child index
+         * Gets child index.
          *
-         * @param {Object} propertyId
+         * @param {Object} propertyId Child field property ID.
          */
         getIndex: function(propertyId) {
             if (Alpaca.isEmpty(propertyId)) {
@@ -123,11 +133,14 @@
         },
 
         /**
-         * @Override
+         * Adds a child item.
          *
-         * Adds item
+         * @param {String} propertyId Child field property ID.
+         * @param {Object} fieldOptions Child field options.
+         * @param {Any} value Child field value
+         * @param {String} insertAfterId Location where the child item will be inserted.
          */
-        addItem: function(propertyId, fieldSetting, value, insertAfterId) {
+        addItem: function(propertyId, fieldOptions, value, insertAfterId) {
             var _this = this;
             var itemSchema;
             if (_this.schema && _this.schema.properties && _this.schema.properties[propertyId]) {
@@ -137,7 +150,7 @@
 
             containerElem.alpaca({
                 "data" : value,
-                "options": fieldSetting,
+                "options": fieldOptions,
                 "schema" : itemSchema,
                 "view" : this.view.viewObject.id ? this.view.viewObject.id : this.view.viewObject,
                 "connector": this.connector,
@@ -172,50 +185,10 @@
                     }
                 }
             });
-
-
-            /*            Alpaca(containerElem, value, fieldSetting, itemSchema, */
-            /*this.getView()*/
-            /*this.view.viewObject.id? this.view.viewObject.id : this.view.viewObject, function(fieldControl) {
-             // render
-             fieldControl.parent = _this;
-             // add the property Id
-             fieldControl.propertyId = propertyId;
-             // setup item path
-             if (_this.path != "/") {
-             fieldControl.path = _this.path + "/" + propertyId;
-             } else {
-             fieldControl.path = _this.path + propertyId;
-             }
-             fieldControl.render();
-             containerElem.attr("id", fieldControl.getId() + "-item-container");
-             containerElem.attr("alpaca-id", fieldControl.getId());
-             // remember the control
-             if (Alpaca.isEmpty(insertAfterId)) {
-             _this.addChild(fieldControl);
-             } else {
-             var index = _this.getIndex(insertAfterId);
-             if (index != -1) {
-             _this.addChild(fieldControl, index + 1);
-             } else {
-             _this.addChild(fieldControl);
-             }
-             }
-             if (insertAfterId) {
-             _this.renderValidationState();
-             }
-             });*/
-
         },
 
         /**
-         * @Override
-         *
-         * Renders all properties
-         *
-         * We need to validate data against schema before rendering if schema
-         * is present.
-         *
+         * @see Alpaca.ContainerField#renderItems
          */
         renderItems: function() {
             var _this = this;
@@ -254,9 +227,13 @@
         },
 
         /**
+         * Checks status of field dependencies.
          *
-         * @param {Object} propertyId
-         * @param {Object} dependency
+         * @param {Object} propertyId Field property id.
+         * @param {Object} dependency Property id of the dependency field.
+         *
+         * @returns {Boolean} True if all dependencies have been satisfied and the field needs to be shown,
+         * false otherwise.
          */
         getDependencyStatus: function(propertyId, dependency) {
             var shouldShow = !Alpaca.isValEmpty(this.childrenByPropertyId[dependency].data);
@@ -270,9 +247,9 @@
         },
 
         /**
-         * Displays or hides item depending on status of its dependencies
+         * Displays or hides a field depending on status of its dependencies
          *
-         * @param {Object} propertyId
+         * @param {String} propertyId Field property id.
          */
         renderDependency: function(propertyId) {
             var item = this.childrenByPropertyId[propertyId];
@@ -302,9 +279,10 @@
         },
 
         /**
-         * Enable item dependency
+         * Enables field dependency.
          *
-         * @param {Object} dependency
+         * @param {String} propertyId Field property ID
+         * @param {String} dependency Field dependency property id.
          */
         enableDependency: function(propertyId, dependency) {
             if (this.childrenByPropertyId[propertyId]) {
@@ -318,17 +296,15 @@
         },
 
         /**
-         * Renders wizard
+         * Renders a template-based wizard.
          */
         wizard: function() {
 
             var element = this.outerEl;
-
             var steps = $('.alpaca-wizard-step', element);
             var count = steps.size();
 
             this.totalSteps = count;
-
             var _this = this;
             var stepTitles = [];
             if (this.wizardConfigs.stepTitles) {
@@ -391,7 +367,7 @@
         },
 
         /**
-         * Renders wizard without layout
+         * Renders a configuration-based wizard without a layout template.
          */
         autoWizard: function() {
 
@@ -468,9 +444,9 @@
         },
 
         /**
-         * Renders wizard status bar
+         * Renders wizard status bar.
          *
-         * @param {Object} stepTitles
+         * @param {Object} stepTitles Step titles.
          */
         _renderWizardStatusBar: function(stepTitles) {
             var wizardStatusBar = this.wizardConfigs.statusBar;
@@ -488,39 +464,27 @@
         },
 
         /**
-         * Creates prev button
+         * Creates an "prev" button.
          *
-         * @param {Object} i
+         * @param {Integer} i Step number.
          */
         _createPrevButton: function(i) {
             var stepName = "step" + i;
             var _this = this;
 
-            /*
-             var wizardPreButtonTemplate = Alpaca.getTemplate("wizardPreButton", this);
-             if (wizardPreButtonTemplate) {
-             var wizardPreButtonElement = $.tmpl(wizardPreButtonTemplate, {});
-             wizardPreButtonElement.attr("id", stepName + '-button-pre');
-             wizardPreButtonElement.addClass('alpaca-wizard-button alpaca-wizard-button-back');
-             $("#" + stepName + "-nav-bar").append(wizardPreButtonElement);
-             }
-
-             $("#" + stepName + "-button-pre").bind("click", function(e) {
-             $("#" + stepName).hide();
-             $("#step" + (i - 1)).show();
-             _this._selectStep(i - 1);
-             });
-             */
             var wizardPreButtonTemplate = this.view.getTemplate("wizardPreButton");
             if (wizardPreButtonTemplate) {
                 var wizardPreButtonElement = $.tmpl(wizardPreButtonTemplate, {});
                 wizardPreButtonElement.attr("id", stepName + '-button-pre');
-                wizardPreButtonElement.button({
-                    text: true,
-                    icons: {
-                        primary: "ui-icon-triangle-1-w"
-                    }
-                }).click(function() {
+                if (wizardPreButtonElement.button) {
+                    wizardPreButtonElement.button({
+                        text: true,
+                        icons: {
+                            primary: "ui-icon-triangle-1-w"
+                        }
+                    });
+                }
+                wizardPreButtonElement.click(function() {
                     $("#" + stepName).hide();
                     $("#step" + (i - 1)).show();
                     _this._selectStep(i - 1);
@@ -532,40 +496,27 @@
         },
 
         /**
-         * Creates next button
+         * Creates a "next" button.
          *
-         * @param {Object} i
+         * @param {Integer} i Step number.
          */
         _createNextButton: function(i) {
             var stepName = "step" + i;
             var _this = this;
 
-            /*
-             var wizardNextButtonTemplate = Alpaca.getTemplate("wizardNextButton", this);
-             if (wizardNextButtonTemplate) {
-             var wizardNextButtonElement = $.tmpl(wizardNextButtonTemplate, {});
-             wizardNextButtonElement.attr("id", stepName + '-button-next');
-             wizardNextButtonElement.addClass('alpaca-wizard-button alpaca-wizard-button-next');
-             $("#" + stepName + "-nav-bar").append(wizardNextButtonElement);
-             }
-
-             $("#" + stepName + "-button-next").bind("click", function(e) {
-             $("#" + stepName).hide();
-             $("#step" + (i + 1)).show();
-
-             _this._selectStep(i + 1);
-             });
-             */
             var wizardNextButtonTemplate = this.view.getTemplate("wizardNextButton");
             if (wizardNextButtonTemplate) {
                 var wizardNextButtonElement = $.tmpl(wizardNextButtonTemplate, {});
                 wizardNextButtonElement.attr("id", stepName + '-button-next');
-                wizardNextButtonElement.button({
-                    text: true,
-                    icons: {
-                        secondary: "ui-icon-triangle-1-e"
-                    }
-                }).click(function() {
+                if (wizardNextButtonElement.button) {
+                    wizardNextButtonElement.button({
+                        text: true,
+                        icons: {
+                            secondary: "ui-icon-triangle-1-e"
+                        }
+                    });
+                }
+                wizardNextButtonElement.click(function() {
                     var valid = true;
 
                     if (_this.view && _this.wizardConfigs && _this.wizardConfigs.validation) {
@@ -588,9 +539,9 @@
         },
 
         /**
-         * Selects wizard step
+         * Selects a wizard step.
          *
-         * @param {Object} i
+         * @param {Integer} i Step number.
          */
         _selectStep: function(i) {
             $("#" + this.getId() + "-wizard-status-bar" + " li").removeClass("current current-has-next ui-state-highlight ui-corner-all");
@@ -601,7 +552,8 @@
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ContainerField#getSchemaOfSchema
          */
         getSchemaOfSchema: function() {
             var properties = {
@@ -630,28 +582,8 @@
         },
 
         /**
-         * @Override
-         */
-        getTitle: function() {
-            return "Composite Field";
-        },
-
-        /**
-         * @Override
-         */
-        getDescription: function() {
-            return "Composite field for containing other fields";
-        },
-
-        /**
-         * @Override
-         */
-        getType: function() {
-            return "object";
-        },
-
-        /**
-         * @Override
+         * @private
+         * @see Alpaca.ContainerField#getSchemaOfOptions
          */
         getSchemaOfOptions: function() {
             var schemaOfOptions = Alpaca.merge(this.base(), {
@@ -685,7 +617,28 @@
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#getTitle
+         */
+        getTitle: function() {
+            return "Composite Field";
+        },
+
+        /**
+         * @see Alpaca.Field#getDescription
+         */
+        getDescription: function() {
+            return "Composite field for containing other fields";
+        },
+
+        /**
+         * @see Alpaca.Field#getType
+         */
+        getType: function() {
+            return "object";
+        },
+
+        /**
+         * @see Alpaca.Field#getFieldType
          */
         getFieldType: function() {
             return "object";

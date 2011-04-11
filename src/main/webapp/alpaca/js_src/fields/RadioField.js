@@ -1,19 +1,31 @@
-/**
- * Radio control
- */
 (function($){
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.RadioField = Alpaca.Fields.ListField.extend(
     /**
-     * List field
+     * @lends Alpaca.Fields.RadioField.prototype
      */
-    Alpaca.Fields.RadioField = Alpaca.Fields.ListField.extend({
-    
+    {
         /**
-         * @Override
-		 *	
-         * Sets up any default values for this field.
+         * @constructs
+         * @augments Alpaca.Fields.ListField
+         *
+         * @class Radio group control for list type.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.ListField#setup
          */
         setup: function(){
             this.base();
@@ -27,29 +39,23 @@
         },
 		        
         /**
-         * @Override
-         *
-         * Return the value of the input control
+         * @see Alpaca.Field#getValue
          */
         getValue: function(){
             return $('input:radio[name='+this.name+']:checked',this.field).val();
         },
         
         /**
-         * @Override
-         *
-         * Return the value of the input control
+         * @see Alpaca.Field#setValue
          */
-        setValue: function(val, stopUpdateTrigger){
+        setValue: function(val){
             if (val != this.getValue()) {
-                this.base(val, stopUpdateTrigger);
+                this.base(val);
             }
         },
         
         /**
-         * @Override
-         *
-         * Render list control into the field container
+         * @private
          */
         _renderField: function(onSuccess){            
             var controlFieldTemplate = this.view.getTemplate("controlFieldRadio");
@@ -75,7 +81,7 @@
         },
         
         /**
-         * @Override
+         * @see Alpaca.ControlField#postRender
          */
         postRender: function() {
             this.base();
@@ -85,9 +91,7 @@
         },        
         
         /**
-         * @Override
-         *
-         * Handler for click event
+         * @see Alpaca.ControlField#onClick
          */
         onClick: function(e){
             this.base(e);
@@ -96,13 +100,14 @@
             
             Alpaca.later(25, this, function(){
                 var v = _this.getValue();
-                _this.setValue(v, false);
+                _this.setValue(v);
                 _this.renderValidationState();
             });
         },
 		
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.ListField#getSchemaOfOptions
          */
 		getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(),{
@@ -118,21 +123,21 @@
         },
         
 		/**
-         * @Override
+         * @see Alpaca.Field#getTitle
 		 */
 		getTitle: function() {
 			return "Radio Group Field";
 		},
 		
 		/**
-         * @Override
+         * @see Alpaca.Field#getDescription
 		 */
 		getDescription: function() {
 			return "Radio Group Field.";
 		},
 
 		/**
-         * @Override
+         * @see Alpaca.Field#getFieldType
          */
         getFieldType: function() {
             return "radio";

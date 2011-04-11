@@ -1,61 +1,72 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.EmailField = Alpaca.Fields.TextField.extend(
     /**
-     * Email field
+     * @lends Alpaca.Fields.EmailField.prototype
      */
-    Alpaca.Fields.EmailField = Alpaca.Fields.TextField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.TextField
+         *
+         * @class Control for JSON schema email format.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#setup
          */
         setup: function() {
             this.base();
-            
+
             if (!this.schema.pattern) {
-                this.schema.pattern = /^[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+(?:\.[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,6}$/i;
+                this.schema.pattern = Alpaca.regexps.email;
             }
         },
-        
+
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#postRender
          */
         postRender: function() {
             this.base();
             $('<span class="ui-icon ui-icon-mail-closed"></span>').prependTo(this.fieldContainer);
-			if (this.fieldContainer) {
-				this.fieldContainer.addClass('alpaca-controlfield-email');
-			}	
+            if (this.fieldContainer) {
+                this.fieldContainer.addClass('alpaca-controlfield-email');
+            }
         },
-        
-		/**
-		 * 
-		 */
-		addFieldClass: function() {
-			this.base();
-			this.outerEl.addClass('alpaca-controlfield-email');
-		},
-        
+
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#handleValidate
          */
         handleValidate: function() {
             var baseStatus = this.base();
-            
+
             var valInfo = this.validation;
-            
+
             if (!valInfo["invalidPattern"]["status"]) {
                 valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidEmail");
             }
-            
+
             return baseStatus;
         },
+
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.TextField#getSchemaOfSchema
          */
         getSchemaOfSchema: function() {
-            var pattern = (this.schema && this.schema.pattern)? this.schema.pattern :/^[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+(?:\.[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,6}$/i;
+            var pattern = (this.schema && this.schema.pattern) ? this.schema.pattern : Alpaca.regexps.email;
             return Alpaca.merge(this.base(), {
                 "properties": {
                     "pattern": {
@@ -65,56 +76,57 @@
                         "default": pattern,
                         "enum":[pattern],
                         "readonly": true
-                    },                    
-					"format": {
+                    },
+                    "format": {
                         "title": "Format",
                         "description": "Property data format",
                         "type": "string",
-						"default":"email",
+                        "default":"email",
                         "enum":["email"],
-						"readonly":true
+                        "readonly":true
                     }
                 }
             });
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.TextField#getOptionsForSchema
          */
-		getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(),{
-				"fields": {
-					"format": {
-						"type": "text"
-					}
-				}
-			});
+        getOptionsForSchema: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "format": {
+                        "type": "text"
+                    }
+                }
+            });
         },
-        
+
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#getTitle
          */
         getTitle: function() {
             return "Email Field";
         },
-        
+
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
             return "Email Field.";
         },
-        
+
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#getFieldType
          */
         getFieldType: function() {
             return "email";
         }
     });
-    
+
     Alpaca.registerMessages({
-        "invalidEmail": "Invalid Email address, ex: admin@gitanasoftware.com"
+        "invalidEmail": "Invalid Email address e.g. admin@gitanasoftware.com"
     });
     Alpaca.registerFieldClass("email", Alpaca.Fields.EmailField);
     Alpaca.registerDefaultFormatFieldMapping("email", "email");

@@ -1,66 +1,83 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.PrintButtonField = Alpaca.Fields.ButtonField.extend(
     /**
-     * Abstract Button class
+     * @lends Alpaca.Fields.PrintButtonField.prototype
      */
-    Alpaca.Fields.PrintButtonField = Alpaca.Fields.ButtonField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.ButtonField
          *
-         * Sets up any default values for this field.
+         * @class Button control for printing form.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.ButtonField#setup
          */
         setup: function() {
-			this.base();			
-			// sets defaults
-			if (!this.data) {
-				this.data = this.view.getMessage("print");
-			}			
-		},
-        
+            this.base();
+            // sets defaults
+            if (!this.data) {
+                this.data = this.view.getMessage("print");
+            }
+        },
+
         /**
-         * @Override
+         * @see Alpaca.Fields.ButtonField#onClick
          */
         onClick: function(e) {
-			this.form.topControl.print();
-		},
-		
-		/**
-		 * @Override
-		 */
-		postRender: function () {
-			this.base();
-			this.field.addClass("alpaca-form-button-print");
-			this.field.button({
-				text: true,
-				icons: {
-					primary: "ui-icon-print"
-				}
-			});			
-		},
-		
-		/**
-         * @Override
-		 */
-		getTitle: function() {
-			return "Alpaca Screen Print Button";
-		},
-		
-		/**
-         * @Override
-		 */
-		getDescription: function() {
-			return "Alpaca button for screen printing.";
-		}		
+            this.form.topControl.print();
+        },
+
+        /**
+         * @see Alpaca.ControlField#postRender
+         */
+        postRender: function () {
+            this.base();
+            this.field.addClass("alpaca-form-button-print");
+            if (this.field.button) {
+                this.field.button({
+                    text: true,
+                    icons: {
+                        primary: "ui-icon-print"
+                    }
+                });
+            }
+        },
+
+        /**
+         * @see Alpaca.Fields.ButtonField#getTitle
+         */
+        getTitle: function() {
+            return "Alpaca Screen Print Button";
+        },
+
+        /**
+         * @see Alpaca.Fields.ButtonField#getDescription
+         */
+        getDescription: function() {
+            return "Alpaca button for screen printing.";
+        }
     });
 
-    // Registers additonal messages
+    // Registers additional messages
     Alpaca.registerMessages({
         "print": "Print Screen"
     });
-	    
+
     Alpaca.registerFieldClass("printbutton", Alpaca.Fields.PrintButtonField);
-    
+
 })(jQuery);

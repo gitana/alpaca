@@ -1,27 +1,44 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.PasswordField = Alpaca.Fields.TextField.extend(
     /**
-     * IPv4 field
+     * @lends Alpaca.Fields.PasswordField.prototype
      */
-    Alpaca.Fields.PasswordField = Alpaca.Fields.TextField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.TextField
+         *
+         * @class Control for JSON schema password format.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#setup
          */
         setup: function() {
             this.base();
             
             if (!this.schema.pattern) {
-                this.schema.pattern = /^[0-9a-zA-Z\x20-\x7E]*$/;
+                this.schema.pattern = Alpaca.regexps.password;
             }
             
             this.controlFieldTemplate = this.view.getTemplate("controlFieldPassword");
         },
 
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#postRender
          */
         postRender: function() {
             this.base();
@@ -31,7 +48,7 @@
         },
 		        
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#handleValidate
          */
         handleValidate: function() {
             var baseStatus = this.base();
@@ -46,16 +63,8 @@
         },
         
         /**
-         * @Override
-         */
-        postRender: function() {
-            this.base();
-            // apply additional css
-            this.fieldContainer.addClass("alpaca-controlfield-password");
-        },
-        
-        /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.TextField#getSchemaOfSchema
          */
         getSchemaOfSchema: function() {
             var pattern = (this.schema && this.schema.pattern)? this.schema.pattern : /^[0-9a-zA-Z\x20-\x7E]*$/;
@@ -82,7 +91,8 @@
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.TextField#getOptionsForSchema
          */
 		getOptionsForSchema: function() {
             return Alpaca.merge(this.base(),{
@@ -95,21 +105,21 @@
         },
         
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#getTitle
          */
         getTitle: function() {
             return "Password Field";
         },
         
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
             return "Password Field.";
         },
 
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextField#getFieldType
          */
         getFieldType: function() {
             return "password";

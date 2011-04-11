@@ -1,32 +1,46 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.IntegerField = Alpaca.Fields.NumberField.extend(
     /**
-     * Integer field control
-     *
-     * The following additional settings are permitted:
-     *
-     * {
-     *    min: <number>                                  minimum value
-     *    max: <number>                                  maximum value
-     * }
-     *
-     * This field obeys JSON Schema for:
-     *
-     * {
-     *    minimum: <number>,							[optional]
-     *    maximum: <number>,							[optional]
-     *    minimumCanEqual: <boolean>,					[optional]
-     *    maximumCanEqual: <boolean>,					[optional]
-     *    divisibleBy: <number>                         [optional]
-     * }
+     * @lends Alpaca.Fields.IntegerField.prototype
      */
-    Alpaca.Fields.IntegerField = Alpaca.Fields.NumberField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.NumberField
          *
+         * @class Control for integers. If jQuery UI is enabled, it can also be
+         * turned into a slider.
+         *<p>
+         * The following additional JSON Schema properties are supported:
+         *<p/>
+         *<code>
+         *     <pre>
+         * {
+         *    minimum: {number},
+         *    maximum: {number},
+         *    minimumCanEqual: {boolean},
+         *    maximumCanEqual: {boolean},
+         *    divisibleBy: {number}
+         * }
+         * </pre>
+         * </code>
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.NumberField#getValue
          */
         getValue: function() {
             var textValue = this.field.val();
@@ -36,86 +50,87 @@
                 return parseInt(textValue);
             }
         },
-		
-		/**
-         * @Override
+
+        /**
+         * @see Alpaca.Field#onChange
          */
         onChange: function(e) {
             this.base();
-			if (this.slider) {
-				this.slider.slider( "value", this.getValue() );
-			}
+            if (this.slider) {
+                this.slider.slider("value", this.getValue());
+            }
         },
-        
+
         /**
-         * @Override
+         * @see Alpaca.Fields.NumberField#postRender
          */
         postRender: function() {
             this.base();
-			var _this = this;
+            var _this = this;
             if (this.options.slider) {
                 if (this.schema.maximum && this.schema.minimum) {
                     this.field.after('<div id="slider"></div>');
-					this.slider =$('#slider',this.field.parent()).slider({
+                    this.slider = $('#slider', this.field.parent()).slider({
                         value: this.getValue(),
                         min: this.schema.minimum,
                         max: this.schema.maximum,
                         slide: function(event, ui) {
                             _this.setValue(ui.value);
-							_this.renderValidationState();
+                            _this.renderValidationState();
                         }
-                    });                    
+                    });
                 }
             }
-			if (this.fieldContainer) {
-				this.fieldContainer.addClass('alpaca-controlfield-integer');
-			}
+            if (this.fieldContainer) {
+                this.fieldContainer.addClass('alpaca-controlfield-integer');
+            }
         },
 
         /**
-         * @Override
-         *
+         * @see Alpaca.Fields.NumberField#handleValidate
          */
         handleValidate: function() {
-        
+
             var baseStatus = this.base();
-            
+
             var valInfo = this.validation;
-            
+
             if (!valInfo["stringNotANumber"]["status"]) {
                 valInfo["stringNotANumber"]["message"] = this.view.getMessage("stringNotAnInteger");
             }
-            
+
             return baseStatus;
         },
-        
+
         /**
-         * Validates if it is a number
+         * Validates if it is an integer.
+         * @returns {Boolean} true if it is an integer
          */
         _validateNumber: function() {
             var textValue = this.field.val();
-			
-			if (Alpaca.isValEmpty(textValue)) {
+
+            if (Alpaca.isValEmpty(textValue)) {
                 return true;
             }
-			
+
             var floatValue = this.getValue();
-            
+
             // quick check to see if what they entered was a number
             if (isNaN(floatValue)) {
                 return false;
             }
-            
+
             // check if valid number format
-            if (!textValue.match(/^([\+\-]?([1-9]\d*)|0)$/)) {
+            if (!textValue.match(Alpaca.regexps.integer)) {
                 return false;
             }
-            
+
             return true;
         },
-        
+
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.NumberField#getSchemaOfSchema
          */
         getSchemaOfSchema: function() {
             return Alpaca.merge(this.base(), {
@@ -140,7 +155,8 @@
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.NumberField#getOptionsForSchema
          */
         getOptionsForSchema: function() {
             return Alpaca.merge(this.base(), {
@@ -159,67 +175,70 @@
                     }
                 }
             });
-        }, 
-		
-        /**
-         * @Override
-         */
-		getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(),{
-				"properties": {
-					"slider": {
-						"title": "Slider",
-						"description": "Generate slider control if true",
-						"type": "boolean",
-						"default": false
-					}
-				}
-			});
-		},
+        },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.NumberField#getSchemaOfOptions
          */
-		getOptionsForOptions: function() {
-			return Alpaca.merge(this.base(), {
-				"fields": {
-					"slider": {
-						"rightLabel": "Slider control ?",
-						"helper": "Generate slider control if selected",
-						"type": "checkbox"
-					}
-				}
-			});
-		},		       
+        getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "slider": {
+                        "title": "Slider",
+                        "description": "Generate slider control if true",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            });
+        },
+
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.NumberField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "slider": {
+                        "rightLabel": "Slider control ?",
+                        "helper": "Generate slider control if selected",
+                        "type": "checkbox"
+                    }
+                }
+            });
+        },
+
+        /**
+         * @see Alpaca.Fields.NumberField#getTitle
          */
         getTitle: function() {
             return "Integer Field";
         },
-        
+
         /**
-         * @Override
+         * @see Alpaca.Fields.NumberField#getDescription
          */
         getDescription: function() {
             return "Integer Field.";
         },
 
-		/**
-         * @Override
+        /**
+         * @see Alpaca.Fields.NumberField#getType
          */
         getType: function() {
             return "integer";
         },
-        
+
         /**
-         * @Override
+         * @see Alpaca.Fields.NumberField#getFieldType
          */
         getFieldType: function() {
             return "integer";
         }
     });
-    
+
     // Additional Registrations
     Alpaca.registerMessages({
         "stringNotAnInteger": "This value is not an integer."

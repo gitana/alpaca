@@ -2,15 +2,30 @@
 
     var Alpaca = $.alpaca;
 
+    Alpaca.Fields.ButtonField = Alpaca.ControlField.extend(
     /**
-     * Abstract Button class
+     * @lends Alpaca.Fields.ButtonField.prototype
      */
-    Alpaca.Fields.ButtonField = Alpaca.ControlField.extend({
+    {
+        /**
+         * @constructs
+         * @augments Alpaca.ControlField
+         *
+         * @class Default control for form buttons.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
 
         /**
-         * @Override
-         *
-         * Sets up any default values for this field.
+         * @see Alpaca.Field#setup
          */
         setup: function() {
             this.base();
@@ -35,9 +50,7 @@
         },
 
         /**
-         * @Override
-         *
-         * Renders an INPUT control into the field container
+         * @see Alpaca.ControlField#renderField
          */
         renderField: function(onSuccess) {
             // decorate the field container with our class
@@ -68,20 +81,16 @@
         },
 
         /**
-         * @Override
-         *
-         * Return the value of the input control
+         * @see Alpaca.Field#getValue
          */
         getValue: function() {
             return $(this.field).val();
         },
 
         /**
-         * @Override
-         *
-         * Set value onto the input contorl
+         * @see Alpaca.Field#setValue
          */
-        setValue: function(value, stopUpdateTrigger) {
+        setValue: function(value) {
             if (value) {
                 $(this.field).val(value);
             } else {
@@ -89,52 +98,52 @@
             }
 
             // be sure to call into base method
-            this.base(value, stopUpdateTrigger);
+            this.base(value);
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#disable
          */
         disable: function() {
             this.field.disabled = true;
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#enable
          */
         enable: function() {
             this.field.disabled = false;
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#focus
          */
         focus: function() {
             this.field.focus();
         },
 
         /**
-         * @Override
+         * @see Alpaca.ControlField#onClick
          */
         onClick: function(e) {
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#getTitle
          */
         getTitle: function() {
             return "Button Field";
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#getDescription
          */
         getDescription: function() {
             return "Common Button Field.";
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#getType
          */
         getType: function() {
             return "any";

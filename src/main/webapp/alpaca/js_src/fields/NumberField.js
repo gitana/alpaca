@@ -1,32 +1,31 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.NumberField = Alpaca.Fields.TextField.extend(
     /**
-     * Number field control
-     *
-     * The following additional settings are permitted:
-     *
-     * {
-     *    min: <number>                                  minimum value
-     *    max: <number>                                  maximum value
-     * }
-     *
-     * This field obeys JSON Schema for:
-     *
-     * {
-     *    minimum: <number>,							[optional]
-     *    maximum: <number>,							[optional]
-     *    exclusiveMinimum: <boolean>,					[optional]
-     *    exclusiveMaximum: <boolean>,					[optional]
-     *    divisibleBy: <number>                         [optional]
-     * }
+     * @lends Alpaca.Fields.NumberField.prototype
      */
-    Alpaca.Fields.NumberField = Alpaca.Fields.TextField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.TextField
          *
+         * @class Control for JSON schema number type.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#getValue
          */
         getValue: function() {
             var textValue = this.field.val();
@@ -38,7 +37,7 @@
         },
         
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#postRender
          */
         postRender: function() {
             this.base();
@@ -48,8 +47,7 @@
         },		
 				
         /**
-         * @Override
-         *
+         * @see Alpaca.Fields.TextField#handleValidate
          */
         handleValidate: function() {
             var baseStatus = this.base();
@@ -97,7 +95,8 @@
         },
         
         /**
-         * Validates if it is a number
+         * Validates if it is a float number.
+         * @returns {Boolean} true if it is a float number
          */
         _validateNumber: function() {
             var textValue = this.field.val();
@@ -113,7 +112,7 @@
             }
             
             // check if valid number format
-            if (!textValue.match(/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/)) {
+            if (!textValue.match(Alpaca.regexps.number)) {
                 return false;
             }
             
@@ -121,22 +120,22 @@
         },
         
         /**
-         * Validates DivisibleBy
+         * Validates divisibleBy constraint.
+         * @returns {Boolean} true if it passes the divisibleBy constraint.
          */
         _validateDivisibleBy: function() {
             var floatValue = this.getValue();
-            
             if (this.schema.divisibleBy) {
                 if (!(floatValue % this.schema.divisibleBy == 0)) {
                     return false;
                 }
             }
-            
             return true;
         },
         
         /**
-         * Validates Maximum
+         * Validates maximum constraint.
+         * @returns {Boolean} true if it passes the maximum constraint.
          */
         _validateMaximum: function() {
             var floatValue = this.getValue();
@@ -157,7 +156,8 @@
         },
         
         /**
-         * Validates Minimum
+         * Validates maximum constraint.
+         * @returns {Boolean} true if it passes the minimum constraint.
          */
         _validateMinimum: function() {
             var floatValue = this.getValue();
@@ -176,8 +176,10 @@
             
             return true;
         },
+
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.TextField#getSchemaOfSchema
          */
         getSchemaOfSchema: function() {
             return Alpaca.merge(this.base(), {
@@ -209,7 +211,8 @@
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Fields.TextField#getOptionsSchema
          */
         getOptionsForSchema: function() {
 			return Alpaca.merge(this.base(), {
@@ -236,30 +239,31 @@
 					}
 				}
 			});
-		},		
+		},
+
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextField#getTitle
 		 */
 		getTitle: function() {
 			return "Number Field";
 		},
 		
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextField#getDescription
 		 */
 		getDescription: function() {
 			return "Field for float numbers.";
 		},
 
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextField#getType
          */
         getType: function() {
             return "number";
         },
 
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextField#getFieldType
          */
         getFieldType: function() {
             return "number";

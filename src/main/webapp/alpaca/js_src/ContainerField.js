@@ -2,35 +2,42 @@
 
     var Alpaca = $.alpaca;
 
-    /**
-     * Abstract Container Field
-     *
-     * Extends Field to provide for parenting of child fields.
-     *
-     * Custom field implementation should extend this if they intend to be containers of subcontrols - examples include
-     * tree controls, list controls and more.
-     *
-     * {
-     *    collapsible: <boolean>
-     *    collapsed: <boolean>
-     * }
-     */
-    Alpaca.ContainerField = Alpaca.Field.extend({
+    Alpaca.ContainerField = Alpaca.Field.extend(
 
+    /**
+     * @lends Alpaca.ContainerField.prototype
+     */
+    {
+        /**
+         * @constructs
+         * @augments Alpaca.Field
+         *
+         * @class Abstract container field for parenting of child fields.
+         *
+         * Custom field implementation should extend this if they intend to be containers of sub-controls -
+         * examples include tree controls, list controls and more.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
 
         /**
-         * @Override
-         *
-         * Override so that we can set up containers to hold subfields.
-         * We also check for valid data type.
+         * @see Alpaca.Field#setup
          */
         setup: function() {
             this.base();
 
             var collapsible = true;
 
-            if (!Alpaca.isEmpty(this.view.collapsible/*Alpaca.getViewParam('collapsible', this)*/)) {
-                collapsible = this.view.collapsible/*Alpaca.getViewParam('collapsible', this)*/;
+            if (!Alpaca.isEmpty(this.view.collapsible)) {
+                collapsible = this.view.collapsible;
             }
 
             if (!Alpaca.isEmpty(this.options.collapsible)) {
@@ -41,15 +48,9 @@
 
             var legendStyle = "button";
 
-            if (!Alpaca.isEmpty(this.view.legendStyle/*Alpaca.getViewParam('legendStyle', this)*/)) {
-                legendStyle = this.view.legendStyle/*Alpaca.getViewParam('legendStyle', this)*/;
+            if (!Alpaca.isEmpty(this.view.legendStyle)) {
+                legendStyle = this.view.legendStyle;
             }
-
-            /*
-             if (!Alpaca.isEmpty(this.options.legendStyle)) {
-             legendStyle = this.options.legendStyle;
-             }
-             */
 
             this.options.legendStyle = legendStyle;
 
@@ -57,25 +58,27 @@
             this.children = [];
             this.childrenById = [];
             this.childrenByPropertyId = [];
-
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#getDefaultFieldTemplateId
          */
         getDefaultFieldTemplateId : function () {
             return "fieldSet";
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#setDefaultTemplate
          */
         setDefaultTemplate: function() {
             this.base();
         },
 
         /**
-         * Helper method to register child fields of this field.
+         * Helper method to add child field.
+         *
+         * @param {Alpaca.Control} child Child field to be added.
+         * @param {Integer} index Index of the new child.
          */
         addChild: function(child, index) {
             if (!Alpaca.isEmpty(index)) {
@@ -91,9 +94,7 @@
         },
 
         /**
-         * @Override
-         *
-         * Initialize events
+         * @see Alpaca.Field#initEvents
          */
         initEvents: function() {
             var _this = this;
@@ -141,26 +142,10 @@
             }
         },
 
-    /**
-     * @Override
-     *
-     * Handle validation
-     */
-        /*
-         handleValidate: function() {
-
-         var baseStatus =  this.base();
-         Alpaca.each(this.children, function() {
-         baseStatus = this.validate() && baseStatus;
-         });
-
-         return baseStatus;
-         },
-         */
         /**
-         * @Override
+         * Clears the field and resets the field to its original value.
          *
-         * Clear
+         * @param stopUpdateTrigger If false, triggers the update event of this event.
          */
         clear: function(stopUpdateTrigger) {
             // clear all the kiddies
@@ -175,9 +160,7 @@
         },
 
         /**
-         * @Override
-         *
-         * Destroy
+         * @see Alpaca.Field#destroy
          */
         destroy: function() {
             Alpaca.each(this.children, function() {
@@ -190,10 +173,14 @@
 
 
         /**
-         * Renders item container
+         * Renders child item container.
+         *
+         * @param {Integer} insertAfterId Insertion point for the container.
+         * @param {Alpaca.Control} parent Parent field.
+         * @param {String} propertyId Child item property ID.
          */
         renderItemContainer: function(insertAfterId, parent, propertyId) {
-            var itemContainerTemplate = this.view.getTemplate("fieldSetItemContainer")/*Alpaca.getTemplate("fieldSetItemContainer", this)*/;
+            var itemContainerTemplate = this.view.getTemplate("fieldSetItemContainer");
             if (itemContainerTemplate) {
                 var containerElem = $.tmpl(itemContainerTemplate, {});
                 if (containerElem.attr('data-replace') == 'true') {
@@ -205,22 +192,13 @@
 
                         var appendToContainer = this.fieldContainer;
 
-                        var bindings = this.view.getLayout().bindings/*Alpaca.getLayout("bindings", this)*/;
+                        var bindings = this.view.getLayout().bindings;
                         if (bindings) {
                             var binding = bindings[propertyId];
                             if (binding && $('#' + binding, appendToContainer).length > 0) {
                                 appendToContainer = $('#' + binding, appendToContainer);
                             }
                         }
-
-                        /*
-                         if (parent && parent.isTopLevel() && parent.view.templates && parent.view.templates.bindings) {
-                         var binding = parent.view.templates.bindings[propertyId];
-                         if (binding && $('#' + binding, appendToContainer).length > 0) {
-                         appendToContainer = $('#' + binding, appendToContainer);
-                         }
-                         }
-                         */
                         containerElem.appendTo(appendToContainer);
                     }
                 }
@@ -231,8 +209,7 @@
         },
 
         /**
-         * @Override
-         *
+         * @see Alpaca.Field#renderField
          */
         renderField: function(onSuccess) {
 
@@ -261,20 +238,23 @@
         },
 
         /**
-         * To be overriden
+         * Renders all child items of this field.
+         *
+         * @param onSuccess onSuccess callback.
          */
         renderItems: function(onSuccess) {
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#isContainer
          */
         isContainer: function() {
             return true;
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Field#getSchemaOfOptions
          */
         getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(), {
@@ -303,7 +283,8 @@
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.Field#getOptionsForOptions
          */
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
@@ -324,7 +305,6 @@
                 }
             });
         }
-
     });
 
 })(jQuery);

@@ -2,60 +2,22 @@
 
     var Alpaca = $.alpaca;
 
+    Alpaca.Field = Base.extend(
     /**
-     * Abstract Field class
-     *
-     * Defines a field which contains a value and core functions.
-     * These functions are left empty and are intended to be implemented in inheriting classes.
-     *
-     * Provides support for templated rendering.
-     *
-     * This takes in an options block which look like this:
-     *
-     * {
-     *    id: <id>,                                     field id (optional)
-     *    type: <type>,                                 field type (optional) - "text" if not specified
-     *    schema: schema,                                  field schema (optional)
-     *    settings: settings                            field settings (optional) - {} if not specified
-     * }
-     *
-     * The settings block consists of the following:
-     *
-     * SETTINGS
-     * {
-     *    fieldClass: [<string>]                        optional - additional css classes to apply
-     *    validate: <boolean>                            optional - whether to validate on change (true)
-     *    disabled: <boolean>                           optional - whether to initialize as disabled (false)
-     *    displayMessages: <boolean>                    optional - whether to display message (true)
-     * }
-     *
-     * JSON SCHEMA:
-     *
-     * This class obeys JSON schema for:
-     *
-     * {
-     *    optional: <boolean>                            [optional] (false)
-     *    default: <any>                                [optional]
-     * }
+     * @lends Alpaca.Field.prototype
      */
-    Alpaca.Field = Base.extend({
-
+    {
         /**
-         * Constructor
+         * @constructs
          *
-         * @param container The DOM element to which this field is bound.
-         * @param data The data bound to this field.
-         * @param options (optional)
+         * @class Abstract class that served as base for all Alpaca field classes that provide actual implementation.
          *
-         * Options consists of:
-         *
-         * {
-         *    id: <id>,                     field id (optional)
-         *    type: <type>,                 field type (optional)
-         *    settings: settings            field settings (optional)
-         * }
-         *
-         * @param schema field schema (optional)
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
          */
         constructor: function(container, data, options, schema, view, connector) {
             // mark that we are initializing
@@ -118,14 +80,17 @@
         },
 
         /**
+         * Returns default field template id. It would be "filedSet" for container fields and
+         * "controlField" for none-container fields.
          *
+         * @returns {String} Default field template id.
          */
         getDefaultFieldTemplateId : function () {
             return "controlField";
         },
 
         /**
-         * Sets up default rendition template from view
+         * Sets up default rendition template from view.
          */
         setDefaultTemplate: function() {
             var globalTemplate = this.view.getGlobalTemplate();
@@ -136,12 +101,13 @@
             } else if (layoutTemplate) {
                 this.setTemplate(layoutTemplate);
             } else {
-                this.setTemplate(this.view.getTemplate(this.getDefaultFieldTemplateId())/*Alpaca.getTemplate(this.getDefaultFieldTemplateId(), this)*/);
+                this.setTemplate(this.view.getTemplate(this.getDefaultFieldTemplateId()));
             }
         },
 
         /**
-         * Sets up any default values for this field.
+         * This method will be called right after the field instance is created. It will initialize
+         * the field to get it ready for rendition.
          */
         setup: function() {
 
@@ -176,19 +142,18 @@
          */
         bindData: function() {
             if (!Alpaca.isEmpty(this.data)) {
-                this.setValue(this.data, true);
+                this.setValue(this.data);
             }
         },
 
         /**
-         * Renders this field into the container.
-         * Creates an outerEl which is bound into the container.
+         * Renders this field into the container and creates a DOM element which is bound into the container.
+         *
+         * @param {Object|String} view View to be used for rendering field (optional).
+         * @param {Function} callback Post-Render callback (optional).
          */
         render: function(view, callback) {
             if (view && (Alpaca.isString(view) || Alpaca.isObject(view))) {
-                /*
-                 this.setView(view);
-                 */
                 this.view.setView(view);
             } else {
                 if (Alpaca.isEmpty(callback) && Alpaca.isFunction(view)) {
@@ -201,6 +166,9 @@
 
         /**
          * Internal method for processing the render.
+         *
+         * @private
+         * @param {Function} callback Post-render callback.
          */
         _render: function(callback) {
             var _this = this;
@@ -220,39 +188,29 @@
                 form.render(function(form) {
                     // load the appropriate template and render it
                     _this._processRender(form.formFieldsContainer, function() {
-
                         // bind our field dom element into the container
                         _this.getEl().appendTo(form.formFieldsContainer);
-
                         // bind the top field to the form
                         form.topControl = _this;
-
-                        if ( _this.view.type && _this.view.type != 'view') {
+                        if (_this.view.type && _this.view.type != 'view') {
                             form.initEvents();
                         }
-
                         _this.form = form;
-
                         // allow any post-rendering facilities to kick in
                         _this.postRender();
-
                         // callback
                         if (callback && Alpaca.isFunction(callback)) {
                             callback(_this);
                         }
-
                     });
                 });
             } else {
                 // load the appropriate template and render it
                 this._processRender(this.container, function() {
-
                     // bind our field dom element into the container
                     _this.getEl().appendTo(_this.container);
-
                     // allow any post-rendering facilities to kick in
                     _this.postRender();
-
                     // callback
                     if (callback && Alpaca.isFunction(callback)) {
                         callback(_this);
@@ -266,6 +224,11 @@
          * current mode for this field.
          *
          * Once completed, the onSuccess method is called.
+         *
+         * @private
+         *
+         * @param {Object} parentEl Field container.
+         * @param {Function} onSuccess onSuccess callback.
          */
         _processRender: function(parentEl, onSuccess) {
             var _this = this;
@@ -282,7 +245,13 @@
         },
 
         /**
-         * Renders the loaded template
+         * Renders the loaded template.
+         *
+         * @internal
+         *
+         * @param {Object} parentEl Field container.
+         * @param {String} templateString Template for rendering.
+         * @param {Function} onSuccess onSuccess callback.
          */
         _renderLoadedTemplate: function(parentEl, templateString, onSuccess) {
             // render field template
@@ -291,7 +260,7 @@
                 "options": this.options,
                 "schema": this.schema,
                 "data": this.data,
-                "view": /*this.getView()*/this.view.viewObject,
+                "view": this.view.viewObject,
                 "path": this.path
             }, {});
             renderedDomElement.appendTo(parentEl);
@@ -307,8 +276,16 @@
         },
 
         /**
-         * Called after the rendering is complete as a way to make final modifications to the
-         * dom elements that were produced.
+         * Renders DOM elements for this field.
+         *
+         * @param onSuccess {Function} onSuccess callback.
+         */
+        renderField: function(onSuccess) {
+        },
+
+        /**
+         * This method will be called after the field rendition is complete. It is served as a way to make final
+         * modifications to the dom elements that were produced.
          */
         postRender: function() {
             // add classes
@@ -345,7 +322,7 @@
             }
 
             // Support for custom styles provided by custom view
-            var customStyles = this.view.getStyles()/*Alpaca.getStyles(this)*/;
+            var customStyles = this.view.getStyles();
 
             if (customStyles) {
                 for (var styleClass in customStyles) {
@@ -392,74 +369,85 @@
         },
 
         /**
-         * Retrieves the rendering element
+         * Retrieves the rendered DOM element.
+         *
+         * @returns {Object} The rendered DOM element.
          */
         getEl: function() {
             return this.outerEl;
         },
 
         /**
-         * Sets the rendering element
+         * Sets the outer element of the DOM element to be rendered by this field.
+         *
+         * @param outerEl New outer element for this field.
          */
         setEl: function(outerEl) {
             this.outerEl = outerEl;
         },
 
         /**
-         * Returns the id of the field
+         * Returns the id of the field.
+         *
+         * @returns Field id.
          */
         getId: function() {
             return this.id;
         },
 
-        getType: function() {
-            return this.type;
-        },
+        /*        getType: function() {
+         return this.type;
+         },*/
 
         /**
-         * Returns this field's parent field.
+         * Returns this field's parent.
+         *
+         * @returns {Alpaca.Field} Field parent.
          */
         getParent: function() {
             return this.parent;
         },
 
         /**
-         * Returns true if this field is the top level one.
+         * Finds if this field is top level.
+         *
+         * @returns {Boolean} True if this field is the top level one, false otherwise.
          */
         isTopLevel: function() {
             return Alpaca.isEmpty(this.parent);
         },
+
         /**
-         * Returns the value of the field
+         * Returns the value of this field.
+         *
+         * @returns {Any} value Field value.
          */
         getValue: function() {
             return this.data;
         },
 
         /**
-         * Sets the value of the field
+         * Sets the value of the field.
+         *
+         * @param {Any} value Value to be set.
          */
-        setValue: function(value, stopUpdateTrigger) {
+        setValue: function(value) {
             this.data = value;
-
-            // set corresponding style
-            //this.renderValidationState();
-            /*
-             if (!stopUpdateTrigger) {
-             this.triggerUpdate();
-             }
-             */
         },
 
         /**
-         * Returns the field template
+         * Returns the field template.
+         *
+         * @returns {String} Field template.
          */
         getTemplate: function() {
             return this.template;
         },
 
         /**
-         * Sets the field template
+         * Sets the field template.
+         *
+         * @param {String} template Template to be set.
          */
         setTemplate: function(template) {
             // if template is a function, evaluate it to get a string
@@ -474,6 +462,9 @@
 
         /**
          * Renders a validation state message below the field.
+         *
+         * @param {String} messages Validation state messages.
+         * @param {Boolean} beforeStatus Previous validation status.
          */
         displayMessage: function(messages, beforeStatus) {
             // remove the message element if it exists
@@ -485,7 +476,7 @@
             if (messages && messages.length > 0) {
                 $.each(messages, function(index, message) {
                     if (message.length > 0) {
-                        var messageTemplate = _this.view.getTemplate("controlFieldMessage")/*Alpaca.getTemplate("controlFieldMessage", _this)*/;
+                        var messageTemplate = _this.view.getTemplate("controlFieldMessage");
                         if (messageTemplate) {
                             _this.messageElement = $.tmpl(messageTemplate, {
                                 "message": message
@@ -505,8 +496,8 @@
         },
 
         /**
-         * Makes sure that the DOM of the rendered field reflects the validation state
-         * of the field.
+         * Injects styles to the DOM of the rendered field reflects the validation state
+         * of the field. If necessary, displays validation messages as well.
          */
         renderValidationState: function() {
             if (this.options.validate) {
@@ -537,7 +528,7 @@
                         this.displayMessage(messages, beforeStatus);
                     }
                 }
-                // Revalidate parents if validation state changed
+                // Re-validate parents if validation state changed
                 if (beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) {
                     this.parent.renderValidationState();
                 }
@@ -546,10 +537,11 @@
         },
 
         /**
-         * Updates validation based on provide valinfo. This function is for user provided validator.
+         * Updates validation based on provided validation information. This method is for user provided
+         * custom validator only.
          *
-         * @param valId
-         * @param valInfo
+         * @param {String} valId Validator id.
+         * @param {Object} valInfo Object that contains validation information.
          */
         updateValidationState: function(valId, valInfo) {
             if (this.options.validate) {
@@ -590,6 +582,8 @@
 
         /**
          * Validates this field and returns whether it is in a valid state.
+         *
+         * @returns {Boolean} True if value of this field is valid, false otherwise.
          */
         validate: function() {
             // skip out if we haven't yet bound any data into this control
@@ -602,9 +596,7 @@
         },
 
         /**
-         * To be overridden for additional validations
-         *
-         * Performs validation
+         * Performs validation.
          */
         handleValidate: function() {
             var valInfo = this.validation;
@@ -625,7 +617,7 @@
         },
 
         /**
-         * Validates user provided validator.
+         * Validates using user provided validator.
          */
         _validateCustomValidator: function() {
             var _this = this;
@@ -637,7 +629,9 @@
         },
 
         /**
-         * Checks whether validation is optional
+         * Validates against required property.
+         *
+         * @returns {Boolean} False if this field value is empty but required, true otherwise.
          */
         _validateOptional: function() {
             if (this.schema.required && this.isEmpty()) {
@@ -647,7 +641,9 @@
         },
 
         /**
-         * Checks whether the value is allowed
+         * Checks whether the field value is allowed or not.
+         *
+         * @returns {Boolean} True if the field value is allowed, false otherwise.
          */
         _validateDisallow: function() {
             if (!Alpaca.isValEmpty(this.schema.disallow)) {
@@ -676,43 +672,42 @@
         },
 
         /**
-         * Triggers any event handlers that want to listen to an update event for this field
+         * Triggers any event handlers that listens to the update event of this field.
          */
         triggerUpdate: function() {
             this.getEl().trigger("fieldupdate");
         },
 
         /**
-         * Disable the field
+         * Disables the field.
          */
         disable: function() {
             // OVERRIDE
         },
 
         /**
-         * Enable the field
+         * Enables the field.
          */
         enable: function() {
             // OVERRIDE
         },
 
         /**
-         * Focus the field
+         * Focuses on the field.
          */
         focus: function() {
             // OVERRIDE
         },
 
         /**
-         * Purge any event listeners
-         * Remove the field from the DOM
+         * Purges any event listeners and remove this field from the DOM.
          */
         destroy: function() {
             this.getEl().remove();
         },
 
         /**
-         * Shows the field
+         * Shows the field.
          */
         show: function() {
             this.getEl().css({
@@ -721,7 +716,7 @@
         },
 
         /**
-         * Hides the field
+         * Hides the field.
          */
         hide: function() {
             this.getEl().css({
@@ -730,7 +725,7 @@
         },
 
         /**
-         * Prints the field
+         * Prints the field.
          */
         print: function() {
             if (this.container.printArea) {
@@ -739,7 +734,7 @@
         },
 
         /**
-         * Reloads the field
+         * Reloads the field.
          */
         reload: function() {
             this.initializing = true;
@@ -755,29 +750,31 @@
         },
 
         /**
-         * Clear the field.
-         *
-         * This resets the field to its original value (this.data)
+         * Clears the field and resets the field to its original value.
          */
-        clear: function(stopUpdateTrigger) {
+        clear: function() {
             var newValue = null;
 
             if (this.data) {
                 newValue = this.data;
             }
 
-            this.setValue(newValue, stopUpdateTrigger);
+            this.setValue(newValue);
         },
 
         /**
-         * True if the field is empty
+         * Finds if the value of this field is empty.
+         *
+         * @return {Boolean} True if the field value is empty, false otherwise.
          */
         isEmpty: function() {
             return Alpaca.isValEmpty(this.getValue());
         },
 
         /**
-         * True if this field is valid.
+         * Finds if this field is valid.
+         *
+         * @return {Boolean} True if the field is valid, false otherwise.
          */
         isValid: function(checkChildren) {
             if ($.isEmptyObject(this.validation)) {
@@ -801,7 +798,7 @@
         },
 
         /**
-         * Initialize events
+         * Initializes event handling.
          */
         initEvents: function() {
             var _this = this;
@@ -820,7 +817,9 @@
         },
 
         /**
-         * Highlights the entire field
+         * Handler for the event that highlights the entire field.
+         *
+         * @param e Event.
          */
         onFocus: function(e) {
             this.getEl().removeClass("alpaca-field-empty");
@@ -828,7 +827,9 @@
         },
 
         /**
-         * Unhighlights the entire field
+         * Handler for the event that un-highlights the entire field.
+         *
+         * @param e Event.
          */
         onBlur: function(e) {
             this.getEl().removeClass("alpaca-field-focused");
@@ -838,7 +839,9 @@
         },
 
         /**
-         * Field value changed
+         * Handler for the field value change event.
+         *
+         * @param e Event.
          */
         onChange: function(e) {
             // store back into data element
@@ -847,9 +850,10 @@
         },
 
         /**
-         * Gets field control via path
+         * Finds a field control by its path.
          *
-         * @param path
+         * @param {String} path Field control path.
+         * @returns {Alpaca.Field} Field control mapped to the path.
          */
         getControlByPath: function(path) {
             var parentControl = this;
@@ -877,42 +881,55 @@
 
         // Utility Functions for Form Builder		
         /**
-         * Returns field type
+         * Returns field type.
+         *
+         * @returns {String} Field type.
          */
         getFieldType: function() {
 
         },
 
         /**
-         * Returns schema type
+         * Returns schema data type.
+         *
+         * @returns {String} Schema data type.
          */
         getType: function() {
 
         },
 
         /**
-         * Returns true if it is a container
+         * Finds if this field is a container of other fields.
+         *
+         * @returns {Boolean} True if it is a container, false otherwise.
          */
         isContainer: function() {
             return false;
         },
 
         /**
-         * Returns field title
+         * Returns field title.
+         *
+         * @returns {String} Field title.
          */
         getTitle: function() {
 
         },
 
         /**
-         * Returns field description
+         * Returns field description.
+         *
+         * @returns {String} Field description.
          */
         getDescription: function() {
 
         },
 
         /**
-         * Returns schema of the schema
+         * Returns JSON schema of the schema properties that are managed by this class.
+         *
+         * @private
+         * @returns {Object} JSON schema of the schema properties that are managed by this class.
          */
         getSchemaOfSchema: function() {
             var schemaOfSchema = {
@@ -978,7 +995,10 @@
         },
 
         /**
-         * Returns options for the schema
+         * Returns Alpaca options for the schema properties that managed by this class.
+         *
+         * @private
+         * @returns {Object} Alpaca options for the schema properties that are managed by this class.
          */
         getOptionsForSchema: function() {
             return {
@@ -1052,8 +1072,12 @@
                 }
             }
         },
+
         /**
-         * Returns schema of the options
+         * Returns JSON schema of the Alpaca options that are managed by this class.
+         *
+         * @private
+         * @returns {Object} JSON schema of the Alpaca options that are managed by this class.
          */
         getSchemaOfOptions: function() {
             var schemaOfOptions = {
@@ -1202,7 +1226,10 @@
         },
 
         /**
-         * Returns options for the options
+         * Returns Alpaca options for the Alpaca options that are managed by this class.
+         *
+         * @private
+         * @returns {Object} Alpaca options for the Alpaca options that are managed by this class.
          */
         getOptionsForOptions: function() {
             var optionsForOptions = {
@@ -1304,7 +1331,7 @@
         }
     });
 
-    // Registers additonal messages
+    // Registers additional messages
     Alpaca.registerMessages({
         "disallowValue": "{0} are disallowed values.",
         "notOptional": "This field is not optional."

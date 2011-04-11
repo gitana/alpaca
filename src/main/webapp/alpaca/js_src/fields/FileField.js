@@ -1,25 +1,31 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.FileField = Alpaca.Fields.TextField.extend(
     /**
-     * File field control
-     *
-     * The following additional settings are permitted:
-     *
-     * {
-     * }
-     *
-     * This field obeys JSON Schema for:
-     *
-     * {
-     * }
+     * @lends Alpaca.Fields.FileField.prototype
      */
-    Alpaca.Fields.FileField = Alpaca.Fields.TextField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.TextField
          *
+         * @class File control with nice custom styles.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#setup
          */
         setup: function() {
             this.base();            
@@ -27,22 +33,20 @@
         },
                 
         /**
-         * @Override
-         *
-         * Set value onto the input contorl
+         * @see Alpaca.Fields.TextField#setValue
          */
-        setValue: function(value, stopUpdateTrigger) {            
+        setValue: function(value) {
             // be sure to call into base method
         	// We won't be able to actually set the value for file input field so we use the mask input
         	var tmp = this.field;
         	this.field = $('.alpaca-filefield-control',this.fieldContainer);
-            this.base(value, stopUpdateTrigger);
+            this.base(value);
             // switch it back to actual file input
         	this.field = tmp;
         },
         
         /**
-         * @Override
+         * @see Alpaca.Fields.TextField#postRender
          */
         postRender: function() {
             // make it stylable
@@ -57,21 +61,21 @@
         },
 		
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextField#getTitle
 		 */
 		getTitle: function() {
 			return "File Field";
 		},
 		
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextField#getDescription
 		 */
 		getDescription: function() {
 			return "Field for uploading files.";
 		},
 
 		/**
-         * @Override
+         * @see Alpaca.Fields.TextField#getFieldType
          */
         getFieldType: function() {
             return "file";

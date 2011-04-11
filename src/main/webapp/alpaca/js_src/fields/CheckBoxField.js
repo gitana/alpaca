@@ -1,22 +1,31 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.CheckBoxField = Alpaca.ControlField.extend(
     /**
-     * Check box field control
-     *
-     * The following additional settings are permitted:
-     *
-     * {
-     *    rightLabel: <string>                          text to show to the right of the checkbox
-     *    formName: <string>                            http post form name
-     * }
+     * @lends Alpaca.Fields.CheckBoxField.prototype
      */
-    Alpaca.Fields.CheckBoxField = Alpaca.ControlField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.ControlField
          *
+         * @class Checkbox control for JSON schema boolean type.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Field#setup
          */
         setup: function() {
             this.base();
@@ -27,8 +36,7 @@
         },
         
         /**
-         * @Override
-         *
+         * @see Alpaca.ControlField#renderField
          */
         renderField: function(onSuccess) {
             var controlFieldTemplate = this.view.getTemplate("controlFieldCheckbox");
@@ -48,7 +56,7 @@
         },
 		
         /**
-         * @Override
+         * @see Alpaca.ControlField#postRender
          */
         postRender: function() {
             this.base();
@@ -58,18 +66,16 @@
         },		
 
         /**
-         * @Override
-         *
+         * @see Alpaca.Field#getValue
          */
         getValue: function() {
             return this.field.attr("checked") ? this.field.attr("checked") : false;
         },
         
         /**
-         * @Override
-         *
+         * @see Alpaca.Field#setValue
          */
-        setValue: function(value, stopUpdateTrigger) {          
+        setValue: function(value) {
             if (value) {
                 this.field.attr({
                     "checked": true
@@ -80,27 +86,26 @@
                 });
             }
             // be sure to call into base method
-            this.base(value, stopUpdateTrigger);
+            this.base(value);
         },
         
         /**
-         * @Override
-         *
+         * @see Alpaca.Field#disable
          */
         disable: function() {
             this.field.disabled = true;
         },
         
         /**
-         * @Override
-         *
+         * @see Alpaca.Field#enable
          */
         enable: function() {
             this.field.disabled = false;
         },
 		
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ControlField#getSchemaOfOptions
          */
 		getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(),{
@@ -115,7 +120,8 @@
 		},
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ControlField#getOptionsForOptions
          */
 		getOptionsForOptions: function() {
             return Alpaca.merge(this.base(),{
@@ -128,28 +134,28 @@
 		},
 				
 		/**
-         * @Override
+         * @see Alpaca.Field#getTitle
 		 */
 		getTitle: function() {
 			return "Checkbox Field";
 		},
 		
 		/**
-         * @Override
+         * @see Alpaca.Field#getDescription
 		 */
 		getDescription: function() {
 			return "Checkbox Field.";
 		},
 
 		/**
-         * @Override
+         * @see Alpaca.Field#getType
          */
         getType: function() {
             return "boolean";
         },
 
 		/**
-         * @Override
+         * @see Alpaca.Field#getFieldType
          */
         getFieldType: function() {
             return "checkbox";

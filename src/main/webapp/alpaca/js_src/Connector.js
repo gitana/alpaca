@@ -2,28 +2,60 @@
 
     var Alpaca = $.alpaca;
 
+    Alpaca.Connector = Base.extend(
     /**
-     * Abstract Connector Class
+     * @lends Alpaca.Connector.prototype
      */
-    Alpaca.Connector = Base.extend({
-
+    {
+        /**
+         * @constructs
+         * @class Default connector that loads JSONs:
+         * <p>
+         * 1.as provided objects.
+         * </p>
+         * <p>
+         * 2.through Ajax calls if URIs are provided.
+         * </p>
+         * <p>
+         * 3.through ID references (only for Views and Templates).
+         * </p>
+         * <p>
+         * Usage:
+         * </p>
+         * <code>
+         *     <pre>
+         * {
+         *   "data": [Object | URI],
+         *   "schema": [Object | URI],
+         *   "options": [Object | URI],
+         *   "view": [Object | URI | View ID]
+         *  }
+         *      </pre>
+         * </code>
+         * @param {String} id Connector ID.
+         * @param {Object} configs Connector Configurations.
+         */
         constructor: function(id, configs) {
             this.id = id;
             this.configs = configs;
         },
 
         /**
+         * Makes initial connections to data source.
          *
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
          */
         connect: function (onSuccess, onError) {
 
         },
 
         /**
+         * Loads template JSON.
          *
-         * @param dataSource
-         * @param onSuccess
-         * @param onError
+         * @param {Object} dataSource Data source to be loaded.
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
          */
         loadTemplate : function (dataSource, onSuccess, onError) {
             if (!Alpaca.isEmpty(dataSource)) {
@@ -46,10 +78,11 @@
         },
 
         /**
+         * Loads data JSON.
          *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @param {Object} dataSource Data source to load
+         * @param {Function} onSuccess onSuccess callback
+         * @param {Function} onError onError callback
          */
         loadData : function (dataSource, successCallback, errorCallback) {
             var data = dataSource.data;
@@ -68,10 +101,11 @@
         },
 
         /**
+         * Loads schema JSON.
          *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @param {Object} dataSource Data source to be loaded.
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
          */
         loadSchema : function (dataSource, successCallback, errorCallback) {
             var schema = dataSource.schema;
@@ -89,10 +123,11 @@
         },
 
         /**
+         * Loads options JSON.
          *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @param {Object} dataSource Data source to be loaded.
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
          */
         loadOptions : function (dataSource, successCallback, errorCallback) {
             var options = dataSource.options;
@@ -110,10 +145,11 @@
         },
 
         /**
+         * Loads view JSON.
          *
-         * @param dataSource
-         * @param successCallback
-         * @param errorCallback
+         * @param dataSource Data source to be loaded
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
          */
         loadView : function (dataSource, successCallback, errorCallback) {
             var view = dataSource.view;
@@ -131,10 +167,11 @@
         },
 
         /**
+         * Loads schema, form, view and data in a single call.
          *
-         * @param dataSource
-         * @param onSuccess
-         * @param onError
+         * @param {Object} dataSource Data source to be loaded
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
          */
         loadAll : function (dataSource, onSuccess, onError) {
             var loadCounter = 0;
@@ -166,55 +203,45 @@
         },
 
         /**
+         * Saves or creates data through connector.
          *
-         * @param callback
+         * @param {Object} dataSource Data to be created or saved.
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
          */
-        create : function (onSuccess, onError) {
+        saveData : function (data, onSuccess, onError) {
 
         },
 
         /**
+         * Loads a JSON through Ajax call.
          *
-         * @param callback
-         */
-        remove : function (onSuccess, onError) {
-
-        },
-
-        /**
-         *
-         * @param callback
-         */
-        saveData : function (data, successCallback, errorCallback) {
-
-        },
-
-        /**
-         *
-         * @param uri
-         * @param onSuccess
-         * @param onError
+         * @param {String} uri Target source JSON location.
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
          */
         loadJson : function(uri, onSuccess, onError) {
             this.loadUri(uri, true, onSuccess, onError);
         } ,
 
         /**
+         * Loads a general document through Ajax call.
          *
-         * @param uri
-         * @param onSuccess
-         * @param onError
+         * @param {String} uri Target source document location.
+         * @param {Boolean} isJson Whether the document is a JSON or not.
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
          */
         loadUri : function(uri, isJson, onSuccess, onError) {
             var ajaxConfigs = {
-                url: uri,
-                type: "get",
-                success: function(jsonDocument) {
+                "url": uri,
+                "type": "get",
+                "success": function(jsonDocument) {
                     if (onSuccess && Alpaca.isFunction(onSuccess)) {
                         onSuccess(jsonDocument);
                     }
                 },
-                error: function(error) {
+                "error": function(error) {
                     if (onError && Alpaca.isFunction(onError)) {
                         onError(error);
                     }

@@ -2,14 +2,31 @@
 
     var Alpaca = $.alpaca;
 
+    Alpaca.Fields.AnyField = Alpaca.ControlField.extend(
     /**
-     * Basic any field control
+     * @lends Alpaca.Fields.AnyField.prototype
      */
-    Alpaca.Fields.AnyField = Alpaca.ControlField.extend({
+    {
+        /**
+         * @constructs
+         * @augments Alpaca.ControlField
+         *
+         * @class Basic field control for JSON schema any type. This control should be used with additional options parameter
+         * for combo fields. Without options parameter it will simply render a text field.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
 
         /**
-         * @Override
-         *
+         * @see Alpaca.Field#setup
          */
         setup: function() {
             this.base();
@@ -18,9 +35,7 @@
         },
 
         /**
-         * @Override
-         *
-         * Renders an INPUT control into the field container
+         * @see Alpaca.ControlField#renderField
          */
         renderField: function(onSuccess) {
 
@@ -38,7 +53,7 @@
         },
 
         /**
-         * @Override
+         * @see Alpaca.ControlField#postRender
          */
         postRender: function() {
             this.base();
@@ -46,32 +61,27 @@
 
 
         /**
-         * @Override
-         *
-         * Return the value of the input control
+         * @see Alpaca.Field#getValue
          */
         getValue: function() {
             return this.field.val();
         },
 
         /**
-         * @Override
-         *
-         * Set value onto the input contorl
+         * @see Alpaca.Field#setValue
          */
-        setValue: function(value, stopUpdateTrigger) {
+        setValue: function(value) {
             if (Alpaca.isEmpty(value)) {
                 this.field.val("");
             } else {
                 this.field.val(value);
             }
-
             // be sure to call into base method
-            this.base(value, stopUpdateTrigger);
+            this.base(value);
         },
 
         /**
-         * @Override
+         * @see Alpaca.ControlField#handleValidate
          */
         handleValidate: function() {
             var baseStatus = this.base();
@@ -79,28 +89,29 @@
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#disable
          */
         disable: function() {
             this.field.disabled = true;
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#enable
          */
         enable: function() {
             this.field.disabled = false;
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#focus
          */
         focus: function() {
             this.field.focus();
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ControlField#getSchemaOfSchema
          */
         getSchemaOfSchema: function() {
             return Alpaca.merge(this.base(), {
@@ -110,7 +121,8 @@
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ControlField#getOptionsForSchema
          */
         getOptionsForSchema: function() {
             return Alpaca.merge(this.base(), {
@@ -120,7 +132,8 @@
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ControlField#getSchemaOfOptions
          */
         getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(), {
@@ -130,7 +143,8 @@
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ControlField#getOptionsForOptions
          */
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
@@ -140,33 +154,32 @@
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#getTitle
          */
         getTitle: function() {
             return "Any Field";
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#getDescription
          */
         getDescription: function() {
             return "Any field.";
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#getType
          */
         getType: function() {
             return "any";
         },
 
         /**
-         * @Override
+         * @see Alpaca.Field#getFieldType
          */
         getFieldType: function() {
             return "any";
         }
-
     });
 
     Alpaca.registerTemplate("controlFieldAny", '<input type="text" id="${id}" size="40" {{if options.readonly}}readonly="on"{{/if}} {{if options.name}}name="${options.name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');

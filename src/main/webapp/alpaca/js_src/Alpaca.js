@@ -4,127 +4,44 @@
 (function($) {
 
     var Alpaca;
-    var VERSION = "0.1.0";
-    var _makeArray = function(nonarray) {
-        return Array.prototype.slice.call(nonarray);
-    };
-    var _isFunction = function(obj) {
-        return Object.prototype.toString.call(obj) === "[object Function]";
-    };
-    var _isString = function(obj) {
-        return (typeof obj == "string");
-    };
-    var _isObject = function(obj) {
-        return $.isPlainObject(obj);
-    };
-    var _isNumber = function(obj) {
-        return (typeof obj == "number");
-    };
-    var _isBoolean = function(obj) {
-        return (typeof obj == "boolean");
-    };
-    var _isArray = function(obj) {
-        return Object.prototype.toString.call(obj) === "[object Array]";
-    };
-    var _isUndefined = function(obj) {
-        return (typeof obj == "undefined");
-    };
-    var _isEmpty = function(obj) {
-        return _isUndefined(obj) || obj == null;
-    };
-
-    var _escapeHTML = function(s) {
-        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    };
-    var _spliceIn = function(source, splicePoint, splice) {
-        return source.substring(0, splicePoint) + splice + source.substring(splicePoint, source.length);
-    };
-
-    var _indexOf = function(el, arr, fn) {
-        var l = arr.length,i;
-
-        if (!Alpaca.isFunction(fn)) {
-            fn = function(elt, arrElt) {
-                return elt === arrElt;
-            };
-        }
-
-        for (i = 0; i < l; i++) {
-            if (fn.call({}, el, arr[i])) {
-                return i;
-            }
-        }
-
-        return -1;
-    };
 
     /**
-     * Removes accents from the given string.
-     *
-     * @param str
-     * @return
-     */
-    var _removeAccents = function(str) {
-        return str.replace(/[àáâãäå]/g, "a").replace(/[èéêë]/g, "e").replace(/[ìíîï]/g, "i").replace(/[òóôõö]/g, "o").replace(/[ùúûü]/g, "u").replace(/[ýÿ]/g, "y").replace(/[ñ]/g, "n").replace(/[ç]/g, "c").replace(/[œ]/g, "oe").replace(/[æ]/g, "ae");
-    }
-
-    /**
-     * Compacts an array by removing an null or undefined elements.
-     *
-     * @param arr
-     * @return
-     */
-    var _compactArray = function(arr) {
-        var n = [], l = arr.length,i;
-        for (i = 0; i < l; i++) {
-            if (!lang.isNull(arr[i]) && !lang.isUndefined(arr[i])) {
-                n.push(arr[i]);
-            }
-        }
-        return n;
-    };
-
-    /**
-     * Static method to build a field instance bound to a DOM element.
-     *
-     * Alpaca(el)                       Either binds a control using the contents of $(el) or hands back a previously bound control
-     * Alpaca(el, data)                 Binds a control to $(el) using the given data.
-     * Alpaca(el, data, "<type>")       Binds a control of type "<type>" to $(el) using the given data.
-     *
-     * Alpaca(el, data, {               Binds a control to $(el) using the given data and config.
-     *    id: <id>                      field id (optional)
-     *    type: <type>                  field type (optional)
-     *    settings: settings            field configuration (optional)
+     * @namespace Static method to build an Alpaca field instance bound to a DOM element.
+     * @description <p>Usage:</p>
+     * <p>
+     * 1: Binds a control using the contents of $(el) or hands back a previously bound control<br/>
+     * <code>
+     *     <pre>
+     *      Alpaca(el)
+     *     </pre>
+     * </code>
+     * </p>
+     * <p>
+     * 2: Binds a control to $(el) using the given data (only for non-object types).<br/>
+     * <code>
+     *     <pre>
+     *      Alpaca(el, data)
+     *     </pre>
+     * </code>
+     * </p>
+     * <p>
+     * 3: Binds a control to $(el) using the given configuration object.<br/>
+     * </p>
+     * <code>
+     *     <pre>
+     * Alpaca(el,{
+     *   "data" : {Any} field data (optional),
+     *   "schema": {Object} field schema (optional),
+     *   "options" : {Object} field options (optional),
+     *   "view": {Object|String} field view (object or id reference) (optional),
+     *   "render": {Function} callback function for replacing default rendering method (optional),
+     *   "postRender": {Function} callback function for post-rendering  (optional),
+     *   "connector": {Alpaca.Connector} connector for retrieving or storing data, schema, options,
+     *                view and templates. (optional),
      * });
-     *
-     * Alpaca(el, data, {               Binds a control to $(el) using the given data and config.
-     *    id: <id>                      field id (optional)
-     *    type: <type>                  field type (optional)
-     *    settings: settings            field configuration (optional)
-     *  },
-     *  schema                          field schema (optional)
-     * );
-     *
-     * Alpaca(el, data, {               Binds a control to $(el) using the given data and config.
-     *    id: <id>                      field id (optional)
-     *    type: <type>                  field type (optional)
-     *    settings: settings            field configuration (optional)
-     *  },
-     *  schema,                         field schema (optional)
-     *  view                           field view (object or id reference) (optional)
-     * );
-     *
-     * Alpaca(el, data, {               Binds a control to $(el) using the given data and config.
-     *    id: <id>                      field id (optional)
-     *    type: <type>                  field type (optional)
-     *    settings: settings            field configuration (optional)
-     *  },
-     *  schema,                         field schema (optional)
-     *  view,                           field view (object or id reference) (optional)
-     *  callback                        callback function (optional)
-     * );
-     *
-     * @return the alpaca field instance
+     *    </pre>
+     *</code>
+     * @returns {Object} alpaca field instance
      */
     Alpaca = function() {
         var args = Alpaca.makeArray(arguments);
@@ -150,7 +67,7 @@
         if (args.length == 1) {
             // hands back the field instance that is bound directly under the specified element
             // var field = Alpaca(el);
-            var domElements = $(el).find("SPAN:first");
+            var domElements = $(el).find(":first");
 
             var field = null;
             for (var i = 0; i < domElements.length; i++) {
@@ -184,7 +101,7 @@
                 renderedCallback = args[1].postRender;
                 connector = args[1].connector;
                 if (!Alpaca.isEmpty(args[1].notTopLevel)) {
-                   notTopLevel = args[1].notTopLevel;
+                    notTopLevel = args[1].notTopLevel;
                 }
             } else {
                 // "data" is the second argument
@@ -230,7 +147,7 @@
         var loadAllConnector = connector;
 
         if (notTopLevel) {
-           loadAllConnector = new Alpaca.Connector('default');
+            loadAllConnector = new Alpaca.Connector('default');
         }
 
         loadAllConnector.loadAll({
@@ -247,177 +164,245 @@
     };
 
     /**
-     * Initial function for setting up field instance and execute callback.
-     *
-     * @param {Object} el
-     * @param {Object} data
-     * @param {Object} options
-     * @param {Object} schema
-     * @param {Object} view
-     * @param {Object} callback
+     * @namespace Namespace for all Alpaca Field Class Implementations.
      */
-    Alpaca.init = function(el, data, options, schema, view, callback, renderedCallback, connector) {
-        var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector);
-        Alpaca.fieldInstances[field.getId()] = field;
-
-        // allow callbacks defined through view
-        if (Alpaca.isEmpty(callback)) {
-            callback = field.view.render/*Alpaca.getViewParam("render", field)*/;
-        }
-        if (Alpaca.isEmpty(renderedCallback)) {
-            renderedCallback = field.view.postRender/*Alpaca.getViewParam("postRender", field)*/;
-        }
-
-        if (callback != null) {
-            callback(field, renderedCallback);
-        } else {
-            field.render(renderedCallback);
-        }
-
-        field.callback = callback;
-        field.renderedCallback = renderedCallback;
-
-        return field;
-    }
-
-    /**
-     * Internal method for constructing a field instance.
-     *
-     * @param {Object} el the dom element to act as the container of the constructed field
-     * @param {Object} data the data to be bound into the field
-     * @param {Object} options the configuration for the field
-     * @param {Object} schema the schema for the field
-     * @param {Object} view the view for the field
-     */
-    Alpaca.createFieldInstance = function(el, data, options, schema, view, connector) {
-        // make sure options and schema are not empty
-        if (Alpaca.isValEmpty(options)) options = {};
-        if (Alpaca.isValEmpty(schema)) schema = {};
-        // options can be a string that identifies the kind of field to construct (i.e. "text")
-        if (options && Alpaca.isString(options)) {
-            var fieldType = options;
-            options = {};
-            options.type = fieldType;
-        }
-        if (!options.type) {
-            // if nothing passed in, we can try to make a guess based on the type of data
-            if (!schema.type) {
-                schema.type = Alpaca.getSchemaType(data, schema);
-            }
-            if (schema && schema["enum"]) {
-                if (schema["enum"].length > 3) {
-                    options.type = "select";
-                } else {
-                    options.type = "radio";
-                }
-            } else {
-                options.type = Alpaca.defaultSchemaFieldMapping[schema.type];
-            }
-            // check if it has format defined
-            if (schema.format && Alpaca.defaultFormatFieldMapping[schema.format]) {
-                options.type = Alpaca.defaultFormatFieldMapping[schema.format];
-            }
-        }
-        // find the field class registered for this field type
-        var fieldClass = Alpaca.getFieldClass(options.type);
-        if (!fieldClass) {
-            alert("Unable to find field class for type: " + options.type);
-            return null;
-        }
-        // if we have data, bind it in
-        return new fieldClass(el, data, options, schema, view, connector);
-    };
-
     Alpaca.Fields = { };
 
+    /**
+     * @namespace Namespace for all Alpaca Connector Class Implementations.
+     */
     Alpaca.Connectors = { };
 
-    // core statics
-    $.extend(Alpaca, {
-        VERSION: VERSION,
-        makeArray: _makeArray,
+    // static methods and properties
+    $.extend(Alpaca,
+    /** @lends Alpaca */
+    {
+        /**
+         * Version number.
+         */
+        VERSION: "0.1.0",
 
-        isFunction: _isFunction,
-        isString: _isString,
-        isObject: _isObject,
-        isNumber: _isNumber,
-        isArray: _isArray,
-        isBoolean: _isBoolean,
+        /**
+         * Makes an array.
+         *
+         * @param {Any} nonArray A non-array variable.
+         * @returns {Array} Array out of the non-array variable.
+         */
+        makeArray : function(nonArray) {
+            return Array.prototype.slice.call(nonArray);
+        },
 
-        isUndefined: _isUndefined,
-        isEmpty: _isEmpty,
+        /**
+         * Finds whether the type of a variable is function.
+         * @param {Any} obj The variable being evaluated.
+         * @returns {Boolean} True if the variable is a function, false otherwise.
+         */
+        isFunction: function(obj) {
+            return Object.prototype.toString.call(obj) === "[object Function]";
+        },
 
-        spliceIn: _spliceIn,
-        compactArray: _compactArray,
-        removeAccents: _removeAccents,
-        indexOf: _indexOf,
+        /**
+         * Finds whether the type of a variable is string.
+         * @param {Any} obj The variable being evaluated.
+         * @returns {Boolean} True if the variable is a string, false otherwise.
+         */
+        isString: function(obj) {
+            return (typeof obj == "string");
+        },
+
+        /**
+         * Finds whether the type of a variable is object.
+         * @param {Any} obj The variable being evaluated.
+         * @returns {Boolean} True if the variable is an object, false otherwise.
+         */
+        isObject: function(obj) {
+            return $.isPlainObject(obj);
+        },
+
+        /**
+         * Finds whether the type of a variable is number.
+         * @param {Any} obj The variable being evaluated.
+         * @returns {Boolean} True if the variable is a number, false otherwise.
+         */
+        isNumber: function(obj) {
+            return (typeof obj == "number");
+        },
+
+        /**
+         * Finds whether the type of a variable is array.
+         * @param {Any} obj The variable being evaluated.
+         * @returns {Boolean} True if the variable is an array, false otherwise.
+         */
+        isArray: function(obj) {
+            return Object.prototype.toString.call(obj) === "[object Array]";
+        },
+
+        /**
+         * Finds whether the type of a variable is boolean.
+         * @param {Any} obj The variable being evaluated.
+         * @returns {Boolean} True if the variable is a boolean, false otherwise.
+         */
+        isBoolean: function(obj) {
+            return (typeof obj == "boolean");
+        },
+
+        /**
+         * Finds whether the type of a variable is undefined.
+         * @param {Any} obj The variable being evaluated.
+         * @returns {Boolean} True if the variable is a undefined, false otherwise.
+         */
+        isUndefined: function(obj) {
+            return (typeof obj == "undefined");
+        },
+
+        /**
+         * Finds whether a variable is empty.
+         * @param {Any} obj The variable being evaluated.
+         * @returns {Boolean} True if the variable is empty, false otherwise.
+         */
+        isEmpty: function(obj) {
+            return Alpaca.isUndefined(obj) || obj == null;
+        },
+
+        /**
+         * Splices a string.
+         *
+         * @param {String} source Source string to be spliced.
+         * @param {Integer} splicePoint Splice location.
+         * @param {String} splice String to be spliced in.
+         * @returns {String} Spliced string
+         */
+        spliceIn: function(source, splicePoint, splice) {
+            return source.substring(0, splicePoint) + splice + source.substring(splicePoint, source.length);
+        },
+
+        /**
+         * Compacts an array.
+         *
+         * @param {Array} arr Source array to be compacted.
+         * @returns {Array} Compacted array.
+         */
+        compactArray: function(arr) {
+            var n = [], l = arr.length,i;
+            for (i = 0; i < l; i++) {
+                if (!lang.isNull(arr[i]) && !lang.isUndefined(arr[i])) {
+                    n.push(arr[i]);
+                }
+            }
+            return n;
+        },
+
+        /**
+         * Removes accents from a string.
+         *
+         * @param {String} str Source string.
+         * @returns {String} Cleaned string without accents.
+         */
+        removeAccents: function(str) {
+            return str.replace(/[àáâãäå]/g, "a").replace(/[èéêë]/g, "e").replace(/[ìíîï]/g, "i").replace(/[òóôõö]/g, "o").replace(/[ùúûü]/g, "u").replace(/[ýÿ]/g, "y").replace(/[ñ]/g, "n").replace(/[ç]/g, "c").replace(/[œ]/g, "oe").replace(/[æ]/g, "ae");
+        },
+
+        /**
+         * @private
+         * @param el
+         * @param arr
+         * @param fn
+         */
+        indexOf: function(el, arr, fn) {
+            var l = arr.length,i;
+
+            if (!Alpaca.isFunction(fn)) {
+                /**
+                 * @ignore
+                 * @param elt
+                 * @param arrElt
+                 */
+                fn = function(elt, arrElt) {
+                    return elt === arrElt;
+                };
+            }
+
+            for (i = 0; i < l; i++) {
+                if (fn.call({}, el, arr[i])) {
+                    return i;
+                }
+            }
+
+            return -1;
+        },
+
+        /**
+         * Logs a message.
+         *
+         * @param {String} msg The message to be logged.
+         */
         log: function(msg) {
             if (!(typeof console == "undefined")) {
                 console.log(msg);
             }
-        }
-    });
+        },
 
-    // static methods and properties
-    $.extend(Alpaca,
-    {
+        /**
+         * @private
+         * Static counter for generating a unique ID.
+         */
         uniqueIdCounter: 0,
 
         /**
-         * Render modes
-         */
-        MODE_VIEW: "view",
-        MODE_EDIT: "edit",
-        MODE_CREATE: "create",
-
-        /**
-         * Field states
-         */
-        STATE_EMPTY: "empty",
-        STATE_REQUIRED: "required",
-        STATE_VALID: "valid",
-        STATE_INVALID: "invalid",
-
-        /**
-         * Default Locale
+         * Default Locale.
          */
         defaultLocale: "en_US",
 
         /**
-         * Sets default Locale
+         * Sets the default Locale.
+         *
+         * @param {String} locale New default locale.
          */
         setDefaultLocale: function(locale) {
             this.defaultLocale = locale;
         },
 
         /**
-         * Default Field Type to Schema Type Mapping
+         * Field Type to Schema Type Mappings.
          */
         defaultSchemaFieldMapping: {},
+
         /**
-         * Registers a view
+         * Registers a field type to schema data type mapping.
+         *
+         * @param {String} schemaType Schema data type.
+         * @param {String} fieldType Field type.
          */
         registerDefaultSchemaFieldMapping: function(schemaType, fieldType) {
             if (schemaType && fieldType) {
                 this.defaultSchemaFieldMapping[schemaType] = fieldType;
             }
         },
+
         /**
-         * Default Field Type to Schema Type Mapping
+         * Field Type to Schema Format Mappings.
          */
         defaultFormatFieldMapping: {},
+
         /**
-         * Registers a view
+         * Registers a field type to schema format mapping.
+         *
+         * @param {String} format Schema format.
+         * @param {String} fieldType Field type.
          */
         registerDefaultFormatFieldMapping: function(format, fieldType) {
             if (format && fieldType) {
                 this.defaultFormatFieldMapping[format] = fieldType;
             }
         },
+
         /**
-         * Gets schema type based on data type
+         * Gets schema type of a variable.
+         *
+         * @param {Any} data The variable.
+         * @returns {String} Schema type of the variable.
          */
-        getSchemaType: function (data, schema) {
+        getSchemaType: function (data) {
             // map data types to default field types
             if (Alpaca.isEmpty(data)) {
                 return "string";
@@ -437,35 +422,46 @@
             if (Alpaca.isBoolean(data)) {
                 return "boolean";
             }
-
         },
+
         /**
-         * Views
+         * @private
+         *
+         * Alpaca Views.
          */
         views: {},
 
         /**
+         * @private
          *
+         * View ID Prefix.
          */
         viewIdPrefix: "VIEW::",
 
         /**
+         * Validates a view id.
          *
-         * @param id
+         * @param {String} id View id being validated.
+         *
+         * @returns {Boolean} True if the view id is valid, false otherwise.
          */
         isValidViewId : function (id) {
-            return Alpaca.startsWith(id,this.viewIdPrefix);
+            return Alpaca.startsWith(id, this.viewIdPrefix);
         },
 
         /**
+         * Generates a valid view id.
          *
+         * @returns {String} A valid unique view id.
          */
         generateViewId : function () {
-          return this.viewIdPrefix+"VIEW_"+this.generateId();
+            return this.viewIdPrefix + "VIEW_" + this.generateId();
         },
 
         /**
-         * Registers a view
+         * Registers a view.
+         *
+         * @param {Object} view View to be registered.
          */
         registerView: function(view) {
             var type = view.id;
@@ -522,28 +518,36 @@
                 }
 
             } else {
-                alert("Invalid View ID (must starts with "+this.viewIdPrefix+")");
+                alert("Invalid View ID (must starts with " + this.viewIdPrefix + ")");
             }
             return type;
         },
 
+        /**
+         * Default view.
+         */
         defaultView : "VIEW::WEB_EDIT",
 
-        defaultMode : "edit",
-
         /**
-         * Gets view with given type
+         * Gets view for a given id.
+         *
+         * @param {String}viewId The view id.
+         *
+         * @returns {Object} The view mapped to the given view id.
          */
-        getView: function(type) {
-            if (type && this.views.hasOwnProperty(type)) {
-                return this.views[type];
+        getView: function(viewId) {
+            if (viewId && this.views.hasOwnProperty(viewId)) {
+                return this.views[viewId];
             } else {
                 return this.views[this.defaultView];
             }
         },
 
         /**
-         * Gets view with given type
+         * Returns view type.
+         *
+         * @param {Object|String} view view
+         * @returns {String} view type
          */
         getViewType: function(view) {
             if (Alpaca.isString(view)) {
@@ -561,176 +565,22 @@
         },
 
         /**
-         * Sets default template type
-         */
-        setDefaultView: function(type) {
-            if (type && this.views.hasOwnProperty(type)) {
-                this.defaultView = type;
-            }
-        },
-
-        /**
-         * Returns the view parameter
-         */
-        getViewParam: function(configId, field) {
-
-            var view = field.view;
-
-            if (Alpaca.isObject(view)) {
-                var param = this._getViewParam(configId, view);
-                if (!Alpaca.isEmpty(param)) {
-                    return param;
-                }
-                // Try to see if we can pick up default template
-                view = this.defaultView;
-            }
-
-            if (Alpaca.isString(view)) {
-                view = this.getView(view);
-                return this._getViewParam(configId, view);
-            }
-            return null;
-        },
-
-        /**
-         * Internal method for parameter lookup through view hierachy
+         * Sets default view as the view with a given id.
          *
-         * @param {Object} configId
-         * @param {Object} view
+         * @param {String} Id of the view being set as default.
          */
-        _getViewParam: function(configId, view) {
-            if (view && !Alpaca.isEmpty(view[configId])) {
-                return view[configId];
-            } else {
-                if (view && view.parent) {
-                    return this._getViewParam(configId, this.views[view.parent]);
-                } else {
-                    return null;
-                }
+        setDefaultView: function(viewId) {
+            if (viewId && this.views.hasOwnProperty(viewId)) {
+                this.defaultView = viewId;
             }
         },
 
         /**
-         * Returns the field template for given id
-         */
-        getTemplate: function(templateId, field) {
-
-            var view = field.view;
-
-            if (Alpaca.isObject(view)) {
-                var template = this._getTemplate(templateId, view, field.path);
-                if (!Alpaca.isEmpty(template)) {
-                    return template;
-                }
-                // Try to see if we can pick up default template
-                view = this.defaultView;
-            }
-
-            if (Alpaca.isString(view)) {
-                view = this.getView(view);
-                return this._getTemplate(templateId, view, field.path);
-            }
-            return null;
-        },
-
-        /**
-         * Internal method for template lookup through view hierachy
+         * Registers a template to a view.
          *
-         * @param {Object} templateId
-         * @param {Object} view
-         */
-        _getTemplate: function(templateId, view, path) {
-            if (view && view.fields && view.fields[path] && view.fields[path].templates && view.fields[path].templates[templateId]) {
-                return view.fields[path].templates[templateId];
-            }
-            if (view && view.templates && view.templates[templateId]) {
-                return view.templates[templateId];
-            } else {
-                if (view && view.parent) {
-                    return this._getTemplate(templateId, this.views[view.parent], path);
-                } else {
-                    return null;
-                }
-            }
-        },
-
-        getStyles: function(field) {
-
-            var view = field.view;
-
-            if (Alpaca.isObject(view)) {
-                var template = this._getStyles(view, field.path);
-                if (!Alpaca.isEmpty(template)) {
-                    return template;
-                }
-                // Try to see if we can pick up default template
-                view = this.defaultView;
-            }
-
-            if (Alpaca.isString(view)) {
-                view = this.getView(view);
-                return this._getStyles(view, field.path);
-            }
-            return null;
-        },
-
-        _getStyles: function(view, path) {
-            if (view && view.fields && view.fields[path] && view.fields[path].styles) {
-                return view.fields[path].styles;
-            }
-            if (view && view.styles) {
-                return view.styles;
-            } else {
-                if (view && view.parent) {
-                    return this._getStyles(this.views[view.parent], path);
-                } else {
-                    return null;
-                }
-            }
-        },
-
-
-        getLayout: function(templateId, field) {
-
-            var view = field.view;
-
-            if (Alpaca.isObject(view)) {
-                var template = this._getLayout(templateId, view, field.path);
-                if (!Alpaca.isEmpty(template)) {
-                    return template;
-                }
-                // Try to see if we can pick up default template
-                view = this.defaultView;
-            }
-
-            if (Alpaca.isString(view)) {
-                view = this.getView(view);
-                return this._getLayout(templateId, view, field.path);
-            }
-            return null;
-        },
-
-        _getLayout: function(templateId, view, path) {
-            if (path && path != '/') {
-                if (view && view.fields && view.fields[path] && view.fields[path].layout && view.fields[path].layout[templateId]) {
-                    return view.fields[path].layout[templateId];
-                } else {
-                    return null;
-                }
-            }
-            if (view && view.layout && view.layout[templateId]) {
-                return view.layout[templateId];
-            } else {
-                if (view && view.parent) {
-                    return this._getLayout(templateId, this.views[view.parent], path);
-                } else {
-                    return null;
-                }
-            }
-        },
-
-        /**
-         * Registers a new template with given template id and view id
+         * @param {String} templateId Template id.
+         * @param {String} template Template being registered.
+         * @param {String} viewId Id of the view that the template being registered to.
          */
         registerTemplate: function(templateId, template, viewId) {
             var view = this.getView(viewId);
@@ -760,7 +610,10 @@
         },
 
         /**
-         * Registers templates with given type and mode
+         * Registers list of templates to a view.
+         *
+         * @param {Array} templates Templates being registered
+         * @param {String} viewId Id of the view that the templates being registered to.
          */
         registerTemplates: function(templates, viewId) {
             for (var templateId in templates) {
@@ -769,59 +622,11 @@
         },
 
         /**
-         * Returns the field message for given id
-         */
-        getMessage: function(messageId, field) {
-
-            var view = field.getView();
-
-            if (Alpaca.isObject(view)) {
-                var message = this._getMessage(messageId, view, field.path);
-                if (!Alpaca.isEmpty(message)) {
-                    return message;
-                }
-                // Try to see if we can pick up default message
-                view = this.defaultView;
-            }
-
-            if (Alpaca.isString(view)) {
-                view = this.getView(view);
-                return this._getMessage(messageId, view, field.path);
-            }
-            return null;
-        },
-
-        /**
-         * Internal method for message lookup through view hierachy
+         * Registers a message to a view.
          *
-         * @param {Object} messageId
-         * @param {Object} view
-         */
-        _getMessage: function(messageId, view, path) {
-            if (view && view.fields && view.fields[path] && view.fields[path].messages && view.fields[path].messages[messageId]) {
-                if (view.fields[path].messages[this.defaultLocale] && view.fields[path].messages[this.defaultLocale][messageId]) {
-                    return view.fields[path].messages[this.defaultLocale][messageId];
-                } else {
-                    return view.fields[path].messages[messageId];
-                }
-            }
-            if (view && view.messages && view.messages[messageId]) {
-                if (view.messages[this.defaultLocale] && view.messages[this.defaultLocale][messageId]) {
-                    return view.messages[this.defaultLocale][messageId];
-                } else {
-                    return view.messages[messageId];
-                }
-            } else {
-                if (view && view.parent) {
-                    return this._getMessage(messageId, this.views[view.parent], path);
-                } else {
-                    return null;
-                }
-            }
-        },
-
-        /**
-         * Registers a message for for given id, type and field
+         * @param {String} messageId Id of the message being registered.
+         * @param {String} message Message to be registered
+         * @param {String} viewId Id of the view that the message being registered to.
          */
         registerMessage: function(messageId, message, viewId) {
             var view = this.getView(viewId);
@@ -843,7 +648,10 @@
             }
         },
         /**
-         * Registers messages for given type and field
+         * Registers messages with a view.
+         *
+         * @param {Array} messages Messages to be registered.
+         * @param {String} viewId Id of the view that the messages being registered to.
          */
         registerMessages: function(messages, viewId) {
             for (var messageId in messages) {
@@ -854,7 +662,8 @@
         },
 
         /**
-         * Default Class for Field Level Template
+         * @private
+         * Default Mappings for Field Level Templates.
          */
         fieldTemplatePostfix: {
             "controlFieldMessageContainer" : "-controlfield-message-container",
@@ -873,7 +682,14 @@
         },
 
         /**
-         * Processes Field Level Template
+         * @private
+         * Processes field level template.
+         *
+         * @param {String} object Object that the template is applied to.
+         * @param {String} name Template id.
+         * @param {Boolean} wrap True if we want the template as a wrapper, false otherwise.
+         *
+         * @returns {Object} Object rendered by field level template.
          */
         fieldTemplate: function(object, name, wrap) {
             if (!name)
@@ -908,49 +724,113 @@
                 }
             }
         },
-    /**
-     * Date format
-     */
-        //defaultDateFormat: "m/d/Y",
-        //defaultDateFormat: "Y-m-d",
-        defaultDateFormat: "mm/dd/yy",
 
         /**
-         * Useful regular expressions
+         * @private
+         *
+         * @returns The field template for given id.
          */
-        regexps:
-        {
-            email: /^[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+(?:\.[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,6}$/i,
-            url: /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(\:[0-9]{1,5})?(([0-9]{1,5})?\/.*)?$/i,
-            password: /^[0-9a-zA-Z\x20-\x7E]*$/
+        getTemplate: function(templateId, field) {
+
+            var view = field.view;
+
+            if (Alpaca.isObject(view)) {
+                var template = this._getTemplate(templateId, view, field.path);
+                if (!Alpaca.isEmpty(template)) {
+                    return template;
+                }
+                // Try to see if we can pick up default template
+                view = this.defaultView;
+            }
+
+            if (Alpaca.isString(view)) {
+                view = this.getView(view);
+                return this._getTemplate(templateId, view, field.path);
+            }
+            return null;
         },
 
         /**
-         * Map of instantiated fields
+         * @private
+         * Internal method for template lookup through view hierarchy.
+         *
+         * @param {Object} templateId Template id.
+         * @param {Object} view View.
+         * @param {String} path Template path.
+         */
+        _getTemplate: function(templateId, view, path) {
+            if (view && view.fields && view.fields[path] && view.fields[path].templates && view.fields[path].templates[templateId]) {
+                return view.fields[path].templates[templateId];
+            }
+            if (view && view.templates && view.templates[templateId]) {
+                return view.templates[templateId];
+            } else {
+                if (view && view.parent) {
+                    return this._getTemplate(templateId, this.views[view.parent], path);
+                } else {
+                    return null;
+                }
+            }
+        },
+
+
+        /**
+         * Default date format.
+         */
+        defaultDateFormat: "mm/dd/yy",
+
+        /**
+         * Regular expressions for fields.
+         */
+        regexps:
+        {
+            "email": /^[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+(?:\.[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,6}$/i,
+            "url": /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(\:[0-9]{1,5})?(([0-9]{1,5})?\/.*)?$/i,
+            "password": /^[0-9a-zA-Z\x20-\x7E]*$/,
+            "date": /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.]\d\d$/,
+            "integer": /^([\+\-]?([1-9]\d*)|0)$/,
+            "number":/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/,
+            "phone":/^(\D?(\d{3})\D?\D?(\d{3})\D?(\d{4}))?$/,
+            "ipv4":/^(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)(?:\.(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)){3}$/
+        },
+
+        /**
+         * Map of instantiated fields.
          */
         fieldInstances: {},
 
         /**
-         * Maps field types to field class implementations
+         * Maps of field types to field class implementations.
          */
         fieldClassRegistry: {},
 
         /**
-         * Registers an implementation class for a type of field
+         * Registers an implementation class for a type of field.
+         *
+         * @param {String} type Field type.
+         * @param {Alpaca.Field} fieldClass Field class.
          */
         registerFieldClass: function(type, fieldClass) {
             this.fieldClassRegistry[type] = fieldClass;
         },
 
         /**
-         * Returns the implementation class for a type of field
+         * Returns the implementation class for a type of field.
+         *
+         * @param {String} type Field type.
+         *
+         * @returns {Alpaca.Field} Field class mapped to field type.
          */
         getFieldClass: function(type) {
             return this.fieldClassRegistry[type];
         },
 
         /**
-         * Gets the field type id for a given field implementation class
+         * Gets the field type id for a given field implementation class.
+         *
+         * @param {Alpaca.Field} fieldClass Field class.
+         *
+         * @returns {String} Field type of the field class.
          */
         getFieldClassType: function(fieldClass) {
             for (var type in this.fieldClassRegistry) {
@@ -960,33 +840,57 @@
                     }
                 }
             }
-
             return null;
         },
 
         /**
-         * Maps connector types to connector class implementations
+         * Maps of connector types to connector class implementations.
          */
         connectorClassRegistry: {},
 
         /**
-         * Registers an implementation class for a type of connector
+         * Registers an implementation class for a connector type.
+         *
+         * @param {String} type cConnect type
+         * @param {Alpaca.Connector} connectorClass Connector class.
          */
         registerConnectorClass: function(type, connectorClass) {
             this.connectorClassRegistry[type] = connectorClass;
         },
 
         /**
-         * Returns the implementation class for a type of field
+         * Returns the implementation class for a connector type.
+         *
+         * @param {String} type Connect type.
+         * @returns {Alpaca.Connector} Connector class mapped to connect type.
          */
         getConnectorClass: function(type) {
             return this.connectorClassRegistry[type];
         },
 
+        /**
+         * Replaces each substring of this string that matches the given regular expression with the given replacement.
+         *
+         * @param {String} text Source string being replaced.
+         * @param {String} replace Regular expression for replacing.
+         * @param {String} with_this Replacement.
+         *
+         * @returns {String} Replaced string.
+         */
         replaceAll: function(text, replace, with_this) {
             return text.replace(new RegExp(replace, 'g'), with_this);
         },
 
+        /**
+         * Creates an element with a given tag name, dom/style attributes and class names.
+         *
+         * @param {String} tag Tag name.
+         * @param {Array} domAttributes DOM attributes.
+         * @param {Array} styleAttributes Style attributes.
+         * @param {Array} classNames Class names.
+         *
+         * @returns {Object} New element with the tag name and all other provided attributes.
+         */
         element: function(tag, domAttributes, styleAttributes, classNames) {
             var el = $("<" + tag + "/>");
 
@@ -1003,24 +907,38 @@
             }
         },
 
+        /**
+         * Replaces a template with list of replacements.
+         *
+         * @param {String} template Template being processed.
+         * @param {String} substitutions List of substitutions.
+         *
+         * @returns {String} Replaced template.
+         */
         elementFromTemplate: function(template, substitutions) {
             var html = template;
-
             if (substitutions) {
                 for (x in substitutions) {
                     html = Alpaca.replaceAll(html, "${" + x + "}", substitutions[x]);
                 }
             }
-
             return $(html);
         },
 
+        /**
+         * Generates a unique alpaca id.
+         *
+         * @returns {String} The unique alpaca id.
+         */
         generateId: function() {
             Alpaca.uniqueIdCounter++;
             return "alpaca" + Alpaca.uniqueIdCounter;
         },
 
-        // helper function to provide YAHOO later like capabilities
+        /**
+         * @private
+         * Helper function to provide YAHOO later like capabilities.
+         */
         later: function(when, o, fn, data, periodic) {
             when = when || 0;
             o = o || {};
@@ -1038,6 +956,9 @@
                 }
             }
 
+            /**
+             * @ignore
+             */
             f = function() {
                 m.apply(o, d);
             };
@@ -1055,26 +976,379 @@
                     }
                 }
             };
-        }
+        },
 
+        /**
+         * Finds if an string ends with a given suffix.
+         *
+         * @param {String} text The string being evaluated.
+         * @param {String} suffix Suffix.
+         * @returns {Boolean} True if the string ends with the given suffix, false otherwise.
+         */
+        endsWith : function(text, suffix) {
+            return text.indexOf(suffix, text.length - suffix.length) !== -1;
+        },
+
+        /**
+         * Finds if an string starts with a given prefix.
+         *
+         * @param {String} text The string being evaluated.
+         * @param {String} prefix Prefix
+         * @returns {Boolean} True if the string starts with the given prefix, false otherwise.
+         */
+        startsWith : function(text, prefix) {
+            //return (text.match("^" + prefix) == prefix);
+            return text.substr(0, prefix.length) === prefix;
+        },
+
+        /**
+         * Finds if a variable is a URI.
+         *
+         * @param {Object} obj The variable being evaluated.
+         * @returns {Boolean} True if the variable is a URI, false otherwise.
+         */
+        isUri : function(obj) {
+            return Alpaca.isString(obj) && (Alpaca.startsWith(obj, "http://") ||
+                    Alpaca.startsWith(obj, "https://") ||
+                    Alpaca.startsWith(obj, "/") ||
+                    Alpaca.startsWith(obj, "./") ||
+                    Alpaca.startsWith(obj, "../"));
+        },
+
+        /**
+         * Picks a sub-element from an object using a keys array.
+         *
+         * @param {Object} object Object to be traversed
+         * @param {String|Array} keys Either an array of tokens or a dot-delimited string (i.e. "data.user.firstname")
+         * @param {String} subprop Optional subproperty to traverse (i.e.. "data.properties.user.properties.firstname")
+         *
+         * @returns {Object} Sub element mapped to the given key path
+         */
+        traverseObject : function(object, keys, subprop) {
+            if (Alpaca.isString(keys)) {
+                keys = keys.split(".");
+            }
+
+            var element = null;
+            var current = object;
+
+            var key = null;
+            do {
+                key = keys.shift();
+                if (subprop && key == subprop) {
+                    key = keys.shift();
+                }
+                if (!Alpaca.isEmpty(current[key])) {
+                    current = current[key];
+                    if (keys.length == 0) {
+                        element = current;
+                    }
+                } else {
+                    keys = [];
+                }
+            } while (keys.length > 0);
+
+            return element;
+        },
+
+        /**
+         * Helper function that executes the given function upon each element in the array
+         * The element of the array becomes the "this" variable in the function
+         *
+         * @param {Array|Object} data Either an array or an object
+         * @param {Function} func Function to be executed.
+         */
+        each : function(data, func) {
+            if (Alpaca.isArray(data)) {
+                for (var i = 0; i < data.length; i++) {
+                    func.apply(data[i]);
+                }
+            } else if (Alpaca.isObject(data)) {
+                for (var key in data) {
+                    func.apply(data[key]);
+                }
+            }
+        },
+
+        /**
+         * Merges json obj2 into obj1 using a recursive approach.
+         *
+         * @param {Object} obj1 Destination object.
+         * @param {Object} obj2 Source object.
+         * @param {Function} validKeyFunction Function used to determine whether to include a given key or not.
+         *
+         * @returns {Object} Merged object.
+         */
+        merge : function(obj1, obj2, validKeyFunction) {
+            if (!obj1) {
+                obj1 = {};
+            }
+            for (var key in obj2) {
+                var valid = true;
+
+                if (validKeyFunction) {
+                    valid = validKeyFunction(key);
+                }
+
+                if (valid) {
+                    if (Alpaca.isEmpty(obj2[key])) {
+                        obj1[key] = obj2[key];
+                    } else {
+                        if (Alpaca.isObject(obj2[key])) {
+                            if (!obj1[key]) {
+                                obj1[key] = {};
+                            }
+                            obj1[key] = Alpaca.merge(obj1[key], obj2[key]);
+                        } else {
+                            obj1[key] = obj2[key];
+                        }
+                    }
+                }
+            }
+
+            return obj1;
+        },
+
+        /**
+         * Merges json obj2 into obj1 using a recursive approach. The merge will include empty values
+         * of obj2 properties.
+         *
+         * @param {Object} obj1 Source object.
+         * @param {Object} obj2 Destination object
+         *
+         * @returns {Object} Merged object
+         */
+        mergeWithNullChecking : function(obj1, obj2) {
+            if (!obj1) {
+                obj1 = {};
+            }
+            for (var key in obj2) {
+                if (!Alpaca.isFunction(obj2[key])) {
+                    if (Alpaca.isValEmpty(obj2[key])) {
+                        if (!Alpaca.isEmpty(obj1[key])) {
+                            obj1[key] = obj2[key];
+                        }
+                    } else {
+                        if (Alpaca.isObject(obj2[key])) {
+                            if (!obj1[key]) {
+                                obj1[key] = {};
+                            }
+                            obj1[key] = Alpaca.mergeWithNullChecking(obj1[key], obj2[key]);
+                        } else {
+                            obj1[key] = obj2[key];
+                        }
+                    }
+                }
+            }
+            return obj1;
+        },
+
+        /**
+         * Clones an object.
+         *
+         * @param {Object} obj Source object
+         * @returns {Object} Cloned object
+         */
+        cloneObject : function(obj) {
+            var clone = {};
+
+            for (var i in obj) {
+                if (Alpaca.isObject(obj[i])) {
+                    clone[i] = Alpaca.cloneObject(obj[i]);
+                } else {
+                    clone[i] = obj[i];
+                }
+            }
+
+            return clone;
+        },
+
+        /**
+         * Substitutes a string with a list of tokens.
+         *
+         * @param text Source string.
+         * @param args List of tokens.
+         *
+         * @returns Substituted string.
+         */
+        substituteTokens : function(text, args) {
+
+            if (!Alpaca.isEmpty(text)) {
+                for (var i = 0; i < args.length; i++) {
+                    var token = "{" + i + "}";
+
+                    var x = text.indexOf(token);
+                    if (x > -1) {
+                        var nt = text.substring(0, x) + args[i] + text.substring(x + 3);
+                        text = nt;
+                        //text = Alpaca.replaceAll(text, token, args[i]);
+                    }
+                }
+            }
+            return text;
+        },
+
+        /**
+         * Compares two objects.
+         *
+         * @param {Object} obj1 First object.
+         * @param {Object} obj2 Second object.
+         *
+         * @returns {Boolean} True if two objects are same, false otherwise.
+         */
+        compareObject : function(obj1, obj2) {
+            return equiv(obj1, obj2);
+        },
+
+        /**
+         * Compares content of two arrays.
+         *
+         * @param {Array} arr_1 First array.
+         * @param {Array} arr_2 Second array.
+         * @returns {Boolean} True if two arrays have same content, false otherwise.
+         */
+        compareArrayContent : function(arr_1, arr_2) {
+            var equal = arr_1.length == arr_2.length;
+            if (equal) {
+                $.each(arr_1, function(foo, val) {
+                    if (!equal)
+                        return false;
+                    if ($.inArray(val, arr_2) == -1) {
+                        equal = false;
+                    } else {
+                        equal = true;
+                    }
+                });
+            }
+            return equal;
+        },
+
+        /**
+         * Finds whether a variable has empty value or not.
+         *
+         * @param {Any} val Variable to be evaluated.
+         * @returns {Boolean} True if the variable has empty value, false otherwise.
+         */
+        isValEmpty : function(val) {
+            var empty = false;
+            if (Alpaca.isEmpty(val)) {
+                empty = true;
+            } else {
+                if (Alpaca.isString(val) && val == "") {
+                    empty = true;
+                }
+                if (Alpaca.isObject(val) && $.isEmptyObject(val)) {
+                    empty = true;
+                }
+                if (Alpaca.isArray(val) && val.length == 0) {
+                    empty = true;
+                }
+                if (Alpaca.isNumber(val) && isNaN(val)) {
+                    empty = true;
+                }
+            }
+            return empty;
+        },
+
+        /**
+         * @private
+         *
+         * Initial function for setting up field instance and executing callbacks if needed.
+         *
+         * @param {Object} el Container element.
+         * @param {Object} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Function} callback Render callback.
+         * @param {Function} renderedCallback Post-render callback.
+         * @param {Alpaca.connector} connector Field connector.
+         *
+         * @returns {Alpaca.Field} New field instance.
+         */
+        init : function(el, data, options, schema, view, callback, renderedCallback, connector) {
+            var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector);
+            Alpaca.fieldInstances[field.getId()] = field;
+
+            // allow callbacks defined through view
+            if (Alpaca.isEmpty(callback)) {
+                callback = field.view.render;
+            }
+            if (Alpaca.isEmpty(renderedCallback)) {
+                renderedCallback = field.view.postRender;
+            }
+
+            if (callback != null) {
+                callback(field, renderedCallback);
+            } else {
+                field.render(renderedCallback);
+            }
+
+            field.callback = callback;
+            field.renderedCallback = renderedCallback;
+
+            return field;
+        },
+
+        /**
+         * @private
+         *
+         * Internal method for constructing a field instance.
+         *
+         * @param {Object} el The dom element to act as the container of the constructed field.
+         * @param {Object} data The data to be bound into the field.
+         * @param {Object} options The configuration for the field.
+         * @param {Object} schema The schema for the field.
+         * @param {Object|String} view The view for the field.
+         * @param {Alpaca.connector} connector The field connector to be bound into the field.
+         *
+         * @returns {Alpaca.Field} New field instance.
+         */
+        createFieldInstance : function(el, data, options, schema, view, connector) {
+            // make sure options and schema are not empty
+            if (Alpaca.isValEmpty(options)) options = {};
+            if (Alpaca.isValEmpty(schema)) schema = {};
+            // options can be a string that identifies the kind of field to construct (i.e. "text")
+            if (options && Alpaca.isString(options)) {
+                var fieldType = options;
+                options = {};
+                options.type = fieldType;
+            }
+            if (!options.type) {
+                // if nothing passed in, we can try to make a guess based on the type of data
+                if (!schema.type) {
+                    schema.type = Alpaca.getSchemaType(data);
+                }
+                if (schema && schema["enum"]) {
+                    if (schema["enum"].length > 3) {
+                        options.type = "select";
+                    } else {
+                        options.type = "radio";
+                    }
+                } else {
+                    options.type = Alpaca.defaultSchemaFieldMapping[schema.type];
+                }
+                // check if it has format defined
+                if (schema.format && Alpaca.defaultFormatFieldMapping[schema.format]) {
+                    options.type = Alpaca.defaultFormatFieldMapping[schema.format];
+                }
+            }
+            // find the field class registered for this field type
+            var fieldClass = Alpaca.getFieldClass(options.type);
+            if (!fieldClass) {
+                alert("Unable to find field class for type: " + options.type);
+                return null;
+            }
+            // if we have data, bind it in
+            return new fieldClass(el, data, options, schema, view, connector);
+        }
     });
 
     $.alpaca = window.Alpaca = Alpaca;
 
     /**
      * jQuery friendly method for binding a field to a DOM element.
-     *
-     * $(el).alpaca()                       Either binds a control using the contents of $(el) or hands back a previously bound control
-     * $(el).alpaca(data)                   Binds a control to $(el) using the given data.
-     * $(el).alpaca(data, "<type>")         Binds a control of type <type> to $(el) using the given data.
-     *
-     * $(el).alpaca(data, {                 Binds a control to the $(el) using the given data.
-     *    id: <id>                          field id (optional)
-     *    type: <type>                      field type (optional)
-     *    schema: schema,                   field schema (optional)
-     *    settings: settings                field settings (optional)
-     * });
-     *
+     * @ignore
      */
     $.fn.alpaca = function() {
         var args = Alpaca.makeArray(arguments);
@@ -1086,16 +1360,10 @@
         return Alpaca.apply(this, newArgs);
     };
 
-    // helper
-    Alpaca.endsWith = function(text, suffix) {
-        return text.indexOf(suffix, text.length - suffix.length) !== -1;
-    };
-
-    Alpaca.startsWith = function(text, prefix) {
-        //return (text.match("^" + prefix) == prefix);
-        return text.substr(0, prefix.length) === prefix;
-    };
-
+    /**
+     * @ignore
+     * @param nocloning
+     */
     $.fn.outerHTML = function(nocloning) {
         if (nocloning) {
             return $("<div></div>").append(this).html();
@@ -1104,14 +1372,10 @@
         }
     }
 
-    Alpaca.isUri = function(obj) {
-        return Alpaca.isString(obj) && (Alpaca.startsWith(obj, "http://") ||
-                Alpaca.startsWith(obj, "https://") ||
-                Alpaca.startsWith(obj, "/") ||
-                Alpaca.startsWith(obj, "./") ||
-                Alpaca.startsWith(obj, "../"));
-    };
-
+    /**
+     * @ignore
+     * @param to
+     */
     $.fn.swapWith = function(to) {
         return this.each(function() {
             var copy_to = $(to).clone();
@@ -1119,208 +1383,6 @@
             $(to).replaceWith(copy_from);
             $(this).replaceWith(copy_to);
         });
-    };
-
-
-    /**
-     * Picks a subelement from the given object using the given keys array.
-     *
-     * @param object
-     * @param keys either an array of tokens or a dot-delimited string (i.e. "data.user.firstname")
-     * @param subprop optional subproperty to traverse (i.e.. "data.properties.user.properties.firstname")
-     */
-    Alpaca.traverseObject = function(object, keys, subprop) {
-        if (Alpaca.isString(keys)) {
-            keys = keys.split(".");
-        }
-
-        var element = null;
-        var current = object;
-
-        var key = null;
-        do {
-            key = keys.shift();
-            if (subprop && key == subprop) {
-                key = keys.shift();
-            }
-            if (!Alpaca.isEmpty(current[key])) {
-                current = current[key];
-                if (keys.length == 0) {
-                    element = current;
-                }
-            } else {
-                keys = [];
-            }
-        } while (keys.length > 0);
-
-        return element;
-    };
-
-    /**
-     * Helper function that executes the given function upon each element in the array
-     *
-     * @param data either an array or an object
-     *
-     * The element of the array becomes the "this" variable in the function
-     */
-    Alpaca.each = function(data, func) {
-        if (Alpaca.isArray(data)) {
-            for (var i = 0; i < data.length; i++) {
-                func.apply(data[i]);
-            }
-        } else if (Alpaca.isObject(data)) {
-            for (var key in data) {
-                func.apply(data[key]);
-            }
-        }
-    };
-
-    /**
-     * Merges json obj2 into obj1 using a recursive approach
-     *
-     * @param validKeyFunction used to determine whether to include a given key
-     */
-    Alpaca.merge = function(obj1, obj2, validKeyFunction) {
-        if (!obj1) {
-            obj1 = {};
-        }
-        for (var key in obj2) {
-            var valid = true;
-
-            if (validKeyFunction) {
-                valid = validKeyFunction(key);
-            }
-
-            if (valid) {
-                if (Alpaca.isEmpty(obj2[key])) {
-                    obj1[key] = obj2[key];
-                } else {
-                    if (Alpaca.isObject(obj2[key])) {
-                        if (!obj1[key]) {
-                            obj1[key] = {};
-                        }
-                        obj1[key] = Alpaca.merge(obj1[key], obj2[key]);
-                    } else {
-                        obj1[key] = obj2[key];
-                    }
-                }
-            }
-        }
-
-        return obj1;
-    }
-
-    /**
-     * Merges json obj2 into obj1 using a recursive approach
-     */
-    Alpaca.mergeWithNullChecking = function(obj1, obj2) {
-        if (!obj1) {
-            obj1 = {};
-        }
-        for (var key in obj2) {
-            if (!Alpaca.isFunction(obj2[key])) {
-                if (Alpaca.isValEmpty(obj2[key])) {
-                    if (!Alpaca.isEmpty(obj1[key])) {
-                        obj1[key] = obj2[key];
-                    }
-                } else {
-                    if (Alpaca.isObject(obj2[key])) {
-                        if (!obj1[key]) {
-                            obj1[key] = {};
-                        }
-                        obj1[key] = Alpaca.mergeWithNullChecking(obj1[key], obj2[key]);
-                    } else {
-                        obj1[key] = obj2[key];
-                    }
-                }
-            }
-        }
-        return obj1;
-    }
-
-    Alpaca.cloneObject = function(obj) {
-        var clone = {};
-
-        for (var i in obj) {
-            if (Alpaca.isObject(obj[i])) {
-                clone[i] = Alpaca.cloneObject(obj[i]);
-            } else {
-                clone[i] = obj[i];
-            }
-        }
-
-        return clone;
-    };
-
-    Alpaca.substituteTokens = function(text, args) {
-
-        if (!Alpaca.isEmpty(text)) {
-            for (var i = 0; i < args.length; i++) {
-                var token = "{" + i + "}";
-
-                var x = text.indexOf(token);
-                if (x > -1) {
-                    var nt = text.substring(0, x) + args[i] + text.substring(x + 3);
-                    text = nt;
-                    //text = Alpaca.replaceAll(text, token, args[i]);
-                }
-            }
-        }
-        return text;
-    };
-
-    /**
-     * Compares two objects with any type
-     *
-     * @param {Object} obj1
-     * @param {Object} obj2
-     */
-    Alpaca.compareObject = function(obj1, obj2) {
-        return equiv(obj1, obj2);
-    };
-
-    /**
-     * Compares content of two arrays
-     *
-     * @param {Object} arr_1
-     * @param {Object} arr_2
-     */
-    Alpaca.compareArrayContent = function(arr_1, arr_2) {
-        var equal = arr_1.length == arr_2.length;
-        if (equal) {
-            $.each(arr_1, function(foo, val) {
-                if (!equal)
-                    return false;
-                if ($.inArray(val, arr_2) == -1) {
-                    equal = false;
-                } else {
-                    equal = true;
-                }
-            });
-        }
-        return equal;
-    };
-
-
-    Alpaca.isValEmpty = function(val) {
-        var empty = false;
-        if (Alpaca.isEmpty(val)) {
-            empty = true;
-        } else {
-            if (Alpaca.isString(val) && val == "") {
-                empty = true;
-            }
-            if (Alpaca.isObject(val) && $.isEmptyObject(val)) {
-                empty = true;
-            }
-            if (Alpaca.isArray(val) && val.length == 0) {
-                empty = true;
-            }
-            if (Alpaca.isNumber(val) && isNaN(val)) {
-                empty = true;
-            }
-        }
-        return empty;
     };
 
     /*
@@ -1334,7 +1396,8 @@
      * Based on work by Shaun Inman
      *   http://www.shauninman.com/archive/2007/09/10/styling_file_inputs_with_css_and_the_dom
      *
-     */
+     * @ignore
+     * */
 
     $.fn.filestyle = function(options) {
 
@@ -1394,6 +1457,7 @@
      * Copyright (c) 2009 Filament Group
      * licensed under MIT (filamentgroup.com/examples/mit-license.txt)
      * --------------------------------------------------------------------
+     * @ignore
      */
     $.fn.customFileInput = function() {
         return $(this).each(function() {

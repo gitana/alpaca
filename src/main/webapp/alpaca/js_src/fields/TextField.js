@@ -1,31 +1,31 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.TextField = Alpaca.ControlField.extend(
     /**
-     * Basic text field control
-     *
-     * The following additional settings are permitted:
-     *
-     * {
-     *    size: <number>								size attribute for input element
-     *    readonly: <boolean>                           whether to mark the input control as readonly
-     *    formName: <string>                            http post form name
-     * }
-     *
-     * This field obeys JSON Schema for:
-     *
-     * {
-     *    minLength: <number>,                          [optional]
-     *    maxLength: <number>,                          [optional]
-     *    pattern: <string>                             [optional]
-     * }
+     * @lends Alpaca.Fields.TextField.prototype
      */
-    Alpaca.Fields.TextField = Alpaca.ControlField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.ControlField
          *
+         * @class Basic control for general text.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Field#setup
          */
         setup: function() {
             this.base();
@@ -38,9 +38,7 @@
         },
         
         /**
-         * @Override
-         *
-         * Renders an INPUT control into the field container
+         * @see Alpaca.ControlField#renderField
          */
         renderField: function(onSuccess) {
         
@@ -58,7 +56,7 @@
         },
         
         /**
-         * @Override
+         * @see Alpaca.ControlField#postRender
          */
         postRender: function() {
             this.base();
@@ -73,20 +71,16 @@
 
         
         /**
-         * @Override
-         *
-         * Return the value of the input control
+         * @see Alpaca.Field#getValue
          */
         getValue: function() {
             return this.field.val();
         },
         
         /**
-         * @Override
-         *
-         * Set value onto the input contorl
+         * @see Alpaca.Field#setValue
          */
-        setValue: function(value, stopUpdateTrigger) {
+        setValue: function(value) {
             if (Alpaca.isEmpty(value)) {
                 this.field.val("");
             } else {
@@ -94,11 +88,11 @@
             }
             
             // be sure to call into base method
-            this.base(value, stopUpdateTrigger);
+            this.base(value);
         },
         
         /**
-         * @Override
+         * @see Alpaca.ControlField#handleValidate
          */
         handleValidate: function() {
             var baseStatus = this.base();
@@ -127,7 +121,9 @@
         },
         
         /**
-         * validates against the pattern
+         * Validates against the schema pattern property.
+         *
+         * @returns {Boolean} True if it matches the pattern, false otherwise.
          */
         _validatePattern: function() {
             if (this.schema.pattern) {
@@ -141,7 +137,9 @@
         },
         
         /**
-         * validates against the minLength
+         * Validates against the schema minLength property.
+         *
+         * @returns {Boolean} True if its size is greater than minLength, false otherwise.
          */
         _validateMinLength: function() {
 			if (!Alpaca.isEmpty(this.schema.minLength)) {
@@ -156,7 +154,9 @@
 		},
         
         /**
-         * validates against the maxLength
+         * Validates against the schema maxLength property.
+         *
+         * @returns {Boolean} True if its size is less than maxLength , false otherwise.
          */
         _validateMaxLength: function() {
 			if (!Alpaca.isEmpty(this.schema.maxLength)) {
@@ -167,33 +167,33 @@
 					}
 				}
 			}
-
             return true;
         },
         
         /**
-         * @Override
+         * @see Alpaca.Field#disable
          */
         disable: function() {
             this.field.disabled = true;
         },
         
         /**
-         * @Override
+         * @see Alpaca.Field#enable
          */
         enable: function() {
             this.field.disabled = false;
         },
         
         /**
-         * @Override
+         * @see Alpaca.Field#focus
          */
         focus: function() {
             this.field.focus();
         },
         
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ControlField#getSchemaOfSchema
          */
         getSchemaOfSchema: function() {
             return Alpaca.merge(this.base(), {
@@ -218,7 +218,8 @@
         },
 
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ControlField#getOptionsForSchema
          */
         getOptionsForSchema: function() {
             return Alpaca.merge(this.base(), {
@@ -237,7 +238,8 @@
         },
 		
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ControlField#getSchemaOfOptions
          */
         getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(), {
@@ -263,7 +265,8 @@
         },    
 		
         /**
-         * @Override
+         * @private
+         * @see Alpaca.ControlField#getOptionsForOptions
          */
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
@@ -285,28 +288,28 @@
         },    
 				    
         /**
-         * @Override
+         * @see Alpaca.Field#getTitle
          */
         getTitle: function() {
             return "Single-Line Text";
         },
         
         /**
-         * @Override
+         * @see Alpaca.Field#getDescription
          */
         getDescription: function() {
             return "Text field for single-line text.";
         },
         
         /**
-         * @Override
+         * @see Alpaca.Field#getType
          */
         getType: function() {
             return "string";
         },
 		
         /**
-         * @Override
+         * @see Alpaca.Field#getFieldType
          */
         getFieldType: function() {
             return "text";

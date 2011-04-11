@@ -1,165 +1,173 @@
-/**
- * Select control
- */
 (function($) {
 
     var Alpaca = $.alpaca;
-    
+
+    Alpaca.Fields.SelectField = Alpaca.Fields.ListField.extend(
     /**
-     * List field
+     * @lends Alpaca.Fields.SelectField.prototype
      */
-    Alpaca.Fields.SelectField = Alpaca.Fields.ListField.extend({
-    
+    {
         /**
-         * @Override
+         * @constructs
+         * @augments Alpaca.Fields.ListField
          *
-         * Return the value of the input control
+         * @class Dropdown list control for list type.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector) {
+            this.base(container, data, options, schema, view, connector);
+        },
+
+        /**
+         * @see Alpaca.Field#getValue
          */
         getValue: function() {
-			if (this.field) {
-				return this.field.val();
-			}
+            if (this.field) {
+                return this.field.val();
+            }
         },
-        
+
         /**
-         * @Override
-         *
-         * Return the value of the input control
+         * @see Alpaca.Field#setValue
          */
-        setValue: function(val, stopUpdateTrigger) {
+        setValue: function(val) {
             if (Alpaca.isArray(val)) {
-				if (!Alpaca.compareArrayContent(val,this.getValue())) {
-					this.base(val, stopUpdateTrigger);
-				}			
-			} else {
-				if (val != this.getValue()) {
-					this.base(val, stopUpdateTrigger);
-				}
-			}
+                if (!Alpaca.compareArrayContent(val, this.getValue())) {
+                    this.base(val);
+                }
+            } else {
+                if (val != this.getValue()) {
+                    this.base(val);
+                }
+            }
         },
-        
+
         /**
-         * @Override
-         *
-         * Render list control into the field container
+         * @private
          */
         _renderField: function(onSuccess) {
-            
+
             var controlFieldTemplate;
-			
-			if (this.options.multiple && Alpaca.isArray(this.data)) {
-				controlFieldTemplate = this.view.getTemplate("controlFieldSelectMultiple");
-			} else {
-				controlFieldTemplate = this.view.getTemplate("controlFieldSelect");
-			}
-            
+
+            if (this.options.multiple && Alpaca.isArray(this.data)) {
+                controlFieldTemplate = this.view.getTemplate("controlFieldSelectMultiple");
+            } else {
+                controlFieldTemplate = this.view.getTemplate("controlFieldSelect");
+            }
+
             if (controlFieldTemplate) {
                 this.field = $.tmpl(controlFieldTemplate, {
                     "id": this.getId(),
                     "options": this.options,
-					"required": this.schema.required,
+                    "required": this.schema.required,
                     "selectOptions": this.selectOptions,
                     "data": this.data
                 });
                 this.injectField(this.field);
             }
-            
+
             if (onSuccess) {
                 onSuccess();
             }
         },
-		
+
         /**
-         * @Override
+         * @see Alpaca.ControlField#postRender
          */
         postRender: function() {
             this.base();
-			if (this.fieldContainer) {
-				this.fieldContainer.addClass('alpaca-controlfield-select');
-			}
-        },				
-        
+            if (this.fieldContainer) {
+                this.fieldContainer.addClass('alpaca-controlfield-select');
+            }
+        },
+
         /**
-         * @Override
-         *
-         * Handler for change event
+         * @see Alpaca.Field#onChange
          */
         onChange: function(e) {
             this.base(e);
-            
+
             var _this = this;
-            
+
             Alpaca.later(25, this, function() {
                 var v = _this.getValue();
-                _this.setValue(v, false);
-				_this.renderValidationState();
-            });			
+                _this.setValue(v);
+                _this.renderValidationState();
+            });
         },
-		
-        /**
-         * @Override
-         */
-		getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(),{
-				"properties": {
-					"multiple": {
-						"title": "Mulitple Selection",
-						"description": "Allow multiple selection if true",
-						"type": "boolean",
-						"default": false
-					},
-					"size": {
-						"title": "Displayed Options",
-						"description": "Number of options to be shown",
-						"type": "number"
-					}
-				}
-			});
-        },
-		
-        /**
-         * @Override
-         */
-		getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(),{
-				"fields": {
-					"multiple": {
-						"rightLabel": "Allow mulitple selection ?",
-						"helper": "Allow multiple selection if checked",
-						"type": "checkbox"
-					},
-					"size": {
-						"type": "integer"
-					}
-				}
-			});
-        }, 		
-		
-		/**
-         * @Override
-		 */
-		getTitle: function() {
-			return "Dropdown Select";
-		},
-		
-		/**
-         * @Override
-		 */
-		getDescription: function() {
-			return "Dropdown select field.";
-		},
 
-		/**
-         * @Override
+        /**
+         * @private
+         * @see Alpaca.Fields.ListField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "multiple": {
+                        "title": "Mulitple Selection",
+                        "description": "Allow multiple selection if true",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "size": {
+                        "title": "Displayed Options",
+                        "description": "Number of options to be shown",
+                        "type": "number"
+                    }
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.ListField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "multiple": {
+                        "rightLabel": "Allow mulitple selection ?",
+                        "helper": "Allow multiple selection if checked",
+                        "type": "checkbox"
+                    },
+                    "size": {
+                        "type": "integer"
+                    }
+                }
+            });
+        },
+
+        /**
+         * @see Alpaca.Field#getTitle
+         */
+        getTitle: function() {
+            return "Dropdown Select";
+        },
+
+        /**
+         * @see Alpaca.Field#getDescription
+         */
+        getDescription: function() {
+            return "Dropdown select field.";
+        },
+
+        /**
+         * @see Alpaca.Field#getFieldType
          */
         getFieldType: function() {
             return "select";
-        }	
-    
+        }
+
     });
-    
+
     Alpaca.registerTemplate("controlFieldSelect", '<select id="${id}" {{if options.readonly}}readonly="on"{{/if}} {{if options.multiple}}multiple{{/if}} {{if options.size}}size="${options.size}"{{/if}} {{if options.name}}name="${options.name}"{{/if}}>{{if !required}}<option value="">None</option>{{/if}}{{each(i,value) selectOptions}}<option value="${value}" {{if value == data}}selected="selected"{{/if}}>${text}</option>{{/each}}/></select>');
     Alpaca.registerTemplate("controlFieldSelectMultiple", '<select id="${id}" {{if options.readonly}}readonly="on"{{/if}} {{if options.multiple}}multiple{{/if}} {{if options.size}}size="${options.size}"{{/if}} {{if options.name}}name="${options.name}"{{/if}}>{{if !required}}<option value="">None</option>{{/if}}{{each(i,value) selectOptions}}<option value="${value}" {{each(j,val) data}}{{if value == val}}selected="selected"{{/if}}{{/each}}>${text}</option>{{/each}}/></select>');
     Alpaca.registerFieldClass("select", Alpaca.Fields.SelectField);
-    
+
 })(jQuery);
