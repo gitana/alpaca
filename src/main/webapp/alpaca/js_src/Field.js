@@ -309,10 +309,10 @@
             // readonly
             if (this.options.readonly) {
                 this.getEl().addClass("alpaca-field-readonly");
-                $(':input', this.getEl()).attr('readonly', 'on');
-                $('select', this.getEl()).attr('disabled', 'on');
-                $(':radio', this.getEl()).attr('disabled', 'on');
-                $(':checkbox', this.getEl()).attr('disabled', 'on');
+                $(':input', this.getEl()).attr('readonly', 'readonly');
+                $('select', this.getEl()).attr('disabled', 'disabled');
+                $(':radio', this.getEl()).attr('disabled', 'disabled');
+                $(':checkbox', this.getEl()).attr('disabled', 'disabled');
             }
 
             // Support for custom CSS class for the field

@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.gitana</groupId>
-    <artifactId>alpaca-forms</artifactId>
+    <artifactId>alpaca</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Alpaca Forms</name>
+    <name>Alpaca</name>
     <packaging>war</packaging>
     <url>http://www.gitanasoftware.org/</url>
 
@@ -200,6 +200,54 @@
                                 <param>../css_src/example.css</param>
                             </cssSourceFiles>
                             <cssFinalFile>example.css</cssFinalFile>
+                            <linebreak>-1</linebreak>
+                            <nomunge>false</nomunge>
+                            <verbose>true</verbose>
+                            <preserveAllSemiColons>false</preserveAllSemiColons>
+                            <disableOptimizations>false</disableOptimizations>
+                            <bufferSize>4096</bufferSize>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>minify-tests</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                        <configuration>
+                            <jsSourceDir>alpaca/tests/js</jsSourceDir>
+                            <jsSourceFiles>
+                                <!-- alpaca basic fields -->
+                                <param>../js_src/fields/TextField.js</param>
+                                <param>../js_src/fields/CheckBoxField.js</param>
+                                <param>../js_src/fields/NumberField.js</param>
+                                <param>../js_src/fields/AnyField.js</param>
+                                <param>../js_src/fields/ArrayField.js</param>
+                                <param>../js_src/fields/ObjectField.js</param>
+                                <param>../js_src/fields/IntegerField.js</param>
+                                <param>../js_src/fields/RadioField.js</param>
+                                <param>../js_src/fields/SelectField.js</param>
+                                <param>../js_src/fields/UpperCaseField.js</param>
+                                <param>../js_src/fields/IPv4Field.js</param>
+                                <param>../js_src/fields/DateField.js</param>
+                                <param>../js_src/fields/PasswordField.js</param>
+                                <param>../js_src/fields/EmailField.js</param>
+                                <param>../js_src/fields/PhoneField.js</param>
+                                <param>../js_src/fields/TextAreaField.js</param>
+                                <param>../js_src/fields/WysiwygField.js</param>
+                                <param>../js_src/fields/FileField.js</param>
+                                <param>../js_src/fields/AddressField.js</param>
+                                <param>../js_src/fields/DependencyField.js</param>
+                                <param>../js_src/fields/ConditionalField.js</param>
+                                <param>../js_src/fields/Form.js</param>
+                                <param>../js_src/validation/Validation.js</param>
+                                <param>../js_src/wizards/Wizard.js</param>
+                                <param>../js_src/views/View.js</param>
+                                <param>../js_src/connectors/SimpleConnector.js</param>
+                                <param>../js_src/forms/CreateForm.js</param>
+                                <param>../js_src/forms/EditForm.js</param>
+                            </jsSourceFiles>
+                            <jsFinalFile>alpaca-${project.version}-test.js</jsFinalFile>
                             <linebreak>-1</linebreak>
                             <nomunge>false</nomunge>
                             <verbose>true</verbose>

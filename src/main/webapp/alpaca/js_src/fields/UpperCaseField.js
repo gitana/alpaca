@@ -82,5 +82,6 @@
     });
 
     Alpaca.registerFieldClass("uppercase", Alpaca.Fields.UpperCaseField);
+    Alpaca.registerDefaultFormatFieldMapping("uppercase", "uppercase");
 
 })(jQuery);

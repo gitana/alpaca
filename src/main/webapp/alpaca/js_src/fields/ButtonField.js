@@ -150,7 +150,7 @@
         }
     });
 
-    Alpaca.registerTemplate("controlFieldButton", '<button type="${type}" id="${id}" {{if options.readonly}}readonly="on"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}} {{if value}}value="${value}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}>{{if label}}${label}{{else}}{{if value}}${value}{{/if}}{{/if}}</button>');
+    Alpaca.registerTemplate("controlFieldButton", '<button type="${type}" id="${id}" {{if options.readonly}}readonly="readonly"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}} {{if value}}value="${value}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}>{{if label}}${label}{{else}}{{if value}}${value}{{/if}}{{/if}}</button>');
     Alpaca.registerFieldClass("button", Alpaca.Fields.ButtonField);
 
 })(jQuery);

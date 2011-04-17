@@ -172,11 +172,13 @@
                     }
                 });
             } else {
-                if (_this.options.toolbarStyle == "button" && $(this).button) {
-                    $(this).button("disable");
-                } else {
-                    $(this).addClass('alpaca-fieldset-array-item-toolbar-disabled');
-                }
+                $('.alpaca-fieldset-array-item-toolbar-remove', this.outerEl).each(function(index) {
+                    if (_this.options.toolbarStyle == "button" && $(this).button) {
+                        $(this).button("disable");
+                    } else {
+                        $(this).addClass('alpaca-fieldset-array-item-toolbar-disabled');
+                    }
+                });
             }
             if (this.getSize() == 0) {
                 this.renderArrayToolbar(this.outerEl);
