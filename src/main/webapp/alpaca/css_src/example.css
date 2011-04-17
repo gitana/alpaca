@@ -43,6 +43,21 @@ h4 {
 	padding:10px 0 0 60px;
 }
 
+.alpaca-example-header h2 A:link {
+    text-decoration: none;
+}
+
+.alpaca-example-header h2 A:visited {
+    text-decoration: none;
+    color: #000000;
+}
+.alpaca-example-header h2 A:active {
+    text-decoration: none;
+}
+.alpaca-example-header h2 A:hover {
+    text-decoration: underline;
+}
+
 .alpaca-example-sidebar-header {
 	padding:4px;
 }
@@ -51,8 +66,8 @@ h4 {
 /*
 	float:left;
 */
-	width:200px;
-	margin:10px 20px 10px 10px;
+	width:250px;
+	margin: 0px 20px 10px 10px;
 	padding:4px;
 }
 
