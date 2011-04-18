@@ -24,6 +24,7 @@
                         ok(fieldLayoutLeftColumnElem.length, 'Address field layout left column rendered correctly.');
                         var fieldLayoutRightColumnElem = $('.alpaca-layout-two-column-right', topLayoutRightColumnElem);
                         ok(fieldLayoutRightColumnElem.length, 'Address field layout right column rendered correctly.');
+                        start();
                     };
                     field.render();
                     postRenderCallback(field);
@@ -46,7 +47,6 @@
                     ok(switchViewButtonElem.length, 'Switch view button generated.');
                     var topLayoutLeftColumnElem = $('div > div > div.alpaca-layout-two-column-left', formElem);
                     ok(topLayoutLeftColumnElem.length, 'Top layout left column rendered correctly.');
-                    start();
                 }
             })
         });
