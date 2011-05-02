@@ -39,6 +39,27 @@
                                 "options": {
                                     "type": "file",
                                     "label": "Ice Cream Photo:",
+                                    "helper": "Pick your favorite ice cream picture.",
+                                    "styled": true
+                                },
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uri"
+                                }
+                            });
+                        });
+                    </script>
+                    <h3>Example 2: </h3>
+                    <h4>File field without style.</h4>
+                    <div id="field2">
+                    </div>
+                    <script type="text/javascript" id="field2-script">
+                        $(function() {
+                            $("#field2").alpaca({
+                                "data": "",
+                                "options": {
+                                    "type": "file",
+                                    "label": "Ice Cream Photo:",
                                     "helper": "Pick your favorite ice cream picture."
                                 },
                                 "schema": {

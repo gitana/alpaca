@@ -238,6 +238,10 @@
 
             // if we have a template to load, load it and then render
             this.connector.loadTemplate(template, function(loadedTemplate) {
+                var tmp = loadedTemplate;
+                if ($(tmp)[0] && $(tmp)[0].tagName.toLowerCase() == 'script' && $(tmp).attr('type') == 'text/x-jquery-tmpl') {
+                    loadedTemplate = $(tmp).html();
+                }
                 _this._renderLoadedTemplate(parentEl, loadedTemplate, onSuccess);
             }, function(error) {
                 alert(error);

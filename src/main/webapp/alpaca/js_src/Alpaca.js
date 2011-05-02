@@ -158,6 +158,7 @@
         }, function(loadedData, loadedOptions, loadedSchema, loadedView) {
             return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, callback, renderedCallback, connector);
         }, function (loadError) {
+            //TODO: add support for custom error handler.
             alert(loadError);
             return null;
         });
@@ -421,6 +422,10 @@
             }
             if (Alpaca.isBoolean(data)) {
                 return "boolean";
+            }
+            // Last check for data that carries functions -- GitanaConnector case.
+            if (typeof data == 'object') {
+                return "object";
             }
         },
 

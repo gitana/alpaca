@@ -126,7 +126,12 @@
          * @returns {Object|String} The template mapped to the given id.
          */
         getTemplate : function (templateId) {
-            return this.getViewParam(["templates",templateId]);
+            // add support for script wrapper tag
+            var tmp = this.getViewParam(["templates",templateId]);
+            if ($(tmp)[0] && $(tmp)[0].tagName.toLowerCase() == 'script' && $(tmp).attr('type') == 'text/x-jquery-tmpl') {
+                tmp = $(tmp).html();
+            }
+            return tmp;
         },
 
         /**

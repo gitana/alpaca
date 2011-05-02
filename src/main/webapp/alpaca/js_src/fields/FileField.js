@@ -50,7 +50,7 @@
          */
         postRender: function() {
             // make it stylable
-            if (this.field) {
+            if (this.field && !Alpaca.isEmpty(this.options["styled"]) && this.options["styled"]) {
 				this.field.customFileInput();
             }
             this.base();

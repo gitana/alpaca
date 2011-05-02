@@ -31,6 +31,7 @@
          */
         constructor: function(id, configs) {
             this.base(id, configs);
+            this.isRetry = false;
         },
 
         /**
@@ -44,17 +45,33 @@
             this.repositoryId = this.configs.repositoryId;
             this.branchId = this.configs.branchId ? this.configs.branchId : "master";
 
-            this.gitanaDriver = new Gitana.Driver();
+            if (Alpaca.isEmpty(this.gitanaDriver)) {
+                this.gitanaDriver = new Gitana.Driver();
+            }
 
-            this.gitanaDriver.security().authenticate(this.userName, this.password, function(success) {
+            //this.ticket = "0258f7026484b83473ae1348f91c01ca";
+
+            if (Alpaca.isEmpty(this.ticket) || this.isRetry) {
+                this.gitanaDriver.security().authenticate(this.userName, this.password, function(success) {
+                    // store the ticket
+                    _this.ticket = success.ticket;
+                    _this.isRetry = false;
+                    //alert("Get new ticket" + _this.ticket);
+                    if (onSuccess && Alpaca.isFunction(onSuccess)) {
+                        onSuccess(success);
+                    }
+                }, function(error) {
+                    alert('Failed to connect to Gitana. Error code ' + error.status + '.');
+                    _this.isRetry = false;
+                    if (onError && Alpaca.isFunction(onError)) {
+                        onError(error);
+                    }
+                });
+            } else {
                 if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                    onSuccess(success);
+                    onSuccess();
                 }
-            }, function(error) {
-                if (onError && Alpaca.isFunction(onError)) {
-                    onError(error);
-                }
-            });
+            }
         },
 
         /**
@@ -101,9 +118,25 @@
                         && (_this.isValidGitanaId(data) || _this.isValidQName(data));
             };
 
+            var isValidQuery = function () {
+                return !Alpaca.isEmpty(data) && Alpaca.isObject(data) && !Alpaca.isEmpty(data.query);
+            };
+
+            var isValidSearch = function () {
+                return !Alpaca.isEmpty(data) && Alpaca.isObject(data) && !Alpaca.isEmpty(data.search);
+            };
+
+            var isValidTraversal = function () {
+                return !Alpaca.isEmpty(data) && Alpaca.isObject(data) && !Alpaca.isEmpty(data.traversal);
+            };
+
             if (isValidData()) {
                 branch.nodes().read(data, function(loadedData) {
                     dataSource.data = loadedData;
+                    //inject ticket
+                    dataSource.data._ticket = _this.ticket;
+                    //inject url
+                    dataSource.data._url = "/repositories/" + loadedData.getRepositoryId() + "/branches/" + loadedData.getBranchId() + "/nodes/" + loadedData.getId();
                     successCallback(dataSource);
                 }, function(loadedError) {
                     base(dataSource, function(dataSource) {
@@ -111,6 +144,58 @@
                     }, function(error) {
                         errorCallback(error);
                     });
+                });
+            } else if (isValidQuery()) {
+                branch.nodes().query(data, function(loadedData) {
+                    dataSource.data = loadedData;
+                    //inject ticket
+                    dataSource.data._ticket = _this.ticket;
+                    //inject other ids
+                    dataSource.data.repositoryId = _this.repositoryId;
+                    dataSource.data.branchId = _this.branchId;
+                    successCallback(dataSource);
+                }, function(loadedError) {
+                    base(dataSource, function(dataSource) {
+                        successCallback(dataSource);
+                    }, function(error) {
+                        errorCallback(error);
+                    });
+                });
+            } else if (isValidSearch()) {
+                branch.nodes().search(data, function(loadedData) {
+                    dataSource.data = loadedData;
+                    //inject ticket
+                    dataSource.data._ticket = _this.ticket;
+                    //inject other ids
+                    dataSource.data.repositoryId = _this.repositoryId;
+                    dataSource.data.branchId = _this.branchId;
+                    successCallback(dataSource);
+                }, function(loadedError) {
+                    base(dataSource, function(dataSource) {
+                        successCallback(dataSource);
+                    }, function(error) {
+                        errorCallback(error);
+                    });
+                });
+            } else if (isValidTraversal()) {
+                branch.nodes().read(data.traversal.sourceId, function(loadedNode) {
+                    loadedNode.traverse(data.traversal, function(loadedData) {
+                        dataSource.data = loadedData;
+                        //inject ticket
+                        dataSource.data._ticket = _this.ticket;
+                        //inject other ids
+                        dataSource.data.repositoryId = _this.repositoryId;
+                        dataSource.data.branchId = _this.branchId;
+                        successCallback(dataSource);
+                    }, function(loadedError) {
+                        base(dataSource, function(dataSource) {
+                            successCallback(dataSource);
+                        }, function(error) {
+                            errorCallback(error);
+                        });
+                    });
+                }, function(error) {
+                    errorCallback(error);
                 });
             } else {
                 this.base(dataSource, function(dataSource) {
@@ -156,7 +241,7 @@
             var branch = this.branch;
 
             var isValidOptions = function () {
-                return !Alpaca.isEmpty(options) && Alpaca.isString(options) && !Alpaca.isUri(options);
+                return !Alpaca.isEmpty(schema) && !Alpaca.isEmpty(options) && Alpaca.isString(options) && !Alpaca.isUri(options);
             };
             if (isValidOptions()) {
                 schema.forms().read(options, function(loadedOptions) {
@@ -223,22 +308,74 @@
             };
 
             var errorCallback = function (loadError) {
-                if (onError && Alpaca.isFunction(onError)) {
-                    onError(loadError);
+                // Handle ticket expiration.
+                if (loadError.status && loadError.status == 403) {
+                    if (!_this.isRetry) {
+                        _this.isRetry = true;
+                        // Re-run the loadAll
+                        _this.gitanaDriver.security().authenticate(_this.userName, _this.password, function(success) {
+                            // store the ticket
+                            _this.ticket = success.ticket;
+                            _this.isRetry = false;
+                            //alert("Get new ticket" + _this.ticket);
+                            _this.loadAll(dataSource, onSuccess, onError);
+                        }, function(error) {
+                            alert('Failed to connect to Gitana. Error code ' + error.status + '.');
+                            this.isRetry = false;
+                            if (onError && Alpaca.isFunction(onError)) {
+                                onError(error);
+                            }
+                        });
+                    } else {
+                        var delayedCall = function () {
+                            _this.loadAll(dataSource, onSuccess, onError);
+                        }
+                        //Wait till we get a new ticket
+                        setTimeout(delayedCall, 1000);
+                    }
+                } else {
+                    // Other errors
+                    if (onError && Alpaca.isFunction(onError)) {
+                        onError(loadError);
+                    }
                 }
             };
 
-            this.gitanaDriver.repositories().read(this.repositoryId, function(repository) {
-                _this.repository = repository;
-                repository.branches().read(_this.branchId, function(branch) {
-                    _this.branch = branch;
-                    _this.loadSchema(dataSource, successCallback, errorCallback);
+            if (this.isValidGitanaId(this.repositoryId)) {
+                this.gitanaDriver.repositories().read(this.repositoryId, function(repository) {
+                    _this.repository = repository;
+                    repository.branches().read(_this.branchId, function(branch) {
+                        _this.branch = branch;
+                        _this.branchId = branch.getId();
+                        _this.loadSchema(dataSource, successCallback, errorCallback);
+                    }, function(error) {
+                        errorCallback(error);
+                    })
                 }, function(error) {
                     errorCallback(error);
-                })
-            }, function(error) {
-                errorCallback(error);
-            });
+                });
+            } else if (Alpaca.isObject(this.repositoryId)) {
+                this.gitanaDriver.repositories().query(this.repositoryId, function(repositoryList) {
+                    if (repositoryList.rows.length > 0) {
+                        _this.gitanaDriver.repositories().read(repositoryList.rows[0].repository, function(repository) {
+                            _this.repository = repository;
+                            _this.repositoryId = repository.getId();
+                            repository.branches().read(_this.branchId, function(branch) {
+                                _this.branch = branch;
+                                _this.loadSchema(dataSource, successCallback, errorCallback);
+                            }, function(error) {
+                                errorCallback(error);
+                            })
+                        }, function(error) {
+                            errorCallback(error);
+                        });
+                    }
+                }, function(error) {
+                    errorCallback(error);
+                });
+            } else {
+                alert("Invalid Repository ID or Query");
+            }
         },
 
         /**
