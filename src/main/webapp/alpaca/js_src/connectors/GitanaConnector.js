@@ -42,8 +42,13 @@
             this.userName = this.configs.userName;
             this.password = this.configs.password;
 
-            this.repositoryId = this.configs.repositoryId;
-            this.branchId = this.configs.branchId ? this.configs.branchId : "master";
+            if (Alpaca.isEmpty(this.repositoryId)) {
+                this.repositoryId = this.configs.repositoryId;
+            }
+
+            if (Alpaca.isEmpty(this.branchId)) {
+                this.branchId = this.configs.branchId ? this.configs.branchId : "master";
+            }
 
             if (Alpaca.isEmpty(this.gitanaDriver)) {
                 this.gitanaDriver = new Gitana.Driver();
