@@ -29,7 +29,7 @@
          */
         getValue: function() {
             if (this.field) {
-                return this.field.val();
+                return this.base(this.field.val());
             }
         },
 

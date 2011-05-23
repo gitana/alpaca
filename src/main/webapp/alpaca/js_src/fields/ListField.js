@@ -57,6 +57,29 @@
         },
 
         /**
+         * @see Alpaca.Field#getValue
+         */
+        getValue: function(val) {
+            var _this = this;
+            if (Alpaca.isArray(val)) {
+                $.each(val, function(index, itemVal) {
+                    $.each(_this.selectOptions, function(index2, selectOption) {
+                        if (selectOption.value == itemVal) {
+                            val[index] = selectOption.value;
+                        }
+                    });
+                });
+            } else {
+                $.each(this.selectOptions, function(index, selectOption) {
+                    if (selectOption.value == val) {
+                        val = selectOption.value;
+                    }
+                });
+            }
+            return val;
+        },
+
+        /**
          * @see Alpaca.ControlField#renderField
          */
         renderField: function(onSuccess) {

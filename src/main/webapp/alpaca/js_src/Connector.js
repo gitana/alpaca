@@ -47,7 +47,9 @@
          * @param {Function} onError onError callback.
          */
         connect: function (onSuccess, onError) {
-
+            if (onSuccess && Alpaca.isFunction(onSuccess)) {
+                onSuccess();
+            }
         },
 
         /**

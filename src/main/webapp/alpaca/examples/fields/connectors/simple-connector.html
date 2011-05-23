@@ -44,14 +44,12 @@
                 var connector = new Alpaca.Connectors.SimpleConnector('simple', {
                     "root": "/alpaca/examples/fields/connectors/simple"
                 });
-                connector.connect(function (success) {
-                    $("#field1").alpaca({
-                        "data": "betty_icecream_lover",
-                        "options": "edit",
-                        "schema": "profile",
-                        "view": "custom_web",
-                        "connector": connector
-                    })
+                $("#field1").alpaca({
+                    "data": "betty_icecream_lover",
+                    "options": "edit",
+                    "schema": "profile",
+                    "view": "custom_web",
+                    "connector": connector
                 });
             </script>
         </div>

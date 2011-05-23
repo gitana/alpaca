@@ -61,45 +61,32 @@
          */
         constructor: function(id, configs) {
             this.base(id, configs);
+            this.root = this.configs.root ? this.configs.root : "/";
+            if (!Alpaca.endsWith(this.root, "/")) {
+                this.root = this.root + "/";
+            }
+            this.prefixMappings = {
+                "data": this.root + "data",
+                "schema": this.root + "schema",
+                "options": this.root + "forms",
+                "view": this.root + "views",
+                "template": this.root + "templates"
+            };
+
+            this.postfixMappings = {
+                "data": ".json",
+                "schema": ".json",
+                "options":".json",
+                "view": ".json",
+                "template": ".tmpl"
+            };
         },
 
         /**
          * @see Alpaca.Connector#connect
          */
         connect: function (onSuccess, onError) {
-            var _this = this;
-            this.root = this.configs.root ? this.configs.root : "/";
-            if (!Alpaca.endsWith(this.root, "/")) {
-                this.root = this.root + "/";
-            }
-            // TODO: It might not be a good idea to check root?
-            // Test the root availability
-            this.loadUri(this.root, false, function(success) {
-
-                _this.prefixMappings = {
-                    "data": _this.root + "data",
-                    "schema": _this.root + "schema",
-                    "options": _this.root + "forms",
-                    "view": _this.root + "views",
-                    "template": _this.root + "templates"
-                };
-
-                _this.postfixMappings = {
-                    "data": ".json",
-                    "schema": ".json",
-                    "options":".json",
-                    "view": ".json",
-                    "template": ".tmpl"
-                };
-
-                if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                    onSuccess(success);
-                }
-            }, function(error) {
-                if (onError && Alpaca.isFunction(onError)) {
-                    onError(error);
-                }
-            });
+            this.base(onSuccess, onError);
         },
 
         /**

@@ -58,20 +58,18 @@
                     "repositoryId": "f329d77247e4826f2e92e957c451ab1c",
                     "branchId":"d551cbe0a3e56172e0ff2d9bda50db8a"
                 });
-                connector.connect(function (success) {
-                    $("#field1").alpaca({
-                        "data": "o:577341d7ee48e58cf90666dffdff90cc",
-                        "options": "form0",
-                        "schema": "custom:userprofile",
-                        "view":"VIEW::WEB_EDIT_LIST",
-                        "connector": connector
-                    });
-                    $("#field2").alpaca({
-                        "options": "form0",
-                        "schema": "custom:userprofile",
-                        "view":"VIEW::WEB_EDIT_LIST",
-                        "connector": connector
-                    });
+                $("#field1").alpaca({
+                    "data": "o:577341d7ee48e58cf90666dffdff90cc",
+                    "options": "form0",
+                    "schema": "custom:userprofile",
+                    "view":"VIEW::WEB_EDIT_LIST",
+                    "connector": connector
+                });
+                $("#field2").alpaca({
+                    "options": "form0",
+                    "schema": "custom:userprofile",
+                    "view":"VIEW::WEB_EDIT_LIST",
+                    "connector": connector
                 });
             </script>
         </div>

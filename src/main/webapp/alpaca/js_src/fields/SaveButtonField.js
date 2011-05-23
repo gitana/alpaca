@@ -48,7 +48,9 @@
             }
             Alpaca.mergeWithNullChecking(control.data, newValue);
             // if we have a template to load, load it and then render
-            control.connector.saveData({
+            var connector = control.connector;
+
+            connector.saveData({
                 "data":control.data,
                 "schema":control.schema
             }, function(updatedData) {

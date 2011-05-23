@@ -61,7 +61,43 @@
                 equal(rightLabelElem1.text(),'Chocolate Flavor','Second option right label text populated correctly.')
                 var rightLabelElem2 = $('#radio-2 .alpaca-controlfield-radio-label:eq(2)');
                 ok(rightLabelElem2.length, 'Third option right label generated.');
-                equal(rightLabelElem2.text(),'Coffee Flavor','First option right label text populated correctly.')
+                equal(rightLabelElem2.text(),'Coffee Flavor','Third option right label text populated correctly.')
+                start();
+            }
+        });
+    });
+
+    // Test case 3 : Radio field with option labels and integer value.
+    test("Radio field with option labels.", function() {
+        stop();
+        $("#radio-3").alpaca({
+            "data": 3,
+            "options": {
+                "label": "Rate My Ice cream",
+                "helper": "Please rate my ice cream",
+                "optionLabels": ["Bad", "Ok", "Good"]
+            },
+            "schema": {
+                "required": true,
+                "enum": [1, 2, 3]
+            },
+            "postRender": function (renderedField) {
+                expect(10);
+                var radioElems = $('#radio-3 input:radio');
+                equal(radioElems.length, 3, 'Right number of radio controls generated.');
+                var radioCheckedElem = $('#radio-3 input:radio:checked');
+                equal(radioCheckedElem.length, 1, "Checked radio control found.");
+                equal(radioCheckedElem.val(), "3", "Right radio control checked.");
+                var rightLabelElem0 = $('#radio-3 .alpaca-controlfield-radio-label:eq(0)');
+                ok(rightLabelElem0.length, 'First option right label generated.');
+                equal(rightLabelElem0.text(),'Bad','First option right label text populated correctly.');
+                var rightLabelElem1 = $('#radio-3 .alpaca-controlfield-radio-label:eq(1)');
+                ok(rightLabelElem1.length, 'Second option right label generated.');
+                equal(rightLabelElem1.text(),'Ok','Second option right label text populated correctly.');
+                var rightLabelElem2 = $('#radio-3 .alpaca-controlfield-radio-label:eq(2)');
+                ok(rightLabelElem2.length, 'Third option right label generated.');
+                equal(rightLabelElem2.text(),'Good','Third option right label text populated correctly.');
+                ok(renderedField.getValue()===3, 'Return value with right type.');
                 start();
             }
         });

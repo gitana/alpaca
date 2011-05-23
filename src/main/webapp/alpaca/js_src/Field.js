@@ -292,64 +292,69 @@
          * modifications to the dom elements that were produced.
          */
         postRender: function() {
-            // add classes
-            this.getEl().addClass("ui-widget alpaca-field");
 
-            // for edit or create mode
-            // injects Ids
-            if (this.getEl().attr("id") == null) {
-                this.getEl().attr("id", this.getId() + "-field-outer");
-            }
-            if (this.getEl().attr("alpaca-field-id") == null) {
-                this.getEl().attr("alpaca-field-id", this.getId());
-            }
-            // optional
-            if (this.schema.required) {
-                this.getEl().addClass("alpaca-field-required");
-            } else {
-                this.getEl().addClass("alpaca-field-optional");
-            }
+            // try to avoid adding unnecessary injections for display view.
+            if (this.view.type != 'view') {
 
-            // readonly
-            if (this.options.readonly) {
-                this.getEl().addClass("alpaca-field-readonly");
-                $(':input', this.getEl()).attr('readonly', 'readonly');
-                $('select', this.getEl()).attr('disabled', 'disabled');
-                $(':radio', this.getEl()).attr('disabled', 'disabled');
-                $(':checkbox', this.getEl()).attr('disabled', 'disabled');
-            }
+                // add classes
+                this.getEl().addClass("ui-widget alpaca-field");
 
-            // Support for custom CSS class for the field
-            var fieldClass = this.options["fieldClass"];
-            if (fieldClass) {
-                this.getEl().addClass(fieldClass);
-            }
-
-            // Support for custom styles provided by custom view
-            var customStyles = this.view.getStyles();
-
-            if (customStyles) {
-                for (var styleClass in customStyles) {
-                    $(styleClass, this.container).css(customStyles[styleClass]);
+                // for edit or create mode
+                // injects Ids
+                if (this.getEl().attr("id") == null) {
+                    this.getEl().attr("id", this.getId() + "-field-outer");
                 }
-            }
+                if (this.getEl().attr("alpaca-field-id") == null) {
+                    this.getEl().attr("alpaca-field-id", this.getId());
+                }
+                // optional
+                if (this.schema.required) {
+                    this.getEl().addClass("alpaca-field-required");
+                } else {
+                    this.getEl().addClass("alpaca-field-optional");
+                }
 
-            // add required field style
-            if (this.labelDiv && this.schema.required) {
-                $('<span class="ui-icon ui-icon-star"></span>').prependTo(this.labelDiv);
-            }
+                // readonly
+                if (this.options.readonly) {
+                    this.getEl().addClass("alpaca-field-readonly");
+                    $(':input', this.getEl()).attr('readonly', 'readonly');
+                    $('select', this.getEl()).attr('disabled', 'disabled');
+                    $(':radio', this.getEl()).attr('disabled', 'disabled');
+                    $(':checkbox', this.getEl()).attr('disabled', 'disabled');
+                }
 
-            // after render
-            if (this.options.disabled) {
-                this.disable();
-            }
-            // bind data
-            if (this.view.type && this.view.type == 'edit') {
-                this.bindData();
-            }
-            // initialize events (after part of the dom)
-            if (this.view.type && this.view.type != 'view') {
-                this.initEvents();
+                // Support for custom CSS class for the field
+                var fieldClass = this.options["fieldClass"];
+                if (fieldClass) {
+                    this.getEl().addClass(fieldClass);
+                }
+
+                // Support for custom styles provided by custom view
+                var customStyles = this.view.getStyles();
+
+                if (customStyles) {
+                    for (var styleClass in customStyles) {
+                        $(styleClass, this.container).css(customStyles[styleClass]);
+                    }
+                }
+
+                // add required field style
+                if (this.labelDiv && this.schema.required) {
+                    $('<span class="ui-icon ui-icon-star"></span>').prependTo(this.labelDiv);
+                }
+
+                // after render
+                if (this.options.disabled) {
+                    this.disable();
+                }
+                // bind data
+                if (this.view.type && this.view.type == 'edit') {
+                    this.bindData();
+                }
+                // initialize events (after part of the dom)
+                if (this.view.type && this.view.type != 'view') {
+                    this.initEvents();
+                }
             }
 
             // finished initializing

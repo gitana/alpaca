@@ -42,7 +42,7 @@
          * @see Alpaca.Field#getValue
          */
         getValue: function(){
-            return $('input:radio[name='+this.name+']:checked',this.field).val();
+            return this.base($('input:radio[name='+this.name+']:checked',this.field).val());
         },
         
         /**
