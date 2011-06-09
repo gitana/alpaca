@@ -20,9 +20,10 @@
          * @param {Object} schema Field schema.
          * @param {Object|String} view Field view.
          * @param {Alpaca.Connector} connector Field connector.
+         * @param {Function} errorCallback Error callback.
          */
-        constructor: function(container, data, options, schema, view, connector) {
-            this.base(container, data, options, schema, view, connector);
+        constructor: function(container, data, options, schema, view, connector,errorCallback) {
+            this.base(container, data, options, schema, view, connector,errorCallback);
         },
 
         /**

@@ -75,7 +75,10 @@
                     onSuccess(dataSource);
                 }
             } else {
-                onError('Invalid data source.');
+                onError({
+                    "message":"Empty data source.",
+                    "reason": "TEMPLATE_LOADING_ERROR"
+                });
             }
         },
 
@@ -243,9 +246,17 @@
                         onSuccess(jsonDocument);
                     }
                 },
-                "error": function(error) {
+                "error": function(jqXHR, textStatus, errorThrown) {
                     if (onError && Alpaca.isFunction(onError)) {
-                        onError(error);
+                        onError({
+                            "message":"Unable to load data from uri : " + uri,
+                            "stage": "DATA_LOADING_ERROR",
+                            "details": {
+                                "jqXHR" : jqXHR,
+                                "textStatus" : textStatus,
+                                "errorThrown" : errorThrown
+                            }
+                        });
                     }
                 }
             };

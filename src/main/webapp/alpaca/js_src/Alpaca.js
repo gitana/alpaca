@@ -36,6 +36,7 @@
      *   "view": {Object|String} field view (object or id reference) (optional),
      *   "render": {Function} callback function for replacing default rendering method (optional),
      *   "postRender": {Function} callback function for post-rendering  (optional),
+     *   "error": {Function} callback function for error handling  (optional),
      *   "connector": {Alpaca.Connector} connector for retrieving or storing data, schema, options,
      *                view and templates. (optional),
      * });
@@ -61,6 +62,7 @@
         var view = null;
         var callback = null;
         var renderedCallback = null;
+        var errorCallback = null;
         var connector = null;
         var notTopLevel = false;
 
@@ -99,6 +101,7 @@
                 view = args[1].view;
                 callback = args[1].render;
                 renderedCallback = args[1].postRender;
+                errorCallback = args[1].error;
                 connector = args[1].connector;
                 if (!Alpaca.isEmpty(args[1].notTopLevel)) {
                     notTopLevel = args[1].notTopLevel;
@@ -112,9 +115,14 @@
             }
         }
 
+        if (Alpaca.isEmpty(errorCallback)) {
+            errorCallback = function(error) {
+                alert(error.message);
+            };
+        }
+
         if (Alpaca.isEmpty(connector)) {
             connector = new Alpaca.Connector('default');
-            connector.connect();
         }
 
         // handle case for null data
@@ -156,10 +164,9 @@
             "schema": schema,
             "view": view
         }, function(loadedData, loadedOptions, loadedSchema, loadedView) {
-            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, callback, renderedCallback, connector);
+            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, callback, renderedCallback, connector, errorCallback);
         }, function (loadError) {
-            //TODO: add support for custom error handler.
-            alert(loadError);
+            errorCallback(loadError);
             return null;
         });
     };
@@ -1268,11 +1275,12 @@
          * @param {Function} callback Render callback.
          * @param {Function} renderedCallback Post-render callback.
          * @param {Alpaca.connector} connector Field connector.
+         * @param {Function} errorCallback Error callback.
          *
          * @returns {Alpaca.Field} New field instance.
          */
-        init : function(el, data, options, schema, view, callback, renderedCallback, connector) {
-            var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector);
+        init : function(el, data, options, schema, view, callback, renderedCallback, connector, errorCallback) {
+            var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);
             Alpaca.fieldInstances[field.getId()] = field;
 
             // allow callbacks defined through view
@@ -1306,10 +1314,11 @@
          * @param {Object} schema The schema for the field.
          * @param {Object|String} view The view for the field.
          * @param {Alpaca.connector} connector The field connector to be bound into the field.
+         * @param {Function} errorCallback Error callback.
          *
          * @returns {Alpaca.Field} New field instance.
          */
-        createFieldInstance : function(el, data, options, schema, view, connector) {
+        createFieldInstance : function(el, data, options, schema, view, connector, errorCallback) {
             // make sure options and schema are not empty
             if (Alpaca.isValEmpty(options)) options = {};
             if (Alpaca.isValEmpty(schema)) schema = {};
@@ -1341,7 +1350,10 @@
             // find the field class registered for this field type
             var fieldClass = Alpaca.getFieldClass(options.type);
             if (!fieldClass) {
-                alert("Unable to find field class for type: " + options.type);
+                errorCallback({
+                    "message":"Unable to find field class for type: " + options.type,
+                    "reason": "FIELD_INSTANTIATION_ERROR"
+                });
                 return null;
             }
             // if we have data, bind it in

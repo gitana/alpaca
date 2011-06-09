@@ -18,8 +18,9 @@
          * @param {Object} schema Field schema.
          * @param {Object|String} view Field view.
          * @param {Alpaca.Connector} connector Field connector.
+         * @param {Function} errorCallback Error callback.
          */
-        constructor: function(container, data, options, schema, view, connector) {
+        constructor: function(container, data, options, schema, view, connector, errorCallback) {
             // mark that we are initializing
             this.initializing = true;
 
@@ -32,6 +33,7 @@
             this.options = options;
             this.schema = schema;
             this.connector = connector;
+            this.errorCallback = errorCallback;
 
             // check if this field rendering is single-level or not
             this.singleLevelRendering = false;
@@ -183,7 +185,7 @@
                 this.options.form.viewType = /*this.viewType*/this.view.type;
                 var form = this.form;
                 if (!form) {
-                    form = new Alpaca.Form(this.container, this.options.form, this.view.viewObject, this.connector);
+                    form = new Alpaca.Form(this.container, this.options.form, this.view.viewObject, this.connector, this.errorCallback);
                 }
                 form.render(function(form) {
                     // load the appropriate template and render it
@@ -244,7 +246,7 @@
                 }
                 _this._renderLoadedTemplate(parentEl, loadedTemplate, onSuccess);
             }, function(error) {
-                alert(error);
+                _this.errorCallback(error);
             });
         },
 

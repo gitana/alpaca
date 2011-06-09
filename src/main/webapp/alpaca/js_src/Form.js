@@ -16,8 +16,9 @@
          * @param {Object} options Field options.
          * @param {Object|String} view Field view.
          * @param {Alpaca.Connector} connector Field connector.
+         * @param {Function} errorCallback Error callback.
          */
-        constructor: function(container, options, view, connector) {
+        constructor: function(container, options, view, connector, errorCallback) {
             var _this = this;
 
             // container
@@ -27,6 +28,7 @@
             this.parent = null;
 
             this.connector = connector;
+            this.errorCallback = errorCallback;
 
             // options
             this.options = options;

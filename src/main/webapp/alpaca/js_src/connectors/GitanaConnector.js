@@ -31,92 +31,15 @@
          */
         constructor: function(id, configs) {
             this.base(id, configs);
-            this.authenticationLock = false;
             this.gitanaNodes = {};
-            this.userName = this.configs.userName;
-            this.password = this.configs.password;
-
-            //TODO: add branch query
-            if (Alpaca.isEmpty(this.repositoryId)) {
-                this.repositoryId = this.configs.repositoryId;
-            }
-
-            if (Alpaca.isEmpty(this.branchId)) {
-                this.branchId = this.configs.branchId ? this.configs.branchId : "master";
-            }
-
-            if (Alpaca.isEmpty(this.gitanaDriver)) {
-                this.gitanaDriver = new Gitana();
-            }
+            this.gitanaContext = configs.gitanaContext;
         },
 
         /**
          * @see Alpaca.Connector#connect
          */
         connect: function (onSuccess, onError) {
-            var _this = this;
-
-            if (Alpaca.isEmpty(this.server) || this.authenticationLock) {
-                 _this.authenticationLock = true;
-                this.gitanaDriver.authenticate(this.userName, this.password).trap(function(error) {
-                    _this.authenticationLock = false;
-                    if (onError && Alpaca.isFunction(onError)) {
-                        onError(error);
-                    }
-                }).then(function() {
-                    _this.authenticationLock = false;
-                    _this.server = this;
-
-                    if (_this.repository == null || _this.branch == null) {
-                        if (_this.isValidGitanaId(_this.repositoryId)) {
-                            _this.server.chain().trap(function(error) {
-                            if (onError && Alpaca.isFunction(onError)) {
-                                onError(error);
-                            }
-                        }).readRepository(_this.repositoryId).then(function() {
-                            _this.repository = this;
-                            _this.repository.readBranch(_this.branchId).then(function() {
-                                _this.branch = this;
-                                if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                                    onSuccess(this);
-                                }
-                            });
-                        });
-                    } else if (Alpaca.isObject(_this.repositoryId)) {
-                        _this.server.chain().trap(function(error) {
-                           errorCallback(error);
-                        }).queryRepositories(_this.repositoryId).keep(1).each(function() {
-                            _this.repository = this;
-                            this.readBranch(_this.branchId).then(function() {
-                                _this.branch = this;
-                                if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                                    onSuccess(this);
-                                }
-                            });
-                        });
-                    } else {
-                        if (onError && Alpaca.isFunction(onError)) {
-                            onError({
-                                "message" : "Invalid Repository ID or Query"
-                            });
-                        }
-                    }
-                } else {
-                    if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                        onSuccess(this);
-                    }
-                }
-                /*
-                    if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                        onSuccess(this);
-                    }
-                */
-                });
-            } else {
-                if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                    onSuccess();
-                }
-            }
+            this.base(onSuccess, onError);
         },
 
         /**
@@ -128,70 +51,52 @@
 
             var errorCallback = function (loadError) {
                 // Handle ticket expiration.
-                if (loadError.http && loadError.http.status && loadError.http.status == 403) {
-                    if (!_this.authenticationLock) {
-                        _this.authenticationLock = true;
-                        // Re-run the loadAll
-                        _this.gitanaDriver.authenticate(_this.userName, _this.password).trap(function(error) {
-                            this.authenticationLock = false;
-                            if (onError && Alpaca.isFunction(onError)) {
-                                onError(error);
-                            }
-                        }).then(function() {
-                            _this.authenticationLock = false;
-                            _this.server = this;
-                            _this.saveData(dataSource, onSuccess, onError);
-                        });
-                    } else {
-                        var delayedCall = function () {
-                            _this.saveData(dataSource, onSuccess, onError);
-                        }
-                        //Wait till we get a new ticket
-                        setTimeout(delayedCall, 1000);
-                    }
+                if (_this.isInvalidTicketError(loadError)) {
+                    _this.gitanaContext.refresh();
+                    _this.saveData(dataSource, onSuccess, onError);
                 } else {
                     // Other errors
                     if (onError && Alpaca.isFunction(onError)) {
-                        onError(loadError);
+                        onError({
+                            "message":"Gitana Connector Error : " + loadError.message,
+                            "reason": "GITANA_SAVE_ERROR",
+                            "details": {
+                                "error" : loadError
+                            }
+                        });
                     }
                 }
             };
 
-            this.connect(function(){
-                var dataNode = _this.getGitanaNode(data);
-                if (!Alpaca.isEmpty(dataNode)) {
-                    // Update
-                    Alpaca.mergeWithNullChecking(dataNode.object, data);
-                    dataNode.chain().trap(function(saveError) {
-                        errorCallback(saveError);
-                    }).update().reload().then(function() {
-                        _this.gitanaNodes[dataNode.getId()] = this;
-                        dataSource.data = this.object;
-                        if (onSuccess) {
-                            onSuccess(this.object);
-                        }
-                    });
-                } else {
-                    var schema = dataSource.schema;
-                    if (!Alpaca.isEmpty(schema) && !Alpaca.isEmpty(schema._qname)) {
-                        data._type = schema._qname;
+            var dataNode = this.getGitanaNode(data);
+            if (!Alpaca.isEmpty(dataNode)) {
+                // Update
+                Alpaca.mergeWithNullChecking(dataNode.object, data);
+                dataNode.trap(function(saveError) {
+                    errorCallback(saveError);
+                }).update().reload().then(function() {
+                    _this.gitanaNodes[dataNode.getId()] = this;
+                    dataSource.data = this.object;
+                    if (onSuccess) {
+                        onSuccess(this.object);
                     }
-                    // Create
-                    _this.branch.chain().trap(function(createError) {
-                        errorCallback(createError);
-                    }).createNode(data).then(function() {
-                        _this.gitanaNodes[dataNode.getId()] = this;
-                        dataSource.data = this.object;
-                        if (onSuccess) {
-                            onSuccess(this.object);
-                        }
-                    });
+                });
+            } else {
+                var schema = dataSource.schema;
+                if (!Alpaca.isEmpty(schema) && !Alpaca.isEmpty(schema._qname)) {
+                    data._type = schema._qname;
                 }
-            },function(connectionError){
-                if (onError && Alpaca.isFunction(onError)) {
-                    onError(connectionError);
-                }
-            });
+                // Create
+                this.gitanaContext.getBranch().trap(function(createError) {
+                    errorCallback(createError);
+                }).createNode(data).then(function() {
+                    _this.gitanaNodes[dataNode.getId()] = this;
+                    dataSource.data = this.object;
+                    if (onSuccess) {
+                        onSuccess(this.object);
+                    }
+                });
+            }
         },
 
         /**
@@ -209,7 +114,7 @@
             };
 
             if (isValidData()) {
-                branch.chain().trap(function(loadedError) {
+                this.gitanaContext.getBranch().trap(function(loadedError) {
                     errorCallback(loadedError);
                 }).readNode(data).then(function() {
                     _this.gitanaNodes[this.getId()] = this;
@@ -306,7 +211,7 @@
                         && (_this.isValidGitanaId(schema) || _this.isValidQName(schema));
             };
             if (isValidSchema()) {
-                branch.chain().trap( function(loadedError) {
+                this.gitanaContext.getBranch().trap( function(loadedError) {
                     errorCallback(loadedError);
                 }).readDefinition(schema).then(function() {
                     dataSource.schemaNode = this;
@@ -337,77 +242,23 @@
 
             var errorCallback = function (loadError) {
                 // Handle ticket expiration.
-                if (loadError.http && loadError.http.status && loadError.http.status == 403) {
-                    if (!_this.authenticationLock) {
-                        _this.authenticationLock = true;
-                        // Re-run the loadAll
-                        _this.gitanaDriver.authenticate(_this.userName, _this.password).trap(function(error) {
-                            this.authenticationLock = false;
-                            if (onError && Alpaca.isFunction(onError)) {
-                                onError(error);
-                            }
-                        }).then(function() {
-                            _this.authenticationLock = false;
-                            _this.server = this;
-                            _this.loadAll(dataSource, onSuccess, onError);
-                        });
-                    } else {
-                        var delayedCall = function () {
-                            _this.loadAll(dataSource, onSuccess, onError);
-                        }
-                        //Wait till we get a new ticket
-                        setTimeout(delayedCall, 1000);
-                    }
+                if (_this.isInvalidTicketError(loadError)) {
+                    _this.gitanaContext.refresh();
+                    _this.loadAll(dataSource, onSuccess, onError);
                 } else {
                     // Other errors
                     if (onError && Alpaca.isFunction(onError)) {
-                        onError(loadError);
+                        onError({
+                            "message":"Gitana Connector Error : " + loadError.message,
+                            "reason": "GITANA_LOAD_ERROR",
+                            "details": {
+                                "error" : loadError
+                            }
+                        });
                     }
                 }
             };
-
-            /*
-            this.connect(function(){
-                if (_this.repository == null || _this.branch == null) {
-                    if (_this.isValidGitanaId(_this.repositoryId)) {
-                        _this.server.chain().trap(function(error) {
-                        errorCallback(error);
-                        }).readRepository(_this.repositoryId).then(function() {
-                            _this.repository = this;
-                            _this.repository.readBranch(_this.branchId).then(function() {
-                                _this.branch = this;
-                                _this.loadSchema(dataSource, successCallback, errorCallback);
-                            });
-                        });
-                    } else if (Alpaca.isObject(_this.repositoryId)) {
-                        _this.server.chain().trap(function(error) {
-                           errorCallback(error);
-                        }).queryRepositories(_this.repositoryId).keep(1).each(function() {
-                            _this.repository = this;
-                            this.readBranch(_this.branchId).then(function() {
-                                _this.branch = this;
-                                _this.loadSchema(dataSource, successCallback, errorCallback);
-                            });
-                        });
-                    } else {
-                        if (onError && Alpaca.isFunction(onError)) {
-                            onError({
-                                "message" : "Invalid Repository ID or Query"
-                            });
-                        }
-                    }
-                } else {
-                    _this.loadSchema(dataSource, successCallback, errorCallback);
-                }
-            },function(connectionError){
-                if (onError && Alpaca.isFunction(onError)) {
-                    onError(connectionError);
-                }
-            });
-            */
-            this.connect(function(){
-                 _this.loadSchema(dataSource, successCallback, errorCallback);
-            },errorCallback);
+            this.loadSchema(dataSource, successCallback, errorCallback);
         },
 
         /**
@@ -435,6 +286,16 @@
          */
         isValidGitanaId: function (data) {
             return !Alpaca.isEmpty(data) && Alpaca.isString(data) && data.match(/^[0-9a-z]{32}$/);
+        },
+
+        /**
+         * Finds if an error is INVALID_TICKET error.
+         *
+         * @param {Object} err0r The error to be evaluated.
+         * @returns {Boolean} True if the  error is INVALID_TICKET error, false otherwise.
+         */
+        isInvalidTicketError: function (error) {
+            return error.http && error.http.status && error.http.status == 403 && error.http.reason == 'INVALID_TICKET';
         },
 
         /**
