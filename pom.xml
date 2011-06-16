@@ -76,6 +76,11 @@
             <id>jsdoctk1</id>
             <url>http://jsdoctk-plugin.googlecode.com/svn/repo</url>
         </repository>
+		<repository>
+			<id>cloudcms-public</id>
+			<name>cloudcms-public</name>
+			<url>http://maven.cloudcms.com/public</url>
+		</repository>
     </repositories>
 
     <build>
