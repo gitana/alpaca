@@ -15,6 +15,7 @@ $(function() {
     });
 
     // Enable source view buttons
+/*
     $.each($("div[id^='field'],table[id^='field']"), function() {
         var currentId = $(this).attr('id');
 
@@ -28,6 +29,23 @@ $(function() {
             var code = $.trim($('#' + currentId + '-script').html());
             $('#' + currentId + '-code').html(code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
             $('#' + currentId + '-pre').toggle();
+            $('.ui-icon', this).toggleClass("ui-icon-circle-arrow-e").toggleClass("ui-icon-circle-arrow-s");
+        });
+    });
+*/
+    $.each($("div[id^='field'],table[id^='field']"), function() {
+        var currentId = $(this).attr('id');
+
+        $(this).after('<div class="clear" style="min-height:10px;"></div><span><small><button id="' + currentId + '-code-button">Source Code</button></small></span><div class="code-block" id="' + currentId + '-block"><pre id="' + currentId + '-pre" class="brush: js; toolbar: false;"></pre></div>').after('<div class="gitana-clear"></div>');
+        $('#' + currentId + '-block').hide();
+        var code = $.trim($('#' + currentId + '-script').html());
+        $('#' + currentId + '-pre').html(code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+        $('#' + currentId + '-code-button').button({
+            icons: {
+                primary: "ui-icon-circle-arrow-e"
+            }
+        }).click(function() {
+            $('#' + currentId + '-block').toggle();
             $('.ui-icon', this).toggleClass("ui-icon-circle-arrow-e").toggleClass("ui-icon-circle-arrow-s");
         });
     });
@@ -321,6 +339,6 @@ $(function() {
             autoHeight: false,
             navigation: true
         });
-        $('.alpaca-example-header h2').prepend('<a href="../../index.html">Examples</a><span> :: </span>');
+        $('.alpaca-example-header h2').prepend('<a href="../../../index.html">Alpaca</a><span> :: </span>');
     }
 });

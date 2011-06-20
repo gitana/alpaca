@@ -28,7 +28,7 @@ h4 {
 .alpaca-example-body {
 	padding-bottom:20px;
 	display:inline-block;
-	width:100%;
+	width:1400px;
 }
 
 .alpaca-example-header {
@@ -36,7 +36,7 @@ h4 {
     float: left;
     width: 100%;
 	margin-bottom:10px;
-	background: transparent url(../examples/images/Alpaca-icon.png) no-repeat scroll left center;
+	background: transparent url(../css/images/Alpaca-icon.png) no-repeat scroll left center;
 }
 
 .alpaca-example-header h2 {
@@ -118,4 +118,38 @@ pre code {
     margin: 0 0 0 40px;
     padding: 5px 0;
     display: block;
+}
+
+.code-block {
+    font-size: 12px;
+    padding: 0;
+    border: 1px solid #ccc;
+    line-height: 20px;
+    overflow: auto;
+    overflow-Y: hidden;
+    width: 800px;
+    margin: -10px 0px 0px 5px;
+}
+
+.front-page-item-title {
+    padding: 4px;
+    font-size: 1.2em;
+    padding-left: 10px;
+}
+
+.front-page-item-image {
+    display: inline-block;
+    width: 50px;
+    margin: 20px 10px;
+    vertical-align: top;
+}
+
+.front-page-item-description {
+    display: inline-block;
+    width: 450px;
+    margin: 10px;
+}
+
+a.get-started:before {
+    content: "\00bb  ";
 }

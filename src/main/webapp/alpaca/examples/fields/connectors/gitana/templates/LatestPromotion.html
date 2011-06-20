@@ -1,0 +1,30 @@
+<script id="latestPromotionTemplate" type="text/x-jquery-tmpl">
+    <div class="product-promotion">
+        <div class="product-promotion-title">
+            ${data.product}
+        </div>
+        <div class="product-promotion-image">
+            <img src="${data.attachments.full}" alt="${data.product}"/>
+        </div>
+        <div class="product-promotion-body">
+            <div class="product-promotion-price"><span class="price">$${data.promotion_price.price}</span> <span class="unit">${data.promotion_price.unit}</span></div>
+            <div>${data.code}</div>
+            <div>${data.details}</div>
+            <div class="product-regular-price">Reg. Price <span class="price">$${data.original_price.price}</span> <span class="unit">${data.original_price.unit}</span></div>
+            <div class="product-promotion-stores">
+                 Available store locations:
+                 {{each(i, store) data.stores}}
+                    {{if i !=0}},{{/if}}
+                    <span class="store">${store}</span>
+                 {{/each}}
+            </div>
+            <div class="product-promotion-dates">
+                 Promotion effective from <span class="date">${data.start_date}</span> to <span class="date">${data.end_date}</span>.
+            </div>
+        </div>
+        <div class="clear"/>
+    </div>
+    <div class="h_divider">&nbsp;</div>
+    <div gadget="front_page_products_gadget" id="front_page_products">
+    </div>
+</script>

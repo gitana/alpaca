@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Alpaca > Component Gallery > Forms > Customer Profile > Custom Edit View</title>
+    <title>Alpaca > Component Gallery > Connectors > Gitana Connector</title>
     <meta name="keywords" content="alpaca,forms,create,gitana"/>
     <meta name="description" content="Customer Profile Form with Custom View Template."/>
     <meta name="author" content="Gitana Software Inc."/>
@@ -27,49 +27,158 @@
           rel="stylesheet">
     <link type="text/css" href="../../../css/alpaca-${project.version}.css" rel="stylesheet"/>
     <link type="text/css" href="../../../css/example.css" rel="stylesheet"/>
+    <style>
+        /* product promotion */
+        .product-promotion {
+            /*
+            border: 2px dotted;
+            */
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .product-promotion-image {
+            display: inline-block;
+            padding: 4px;
+            width: 180px;
+        }
+
+        .product-promotion-image img {
+            width: 160px;
+        }
+
+        .product-promotion-body {
+            display: inline-block;
+            vertical-align: top;
+            width: 300px;
+        }
+
+        .product-promotion-title {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .product-promotion-price {
+            padding: 10px 0 20px 0;
+        }
+
+        .product-promotion-price .price {
+            font-size: 6em;
+            color: #ff0000;
+        }
+
+        .product-promotion-price .unit {
+            color: #ff0000;
+        }
+
+        .product-promotion .store {
+            font-weight: bold;
+        }
+
+        .product-promotion .date {
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    </style>
+    <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js"></script>
+    <script type="text/javascript"
+            src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js"></script>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css"/>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet"
+          type="text/css"/>
+    <script type="text/javascript">
+        SyntaxHighlighter.all()
+    </script>
 </head>
 <body style="min-width:1400px;">
 <div class='alpaca-example-container'>
     <div class='alpaca-example-header' id='gitana-connector' alpaca-types=''>
-        <h2>Alpaca Farm Ice Cream Customer Profile</h2>
+        <h2>Full Edit Form for Gitana CloudCMS Product Promotion</h2>
     </div>
     <div class='alpaca-example-body'>
         <div class='alpaca-example-case'>
-            <h3>Customized Edit Form for Existing Customer</h3>
-            <h4>This example loads <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a
-                    href="./data.json" target="_source">data</a>, <a href="./options.json" target="_source">options</a>
-                and <a href="./schema.json" target="_source">schema</a> parameters through ajax calls.</h4>
-
+            <h3>Full Edit Form for Gitana CloudCMS Product Promotion</h3>
+            <h4>This example shows you how to use Gitana connector to provide in-context editing for a single product promotion node which is stored in Gitana CloudCMS. Once you click Edit button, a full editing form will let you change the properties of the promotion product.</h4>
             <div id="field1">
             </div>
             <script type="text/javascript" id="field1-script">
-            </script>
-            <h3>Customized Form for Creating New Customer</h3>
-            <h4>This example loads <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a
-                    href="./data.json" target="_source">data</a>, <a href="./options.json" target="_source">options</a>
-                and <a href="./schema.json" target="_source">schema</a> parameters through ajax calls.</h4>
+                $(function() {
+                    $(document).ready(function() {
+                        var el = $('#field1');
+                        var connector = new Alpaca.Connectors.GitanaConnector('gitana', {
+                            "gitanaContext" :new Gitana.GitanaContext({
+                                "user":{
+                                    "userName" : "admin",
+                                    "password" : "admin"
+                                },
+                                "repository": {
+                                    "sdk_version": "0.1",
+                                    "sdk_bundle": "theoffice"
+                                },
+                                "error" : function(error) {
 
-            <div id="field2">
-            </div>
-            <script type="text/javascript" id="field2-script">
-                var connector = new Alpaca.Connectors.GitanaConnector('gitana', {
-                    "userName": "admin",
-                    "password": "admin",
-                    "repositoryId": "f329d77247e4826f2e92e957c451ab1c",
-                    "branchId":"d551cbe0a3e56172e0ff2d9bda50db8a"
-                });
-                $("#field1").alpaca({
-                    "data": "o:577341d7ee48e58cf90666dffdff90cc",
-                    "options": "form0",
-                    "schema": "custom:userprofile",
-                    "view":"VIEW::WEB_EDIT_LIST",
-                    "connector": connector
-                });
-                $("#field2").alpaca({
-                    "options": "form0",
-                    "schema": "custom:userprofile",
-                    "view":"VIEW::WEB_EDIT_LIST",
-                    "connector": connector
+                                }
+                            })
+                        });
+                            el.alpaca({
+                                "view" : {
+                                    "globalTemplate": './gitana/templates/LatestPromotion.html'
+                                },
+                                "data": "theoffice:binderpromotion",
+                                "connector" : connector,
+                                "postRender": function (renderedField) {
+                                    var editButton = $("<button>Edit</button>").button(({
+                                        icons: {
+                                            primary: "ui-icon-pencil"
+                                        }
+                                    }));
+                                    editButton.click(function() {
+                                        editButton.removeClass("ui-state-focus ui-state-hover");
+                                        var editDialog = $('<div id="alpaca-edit-form" title="Edit latest promotion"></div>');
+                                        var _this = this;
+                                            editDialog.alpaca({
+                                                "data": "theoffice:binderpromotion",
+                                                "options": "full",
+                                                "schema": "theoffice:promotion",
+                                                "view":"VIEW::WEB_EDIT_LIST",
+                                                "connector": connector,
+                                                "postRender": function(renderedNewFieldControl) {
+                                                    var saveButton = renderedNewFieldControl.form.saveButton;
+                                                    saveButton.hide();
+                                                    editDialog.dialog({
+                                                        resizable: true,
+                                                        height: 550,
+                                                        width: 650,
+                                                        modal: true,
+                                                        buttons: {
+                                                            "Save": function() {
+                                                                saveButton.field.click();
+                                                            }
+                                                        }
+                                                    });
+                                                    $('.ui-dialog').css("overflow", "hidden");
+                                                    $('.ui-dialog-buttonpane').css("overflow", "hidden");
+                                                    // add call backs to save button
+                                                    if (saveButton) {
+                                                        saveButton.success = function (updatedData) {
+                                                            el.empty();
+                                                            el.alpaca({
+                                                                "view" : {
+                                                                    "globalTemplate": './gitana/templates/LatestPromotion.html'
+                                                                },
+                                                                "data": updatedData
+                                                            });
+                                                            editDialog.dialog('close');
+                                                            alert("Promotion updated!");
+                                                        };
+                                                    }
+                                                }
+                                            });
+                                    });
+                                    el.after(editButton);
+                                }
+                            });
+                    });
                 });
             </script>
         </div>
