@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Alpaca Project > Getting Started</title>
+    <meta name="keywords" content="alpaca,forms,gitana,cloud cms"/>
+    <meta name="description" content="Alpaca Forms Project"/>
+    <meta name="author" content="Gitana Software Inc."/>
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/${jquery.version}/jquery.min.js">
+    </script>
+    <script type="text/javascript" src="examples/js/themeswitchertool.js">
+    </script>
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/jquery-ui.min.js">
+    </script>
+    <script type="text/javascript" src="js/alpaca-${project.version}.js">
+    </script>
+    <script type="text/javascript" src="examples/js/example.js">
+    </script>
+    <link type="text/css"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css"
+          rel="stylesheet">
+    <link type="text/css" href="css/alpaca-${project.version}.css" rel="stylesheet"/>
+    <link type="text/css" href="css/example.css" rel="stylesheet"/>
+    <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js"></script>
+    <script type="text/javascript"
+            src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js"></script>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css"/>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet"
+          type="text/css"/>
+    <script type="text/javascript">
+        SyntaxHighlighter.all()
+    </script>
+</head>
+<body>
+<div class='alpaca-example-container'>
+    <div class='alpaca-example-header'>
+        <h2>Getting Started</h2>
+    </div>
+    <div class='alpaca-example-body' style='display:inline-block;width:800px;margin-left:50px;margin-right:auto;'>
+        <h2>What is Alpaca?</h2>
+
+        <p>
+            Alpaca is a client-side forms and templating engine which gives your application
+            the ability to render elegant content entry and presentation forms with
+            minimal development effort.
+        </p>
+
+        <h2>Start by checking out hosted demos</h2>
+
+        <p>
+            To get a feel for what Alpaca is capable of, check out <a
+                href="http://code.cloudcms.com/alpaca/index.html">the
+            hosted demos</a>.
+
+            In the demos section, the left-side navigation lists sample forms (under Form Gallery) and all of the form
+            controls and features (under Component Gallery) that Alpaca offers. Choose a sample form, control or feature
+            and you'll be presented with several examples for that particular component. Each demo allows you to view
+            source code by clicking on "Source Code" button.
+        </p>
+
+        <h2>Download Alpaca</h2>
+
+        <p>
+            Alpaca core library download contains both Alpaca JavaScript library and its
+            supporting stylesheet.
+            It is available in both minified format (for production) and uncompressed format (for development).
+            <br/><br/>
+            Download for Alpaca examples is a self-contained zip or war file which includes
+            everything you need to run Alpaca examples locally.
+        </p>
+
+        <h3>Current Release Candidate</h3>
+
+        <p>
+        <ul>
+            <li>
+                <span class="list-item-header">Core</span>&nbsp;&nbsp;<a
+                    href="${pom.version}/${pom.artifactId}-${pom.version}-minified.zip" rel='web'
+                    target="_blank">Minified</a>&nbsp;|&nbsp;<a
+                    href="${pom.version}/${pom.artifactId}-${pom.version}-uncompressed.zip" rel='web'
+                    target="_blank">Uncompressed</a>
+            </li>
+            <li>
+                <span class="list-item-header">Examples</span>&nbsp;&nbsp;<a
+                    href="${pom.version}/${pom.artifactId}-${pom.version}-examples.zip" rel='web'
+                    target="_blank">Zip</a>&nbsp;|&nbsp;<a
+                    href="${pom.version}/${pom.artifactId}-${pom.version}.war" rel='web'
+                    target="_blank">war</a>
+            </li>
+        </ul>
+        </p>
+
+        <h2>Intro to using Alpaca</h2>
+
+        <p>
+            Once you've downloaded Alpaca core library, you'll get a zip containing the following
+        <ul>
+            <li>/js/</li>
+            <li>/css/</li>
+        </ul>
+        </p>
+        <p>
+            Unzip the zip file and then use your favorite text editor to create an empty html file. You will first need
+            to include jQuery library (1.5 or later) and jQuery UI library (1.8.8 or later). jQuery UI library is
+            not required for running Alpaca but highly recommended.
+        </p>
+
+        <pre class="brush: js; toolbar: false;">
+                &lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"&gt;
+                &lt;/script&gt;
+                &lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.min.js"&gt;
+                &lt;/script&gt;
+                &lt;link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/themes/base/jquery.ui.all.css"
+                rel="stylesheet"&gt;
+        </pre>
+
+        <p>
+            Now include link to minified Alpaca JavaScript library and minified Alpaca stylesheet in its head section
+        </p>
+        <pre class="brush: js; toolbar: false;">
+                &lt;script type="text/javascript" src="js/alpaca-${project.version}.min.js"&gt;
+                &lt;/script&gt;
+                &lt;link type="text/css" href="css/alpaca-${project.version}.min.css" rel="stylesheet"/&gt;
+        </pre>
+        <p>Or you can include uncompressed version</p>
+        <pre class="brush: js; toolbar: false;">
+                &lt;script type="text/javascript" src="js/alpaca-${project.version}.js"&gt;
+                &lt;/script&gt;
+                &lt;link type="text/css" href="css/alpaca-${project.version}.css" rel="stylesheet"/&gt;
+        </pre>
+        <p>
+            If you prefer to use hosted Alpaca library and stylesheet, all you need is to include
+        </p>
+        <pre class="brush: js; toolbar: false;">
+                &lt;script type="text/javascript" src="http://code.cloudcms.com/alpaca/js/alpaca-${project.version}.min.js"&gt;
+                &lt;/script&gt;
+                &lt;link type="text/css" href="http://code.cloudcms.com/alpaca/css/alpaca-${project.version}.min.css"
+                rel="stylesheet"/&gt;
+        </pre>
+        <p>
+            Now add a simple test to the body section of your test html
+        </p>
+        <pre class="brush: js; toolbar: false;">
+                &lt;div id="field1"&gt;
+                &lt;/div&gt;
+                &lt;script type="text/javascript"&gt;
+                $(function() {
+                    $("#field1").alpaca({
+                        "data": "Alpaca rocks!"
+                    });
+                });
+                &lt;/script&gt;
+        </pre>
+        <p>
+            Save the html file and open it in a browser. You should get a simple text field with "Alpaca rocks!" in it.
+        </p>
+
+        <p>
+            To learn more about Alpaca library, you can also download Alpaca samples and have them running on your
+            machine. Since Alpaca samples contain many examples that use Ajax calls, it is highly recommended to run the
+            examples either in a web server (such as Apache Web Server ) or an web application server (such as Tomcat or
+            Jetty).
+        </p>
+
+        <p>For web application servers, you can simply download and deploy <a
+                href="${pom.version}/${pom.version}.war" rel='web'
+                target="_blank">Alpaca war</a> and then open your browser and point to
+            index.html page of the deployed web application. The war file contains a proxy servelet for the Gitana
+            Connector example. Therefore no additional step will be required.
+        </p>
+
+        <p>For web servers, you need to download and unzip <a
+                href="${pom.version}/${pom.version}-samples.zip" rel='web'
+                target="_blank">Alpaca samples zip</a> and then open your browser and point to
+            the index.html page which is under the root directory of the unzipped file. In order to run the Gitana
+            Connector example, you will need to setup a reverse proxy that will forward request "/proxy/*" to
+            "http://api.cloudcms.com:80".
+        </p>
+
+        <p>
+            Here is a sample configuration for setting <a href="http://httpd.apache.org/docs/2.2/mod/mod_proxy.html">Apache
+            proxy</a>
+            <pre class="brush: js; toolbar: false;">
+        ProxyRequests Off
+
+        ProxyPass /proxy http://api.cloudcms.com:80
+        ProxyPassReverse /proxy http://api.cloudcms.com:80
+            </pre>
+        </p>
+
+        <h2>Build Alpaca from source</h2>
+
+        <p>
+            All Alpaca source code is kept under Git revision control, which you can <a
+                href="https://github.com/gitana/alpaca">browse online</a>.
+        </p>
+
+        <p>
+            If you have access to Git, you can connect to the repository here:
+        <pre class="brush: js; toolbar: false;">git@github.com:gitana/alpaca.git</pre>
+        </p>
+
+        <p>
+            Once you clone the Alpaca repository to your local machine and have Maven 3.0 or later installed, You can
+            build Alpaca and run Alpaca examples using following Maven command
+        <pre class="brush: js; toolbar: false;">mvn clean install jetty:run-exploded</pre>
+        </p>
+        <p>
+            Wait till Maven finishes the build process and brings up embedded Jetty server, you should now be able to
+            check out all Alpaca examples from this URL
+        <pre class="brush: js; toolbar: false;">http://localhost:8180/alpaca/index.html</pre>
+        </p>
+        <h2>Where can I get help?</h2>
+
+        <p>
+            Alpaca library is developed and maintained by <a href="http://www.gitanasoft.com">Gitana Software</a>.
+        </p>
+    </div>
+    <div class="alpaca-example-footer">
+        <center class="copyright">
+            Copyright &copy; 2011 Gitana Software | All Rights Reserved
+        </center>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('.alpaca-example-header h2').prepend('<a href="./index.html">Alpaca</a><span> > </span>');
+    });
+</script>
+</body>
+</html>

@@ -18,7 +18,7 @@
     </script>
     <script type="text/javascript" src="../../../js/alpaca-${project.version}.js">
     </script>
-    <script type="text/javascript" src="../../../js/gitana.js">
+    <script type="text/javascript" src="${gitana.lib}">
     </script>
     <script type="text/javascript" src="../../js/example.js">
     </script>
@@ -106,9 +106,12 @@
                     $(document).ready(function() {
                         var el = $('#field1');
                         var connector = new Alpaca.Connectors.GitanaConnector('gitana', {
-                            "gitanaContext" :new Gitana.GitanaContext({
+                            "gitanaContext" : Gitana.Context.create({
+                                "driver":{
+        							"serverURL" :"${proxy.serverURL}"
+    							},
                                 "user":{
-                                    "userName" : "admin",
+                                    "username" : "admin",
                                     "password" : "admin"
                                 },
                                 "repository": {

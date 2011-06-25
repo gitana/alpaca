@@ -1,38 +1,47 @@
 <?xml version='1.0'?>
 <project name="Alpaca Forms" basedir=".">
 
-  <property name="version" value="1.0.0.SNAPSHOT"/>
+    <property name="version" value="1.0.0-SNAPSHOT"/>
 
-  <property file="../cloudcms.properties" />
+    <property file="../keys/cloudcms.properties"/>
 
-  <target name="unpublish">
+    <target name="unpublish">
+        <sshexec host="${code.cloudcms.host}"
+                 username="${code.cloudcms.username}"
+                 keyfile="${code.cloudcms.keyfile}"
+                 trust="true"
+                 command="rm -r ${code.cloudcms.basepath}/alpaca/*"
+                 failonerror="false"/>
+    </target>
 
-	<sshexec host="${code.cloudcms.host}"
-	    username="${code.cloudcms.username}"
-	    keyfile="${code.cloudcms.keyfile}"
-	    trust="true"
-	    command="rm -r ${code.cloudcms.basepath}/alpaca/*"
-	    failonerror="false" />	
-  	
-  </target>
+    <target name="publish" depends="unpublish">
 
-  <target name="publish" depends="unpublish">
+        <unzip src="target/alpaca-${version}-examples.zip" dest="target/alpaca-${version}-examples"/>
+        <mkdir dir="target/alpaca-${version}-examples/${version}"/>
+        <mkdir dir="target/alpaca-${version}-examples/documentation"/>
+        <mkdir dir="target/alpaca-${version}-examples/${version}"/>
+        <copy todir="target/alpaca-${version}-examples/${version}">
+            <fileset dir="target">
+                <include name="*.zip"/>
+                <include name="*.war"/>
+            </fileset>
+        </copy>
+        <copy todir="target/alpaca-${version}-examples/documentation">
+            <fileset dir="/Users/drq/dev/jsdoc_toolkit-2.3.2/Documentation">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+        <scp todir="${code.cloudcms.username}@${code.cloudcms.host}:${code.cloudcms.alpaca.basepath}"
+             keyfile="${code.cloudcms.keyfile}"
+             trust="true"
+             verbose="true"
+             passphrase="${code.cloudcms.passphrase}"
+             failonerror="true">
 
-	<!-- Alpaca -->
-    <scp todir="${code.cloudcms.username}@${code.cloudcms.host}:${code.cloudcms.alpaca.basepath}" 
-	     keyfile="${code.cloudcms.keyfile}" 
-	     trust="true" 
-	     verbose="true" 
-	     passphrase="${code.cloudcms.passphrase}"
-	     failonerror="true">
-	
-		<fileset dir="target/alpaca-forms-${version}/alpaca">
-			<exclude name="css_src/**" />
-			<exclude name="js_src/**" />
-		</fileset>
-		
-	</scp>
-	
-  </target>
+            <fileset dir="target/alpaca-${version}-examples">
+            </fileset>
+
+        </scp>
+    </target>
 
 </project>

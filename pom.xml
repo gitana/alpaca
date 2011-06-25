@@ -112,10 +112,6 @@
                             <jsSourceFiles>
                                 <param>../js_src/license.js</param>
 
-                                <!-- third party dependencies -->
-                                <!--
-                                            <param>../../../../../lib/jquery-1.4.2.min.js</param>
-                                        -->
                                 <param>../../../../../lib/base.js</param>
                                 <param>../../../../../lib/validator.js</param>
 
@@ -277,7 +273,6 @@
                 </executions>
                 <configuration>
                     <target>
-
                         <!-- Update the minified file to include license information -->
                         <concat
                                 destfile="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.min.updated.js"
@@ -290,56 +285,17 @@
                         <move
                                 file="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.min.updated.js"
                                 tofile="${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.min.js"/>
-
-                        <!-- Copy other directories into place
-                                                <copy
-                                                    todir="${project.build.directory}/${project.build.finalName}/alpaca">
-                                                    <fileset dir="src/main/webapp/alpaca">
-                                                        <exclude name="css/**" />
-                                                        <exclude name="js/**" />
-                                                        <exclude name="css_src/**" />
-                                                        <exclude name="js_src/**" />
-                                                    </fileset>
-                                                </copy>
-                        -->
                     </target>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <!-- gitana javascript driver -->
-                                <artifactItem>
-                                    <groupId>org.gitana</groupId>
-                                    <artifactId>gitana-javascript-driver</artifactId>
-                                    <version>${gitana.driver.version}</version>
-                                    <type>war</type>
-                                    <overWrite>false</overWrite>
-                                    <outputDirectory>${basedir}/target/${project.build.finalName}/alpaca
-                                    </outputDirectory>
-                                    <includes>js/gitana*.js</includes>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
                 <configuration>
+                    <filters>
+                        <filter>src/main/resources/filters/default.properties</filter>
+                    </filters>
                     <webResources>
                         <resource>
                             <filtering>true</filtering>
@@ -377,8 +333,13 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
+                    <filters>
+                        <filter>src/main/resources/filters/examples.properties</filter>
+                    </filters>
                     <descriptors>
-                        <descriptor>src/main/assemble/alpaca-examples.xml</descriptor>
+                        <descriptor>src/main/assemble/examples.xml</descriptor>
+                        <descriptor>src/main/assemble/minified.xml</descriptor>
+                        <descriptor>src/main/assemble/uncompressed.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>
@@ -391,7 +352,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>nl.windgazer</groupId>
                 <artifactId>jsdoctk-plugin</artifactId>
@@ -421,6 +381,13 @@
             <artifactId>gitana-servlets</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        <!--
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty-client</artifactId>
+            <version>6.1.22</version>
+        </dependency>
+        -->
     </dependencies>
     <properties>
         <jquery.version>1.5</jquery.version>
@@ -429,5 +396,46 @@
         <gitana.driver.version>1.0.0-SNAPSHOT</gitana.driver.version>
         <spring.version>3.0.5.RELEASE</spring.version>
         <spring.security.version>3.1.0.RC1</spring.security.version>
+        <gitana.lib>http://code.cloudcms.com/gitana-javascript-driver/1.0.0-SNAPSHOT/gitana.min.js</gitana.lib>
     </properties>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <!-- gitana javascript driver -->
+                                        <artifactItem>
+                                            <groupId>org.gitana</groupId>
+                                            <artifactId>gitana-javascript-driver</artifactId>
+                                            <version>${gitana.driver.version}</version>
+                                            <type>war</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${basedir}/target/${project.build.finalName}/alpaca
+                                            </outputDirectory>
+                                            <includes>js/gitana*.js</includes>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <gitana.lib>../../../js/gitana.js</gitana.lib>
+            </properties>
+        </profile>
+    </profiles>
 </project>

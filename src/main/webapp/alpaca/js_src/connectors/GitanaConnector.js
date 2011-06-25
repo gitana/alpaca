@@ -52,8 +52,9 @@
             var errorCallback = function (loadError) {
                 // Handle ticket expiration.
                 if (_this.isInvalidTicketError(loadError)) {
-                    _this.gitanaContext.refresh();
-                    _this.saveData(dataSource, onSuccess, onError);
+                    _this.gitanaContext.init().then(function() {
+                        _this.saveData(dataSource, onSuccess, onError);
+                    });
                 } else {
                     // Other errors
                     if (onError && Alpaca.isFunction(onError)) {
@@ -87,14 +88,16 @@
                     data._type = schema._qname;
                 }
                 // Create
-                this.gitanaContext.getBranch().trap(function(createError) {
-                    errorCallback(createError);
-                }).createNode(data).then(function() {
-                    _this.gitanaNodes[dataNode.getId()] = this;
-                    dataSource.data = this.object;
-                    if (onSuccess) {
-                        onSuccess(this.object);
-                    }
+                this.gitanaContext.then(function() {
+                    this.branch().trap(function(createError) {
+                        errorCallback(createError);
+                    }).createNode(data).then(function() {
+                        _this.gitanaNodes[dataNode.getId()] = this;
+                        dataSource.data = this.object;
+                        if (onSuccess) {
+                            onSuccess(this.object);
+                        }
+                    });
                 });
             }
         },
@@ -114,16 +117,18 @@
             };
 
             if (isValidData()) {
-                this.gitanaContext.getBranch().trap(function(loadedError) {
-                    errorCallback(loadedError);
-                }).readNode(data).then(function() {
-                    _this.gitanaNodes[this.getId()] = this;
-                    dataSource.data = this.object;
-                    dataSource.data.attachments = {};
-                    this.listAttachments().each(function() {
-                        dataSource.data.attachments[this.getId()] = this.getDownloadUri();
-                    }).then(function(){
-                        successCallback(dataSource);
+                this.gitanaContext.then(function() {
+                    this.branch().trap(function(loadedError) {
+                        errorCallback(loadedError);
+                    }).readNode(data).then(function() {
+                        _this.gitanaNodes[this.getId()] = this;
+                        dataSource.data = this.object;
+                       dataSource.data.attachments = {};
+                        this.listAttachments().each(function() {
+                            dataSource.data.attachments[this.getId()] = this.getDownloadUri();
+                        }).then(function(){
+                            successCallback(dataSource);
+                        });
                     });
                 });
             } else {
@@ -211,13 +216,15 @@
                         && (_this.isValidGitanaId(schema) || _this.isValidQName(schema));
             };
             if (isValidSchema()) {
-                this.gitanaContext.getBranch().trap( function(loadedError) {
-                    errorCallback(loadedError);
-                }).readDefinition(schema).then(function() {
-                    dataSource.schemaNode = this;
-                    dataSource.schema = this.object;
-                    _this.gitanaNodes[this.getId()] = this;
-                    _this.loadOptions(dataSource, successCallback, errorCallback);
+                this.gitanaContext.then(function() {
+                    this.branch().trap( function(loadedError) {
+                        errorCallback(loadedError);
+                    }).readDefinition(schema).then(function() {
+                        dataSource.schemaNode = this;
+                        dataSource.schema = this.object;
+                        _this.gitanaNodes[this.getId()] = this;
+                        _this.loadOptions(dataSource, successCallback, errorCallback);
+                    });
                 });
             } else {
                 this.base(dataSource, function(dataSource) {
@@ -243,8 +250,9 @@
             var errorCallback = function (loadError) {
                 // Handle ticket expiration.
                 if (_this.isInvalidTicketError(loadError)) {
-                    _this.gitanaContext.refresh();
-                    _this.loadAll(dataSource, onSuccess, onError);
+                    _this.gitanaContext.init().then(function() {
+                        _this.loadAll(dataSource, onSuccess, onError);
+                    });
                 } else {
                     // Other errors
                     if (onError && Alpaca.isFunction(onError)) {

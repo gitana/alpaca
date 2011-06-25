@@ -7,7 +7,7 @@
 		<welcome-file>alpaca/index.html</welcome-file>
 	</welcome-file-list>
     <!-- Gitana Repository Proxy Servlet -->
-	<servlet>
+    <servlet>
 		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
 		<servlet-class>org.gitana.repo.servlet.GitanaProxyServlet</servlet-class>
         <init-param>
@@ -19,6 +19,21 @@
             <param-value>80</param-value>
         </init-param>
 	</servlet>
+    <!--
+    <servlet>
+        <servlet-name>Gitana Repository Proxy Servlet</servlet-name>
+        <servlet-class>org.mortbay.proxy.AsyncProxyServlet$Transparent</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>ProxyTo</param-name>
+            <param-value>http://localhost:8080</param-value>
+        </init-param>
+        <init-param>
+            <param-name>Prefix</param-name>
+            <param-value>/proxy</param-value>
+        </init-param>
+    </servlet>
+    -->
 	<servlet-mapping>
 		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
 		<url-pattern>/proxy/*</url-pattern>

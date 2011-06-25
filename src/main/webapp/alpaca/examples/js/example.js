@@ -339,6 +339,6 @@ $(function() {
             autoHeight: false,
             navigation: true
         });
-        $('.alpaca-example-header h2').prepend('<a href="../../../index.html">Alpaca</a><span> :: </span>');
+        $('.alpaca-example-header h2').prepend('<a href="../../../index.html">Alpaca</a><span> > </span>');
     }
 });

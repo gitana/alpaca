@@ -1,7 +1,8 @@
 {
     "fields":{
         "photo":{
-            "type":"file"
+            "type":"file",
+            "styled": true
         },
         "member":{
             "rightLabel":"Alpaca Club Member"

@@ -153,3 +153,20 @@ pre code {
 a.get-started:before {
     content: "\00bb  ";
 }
+
+a.get-started:link {
+    text-decoration: none;
+}
+
+a.get-started:visited {
+    text-decoration: none;
+    color: #000000;
+}
+
+a.get-started:active {
+    text-decoration: none;
+}
+
+a.get-started:hover {
+    text-decoration: underline;
+}

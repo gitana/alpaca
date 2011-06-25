@@ -225,6 +225,7 @@
                     var currentItemVal = fieldControl.getValue();
                     var newContainerElem = _this.addItem(containerElem.index() + 1, null, Alpaca.isValEmpty(currentItemVal) ? null : fieldControl.getValue(), id);
                     _this.enrichElements(newContainerElem);
+                    return false;
                 });
                 var removeButton = $('.alpaca-fieldset-array-item-toolbar-remove', toolbarElem);
                 if (removeButton.button) {
