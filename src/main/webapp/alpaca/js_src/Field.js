@@ -66,7 +66,7 @@
             }
 
             // data
-            if (Alpaca.isValEmpty(this.data) && this.schema["default"]) {
+            if (Alpaca.isValEmpty(this.data) && !Alpaca.isEmpty(this.schema["default"])) {
                 this.data = this.schema["default"];
             }
 

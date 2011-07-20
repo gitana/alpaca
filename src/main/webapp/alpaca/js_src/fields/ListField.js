@@ -90,50 +90,75 @@
                     this.options.dataSource(this, function() {
                         _this._renderField(onSuccess);
                     });
-                }
-                if (Alpaca.isUri(this.options.dataSource)) {
-                    $.ajax({
-                        url: this.options.dataSource,
-                        type: "get",
-                        dataType: "json",
-                        success: function(jsonDocument) {
-                            var ds = jsonDocument;
-                            if (_this.options.dsTransformer && Alpaca.isFunction(_this.options.dsTransformer)) {
-                                ds = _this.options.dsTransformer(ds);
-                            }
-                            if (ds) {
-                                if (Alpaca.isArray(ds)) {
-                                    $.each(ds, function(index, value) {
-                                        _this.selectOptions.push({
-                                            "value": value,
-                                            "text": value
-                                        });
-                                    });
+                } else {
+                    if (Alpaca.isUri(this.options.dataSource)) {
+                        $.ajax({
+                            url: this.options.dataSource,
+                            type: "get",
+                            dataType: "json",
+                            success: function(jsonDocument) {
+                                var ds = jsonDocument;
+                                if (_this.options.dsTransformer && Alpaca.isFunction(_this.options.dsTransformer)) {
+                                    ds = _this.options.dsTransformer(ds);
                                 }
-                                if (Alpaca.isObject(ds)) {
-                                    $.each(ds, function(index, value) {
-                                        _this.selectOptions.push({
-                                            "value": index,
-                                            "text": value
+                                if (ds) {
+                                    if (Alpaca.isArray(ds)) {
+                                        $.each(ds, function(index, value) {
+                                            _this.selectOptions.push({
+                                                "value": value,
+                                                "text": value
+                                            });
                                         });
-                                    });
+                                    }
+                                    if (Alpaca.isObject(ds)) {
+                                        $.each(ds, function(index, value) {
+                                            _this.selectOptions.push({
+                                                "value": index,
+                                                "text": value
+                                            });
+                                        });
+                                    }
                                 }
-                            }
 
-                            _this._renderField(onSuccess);
-                        },
-                        "error": function(jqXHR, textStatus, errorThrown) {
-                            _this.errorCallback({
-                                "message":"Unable to load data from uri : " + uri,
-                                "stage": "DATASOURCE_LOADING_ERROR",
-                                "details": {
-                                    "jqXHR" : jqXHR,
-                                    "textStatus" : textStatus,
-                                    "errorThrown" : errorThrown
-                                }
-                            });
+                                _this._renderField(onSuccess);
+                            },
+                            "error": function(jqXHR, textStatus, errorThrown) {
+                                _this.errorCallback({
+                                    "message":"Unable to load data from uri : " + uri,
+                                    "stage": "DATASOURCE_LOADING_ERROR",
+                                    "details": {
+                                        "jqXHR" : jqXHR,
+                                        "textStatus" : textStatus,
+                                        "errorThrown" : errorThrown
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        var ds = this.options.dataSource;
+                        if (_this.options.dsTransformer && Alpaca.isFunction(_this.options.dsTransformer)) {
+                            ds = _this.options.dsTransformer(ds);
                         }
-                    });
+                        if (ds) {
+                            if (Alpaca.isArray(ds)) {
+                                $.each(ds, function(index, value) {
+                                    _this.selectOptions.push({
+                                        "value": value,
+                                        "text": value
+                                    });
+                                });
+                            }
+                            if (Alpaca.isObject(ds)) {
+                                for (var index in ds) {
+                                    _this.selectOptions.push({
+                                        "value": index,
+                                        "text": ds[index]
+                                    });
+                                }
+                            }
+                            _this._renderField(onSuccess);
+                        }
+                    }
                 }
             } else {
                 this._renderField(onSuccess);

@@ -69,7 +69,7 @@
             this.base();
             var _this = this;
             if (this.options.slider) {
-                if (this.schema.maximum && this.schema.minimum) {
+                if (!Alpaca.isEmpty(this.schema.maximum) && !Alpaca.isEmpty(this.schema.minimum)) {
                     this.field.after('<div id="slider"></div>');
                     this.slider = $('#slider', this.field.parent()).slider({
                         value: this.getValue(),

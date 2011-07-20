@@ -126,7 +126,7 @@
          */
         _validateDivisibleBy: function() {
             var floatValue = this.getValue();
-            if (this.schema.divisibleBy) {
+            if (!Alpaca.isEmpty(this.schema.divisibleBy)) {
                 if (!(floatValue % this.schema.divisibleBy == 0)) {
                     return false;
                 }
@@ -141,7 +141,7 @@
         _validateMaximum: function() {
             var floatValue = this.getValue();
             
-            if (this.schema.maximum) {
+            if (!Alpaca.isEmpty(this.schema.maximum)) {
                 if (floatValue > this.schema.maximum) {
                     return false;
                 }
@@ -163,7 +163,7 @@
         _validateMinimum: function() {
             var floatValue = this.getValue();
             
-            if (this.schema.minimum) {
+            if (!Alpaca.isEmpty(this.schema.minimum)) {
                 if (floatValue < this.schema.minimum) {
                     return false;
                 }

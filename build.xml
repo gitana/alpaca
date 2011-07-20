@@ -27,7 +27,7 @@
             </fileset>
         </copy>
         <copy todir="target/alpaca-${version}-examples/documentation">
-            <fileset dir="/Users/drq/dev/jsdoc_toolkit-2.3.2/Documentation">
+            <fileset dir="/Users/drq/dev/jsdoc_toolkit-2.3.2/alpaca">
                 <include name="**/*"/>
             </fileset>
         </copy>

@@ -76,11 +76,11 @@
             <id>jsdoctk1</id>
             <url>http://jsdoctk-plugin.googlecode.com/svn/repo</url>
         </repository>
-		<repository>
-			<id>cloudcms-public</id>
-			<name>cloudcms-public</name>
-			<url>http://maven.cloudcms.com/public</url>
-		</repository>
+        <repository>
+            <id>cloudcms-public</id>
+            <name>cloudcms-public</name>
+            <url>http://maven.cloudcms.com/public</url>
+        </repository>
     </repositories>
 
     <build>
@@ -302,6 +302,7 @@
                             <directory>src/main/webapp</directory>
                             <includes>
                                 <include>**/*.html</include>
+                                <include>**/web.xml</include>
                             </includes>
                         </resource>
                     </webResources>
@@ -367,7 +368,9 @@
                     <privateOption>false</privateOption>
                     <!-- If you're using the maven default setup this alternative is sometimes required
               to make the plugin work: ${basedir}/src/main/webapp/ -->
-                    <srcDir>${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.js</srcDir>
+                    <srcDir>
+                        ${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.js
+                    </srcDir>
                 </configuration>
             </plugin>
 
@@ -397,6 +400,8 @@
         <spring.version>3.0.5.RELEASE</spring.version>
         <spring.security.version>3.1.0.RC1</spring.security.version>
         <gitana.lib>http://code.cloudcms.com/gitana-javascript-driver/1.0.0-SNAPSHOT/gitana.min.js</gitana.lib>
+        <cloudcms.host>api.cloudcms.com</cloudcms.host>
+        <cloudcms.port>80</cloudcms.port>
     </properties>
     <profiles>
         <profile>
@@ -435,6 +440,8 @@
             </build>
             <properties>
                 <gitana.lib>../../../js/gitana.js</gitana.lib>
+                <cloudcms.host>localhost</cloudcms.host>
+                <cloudcms.port>8080</cloudcms.port>
             </properties>
         </profile>
     </profiles>

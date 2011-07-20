@@ -12,11 +12,11 @@
 		<servlet-class>org.gitana.repo.servlet.GitanaProxyServlet</servlet-class>
         <init-param>
             <param-name>host</param-name>
-            <param-value>api.cloudcms.com</param-value>
+            <param-value>${cloudcms.host}</param-value>
         </init-param>
         <init-param>
             <param-name>port</param-name>
-            <param-value>80</param-value>
+            <param-value>${cloudcms.port}</param-value>
         </init-param>
 	</servlet>
     <!--
