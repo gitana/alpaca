@@ -129,7 +129,7 @@
         _validatePattern: function() {
             if (this.schema.pattern) {
 	            var val = this.getValue();
-                if (!val.match(this.schema.pattern)) {
+                if (!Alpaca.isValEmpty(val) && !val.match(this.schema.pattern)) {
                     return false;
                 }
             }
