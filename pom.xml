@@ -400,7 +400,7 @@
         <spring.version>3.0.5.RELEASE</spring.version>
         <spring.security.version>3.1.0.RC1</spring.security.version>
         <gitana.lib>http://code.cloudcms.com/gitana-javascript-driver/1.0.0-SNAPSHOT/gitana.min.js</gitana.lib>
-        <cloudcms.host>api.cloudcms.com</cloudcms.host>
+        <cloudcms.host>api.dev.gitanacloud.com</cloudcms.host>
         <cloudcms.port>80</cloudcms.port>
     </properties>
     <profiles>
