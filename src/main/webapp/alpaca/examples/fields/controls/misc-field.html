@@ -39,13 +39,25 @@
                 <div class='alpaca-example-case'>
                     <h3>Upper Case Field: </h3>
                     <h4>Upper case field.</h4>
-                    <div id="field1">
+                    <div id="field0">
                     </div>
+                    <script type="text/javascript" id="field0-script">
+                        $("#field0").alpaca({
+                            "data": "Ice cream is wonderful.",
+                            "schema": {
+                                "format": "uppercase"
+                            }
+                        });
+                    </script>
+                    <h3>Lower Case Field: </h3>
+                    <h4>Lower case field.</h4>
+                    <div id="field1">
+                    </div>1
                     <script type="text/javascript" id="field1-script">
                         $("#field1").alpaca({
                             "data": "Ice cream is wonderful.",
                             "schema": {
-                                "format": "uppercase"
+                                "format": "lowercase"
                             }
                         });
                     </script>

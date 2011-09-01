@@ -177,6 +177,10 @@ input:focus, textarea:focus {
     margin-right: 0.3em;
 }
 
+.alpaca-controlfield-radio-label {
+   margin-right: 0.3em;
+}
+
 /**
  * Select Field
  */
