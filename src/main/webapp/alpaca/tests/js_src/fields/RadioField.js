@@ -103,5 +103,28 @@
         });
     });
 
-
+    // Test case 4 : Radio field with option labels and integer value.
+    test("Radio field for boolean type.", function() {
+        stop();
+        $("#radio-4").alpaca({
+            "data": false,
+            "options": {
+                "type" : "radio",
+                "label": "Rate My Ice cream",
+                "helper": "Please rate my ice cream",
+                "optionLabels": ["Good", "Bad"]
+            },
+            "schema": {
+                "type" : "boolean",
+                "required": true,
+                "default" : true,
+                "enum": [true,false]
+            },
+            "postRender": function (renderedField) {
+                expect(1);
+                ok(renderedField.getValue()===false, 'Return value with right type.');
+                start();
+            }
+        });
+    });
 }(jQuery) );
