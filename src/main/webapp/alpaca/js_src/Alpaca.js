@@ -1220,7 +1220,7 @@
          * @returns {Boolean} True if two arrays have same content, false otherwise.
          */
         compareArrayContent : function(arr_1, arr_2) {
-            var equal = arr_1.length == arr_2.length;
+            var equal = arr_1 && arr_2 && (arr_1.length == arr_2.length);
             if (equal) {
                 $.each(arr_1, function(foo, val) {
                     if (!equal)
