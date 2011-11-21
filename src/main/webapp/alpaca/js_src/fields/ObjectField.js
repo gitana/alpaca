@@ -237,11 +237,22 @@
          * false otherwise.
          */
         getDependencyStatus: function(propertyId, dependency) {
-            var shouldShow = !Alpaca.isValEmpty(this.childrenByPropertyId[dependency].data);
+            var shouldShow = this.childrenByPropertyId[dependency] && !Alpaca.isValEmpty(this.childrenByPropertyId[dependency].data);
             var itemDependencySettings = this.childrenByPropertyId[propertyId].options.dependencies;
             if (shouldShow && itemDependencySettings) {
-                if (itemDependencySettings[dependency] && (itemDependencySettings[dependency] != this.childrenByPropertyId[dependency].data)) {
-                    shouldShow = false;
+
+                if (Alpaca.isArray(itemDependencySettings[dependency])) {
+
+                    if (itemDependencySettings[dependency] && $.inArray(this.childrenByPropertyId[dependency].data, itemDependencySettings[dependency]) == -1 ) {
+                        shouldShow = false;
+                    }
+
+                } else {
+
+                    if (itemDependencySettings[dependency] && (itemDependencySettings[dependency] != this.childrenByPropertyId[dependency].data)) {
+                        shouldShow = false;
+                    }
+
                 }
             }
             return shouldShow;
@@ -290,9 +301,11 @@
                 this.renderDependency(propertyId);
                 // do the binding
                 var _this = this;
-                this.childrenByPropertyId[dependency].getEl().bind("fieldupdate", function(event) {
-                    _this.renderDependency(propertyId);
-                });
+                if (this.childrenByPropertyId[dependency]) {
+                    this.childrenByPropertyId[dependency].getEl().bind("fieldupdate", function(event) {
+                        _this.renderDependency(propertyId);
+                    });
+                }
             }
         },
 

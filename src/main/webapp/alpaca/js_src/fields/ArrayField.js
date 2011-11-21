@@ -343,6 +343,11 @@
                 if (_this.schema && _this.schema.items) {
                     itemSchema = _this.schema.items;
                 }
+
+                if (fieldOptions == null && _this.options && _this.options.fields && _this.options.fields["item"]) {
+                    fieldOptions = _this.options.fields["item"];
+                }
+
                 var containerElem = _this.renderItemContainer(insertAfterId);
 
                 containerElem.alpaca({
