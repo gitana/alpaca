@@ -70,7 +70,7 @@
          * @see Alpaca.Field#getValue
          */
         getValue: function() {
-            return this.field.attr("checked") ? this.field.attr("checked") : false;
+            return this.field.attr("checked") ? true : false;
         },
         
         /**
