@@ -249,7 +249,7 @@
 
                 } else {
 
-                    if (itemDependencySettings[dependency] && (itemDependencySettings[dependency] != this.childrenByPropertyId[dependency].data)) {
+                    if (itemDependencySettings[dependency] != null && (itemDependencySettings[dependency] != this.childrenByPropertyId[dependency].data)) {
                         shouldShow = false;
                     }
 
