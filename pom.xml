@@ -156,6 +156,7 @@
                                 <!-- alpaca advanced fields -->
                                 <param>../js_src/fields/UpperCaseField.js</param>
                                 <param>../js_src/fields/LowerCaseField.js</param>
+                                <param>../js_src/fields/PersonalNameField.js</param>
                                 <param>../js_src/fields/IPv4Field.js</param>
                                 <param>../js_src/fields/DateField.js</param>
                                 <param>../js_src/fields/PasswordField.js</param>
