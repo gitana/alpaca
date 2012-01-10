@@ -39,9 +39,33 @@
 			"title":"Select Field",
 			"link":"../controls/select-field.html"
 		},{
-		    "id":"misc-field",
-			"title":"Misc. Fields",
-			"link":"../controls/misc-field.html"
+		    "id":"uppercase-field",
+			"title":"Uppercase Field",
+			"link":"../controls/uppercase-field.html"
+		},{
+		    "id":"lowercase-field",
+			"title":"Lowercase Field",
+			"link":"../controls/lowercase-field.html"
+		},{
+		    "id":"ipv4-field",
+			"title":"IPV4 Field",
+			"link":"../controls/ipv4-field.html"
+		},{
+		    "id":"email-field",
+			"title":"Email Field",
+			"link":"../controls/email-field.html"
+		},{
+		    "id":"password-field",
+			"title":"Password Field",
+			"link":"../controls/password-field.html"
+		},{
+		    "id":"date-field",
+			"title":"Date Field",
+			"link":"../controls/date-field.html"
+		},{
+		    "id":"phone-field",
+			"title":"Phone Field",
+			"link":"../controls/phone-field.html"
 		},{
 		    "id":"textarea-field",
 			"title":"Textarea Field",

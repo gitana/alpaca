@@ -48,6 +48,12 @@
                 }
             }
             this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle) ? "button" : this.view.toolbarStyle;
+            // Enable forceRevalidation option so that any change in children will trigger parent's revalidation.
+            if (this.schema.items && this.schema.uniqueItems) {
+                Alpaca.mergeWithNullChecking(this.options, {
+                    "forceRevalidation" : true
+                });
+            }
         },
 
         /**

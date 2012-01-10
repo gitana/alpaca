@@ -540,7 +540,15 @@
                     }
                 }
                 // Re-validate parents if validation state changed
-                if (beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) {
+                var forceRevalidation = false;
+                var parent = this.parent;
+                while (parent) {
+                    if (parent.options && parent.options.forceRevalidation) {
+                        forceRevalidation = true;
+                    }
+                    parent = parent.parent;
+                }
+                if ((beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) || forceRevalidation) {
                     this.parent.renderValidationState();
                 }
                 this._validateCustomValidator();

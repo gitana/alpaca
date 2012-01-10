@@ -96,7 +96,7 @@ h4 {
 .alpaca-example-footer {
 	clear:both;
    	display:inline-block;		
-   	position:absolute;
+   	/* position:absolute; */
   	bottom:0;
   	width:100%;
    	height:20px;
@@ -169,4 +169,61 @@ a.get-started:active {
 
 a.get-started:hover {
     text-decoration: underline;
+}
+
+/* Table */
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+.table {
+	clear: both;
+	width: 100%;
+	margin: 0 auto;
+    max-width: 800px;
+}
+
+.table thead {
+	background: url("../css/images/table-head-bg.png") repeat-x scroll top left #dddddd;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #bcbcbc;
+}
+
+.table thead th:first-child {
+	border-left: none;
+}
+
+.table thead th:last-child {
+	border-right: none;
+}
+
+.table thead th {
+	vertical-align: middle;
+	text-align: left;
+	padding: 8px 13px;
+	border-left: 1px solid #fff;
+	border-right: 1px solid #c3c3c3;
+	cursor: pointer;
+}
+
+.table tbody th, .table tbody td, .table tfoot th, .table tfoot td {
+	vertical-align: top;
+	text-align: left;
+	padding: 7px;
+	border-left: 1px dotted #bebebe;
+}
+
+.table tbody td {
+	background: #f2f2f2;
+}
+
+.table tbody th:first-child, .table tbody .th:first-child, .table tbody td:first-child, .table tfoot th:first-child, .table tfoot td:first-child {
+	border-left: none;
+}
+
+.table tbody tr.even td {
+	background: #e6e6e6;
+}
+
+.table tbody tr:hover th, .table tbody tr:hover .th, .table tbody tr:hover td {
+	background: #d8dce6;
 }

@@ -162,6 +162,10 @@
                                 <param>../js_src/fields/PasswordField.js</param>
                                 <param>../js_src/fields/EmailField.js</param>
                                 <param>../js_src/fields/PhoneField.js</param>
+                                <param>../js_src/fields/JSONField.js</param>
+                                <param>../js_src/fields/MapField.js</param>
+                                <param>../js_src/fields/TagField.js</param>
+                                <param>../js_src/fields/TimeField.js</param>
                                 <param>../js_src/fields/AddressField.js</param>
                                 <param>../js_src/fields/PrintButtonField.js</param>
                                 <param>../js_src/fields/ReloadButtonField.js</param>
@@ -244,6 +248,9 @@
                                 <param>../js_src/fields/DependencyField.js</param>
                                 <param>../js_src/fields/ConditionalField.js</param>
                                 <param>../js_src/fields/Form.js</param>
+                                <param>../js_src/fields/TimeField.js</param>
+                                <param>../js_src/fields/TagField.js</param>
+                                <param>../js_src/fields/MapField.js</param>
                                 <param>../js_src/validation/Validation.js</param>
                                 <param>../js_src/wizards/Wizard.js</param>
                                 <param>../js_src/views/View.js</param>
