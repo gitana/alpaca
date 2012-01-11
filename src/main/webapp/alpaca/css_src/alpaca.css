@@ -119,10 +119,37 @@ input:focus, textarea:focus {
 .alpaca-controlfield-date {
 }
 
+.alpaca-controlfield-date input {
+    background-image: url("../css/images/date.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
 .alpaca-controlfield-phone {
 }
 
+.alpaca-controlfield-phone input {
+    background-image: url("../css/images/phone.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
 .alpaca-controlfield-email {
+}
+
+.alpaca-controlfield-email input {
+    background-image: url("../css/images/email.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.alpaca-controlfield-time {
+}
+
+.alpaca-controlfield-time input {
+    background-image: url("../css/images/time.png");
+    background-position: right center;
+    background-repeat: no-repeat;
 }
 
 .alpaca-controlfield-password {

@@ -60,6 +60,39 @@
 				this.fieldContainer.addClass("alpaca-controlfield-file");
 			}            			
         },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.NumberField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "styled": {
+                        "title": "Custom Style",
+                        "description": "Apply custom style if true.",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.NumberField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "styled": {
+                        "rightLabel": "Custom Style ?",
+                        "helper": "Apply custom style if true.",
+                        "type": "checkbox"
+                    }
+                }
+            });
+        },
 		
 		/**
          * @see Alpaca.Fields.TextField#getTitle

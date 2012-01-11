@@ -44,7 +44,7 @@
          */
         postRender: function() {
             this.base();
-            $('<span class="ui-icon ui-icon-calendar"></span>').prependTo(this.fieldContainer);
+            // $('<span class="ui-icon ui-icon-calendar"></span>').prependTo(this.fieldContainer);
             if (this.field.datepicker) {
                 this.field.datepicker({
                     "dateFormat":  this.options.dateFormat

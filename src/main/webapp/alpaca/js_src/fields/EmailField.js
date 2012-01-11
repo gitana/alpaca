@@ -41,7 +41,7 @@
          */
         postRender: function() {
             this.base();
-            $('<span class="ui-icon ui-icon-mail-closed"></span>').prependTo(this.fieldContainer);
+            //$('<span class="ui-icon ui-icon-mail-closed"></span>').prependTo(this.fieldContainer);
             if (this.fieldContainer) {
                 this.fieldContainer.addClass('alpaca-controlfield-email');
             }
