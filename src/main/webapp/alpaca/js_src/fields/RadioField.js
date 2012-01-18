@@ -57,6 +57,16 @@
          */
         setValue: function(val){
             if (val != this.getValue()) {
+                $.each($('input:radio[name='+this.name+']',this.field),function() {
+                    if ($(this).val() == val) {
+                        $(this).attr('checked','checked');
+                    } else {
+                        $(this).removeAttr('checked');
+                    }
+                });
+                if ($("input:radio:checked",this.field).length == 0) {
+                	$("input:radio:first",this.field).attr("checked","checked");
+                }
                 this.base(val);
             }
         },

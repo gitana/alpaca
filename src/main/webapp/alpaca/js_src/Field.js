@@ -362,10 +362,14 @@
             // finished initializing
             this.initializing = false;
 
+            this.hideInitValidationError = Alpaca.isValEmpty(this.options.hideInitValidationError) ? false : this.options.hideInitValidationError;
+
             // final call to update validation state
             if (this.view.type != 'view') {
                 this.renderValidationState();
             }
+
+            this.hideInitValidationError = false;
 
             // for create view, hide all readonly fields
             if (!this.view.displayReadonly) {
@@ -492,7 +496,11 @@
                             _this.messageElement = $.tmpl(messageTemplate, {
                                 "message": message
                             });
-                            _this.messageElement.addClass("ui-state-error-text alpaca-controlfield-message");
+                            if (_this.hideInitValidationError) {
+                                _this.messageElement.addClass("ui-state-error-text alpaca-controlfield-message-hidden");
+                            } else {
+                                _this.messageElement.addClass("ui-state-error-text alpaca-controlfield-message");
+                            }
                             _this.messageElement.attr("id", _this.getId() + '-field-message-' + index);
                             // check to see if we have a message container rendered
                             if ($('.alpaca-controlfield-message-container', _this.getEl()).length) {
@@ -513,7 +521,7 @@
         renderValidationState: function() {
             if (this.options.validate) {
                 // remove all previous markers
-                this.getEl().removeClass("alpaca-field-invalid ui-state-error");
+                this.getEl().removeClass("alpaca-field-invalid ui-state-error alpaca-field-invalid-hidden");
                 this.getEl().removeClass("alpaca-field-valid");
 
                 var beforeStatus = this.isValid();
@@ -522,13 +530,17 @@
                 if (this.validate()) {
                     this.getEl().addClass("alpaca-field-valid");
                 } else {
-                    this.getEl().addClass("ui-state-error alpaca-field-invalid");
+                    if (!this.hideInitValidationError) {
+                        this.getEl().addClass("ui-state-error alpaca-field-invalid");
+                    } else {
+                        this.getEl().addClass("alpaca-field-invalid-hidden");
+                    }
                 }
 
                 var afterStatus = this.isValid();
 
                 // Allow for the message to change
-                if (this.options.showMessages) {
+                if (this.options.showMessages && !this.hideInitValidationError) {
                     if (!this.initializing) {
                         var messages = [];
                         for (var messageId in this.validation) {
@@ -553,6 +565,11 @@
                 }
                 this._validateCustomValidator();
             }
+        },
+
+        showHiddenMessages: function() {
+            $('.alpaca-field-invalid-hidden', this.outerEl).removeClass('alpaca-field-invalid-hidden').addClass('ui-state-error alpaca-field-invalid');
+            $('.alpaca-controlfield-message-hidden', this.outerEl).removeClass('alpaca-controlfield-message-hidden').addClass('alpaca-controlfield-message');
         },
 
         /**
@@ -1150,6 +1167,11 @@
                         "title": "Style Class",
                         "description": "Additional field style class",
                         "type": "string"
+                    },
+                    "hideInitValidationError" : {
+                        "title": "Hide Initial Validation Errors",
+                        "description" : "Hide initial validation errors.",
+                        "type": "boolean"
                     }
                 }
             };
@@ -1281,6 +1303,10 @@
                     },
                     "fieldClass": {
                         "type": "text"
+                    },
+                    "hideInitValidationError": {
+                        "rightLabel":"Hide initial validation errors ?",
+                        "type": "checkbox"
                     }
                 }
             };

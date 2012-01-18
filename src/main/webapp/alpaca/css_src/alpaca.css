@@ -60,6 +60,10 @@
     font-size: 0.85em;
 }
 
+.alpaca-controlfield-message-hidden {
+    display: none;
+}
+
 .alpaca-field-message-container {	
 }
 

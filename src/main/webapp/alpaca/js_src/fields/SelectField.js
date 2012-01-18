@@ -40,10 +40,16 @@
         setValue: function(val) {
             if (Alpaca.isArray(val)) {
                 if (!Alpaca.compareArrayContent(val, this.getValue())) {
+                    if (val != null && this.field) {
+                        this.field.val(val);
+                    }
                     this.base(val);
                 }
             } else {
                 if (val != this.getValue()) {
+                    if (val != null && this.field) {
+                        this.field.val(val);
+                    }
                     this.base(val);
                 }
             }
