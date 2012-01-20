@@ -109,10 +109,10 @@
             var styles = {};
             for (var i = parents.length - 1; i >= 0; i--) {
                 if (parents[i].styles) {
-                    Alpaca.mergeWithNullChecking(styles, parents[i].styles);
+                    Alpaca.mergeObject(styles, parents[i].styles);
                 }
                 if (this.field.path && parents[i].fields && parents[i].fields[this.field.path] && parents[i].fields[this.field.path].styles) {
-                    Alpaca.mergeWithNullChecking(styles, parents[i].fields[this.field.path].styles);
+                    Alpaca.mergeObject(styles, parents[i].fields[this.field.path].styles);
                 }
             }
             return styles;

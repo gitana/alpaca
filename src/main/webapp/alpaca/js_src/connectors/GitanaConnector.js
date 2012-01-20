@@ -72,7 +72,7 @@
             var dataNode = this.getGitanaNode(data);
             if (!Alpaca.isEmpty(dataNode)) {
                 // Update
-                Alpaca.mergeWithNullChecking(dataNode.object, data);
+                Alpaca.mergeObject(dataNode.object, data);
                 dataNode.trap(function(saveError) {
                     errorCallback(saveError);
                 }).update().reload().then(function() {

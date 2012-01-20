@@ -46,7 +46,7 @@
                 }
             }
 
-            Alpaca.mergeWithNullChecking(this.options, {
+            Alpaca.mergeObject(this.options, {
                 "forceRevalidation" : true
             });
 

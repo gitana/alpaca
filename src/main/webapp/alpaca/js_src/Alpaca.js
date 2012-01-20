@@ -1130,7 +1130,7 @@
          *
          * @returns {Object} Merged object
          */
-        mergeWithNullChecking : function(obj1, obj2) {
+        mergeObject : function(obj1, obj2) {
             if (!obj1) {
                 obj1 = {};
             }
@@ -1145,7 +1145,7 @@
                             if (!obj1[key]) {
                                 obj1[key] = {};
                             }
-                            obj1[key] = Alpaca.mergeWithNullChecking(obj1[key], obj2[key]);
+                            obj1[key] = Alpaca.mergeObject(obj1[key], obj2[key]);
                         } else {
                             obj1[key] = obj2[key];
                         }

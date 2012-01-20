@@ -47,7 +47,7 @@
             if (Alpaca.isEmpty(control.data)) {
                 control.data = {};
             }
-            Alpaca.mergeWithNullChecking(control.data, newValue);
+            Alpaca.mergeObject(control.data, newValue);
             // if we have a template to load, load it and then render
             var connector = control.connector;
 
