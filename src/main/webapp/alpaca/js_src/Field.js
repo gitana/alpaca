@@ -325,6 +325,11 @@
                     $(':checkbox', this.getEl()).attr('disabled', 'disabled');
                 }
 
+                // hidden
+                if (this.options.hidden) {
+                    this.getEl().hide();
+                }
+
                 // Support for custom CSS class for the field
                 var fieldClass = this.options["fieldClass"];
                 if (fieldClass) {
@@ -1153,6 +1158,18 @@
                         "type": "boolean",
                         "default": false
                     },
+                    "readonly": {
+                        "title": "Readonly",
+                        "description": "Field will be read only if true",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "hidden": {
+                        "title": "Hidden",
+                        "description": "Field will be hidden if true",
+                        "type": "boolean",
+                        "default": false
+                    },
                     "label": {
                         "title": "Label",
                         "description": "Field label",
@@ -1293,6 +1310,14 @@
                     },
                     "disabled": {
                         "rightLabel":"Disable this field ?",
+                        "type": "checkbox"
+                    },
+                    "readonly": {
+                        "rightLabel":"make this field readonly ?",
+                        "type": "checkbox"
+                    },
+                    "hidden": {
+                        "rightLabel":"Hide this field ?",
                         "type": "checkbox"
                     },
                     "label": {
