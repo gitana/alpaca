@@ -124,7 +124,7 @@
                 this.schema.required = false;
             }
 
-            // SETTINGS             
+            // SETTINGS
             if (Alpaca.isUndefined(this.options.validate)) {
                 this.options.validate = true;
             }
@@ -133,7 +133,7 @@
                 this.options.disabled = false;
             }
 
-            // MESSAGES                        
+            // MESSAGES
             if (Alpaca.isUndefined(this.options.showMessages)) {
                 this.options.showMessages = true;
             }
@@ -453,6 +453,12 @@
          */
         setValue: function(value) {
             this.data = value;
+        },
+
+        /**
+         * Resets value to default.
+         */
+        setDefault: function() {
         },
 
         /**
@@ -920,7 +926,7 @@
             }
         },
 
-        // Utility Functions for Form Builder		
+        // Utility Functions for Form Builder
         /**
          * Returns field type.
          *
@@ -1166,7 +1172,7 @@
                     },
                     "hidden": {
                         "title": "Hidden",
-                        "description": "Field will be hidden if true",
+                        "description": "Field will be read only if true",
                         "type": "boolean",
                         "default": false
                     },
@@ -1310,14 +1316,6 @@
                     },
                     "disabled": {
                         "rightLabel":"Disable this field ?",
-                        "type": "checkbox"
-                    },
-                    "readonly": {
-                        "rightLabel":"make this field readonly ?",
-                        "type": "checkbox"
-                    },
-                    "hidden": {
-                        "rightLabel":"Hide this field ?",
                         "type": "checkbox"
                     },
                     "label": {

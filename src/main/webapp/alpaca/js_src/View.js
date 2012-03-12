@@ -163,6 +163,17 @@
                 }
             }
 
+            // array related field path
+            if (fieldPath && fieldPath.indexOf('[') != -1 && fieldPath.indexOf(']') != -1) {
+                fieldPath = fieldPath.replace(/\[\d+\]/g,"[*]");
+                if (this.viewObject.fields && this.viewObject.fields[fieldPath]) {
+                    var configVal = this._getConfigVal(this.viewObject.fields[fieldPath], configId);
+                    if (!Alpaca.isEmpty(configVal)) {
+                        return configVal;
+                    }
+                }
+            }
+
             if (!Alpaca.isEmpty(topLevelOnly) && topLevelOnly && this.field.path != "/") {
                 return null;
             }

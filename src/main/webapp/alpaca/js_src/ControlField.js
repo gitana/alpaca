@@ -26,6 +26,14 @@
         },
 
         /**
+         * @see Alpaca.Field#setDefault
+         */
+        setDefault: function() {
+            var defaultData = Alpaca.isEmpty(this.schema['default']) ? "" : this.schema['default'];
+            this.setValue(defaultData);
+        },
+
+        /**
          * @see Alpaca.Field#renderField
          */
         renderField: function(onSuccess) {

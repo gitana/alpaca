@@ -183,6 +183,7 @@
                             <cssSourceDir>alpaca/css</cssSourceDir>
                             <cssSourceFiles>
                                 <param>../css_src/alpaca.css</param>
+                                <param>../css_src/960.fluid.css</param>
                                 <param>../../../../../lib/jquery.wysiwyg.css</param>
                             </cssSourceFiles>
                             <jsFinalFile>alpaca-${project.version}.js</jsFinalFile>

@@ -21,13 +21,13 @@
 .alpaca-field-optional {
 }
 
-.alpaca-field-valid {	
+.alpaca-field-valid {
 }
 
-.alpaca-field-invalid {	
+.alpaca-field-invalid {
 }
 
-.alpaca-field-readonly {	
+.alpaca-field-readonly {
 }
 
 /**
@@ -40,7 +40,7 @@
 }
 
 .alpaca-controlfield-container {
-	display: inline-block;
+    display: inline-block;
     padding-top: 4px;
     padding-bottom: 4px;
 }
@@ -64,10 +64,10 @@
     display: none;
 }
 
-.alpaca-field-message-container {	
+.alpaca-field-message-container {
 }
 
-.alpaca-field-required span.ui-icon-star{
+.alpaca-field-required span.ui-icon-star {
     float: left;
     margin-right: 0.3em;
 }
@@ -93,12 +93,12 @@ input, textarea, select {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
 }
 
-input[type="checkbox"],input[type="radio"] {
-	border:0px;
+input[type="checkbox"], input[type="radio"] {
+    border: 0px;
 }
 
 select {
-	min-width :150px;
+    min-width: 150px;
 }
 
 input:focus, textarea:focus {
@@ -159,18 +159,21 @@ input:focus, textarea:focus {
 .alpaca-controlfield-password {
 }
 
-.alpaca-controlfield-email > span.ui-icon, .alpaca-controlfield-date > span.ui-icon, .alpaca-controlfield-phone > span.ui-icon{
+.alpaca-controlfield-email > span.ui-icon, .alpaca-controlfield-date > span.ui-icon, .alpaca-controlfield-phone > span.ui-icon {
     float: right;
     margin-left: .3em;
 }
 
-.alpaca-controlfield-helper .alpaca-controlfield-helper-text, .alpaca-controlfield-message .alpaca-controlfield-message-text , .alpaca-controlfield-email > input , .alpaca-controlfield-date > input , .alpaca-controlfield-phone > input{
+.alpaca-controlfield-helper .alpaca-controlfield-helper-text, .alpaca-controlfield-message .alpaca-controlfield-message-text, .alpaca-controlfield-email > input, .alpaca-controlfield-date > input, .alpaca-controlfield-phone > input {
     line-height: 16px;
 }
+
 /**
- * Fix for jQuery datepicker initial state issue.
- */
-#ui-datepicker-div { display: none; }
+* Fix for jQuery datepicker initial state issue.
+*/
+#ui-datepicker-div {
+    display: none;
+}
 
 /**
  * Address Map Field
@@ -193,8 +196,8 @@ input:focus, textarea:focus {
 }
 
 /* IE < 8 */
-.alpaca-controlfield-checkbox { 
-	*padding-top:0;
+.alpaca-controlfield-checkbox {
+    *padding-top: 0;
 }
 
 /**
@@ -209,7 +212,7 @@ input:focus, textarea:focus {
 }
 
 .alpaca-controlfield-radio-label {
-   margin-right: 0.3em;
+    margin-right: 0.3em;
 }
 
 /**
@@ -254,43 +257,43 @@ input:focus, textarea:focus {
 .alpaca-controlfield-file {
 }
 
-.alpaca-controlfield-file-custom-input { 
-	position: absolute; 
-	height: 100px; 
-	cursor: pointer; 
-	background: transparent; 
-	border: 0; 
-	opacity: 0; 
-	-moz-opacity: 0; 
-	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0); 
-	z-index: 999;  
+.alpaca-controlfield-file-custom-input {
+    position: absolute;
+    height: 100px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    opacity: 0;
+    -moz-opacity: 0;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity = 0);
+    z-index: 999;
 }
 
-.alpaca-controlfield-file-custom { 
-	width: 350px; 
-	cursor: pointer; 
-	overflow: hidden; 
-	padding: 2px; 
-	position: relative; 
+.alpaca-controlfield-file-custom {
+    width: 350px;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 2px;
+    position: relative;
 }
 
-.alpaca-controlfield-file-custom-disabled { 
-	opacity: .5; 
-	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);  
-	cursor: default;   
+.alpaca-controlfield-file-custom-disabled {
+    opacity: .5;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity = 0);
+    cursor: default;
 }
 
-.alpaca-controlfield-file-custom-feedback {  
-	display: block;  
-	margin: 1px 1px 1px 5px;  
-	font-style: italic;  
-	padding: .3em .6em;  
+.alpaca-controlfield-file-custom-feedback {
+    display: block;
+    margin: 1px 1px 1px 5px;
+    font-style: italic;
+    padding: .3em .6em;
 }
-	
-.alpaca-controlfield-file-custom-feedback-populated {  
-	font-style: normal;  
-	font-weight: bold;  
-	padding-left: 20px;
+
+.alpaca-controlfield-file-custom-feedback-populated {
+    font-style: normal;
+    font-weight: bold;
+    padding-left: 20px;
     /*
 	left 4px no-repeat;
 	*/
@@ -305,14 +308,14 @@ input:focus, textarea:focus {
 	*/
     padding: 4px;
     margin: 4px;
-	overflow:auto;
-	position:relative;
+    overflow: auto;
+    position: relative;
 }
 
 fieldset.alpaca-fieldset {
-/*
-    display: inline-block;
-*/
+    /*
+        display: inline-block;
+    */
     margin: 0.5em 1em 1em 0px;
 }
 
@@ -356,16 +359,16 @@ legend.alpaca-fieldset-legend {
     opacity: .5;
 }
 
-.alpaca-fieldset-array-item-toolbar-add {	
+.alpaca-fieldset-array-item-toolbar-add {
 }
 
-.alpaca-fieldset-array-item-toolbar-remove {	
+.alpaca-fieldset-array-item-toolbar-remove {
 }
 
-.alpaca-fieldset-array-item-toolbar-up {	
+.alpaca-fieldset-array-item-toolbar-up {
 }
 
-.alpaca-fieldset-array-item-toolbar-down {	
+.alpaca-fieldset-array-item-toolbar-down {
 }
 
 /**
@@ -398,36 +401,37 @@ legend.alpaca-fieldset-legend {
 }
 
 .alpaca-form-button-view-switcher {
-	position: absolute;
-	float: left;
-	font-size: 1em;
-	padding: 8px 3px 3px;
-	zIndex: 999999;
+    position: absolute;
+    float: left;
+    font-size: 1em;
+    padding: 8px 3px 3px;
+    zIndex: 999999;
 }
 
-.alpaca-form-button-view-switcher ul{
-	listStyle: none;
-	margin: 0;
-	padding: 0;
-	overflow: auto;
-}		
+.alpaca-form-button-view-switcher ul {
+    listStyle: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
 
-.alpaca-form-button-view-switcher ul li{
-	padding: 2px;
-	margin: 1px;
-	clear: left;
-	float: left;
-}		
+.alpaca-form-button-view-switcher ul li {
+    padding: 2px;
+    margin: 1px;
+    clear: left;
+    float: left;
+}
 
-.alpaca-form-button-view-switcher ul li a{
-	text-decoration : none;
-}	
+.alpaca-form-button-view-switcher ul li a {
+    text-decoration: none;
+}
+
 /**
- * Display View
- */
+* Display View
+*/
 div.alpaca-fieldset {
     display: block;
-	border:none;
+    border: none;
     margin: 1.5em 1em 1em 0px;
 }
 
@@ -435,98 +439,98 @@ div.alpaca-fieldset-legend {
 }
 
 .alpaca-data-container {
-	margin:5px 5px 5px 5px;
-	padding:5px 5px 5px 5px;
-	display:block;
+    margin: 5px 5px 5px 5px;
+    padding: 5px 5px 5px 5px;
+    display: block;
 }
-   
+
 .alpaca-data {
     text-align: left;
-	padding-left:10px;
+    padding-left: 10px;
 }
 
 .alpaca-data-label {
     float: left;
-	min-width: 100px;
-	clear: both;
-	font-weight: bold;
-	display:inline-block;
+    min-width: 100px;
+    clear: both;
+    font-weight: bold;
+    display: inline-block;
 }
 
 /**
  * Wizard
  */
-.alpaca-wizard-status-bar { 
-	list-style:none; 
-	overflow:hidden; 
-	margin:10px 0px 10px 0px; 
-	padding:0px;
-	counter-reset:step;
-	float:left;	
+.alpaca-wizard-status-bar {
+    list-style: none;
+    overflow: hidden;
+    margin: 10px 0px 10px 0px;
+    padding: 0px;
+    counter-reset: step;
+    float: left;
 }
 
 .alpaca-wizard-status-bar li {
-	float:left;
+    float: left;
 }
 
 .alpaca-wizard-status-bar li span {
-	display:block;
-	font-size:1.2em; 
+    display: block;
+    font-size: 1.2em;
 }
 
 .alpaca-wizard-status-bar li div {
-	display:block;
-	position:relative;
-	padding:2px 25px 2px 30px;
-}	
+    display: block;
+    position: relative;
+    padding: 2px 25px 2px 30px;
+}
 
 .alpaca-wizard-status-bar li div:before {
-	font-size:1em;
-	position:absolute;
-	top:50%;
-	left:5px;
-	margin-top:-8px;
-	text-align:center;
-	font-weight:bold;
-	padding:2px 6px;	
-	counter-increment:step;
-	content:counter(step);
+    font-size: 1em;
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    margin-top: -8px;
+    text-align: center;
+    font-weight: bold;
+    padding: 2px 6px;
+    counter-increment: step;
+    content: counter(step);
 }
 
 .alpaca-wizard-status-bar li div strong {
-	font-weight:normal
+    font-weight: normal
 }
 
-.alpaca-wizard-status-bar li.current { 
+.alpaca-wizard-status-bar li.current {
 }
 
-.alpaca-wizard-status-bar li.current-has-next { 
+.alpaca-wizard-status-bar li.current-has-next {
 }
 
 .alpaca-wizard-title {
-	font-size:1.2em; 
-	margin:0px; 
-	padding:10px 0px; 
-	font-weight:bold;
+    font-size: 1.2em;
+    margin: 0px;
+    padding: 10px 0px;
+    font-weight: bold;
 }
 
 .alpaca-wizard-desc {
-	font-size:0.9em; 
-	margin:0px; 
-	padding:5px 0px; 
+    font-size: 0.9em;
+    margin: 0px;
+    padding: 5px 0px;
 }
 
 .alpaca-wizard-step-title {
-	font-size:1em; 
-	margin:0px; 
-	padding:10px 0px; 
-	text-decoration:underline; 
-	font-weight:bold;
+    font-size: 1em;
+    margin: 0px;
+    padding: 10px 0px;
+    text-decoration: underline;
+    font-weight: bold;
 }
 
 .alpaca-wizard-nav-bar {
-	clear:both;
-	float:right;
+    clear: both;
+    float: right;
 }
 
 .alpaca-wizard-button {
@@ -566,22 +570,45 @@ div.alpaca-fieldset-legend {
 .alpaca-layout-two-column-mask {
     overflow: auto;
     width: 100%;
-	min-width: 600px;
-	display:inline-block;
+    min-width: 600px;
+    display: inline-block;
 }
 
 .alpaca-layout-two-column-left {
-	overflow: auto;
-    display:inline-block;
-	padding: 5px;
-	vertical-align:top;
+    overflow: auto;
+    display: inline-block;
+    padding: 5px;
+    vertical-align: top;
 }
 
 .alpaca-layout-two-column-right {
-	overflow: auto;
-    display:inline-block;
-	padding: 5px;
-	vertical-align:top;
+    overflow: auto;
+    display: inline-block;
+    padding: 5px;
+    vertical-align: top;
 }
+
+fieldset.alpaca-view-web-edit-list {
+    border-left: none;
+    border-bottom: none;
+    border-right: none;
+    padding-right: 3em;
+}
+
+fieldset.alpaca-view-web-edit-list.fieldset-collapsed {
+    border: solid 1px;
+}
+
+span.alpaca-view-web-edit-list .alpaca-controlfield-label {
+    width: 100px;
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 0.5em;
+}
+
+fieldset.alpaca-view-web-edit-list legend {
+    font-size: 1.0em
+}
+
 
 

@@ -68,7 +68,7 @@
             for (var i = 0; i < this.children.length; i++) {
                 var childField = this.children[i];
                 if (data.length < i) {
-                    childField.setValue(data[fieldId]);
+                    childField.setValue(data[i]);
                 }
             }
         },
