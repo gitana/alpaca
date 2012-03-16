@@ -269,12 +269,16 @@
                 downButton.click(function() {
                     _this.moveItem(id, false);
                 });
-                toolbarElem.hide().prependTo(containerElem);
-                containerElem.hover(function() {
-                    $('.alpaca-fieldset-array-item-toolbar', this).show();
-                }, function() {
-                    $('.alpaca-fieldset-array-item-toolbar', this).hide();
-                });
+                if (this.options.toolbarSticky) {
+                    toolbarElem.prependTo(containerElem);
+                } else {
+                    toolbarElem.hide().prependTo(containerElem);
+                    containerElem.hover(function() {
+                        $('.alpaca-fieldset-array-item-toolbar', this).show();
+                    }, function() {
+                        $('.alpaca-fieldset-array-item-toolbar', this).hide();
+                    });
+                }
             }
         },
 
@@ -589,6 +593,54 @@
                                 "type": "integer"
                             },
                             "uniqueItems": {
+                                "type": "checkbox"
+                            }
+                        }
+                    }
+                }
+            });
+        },
+        /**
+         * @private
+         * @see Alpaca.ContainerField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+            var properties = {
+                "properties": {
+                    "items": {
+                        "title": "Array Items",
+                        "description": "Schema of array items",
+                        "type": "object",
+                        "properties": {
+                            "toolbarSticky": {
+                                "title": "Sticky Toolbar",
+                                "description": "Toolbar will be aways on if true",
+                                "type": "boolean",
+                                "default": false
+                            }
+                        }
+                    }
+                }
+            };
+
+            if (this.children && this.children[0]) {
+                Alpaca.merge(properties.properties.items.properties, this.children[0].getSchemaOfSchema())
+            }
+
+            return Alpaca.merge(this.base(), properties);
+        },
+
+        /**
+         * @private
+         * @see Alpaca.ContainerField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "items": {
+                        "type": "object",
+                        "fields": {
+                            "toolbarSticky": {
                                 "type": "checkbox"
                             }
                         }
