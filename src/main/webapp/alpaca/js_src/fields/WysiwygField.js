@@ -30,6 +30,7 @@
          */
         setup: function() {
             this.base();
+            this.isWyswygLoaded = false;
         },
         
         /**
@@ -39,7 +40,15 @@
             this.base();            
 			// see if we can render jWysiwyg
 			if (this.field.wysiwyg) {
-				this.field.wysiwyg();
+				if (this.options.onDemand && !this.isWyswygLoaded) {
+                    this.field.hover(function() {
+                        $(this).wysiwyg();
+                        this.isWyswygLoaded = true;
+                    });
+                } else {
+                    this.field.wysiwyg();
+                    this.isWyswygLoaded = true;
+                }
 			}
 			if (this.fieldContainer) {
 				this.fieldContainer.addClass('alpaca-controlfield-wysiwyg');

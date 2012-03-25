@@ -55,6 +55,12 @@
 
                 this.options.legendStyle = legendStyle;
 
+                //Lazy loading
+                this.lazyLoading = false;
+                if (!Alpaca.isEmpty(this.options.lazyLoading)) {
+                    this.lazyLoading = this.options.lazyLoading;
+                    //delete this.options.lazyLoading;
+                }
                 // holders of references to children
                 this.children = [];
                 this.childrenById = [];
@@ -239,6 +245,8 @@
              */
             renderField: function(onSuccess) {
 
+                var _this = this;
+
                 this.outerEl.addClass('ui-widget-content');
 
                 var labelDiv = $('.alpaca-fieldset-legend', this.outerEl);
@@ -262,8 +270,19 @@
                     this.fieldContainer = this.outerEl;
                 }
 
-                if (!this.singleLevelRendering) {
+                if (!this.singleLevelRendering && !this.lazyLoading) {
                     this.renderItems();
+                }
+
+                if (this.lazyLoading) {
+                    if (this.labelDiv) {
+                        $(this.labelDiv).click(function() {
+                            if(_this.lazyLoading) {
+                                _this.renderItems();
+                                _this.lazyLoading = false;
+                            }
+                        });
+                    }
                 }
 
                 if (onSuccess) {
