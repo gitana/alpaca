@@ -757,9 +757,13 @@
          * Shows the field.
          */
         show: function() {
-            this.getEl().css({
-                "display": ""
-            });
+            if (this.options && this.options.hidden) {
+                return;
+            } else {
+                this.getEl().css({
+                    "display": ""
+                });
+            }
         },
 
         /**
