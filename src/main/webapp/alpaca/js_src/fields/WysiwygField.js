@@ -39,14 +39,15 @@
     	postRender: function() {
             this.base();            
 			// see if we can render jWysiwyg
+            var wysiwygOptions = this.options.wysiwyg ? this.options.wysiwyg : {};
 			if (this.field.wysiwyg) {
 				if (this.options.onDemand && !this.isWyswygLoaded) {
                     this.field.hover(function() {
-                        $(this).wysiwyg();
+                        $(this).wysiwyg(wysiwygOptions);
                         this.isWyswygLoaded = true;
                     });
                 } else {
-                    this.field.wysiwyg();
+                    this.field.wysiwyg(wysiwygOptions);
                     this.isWyswygLoaded = true;
                 }
 			}
