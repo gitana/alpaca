@@ -262,7 +262,7 @@
                 if (itemDependencySettings) {
 
                     if (itemDependencySettings[dependency] != null && Alpaca.isFunction(itemDependencySettings[dependency])) {
-                        shouldShow = itemDependencySettings[dependency](this.childrenByPropertyId[dependency].data);
+                        shouldShow = itemDependencySettings[dependency].call(this,this.childrenByPropertyId[dependency].data);
                     } else {
 
                         if (shouldShow) {

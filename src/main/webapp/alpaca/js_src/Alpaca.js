@@ -1155,12 +1155,7 @@
             return obj1;
         },
 
-        /**
-         * Clones an object.
-         *
-         * @param {Object} obj Source object
-         * @returns {Object} Cloned object
-         */
+        /*
         cloneObject : function(obj) {
             var clone = {};
 
@@ -1170,6 +1165,42 @@
                 } else {
                     clone[i] = obj[i];
                 }
+            }
+
+            return clone;
+        },
+        */
+        /**
+         * Clones an object.
+         *
+         * @param {Object} obj Source object
+         * @returns {Object} Cloned object
+         */
+        cloneObject : function(obj) {
+            var clone;
+
+            if (Alpaca.isObject(obj)) {
+                clone = {};
+                for (var i in obj) {
+                    if (obj.hasOwnProperty(i)) {
+                        if (Alpaca.isObject(obj[i]) || Alpaca.isArray(obj[i])) {
+                            clone[i] = Alpaca.cloneObject(obj[i]);
+                        } else {
+                            clone[i] = obj[i];
+                        }
+                    }
+                }
+            } else if (Alpaca.isArray(obj)) {
+                clone = [];
+                for (var i = 0 ; i < obj.length ; i++) {
+                    if (Alpaca.isObject(obj[i]) || Alpaca.isArray(obj[i])) {
+                        clone.push(Alpaca.cloneObject(obj[i]));
+                    } else {
+                        clone.push(obj[i]);
+                    }
+                }
+            } else {
+                clone = obj;
             }
 
             return clone;
