@@ -13,6 +13,9 @@
         }
     },
     "fields":{
+        "name":{
+            "hideInitValidationError" : true
+        },
         "photo":{
             "type":"file",
             "styled": true

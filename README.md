@@ -3,19 +3,19 @@ JSON Schema Forms Engine for jQuery
 
 Home: http://github.com/gitana/alpaca
 
-Gitana home: http://www.gitanasoftware.org
+Gitana home: http://code.cloudcms.com/alpaca
 
 JavaScript documentation: Coming soon!
 
 ### Questions and Bug Reports
- * mailing list: http://groups.google.com/group/alpaca-user
- * jira: http://jira.gitanasoftware.org/
+ * jira: https://gitana.atlassian.net/browse/ALPACA
 
 ### Change Log ##
 
-http://jira.gitanasoftware.org/browse/ALPACA
+https://gitana.atlassian.net/browse/ALPACA
 
 ### Maintainers
+* Yong Qu     yqu@gitanasoftware.com
 * Michael Uzquiano     uzi@gitanasoftware.com
 
 ### Contributors:

@@ -1,47 +1,30 @@
 <?xml version='1.0'?>
-<project name="Alpaca Forms" basedir=".">
+<project name="Alpaca Forms" basedir="." default="update">
+    <!-- load custom properties file -->
+    <property file="custom-deployment.properties"/>
 
-    <property name="version" value="1.0.0-SNAPSHOT"/>
+    <!-- load properties from file -->
+    <property file="deployment.properties"/>
 
-    <property file="../keys/cloudcms.properties"/>
-
-    <target name="unpublish">
-        <sshexec host="${code.cloudcms.host}"
-                 username="${code.cloudcms.username}"
-                 keyfile="${code.cloudcms.keyfile}"
-                 trust="true"
-                 command="rm -r ${code.cloudcms.basepath}/alpaca/*"
-                 failonerror="false"/>
+    <target name="clean">
+        <mkdir dir="${local.deployment.basepath}/${appkey}"/>
+        <delete>
+            <fileset dir="${local.deployment.basepath}/${appkey}" includes="**/*"/>
+        </delete>
     </target>
 
-    <target name="publish" depends="unpublish">
-
-        <unzip src="target/alpaca-${version}-examples.zip" dest="target/alpaca-${version}-examples"/>
-        <mkdir dir="target/alpaca-${version}-examples/${version}"/>
-        <mkdir dir="target/alpaca-${version}-examples/documentation"/>
-        <mkdir dir="target/alpaca-${version}-examples/${version}"/>
-        <copy todir="target/alpaca-${version}-examples/${version}">
-            <fileset dir="target">
-                <include name="*.zip"/>
-                <include name="*.war"/>
+    <target name="full" depends="clean">
+        <copy todir="${local.deployment.basepath}/${appkey}">
+            <fileset dir="${dev.root}/target/${artifact}-${version}">
+                <exclude name="WEB-INF/**/*"/>
             </fileset>
         </copy>
-        <copy todir="target/alpaca-${version}-examples/documentation">
-            <fileset dir="/Users/drq/dev/jsdoc_toolkit-2.3.2/alpaca">
-                <include name="**/*"/>
-            </fileset>
-        </copy>
-        <scp todir="${code.cloudcms.username}@${code.cloudcms.host}:${code.cloudcms.alpaca.basepath}"
-             keyfile="${code.cloudcms.keyfile}"
-             trust="true"
-             verbose="true"
-             passphrase="${code.cloudcms.passphrase}"
-             failonerror="true">
-
-            <fileset dir="target/alpaca-${version}-examples">
-            </fileset>
-
-        </scp>
     </target>
 
+    <target name="update">
+        <copy todir="${local.deployment.basepath}/${appkey}">
+            <fileset dir="${dev.root}/src/main/webapp">
+            </fileset>
+        </copy>
+    </target>
 </project>

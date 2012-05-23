@@ -176,7 +176,7 @@
                 target="_blank">Alpaca samples zip</a> and then open your browser and point to
             the index.html page which is under the root directory of the unzipped file. In order to run the Gitana
             Connector example, you will need to setup a reverse proxy that will forward request "/proxy/*" to
-            "http://api.cloudcms.com:80".
+            "http://demo.cloudcms.net:80".
         </p>
 
         <p>
@@ -185,8 +185,10 @@
             <pre class="brush: js; toolbar: false;">
         ProxyRequests Off
 
-        ProxyPass /proxy http://api.cloudcms.com:80
-        ProxyPassReverse /proxy http://api.cloudcms.com:80
+        ProxyPassInterpolateEnv On
+        ProxyPass /proxy http://api.cloudcms.com:80 interpolate
+        ProxyPassReverse /proxy http://api.cloudcms.com:80 interpolate
+        ProxyPassReverseCookieDomain localhost ${HTTP_HOST} interpolate
             </pre>
         </p>
 
@@ -220,7 +222,7 @@
     </div>
     <div class="alpaca-example-footer">
         <center class="copyright">
-            Copyright &copy; 2011 Gitana Software | All Rights Reserved
+            Copyright &copy; 2012 Gitana Software | All Rights Reserved
         </center>
     </div>
 </div>

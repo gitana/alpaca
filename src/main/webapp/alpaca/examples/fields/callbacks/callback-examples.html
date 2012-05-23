@@ -49,10 +49,9 @@
                             $("#field1").alpaca({
                                 "data": "Alpaca Farm Offers Best Home Made Ice Cream!",
                                 "postRender": function(renderedField) {
-                                    $('#data').html(renderedField.getEl().html());
+                                    $('#data').html(renderedField.getValue());
                                 }
                             });
-                            var field = $("#field1").alpaca();
                         });
                     </script>
                 </div>
@@ -60,7 +59,7 @@
 			<div class="alpaca-clear"></div>
             <div class="alpaca-example-footer">
                 <center class="copyright">
-                    Copyright &copy; 2011 Gitana Software | All Rights Reserved
+                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
                 </center>
             </div>
         </div>

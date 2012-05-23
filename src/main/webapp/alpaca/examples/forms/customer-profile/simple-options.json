@@ -2,9 +2,10 @@
     "form":{
         "action":"/endpoint"
     },
-	"fields": {
+    "fields": {
         "name":{
-            "fieldClass":"customer-profile-name"
+            "fieldClass":"customer-profile-name",
+            "hideInitValidationError":true
         },
         "icecream":{
             "fieldClass":"customer-profile-icecream"
@@ -12,7 +13,7 @@
         "photo":{
             "readonly":true
         },
-		"age":{
+        "age":{
             "readonly":true
         },
         "gender":{
@@ -20,15 +21,15 @@
         },
         "phone":{
             "readonly":true
-        },	
-		"member":{
+        },
+        "member":{
             "rightLabel": "Alpaca Club Member",
             "readonly":true
         },
-		"address":{
-        	"type": "address",
+        "address":{
+            "type": "address",
             "addressValidation": true,
             "readonly":true
         }
-	}
+    }
 }

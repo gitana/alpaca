@@ -26,10 +26,6 @@
             <id>oss.sonatype.org</id>
             <url>http://oss.sonatype.org/content/groups/public</url>
         </pluginRepository>
-        <pluginRepository>
-            <id>jsdoctk2</id>
-            <url>http://jsdoctk-plugin.googlecode.com/svn/repo</url>
-        </pluginRepository>
     </pluginRepositories>
 
     <repositories>
@@ -72,10 +68,6 @@
             </snapshots>
         </repository>
 
-        <repository>
-            <id>jsdoctk1</id>
-            <url>http://jsdoctk-plugin.googlecode.com/svn/repo</url>
-        </repository>
         <repository>
             <id>cloudcms-public</id>
             <name>cloudcms-public</name>
@@ -364,26 +356,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>nl.windgazer</groupId>
-                <artifactId>jsdoctk-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <template>jsdoc</template>
-                    <!-- Alternatives are not pre-installed for version 2.x-->
-                    <directory>${project.build.directory}/jsdoc</directory>
-                    <recurse>1</recurse>
-                    <ext>js</ext>
-                    <allfunctions>true</allfunctions>
-                    <Allfunctions>false</Allfunctions>
-                    <privateOption>false</privateOption>
-                    <!-- If you're using the maven default setup this alternative is sometimes required
-              to make the plugin work: ${basedir}/src/main/webapp/ -->
-                    <srcDir>
-                        ${project.build.directory}/${project.build.finalName}/alpaca/js/alpaca-${project.version}.js
-                    </srcDir>
-                </configuration>
-            </plugin>
 
         </plugins>
     </build>
@@ -392,16 +364,9 @@
         <!-- Gitana Proxy Servlet -->
         <dependency>
             <groupId>org.gitana</groupId>
-            <artifactId>gitana-servlets</artifactId>
+            <artifactId>gitana-proxy-servlet</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty-client</artifactId>
-            <version>6.1.22</version>
-        </dependency>
-        -->
     </dependencies>
     <properties>
         <jquery.version>1.5</jquery.version>
@@ -411,7 +376,7 @@
         <spring.version>3.0.5.RELEASE</spring.version>
         <spring.security.version>3.1.0.RC1</spring.security.version>
         <gitana.lib>http://code.cloudcms.com/gitana-javascript-driver/1.0.0-SNAPSHOT/gitana.min.js</gitana.lib>
-        <cloudcms.host>api.dev.gitanacloud.com</cloudcms.host>
+        <cloudcms.host>demo.cloudcms.net</cloudcms.host>
         <cloudcms.port>80</cloudcms.port>
     </properties>
     <profiles>
@@ -451,7 +416,7 @@
             </build>
             <properties>
                 <gitana.lib>../../../js/gitana.js</gitana.lib>
-                <cloudcms.host>localhost</cloudcms.host>
+                <cloudcms.host>demo.cloudcms.net</cloudcms.host>
                 <cloudcms.port>8080</cloudcms.port>
             </properties>
         </profile>

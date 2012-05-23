@@ -337,7 +337,7 @@ $(function() {
                         },
                         {
                             "id":"gitana-connector",
-                            "title":"Gitana",
+                            "title":"Gitana CloudCMS",
                             "link":"../../fields/connectors/gitana-connector.html"
                         }
                     ]
