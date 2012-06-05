@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ant -lib ../3rd-party publish
