@@ -7,7 +7,7 @@
         stop();
 
         var connector = new Alpaca.Connectors.SimpleConnector('simple', {
-            "root": "/alpaca/examples/fields/connectors/simple"
+            "root": "../examples/fields/connectors/simple"
         });
         connector.connect(function (success) {
             $("#simple-1").alpaca({

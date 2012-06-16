@@ -77,16 +77,16 @@
         <ul>
             <li>
                 <span class="list-item-header">Core</span>&nbsp;&nbsp;<a
-                    href="${pom.version}/${pom.artifactId}-${pom.version}-minified.zip" rel='web'
+                    href="${pom.artifactId}-${pom.version}-minified.zip" rel='web'
                     target="_blank">Minified</a>&nbsp;|&nbsp;<a
-                    href="${pom.version}/${pom.artifactId}-${pom.version}-uncompressed.zip" rel='web'
+                    href="${pom.artifactId}-${pom.version}-uncompressed.zip" rel='web'
                     target="_blank">Uncompressed</a>
             </li>
             <li>
                 <span class="list-item-header">Examples</span>&nbsp;&nbsp;<a
-                    href="${pom.version}/${pom.artifactId}-${pom.version}-examples.zip" rel='web'
+                    href="${pom.artifactId}-${pom.version}-examples.zip" rel='web'
                     target="_blank">Zip</a>&nbsp;|&nbsp;<a
-                    href="${pom.version}/${pom.artifactId}-${pom.version}.war" rel='web'
+                    href="${pom.artifactId}-${pom.version}.war" rel='web'
                     target="_blank">war</a>
             </li>
         </ul>
@@ -134,9 +134,9 @@
             If you prefer to use hosted Alpaca library and stylesheet, all you need is to include
         </p>
         <pre class="brush: js; toolbar: false;">
-                &lt;script type="text/javascript" src="http://code.cloudcms.com/alpaca/js/alpaca-${project.version}.min.js"&gt;
+                &lt;script type="text/javascript" src="http://code.cloudcms.com/alpaca/${project.version}/js/alpaca-${project.version}.min.js"&gt;
                 &lt;/script&gt;
-                &lt;link type="text/css" href="http://code.cloudcms.com/alpaca/css/alpaca-${project.version}.min.css"
+                &lt;link type="text/css" href="http://code.cloudcms.com/alpaca/${project.version}/css/alpaca-${project.version}.min.css"
                 rel="stylesheet"/&gt;
         </pre>
         <p>
@@ -165,14 +165,14 @@
         </p>
 
         <p>For web application servers, you can simply download and deploy <a
-                href="${pom.version}/${pom.version}.war" rel='web'
+                href="${pom.version}.war" rel='web'
                 target="_blank">Alpaca war</a> and then open your browser and point to
             index.html page of the deployed web application. The war file contains a proxy servelet for the Cloud CMS
             Connector example. Therefore no additional step will be required.
         </p>
 
         <p>For web servers, you need to download and unzip <a
-                href="${pom.version}/${pom.version}-samples.zip" rel='web'
+                href="${pom.version}-samples.zip" rel='web'
                 target="_blank">Alpaca samples zip</a> and then open your browser and point to
             the index.html page which is under the root directory of the unzipped file. In order to run the Cloud CMS
             Connector example, you will need to setup a reverse proxy that will forward request "/proxy/*" to
