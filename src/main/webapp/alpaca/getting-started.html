@@ -167,14 +167,14 @@
         <p>For web application servers, you can simply download and deploy <a
                 href="${pom.version}/${pom.version}.war" rel='web'
                 target="_blank">Alpaca war</a> and then open your browser and point to
-            index.html page of the deployed web application. The war file contains a proxy servelet for the Gitana
+            index.html page of the deployed web application. The war file contains a proxy servelet for the Cloud CMS
             Connector example. Therefore no additional step will be required.
         </p>
 
         <p>For web servers, you need to download and unzip <a
                 href="${pom.version}/${pom.version}-samples.zip" rel='web'
                 target="_blank">Alpaca samples zip</a> and then open your browser and point to
-            the index.html page which is under the root directory of the unzipped file. In order to run the Gitana
+            the index.html page which is under the root directory of the unzipped file. In order to run the Cloud CMS
             Connector example, you will need to setup a reverse proxy that will forward request "/proxy/*" to
             "http://demo.cloudcms.net:80".
         </p>
@@ -209,6 +209,12 @@
             build Alpaca and run Alpaca examples using following Maven command
         <pre class="brush: js; toolbar: false;">mvn clean install jetty:run-exploded</pre>
         </p>
+
+        <p>
+            If you want to run Cloud CMS Connector example, you will need to use following Maven command instead
+        <pre class="brush: js; toolbar: false;">mvn clean install jetty:run-exploded -Pcloudcms</pre>
+        </p>
+
         <p>
             Wait till Maven finishes the build process and brings up embedded Jetty server, you should now be able to
             check out all Alpaca examples from this URL

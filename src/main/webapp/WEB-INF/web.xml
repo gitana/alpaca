@@ -7,20 +7,5 @@
 		<welcome-file>alpaca/index.html</welcome-file>
 	</welcome-file-list>
     <!-- Gitana Repository Proxy Servlet -->
-    <servlet>
-		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
-		<servlet-class>org.gitana.platform.servlet.GitanaProxyServlet</servlet-class>
-        <init-param>
-            <param-name>proxyHost</param-name>
-            <param-value>${cloudcms.host}</param-value>
-        </init-param>
-        <init-param>
-            <param-name>proxyPort</param-name>
-            <param-value>${cloudcms.port}</param-value>
-        </init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
-		<url-pattern>/proxy/*</url-pattern>
-	</servlet-mapping>
-</web-app>	
+    ${proxy.servlet}
+</web-app>

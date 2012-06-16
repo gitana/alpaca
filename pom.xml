@@ -305,7 +305,7 @@
                             <directory>src/main/webapp</directory>
                             <includes>
                                 <include>**/*.html</include>
-                                <include>**/web.xml</include>
+                                <include>**/*web.xml</include>
                             </includes>
                         </resource>
                     </webResources>
@@ -359,25 +359,20 @@
 
         </plugins>
     </build>
-
+    <!--
     <dependencies>
-        <!-- Gitana Proxy Servlet -->
         <dependency>
             <groupId>org.gitana</groupId>
             <artifactId>gitana-proxy-servlet</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+    -->
     <properties>
         <jquery.version>1.5</jquery.version>
         <jquery.ui.version>1.8.8</jquery.ui.version>
         <jquery.mobile.version>1.0a3</jquery.mobile.version>
         <gitana.driver.version>1.0.0-SNAPSHOT</gitana.driver.version>
-        <spring.version>3.0.5.RELEASE</spring.version>
-        <spring.security.version>3.1.0.RC1</spring.security.version>
-        <gitana.lib>http://code.cloudcms.com/gitana-javascript-driver/1.0.0-SNAPSHOT/gitana.min.js</gitana.lib>
-        <cloudcms.host>demo.cloudcms.net</cloudcms.host>
-        <cloudcms.port>80</cloudcms.port>
     </properties>
     <profiles>
         <profile>
@@ -418,6 +413,112 @@
                 <gitana.lib>../../../js/gitana.js</gitana.lib>
                 <cloudcms.host>demo.cloudcms.net</cloudcms.host>
                 <cloudcms.port>8080</cloudcms.port>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev-cloudcms</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <!-- gitana javascript driver -->
+                                        <artifactItem>
+                                            <groupId>org.gitana</groupId>
+                                            <artifactId>gitana-javascript-driver</artifactId>
+                                            <version>${gitana.driver.version}</version>
+                                            <type>war</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${basedir}/target/${project.build.finalName}/alpaca
+                                            </outputDirectory>
+                                            <includes>js/gitana*.js</includes>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.gitana</groupId>
+                    <artifactId>gitana-proxy-servlet</artifactId>
+                    <version>1.0.0-SNAPSHOT</version>
+                </dependency>
+            </dependencies>
+            <properties>
+                <gitana.lib>../../../js/gitana.js</gitana.lib>
+                <cloudcms.host>demo.cloudcms.net</cloudcms.host>
+                <cloudcms.port>8080</cloudcms.port>
+                <proxy.servlet>
+                    <![CDATA[
+    <servlet>
+		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
+		<servlet-class>org.gitana.platform.servlet.GitanaProxyServlet</servlet-class>
+        <init-param>
+            <param-name>proxyHost</param-name>
+            <param-value>${cloudcms.host}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPort</param-name>
+            <param-value>${cloudcms.port}</param-value>
+        </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
+		<url-pattern>/proxy/*</url-pattern>
+	</servlet-mapping>
+                    ]]>
+                </proxy.servlet>
+            </properties>
+        </profile>
+        <profile>
+            <id>cloudcms</id>
+            <build>
+                <plugins>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.gitana</groupId>
+                    <artifactId>gitana-proxy-servlet</artifactId>
+                    <version>1.0.0-SNAPSHOT</version>
+                </dependency>
+            </dependencies>
+            <properties>
+                <gitana.lib>http://code.cloudcms.com/gitana-javascript-driver/1.0.0-SNAPSHOT/gitana.min.js</gitana.lib>
+                <cloudcms.host>demo.cloudcms.net</cloudcms.host>
+                <cloudcms.port>80</cloudcms.port>
+                <proxy.servlet>
+                    <![CDATA[
+    <servlet>
+		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
+		<servlet-class>org.gitana.platform.servlet.GitanaProxyServlet</servlet-class>
+        <init-param>
+            <param-name>proxyHost</param-name>
+            <param-value>${cloudcms.host}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPort</param-name>
+            <param-value>${cloudcms.port}</param-value>
+        </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
+		<url-pattern>/proxy/*</url-pattern>
+	</servlet-mapping>
+                    ]]>
+                </proxy.servlet>
             </properties>
         </profile>
     </profiles>

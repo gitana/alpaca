@@ -9,8 +9,6 @@ $(function() {
         $('<div id="themeContainer" style="position: absolute; overflow-x: hidden;"></div>').css($.extend(pos, position)).appendTo(container || 'body').themeswitcher();
     }
 
-    ;
-
     addThemeSwitcher($('.alpaca-example-header'), {
         top: '26px',
         right: '20px'
@@ -337,7 +335,7 @@ $(function() {
                         },
                         {
                             "id":"gitana-connector",
-                            "title":"Gitana CloudCMS",
+                            "title":"Cloud CMS",
                             "link":"../../fields/connectors/gitana-connector.html"
                         }
                     ]
