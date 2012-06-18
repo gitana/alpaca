@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.gitana</groupId>
     <artifactId>alpaca</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Alpaca</name>
     <packaging>war</packaging>
     <url>http://www.gitanasoftware.org/</url>
@@ -363,7 +363,7 @@
         <jquery.version>1.5</jquery.version>
         <jquery.ui.version>1.8.8</jquery.ui.version>
         <jquery.mobile.version>1.0a3</jquery.mobile.version>
-        <gitana.driver.version>1.0.0-SNAPSHOT</gitana.driver.version>
+        <gitana.driver.version>1.0.0</gitana.driver.version>
     </properties>
     <profiles>
         <profile>
