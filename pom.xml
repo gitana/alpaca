@@ -359,15 +359,6 @@
 
         </plugins>
     </build>
-    <!--
-    <dependencies>
-        <dependency>
-            <groupId>org.gitana</groupId>
-            <artifactId>gitana-proxy-servlet</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
-    -->
     <properties>
         <jquery.version>1.5</jquery.version>
         <jquery.ui.version>1.8.8</jquery.ui.version>
@@ -496,7 +487,7 @@
                 </dependency>
             </dependencies>
             <properties>
-                <gitana.lib>http://code.cloudcms.com/gitana-javascript-driver/1.0.0-SNAPSHOT/gitana.min.js</gitana.lib>
+                <gitana.lib>http://code.cloudcms.com/gitana-javascript-driver/${gitana.driver.version}/gitana.min.js</gitana.lib>
                 <cloudcms.host>demo.cloudcms.net</cloudcms.host>
                 <cloudcms.port>80</cloudcms.port>
                 <proxy.servlet>
