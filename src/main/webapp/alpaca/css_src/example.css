@@ -39,22 +39,22 @@ h4 {
 	background: transparent url(../css/images/Alpaca-icon.png) no-repeat scroll left center;
 }
 
-.alpaca-example-header h2 {
+.alpaca-example-header h1 {
 	padding:10px 0 0 60px;
 }
 
-.alpaca-example-header h2 A:link {
+.alpaca-example-header h1 A:link {
     text-decoration: none;
 }
 
-.alpaca-example-header h2 A:visited {
+.alpaca-example-header h1 A:visited {
     text-decoration: none;
     color: #000000;
 }
-.alpaca-example-header h2 A:active {
+.alpaca-example-header h1 A:active {
     text-decoration: none;
 }
-.alpaca-example-header h2 A:hover {
+.alpaca-example-header h1 A:hover {
     text-decoration: underline;
 }
 
