@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Combo Field</title>
+        <title>Alpaca - JSON Based jQuery Form Service - Combo Field</title>
         <meta name="keywords" content="alpaca,forms,combo field,gitana" />
         <meta name="description" content="Combo Field Examples for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
@@ -34,38 +34,40 @@
     </head>
     <body>
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='combo-field' alpaca-types='address'>
-                <h2>Combo Fields</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='combo-field' alpaca-types='address'>
+                <h1>Combo Fields</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Address Field: </h3>
 					<h4>Address field with google map.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
-                        $(function() {
-                            $("#field1").alpaca({
-                                "data": {},
-                                "options": {
-                                    "type": "address",
-                                    "addressValidation": true
-                                },
-                                "schema": {
-                                    "title": "Home Address",
-                                    "type": "any"
-                                }
-                            });
-                        });
+$(function() {
+    $("#field1").alpaca({
+        "data": {},
+        "options": {
+            "type": "address",
+            "addressValidation": true
+        },
+        "schema": {
+            "title": "Home Address",
+            "type": "any"
+        }
+    });
+});
                     </script>
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Forms > Customer Profile > Display</title>
+        <title>Alpaca - JSON Based jQuery Form Service - Customer Profile Custom Display View</title>
         <meta name="keywords" content="alpaca,forms,view,gitana" />
         <meta name="description" content="Customer Profile Form with Custom View Template." />
         <meta name="author" content="Gitana Software Inc." />
@@ -34,20 +34,30 @@
     </head>
     <body>
         <div class='alpace-test-header'>
-            <h2>Alpaca Farm Ice Cream Customer Profile</h2>
+            <h1>Alpaca Farm Ice Cream Customer Profile</h1>
         </div>
 		<div style="clear:both"/>
         <div id="field1">
         </div>
         <script type="text/javascript" id="field1-script">
-            $("#field1").alpaca({
-                "data": "/alpaca/examples/data/customer-profile-form-data.json",
-                "options": "/alpaca/examples/data/customer-profile-form-settings.json",
-                "schema": "/alpaca/examples/data/customer-profile-form-schema.json",
-                "render": function(field) {
-                    field.render('VIEW::WEB_DISPLAY');
-                }
-            });
+$("#field1").alpaca({
+    "data": "/alpaca/examples/data/customer-profile-form-data.json",
+    "options": "/alpaca/examples/data/customer-profile-form-settings.json",
+    "schema": "/alpaca/examples/data/customer-profile-form-schema.json",
+    "render": function(field) {
+        field.render('VIEW::WEB_DISPLAY');
+    }
+});
         </script>
+                </div>
+        </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

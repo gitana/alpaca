@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Alpaca > Component Gallery > Map Field</title>
+    <title>Alpaca - JSON Based jQuery Form Service - Map Field</title>
     <meta name="keywords" content="alpaca,forms,miscellaneous,gitana"/>
     <meta name="description" content="Miscellaneous Field Examples for Alpaca Forms."/>
     <meta name="author" content="Gitana Software Inc."/>
@@ -35,10 +35,11 @@
 </head>
 <body>
 <div class='alpaca-example-container'>
-    <div class='alpaca-example-header' id='map-field' alpaca-types='map'>
-        <h2>Map Field</h2>
+    <div class='container_12'>
+    <div class='grid_12 alpaca-example-header' id='map-field' alpaca-types='map'>
+        <h1>Map Field</h1>
     </div>
-    <div class='alpaca-example-body'>
+    <div class='grid_12 alpaca-example-body'>
         <div class='alpaca-example-case'>
             <h3>Example 1: </h3>
             <h4>Map field for user profiles.</h4>
@@ -46,67 +47,68 @@
             <div id="field1">
             </div>
             <script type="text/javascript" id="field1-script">
-                $("#field1").alpaca({
-                    "data": {
-                        "john316" : {
-                            "firstName" : "Tim",
-                            "lastName" : "Tebow",
-                            "gender" : "Male"
+$("#field1").alpaca({
+    "data": {
+        "john316" : {
+            "firstName" : "Tim",
+            "lastName" : "Tebow",
+            "gender" : "Male"
 
-                        },
-                        "ladygaga" : {
-                            "firstName" : "Stefani",
-                            "lastName" : "Germanotta",
-                            "gender" : "Female"
+        },
+        "ladygaga" : {
+            "firstName" : "Stefani",
+            "lastName" : "Germanotta",
+            "gender" : "Female"
 
-                        }
-                    },
-                    "schema": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "_key" : {
-                                    "title" : "User Id"
-                                },
-                                "firstName" : {
-                                    "title" : "First Name",
-                                    "description" : "Enter user's first name."
-                                },
-                                "lastName" : {
-                                    "title" : "Last Name",
-                                    "description" : "Enter user's last name."
-                                },
-                                "gender" : {
-                                    "title" : "Gender",
-                                    "description" : "Select user's gender",
-                                    "enum" : ["Male","Female"]
-                                }
-                            }
-                        }
-                    },
-                    "options" : {
-                        "type" : "map",
-                        "fields": {
-                            "item" : {
-                                "fields" : {
-                                    "_key" : {
-                                        "size" : 60,
-                                        "helper" : "Provide a unique user id."
-                                    }
-                                }
-                            }
-                        }
+        }
+    },
+    "schema": {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "_key" : {
+                    "title" : "User Id"
+                },
+                "firstName" : {
+                    "title" : "First Name",
+                    "description" : "Enter user's first name."
+                },
+                "lastName" : {
+                    "title" : "Last Name",
+                    "description" : "Enter user's last name."
+                },
+                "gender" : {
+                    "title" : "Gender",
+                    "description" : "Select user's gender",
+                    "enum" : ["Male","Female"]
+                }
+            }
+        }
+    },
+    "options" : {
+        "type" : "map",
+        "fields": {
+            "item" : {
+                "fields" : {
+                    "_key" : {
+                        "size" : 60,
+                        "helper" : "Provide a unique user id."
                     }
-                });
+                }
+            }
+        }
+    }
+});
             </script>
+            </div>
         </div>
-    </div>
-    <div class="alpaca-clear"></div>
-    <div class="alpaca-example-footer">
-        <center class="copyright">
-            Copyright &copy; 2012 Gitana Software | All Rights Reserved
-        </center>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
     </div>
 </div>
 </body>

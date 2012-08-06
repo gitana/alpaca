@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Array Field</title>
+        <title>Alpaca - JSON Based jQuery Form Service - Array Field</title>
         <meta name="keywords" content="alpaca,forms,array field,gitana" />
         <meta name="description" content="Array Field Examples for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
@@ -17,6 +17,9 @@
         </script>
         <script type="text/javascript" src="../../js/example.js">
         </script>
+    <link type="text/css"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css"
+          rel="stylesheet">
         <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/${jquery.ui.version}/themes/base/jquery.ui.all.css" rel="stylesheet">
         <link type="text/css" href="../../../css/alpaca-${project.version}.css" rel="stylesheet" />
         <link type="text/css" href="../../../css/example.css" rel="stylesheet" />
@@ -32,157 +35,160 @@
     </head>
     <body>
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='array-field' alpaca-types='array'>
-                <h2>Array Field</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='array-field' alpaca-types='array'>
+                <h1>Array Field</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Example 1: </h3>
 					<h4>Simple array field for array data type.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
-                        $(function() {
-                            $("#field1").alpaca({
-								"data": ["test1", "test2", "test3"]
-							});
-                        });
+$(function() {
+    $("#field1").alpaca({
+        "data": ["test1", "test2", "test3"]
+    });
+});
                     </script>
                     <h3>Example 2: </h3>
 					<h4>Array field with options and schema parameters.</h4>
                     <div id="field2">
                     </div>
                     <script type="text/javascript" id="field2-script">
-                        $(function() {
-                            $("#field2").alpaca({
-                                "data": ["Mint Chocolate"],
-                                "options": {
-                                    "label": "Ice Cream",
-                                    "helper": "Favorite Ice Cream",
-                                    "itemLabel": "Favorite",
-                                    "fields" : {
-                                        "item" : {
-                                            "size" : 20
-                                        }
-                                    }
-                                },
-                                "schema": {
-                                    "description": "My Favorite Ice Creams",
-                                    "type": "array",
-                                    "items": {
-                                        "title": "Ice Cream",
-                                        "type": "string",
-                                        "minLength": 3,
-                                        "maxLength": 8,
-                                        "minItems": 2,
-                                        "maxItems": 5
-                                    }
-                                }
-                            });
-                        });
+$(function() {
+    $("#field2").alpaca({
+        "data": ["Mint Chocolate"],
+        "options": {
+            "label": "Ice Cream",
+            "helper": "Favorite Ice Cream",
+            "itemLabel": "Favorite",
+            "toolbarSticky" : true,
+            "fields" : {
+                "item" : {
+                    "size" : 20
+                }
+            }
+        },
+        "schema": {
+            "description": "My Favorite Ice Creams",
+            "type": "array",
+            "items": {
+                "title": "Ice Cream",
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 8,
+                "minItems": 2,
+                "maxItems": 5
+            }
+        }
+    });
+});
                     </script>
                     <h3>Example 3: </h3>
 					<h4>Array field with array default value.</h4>
                     <div id="field3">
                     </div>
                     <script type="text/javascript" id="field3-script">
-                        $(function() {
-                            $("#field3").alpaca({
-                                "schema": {
-                                    "description": "My Favorite Ice Creams",
-                                    "type": "array",
-                                    "default": '["Vanilla","Mint","Moose Track"]',
-                                    "items": {
-                                        "title": "Ice Cream",
-                                        "type": "string",
-                                        "minLength": 3,
-                                        "maxLength": 8,
-                                        "minItems": 2,
-                                        "maxItems": 5
-                                    }
-                                }
-                            });
-                        });
+$(function() {
+    $("#field3").alpaca({
+        "schema": {
+            "description": "My Favorite Ice Creams",
+            "type": "array",
+            "default": '["Vanilla","Mint","Moose Track"]',
+            "items": {
+                "title": "Ice Cream",
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 8,
+                "minItems": 2,
+                "maxItems": 5
+            }
+        }
+    });
+});
                     </script>
                     <h3>Example 4: </h3>
 					<h4>Array field with string default value.</h4>					
                     <div id="field4">
                     </div>
                     <script type="text/javascript" id="field4-script">
-                        $(function() {
-                            $("#field4").alpaca({
-                                "schema": {
-                                    "description": "My Favorite Ice Creams",
-                                    "type": "array",
-                                    "default": "Vanilla",
-                                    "items": {
-                                        "title": "Ice Cream",
-                                        "type": "string"
-                                    }
-                                }
-                            });
-                        });
+$(function() {
+    $("#field4").alpaca({
+        "schema": {
+            "description": "My Favorite Ice Creams",
+            "type": "array",
+            "default": "Vanilla",
+            "items": {
+                "title": "Ice Cream",
+                "type": "string"
+            }
+        }
+    });
+});
                     </script>
                     <h3>Example 5: </h3>
 					<h4>Array field with item type as object.</h4>	
                     <div id="field5">
                     </div>
                     <script type="text/javascript" id="field5-script">
-                        $(function() {
-                            $("#field5").alpaca({
-                                "schema": {
-                                    "description": "My Favorite Ice Creams",
-                                    "type": "array",
-                                    "items": {
-                                        "title": "Ice Cream",
-                                        "type": "object",
-                                        "properties": {
-                                            "flavor": {
-                                                "title": "Flavor",
-                                                "description": "Ice cream flavor",
-                                                "type": "string"
-                                            },
-                                            "topping": {
-                                                "title": "Topping",
-                                                "description": "Ice cream topping",
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        });
+$(function() {
+    $("#field5").alpaca({
+        "schema": {
+            "description": "My Favorite Ice Creams",
+            "type": "array",
+            "items": {
+                "title": "Ice Cream",
+                "type": "object",
+                "properties": {
+                    "flavor": {
+                        "title": "Flavor",
+                        "description": "Ice cream flavor",
+                        "type": "string"
+                    },
+                    "topping": {
+                        "title": "Topping",
+                        "description": "Ice cream topping",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    });
+});
                     </script>
                     <h3>Example 6: </h3>
 					<h4>Nested array field.</h4>					
                     <div id="field6">
                     </div>
                     <script type="text/javascript" id="field6-script">
-                        $(function() {
-                            $("#field6").alpaca({
-                                "schema": {
-                                    "description": "Ice Cream Prices",
-                                    "type": "array",
-                                    "items": {
-                                        "title": "Flavor Price",
-                                        "type": "array",
-										"items": {
-											"title": "Price",
-											"type": "number"
-										}
-                                    }
-                                }
-                            });
-                        });
+$(function() {
+    $("#field6").alpaca({
+        "schema": {
+            "description": "Ice Cream Prices",
+            "type": "array",
+            "items": {
+                "title": "Flavor Price",
+                "type": "array",
+                "items": {
+                    "title": "Price",
+                    "type": "number"
+                }
+            }
+        }
+    });
+});
                     </script>					
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

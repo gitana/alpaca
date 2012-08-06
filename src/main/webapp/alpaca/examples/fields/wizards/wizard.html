@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Auto Wizard</title>
+        <title>Alpaca - JSON Based jQuery Form Service - Auto Wizard</title>
         <meta name="keywords" content="alpaca,forms,wizard,gitana" />
         <meta name="description" content="Auto Wizard Examples for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
@@ -34,10 +34,11 @@
     </head>
     <body>
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='template-wizard' alpaca-types=''>
-                <h2>Wizard Through Layout</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='template-wizard' alpaca-types=''>
+                <h1>Wizard Through Layout</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Customer Profile: </h3>
                     <h4>Wizard element injections are based on field to template region bindings which are defined by the templates properties of the field view parameter. 
@@ -48,42 +49,43 @@
                     <div id="field1">
                     </div>
                     <script type="text/javascript"id="field1-script">
-                        $(function() {
-                            $("#field1").alpaca({
-                                "data": "./customer-profile-data.json",
-                                "schema": "./customer-profile-schema.json",
-                                "options": "./customer-profile-options.json",
-                                "view": {
-                                    "parent": "VIEW::WEB_EDIT_LIST",
-                                    "layout": {
-                                        "template": './wizard-template.html',
-                                        "bindings": {
-                                            "name": "alpaca-wizard-step-1",
-                                            "age": "alpaca-wizard-step-1",
-                                            "gender": "alpaca-wizard-step-1",
-                                            "photo": "alpaca-wizard-step-1",
-                                            "member": "alpaca-wizard-step-2",
-                                            "phone": "alpaca-wizard-step-2",
-                                            "icecream": "alpaca-wizard-step-2",
-                                            "address": "alpaca-wizard-step-3"
-                                        }
-                                    },
-                                    "wizard": {
-                                        "renderWizard": true,
-                                        "statusBar": true
-                                    }
-                                }
-                            });
-                        });
+$(function() {
+    $("#field1").alpaca({
+        "data": "./customer-profile-data.json",
+        "schema": "./customer-profile-schema.json",
+        "options": "./customer-profile-options.json",
+        "view": {
+            "parent": "VIEW::WEB_EDIT_LIST",
+            "layout": {
+                "template": './wizard-template.html',
+                "bindings": {
+                    "name": "alpaca-wizard-step-1",
+                    "age": "alpaca-wizard-step-1",
+                    "gender": "alpaca-wizard-step-1",
+                    "photo": "alpaca-wizard-step-1",
+                    "member": "alpaca-wizard-step-2",
+                    "phone": "alpaca-wizard-step-2",
+                    "icecream": "alpaca-wizard-step-2",
+                    "address": "alpaca-wizard-step-3"
+                }
+            },
+            "wizard": {
+                "renderWizard": true,
+                "statusBar": true
+            }
+        }
+    });
+});
                     </script>
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

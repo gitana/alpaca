@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > WYSIWYG Field</title>
+        <title>Alpaca - JSON Based jQuery Form Service - WYSIWYG Field</title>
         <meta name="keywords" content="alpaca,forms,wysiwys,gitana" />
         <meta name="description" content="WYSIWYG Field for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
@@ -32,32 +32,34 @@
     </head>
     <body>
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='wysiwyg-field' alpaca-types='wysiwyg'>
-                <h2>WYSIWYG Field</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='wysiwyg-field' alpaca-types='wysiwyg'>
+                <h1>WYSIWYG Field</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Example 1: </h3>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
-                        $(function() {
-                            $("#field1").alpaca({
-                                "data": "Ice cream or ice-cream is a frozen dessert usually made from dairy products, such as milk and cream, and often combined with fruits or other ingredients and flavours.",
-                                "options": {
-                                    "type": "wysiwyg"
-                                }
-                            });
-                        });
+$(function() {
+    $("#field1").alpaca({
+        "data": "Ice cream or ice-cream is a frozen dessert usually made from dairy products, such as milk and cream, and often combined with fruits or other ingredients and flavours.",
+        "options": {
+            "type": "wysiwyg"
+        }
+    });
+});
                     </script>
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

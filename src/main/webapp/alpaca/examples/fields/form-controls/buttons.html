@@ -37,10 +37,11 @@
 </head>
 <body>
 <div class='alpaca-example-container'>
-    <div class='alpaca-example-header' id='form-controls' alpaca-types='button'>
-        <h2>Alpaca Farm Ice Cream Customer Profile</h2>
+    <div class='container_12'>
+    <div class='grid_12 alpaca-example-header' id='form-controls' alpaca-types='button'>
+        <h1>Alpaca Farm Ice Cream Customer Profile</h1>
     </div>
-    <div class='alpaca-example-body'>
+    <div class='grid_12 alpaca-example-body'>
         <div class='alpaca-example-case'>
             <h3>Form Button</h3>
             <h4>This example shows how to access buttons, manage buttons and add a new button with custom handlers. This example loads <a href="./data.json" target="_source">data</a>, <a href="./options.json" target="_source">options</a> and
@@ -48,83 +49,84 @@
             <div id="field1">
             </div>
             <script type="text/javascript" id="field1-script">
-                $(function() {
-                    $("#field1").alpaca({
-                        "data": "./data.json",
-                        "options": "./options.json",
-                        "schema": "./schema.json",
-                        "postRender": function(renderedField) {
-                            var form = renderedField.form;
-                            // access all buttons
-                            $.each(form.buttons, function(index,button) {
-                               if (button.type == 'reloadbutton') {
-                                 button.hide();
-                               }
-                            });
-                            // direct reference
-                            form.switchViewButton.hide();
-                            // try to access control through path
-                            var cityControl = renderedField.getControlByPath("address/city");
-                            cityControl.setValue("Lexington");
-                            form.addButton({
-                                "data" : "Custom Button",
-                                "postRender" : function(buttonControl) {
-                                    buttonControl.field.button({
-                                        text: true,
-                                        icons: {
-                                            primary: "ui-icon-newwin"
-                                        }
-                                    }).click(function() {
-                                        buttonControl.field.removeClass("ui-state-focus ui-state-hover");
-                                        var sourceViewDialog = $('<div id="source-alpaca-field" title="View Source"></div>');
-                                        var _this = this;
-                                        sourceViewDialog.alpaca({
-                                            "data": [
-                                                {
-                                                    "title": "JSON Source",
-                                                    "text": JSON.stringify(renderedField.getValue(), null, '&nbsp;')
-                                                }
-                                            ],
-                                            "view": {
-                                                "globalTemplate": '<div id="source-view-alpaca-field">{{each data}}<div><h3 style="text-decoration:underline;">${title}</h3><div><pre><code>${text}</pre></code></div></div>{{/each}}</div>'
-                                            },
-                                            "postRender": function(renderedNewFieldControl) {
-                                                sourceViewDialog.dialog({
-                                                    resizable: true,
-                                                    height: 550,
-                                                    width: 650,
-                                                    modal: true,
-                                                    buttons: {
-                                                        "Print": function() {
-                                                            var sourceDiv = $('#source-view-alpaca-field', sourceViewDialog);
-                                                            if (sourceDiv.printArea) {
-                                                                sourceDiv.printArea();
-                                                            }
-                                                            $(this).dialog("close");
-                                                        },
-                                                        "Close": function() {
-                                                            $(this).dialog("close");
-                                                        }
-                                                    }
-                                                });
-                                                $('.ui-dialog').css("overflow", "hidden");
-                                                $('.ui-dialog-buttonpane').css("overflow", "hidden");
-                                            }
-                                        });
-                                    });
-                                }
-                            });
+$(function() {
+    $("#field1").alpaca({
+        "data": "./data.json",
+        "options": "./options.json",
+        "schema": "./schema.json",
+        "postRender": function(renderedField) {
+            var form = renderedField.form;
+            // access all buttons
+            $.each(form.buttons, function(index,button) {
+               if (button.type == 'reloadbutton') {
+                 button.hide();
+               }
+            });
+            // direct reference
+            form.switchViewButton.hide();
+            // try to access control through path
+            var cityControl = renderedField.getControlByPath("address/city");
+            cityControl.setValue("Lexington");
+            form.addButton({
+                "data" : "Custom Button",
+                "postRender" : function(buttonControl) {
+                    buttonControl.field.button({
+                        text: true,
+                        icons: {
+                            primary: "ui-icon-newwin"
                         }
+                    }).click(function() {
+                        buttonControl.field.removeClass("ui-state-focus ui-state-hover");
+                        var sourceViewDialog = $('<div id="source-alpaca-field" title="View Source"></div>');
+                        var _this = this;
+                        sourceViewDialog.alpaca({
+                            "data": [
+                                {
+                                    "title": "JSON Source",
+                                    "text": JSON.stringify(renderedField.getValue(), null, '&nbsp;')
+                                }
+                            ],
+                            "view": {
+                                "globalTemplate": '<div id="source-view-alpaca-field">{{each data}}<div><h3 style="text-decoration:underline;">${title}</h3><div><pre><code>${text}</pre></code></div></div>{{/each}}</div>'
+                            },
+                            "postRender": function(renderedNewFieldControl) {
+                                sourceViewDialog.dialog({
+                                    resizable: true,
+                                    height: 550,
+                                    width: 650,
+                                    modal: true,
+                                    buttons: {
+                                        "Print": function() {
+                                            var sourceDiv = $('#source-view-alpaca-field', sourceViewDialog);
+                                            if (sourceDiv.printArea) {
+                                                sourceDiv.printArea();
+                                            }
+                                            $(this).dialog("close");
+                                        },
+                                        "Close": function() {
+                                            $(this).dialog("close");
+                                        }
+                                    }
+                                });
+                                $('.ui-dialog').css("overflow", "hidden");
+                                $('.ui-dialog-buttonpane').css("overflow", "hidden");
+                            }
+                        });
                     });
-                });
+                }
+            });
+        }
+    });
+});
             </script>
+            </div>
         </div>
-    </div>
-    <div class="alpaca-clear"></div>
-    <div class="alpaca-example-footer">
-        <center class="copyright">
-            Copyright &copy; 2012 Gitana Software | All Rights Reserved
-        </center>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
     </div>
 </div>
 </body>

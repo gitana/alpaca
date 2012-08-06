@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Conditional Field</title>
+        <title>Alpaca - JSON Based jQuery Form Service - Conditional Field</title>
         <meta name="keywords" content="alpaca,forms,conditional field,gitana" />
         <meta name="description" content="Conditional Field Examples for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
@@ -32,70 +32,72 @@
     </head>
     <body>
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='conditional-field' alpaca-types=''>
-                <h2>Conditional Fields</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='conditional-field' alpaca-types=''>
+                <h1>Conditional Fields</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Ice Cream Picker Field: </h3>
 					<h4>Conditional field through combination of schema dependency properties and options dependency properties.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
-                        $(function() {
-                            $("#field1").alpaca({
-                                "data": {},
-                                "options": {
-                                    "fields": {
-                                        "flavour": {
-                                            "dependencies": {
-                                                "choice": "Flavour"
-                                            }
-                                        },
-                                        "topping": {
-                                            "dependencies": {
-                                                "choice": "Topping"
-                                            }
-                                        }
-                                    }
-                                },
-                                "schema": {
-                                    "title": "Ice Cream Picker",
-                                    "description": "Select Your Favorite Ice Cream",
-                                    "type": "object",
-                                    "properties": {
-                                        "choice": {
-                                            "title": "Select",
-                                            "type": "String",
-                                            "description": "What do you want to choose?",
-                                            "enum": ["Flavour", "Topping"]
-                                        },
-                                        "flavour": {
-                                            "title": "Flavour",
-                                            "type": "String",
-                                            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
-                                            "dependencies": "choice"
-                                        },
-                                        "topping": {
-                                            "title": "Topping",
-                                            "type": "String",
-                                            "enum": ["Marshmelllow", "Chocolate Chip", "Caramel", "Cookie Dough"],
-                                            "dependencies": "choice"
-                                        }
-                                    }
-                                },
-                                "view": "VIEW::WEB_EDIT_LIST"
-                            });
-                        });
+$(function() {
+    $("#field1").alpaca({
+        "data": {},
+        "options": {
+            "fields": {
+                "flavour": {
+                    "dependencies": {
+                        "choice": "Flavour"
+                    }
+                },
+                "topping": {
+                    "dependencies": {
+                        "choice": "Topping"
+                    }
+                }
+            }
+        },
+        "schema": {
+            "title": "Ice Cream Picker",
+            "description": "Select Your Favorite Ice Cream",
+            "type": "object",
+            "properties": {
+                "choice": {
+                    "title": "Select",
+                    "type": "String",
+                    "description": "What do you want to choose?",
+                    "enum": ["Flavour", "Topping"]
+                },
+                "flavour": {
+                    "title": "Flavour",
+                    "type": "String",
+                    "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
+                    "dependencies": "choice"
+                },
+                "topping": {
+                    "title": "Topping",
+                    "type": "String",
+                    "enum": ["Marshmelllow", "Chocolate Chip", "Caramel", "Cookie Dough"],
+                    "dependencies": "choice"
+                }
+            }
+        },
+        "view": "VIEW::WEB_EDIT_LIST"
+    });
+});
                     </script>
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

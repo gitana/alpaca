@@ -1,9 +1,14 @@
 html,body {
     margin: 0px;
     padding: 0;
-    font: 12px normal Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-family: 'Trebuchet MS',tahoma,arial,helvetica,sans-serif;
 	height:100%;
-	min-width:1000px;
+	min-width:960px;
+}
+
+h1, h2, h3, h4, h5, h6, .btn, nav, label {
+    font-family: Mentone-SemiBold,'Mentone SemiBold','Trebuchet MS',sans-serif;
 }
 
 h3 {
@@ -12,8 +17,14 @@ h3 {
 }
 
 h4 {
-	width:500px;
-	font-weight:normal;	
+	font-size: 1.1em;
+	font-weight:normal;
+    max-width: 600px;
+}
+
+.ui-widget {
+    font-family: 'Trebuchet MS',tahoma,arial,helvetica,sans-serif;
+    font-size: 1.1em;
 }
 
 .clear {
@@ -28,7 +39,6 @@ h4 {
 .alpaca-example-body {
 	padding-bottom:20px;
 	display:inline-block;
-	width:1400px;
 }
 
 .alpaca-example-header {
@@ -109,7 +119,6 @@ pre {
     background: #f0f0f0;
     border: 1px solid #ccc;
     line-height: 20px;
-    width: 600px;
     overflow: auto;
     overflow-Y: hidden;
 }
@@ -127,26 +136,27 @@ pre code {
     line-height: 20px;
     overflow: auto;
     overflow-Y: hidden;
-    width: 800px;
     margin: -10px 0px 0px 5px;
+    max-width: 600px;
 }
 
-.front-page-item-title {
+.front-page-item-title{
     padding: 4px;
     font-size: 1.2em;
     padding-left: 10px;
 }
 
+.front-page-item-title h2 {
+    font-size: 1.2em;
+    margin: 2px;
+}
+
 .front-page-item-image {
-    display: inline-block;
-    width: 50px;
-    margin: 20px 10px;
-    vertical-align: top;
+    float: right;
+    margin: 10px;
 }
 
 .front-page-item-description {
-    display: inline-block;
-    width: 450px;
     margin: 10px;
 }
 
@@ -180,11 +190,12 @@ table { border-collapse: collapse; border-spacing: 0; }
 	width: 100%;
 	margin: 0 auto;
     max-width: 800px;
+    border: 1px solid;
 }
 
 .table thead {
 	background: url("../css/images/table-head-bg.png") repeat-x scroll top left #dddddd;
-	border-top: 1px solid #fff;
+	border-top: 1px solid #000000;
 	border-bottom: 1px solid #bcbcbc;
 }
 
@@ -226,4 +237,17 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 .table tbody tr:hover th, .table tbody tr:hover .th, .table tbody tr:hover td {
 	background: #d8dce6;
+}
+
+.copyright {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.dashlet {
+    margin: 10px 0;
+}
+
+small .ui-button .ui-button-text {
+    font-size: 12px;
 }

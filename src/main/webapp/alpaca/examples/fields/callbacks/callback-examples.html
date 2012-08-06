@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Callback Examples</title>
+        <title>Alpaca - JSON Based jQuery Form Service - Callback Examples</title>
         <meta name="keywords" content="alpaca,forms,callback,gitana" />
         <meta name="description" content="Callback Examples for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
@@ -33,10 +33,11 @@
         </script>    </head>
     <body>
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='callback' alpaca-types=''>
-                <h2>Callback Examples</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='callback' alpaca-types=''>
+                <h1>Callback Examples</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Example 1: </h3>
 					<h4>Example for post render callback.</h4>
@@ -45,23 +46,24 @@
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
-                        $(function() {
-                            $("#field1").alpaca({
-                                "data": "Alpaca Farm Offers Best Home Made Ice Cream!",
-                                "postRender": function(renderedField) {
-                                    $('#data').html(renderedField.getValue());
-                                }
-                            });
-                        });
+$(function() {
+    $("#field1").alpaca({
+        "data": "Alpaca Farm Offers Best Home Made Ice Cream!",
+        "postRender": function(renderedField) {
+            $('#data').html(renderedField.getValue());
+        }
+    });
+});
                     </script>
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

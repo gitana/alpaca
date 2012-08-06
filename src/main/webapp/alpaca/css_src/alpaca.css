@@ -371,6 +371,11 @@ legend.alpaca-fieldset-legend {
 .alpaca-fieldset-array-item-toolbar-down {
 }
 
+/* Fix for Chrome issue with Button text */
+.ui-button .ui-button-text {
+    white-space: nowrap;
+}
+
 /**
  * Form
  */

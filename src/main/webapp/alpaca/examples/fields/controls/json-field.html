@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > JSON Editor Field</title>
+        <title>Alpaca - JSON Based jQuery Form Service - JSON Editor Field</title>
         <meta name="keywords" content="alpaca,forms,miscellaneous,gitana" />
         <meta name="description" content="Miscellaneous Field Examples for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
@@ -32,36 +32,38 @@
     </head>
     <body>
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='json-field' alpaca-types='json'>
-                <h2>JSON Editor Field</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='json-field' alpaca-types='json'>
+                <h1>JSON Editor Field</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Example 1: </h3>
                     <h4>JSON Editor field with valid json.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
-                        $("#field1").alpaca({
-                            "data": {
-                                "properties" : {
-                                    "text1" : "Text1",
-                                    "text2" : "Text2"
-                                }
-                            },
-                            "options": {
-                                "type": "json"
-                            }
-                        });
+$("#field1").alpaca({
+    "data": {
+        "properties" : {
+            "text1" : "Text1",
+            "text2" : "Text2"
+        }
+    },
+    "options": {
+        "type": "json"
+    }
+});
                     </script>
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

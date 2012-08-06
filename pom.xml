@@ -198,6 +198,7 @@
                             <cssSourceDir>alpaca/css</cssSourceDir>
                             <cssSourceFiles>
                                 <param>../css_src/example.css</param>
+                                <param>../css_src/960.fluid.css</param>
                             </cssSourceFiles>
                             <cssFinalFile>example.css</cssFinalFile>
                             <linebreak>-1</linebreak>

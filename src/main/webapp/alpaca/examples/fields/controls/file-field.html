@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > File Field</title>
+        <title>Alpaca - JSON Based jQuery Form Service - File Field</title>
         <meta name="keywords" content="alpaca,forms,file field,gitana" />
         <meta name="description" content="File Field Examples for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
@@ -32,60 +32,62 @@
     </head>
     <body>
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='file-field' alpaca-types='file'>
-                <h2>File Field</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='file-field' alpaca-types='file'>
+                <h1>File Field</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Example 1: </h3>
                     <h4>File field with custom style.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
-                        $(function() {
-                            $("#field1").alpaca({
-                                "data": "",
-                                "options": {
-                                    "type": "file",
-                                    "label": "Ice Cream Photo:",
-                                    "helper": "Pick your favorite ice cream picture.",
-                                    "styled": true
-                                },
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uri"
-                                }
-                            });
-                        });
+$(function() {
+    $("#field1").alpaca({
+        "data": "",
+        "options": {
+            "type": "file",
+            "label": "Ice Cream Photo:",
+            "helper": "Pick your favorite ice cream picture.",
+            "styled": true
+        },
+        "schema": {
+            "type": "string",
+            "format": "uri"
+        }
+    });
+});
                     </script>
                     <h3>Example 2: </h3>
                     <h4>File field without style.</h4>
                     <div id="field2">
                     </div>
                     <script type="text/javascript" id="field2-script">
-                        $(function() {
-                            $("#field2").alpaca({
-                                "data": "",
-                                "options": {
-                                    "type": "file",
-                                    "label": "Ice Cream Photo:",
-                                    "helper": "Pick your favorite ice cream picture."
-                                },
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uri"
-                                }
-                            });
-                        });
+$(function() {
+    $("#field2").alpaca({
+        "data": "",
+        "options": {
+            "type": "file",
+            "label": "Ice Cream Photo:",
+            "helper": "Pick your favorite ice cream picture."
+        },
+        "schema": {
+            "type": "string",
+            "format": "uri"
+        }
+    });
+});
                     </script>
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

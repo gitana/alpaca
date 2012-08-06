@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Alpaca > Component Gallery > Validation</title>
+    <title>Alpaca - JSON Based jQuery Form Service - Validation</title>
     <meta name="keywords" content="alpaca,forms,validation,gitana"/>
     <meta name="description" content="Validation Examples for Alpaca Forms."/>
     <meta name="author" content="Gitana Software Inc."/>
@@ -35,10 +35,11 @@
 </head>
 <body>
 <div class='alpaca-example-container'>
-    <div class='alpaca-example-header' id='validation' alpaca-types=''>
-        <h2>Validation Examples</h2>
+    <div class='container_12'>
+    <div class='grid_12 alpaca-example-header' id='validation' alpaca-types=''>
+        <h1>Validation Examples</h1>
     </div>
-    <div class='alpaca-example-body'>
+    <div class='grid_12 alpaca-example-body'>
         <div class='alpaca-example-case'>
             <h3>Example 1: </h3>
             <h4>Required field.</h4>
@@ -46,16 +47,16 @@
             <div id="field1">
             </div>
             <script type="text/javascript" id="field1-script">
-                $(function() {
-                    $("#field1").alpaca({
-                        "data": "",
-                        "schema": {
-                            "title": "Required field",
-                            "type": "string",
-                            "required": true
-                        }
-                    });
-                });
+$(function() {
+    $("#field1").alpaca({
+        "data": "",
+        "schema": {
+            "title": "Required field",
+            "type": "string",
+            "required": true
+        }
+    });
+});
             </script>
             <h3>Example 2: </h3>
             <h4>Field with disallowed values.</h4>
@@ -63,16 +64,16 @@
             <div id="field2">
             </div>
             <script type="text/javascript" id="field2-script">
-                $(function() {
-                    $("#field2").alpaca({
-                        "data": "book",
-                        "schema": {
-                            "title": "Diallowed value",
-                            "type": "string",
-                            "disallow": ["book", "pencil"]
-                        }
-                    });
-                });
+$(function() {
+    $("#field2").alpaca({
+        "data": "book",
+        "schema": {
+            "title": "Diallowed value",
+            "type": "string",
+            "disallow": ["book", "pencil"]
+        }
+    });
+});
             </script>
             <h3>Example 3: </h3>
             <h4>Field with default value.</h4>
@@ -80,16 +81,16 @@
             <div id="field3">
             </div>
             <script type="text/javascript" id="field3-script">
-                $(function() {
-                    $("#field3").alpaca({
-                        "data": "",
-                        "schema": {
-                            "title": "Default value",
-                            "type": "string",
-                            "default": "book"
-                        }
-                    });
-                });
+$(function() {
+    $("#field3").alpaca({
+        "data": "",
+        "schema": {
+            "title": "Default value",
+            "type": "string",
+            "default": "book"
+        }
+    });
+});
             </script>
             <h3>Example 4: </h3>
             <h4>Field with schema enum properties.</h4>
@@ -97,16 +98,16 @@
             <div id="field4">
             </div>
             <script type="text/javascript" id="field4-script">
-                $(function() {
-                    $("#field4").alpaca({
-                        "data": "laptop",
-                        "schema": {
-                            "title": "Enum field",
-                            "type": "string",
-                            "enum": ["book", "pen", "eraser"]
-                        }
-                    });
-                });
+$(function() {
+    $("#field4").alpaca({
+        "data": "laptop",
+        "schema": {
+            "title": "Enum field",
+            "type": "string",
+            "enum": ["book", "pen", "eraser"]
+        }
+    });
+});
             </script>
             <h3>Example 5: </h3>
             <h4>JSon Schema validation (valid).</h4>
@@ -114,22 +115,22 @@
             <div id="field5">
             </div>
             <script type="text/javascript" id="field5-script">
-                $(function() {
-                    var data = "book";
-                    var schema = {
-                        "title": "Enum field",
-                        "type": "string",
-                        "enum": ["book", "pen", "eraser"]
-                    };
-                    if (Validator.validate(data, schema).valid) {
-                        $("#field5").alpaca({
-                            "data": data,
-                            "schema": schema
-                        });
-                    } else {
-                        $("#field5").html('Failed the schema validation');
-                    }
-                });
+$(function() {
+    var data = "book";
+    var schema = {
+        "title": "Enum field",
+        "type": "string",
+        "enum": ["book", "pen", "eraser"]
+    };
+    if (Validator.validate(data, schema).valid) {
+        $("#field5").alpaca({
+            "data": data,
+            "schema": schema
+        });
+    } else {
+        $("#field5").html('Failed the schema validation');
+    }
+});
             </script>
             <h3>Example 6: </h3>
             <h4>JSon Schema validation (invalid).</h4>
@@ -137,22 +138,22 @@
             <div id="field6">
             </div>
             <script type="text/javascript" id="field6-script">
-                $(function() {
-                    var data = "laptop";
-                    var schema = {
-                        "title": "Enum field",
-                        "type": "string",
-                        "enum": ["book", "pen", "eraser"]
-                    };
-                    if (Validator.validate(data, schema).valid) {
-                        $("#field6").alpaca({
-                            "data": data,
-                            "schema": schema
-                        });
-                    } else {
-                        $("#field6").append('<strong>Failed the schema validation</strong>');
-                    }
-                });
+$(function() {
+    var data = "laptop";
+    var schema = {
+        "title": "Enum field",
+        "type": "string",
+        "enum": ["book", "pen", "eraser"]
+    };
+    if (Validator.validate(data, schema).valid) {
+        $("#field6").alpaca({
+            "data": data,
+            "schema": schema
+        });
+    } else {
+        $("#field6").append('<strong>Failed the schema validation</strong>');
+    }
+});
             </script>
             <h3>Example 7: </h3>
             <h4>Custom validator.</h4>
@@ -160,41 +161,43 @@
             <div id="field7">
             </div>
             <script type="text/javascript" id="field7-script">
-                $(function() {
-                    $("#field7").alpaca({
-                        "data": "book",
-                        "schema": {
-                            "title": "Diallowed value",
-                            "type": "string",
-                            "disallow": ["book", "pencil"]
-                        },
-                        "options": {
-                            "validator" : function(control, callback) {
-                                var controlVal = control.getValue();
-                                if (controlVal == "pen" || controlVal == "book") {
-                                    callback({
-                                        "message": "Invalid value (custom validator)",
-                                        "status": false
-                                    });
-                                } else {
-                                    callback({
-                                        "message": "Valid value (custom validator)",
-                                        "status": true
-                                    });
-                                }
-                            }
-                        }
+$(function() {
+    $("#field7").alpaca({
+        "data": "book",
+        "schema": {
+            "title": "Diallowed value",
+            "type": "string",
+            "disallow": ["book", "pencil"]
+        },
+        "options": {
+            "validator" : function(control, callback) {
+                var controlVal = control.getValue();
+                if (controlVal == "pen" || controlVal == "book") {
+                    callback({
+                        "message": "Invalid value (custom validator)",
+                        "status": false
                     });
-                });
+                } else {
+                    callback({
+                        "message": "Valid value (custom validator)",
+                        "status": true
+                    });
+                }
+            }
+        }
+    });
+});
             </script>
+            </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
     </div>
-    <div class="alpaca-clear"></div>
-    <div class="alpaca-example-footer">
-        <center class="copyright">
-            Copyright &copy; 2012 Gitana Software | All Rights Reserved
-        </center>
-    </div>
+</div>
 </div>
 </body>
 </html>

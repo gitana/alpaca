@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Phone Field</title>
+        <title>Alpaca - JSON Based jQuery Form Service - Phone Field</title>
         <meta name="keywords" content="alpaca,forms,miscellaneous,gitana" />
         <meta name="description" content="Miscellaneous Field Examples for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
@@ -32,31 +32,33 @@
     </head>
     <body>
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='phone-field' alpaca-types='phone'>
-                <h2>Phone Field</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='phone-field' alpaca-types='phone'>
+                <h1>Phone Field</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Phone Field: </h3>
 					<h4>Phone field with input mask.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
-                        $("#field1").alpaca({
-                            "data": "",
-                            "schema": {
-                                "format": "phone"
-                            }
-                        });
+$("#field1").alpaca({
+    "data": "",
+    "schema": {
+        "format": "phone"
+    }
+});
                     </script>
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

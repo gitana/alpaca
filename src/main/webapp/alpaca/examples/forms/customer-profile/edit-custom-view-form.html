@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Forms > Customer Profile > Custom Edit View</title>
+        <title>Alpaca - JSON Based jQuery Form Service - Customer Profile Form with Custom Edit View</title>
         <meta name="keywords" content="alpaca,forms,create,gitana" />
         <meta name="description" content="Customer Profile Form with Custom View Template." />
         <meta name="author" content="Gitana Software Inc." />
@@ -34,132 +34,134 @@
     </head>
     <body style="min-width:1400px;">
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='customer-profile-edit-custom' alpaca-types=''>
-                <h2>Alpaca Farm Ice Cream Customer Profile</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='customer-profile-edit-custom' alpaca-types=''>
+                <h1>Alpaca Farm Ice Cream Customer Profile</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Customized Edit Form for Existing Customer</h3>
                     <h4>This example loads <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a href="./data.json" target="_source">data</a>, <a href="./options.json" target="_source">options</a> and <a href="./schema.json" target="_source">schema</a> parameters through ajax calls.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
-                        $("#field1").alpaca({
-                            "data": "./data.json",
-                            "options": "./options.json",
-                            "schema": "./schema.json",
-                            "view": {
-                                "parent": "VIEW::WEB_EDIT_LAYOUT_TWO_COLUMN",
-                                "layout": {
-                                    "bindings": {
-                                        "name": "leftcolumn",
-                                        "age": "leftcolumn",
-                                        "gender": "leftcolumn",
-                                        "member": "leftcolumn",
-                                        "photo": "leftcolumn",
-                                        "phone": "rightcolumn",
-                                        "icecream": "leftcolumn",
-                                        "address": "rightcolumn"
-                                    }
-                                },
-                                "styles": {
-                                    ".alpaca-controlfield-label": {
-                                        "min-width": "50px",
-                                        "padding-right": "2px"
-                                    }
-                                },
-                                "fields": {
-                                    "/name": {
-                                        "templates": {
-                                            "fieldOuterEl": '<span class="alpaca-field" id="${id}-outer" alpaca-field-id="${id}"><div>Full Name</div>{{html this.html}}</span>',
-                                            "controlFieldHelper": '{{if options.helper}}<div class="{{if options.helperClass}}${options.helperClass}{{/if}}" id="${helperId}">${options.helper}</div>{{/if}}'
-                                        },
-                                        "styles": {
-                                            ".alpaca-field": {
-                                                "border": "1px solid #555",
-                                                "padding": "2px"
-                                            },
-                                            ".alpaca-controlfield-label": {
-                                                "float": "left",
-                                                "margin-top": "0.3em"
-                                            }
-                                        }
-                                    },
-                                    "/age": {
-                                        "messages": {
-                                            "stringNotANumber": "Invalid Age (Must be a number)!"
-                                        },
-                                        "styles": {
-                                            ".alpaca-controlfield-label": {
-                                                "text-decoration": "underline",
-                                                "float": "left",
-                                                "margin-top": "0.3em"
-                                            }
-                                        }
-                                    },
-                                    "/gender": {
-                                        "styles": {
-                                            ".alpaca-controlfield-label": {
-                                                "text-decoration": "underline",
-                                                "float": "left",
-                                                "margin-top": "0.5em"
-                                            },
-                                            ".alpaca-controlfield-radio-label:eq(0)": {
-                                                "text-decoration": "underline"
-                                            }
-                                        }
-                                    },
-                                    "/member": {
-                                        "styles": {
-                                            ".alpaca-controlfield-label": {
-                                                "float": "left",
-                                                "margin-top": "0.3em"
-                                            }
-                                        }
-                                    },
-                                    "/address": {
-                                        "layout": {
-                                            "template": 'twoColumnLayout',
-                                            "bindings": {
-                                                "street": "leftcolumn",
-                                                "city": "rightcolumn",
-                                                "state": "rightcolumn",
-                                                "zip": "rightcolumn"
-                                            }
-                                        },
-                                        "styles": {
-                                            "h3": {
-                                                "font-size": "14px",
-                                                "margin": "0px"
-                                            }
-                                        }
-                                    },
-                                    "/address/city": {
-                                        "templates": {
-                                            "controlFieldText": '<input type="text" readonly="on" size="20" id="${id}" {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="on"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>'
-                                        }
-                                    }
-                                }
-                            },
-                            "postRender": function(renderedField) {
-                                var form = renderedField.form;
-                                if (form) {
-                                    form.registerSubmitHandler(function(e) {
-                                        alert("Custom Submit Handler");
-                                        return false;
-                                    });
-                                }
-                            }
-                        });
+$("#field1").alpaca({
+    "data": "./data.json",
+    "options": "./options.json",
+    "schema": "./schema.json",
+    "view": {
+        "parent": "VIEW::WEB_EDIT_LAYOUT_TWO_COLUMN",
+        "layout": {
+            "bindings": {
+                "name": "leftcolumn",
+                "age": "leftcolumn",
+                "gender": "leftcolumn",
+                "member": "leftcolumn",
+                "photo": "leftcolumn",
+                "phone": "rightcolumn",
+                "icecream": "leftcolumn",
+                "address": "rightcolumn"
+            }
+        },
+        "styles": {
+            ".alpaca-controlfield-label": {
+                "min-width": "50px",
+                "padding-right": "2px"
+            }
+        },
+        "fields": {
+            "/name": {
+                "templates": {
+                    "fieldOuterEl": '<span class="alpaca-field" id="${id}-outer" alpaca-field-id="${id}"><div>Full Name</div>{{html this.html}}</span>',
+                    "controlFieldHelper": '{{if options.helper}}<div class="{{if options.helperClass}}${options.helperClass}{{/if}}" id="${helperId}">${options.helper}</div>{{/if}}'
+                },
+                "styles": {
+                    ".alpaca-field": {
+                        "border": "1px solid #555",
+                        "padding": "2px"
+                    },
+                    ".alpaca-controlfield-label": {
+                        "float": "left",
+                        "margin-top": "0.3em"
+                    }
+                }
+            },
+            "/age": {
+                "messages": {
+                    "stringNotANumber": "Invalid Age (Must be a number)!"
+                },
+                "styles": {
+                    ".alpaca-controlfield-label": {
+                        "text-decoration": "underline",
+                        "float": "left",
+                        "margin-top": "0.3em"
+                    }
+                }
+            },
+            "/gender": {
+                "styles": {
+                    ".alpaca-controlfield-label": {
+                        "text-decoration": "underline",
+                        "float": "left",
+                        "margin-top": "0.5em"
+                    },
+                    ".alpaca-controlfield-radio-label:eq(0)": {
+                        "text-decoration": "underline"
+                    }
+                }
+            },
+            "/member": {
+                "styles": {
+                    ".alpaca-controlfield-label": {
+                        "float": "left",
+                        "margin-top": "0.3em"
+                    }
+                }
+            },
+            "/address": {
+                "layout": {
+                    "template": 'twoColumnLayout',
+                    "bindings": {
+                        "street": "leftcolumn",
+                        "city": "rightcolumn",
+                        "state": "rightcolumn",
+                        "zip": "rightcolumn"
+                    }
+                },
+                "styles": {
+                    "h3": {
+                        "font-size": "14px",
+                        "margin": "0px"
+                    }
+                }
+            },
+            "/address/city": {
+                "templates": {
+                    "controlFieldText": '<input type="text" readonly="on" size="20" id="${id}" {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="on"{{/if}} {{if options.formName}}name="${options.formName}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>'
+                }
+            }
+        }
+    },
+    "postRender": function(renderedField) {
+        var form = renderedField.form;
+        if (form) {
+            form.registerSubmitHandler(function(e) {
+                alert("Custom Submit Handler");
+                return false;
+            });
+        }
+    }
+});
                     </script>
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

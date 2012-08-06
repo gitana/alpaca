@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Forms > Customer Profile > Custom View</title>
+        <title>Alpaca - JSON Based jQuery Form Service - Customer Profile Form with Custom View</title>
         <meta name="keywords" content="alpaca,forms,create,gitana" />
         <meta name="description" content="Customer Profile Form with Custom View Template." />
         <meta name="author" content="Gitana Software Inc." />
@@ -72,32 +72,34 @@
     </head>
     <body>
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='customer-profile-view-custom' alpaca-types=''>    	
-			<h2>Alpaca Ice Cream Customer Profile</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='customer-profile-view-custom' alpaca-types=''>
+			<h1>Alpaca Ice Cream Customer Profile</h1>
 		</div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>		
                     <h3>Customer Profile with a Custom Display Template</h3>
 					<h4>This example loads <a href="./custom-view-template.html" target="_source">template</a>, <a href="./options.json" target="_source">options</a> and <a href="./schema.json" target="_source">schema</a> parameters through ajax calls.</h4>
 		<div id="field1">
         </div>
         <script type="text/javascript" id="field1-script">
-            $("#field1").alpaca({
-				"data": "./data.json",
-				"schema": "./schema.json",
-				"view": {
-                    "globalTemplate": "./custom-view-template.html"
-				}
-			});
+$("#field1").alpaca({
+    "data": "./data.json",
+    "schema": "./schema.json",
+    "view": {
+        "globalTemplate": "./custom-view-template.html"
+    }
+});
         </script>
-                </div>
             </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
+        </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
             </div>
-        </div>		
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>

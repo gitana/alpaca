@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Alpaca > Component Gallery > Connectors > Gitana Connector</title>
+    <title>Alpaca - JSON Based jQuery Form Service - Connectors > Gitana Connector</title>
     <meta name="keywords" content="alpaca,forms,create,gitana"/>
     <meta name="description" content="Customer Profile Form with Custom View Template."/>
     <meta name="author" content="Gitana Software Inc."/>
@@ -92,10 +92,11 @@
 </head>
 <body style="min-width:1400px;">
 <div class='alpaca-example-container'>
-    <div class='alpaca-example-header' id='gitana-connector' alpaca-types=''>
-        <h2>Full Edit Form for Cloud CMS Product Promotion</h2>
+    <div class='container_12'>
+    <div class='grid_12 alpaca-example-header' id='gitana-connector' alpaca-types=''>
+        <h1>Full Edit Form for Cloud CMS Product Promotion</h1>
     </div>
-    <div class='alpaca-example-body'>
+    <div class='grid_12 alpaca-example-body'>
         <div class='alpaca-example-case'>
             <h3>Full Edit Form for Cloud CMS Product Promotion</h3>
             <h4>This example shows you how to use Cloud CMS connector to provide in-context editing for a single product
@@ -105,107 +106,108 @@
             <div id="field1">
             </div>
             <script type="text/javascript" id="field1-script">
-                $(function() {
-                    $(document).ready(function() {
-                        var el = $('#field1');
-                        // Initialize Gitana CloudCMS connector
-                        var connector = new Alpaca.Connectors.GitanaConnector('gitana', {
-                            "gitanaContext" : Gitana.Context.create({
-                                "driver": {
-                                    "clientId": "676e3450-6131-46c2-99cc-496aa2ad80fa",
-                                    "clientSecret": "5fGkvesH/tWEMX6SpevL54rY6iJK5ADzLH963sif2ljrWvFOhV2zXv6rSpLF2uMWlJ9SG0uEO9uQO4JZac0i7DZquA/5W8ixJwhj76g0Ksk="
-                                },
-                                "authentication": {
-                                    "username": "demo",
-                                    "password": "demo"
-                                },
-                                "repository": {
-                                    "title": "Store Content"
-                                },
-                                "error" : function(error) {
+$(function() {
+    $(document).ready(function() {
+        var el = $('#field1');
+        // Initialize Gitana CloudCMS connector
+        var connector = new Alpaca.Connectors.GitanaConnector('gitana', {
+            "gitanaContext" : Gitana.Context.create({
+                "driver": {
+                    "clientId": "676e3450-6131-46c2-99cc-496aa2ad80fa",
+                    "clientSecret": "5fGkvesH/tWEMX6SpevL54rY6iJK5ADzLH963sif2ljrWvFOhV2zXv6rSpLF2uMWlJ9SG0uEO9uQO4JZac0i7DZquA/5W8ixJwhj76g0Ksk="
+                },
+                "authentication": {
+                    "username": "demo",
+                    "password": "demo"
+                },
+                "repository": {
+                    "title": "Store Content"
+                },
+                "error" : function(error) {
 
-                                }
-                            })
-                        });
-                        // Display latest promotion item
-                        el.alpaca({
-                            "view" : {
-                                "globalTemplate": './gitana/templates/LatestPromotion.html'
-                            },
-                            "data": "store:binderpromotion",
-                            "connector" : connector,
-                            "postRender": function (renderedField) {
-                                // Create an edit button
-                                var editButton = $("<button>Edit</button>").button(({
-                                    icons: {
-                                        primary: "ui-icon-pencil"
+                }
+            })
+        });
+        // Display latest promotion item
+        el.alpaca({
+            "view" : {
+                "globalTemplate": './gitana/templates/LatestPromotion.html'
+            },
+            "data": "store:binderpromotion",
+            "connector" : connector,
+            "postRender": function (renderedField) {
+                // Create an edit button
+                var editButton = $("<button>Edit</button>").button(({
+                    icons: {
+                        primary: "ui-icon-pencil"
+                    }
+                }));
+                // Pop up a dialog when the edit button is clicked
+                editButton.click(function() {
+                    editButton.removeClass("ui-state-focus ui-state-hover");
+                    var editDialog = $('<div id="alpaca-edit-form" title="Edit latest promotion"></div>');
+                    var _this = this;
+                    // Render the alpaca form inside the dialog
+                    editDialog.alpaca({
+                        "data": "alpacaexamples:binderpromotion",
+                        "options": "full",
+                        "schema": "alpacaexamples:promotion",
+                        "view":"VIEW::WEB_EDIT_LIST",
+                        "connector": connector,
+                        "postRender": function(renderedNewFieldControl) {
+                            // Hide the save button of the rendered form since we will use the save button
+                            // on the dialog panel instead.
+                            var saveButton = renderedNewFieldControl.form.saveButton;
+                            saveButton.hide();
+                            editDialog.dialog({
+                                resizable: true,
+                                height: 550,
+                                width: 650,
+                                modal: true,
+                                buttons: {
+                                    "Save": function() {
+                                        // When the save button on dialog is clicked, the hidden button on the form
+                                        // will be clicked as well. It will then invoke the saveData method of the connector
+                                        // which will push the updates to the CloudCMS server.
+                                        saveButton.field.click();
                                     }
-                                }));
-                                // Pop up a dialog when the edit button is clicked
-                                editButton.click(function() {
-                                    editButton.removeClass("ui-state-focus ui-state-hover");
-                                    var editDialog = $('<div id="alpaca-edit-form" title="Edit latest promotion"></div>');
-                                    var _this = this;
-                                    // Render the alpaca form inside the dialog
-                                    editDialog.alpaca({
-                                        "data": "alpacaexamples:binderpromotion",
-                                        "options": "full",
-                                        "schema": "alpacaexamples:promotion",
-                                        "view":"VIEW::WEB_EDIT_LIST",
-                                        "connector": connector,
-                                        "postRender": function(renderedNewFieldControl) {
-                                            // Hide the save button of the rendered form since we will use the save button
-                                            // on the dialog panel instead.
-                                            var saveButton = renderedNewFieldControl.form.saveButton;
-                                            saveButton.hide();
-                                            editDialog.dialog({
-                                                resizable: true,
-                                                height: 550,
-                                                width: 650,
-                                                modal: true,
-                                                buttons: {
-                                                    "Save": function() {
-                                                        // When the save button on dialog is clicked, the hidden button on the form
-                                                        // will be clicked as well. It will then invoke the saveData method of the connector
-                                                        // which will push the updates to the CloudCMS server.
-                                                        saveButton.field.click();
-                                                    }
-                                                }
-                                            });
-                                            // Make the dialog look pretty
-                                            $('.ui-dialog').css("overflow", "hidden");
-                                            $('.ui-dialog-buttonpane').css("overflow", "hidden");
-                                            // Add callback to the save button
-                                            if (saveButton) {
-                                                saveButton.success = function (updatedData) {
-                                                    // Once the data is saved successfully, this callback will be invoked to re-render the
-                                                    // display view of the promotion item.
-                                                    el.empty().alpaca({
-                                                        "view" : {
-                                                            "globalTemplate": './gitana/templates/LatestPromotion.html'
-                                                        },
-                                                        "data": updatedData
-                                                    });
-                                                    editDialog.dialog('close');
-                                                    alert("Promotion updated!");
-                                                };
-                                            }
-                                        }
+                                }
+                            });
+                            // Make the dialog look pretty
+                            $('.ui-dialog').css("overflow", "hidden");
+                            $('.ui-dialog-buttonpane').css("overflow", "hidden");
+                            // Add callback to the save button
+                            if (saveButton) {
+                                saveButton.success = function (updatedData) {
+                                    // Once the data is saved successfully, this callback will be invoked to re-render the
+                                    // display view of the promotion item.
+                                    el.empty().alpaca({
+                                        "view" : {
+                                            "globalTemplate": './gitana/templates/LatestPromotion.html'
+                                        },
+                                        "data": updatedData
                                     });
-                                });
-                                el.after(editButton);
+                                    editDialog.dialog('close');
+                                    alert("Promotion updated!");
+                                };
                             }
-                        });
+                        }
                     });
                 });
+                el.after(editButton);
+            }
+        });
+    });
+});
             </script>
+            </div>
         </div>
-    </div>
-    <div class="alpaca-clear"></div>
-    <div class="alpaca-example-footer">
-        <center class="copyright">
-            Copyright &copy; 2012 Gitana Software | All Rights Reserved
-        </center>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
     </div>
 </div>
 </body>

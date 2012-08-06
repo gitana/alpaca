@@ -313,6 +313,7 @@
                                 _this.addItem(0, null, "", id);
                                 return false;
                             }).wrap('<small></small>');
+
                 }
                 toolbarElem.appendTo(containerElem);
                 this.arrayToolbar = toolbarElem;

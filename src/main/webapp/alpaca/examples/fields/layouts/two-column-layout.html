@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca > Component Gallery > Layout > Two-Column</title>
+        <title>Alpaca - JSON Based jQuery Form Service - Layout > Two-Column</title>
         <meta name="keywords" content="alpaca,forms,layout,gitana" />
         <meta name="description" content="Two-Column Layout for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
@@ -32,12 +32,13 @@
             SyntaxHighlighter.all()
         </script>
     </head>
-    <body style="min-width:1300px;">
+    <body style="min-width:1400px;">
         <div class='alpaca-example-container'>
-            <div class='alpaca-example-header' id='layout-two-column' alpaca-types=''>
-                <h2>Two-Column Layout</h2>
+    <div class='container_12'>
+            <div class='grid_12 alpaca-example-header' id='layout-two-column' alpaca-types=''>
+                <h1>Two-Column Layout</h1>
             </div>
-            <div class='alpaca-example-body'>
+            <div class='grid_12 alpaca-example-body'>
                 <div class='alpaca-example-case'>
                     <h3>Example 1: </h3>
                     <h4>Field to template region bindings are defined by the templates properties of the view parameter. 
@@ -45,29 +46,29 @@
                     <div id="field1">
                     </div>
                     <script type="text/javascript"id="field1-script">
-                        $(function() {
-                            $("#field1").alpaca({
-                                "data": "./customer-profile-data.json",
-                                "schema": "./customer-profile-schema.json",
-                                "options": "./customer-profile-options.json",
-                                "view": {
-                                    "parent": "VIEW::WEB_EDIT_LIST",
-                                    "layout": {
-                                        "template": './two-column-layout-template.html',
-                                        "bindings": {
-                                            "name": "leftcolumn",
-                                            "age": "leftcolumn",
-                                            "gender": "leftcolumn",
-                                            "member": "leftcolumn",
-                                            "photo": "leftcolumn",
-                                            "phone": "leftcolumn",
-                                            "icecream": "leftcolumn",
-                                            "address": "rightcolumn"
-                                        }
-                                    }
-                                }
-                            });
-                        });
+$(function() {
+    $("#field1").alpaca({
+        "data": "./customer-profile-data.json",
+        "schema": "./customer-profile-schema.json",
+        "options": "./customer-profile-options.json",
+        "view": {
+            "parent": "VIEW::WEB_EDIT_LIST",
+            "layout": {
+                "template": './two-column-layout-template.html',
+                "bindings": {
+                    "name": "leftcolumn",
+                    "age": "leftcolumn",
+                    "gender": "leftcolumn",
+                    "member": "leftcolumn",
+                    "photo": "leftcolumn",
+                    "phone": "leftcolumn",
+                    "icecream": "leftcolumn",
+                    "address": "rightcolumn"
+                }
+            }
+        }
+    });
+});
                     </script>
 
                     <h3>Example 2: </h3>
@@ -76,28 +77,28 @@
                     <div id="field2">
                     </div>
                     <script type="text/javascript"id="field2-script">
-                        $(function() {
-                            $("#field2").alpaca({
-                                "data": "./customer-profile-data.json",
-                                "schema": "./customer-profile-schema.json",
-                                "options": "./customer-profile-options.json",
-                                "view": {
-                                    "parent": "VIEW::WEB_EDIT_LIST_LAYOUT_TWO_COLUMN",
-                                    "layout": {
-                                        "bindings": {
-                                            "name": "leftcolumn",
-                                            "age": "leftcolumn",
-                                            "gender": "leftcolumn",
-                                            "member": "leftcolumn",
-                                            "photo": "leftcolumn",
-                                            "phone": "leftcolumn",
-                                            "icecream": "leftcolumn",
-                                            "address": "rightcolumn"
-                                        }
-                                    }
-                                }
-                            });
-                        });
+$(function() {
+    $("#field2").alpaca({
+        "data": "./customer-profile-data.json",
+        "schema": "./customer-profile-schema.json",
+        "options": "./customer-profile-options.json",
+        "view": {
+            "parent": "VIEW::WEB_EDIT_LIST_LAYOUT_TWO_COLUMN",
+            "layout": {
+                "bindings": {
+                    "name": "leftcolumn",
+                    "age": "leftcolumn",
+                    "gender": "leftcolumn",
+                    "member": "leftcolumn",
+                    "photo": "leftcolumn",
+                    "phone": "leftcolumn",
+                    "icecream": "leftcolumn",
+                    "address": "rightcolumn"
+                }
+            }
+        }
+    });
+});
                     </script>
                     <h3>Example 3: </h3>
                     <h4>Field to template region bindings are defined by the templates properties of the view parameter.
@@ -105,38 +106,38 @@
                     <div id="field3">
                     </div>
                     <script type="text/javascript"id="field3-script">
-                        $(function() {
-                            $("#field3").alpaca({
-                                "data": "./customer-profile-data.json",
-                                "schema": "./customer-profile-schema.json",
-                                "options": "./customer-profile-options.json",
-                                "view": {
-                                    "parent": "VIEW::WEB_EDIT_LAYOUT_TWO_COLUMN",
-                                    "layout": {
-                                        "bindings": {
-                                            "name": "leftcolumn",
-                                            "age": "leftcolumn",
-                                            "gender": "leftcolumn",
-                                            "member": "leftcolumn",
-                                            "photo": "leftcolumn",
-                                            "phone": "leftcolumn",
-                                            "icecream": "leftcolumn",
-                                            "address": "rightcolumn"
-                                        }
-                                    }
-                                }
-                            });
-                        });
+$(function() {
+    $("#field3").alpaca({
+        "data": "./customer-profile-data.json",
+        "schema": "./customer-profile-schema.json",
+        "options": "./customer-profile-options.json",
+        "view": {
+            "parent": "VIEW::WEB_EDIT_LAYOUT_TWO_COLUMN",
+            "layout": {
+                "bindings": {
+                    "name": "leftcolumn",
+                    "age": "leftcolumn",
+                    "gender": "leftcolumn",
+                    "member": "leftcolumn",
+                    "photo": "leftcolumn",
+                    "phone": "leftcolumn",
+                    "icecream": "leftcolumn",
+                    "address": "rightcolumn"
+                }
+            }
+        }
+    });
+});
                     </script>
-
-                </div>
-            </div>
-			<div class="alpaca-clear"></div>
-            <div class="alpaca-example-footer">
-                <center class="copyright">
-                    Copyright &copy; 2012 Gitana Software | All Rights Reserved
-                </center>
             </div>
         </div>
+        <div class="grid_12">
+            <div class="copyright">
+                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+            </div>
+        </div>
+        <div class="clear height-fix"></div>
+    </div>
+</div>
     </body>
 </html>
