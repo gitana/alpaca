@@ -6,24 +6,12 @@ With comprehensive control library and out of the box support for validation, wi
 
 Alpaca is also part of Cloud CMS, a highly scalable clouded based platform for modeling, storing, retrieving and versioning content.
 
+### Resources
 
-Git: http://github.com/gitana/alpaca
+*Home http://code.cloudcms.com/alpaca
 
-Home: http://code.cloudcms.com/alpaca
-
-JavaScript documentation: http://code.cloudcms.com/alpaca/documentation/allclasses.html
-
-### Questions and Bug Reports
- * jira: https://gitana.atlassian.net/browse/ALPACA
-
-### Change Log ##
-
-https://gitana.atlassian.net/browse/ALPACA
+*JavaScript docs http://code.cloudcms.com/alpaca/1.0.1-SNAPSHOT/js-doc/allclasses.html
 
 ### Maintainers
 * Yong Qu     drq@cloudcms.com
 * Michael Uzquiano     uzi@cloudcms.com
-
-### Contributors:
-
-Coming soon!
