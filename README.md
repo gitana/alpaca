@@ -8,9 +8,9 @@ Alpaca is also part of Cloud CMS, a highly scalable clouded based platform for m
 
 ### Resources
 
-*Home http://code.cloudcms.com/alpaca
+* Home http://www.alpacajs.org/
 
-*JavaScript docs http://code.cloudcms.com/alpaca/1.0.1-SNAPSHOT/js-doc/allclasses.html
+* JavaScript docs http://code.cloudcms.com/alpaca/1.0.1-SNAPSHOT/js-doc/allclasses.html
 
 ### Maintainers
 * Yong Qu     drq@cloudcms.com
