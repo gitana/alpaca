@@ -188,6 +188,52 @@ $(function() {
     });
 });
             </script>
+            <h3>Example 8: </h3>
+            <h4>Custom validator.</h4>
+            <div id="field8">
+            </div>
+            <script type="text/javascript" id="field8-script">
+$(function() {
+    $("#field8").alpaca({
+        "data": {
+            "weight" : 100,
+            "age" : 10
+        },
+        "schema": {
+            "title": "Ride Requirement",
+            "type": "object",
+            "properties": {
+                "weight" : {
+                    "type" : "integer",
+                    "title" : "Weight",
+                    "decription" : "Enter your weight."
+                },
+                "age" : {
+                    "type" : "integer",
+                    "title" : "Age",
+                    "decription" : "Enter your age."
+                }
+            }
+        },
+        "options": {
+            "validator" : function(control, callback) {
+                var controlVal = control.getValue();
+                if (controlVal['weight'] <= 120 || controlVal['age'] <= 12) {
+                    callback({
+                        "message": "Weight must be over 120 and age must be over 12.",
+                        "status": false
+                    });
+                } else {
+                    callback({
+                        "message": "Valid value (custom validator)",
+                        "status": true
+                    });
+                }
+            }
+        }
+    });
+});
+            </script>
             </div>
         </div>
         <div class="grid_12">

@@ -566,7 +566,8 @@
                 var forceRevalidation = false;
                 var parent = this.parent;
                 while (parent) {
-                    if (parent.options && parent.options.forceRevalidation) {
+                    // if parent has custom validator, it should re-validate.
+                    if (parent.options && (parent.options.forceRevalidation || parent.options.validator)) {
                         forceRevalidation = true;
                     }
                     parent = parent.parent;
