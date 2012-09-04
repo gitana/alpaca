@@ -184,12 +184,14 @@
             Here is a sample configuration for setting <a href="http://httpd.apache.org/docs/2.2/mod/mod_proxy.html">Apache
             proxy</a>
             <pre class="brush: js; toolbar: false;">
-        ProxyRequests Off
+RewriteEngine On
+RewriteRule .* - [E=host:%{HTTP_HOST}]
 
-        ProxyPassInterpolateEnv On
-        ProxyPass /proxy http://api.cloudcms.com:80 interpolate
-        ProxyPassReverse /proxy http://api.cloudcms.com:80 interpolate
-        ProxyPassReverseCookieDomain localhost ${HTTP_HOST} interpolate
+ProxyRequests Off
+ProxyPassInterpolateEnv On
+ProxyPass /proxy http://api.cloudcms.com interpolate
+ProxyPassReverse /proxy http://api.cloudcms.com interpolate
+ProxyPassReverseCookieDomain api.cloudcms.com interpolate
             </pre>
         </p>
 

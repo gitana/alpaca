@@ -351,8 +351,14 @@
 </body>
 <script type="text/javascript" id="field1-script">
     $(function() {
-        $("#ipad-link").attr('href', 'http://ipadpeek.com/?url=' + window.location.hostname + ':' + window.location.port + '/alpaca/${pom.version}/examples/mobile/mobile-examples.html&portrait');
-        $("#iphone-link").attr('href', 'http://testiphone.com/?url=http://' + window.location.hostname + ':' + window.location.port + '/alpaca/${pom.version}/examples/mobile/mobile-examples.html');
+        var prefix = "";
+        if (window.location.hostname.indexOf('alpacajs.org') != -1 ) {
+            prefix = window.location.hostname;
+        } else {
+            prefix = window.location.hostname + ':' + window.location.port + '/alpaca/${pom.version}';
+        }
+        $("#ipad-link").attr('href', 'http://ipadpeek.com/?url=' + prefix + '/examples/mobile/mobile-examples.html&portrait');
+        $("#iphone-link").attr('href', 'http://testiphone.com/?url=http://' + prefix + '/examples/mobile/mobile-examples.html');
     });
 </script>
 </html>
