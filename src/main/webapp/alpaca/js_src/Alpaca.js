@@ -448,7 +448,7 @@
          *
          * View ID Prefix.
          */
-        viewIdPrefix: "VIEW::",
+        viewIdPrefix: "VIEW_",
 
         /**
          * Validates a view id.
@@ -538,7 +538,7 @@
         /**
          * Default view.
          */
-        defaultView : "VIEW::WEB_EDIT",
+        defaultView : "VIEW_WEB_EDIT",
 
         /**
          * Gets view for a given id.

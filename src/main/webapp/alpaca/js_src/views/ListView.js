@@ -3,8 +3,8 @@
     var Alpaca = $.alpaca;
 
     Alpaca.registerView({
-        "id": "VIEW::WEB_EDIT_LIST",
-        "parent": 'VIEW::WEB_EDIT',
+        "id": "VIEW_WEB_EDIT_LIST",
+        "parent": 'VIEW_WEB_EDIT',
         "title": "Web Edit View List Style",
         "description": "Web edit view based on list styles.",
         "type": "edit",

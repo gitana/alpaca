@@ -361,7 +361,7 @@
         </plugins>
     </build>
     <properties>
-        <jquery.version>1.5</jquery.version>
+        <jquery.version>1.8.1</jquery.version>
         <jquery.ui.version>1.8.8</jquery.ui.version>
         <jquery.mobile.version>1.0a3</jquery.mobile.version>
         <gitana.driver.version>1.0.1-SNAPSHOT</gitana.driver.version>

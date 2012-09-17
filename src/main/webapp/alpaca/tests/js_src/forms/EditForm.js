@@ -10,7 +10,7 @@
             "options": "../examples/forms/customer-profile/simple-options.json",
             "schema": "../examples/forms/customer-profile/schema.json",
             "view": {
-                "parent": "VIEW::WEB_EDIT",
+                "parent": "VIEW_WEB_EDIT",
                 "displayReadonly": true
             },
             "postRender": function (renderedField) {
@@ -32,7 +32,7 @@
             "options": "../examples/forms/customer-profile/simple-options.json",
             "schema": "../examples/forms/customer-profile/schema.json",
             "view": {
-                "parent": "VIEW::WEB_EDIT",
+                "parent": "VIEW_WEB_EDIT",
                 "displayReadonly": false
             },
             "postRender": function (renderedField) {

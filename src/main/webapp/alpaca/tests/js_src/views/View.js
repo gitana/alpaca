@@ -47,7 +47,7 @@
         $("#view-2").alpaca({
             "data": "Alpaca Farm Offers Best Home Made Ice Cream!",
             "render": function(field, postRenderCallback) {
-                field.render('VIEW::WEB_DISPLAY');
+                field.render('VIEW_WEB_DISPLAY');
                 postRenderCallback(field);
             },
             "postRender": function (renderedField) {

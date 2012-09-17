@@ -68,7 +68,7 @@
                 "maxLength": 8
             },
             "view": {
-                "parent": "VIEW::WEB_EDIT",
+                "parent": "VIEW_WEB_EDIT",
                 "styles": {
                     ".alpaca-controlfield-label": {
                         "float": "left",

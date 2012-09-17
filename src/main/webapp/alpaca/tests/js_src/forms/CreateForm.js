@@ -8,7 +8,7 @@
         $("#createform-1").alpaca({
             "options": "../examples/forms/customer-profile/options.json",
             "schema": "../examples/forms/customer-profile/schema.json",
-            "view": "VIEW::WEB_CREATE",
+            "view": "VIEW_WEB_CREATE",
             "postRender": function (renderedField) {
                 expect(13);
                 var formElem = $('#createform-1 form');
@@ -38,7 +38,7 @@
         $("#createform-2").alpaca({
             "options": "../examples/forms/customer-profile/simple-options.json",
             "schema": "../examples/forms/customer-profile/schema.json",
-            "view": "VIEW::WEB_CREATE",
+            "view": "VIEW_WEB_CREATE",
             "postRender": function (renderedField) {
                 expect(1);
                 var textInputElems = $('#createform-2 span.alpaca-controlfield:visible');

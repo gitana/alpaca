@@ -10,7 +10,7 @@
             "options": "../examples/fields/wizards/customer-profile-options.json",
             "schema": "../examples/fields/wizards/customer-profile-schema.json",
             "view": {
-                "parent": "VIEW::WEB_EDIT_LIST",
+                "parent": "VIEW_WEB_EDIT_LIST",
                 "wizard": {
                     "renderWizard": true,
                     "statusBar": true,
@@ -109,7 +109,7 @@
             "options": "../examples/fields/wizards/customer-profile-options.json",
             "schema": "../examples/fields/wizards/customer-profile-schema.json",
             "view": {
-                "parent": "VIEW::WEB_EDIT_LIST",
+                "parent": "VIEW_WEB_EDIT_LIST",
                 "layout": {
                     "template": '../examples/fields/wizards/wizard-template.html',
                     "bindings": {
