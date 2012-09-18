@@ -496,7 +496,7 @@
             // remove the message element if it exists
             var _this = this;
             if (beforeStatus == false) {
-                $("#[id^='" + _this.getId() + "-field-message']", _this.getEl()).remove();
+                $("[id^='" + _this.getId() + "-field-message']", _this.getEl()).remove();
             }
             // add message and generate it
             if (messages && messages.length > 0) {
