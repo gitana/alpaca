@@ -32,32 +32,17 @@
 
         },
         "styles": {
-            /*
-            ".alpaca-fieldset-legend": {
-            },
-            ".alpaca-controlfield-label": {
-                "width": "100px",
-                "display": "inline-block",
-                "vertical-align": "top",
-                "padding-top": "0.5em"
-            },
-            "fieldset": {
-                "border-left":"none",
-                "border-bottom":"none",
-                "border-right":"none",
-                "padding-right":"3em"
-            }*/
         },
         "fields": {
             "/": {
                 "templates": {
                     // Templates for container fields
-                    fieldSetOuterEl: '<fieldset style="border:none">{{html this.html}}</fieldset>',
-                    fieldSetMessage: '<div><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><span>${message}</span></div>',
-                    fieldSetLegend: '{{if options.label}}<legend class="{{if options.labelClass}}${options.labelClass}{{/if}}" style="padding-top:2em;border:none;">${options.label}</legend>{{/if}}',
-                    fieldSetHelper: '{{if options.helper}}<div class="{{if options.helperClass}}${options.helperClass}{{/if}}">${options.helper}</div>{{/if}}',
+                    //fieldSetOuterEl: '<fieldset style="border:none">{{html this.html}}</fieldset>',
+                    //fieldSetMessage: '<div><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><span>${message}</span></div>',
+                    //fieldSetLegend: '{{if options.label}}<legend class="{{if options.labelClass}}${options.labelClass}{{/if}}" style="padding-top:2em;border:none;">${options.label}</legend>{{/if}}',
+                    //fieldSetHelper: '{{if options.helper}}<div class="{{if options.helperClass}}${options.helperClass}{{/if}}">${options.helper}</div>{{/if}}',
                     fieldSetItemsContainer: '<ol style="padding-left :0;">{{html this.html}}</ol>',
-                    fieldSet: '{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"fieldSetLegend")}}{{html Alpaca.fieldTemplate(this,"fieldSetHelper")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetItemsContainer",true)}}{{/wrap}}{{/wrap}}',
+                    //fieldSet: '{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"fieldSetLegend")}}{{html Alpaca.fieldTemplate(this,"fieldSetHelper")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetItemsContainer",true)}}{{/wrap}}{{/wrap}}',
                     fieldSetItemContainer: '<li style="list-style:none;"></li>'
                 }
             }
