@@ -369,7 +369,7 @@ $(function() {
       "renderForm":true,
       "form":{
         "attributes":{
-          "action":"endpoints/save.php",
+          "action":"examples/endpoints/save.php",
           "method":"post"
         },
         "buttons":{
@@ -500,7 +500,7 @@ $(function() {
           var val = renderedForm.getValue();
           $.ajax({
             type: "POST",
-            url: "endpoints/save2.php",
+            url: "examples/endpoints/save2.php",
             data: {json:JSON.stringify(val)},
             success: function(msg) {
               alert("Request received: " + msg);
@@ -657,7 +657,7 @@ $(function() {
             "renderForm":true,
             "form":{
                 "attributes":{
-                    "action":"endpoints/save.php",
+                    "action":"examples/endpoints/save.php",
                     "method":"post"
                 },
                 "buttons":{
@@ -742,7 +742,7 @@ $(function() {
                     var val = renderedForm.getValue();
                     $.ajax({
                         type: "POST",
-                        url: "endpoints/save2.php",
+                        url: "examples/endpoints/save2.php",
                         data: {json:JSON.stringify(val)},
                         success: function(msg) {
                             alert("Request received: " + msg);
