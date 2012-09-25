@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<project name="Alpaca Forms" basedir="../" default="update">
+    <!-- load custom properties file -->
+    <property file="custom-deployment.properties"/>
+
+    <!-- load properties from file -->
+    <property file="deployment.properties"/>
+
+    <target name="clean">
+        <mkdir dir="${local.deployment.basepath}/${appkey}"/>
+        <delete>
+            <fileset dir="${local.deployment.basepath}/${appkey}" includes="**/*"/>
+        </delete>
+    </target>
+
+    <target name="full" depends="clean">
+        <copy todir="${local.deployment.basepath}/${appkey}">
+            <fileset dir="${dev.root}/target/${artifact}-${version}">
+                <exclude name="WEB-INF/**/*"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="update">
+        <copy todir="${local.deployment.basepath}/${appkey}">
+            <fileset dir="src/main/webapp">
+            </fileset>
+        </copy>
+    </target>
+</project>

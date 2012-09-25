@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Alpaca - HTML5 Forms for jQuery - Layout > Two-Column</title>
+        <meta name="keywords" content="alpaca,forms,layout,gitana" />
+        <meta name="description" content="Two-Column Layout for Alpaca Forms." />
+        <meta name="author" content="Gitana Software Inc." />
+        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="../../../lib/jquery-latest.min.js"></script>
+        <!--Custom jQuery UI Library-->
+        <script type="text/javascript" src="../../../lib/jquery-ui-latest.custom.min.js"></script>
+        <!--End of Custom jQuery UI Library-->
+
+        <!--Alpaca JavaScript-->
+        <script type="text/javascript" src="../../../lib/base.js"></script>
+        <script type="text/javascript" src="../../../lib/validator.js"></script>
+
+        <script type="text/javascript" src="../../../lib/jquery.tmpl.js"></script>
+        <script type="text/javascript" src="../../../lib/equiv_and_hoozit.js"></script>
+        <script type="text/javascript" src="../../../lib/jquery.maskedinput-1.2.2.min.js"></script>
+
+        <script type="text/javascript" src="../../../js/Alpaca.js"></script>
+
+        <script type="text/javascript" src="../../../js/views/DefaultView.js"></script>
+        <script type="text/javascript" src="../../../js/views/ListView.js"></script>
+        <script type="text/javascript" src="../../../js/views/MobileView.js"></script>
+        <script type="text/javascript" src="../../../js/views/LayoutView.js"></script>
+
+        <script type="text/javascript" src="../../../js/View.js"></script>
+
+        <script type="text/javascript" src="../../../js/Field.js"></script>
+        <script type="text/javascript" src="../../../js/ControlField.js"></script>
+        <script type="text/javascript" src="../../../js/ContainerField.js"></script>
+        <script type="text/javascript" src="../../../js/Connector.js"></script>
+        <script type="text/javascript" src="../../../js/Form.js"></script>
+
+        <!--Alpaca Base Fields-->
+        <script type="text/javascript" src="../../../js/fields/basic/TextField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/TextAreaField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/CheckBoxField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/FileField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ListField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/RadioField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/SelectField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/NumberField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ArrayField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ObjectField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/AnyField.js"></script>
+        <!--End of Alpaca Base Fields-->
+
+        <!--Alpaca Other Fields-->
+        <script type="text/javascript" src="../../../js/fields/advanced/AddressField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/DateField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/EmailField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/IntegerField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/IPv4Field.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/JSONField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/IntegerField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/LowerCaseField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/MapField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/PasswordField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/PersonalNameField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/PhoneField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/TagField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/TimeField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/UpperCaseField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/WysiwygField.js"></script>
+        <!--End of Alpaca Other Fields-->
+
+        <script type="text/javascript" src="../../../js/views/DefaultViewLanguagePacks.js"></script>
+
+        <!--End of Alpaca JavaScript-->
+
+        <script type="text/javascript" src="../../lib/google-code-prettify/prettify.min.js"></script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js"></script>
+        <script type="text/javascript" src="../../js/example.js"></script>
+
+        <!--Alpaca CSS-->
+        <link type="text/css" href="../../../css/960.fluid.css" rel="stylesheet"/>
+        <link type="text/css" href="../../../css/alpaca.css" rel="stylesheet"/>
+        <link type="text/css" href="../../../css/jquery-ui-latest.custom.css" rel="stylesheet"/>
+        <!--End of Alpaca CSS-->
+        <link type="text/css" href="../../css/site.css" rel="stylesheet"/>
+        <link type="text/css" href="../../lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+        <!-- custom styles for this example-->
+        <style>
+            .alpaca-layout-two-column-mask.ui-widget-content {
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+<header>
+    <div class='actual-body'>
+        <div class='grid_12'>
+            <h1><img src="../../img/alpaca.png"><span>Component Gallery</span></h1>
+            <div class="resource-bar">
+                <a href="../../../index.html">Home</a> |
+                <a href="../../../resources.html#downloads"> Downloads</a> |
+                <a href="javascript:void(0);" class="current"> Component Gallery</a> |
+                <a href="../../../resources.html#documentation"> Documentation</a> |
+                <a href="../../../resources.html#unittests"> Unit Tests</a> |
+                <a href="../../forms/customer-profile/create-form.html"> Form Gallery</a> |
+                <a href="../../../resources.html#mobile"> Alpaca On Mobile</a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class='container_12'>
+    <div class="actual-body">
+        <div class="grid_3">
+            <div class="container_12 side-bar">
+            </div>
+        </div>
+
+        <div class="grid_9">
+            <div class="container_12">
+                <div class="widget">
+                    <div class="widget-body">
+            <div class='grid_12 alpaca-example-header' id='layout-two-column' alpaca-types=''>
+                <h1>Two-Column Layout</h1>
+            </div>
+            <div class='grid_12 alpaca-example-case'>
+                    <h3>Example 1: </h3>
+                    <h4>Field to template region bindings are defined by the templates properties of the view parameter. 
+                        This example loades <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a href="./customer-profile-data.json" target="_source">data</a>, <a href="./customer-profile-schema.json" target="_source">schema</a> and <a href="./customer-profile-options.json" target="_source">options</a> parameters through ajax calls.</h4>
+                    <div id="field1"  style="min-width:1200px;">
+                    </div>
+                    <script type="text/javascript"id="field1-script">
+$(function() {
+    $("#field1").alpaca({
+        "data": "./customer-profile-data.json",
+        "schema": "./customer-profile-schema.json",
+        "options": "./customer-profile-options.json",
+        "view": {
+            "parent": "VIEW_WEB_EDIT_LIST",
+            "layout": {
+                "template": './two-column-layout-template.html',
+                "bindings": {
+                    "name": "leftcolumn",
+                    "age": "leftcolumn",
+                    "gender": "leftcolumn",
+                    "member": "leftcolumn",
+                    "photo": "leftcolumn",
+                    "phone": "leftcolumn",
+                    "icecream": "leftcolumn",
+                    "address": "rightcolumn"
+                }
+            }
+        }
+    });
+});
+                    </script>
+
+                    <h3>Example 2: </h3>
+                    <h4>Field to template region bindings are defined by the templates properties of the view parameter.
+                        This example loades <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a href="./customer-profile-data.json" target="_source">data</a>, <a href="./customer-profile-schema.json" target="_source">schema</a> and <a href="./customer-profile-options.json" target="_source">options</a> parameters through ajax calls.</h4>
+                    <div id="field2"  style="min-width:1200px;">
+                    </div>
+                    <script type="text/javascript"id="field2-script">
+$(function() {
+    $("#field2").alpaca({
+        "data": "./customer-profile-data.json",
+        "schema": "./customer-profile-schema.json",
+        "options": "./customer-profile-options.json",
+        "view": {
+            "parent": "VIEW_WEB_EDIT_LIST_LAYOUT_TWO_COLUMN",
+            "layout": {
+                "bindings": {
+                    "name": "leftcolumn",
+                    "age": "leftcolumn",
+                    "gender": "leftcolumn",
+                    "member": "leftcolumn",
+                    "photo": "leftcolumn",
+                    "phone": "leftcolumn",
+                    "icecream": "leftcolumn",
+                    "address": "rightcolumn"
+                }
+            }
+        }
+    });
+});
+                    </script>
+                    <h3>Example 3: </h3>
+                    <h4>Field to template region bindings are defined by the templates properties of the view parameter.
+                        This example loades <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a href="./customer-profile-data.json" target="_source">data</a>, <a href="./customer-profile-schema.json" target="_source">schema</a> and <a href="./customer-profile-options.json" target="_source">options</a> parameters through ajax calls.</h4>
+                    <div id="field3" style="min-width:1200px;">
+                    </div>
+                    <script type="text/javascript"id="field3-script">
+$(function() {
+    $("#field3").alpaca({
+        "data": "./customer-profile-data.json",
+        "schema": "./customer-profile-schema.json",
+        "options": "./customer-profile-options.json",
+        "view": {
+            "parent": "VIEW_WEB_EDIT_LAYOUT_TWO_COLUMN",
+            "layout": {
+                "bindings": {
+                    "name": "leftcolumn",
+                    "age": "leftcolumn",
+                    "gender": "leftcolumn",
+                    "member": "leftcolumn",
+                    "photo": "leftcolumn",
+                    "phone": "leftcolumn",
+                    "icecream": "leftcolumn",
+                    "address": "rightcolumn"
+                }
+            }
+        }
+    });
+});
+                    </script>
+                        </div>
+                        <div class="clear height-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container_12">
+        <div class="grid_12 copyright">
+            Copyright &copy; 2012 Gitana Software | All Rights Reserved
+        </div>
+    </div>
+</footer>
+    </body>
+</html>
