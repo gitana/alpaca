@@ -1,30 +1,354 @@
 <?xml version='1.0'?>
 <project name="Alpaca Forms" basedir="." default="update">
     <!-- load custom properties file -->
-    <property file="custom-deployment.properties"/>
+    <property file="custom-local.properties"/>
 
     <!-- load properties from file -->
-    <property file="deployment.properties"/>
+    <property file="local.properties"/>
 
-    <target name="clean">
-        <mkdir dir="${local.deployment.basepath}/${appkey}"/>
-        <delete>
-            <fileset dir="${local.deployment.basepath}/${appkey}" includes="**/*"/>
-        </delete>
+    <property name="project.dir" value="."/>
+
+    <property name="js.dir" value="${project.dir}/js"/>
+    <property name="lib.dir" value="${project.dir}/lib"/>
+    <property name="css.dir" value="${project.dir}/css"/>
+    <property name="examples.dir" value="${project.dir}/examples"/>
+    <property name="tests.dir" value="${project.dir}/tests"/>
+
+    <property name="build.dir" value="${project.dir}/build"/>
+
+    <property name="prep.dir" value="${build.dir}/prep"/>
+    <property name="package.dir" value="${build.dir}/package"/>
+
+    <property name="yui-compressor" value="${project.dir}/tool/yuicompressor-2.4.7.jar"/>
+
+    <target name="setup" description="Creates all required directories" depends="clean">
+        <mkdir dir="${build.dir}"/>
     </target>
 
-    <target name="full" depends="clean">
-        <copy todir="${local.deployment.basepath}/${appkey}">
-            <fileset dir="${dev.root}/target/${artifact}-${version}">
-                <exclude name="WEB-INF/**/*"/>
+    <target name="prep" description="Creates all required directories" depends="setup">
+        <mkdir dir="${prep.dir}"/>
+        <mkdir dir="${prep.dir}/js"/>
+        <mkdir dir="${prep.dir}/lib"/>
+        <mkdir dir="${prep.dir}/css"/>
+        <mkdir dir="${prep.dir}/tests"/>
+        <mkdir dir="${prep.dir}/examples"/>
+        <mkdir dir="${package.dir}"/>
+        <mkdir dir="${package.dir}/js"/>
+        <mkdir dir="${package.dir}/lib"/>
+        <mkdir dir="${package.dir}/examples"/>
+
+        <copy todir="${prep.dir}/js">
+            <fileset dir="${js.dir}"/>
+        </copy>
+        <copy todir="${prep.dir}/lib">
+            <fileset dir="${lib.dir}"/>
+        </copy>
+        <copy todir="${prep.dir}/css">
+            <fileset dir="${css.dir}"/>
+        </copy>
+        <copy todir="${prep.dir}/examples">
+            <fileset dir="${examples.dir}"/>
+        </copy>
+        <copy todir="${prep.dir}/tests">
+            <fileset dir="${tests.dir}"/>
+        </copy>
+        <copy todir="${prep.dir}/">
+            <fileset dir="${project.dir}">
+                <include name="favicon.ico"/>
+                <include name="index.html"/>
+                <include name="resources.html"/>
             </fileset>
         </copy>
     </target>
 
-    <target name="update">
-        <copy todir="${local.deployment.basepath}/${appkey}">
-            <fileset dir="${dev.root}/src/main/webapp">
+    <target name="concat-js" description="Concat all javascript files" depends="prep">
+        <concat destfile="${package.dir}/js/${appkey}-${version}-full.js">
+            <filelist dir="${prep.dir}/lib">
+                <file name="base.js"/>
+                <file name="validator.js"/>
+                <file name="jquery.tmpl.js"/>
+                <file name="equiv_and_hoozit.js"/>
+                <file name="jquery.maskedinput-1.2.2.min.js"/>
+            </filelist>
+            <filelist dir="${prep.dir}/js">
+                <file name="Alpaca.js"/>
+                <file name="views/DefaultView.js"/>
+                <file name="views/ListView.js"/>
+                <file name="views/MobileView.js"/>
+                <file name="views/LayoutView.js"/>
+
+                <file name="View.js"/>
+
+                <file name="Field.js"/>
+                <file name="ControlField.js"/>
+                <file name="ContainerField.js"/>
+                <file name="Connector.js"/>
+                <file name="Form.js"/>
+
+                <!--Alpaca Base Fields-->
+                <file name="fields/basic/TextField.js"/>
+                <file name="fields/basic/TextAreaField.js"/>
+                <file name="fields/basic/CheckBoxField.js"/>
+                <file name="fields/basic/FileField.js"/>
+                <file name="fields/basic/ListField.js"/>
+                <file name="fields/basic/RadioField.js"/>
+                <file name="fields/basic/SelectField.js"/>
+                <file name="fields/basic/NumberField.js"/>
+                <file name="fields/basic/ArrayField.js"/>
+                <file name="fields/basic/ObjectField.js"/>
+                <file name="fields/basic/AnyField.js"/>
+                <!--End of Alpaca Base Fields-->
+
+                <!--Alpaca Other Fields-->
+                <file name="fields/advanced/AddressField.js"/>
+                <file name="fields/advanced/DateField.js"/>
+                <file name="fields/advanced/EmailField.js"/>
+                <file name="fields/advanced/IntegerField.js"/>
+                <file name="fields/advanced/IPv4Field.js"/>
+                <file name="fields/advanced/JSONField.js"/>
+                <file name="fields/advanced/IntegerField.js"/>
+                <file name="fields/advanced/LowerCaseField.js"/>
+                <file name="fields/advanced/MapField.js"/>
+                <file name="fields/advanced/PasswordField.js"/>
+                <file name="fields/advanced/PersonalNameField.js"/>
+                <file name="fields/advanced/PhoneField.js"/>
+                <file name="fields/advanced/TagField.js"/>
+                <file name="fields/advanced/TimeField.js"/>
+                <file name="fields/advanced/UpperCaseField.js"/>
+                <file name="fields/advanced/WysiwygField.js"/>
+                <!--End of Alpaca Other Fields-->
+
+                <file name="views/DefaultViewLanguagePacks.js"/>
+            </filelist>
+        </concat>
+        <concat destfile="${package.dir}/js/${appkey}-${version}-tests.js">
+            <filelist dir="${prep.dir}/tests/js">
+                <file name="fields/TextField.js"/>
+                <file name="fields/CheckBoxField.js"/>
+                <file name="fields/NumberField.js"/>
+                <file name="fields/AnyField.js"/>
+                <file name="fields/ArrayField.js"/>
+                <file name="fields/ObjectField.js"/>
+                <file name="fields/IntegerField.js"/>
+                <file name="fields/RadioField.js"/>
+                <file name="fields/SelectField.js"/>
+                <file name="fields/UpperCaseField.js"/>
+                <file name="fields/LowerCaseField.js"/>
+                <file name="fields/IPv4Field.js"/>
+                <file name="fields/DateField.js"/>
+                <file name="fields/PasswordField.js"/>
+                <file name="fields/EmailField.js"/>
+                <file name="fields/PhoneField.js"/>
+                <file name="fields/TextAreaField.js"/>
+                <file name="fields/WysiwygField.js"/>
+                <file name="fields/FileField.js"/>
+                <file name="fields/AddressField.js"/>
+                <file name="fields/DependencyField.js"/>
+                <file name="fields/ConditionalField.js"/>
+                <file name="fields/Form.js"/>
+                <file name="fields/TimeField.js"/>
+                <file name="fields/TagField.js"/>
+                <file name="fields/MapField.js"/>
+                <file name="validation/Validation.js"/>
+                <file name="wizards/Wizard.js"/>
+                <file name="forms/CreateForm.js"/>
+                <file name="forms/EditForm.js"/>
+            </filelist>
+        </concat>
+        <copy file="${package.dir}/js/${appkey}-${version}-full.js" tofile="${package.dir}/js/${appkey}-${version}.js"/>
+        <replaceregexp match=",//__BUILDER_HELPERS(.*?)//__END_OF_BUILDER_HELPERS"
+                       replace="" flags="gs">
+            <fileset dir="${package.dir}/js" includes="${appkey}-${version}.js"/>
+        </replaceregexp>
+        <copy todir="${package.dir}/lib">
+            <fileset dir="${prep.dir}/lib">
+                <include name="jquery-latest.min.js"/>
+                <include name="jquery-ui-latest.custom.min.js"/>
+                <include name="jquery.wysiwyg/**/*"/>
             </fileset>
+        </copy>
+    </target>
+
+    <target name="concat-css" description="Concat all css files" depends="prep">
+        <concat destfile="${package.dir}/css/${appkey}-${version}-core.css">
+            <filelist dir="${prep.dir}/css">
+                <file name="960.fluid.css"/>
+                <file name="alpaca.css"/>
+            </filelist>
+        </concat>
+        <concat destfile="${package.dir}/css/${appkey}-${version}.css">
+            <filelist dir="${prep.dir}/css">
+                <file name="960.fluid.css"/>
+                <file name="alpaca.css"/>
+                <file name="jquery-ui-latest.custom.css"/>
+            </filelist>
+        </concat>
+        <concat destfile="${package.dir}/css/${appkey}-${version}-mobile.css">
+            <filelist dir="${prep.dir}/css">
+                <file name="alpaca-mobile.css"/>
+            </filelist>
+        </concat>
+    </target>
+
+    <target name="compress" description="Compress the javascript and css" depends="concat-js,concat-css">
+        <echo>Compressing Javascript...</echo>
+        <apply executable="java" parallel="false" dest="${build.dir}/package">
+            <fileset dir="${build.dir}/package">
+                <include name="**/*.js"/>
+                <exclude name="**/*-min.js"/>
+                <exclude name="**/*.min.js"/>
+            </fileset>
+            <arg line="-jar"/>
+            <arg path="${yui-compressor}"/>
+            <arg line="-o"/>
+            <targetfile/>
+            <srcfile/>
+            <mapper type="glob" from="*.js" to="*.min.js"/>
+        </apply>
+        <echo>Compressing CSS...</echo>
+        <apply executable="java" parallel="false" dest="${build.dir}/package">
+            <fileset dir="${build.dir}/package">
+                <include name="**/*.css"/>
+                <exclude name="**/*-min.css"/>
+                <exclude name="**/*.min.css"/>
+            </fileset>
+            <arg line="-jar"/>
+            <arg path="${yui-compressor}"/>
+            <arg line="-o"/>
+            <targetfile/>
+            <srcfile/>
+            <mapper type="glob" from="*.css" to="*.min.css"/>
+        </apply>
+    </target>
+
+    <target name="prep-html" description="Prepare all htmls" depends="compress">
+        <replaceregexp match="&lt;!--Alpaca JavaScript--&gt;(.*?)&lt;!--End of Alpaca JavaScript--&gt;"
+                       replace='&lt;script type="text\/javascript" src="../../../js/${appkey}-${version}-full.min.js"&gt;&lt;/script&gt;' flags="gs">
+            <fileset dir="${prep.dir}" includes="examples/**/*.html"/>
+        </replaceregexp>
+        <replaceregexp match="&lt;!--Alpaca CSS--&gt;(.*?)&lt;!--End of Alpaca CSS--&gt;"
+                       replace='&lt;link type="text\/css" href="../../../css/${appkey}-${version}.min.css" rel="stylesheet" /&gt;' flags="gs">
+            <fileset dir="${prep.dir}" includes="examples/**/*.html"/>
+        </replaceregexp>
+        <replaceregexp match="&lt;!--Alpaca Mobile CSS--&gt;(.*?)&lt;!--End of Alpaca Mobile CSS--&gt;"
+                       replace='&lt;link type="text\/css" href="../../../css/${appkey}-${version}-mobile.min.css" rel="stylesheet" /&gt;' flags="gs">
+            <fileset dir="${prep.dir}" includes="examples/mobile/**/*.html"/>
+        </replaceregexp>
+        <replaceregexp match="../../../js/alpaca"
+                       replace='../../js/alpaca' flags="gs">
+            <fileset dir="${prep.dir}" includes="examples/mobile/mobile-examples.html"/>
+        </replaceregexp>
+        <replaceregexp match="../../../css/alpaca"
+                       replace='../../css/alpaca' flags="gs">
+            <fileset dir="${prep.dir}" includes="examples/mobile/mobile-examples.html"/>
+        </replaceregexp>
+        <replaceregexp match="jquery.wysiwyg.js"
+                       replace='jquery.wysiwyg.min.js' flags="gs">
+            <fileset dir="${prep.dir}" includes="examples/**/wysiwyg*.html"/>
+        </replaceregexp>
+        <replaceregexp match="jquery.wysiwyg.css"
+                       replace='jquery.wysiwyg.min.css' flags="gs">
+            <fileset dir="${prep.dir}" includes="examples/**/wysiwyg*.html"/>
+        </replaceregexp>
+        <replaceregexp match="&lt;!--Alpaca JavaScript--&gt;(.*?)&lt;!--End of Alpaca JavaScript--&gt;"
+                       replace='&lt;script type="text\/javascript" src="js/${appkey}-${version}-full.min.js"&gt;&lt;/script&gt;' flags="gs">
+            <fileset dir="${prep.dir}" includes="index.html"/>
+            <fileset dir="${prep.dir}" includes="resources.html"/>
+        </replaceregexp>
+        <replaceregexp match="&lt;!--Alpaca CSS--&gt;(.*?)&lt;!--End of Alpaca CSS--&gt;"
+                       replace='&lt;link type="text\/css" href="css/${appkey}-${version}.min.css" rel="stylesheet" /&gt;' flags="gs">
+            <fileset dir="${prep.dir}" includes="index.html"/>
+            <fileset dir="${prep.dir}" includes="resources.html"/>
+        </replaceregexp>
+        <replaceregexp match="&lt;!--Alpaca JavaScript--&gt;(.*?)&lt;!--End of Alpaca JavaScript--&gt;"
+                       replace='&lt;script type="text\/javascript" src="../js/${appkey}-${version}-full.min.js"&gt;&lt;/script&gt;' flags="gs">
+            <fileset dir="${prep.dir}" includes="tests/index.html"/>
+        </replaceregexp>
+        <replaceregexp match="&lt;!--Alpaca CSS--&gt;(.*?)&lt;!--End of Alpaca CSS--&gt;"
+                       replace='&lt;link type="text\/css" href="../css/${appkey}-${version}.min.css" rel="stylesheet" /&gt;' flags="gs">
+            <fileset dir="${prep.dir}" includes="tests/index.html"/>
+        </replaceregexp>
+        <replaceregexp match="&lt;!--Alpaca Test JavaScript--&gt;(.*?)&lt;!--End of Alpaca Test JavaScript--&gt;"
+                       replace='&lt;script type="text\/javascript" src="../js/${appkey}-${version}-tests.min.js"&gt;&lt;/script&gt;' flags="gs">
+            <fileset dir="${prep.dir}" includes="tests/index.html"/>
+        </replaceregexp>
+        <copy todir="${package.dir}/examples">
+            <fileset dir="${prep.dir}/examples" includes="**/*"/>
+        </copy>
+        <copy todir="${package.dir}/tests">
+            <fileset dir="${prep.dir}/tests">
+                <exclude name="js/**/*"/>
+            </fileset>
+        </copy>
+        <copy todir="${package.dir}">
+            <fileset dir="${prep.dir}">
+                <include name="favicon.ico"/>
+                <include name="index.html"/>
+                <include name="resources.html"/>
+            </fileset>
+        </copy>
+        <copy todir="${package.dir}/css/images">
+            <fileset dir="${prep.dir}/css/images" includes="**/*"/>
+        </copy>
+    </target>
+
+    <target name="package" depends="prep-html">
+        <zip destfile="${prep.dir}/${appkey}-${version}-all.zip">
+            <fileset dir="${package.dir}">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </zip>
+        <zip destfile="${prep.dir}/${appkey}-${version}.zip">
+            <fileset dir="${package.dir}">
+                <include name="css/**/*"/>
+                <include name="js/**/*"/>
+                <include name="lib/**/*"/>
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </zip>
+        <copy todir="${package.dir}/downloads">
+            <fileset dir="${prep.dir}" includes="*.zip"/>
+        </copy>
+        <copy todir="${package.dir}/js">
+            <fileset dir="${package.dir}/js"/>
+            <globmapper from="${appkey}-${version}*.js" to="${appkey}-latest*.js"/>
+        </copy>
+        <copy todir="${package.dir}/css">
+            <fileset dir="${package.dir}/css"/>
+            <globmapper from="${appkey}-${version}*.css" to="${appkey}-latest*.css"/>
+        </copy>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="webserver-clean">
+        <delete>
+            <fileset dir="${local.docroot.basepath}/${appkey}" includes="**/*"/>
+        </delete>
+    </target>
+
+    <fileset id="alpaca-files" dir="${project.dir}">
+        <include name="css/**/*"/>
+        <include name="js/**/*"/>
+        <include name="lib/**/*"/>
+        <include name="examples/**/*"/>
+        <include name="*.html"/>
+        <include name="favicon.ico"/>
+    </fileset>
+
+    <target name="update">
+        <copy todir="${local.docroot.basepath}/${appkey}">
+            <fileset refid="alpaca-files"/>
+        </copy>
+    </target>
+
+    <target name="full" depends="webserver-clean">
+        <copy todir="${local.docroot.basepath}/${appkey}">
+            <fileset refid="alpaca-files"/>
         </copy>
     </target>
 </project>

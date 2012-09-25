@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Alpaca - HTML5 Forms for jQuery - Select Field</title>
+        <meta name="keywords" content="alpaca,forms,select field,gitana" />
+        <meta name="description" content="Select Field Examples for Alpaca Forms." />
+        <meta name="author" content="Gitana Software Inc." />
+        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <script type="text/javascript" src="../../../lib/jquery-latest.min.js">
+        </script>
+        <!--Alpaca JavaScript-->
+        <script type="text/javascript" src="../../../lib/base.js"></script>
+        <script type="text/javascript" src="../../../lib/validator.js"></script>
+
+        <script type="text/javascript" src="../../../lib/jquery.tmpl.js"></script>
+        <script type="text/javascript" src="../../../lib/equiv_and_hoozit.js"></script>
+        <script type="text/javascript" src="../../../lib/jquery.maskedinput-1.2.2.min.js"></script>
+
+        <script type="text/javascript" src="../../../js/Alpaca.js"></script>
+
+        <script type="text/javascript" src="../../../js/views/DefaultView.js"></script>
+        <script type="text/javascript" src="../../../js/views/ListView.js"></script>
+        <script type="text/javascript" src="../../../js/views/MobileView.js"></script>
+        <script type="text/javascript" src="../../../js/views/LayoutView.js"></script>
+
+        <script type="text/javascript" src="../../../js/View.js"></script>
+
+        <script type="text/javascript" src="../../../js/Field.js"></script>
+        <script type="text/javascript" src="../../../js/ControlField.js"></script>
+        <script type="text/javascript" src="../../../js/ContainerField.js"></script>
+        <script type="text/javascript" src="../../../js/Connector.js"></script>
+        <script type="text/javascript" src="../../../js/Form.js"></script>
+
+        <!--Alpaca Base Fields-->
+        <script type="text/javascript" src="../../../js/fields/basic/TextField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/TextAreaField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/CheckBoxField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/FileField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ListField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/RadioField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/SelectField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/NumberField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ArrayField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ObjectField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/AnyField.js"></script>
+        <!--End of Alpaca Base Fields-->
+
+        <script type="text/javascript" src="../../../js/views/DefaultViewLanguagePacks.js"></script>
+
+        <!--End of Alpaca JavaScript-->
+
+        <script type="text/javascript" src="../../lib/google-code-prettify/prettify.min.js"></script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js"></script>
+        <script type="text/javascript" src="../../js/example.js"></script>
+
+        <!--Alpaca CSS-->
+        <link type="text/css" href="../../../css/960.fluid.css" rel="stylesheet"/>
+        <link type="text/css" href="../../../css/alpaca.css" rel="stylesheet"/>
+        <link type="text/css" href="../../../css/jquery-ui-latest.custom.css" rel="stylesheet"/>
+        <!--End of Alpaca CSS-->
+        <link type="text/css" href="../../css/site.css" rel="stylesheet"/>
+        <link type="text/css" href="../../lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+    </head>
+    <body>
+<header>
+    <div class='actual-body'>
+        <div class='grid_12'>
+            <h1><img src="../../img/alpaca.png"><span>Component Gallery</span></h1>
+            <div class="resource-bar">
+                <a href="../../../index.html">Home</a> |
+                <a href="../../../resources.html#downloads"> Downloads</a> |
+                <a href="javascript:void(0);" class="current"> Component Gallery</a> |
+                <a href="../../../resources.html#documentation"> Documentation</a> |
+                <a href="../../../resources.html#unittests"> Unit Tests</a> |
+                <a href="../../forms/customer-profile/create-form.html"> Form Gallery</a> |
+                <a href="../../../resources.html#mobile"> Alpaca On Mobile</a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class='container_12'>
+    <div class="actual-body">
+        <div class="grid_3">
+            <div class="container_12 side-bar">
+            </div>
+        </div>
+
+        <div class="grid_9">
+            <div class="container_12">
+                <div class="widget">
+                    <div class="widget-body">
+            <div class='grid_12 alpaca-example-header' id='select-field' alpaca-types='select'>
+                <h1>Select Field</h1>
+            </div>
+                        <div class='grid_12 alpaca-example-case'>
+                    <h3>Example 1: </h3>
+					<h4>Select field with data, options and schema parameters. As default, select field will be rendered if schema enum properties has more than 3 options.</h4>					
+                    <div id="field1">
+                    </div>
+                    <script type="text/javascript"id="field1-script">
+$(function() {
+    $("#field1").alpaca({
+        "data": "Coffee",
+        "options": {
+            "label": "Ice cream",
+            "helper": "Guess my favorite ice cream?"
+        },
+        "schema": {
+            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+        }
+    });
+});
+                    </script>
+                    <h3>Example 2: </h3>
+					<h4>Select field with option labels.</h4>
+                    <div id="field2">
+                    </div>
+                    <script type="text/javascript"id="field2-script">
+$(function() {
+    $("#field2").alpaca({
+        "data": "Coffee",
+        "options": {
+            "label": "Ice cream",
+            "helper": "Guess my favorite ice cream?",
+            "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"]
+        },
+        "schema": {
+            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+        }
+    });
+});
+                    </script>
+                    <h3>Example 3: </h3>
+					<h4>Select field with options loaded from external <a href="./data/icecream-list.html" target="_datasource">data source</a>.</h4>
+                    <div id="field3">
+                    </div>
+                    <script type="text/javascript"id="field3-script">
+$(function() {
+    $("#field3").alpaca({
+        "options": {
+            "label": "Ice cream",
+            "helper": "Guess my favorite ice cream?",
+            "type": "select",
+            "dataSource": "./data/icecream-list.html"
+        }
+    });
+});
+                    </script>
+                    <h3>Example 4: </h3>
+					<h4>Multiple select field with options loaded from external <a href="./data/icecream-list.html" target="_datasource">data source</a>.</h4>
+                    <div id="field4">
+                    </div>
+                    <script type="text/javascript"id="field4-script">
+$(function() {
+    $("#field4").alpaca({
+        "data": ["Vanilla", "Chocolate"],
+        "options": {
+            "label": "Ice cream",
+            "helper": "Guess my favorite ice cream?",
+            "type": "select",
+            "multiple": true,
+            "size": 3,
+            "dataSource": "./data/icecream-list.html"
+        }
+    });
+});
+                    </script>
+                        </div>
+                        <div class="clear height-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container_12">
+        <div class="grid_12 copyright">
+            Copyright &copy; 2012 Gitana Software | All Rights Reserved
+        </div>
+    </div>
+</footer>
+    </body>
+</html>

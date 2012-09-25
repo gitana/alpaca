@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Alpaca - HTML5 Forms for jQuery - Validation</title>
+    <meta name="keywords" content="alpaca,forms,validation,gitana"/>
+    <meta name="description" content="Validation Examples for Alpaca Forms."/>
+    <meta name="author" content="Gitana Software Inc."/>
+    <link rel="icon" type="image/x-icon" href="../../../favicon.ico"/>
+        <script type="text/javascript" src="../../../lib/jquery-latest.min.js"></script>
+
+        <!--Alpaca JavaScript-->
+        <script type="text/javascript" src="../../../lib/base.js"></script>
+        <script type="text/javascript" src="../../../lib/validator.js"></script>
+
+        <script type="text/javascript" src="../../../lib/jquery.tmpl.js"></script>
+        <script type="text/javascript" src="../../../lib/equiv_and_hoozit.js"></script>
+        <script type="text/javascript" src="../../../lib/jquery.maskedinput-1.2.2.min.js"></script>
+
+        <script type="text/javascript" src="../../../js/Alpaca.js"></script>
+
+        <script type="text/javascript" src="../../../js/views/DefaultView.js"></script>
+        <script type="text/javascript" src="../../../js/views/ListView.js"></script>
+        <script type="text/javascript" src="../../../js/views/MobileView.js"></script>
+        <script type="text/javascript" src="../../../js/views/LayoutView.js"></script>
+
+        <script type="text/javascript" src="../../../js/View.js"></script>
+
+        <script type="text/javascript" src="../../../js/Field.js"></script>
+        <script type="text/javascript" src="../../../js/ControlField.js"></script>
+        <script type="text/javascript" src="../../../js/ContainerField.js"></script>
+        <script type="text/javascript" src="../../../js/Connector.js"></script>
+        <script type="text/javascript" src="../../../js/Form.js"></script>
+
+        <!--Alpaca Base Fields-->
+        <script type="text/javascript" src="../../../js/fields/basic/TextField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/TextAreaField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/CheckBoxField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/FileField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ListField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/RadioField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/SelectField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/NumberField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ArrayField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ObjectField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/AnyField.js"></script>
+        <!--End of Alpaca Base Fields-->
+
+        <!--Alpaca Other Fields-->
+        <script type="text/javascript" src="../../../js/fields/advanced/AddressField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/DateField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/EmailField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/IntegerField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/IPv4Field.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/JSONField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/IntegerField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/LowerCaseField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/MapField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/PasswordField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/PersonalNameField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/PhoneField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/TagField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/TimeField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/UpperCaseField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/WysiwygField.js"></script>
+        <!--End of Alpaca Other Fields-->
+
+        <script type="text/javascript" src="../../../js/views/DefaultViewLanguagePacks.js"></script>
+
+        <!--End of Alpaca JavaScript-->
+
+        <script type="text/javascript" src="../../lib/google-code-prettify/prettify.min.js"></script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js"></script>
+        <script type="text/javascript" src="../../js/example.js"></script>
+
+        <!--Alpaca CSS-->
+        <link type="text/css" href="../../../css/960.fluid.css" rel="stylesheet"/>
+        <link type="text/css" href="../../../css/alpaca.css" rel="stylesheet"/>
+        <link type="text/css" href="../../../css/jquery-ui-latest.custom.css" rel="stylesheet"/>
+        <!--End of Alpaca CSS-->
+        <link type="text/css" href="../../css/site.css" rel="stylesheet"/>
+        <link type="text/css" href="../../lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+    <div class='actual-body'>
+        <div class='grid_12'>
+            <h1><img src="../../img/alpaca.png"><span>Component Gallery</span></h1>
+            <div class="resource-bar">
+                <a href="../../../index.html">Home</a> |
+                <a href="../../../resources.html#downloads"> Downloads</a> |
+                <a href="javascript:void(0);" class="current"> Component Gallery</a> |
+                <a href="../../../resources.html#documentation"> Documentation</a> |
+                <a href="../../../resources.html#unittests"> Unit Tests</a> |
+                <a href="../../forms/customer-profile/create-form.html"> Form Gallery</a> |
+                <a href="../../../resources.html#mobile"> Alpaca On Mobile</a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class='container_12'>
+    <div class="actual-body">
+        <div class="grid_3">
+            <div class="container_12 side-bar">
+            </div>
+        </div>
+
+        <div class="grid_9">
+            <div class="container_12">
+                <div class="widget">
+                    <div class="widget-body">
+    <div class='grid_12 alpaca-example-header' id='validation' alpaca-types=''>
+        <h1>Validation Examples</h1>
+    </div>
+    <div class='grid_12 alpaca-example-case'>
+            <h3>Example 1: </h3>
+            <h4>Required field.</h4>
+
+            <div id="field1">
+            </div>
+            <script type="text/javascript" id="field1-script">
+$(function() {
+    $("#field1").alpaca({
+        "data": "",
+        "schema": {
+            "title": "Required field",
+            "type": "string",
+            "required": true
+        }
+    });
+});
+            </script>
+            <h3>Example 2: </h3>
+            <h4>Field with disallowed values.</h4>
+
+            <div id="field2">
+            </div>
+            <script type="text/javascript" id="field2-script">
+$(function() {
+    $("#field2").alpaca({
+        "data": "book",
+        "schema": {
+            "title": "Diallowed value",
+            "type": "string",
+            "disallow": ["book", "pencil"]
+        }
+    });
+});
+            </script>
+            <h3>Example 3: </h3>
+            <h4>Field with default value.</h4>
+
+            <div id="field3">
+            </div>
+            <script type="text/javascript" id="field3-script">
+$(function() {
+    $("#field3").alpaca({
+        "data": "",
+        "schema": {
+            "title": "Default value",
+            "type": "string",
+            "default": "book"
+        }
+    });
+});
+            </script>
+            <h3>Example 4: </h3>
+            <h4>Field with schema enum properties.</h4>
+
+            <div id="field4">
+            </div>
+            <script type="text/javascript" id="field4-script">
+$(function() {
+    $("#field4").alpaca({
+        "data": "laptop",
+        "schema": {
+            "title": "Enum field",
+            "type": "string",
+            "enum": ["book", "pen", "eraser"]
+        }
+    });
+});
+            </script>
+            <h3>Example 5: </h3>
+            <h4>JSon Schema validation (valid).</h4>
+
+            <div id="field5">
+            </div>
+            <script type="text/javascript" id="field5-script">
+$(function() {
+    var data = "book";
+    var schema = {
+        "title": "Enum field",
+        "type": "string",
+        "enum": ["book", "pen", "eraser"]
+    };
+    if (Validator.validate(data, schema).valid) {
+        $("#field5").alpaca({
+            "data": data,
+            "schema": schema
+        });
+    } else {
+        $("#field5").html('Failed the schema validation');
+    }
+});
+            </script>
+            <h3>Example 6: </h3>
+            <h4>JSon Schema validation (invalid).</h4>
+
+            <div id="field6">
+            </div>
+            <script type="text/javascript" id="field6-script">
+$(function() {
+    var data = "laptop";
+    var schema = {
+        "title": "Enum field",
+        "type": "string",
+        "enum": ["book", "pen", "eraser"]
+    };
+    if (Validator.validate(data, schema).valid) {
+        $("#field6").alpaca({
+            "data": data,
+            "schema": schema
+        });
+    } else {
+        $("#field6").append('<strong>Failed the schema validation</strong>');
+    }
+});
+            </script>
+            <h3>Example 7: </h3>
+            <h4>Custom validator.</h4>
+
+            <div id="field7">
+            </div>
+            <script type="text/javascript" id="field7-script">
+$(function() {
+    $("#field7").alpaca({
+        "data": "book",
+        "schema": {
+            "title": "Diallowed value",
+            "type": "string",
+            "disallow": ["book", "pencil"]
+        },
+        "options": {
+            "validator" : function(control, callback) {
+                var controlVal = control.getValue();
+                if (controlVal == "pen" || controlVal == "book") {
+                    callback({
+                        "message": "Invalid value (custom validator)",
+                        "status": false
+                    });
+                } else {
+                    callback({
+                        "message": "Valid value (custom validator)",
+                        "status": true
+                    });
+                }
+            }
+        }
+    });
+});
+            </script>
+            <h3>Example 8: </h3>
+            <h4>Custom validator.</h4>
+            <div id="field8">
+            </div>
+            <script type="text/javascript" id="field8-script">
+$(function() {
+    $("#field8").alpaca({
+        "data": {
+            "weight" : 100,
+            "age" : 10
+        },
+        "schema": {
+            "title": "Ride Requirement",
+            "type": "object",
+            "properties": {
+                "weight" : {
+                    "type" : "integer",
+                    "title" : "Weight",
+                    "decription" : "Enter your weight."
+                },
+                "age" : {
+                    "type" : "integer",
+                    "title" : "Age",
+                    "decription" : "Enter your age."
+                }
+            }
+        },
+        "options": {
+            "validator" : function(control, callback) {
+                var controlVal = control.getValue();
+                if (controlVal['weight'] <= 120 || controlVal['age'] <= 12) {
+                    callback({
+                        "message": "Weight must be over 120 and age must be over 12.",
+                        "status": false
+                    });
+                } else {
+                    callback({
+                        "message": "Valid value (custom validator)",
+                        "status": true
+                    });
+                }
+            }
+        }
+    });
+});
+            </script>
+                        </div>
+                        <div class="clear height-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container_12">
+        <div class="grid_12 copyright">
+            Copyright &copy; 2012 Gitana Software | All Rights Reserved
+        </div>
+    </div>
+</footer>
+</body>
+</html>

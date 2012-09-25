@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0-rc.2/jquery.mobile-1.2.0-rc.2.min.css" />
+        <script src="http://code.jquery.com/jquery-latest.min.js">
+        </script>
+        <script src="http://code.jquery.com/mobile/1.2.0-rc.2/jquery.mobile-1.2.0-rc.2.js">
+        </script>
+
+        <!--Alpaca JavaScript-->
+        <script type="text/javascript" src="../../../lib/base.js"></script>
+        <script type="text/javascript" src="../../../lib/validator.js"></script>
+
+        <script type="text/javascript" src="../../../lib/jquery.tmpl.js"></script>
+        <script type="text/javascript" src="../../../lib/equiv_and_hoozit.js"></script>
+        <script type="text/javascript" src="../../../lib/jquery.maskedinput-1.2.2.min.js"></script>
+
+        <script type="text/javascript" src="../../../js/Alpaca.js"></script>
+
+        <script type="text/javascript" src="../../../js/views/DefaultView.js"></script>
+        <script type="text/javascript" src="../../../js/views/ListView.js"></script>
+        <script type="text/javascript" src="../../../js/views/MobileView.js"></script>
+        <script type="text/javascript" src="../../../js/views/LayoutView.js"></script>
+
+        <script type="text/javascript" src="../../../js/View.js"></script>
+
+        <script type="text/javascript" src="../../../js/Field.js"></script>
+        <script type="text/javascript" src="../../../js/ControlField.js"></script>
+        <script type="text/javascript" src="../../../js/ContainerField.js"></script>
+        <script type="text/javascript" src="../../../js/Connector.js"></script>
+        <script type="text/javascript" src="../../../js/Form.js"></script>
+
+        <!--Alpaca Base Fields-->
+        <script type="text/javascript" src="../../../js/fields/basic/TextField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/TextAreaField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/CheckBoxField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/FileField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ListField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/RadioField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/SelectField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/NumberField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ArrayField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/ObjectField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/basic/AnyField.js"></script>
+        <!--End of Alpaca Base Fields-->
+
+        <!--Alpaca Other Fields-->
+        <script type="text/javascript" src="../../../js/fields/advanced/AddressField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/DateField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/EmailField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/IntegerField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/IPv4Field.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/JSONField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/IntegerField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/LowerCaseField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/MapField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/PasswordField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/PersonalNameField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/PhoneField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/TagField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/TimeField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/UpperCaseField.js"></script>
+        <script type="text/javascript" src="../../../js/fields/advanced/WysiwygField.js"></script>
+        <!--End of Alpaca Other Fields-->
+
+        <script type="text/javascript" src="../../../js/views/DefaultViewLanguagePacks.js"></script>
+
+        <!--End of Alpaca JavaScript-->
+
+        <!--Alpaca Mobile CSS-->
+        <link type="text/css" href="../../../css/alpaca-mobile.css" rel="stylesheet"/>
+        <!--End of Alpaca Mobile CSS-->
+
+    </head>
+    <body>
+        <div data-role="page" data-theme="b" id="field1" data-header="Customer Profile">
+            <script type="text/javascript" id="field1-script">
+                $(document).ready(function() {
+                    $("#field1").alpaca({
+                        "data": "./customer-profile-data.json",
+                        "options": "./customer-profile-options.json",
+                        "schema": "./customer-profile-schema.json",
+                        "view": "VIEW_MOBILE_EDIT"
+                    });
+                });
+            </script>
+        </div>
+    </body>
+</html>
