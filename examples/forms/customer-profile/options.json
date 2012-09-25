@@ -2,7 +2,7 @@
     "renderForm":true,
     "form":{
         "attributes":{
-            "action":"/endpoint",
+            "action":"../../endpoints/echo.php",
             "method":"post"
         },
         "buttons":{
