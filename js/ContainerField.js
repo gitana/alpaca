@@ -73,6 +73,10 @@
                 this.expandedIcon = "";
                 this.collapsedIcon = "";
                 this.commonIcon = "";
+                this.addIcon = "";
+                this.removeIcon = "";
+                this.upIcon = "";
+                this.downIcon = "";
                 if (this.view.style && Alpaca.styleInjections[this.view.style]) {
                     if (Alpaca.styleInjections[this.view.style]["commonIcon"]) {
                         this.commonIcon = Alpaca.styleInjections[this.view.style]["commonIcon"];
@@ -85,6 +89,18 @@
                     }
                     if (Alpaca.styleInjections[this.view.style]["buttonBeautifier"]) {
                         this.buttonBeautifier = Alpaca.styleInjections[this.view.style]["buttonBeautifier"];
+                    }
+                    if (Alpaca.styleInjections[this.view.style]["addIcon"]) {
+                        this.addIcon = Alpaca.styleInjections[this.view.style]["addIcon"];
+                    }
+                    if (Alpaca.styleInjections[this.view.style]["removeIcon"]) {
+                        this.removeIcon = Alpaca.styleInjections[this.view.style]["removeIcon"];
+                    }
+                    if (Alpaca.styleInjections[this.view.style]["upIcon"]) {
+                        this.upIcon = Alpaca.styleInjections[this.view.style]["upIcon"];
+                    }
+                    if (Alpaca.styleInjections[this.view.style]["downIcon"]) {
+                        this.downIcon = Alpaca.styleInjections[this.view.style]["downIcon"];
                     }
                 }
             },
@@ -200,8 +216,8 @@
             },
 
             /**
-            * @see Alpaca.Field#setDefault
-            */
+             * @see Alpaca.Field#setDefault
+             */
             setDefault: function() {
                 if (Alpaca.isEmpty(this.schema['default'])) {
                     Alpaca.each(this.children, function() {
@@ -268,7 +284,7 @@
 
                 var _this = this;
 
-                this.getStyleInjection("container",this.outerEl);
+                this.getStyleInjection("container", this.outerEl);
 
                 var labelDiv = $('.alpaca-fieldset-legend', this.outerEl);
 
@@ -300,7 +316,7 @@
                 if (this.lazyLoading) {
                     if (this.labelDiv) {
                         $(this.labelDiv).click(function() {
-                            if(_this.lazyLoading) {
+                            if (_this.lazyLoading) {
                                 _this.renderItems();
                                 _this.lazyLoading = false;
                             }

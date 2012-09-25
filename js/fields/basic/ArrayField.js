@@ -67,25 +67,6 @@
                     "forceRevalidation" : true
                 });
             }
-
-            this.addIcon = "";
-            this.removeIcon = "";
-            this.upIcon = "";
-            this.downIcon = "";
-            if (this.view.style && Alpaca.styleInjections[this.view.style]) {
-                if (Alpaca.styleInjections[this.view.style]["addIcon"]) {
-                    this.addIcon = Alpaca.styleInjections[this.view.style]["addIcon"];
-                }
-                if (Alpaca.styleInjections[this.view.style]["removeIcon"]) {
-                    this.removeIcon = Alpaca.styleInjections[this.view.style]["removeIcon"];
-                }
-                if (Alpaca.styleInjections[this.view.style]["upIcon"]) {
-                    this.upIcon = Alpaca.styleInjections[this.view.style]["upIcon"];
-                }
-                if (Alpaca.styleInjections[this.view.style]["downIcon"]) {
-                    this.downIcon = Alpaca.styleInjections[this.view.style]["downIcon"];
-                }
-            }
         },
 
         /**

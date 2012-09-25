@@ -1,4 +1,4 @@
-## Alpaca - Simple HTML5 Forms for jQuery ##
+## Alpaca - Easy HTML5 Forms for jQuery ##
 
 Alpaca is a client-side forms engine which gives your application the ability to render elegant content entry and presentation forms with minimal development effort. Designed for rendering forms based on JSON data format, Alpaca can be easily embedded into or integrated with your application no matter what platform or device you are using.
 
