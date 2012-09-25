@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.gitana</groupId>
     <artifactId>alpaca</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>Alpaca</name>
     <packaging>war</packaging>
     <url>http://www.gitanasoftware.org/</url>
