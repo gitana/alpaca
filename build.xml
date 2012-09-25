@@ -57,12 +57,16 @@
                 <include name="favicon.ico"/>
                 <include name="index.html"/>
                 <include name="resources.html"/>
+                <include name="license.txt"/>
             </fileset>
         </copy>
     </target>
 
     <target name="concat-js" description="Concat all javascript files" depends="prep">
         <concat destfile="${package.dir}/js/${appkey}-${version}-full.js">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
             <filelist dir="${prep.dir}/lib">
                 <file name="base.js"/>
                 <file name="validator.js"/>
@@ -122,6 +126,9 @@
             </filelist>
         </concat>
         <concat destfile="${package.dir}/js/${appkey}-${version}-tests.js">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
             <filelist dir="${prep.dir}/tests/js">
                 <file name="fields/TextField.js"/>
                 <file name="fields/CheckBoxField.js"/>
@@ -171,12 +178,18 @@
 
     <target name="concat-css" description="Concat all css files" depends="prep">
         <concat destfile="${package.dir}/css/${appkey}-${version}-core.css">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
             <filelist dir="${prep.dir}/css">
                 <file name="960.fluid.css"/>
                 <file name="alpaca.css"/>
             </filelist>
         </concat>
         <concat destfile="${package.dir}/css/${appkey}-${version}.css">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
             <filelist dir="${prep.dir}/css">
                 <file name="960.fluid.css"/>
                 <file name="alpaca.css"/>
@@ -184,6 +197,9 @@
             </filelist>
         </concat>
         <concat destfile="${package.dir}/css/${appkey}-${version}-mobile.css">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
             <filelist dir="${prep.dir}/css">
                 <file name="alpaca-mobile.css"/>
             </filelist>

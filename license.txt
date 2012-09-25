@@ -1,4 +1,6 @@
-/*
+/*!
+Alpaca Version 1.0.2-SNAPSHOT
+
 Copyright 2011 Gitana Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); 
@@ -18,3 +20,4 @@ address:
 
   info@gitanasoftware.com
 */
+
