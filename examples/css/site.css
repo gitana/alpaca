@@ -1,6 +1,9 @@
 html, body {
-    font-size: 12px;
-    font-family: 'Trebuchet MS', tahoma, arial, helvetica, sans-serif;
+    /**font-family: 'Trebuchet MS', tahoma, arial, helvetica, sans-serif;**/
+	font-weight: 200 !important;
+	font-family: 'museo-sans','HelveticaNeue',Helvetica,Arial,sans-serif;
+	font-size: 18px;
+	vertical-align: baseline;
     min-width: 980px;
     margin: auto;
 }
@@ -15,7 +18,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, .btn, nav, label {
-    font-family: Mentone-SemiBold, 'Mentone SemiBold', 'Trebuchet MS', sans-serif;
+    /*font-family: Mentone-SemiBold, 'Mentone SemiBold', 'Trebuchet MS', sans-serif;*/
+	font-weight: 200 !important;
 }
 
 h2 {
@@ -27,13 +31,17 @@ h1 img {
 }
 
 h1 span {
-    font-size: 1.5em;
+	font-size: 32px;
     padding-left: 40px;
     vertical-align: middle;
+	font-weight: 200 !important;
 }
 
 p {
-    font-size: 1.2em;
+    /**font-size: 1.2em;**/
+	font-size: 18px;
+	color: #222;;
+	font-weight: 200 !important;
 }
 
 h2 a {
@@ -42,6 +50,7 @@ h2 a {
 
 pre ol.linenums {
     margin: 0px;
+	font-size: 14px;
 }
 
 .copyright {
@@ -49,9 +58,23 @@ pre ol.linenums {
     margin: 10px 0;
 }
 
+div.step:not(:first-child)
+{
+	margin-top: 40px !important;
+}
+
 div.step > img {
     float: left;
-    margin: 0px 10px 10px 0px;
+    margin: 0px 20px 20px 0px;
+	padding-top: 0px;
+}
+
+div.step > p {
+	margin-left: 65px;
+}
+
+div.step > pre {
+	margin-left: 65px;
 }
 
 .step {
@@ -69,7 +92,8 @@ div.step > p, div.step > pre, div.step > div {
 */
 
 .resource-bar {
-    font-size: 1.2em;
+    /**font-size: 1.2em;**/
+	font-size: 18px;
 }
 
 .resource-bar img {
@@ -79,12 +103,14 @@ div.step > p, div.step > pre, div.step > div {
 }
 
 .resource-bar {
-    color: #929292;
+    color: #b2b2b2;
 }
 
 .resource-bar a {
     text-decoration: none;
-    color: #929292;
+    color: #b2b2b2;
+	padding-right: 15px;
+	padding-left: 15px;
 }
 
 .resource-bar a:hover {
@@ -104,16 +130,16 @@ img.resource-icon {
     background-image: url("images/title-r.png");
     background-position: right top;
     background-repeat: no-repeat;
-    border-radius: 4px 4px 4px 4px;
+    border-radius: 5px 5px 5px 5px;
     margin-bottom: 10px;
-    margin-top: 15px;
-    background-color: #212121;
+    margin-top: 45px;
+    background-color: #313131;
     clear: both;
 }
 
 .widget-title {
     background: url("images/title.png") repeat scroll left top transparent;
-    border-radius: 4px 0 0 0;
+    border-radius: 5px 5px 0 0;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
     margin-right: 4px;
 }
@@ -122,7 +148,6 @@ img.resource-icon {
     color: #FFFFFF;
     display: inline;
     font-size: 1.2em;
-    font-weight: normal;
     line-height: 2.3em;
     padding: 0 10px;
     text-shadow: 0 -1px 0 #000000;
@@ -131,20 +156,25 @@ img.resource-icon {
 .widget-body {
     background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #C1C1C1;
-    border-radius: 0 0 4px 4px;
-    padding: 0 10px 10px 10px;
+    border-radius: 0 0 5px 5px;
+    padding: 10px 20px 10px 20px;
 }
 
 header {
-    background-color:#121212;
-    color: #FFFFFF;
+    /**background-color:#121212;**/
+	background-color: #333;
+    color: #fff;
     width: 100%;
-    height: 140px;
+    /**height: 140px;**/
+	height: 175px;
+	text-align: center;
 }
 
 footer {
     background-color:#121212;
-    color: #FFFFFF;
+    color: #aaa;
+	font-size: 16px;
+	padding-top: 10px;
     clear: both;
     height: 40px;
     margin-top: -50px;

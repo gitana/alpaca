@@ -1,0 +1,733 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Alpaca - Easy HTML5 Forms for jQuery</title>
+    <meta name="keywords"
+          content="jquery forms,JSON forms"/>
+    <meta name="description"
+          content="Alpaca is a client-side, cross-platform, JSON based forms engine for rendering elegant forms. It comes with comprehensive control library and support for validation, wizard, layout, templating, preview, i18n etc. Built upon jQuery library, jQuery UI and jQuery Mobile, it can be easily extended for additional form controls."/>
+    <meta name="author" content="Gitana Software Inc."/>
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+
+    <script type="text/javascript" src="lib/jquery-latest.min.js">
+    </script>
+    <!--Alpaca JavaScript-->
+    <script type="text/javascript" src="lib/base.js"></script>
+    <script type="text/javascript" src="lib/validator.js"></script>
+
+    <script type="text/javascript" src="lib/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="lib/equiv_and_hoozit.js"></script>
+    <script type="text/javascript" src="lib/jquery.maskedinput-1.2.2.min.js"></script>
+
+    <script type="text/javascript" src="js/Alpaca.js"></script>
+
+    <script type="text/javascript" src="js/views/DefaultView.js"></script>
+    <script type="text/javascript" src="js/views/ListView.js"></script>
+    <script type="text/javascript" src="js/views/MobileView.js"></script>
+    <script type="text/javascript" src="js/views/LayoutView.js"></script>
+
+    <script type="text/javascript" src="js/View.js"></script>
+
+    <script type="text/javascript" src="js/Field.js"></script>
+    <script type="text/javascript" src="js/ControlField.js"></script>
+    <script type="text/javascript" src="js/ContainerField.js"></script>
+    <script type="text/javascript" src="js/Connector.js"></script>
+    <script type="text/javascript" src="js/Form.js"></script>
+
+    <!--Alpaca Base Fields-->
+    <script type="text/javascript" src="js/fields/basic/TextField.js"></script>
+    <script type="text/javascript" src="js/fields/basic/TextAreaField.js"></script>
+    <script type="text/javascript" src="js/fields/basic/CheckBoxField.js"></script>
+    <script type="text/javascript" src="js/fields/basic/FileField.js"></script>
+    <script type="text/javascript" src="js/fields/basic/ListField.js"></script>
+    <script type="text/javascript" src="js/fields/basic/RadioField.js"></script>
+    <script type="text/javascript" src="js/fields/basic/SelectField.js"></script>
+    <script type="text/javascript" src="js/fields/basic/NumberField.js"></script>
+    <script type="text/javascript" src="js/fields/basic/ArrayField.js"></script>
+    <script type="text/javascript" src="js/fields/basic/ObjectField.js"></script>
+    <script type="text/javascript" src="js/fields/basic/AnyField.js"></script>
+    <!--End of Alpaca Base Fields-->
+
+    <script type="text/javascript" src="js/views/DefaultViewLanguagePacks.js"></script>
+
+    <!--End of Alpaca JavaScript-->
+
+    <script type="text/javascript" src="examples/lib/google-code-prettify/prettify.min.js"></script>
+
+    <!--Alpaca CSS-->
+    <link type="text/css" href="css/960.fluid.css" rel="stylesheet"/>
+    <link type="text/css" href="css/alpaca.css" rel="stylesheet"/>
+    <link type="text/css" href="css/jquery-ui-latest.custom.css" rel="stylesheet"/>
+    <!--End of Alpaca CSS-->
+    <link type="text/css" href="examples/css/site.css" rel="stylesheet"/>
+
+    <link type="text/css" href="examples/lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+
+	<script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+	<header>
+		<div class='container_12'>
+	    <div class='actual-body'>
+	        <div class='grid_12'>
+	            <h1><img src="examples/img/alpaca.png"><span>Easy HTML5 Forms for jQuery</span></h1>
+	            <div class="resource-bar">
+	                <a href="index.html">Home</a>
+	                <a href="resources.html#downloads">Downloads</a>
+	                <a href="tutorials.html" class="current">Tutorials</a>
+	                <a href="examples/components/fields/text-field.html">Components</a>
+	                <a href="resources.html#documentation">Documentation</a>
+	                <a href="resources.html#unittests">Tests</a>
+	                <a href="examples/forms/customer-profile/edit-form.html">Forms</a>
+	                <a href="resources.html#mobile">Mobile</a>
+	            </div>
+	        </div>
+	    </div>
+		</div>
+	</header>
+<div class='container_12'>
+<div class="actual-body">
+<div class='grid_12'>
+
+<br/>
+<div class="widget">
+<div class="widget-title">
+    <h2>Alpaca Form Walkthrough Example</h2>
+</div>
+<div class="widget-body">
+<div class="step">
+	
+    <img src="examples/img/step-1.png"/>
+
+    <p>
+        Use your favorite text editor to create an empty html file and then include latest jQuery library,
+        Alpaca JavaScript library and Alpaca stylesheet in its head section.
+    </p>
+
+<pre class="prettyprint linenums">
+&lt;script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="http://www.alpacajs.org/js/alpaca-latest.min.js"&gt;&lt;/script&gt;
+&lt;link type="text/css" href="http://www.alpacajs.org/css/alpaca-latest.min.css" rel="stylesheet"/&gt;
+</pre>
+</div>
+<div class="step">
+    <img src="examples/img/step-2.png"/>
+
+    <p>
+        Add a div to the body section of your html file and we are now ready to use Alpaca to render a feedback
+        form within the div. Let us first try to use only a schema parameter which is a JSON schema document
+        that describes the data structure of a "User Feedback" object with three properties, name, feedback and ranking.
+    </p>
+
+    <p>
+        As illustrated in
+        the following example, Alpaca is able to render a basic feedback form based on the provided schema.
+        It maps object property to form field based on it data type and format. For example, a string type
+        object property
+        will be mapped to a text field. However if we specify a list of allowed values for the
+        property with an enum attribute, Alpaca will instead render a
+        radio button group (or a drop-down select if the number of enum options is more than three) with all
+        values listed in the enum attribute. Since it is not a required field, Alpaca will automatically append
+        a None option to the radio button group which maps to empty value.
+    </p>
+
+    <p>
+        The feedback form we have at this point is very basic because the schema parameter only describes the data
+        structure and format. As for the options of the rendered form fields, Alpaca makes a lot of assumptions,
+        e.g. the size of text field is set as 40 as default.
+    </p>
+
+    <div class="container_12">
+        <div class='grid_6'>
+            <div id="form1"></div>
+        </div>
+        <div class='grid_6'>
+<pre class="prettyprint linenums">
+&lt;div id="form1"&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+$(function() {
+  $("#form1").alpaca({
+    "schema": {
+      "title":"User Feedback",
+      "description":"What do you think about Alpaca?",
+      "type":"object",
+      "properties": {
+        "name": {
+          "type":"string",
+          "title":"Name"
+        },
+        "feedback": {
+          "type":"string",
+          "title":"Feedback"
+        },
+        "ranking": {
+          "type":"string",
+          "title":"Ranking",
+          "enum":['excellent','ok','terrible']
+        }
+      }
+    }
+  });
+});
+&lt;/script&gt;
+</pre>
+        </div>
+    </div>
+</div>
+
+<div class="step">
+    <img src="examples/img/step-3.png"/>
+
+    <p>
+        To render a better feedback form, let us add an options parameter in addition to the schema parameter. The
+        options parameter is another JSON document that specifies type and options for the rendered form fields. It now
+        sets the size of name field as 20, maps the feedback object property to a textarea field and uses drop-down
+        select for the ranking object property with custom option labels.
+    </p>
+
+    <p>
+        The options parameter can also be used to provide additional field labels and help messages or overwrite the
+        ones that came from the schema parameter. In general, we can couple the same schema parameter with
+        different options parameters to render the form in various formats.
+    </p>
+
+    <div class="container_12">
+        <div class='grid_6'>
+            <div id="form2"></div>
+        </div>
+        <div class='grid_6'>
+<pre class="prettyprint linenums">
+&lt;div id="form1"&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+$(function() {
+  $("#form1").alpaca({
+    "schema": {
+      "title":"User Feedback",
+      "description":"What do you think about Alpaca?",
+      "type":"object",
+      "properties": {
+        "name": {
+          "type":"string",
+          "title":"Name"
+        },
+        "feedback": {
+          "type":"string",
+          "title":"Feedback"
+        },
+        "ranking": {
+          "type":"string",
+          "title":"Ranking",
+          "enum":['excellent','ok','terrible']
+        }
+      }
+    },
+    "options": {
+      "helper": "Tell us what you think about Alpaca!",
+      "fields": {
+        "name": {
+          "size": 20,
+          "helper": "Please enter your name."
+        },
+        "feedback" : {
+          "type": "textarea",
+          "rows": 5,
+          "cols": 40,
+          "helper": "Please enter your feedback."
+        },
+        "ranking": {
+          "type": "select",
+          "helper": "Select your ranking.",
+          "optionLabels": ["Awesome!",
+                            "It's Ok",
+                            "Hmm..."]
+        }
+      }
+    }
+  });
+});
+&lt;/script&gt;
+</pre>
+        </div>
+    </div>
+</div>
+<div class="step">
+    <img src="examples/img/step-4.png"/>
+
+    <p>
+        The ultimate reason for using Alpaca forms service is to provide end users with a friendly interface for
+        collecting their inputs. Those collected information normally needs to be submitted to and stored in a backend
+        system such as database, CMS etc.
+    </p>
+
+    <p>
+        With the schema parameter and the optional options parameter, Alpaca has rendered a decent feedback form with
+        normal HTML form tags. To make it interact with backend services, we have a few options
+    </p>
+
+    <p>
+        1. Render the form inside a FORM tag instead of the div tag. The FORM tag can come with all required attributes
+        such as action, method etc. A submit button can also be added to the FORM tag. Clicking on the
+        submit button will result in form submission just like any other HTML form.
+    </p>
+
+    <p>
+        2. Or we can ask Alpaca to render the FORM tag for us by providing form related options in the options
+        parameter. As
+        shown in the following example, Alpaca now renders the FORM tag with the specified method and endpoint as well
+        as a SUBMIT button. Try to click the SUBMIT button and see what happens!
+    </p>
+
+    <p>
+        Alpaca sets the name attribute of a rendered field based on its schema property name in case we didn't
+        specify it
+        through the options parameter. For the following example, we will have "name" for the name field and
+        "your_feedback" for the feedback field.
+    </p>
+
+    <p>
+        We have also provide Alpaca with a new data parameter which is a JSON document used by Alpaca as the initial
+        data for
+        populating the form. We have also make both name and ranking field as required field. Now if you leave the name
+        field empty, Alpaca will automatically invalidate the field and display an error message.
+    </p>
+
+    <p>
+        You may also notice this rendered form has different styles than the previous example. That is because we set
+        Alpaca with a view parameter which makes Alpaca to pick a different set of templates for form rendition.
+    </p>
+
+    <div class="container_12">
+        <div class='grid_6'>
+            <div id="form3"></div>
+        </div>
+        <div class='grid_6'>
+<pre class="prettyprint linenums">
+&lt;div id="form1"&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+$(function() {
+  $("#form1").alpaca({
+    "data": {
+      "name": "Britney Spears",
+      "feedback": "Alpaca is very cute.",
+      "ranking": "excellent"
+    },
+    "schema": {
+      "title":"User Feedback",
+      "description":"What do you think about Alpaca?",
+      "type":"object",
+      "properties": {
+        "name": {
+          "type":"string",
+          "title":"Name",
+          "required":true
+        },
+        "feedback": {
+          "type":"string",
+          "title":"Feedback"
+        },
+        "ranking": {
+          "type":"string",
+          "title":"Ranking",
+          "enum":['excellent','ok','so so'],
+          "required":true
+        }
+      }
+    },
+    "options": {
+      "renderForm":true,
+      "form":{
+        "attributes":{
+          "action":"examples/endpoints/save.php",
+          "method":"post"
+        },
+        "buttons":{
+          "submit":{}
+        }
+      },
+      "helper": "Tell us what you think about Alpaca!",
+      "fields": {
+        "name": {
+          "size": 20,
+          "helper": "Please enter your name."
+        },
+        "feedback" : {
+          "type": "textarea",
+          "name": "your_feedback",
+          "rows": 5,
+          "cols": 40,
+          "helper": "Please enter your feedback."
+        },
+        "ranking": {
+          "type": "select",
+          "helper": "Select your ranking.",
+          "optionLabels": ["Awesome!",
+                            "It's Ok",
+                            "Hmm..."]
+        }
+      }
+    },
+    "view" : "VIEW_WEB_EDIT_LIST"
+  });
+});
+&lt;/script&gt;
+</pre>
+        </div>
+    </div>
+</div>
+<div class="step">
+    <img src="examples/img/step-5.png"/>
+
+    <p>
+        Alpaca is capable of not only rendering a form based on JSON schema but also reassembling form inputs into a
+        JSON document according to the data structure described by the same JSON schema.
+    </p>
+
+    <p>
+        This brings us a better option for interacting Alpaca with backend services. As shown in the following example,
+        by introducing a "postRender"
+        callback function which gets invoked once the form rendition is finished, we are able to get hold of the
+        reassembled JSON document, validate it and post it to a backend service.
+    </p>
+
+    <p>
+        For developers, this will be the place to do any required post-processing since Alpaca will feed the callback
+        function with the top-most form control that it constructs. We can easily gain access to any other Alpaca form
+        control by using API such as <i>renderedForm.children</i>, <i>renderedForm.childrenByPropertyId</i>, <i>renderForm.getControlByPath</i>
+        etc. From any Alpaca form control, we can get the DOM element of its mapped form field by making a simple API
+        call, <i>myControl.field</i>.
+    </p>
+
+    <div class="container_12">
+        <div class='grid_6'>
+            <div id="form4"></div>
+            <div><input type="button" id="form4-button" value="Save"/></div>
+        </div>
+        <div class='grid_6'>
+<pre class="prettyprint linenums">
+&lt;div id="form1"&gt;&lt;/div&gt;
+&lt;div&gt;
+ &lt;input type="button" id="form1-button" value="Save"&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+$(function() {
+  $("#form1").alpaca({
+    "data": {
+      "name": "Britney Spears",
+      "feedback": "Alpaca is very cute.",
+      "ranking": "excellent"
+    },
+    "schema": {
+      "title":"User Feedback",
+      "description":"What do you think about Alpaca?",
+      "type":"object",
+      "properties": {
+        "name": {
+          "type":"string",
+          "title":"Name",
+          "required":true
+        },
+        "feedback": {
+          "type":"string",
+          "title":"Feedback"
+        },
+        "ranking": {
+          "type":"string",
+          "title":"Ranking",
+          "enum":['excellent','ok','so so'],
+          "required":true
+        }
+      }
+    },
+    "options": {
+      "helper": "Tell us what you think about Alpaca!",
+      "fields": {
+        "name": {
+          "size": 20,
+          "helper": "Please enter your name."
+        },
+        "feedback" : {
+          "type": "textarea",
+          "name": "your_feedback",
+          "rows": 5,
+          "cols": 40,
+          "helper": "Please enter your feedback."
+        },
+        "ranking": {
+          "type": "select",
+          "helper": "Select your ranking.",
+          "optionLabels": ["Awesome!",
+                            "It's Ok",
+                            "Hmm..."]
+        }
+      }
+    },
+    "view" : "VIEW_WEB_EDIT_LIST",
+    "postRender": function(renderedForm) {
+      $('#form4-button').click(function() {
+        if (renderedForm.isValid(true)) {
+          var val = renderedForm.getValue();
+          $.ajax({
+            type: "POST",
+            url: "examples/endpoints/save2.php",
+            data: {json:JSON.stringify(val)},
+            success: function(msg) {
+              alert("Request received: " + msg);
+            }
+          });
+        }
+      });
+    }
+  });
+});
+&lt;/script&gt;
+</pre>
+        </div>
+    </div>
+</div>
+<div class="step">
+    <img src="examples/img/step-6.png"/>
+
+    <p>
+        Alpaca is a client-side forms engine which means form rendition and data processing all happen on client
+        side <i>e.g.</i> client browser. This provides a great foundation for high performance and scalability since
+        JSON is the native data format that all browsers understand and it is the easiest format for data manipulation.
+        Once the jQuery and Alpaca library are downloaded and cached on client side, there will be no other overhead.
+    </p>
+
+    <p>
+        Plugging Alpaca into your existing application should be fairly straightforward. All you need to do is to
+        provide an endpoint for serving Alpaca with data in JSON and another endpoint for taking re-assembled JSON
+        document with user inputs from Alpaca for data persistence. Most modern day backend systems may already
+        have those two endpoints.
+    </p>
+
+    <p>
+        As illustrated by the above examples, using Alpaca is mainly through configuration rather than coding. Since
+        schema and options parameters are also JSON documents, they can be stored in and served by your back
+        systems as well. If you can plugin an adapter that converts XML document to JSON document, you can use Alpaca for your
+        XML data as well.
+    </p>
+
+    <p>
+        If you are interested in learning more about Alpaca or planning to use Alpaca for your project, please check out
+        Alpaca <a href="resources.html" title="Alpaca Resources">resources</a> page
+        for download links, documentation, samples <i>etc.</i>
+    </p>
+</div>
+</div>
+<div class="clear clearfix"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer>
+    <div class="container_12">
+        <div class="grid_12 copyright">
+            Copyright &copy; 2012 Gitana Software | All Rights Reserved
+        </div>
+    </div>
+</footer>
+<script>
+    $('#form1').alpaca({
+        "schema" : {
+            "title" : "User Feedback",
+            "description" : "What do you think about Alpaca?",
+            "type" : "object",
+            "properties" : {
+                "name" : {
+                    "type" : "string",
+                    "title" : "Name"
+                },
+                "feedback" : {
+                    "type" : "string",
+                    "title" : "Feedback"
+                },
+                "ranking" : {
+                    "type" : "string",
+                    "title" : "Ranking",
+                    "enum" : ['excellent','ok','so so']
+                }
+            }
+        }
+    });
+    $('#form2').alpaca({
+        "schema" : {
+            "title" : "User Feedback",
+            "description" : "What do you think about Alpaca?",
+            "type" : "object",
+            "properties" : {
+                "name" : {
+                    "type" : "string",
+                    "title" : "Name"
+                },
+                "feedback" : {
+                    "type" : "string",
+                    "title" : "Feedback"
+                },
+                "ranking" : {
+                    "type" : "string",
+                    "title" : "Ranking",
+                    "enum" : ['excellent','ok','so so']
+                }
+            }
+        },
+        "options" : {
+            "helper" : "Tell us what you think about Alpaca!",
+            "fields" : {
+                "name" : {
+                    "size" : 20,
+                    "helper" : "Please enter your name."
+                },
+                "feedback" : {
+                    "type" : "textarea",
+                    "rows" : 5,
+                    "cols" : 40,
+                    "helper" : "Please enter your feedback."
+                },
+                "ranking" : {
+                    "type" : "select",
+                    "helper" : "Select your ranking.",
+                    "optionLabels" : ["Awesome!","It's Ok","Hmm..."]
+                }
+            }
+        }
+    });
+    $('#form3').alpaca({
+        "data" : {
+            "name" : "Britney Spears",
+            "feedback" : "Alpaca is very cute.",
+            "ranking" : "excellent"
+        },
+        "schema" : {
+            "title" : "User Feedback",
+            "description" : "What do you think about Alpaca?",
+            "type" : "object",
+            "properties" : {
+                "name" : {
+                    "type" : "string",
+                    "title" : "Name",
+                    "required" : true
+                },
+                "feedback" : {
+                    "type" : "string",
+                    "title" : "Feedback"
+                },
+                "ranking" : {
+                    "type" : "string",
+                    "title" : "Ranking",
+                    "enum" : ['excellent','ok','so so'],
+                    "required" : true
+                }
+            }
+        },
+        "options" : {
+            "renderForm":true,
+            "form":{
+                "attributes":{
+                    "action":"examples/endpoints/save.php",
+                    "method":"post"
+                },
+                "buttons":{
+                    "submit":{}
+                }
+            },
+            "fields" : {
+                "helper" : "Tell us what you think about Alpaca!",
+                "name" : {
+                    "size" : 20,
+                    "helper" : "Please enter your name."
+                },
+                "feedback" : {
+                    "type" : "textarea",
+                    "name" : "your_feedback",
+                    "rows" : 5,
+                    "cols" : 30,
+                    "helper" : "Please enter your feedback."
+                },
+                "ranking" : {
+                    "type" : "select",
+                    "helper" : "Select your ranking.",
+                    "optionLabels" : ["Awesome!","It's Ok","Hmm..."]
+                }
+            }
+        },
+        "view" : "VIEW_WEB_EDIT_LIST"
+    });
+    $('#form4').alpaca({
+        "data" : {
+            "name" : "Britney Spears",
+            "feedback" : "Alpaca is very cute.",
+            "ranking" : "excellent"
+        },
+        "schema" : {
+            "title" : "User Feedback",
+            "description" : "What do you think about Alpaca?",
+            "type" : "object",
+            "properties" : {
+                "name" : {
+                    "type" : "string",
+                    "title" : "Name",
+                    "required" : true
+                },
+                "feedback" : {
+                    "type" : "string",
+                    "title" : "Feedback"
+                },
+                "ranking" : {
+                    "type" : "string",
+                    "title" : "Ranking",
+                    "enum" : ['excellent','ok','so so'],
+                    "required" : true
+                }
+            }
+        },
+        "options" : {
+            "fields" : {
+                "helper" : "Tell us what you think about Alpaca!",
+                "name" : {
+                    "size" : 20,
+                    "helper" : "Please enter your name."
+                },
+                "feedback" : {
+                    "type" : "textarea",
+                    "name" : "your_feedback",
+                    "rows" : 5,
+                    "cols" : 30,
+                    "helper" : "Please enter your feedback."
+                },
+                "ranking" : {
+                    "type" : "select",
+                    "helper" : "Select your ranking.",
+                    "optionLabels" : ["Awesome!","It's Ok","Hmm..."]
+                }
+            }
+        },
+        "view" : "VIEW_WEB_EDIT_LIST",
+        "postRender": function(renderedForm) {
+            $('#form4-button').click(function() {
+                if (renderedForm.isValid(true)) {
+                    var val = renderedForm.getValue();
+                    $.ajax({
+                        type: "POST",
+                        url: "examples/endpoints/save2.php",
+                        data: {json:JSON.stringify(val)},
+                        success: function(msg) {
+                            alert("Request received: " + msg);
+                        }
+                    });
+                }
+            });
+        }
+    });
+</script>
+<script>
+    window.prettyPrint && prettyPrint();
+</script>
+</body>
+</html>
