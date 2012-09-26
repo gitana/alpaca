@@ -13,7 +13,7 @@
                 expect(13);
                 var formElem = $('#createform-1 form');
                 ok(formElem.length, 'Form generated.');
-                equal(formElem.attr('action'), '/endpoint', 'Form field action attribute populated correctly.');
+                equal(formElem.attr('action'), '../../endpoints/echo.php', 'Form field action attribute populated correctly.');
                 equal(formElem.attr('method'), 'post', 'Form field method attribute populated correctly.');
                 var textInputElems = $('#createform-1 input:text');
                 equal(textInputElems.length, 5, 'Right number of text input fields rendered.');

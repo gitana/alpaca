@@ -352,6 +352,6 @@ textarea.sample-code {
     width: 530px;
 }
 
-*[id*='field'] {
+*[id^='field'] {
     font-size: 12px;
 }

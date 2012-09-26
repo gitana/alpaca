@@ -317,7 +317,8 @@ $(function() {
             var bar = $('<ul></ul>');
             $.each(example.examples, function(i, item) {
                 var itemBar = $('<li></li>');
-                var listItem = $('<span><span class="ui-icon ui-icon-document" style="float:left"></span><a href="' + item.link + '">' + item.title + '</a></span>');
+                //<span><span class="ui-icon ui-icon-document" style="float:left"></span>
+                var listItem = $('<span><a href="' + item.link + '">' + item.title + '</a></span>');
                 itemBar.append(listItem);
                 if (item.id == currentExampleId) {
                     itemBar.addClass('ui-state-highlight');
