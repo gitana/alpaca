@@ -50,7 +50,7 @@ h2 a {
 
 pre ol.linenums {
     margin: 0px;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .copyright {
@@ -132,7 +132,7 @@ img.resource-icon {
     background-repeat: no-repeat;
     border-radius: 5px 5px 5px 5px;
     margin-bottom: 10px;
-    margin-top: 45px;
+    margin-top: 25px;
     background-color: #313131;
     clear: both;
 }
@@ -148,7 +148,7 @@ img.resource-icon {
     color: #FFFFFF;
     display: inline;
     font-size: 1.2em;
-    line-height: 2.3em;
+    line-height: 2.0em;
     padding: 0 10px;
     text-shadow: 0 -1px 0 #000000;
 }
@@ -158,6 +158,10 @@ img.resource-icon {
     border: 1px solid #C1C1C1;
     border-radius: 0 0 5px 5px;
     padding: 10px 20px 10px 20px;
+}
+
+.widget-body h1 {
+    font-size: 1.4em;
 }
 
 header {
@@ -196,6 +200,15 @@ footer {
 
 .alpaca-example-sidebar ul li a {
     text-decoration: none;
+}
+
+.alpaca-example-sidebar .widget-body {
+    padding: 10px 0 10px 10px;
+}
+
+/* Tutorial */
+.tutorial-example {
+    font-size : 12px;
 }
 
 /* Table */
@@ -337,4 +350,8 @@ textarea.sample-code {
 }
 .input-xxlarge {
     width: 530px;
+}
+
+*[id*='field'] {
+    font-size: 12px;
 }

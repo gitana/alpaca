@@ -10,8 +10,8 @@ $(function() {
     }
 
     addThemeSwitcher($('.alpaca-example-header'), {
-        top: '26px',
-        right: '20px'
+        top: '6px',
+        right: '0px'
     });
 
     // Enable source view buttons
