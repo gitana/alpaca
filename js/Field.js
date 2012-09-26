@@ -168,6 +168,10 @@
                     callback = view;
                 }
             }
+            // last try to see if we can populate the label from propertyId
+            if (!this.options.label && this.propertyId) {
+                this.options.label = this.propertyId;
+            }
             // set default name value if it is not provided through options.
             if (!this.options.name) {
                 // has path?
