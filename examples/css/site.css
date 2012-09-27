@@ -184,7 +184,7 @@ footer {
 	font-size: 16px;
 	padding-top: 10px;
     clear: both;
-    height: 40px;
+    height: 300px;
     margin-top: -50px;
 }
 
@@ -359,4 +359,9 @@ textarea.sample-code {
 
 *[id^='field'] {
     font-size: 12px;
+}
+
+/* Embedded youtube videos */
+.embedded-youtube {
+    text-align: center;
 }
