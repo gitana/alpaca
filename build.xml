@@ -73,7 +73,7 @@
                 <file name="validator.js"/>
                 <file name="jquery.tmpl.js"/>
                 <file name="equiv_and_hoozit.js"/>
-                <file name="jquery.maskedinput-1.3.min.js"/>
+                <file name="jquery.maskedinput-1.3.js"/>
             </filelist>
             <filelist dir="${prep.dir}/js">
                 <file name="Alpaca.js"/>
