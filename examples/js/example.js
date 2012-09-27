@@ -349,7 +349,7 @@ $(function() {
 
     var getParameters = function(parameters, name) {
         var strParameters = "";
-        strParameters += "<thead><tr><th>" + name + "</th><th>Description</th><th>Type</th><th>Required</th><th>Default</th></tr></thead>";
+        strParameters += "<thead><tr><th>" + name + "</th><th>Description</th><th>Type</th><th>Default</th></tr></thead>";
         var oddRow = true
         $.each(parameters, function(key, val) {
             var className = "odd";
@@ -368,10 +368,12 @@ $(function() {
             if (val['readonly']) {
                 description += "<br/><b>Readonly</b>";
             }
-            strParameters += "<td>" + val['title'] + "<br/>" + description + "</td>";
+            if (val['required']) {
+                description += "<br/><b>Required</b>";
+            }
+
+            strParameters += "<td>" + /*val['title'] + "<br/>" +*/ description + "</td>";
             strParameters += "<td>" + val['type'] + "</td>";
-            var required = val['required'] ? "true" : "false";
-            strParameters += "<td>" + required + "</td>";
             var defaultVal = val['default'] != null ? val['default'] : "";
             strParameters += "<td>" + defaultVal + "</td>";
             strParameters += "</tr>";
@@ -387,10 +389,10 @@ $(function() {
                     }
                     strParameters += "<tr class='" + className + "'>";
                     strParameters += "<td>" + key + "." + key2 + "</td>";
-                    strParameters += "<td>" + val2['title'] + "<br/>" + val2['description'] + "</td>";
+                    strParameters += "<td>" /*+ val2['title'] + "<br/>"*/ + val2['description'] + "</td>";
                     strParameters += "<td>" + val2['type'] + "</td>";
-                    required = val2['required'] ? "true" : "false";
-                    strParameters += "<td>" + required + "</td>";
+                    //required = val2['required'] ? "true" : "false";
+                    //strParameters += "<td>" + required + "</td>";
                     defaultVal = val2['default'] != null ? val2['default'] : "";
                     strParameters += "<td>" + defaultVal + "</td>";
                     strParameters += "</tr>";

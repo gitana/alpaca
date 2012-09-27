@@ -1038,50 +1038,50 @@
                 "properties": {
                     "title": {
                         "title": "Title",
-                        "description": "Property short description",
+                        "description": "Short description of the property.",
                         "type": "string"
                     },
                     "description": {
                         "title": "Description",
-                        "description": "Property detailed description",
+                        "description": "Detailed description of the property.",
                         "type": "string"
                     },
                     "readonly": {
                         "title": "Readonly",
-                        "description": "Property will be read only if true",
+                        "description": "Property will be readonly if true.",
                         "type": "boolean",
                         "default": false
                     },
                     "required": {
                         "title": "Required",
-                        "description": "Property value must be set if true",
+                        "description": "Property value must be set if true.",
                         "type": "boolean",
                         "default": false
                     },
                     "default": {
                         "title": "Default",
-                        "description": "Property default value",
+                        "description": "Default value of the property.",
                         "type": "any"
                     },
                     "type": {
                         "title": "Type",
-                        "description": "Property data type",
+                        "description": "Data type of the property.",
                         "type": "string",
                         "readonly": true
                     },
                     "format": {
                         "title": "Format",
-                        "description": "Property data format",
+                        "description": "Data format of the property.",
                         "type": "string"
                     },
                     "disallow": {
                         "title": "Disallow",
-                        "description": "Disallowed values for the property",
+                        "description": "List of disallowed values for the property.",
                         "type": "array"
                     },
                     "dependencies": {
                         "title": "Dependencies",
-                        "description": "Property Dependencies",
+                        "description": "List of property dependencies.",
                         "type": "array"
                     }
                 }
@@ -1193,80 +1193,81 @@
                     },
                     "type": {
                         "title": "Field Type",
-                        "description": "Field type",
+                        "description": "Field type.",
                         "type": "string",
                         "default": this.getFieldType(),
                         "readonly": true
                     },
                     "validate": {
                         "title": "Validation",
-                        "description": "Field validation is required if true",
+                        "description": "Field validation is required if true.",
                         "type": "boolean",
                         "default": true
                     },
                     "showMessages": {
                         "title": "Show Messages",
-                        "description": "Display validation messages if true",
+                        "description": "Display validation messages if true.",
                         "type": "boolean",
                         "default": true
                     },
                     "disabled": {
                         "title": "Disabled",
-                        "description": "Field disabled if true",
+                        "description": "Field will be disabled if true.",
                         "type": "boolean",
                         "default": false
                     },
                     "readonly": {
                         "title": "Readonly",
-                        "description": "Field will be read only if true",
+                        "description": "Field will be readonly if true.",
                         "type": "boolean",
                         "default": false
                     },
                     "hidden": {
                         "title": "Hidden",
-                        "description": "Field will be read only if true",
+                        "description": "Field will be hidden if true.",
                         "type": "boolean",
                         "default": false
                     },
                     "label": {
                         "title": "Label",
-                        "description": "Field label",
+                        "description": "Field label.",
                         "type": "string"
                     },
                     "helper": {
                         "title": "Helper",
-                        "description": "Field help message",
+                        "description": "Field help message.",
                         "type": "string"
                     },
                     "fieldClass": {
                         "title": "Style Class",
-                        "description": "Additional field style class",
+                        "description": "Additional field style class.",
                         "type": "string"
                     },
                     "hideInitValidationError" : {
                         "title": "Hide Initial Validation Errors",
-                        "description" : "Hide initial validation errors.",
-                        "type": "boolean"
+                        "description" : "Hide initial validation errors if true.",
+                        "type": "boolean",
+                        "default": false
                     }
                 }
             };
             if (this.isTopLevel()) {
                 schemaOfOptions.properties.renderForm = {
                     "title": "Render Form",
-                    "description": "Render form tag as container for rest of fields.",
+                    "description": "Render a FORM tag as the container for the rest of fields if true.",
                     "type": "boolean",
                     "default": false
                 };
 
                 schemaOfOptions.properties.form = {
                     "title": "Form",
-                    "description": "Options for form",
+                    "description": "Options for rendering the FORM tag.",
                     "type": "object",
                     "dependencies" : "renderForm",
                     "properties": {
                         "attributes": {
                             "title": "Form Attributes",
-                            "description": "Form attributes",
+                            "description": "List of attributes for the FORM tag.",
                             "type": "object",
                             "properties": {
                                 "id": {

@@ -66,7 +66,6 @@
             Alpaca.merge(this.options, {
                 "fields": {
                     "zip": {
-                        "mask": true,
                         "maskString": "99999",
                         "size": 5
                     },

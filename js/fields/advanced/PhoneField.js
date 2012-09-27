@@ -35,10 +35,6 @@
                 this.schema.pattern = Alpaca.regexps.phone;
             }
 
-            if (Alpaca.isEmpty(this.options.mask)) {
-                this.options.mask = true;
-            }
-
             if (Alpaca.isEmpty(this.options.maskString)) {
                 this.options.maskString = "(999) 999-9999";
             }
@@ -119,12 +115,6 @@
         getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(), {
                 "properties": {
-                    "mask": {
-                        "title": "Field Mask Option",
-                        "description": "Enable field mask if true",
-                        "type": "boolean",
-                        "default": true
-                    },
                     "maskString": {
                         "title": "Field Mask String",
                         "description": "Expression for field mask",

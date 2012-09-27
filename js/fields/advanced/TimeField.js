@@ -39,10 +39,6 @@
                 this.options.timeFormatRegex = /^(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])$/;
             }
 
-            if (Alpaca.isEmpty(this.options.mask)) {
-                this.options.mask = true;
-            }
-
             if (Alpaca.isEmpty(this.options.maskString)) {
                 this.options.maskString = "99:99:99";
             }
@@ -160,9 +156,6 @@
                         "description": "Regular expression for validation time format",
                         "type": "string",
                         "default": /^(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])$/
-                    },
-                    "mask": {
-                        "default" : true
                     },
                     "maskString": {
                         "default" : "99:99:99"

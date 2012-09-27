@@ -180,7 +180,7 @@
                 "properties": {
                     "enum": {
                         "title": "Enumeration",
-                        "description": "List of property value options",
+                        "description": "List of options for the property value.",
                         "type": "array"
                     }
                 }
@@ -211,7 +211,7 @@
                 "properties": {
                     "name": {
                         "title": "Field name",
-                        "description": "Field name",
+                        "description": "Field name.",
                         "type": "string"
                     }
                 }

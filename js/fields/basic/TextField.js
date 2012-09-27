@@ -62,7 +62,7 @@
         postRender: function() {
             this.base();
             // mask it
-            if ( this.field && this.options.mask && this.options.maskString) {
+            if ( this.field && this.field.mask && this.options.maskString) {
                 this.field.mask(this.options.maskString);
             }
 			if (this.fieldContainer) {
@@ -201,17 +201,17 @@
                 "properties": {                
                     "minLength": {
                         "title": "Minimal Length",
-                        "description": "Property value minimal length",
+                        "description": "Minimal length of the property value.",
                         "type": "number"
                     },
                     "maxLength": {
                         "title": "Maximum Length",
-                        "description": "Property value maximum length",
+                        "description": "Maximum length of the property value.",
                         "type": "number"
                     },
                     "pattern": {
                         "title": "Pattern",
-                        "description": "Property value pattern in regular expression",
+                        "description": "Regular expression for the property value.",
                         "type": "string"
                     }
                 }
@@ -247,18 +247,13 @@
                 "properties": {                
                     "size": {
                         "title": "Field Size",
-                        "description": "Field size",
+                        "description": "Field size.",
                         "type": "number",
 						"default":40
                     },
-                    "mask": {
-                        "title": "Mask",
-                        "description": "Enable field mask if true",
-                        "type": "boolean"
-                    },
                     "maskString": {
                         "title": "Mask Expression",
-                        "description": "Expression for field mask",
+                        "description": "Expression for the field mask. Field masking will enabled if not empty.",
                         "type": "string"
                     }
                 }
@@ -274,11 +269,6 @@
                 "fields": {                
                     "size": {
                         "type": "integer"
-                    },
-                    "mask": {
-                        "helper": "Enable field mask if checked",
-						"rightLabel": "Enable field mask?",
-                        "type": "checkbox"
                     },
                     "maskString": {
                         "helper": "a - an alpha character;9 - a numeric character;* - an alphanumeric character",
