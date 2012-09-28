@@ -129,7 +129,7 @@
                     "properties": {
                         "rightLabel": {
                             "title": "Option Label",
-                            "description": "Option label",
+                            "description": "Optional right-hand side label for checkbox field.",
                             "type": "string"
                         }
                     }
@@ -161,7 +161,7 @@
              * @see Alpaca.Field#getDescription
              */
             getDescription: function() {
-                return "Checkbox Field.";
+                return "Checkbox Field for boolean data.";
             },
 
             /**
