@@ -509,22 +509,22 @@
                 "properties": {
                     "items": {
                         "title": "Array Items",
-                        "description": "Schema of array items",
+                        "description": "Schema for array items.",
                         "type": "object",
                         "properties": {
                             "minItems": {
                                 "title": "Minimum Items",
-                                "description": "Minimum number of items",
+                                "description": "Minimum number of items.",
                                 "type": "number"
                             },
                             "maxItems": {
                                 "title": "Maximum Items",
-                                "description": "Maximum number of items",
+                                "description": "Maximum number of items.",
                                 "type": "number"
                             },
                             "uniqueItems": {
                                 "title": "Items Unique",
-                                "description": "Item values should be unique if true",
+                                "description": "Item values should be unique if true.",
                                 "type": "boolean",
                                 "default": false
                             }
@@ -573,12 +573,12 @@
                 "properties": {
                     "items": {
                         "title": "Array Items",
-                        "description": "Schema of array items",
+                        "description": "Options for array items.",
                         "type": "object",
                         "properties": {
                             "toolbarSticky": {
                                 "title": "Sticky Toolbar",
-                                "description": "Toolbar will be aways on if true",
+                                "description": "Array item toolbar will be aways on if true.",
                                 "type": "boolean",
                                 "default": false
                             }
@@ -623,7 +623,7 @@
          * @see Alpaca.ContainerField#getDescription
          */
         getDescription: function() {
-            return "Array Field.";
+            return "Field for list of items with same data type or structure.";
         },
 
         /**

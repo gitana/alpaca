@@ -187,23 +187,23 @@
 				"properties": {
 					"minimum": {
 						"title": "Minimum",
-						"description": "Minimum value of the property",
+						"description": "Minimum value of the property.",
 						"type": "number"
 					},
 					"maximum": {
 						"title": "Maximum",
-						"description": "Maximum value of the property",
+						"description": "Maximum value of the property.",
 						"type": "number"
 					},
 					"exclusiveMinimum": {
 						"title": "Exclusive Minimum",
-						"description": "Field value can not equal the number defined by the minimum attribute",
+						"description": "Property value can not equal the number defined by the minimum schema property.",
 						"type": "boolean",
 						"default": false
 					},
 					"exclusiveMaximum": {
 						"title": "Exclusive Maximum",
-						"description": "Field value can not equal the number defined by the maxinum attribute",
+						"description": "Property value can not equal the number defined by the maximum schema property.",
 						"type": "boolean",
 						"default": false
 					}

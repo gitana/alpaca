@@ -35,8 +35,12 @@
             if (_this.getEnum()) {
                 $.each(_this.getEnum(), function(index, value) {
                     var text = value;
-                    if (_this.options.optionLabels && _this.options.optionLabels[index]) {
-                        text = _this.options.optionLabels[index];
+                    if (_this.options.optionLabels) {
+                        if (!Alpaca.isEmpty(_this.options.optionLabels[index])) {
+                            text = _this.options.optionLabels[index];
+                        } else if (!Alpaca.isEmpty(_this.options.optionLabels[value])) {
+                            text = _this.options.optionLabels[value];
+                        }
                     }
                     _this.selectOptions.push({
                         "value": value,
@@ -191,12 +195,12 @@
                 "properties": {
                     "optionLabels": {
                         "title": "Option Labels",
-                        "description": "Lables for options",
+                        "description": "Labels for options. It can either be a map object or an array field that maps labels to items defined by enum schema property one by one.",
                         "type": "array"
                     },
                     "dataSource": {
                         "title": "Option Datasource",
-                        "description": "Datasource for generating options",
+                        "description": "Datasource for generating list of options.",
                         "type": "string"
                     }
                 }
