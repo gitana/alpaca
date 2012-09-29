@@ -131,9 +131,8 @@
 				"properties": {
 					"name": {
 						"title": "Field name",
-						"description": "Field name",
-						"type": "string",
-						"readonly": true
+						"description": "Field name.",
+						"type": "string"
 					}
 				}
 			});
@@ -150,7 +149,7 @@
          * @see Alpaca.Field#getDescription
 		 */
 		getDescription: function() {
-			return "Radio Group Field.";
+			return "Radio Group Field with list of options.";
 		},
 
 		/**

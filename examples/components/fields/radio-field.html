@@ -139,6 +139,33 @@ $(function() {
     });
 });
                     </script>
+                    <h3>Example 3: </h3>
+					<h4>Radio button field with more than 3 options and custom option labels.</h4>
+                    <div id="field3">
+                    </div>
+                    <script type="text/javascript"id="field3-script">
+$(function() {
+    $("#field3").alpaca({
+        "data": "green",
+        "options": {
+            "type" : "radio",
+            "label": "Favorite Color",
+            "helper": "Pick your favorite color",
+            "optionLabels": {
+                "red" : "Red",
+                "green" : "Green",
+                "blue" : "Blue",
+                "white" : "White",
+                "black" : "Black"
+            }
+        },
+        "schema": {
+            "required": true,
+            "enum": ["red", "green", "blue","white","black"]
+        }
+    });
+});
+                    </script>
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

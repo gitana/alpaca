@@ -102,18 +102,18 @@
             </div>
                         <div class='grid_12 alpaca-example-case'>
                     <h3>Example 1: </h3>
-                    <h4>Number field with data parameter.</h4>
+                    <h4>Number field with only data parameter.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
 $(function() {
     $("#field1").alpaca({
-        "data": 15
+        "data": 15.01
     });
 });
                     </script>
                     <h3>Example 2: </h3>
-                    <h4>Number field with data, options and schema parameter.</h4>
+                    <h4>Number field with value range defined by minimum and maximum schema property.</h4>
                     <div id="field2">
                     </div>
                     <script type="text/javascript" id="field2-script">
@@ -122,15 +122,37 @@ $(function() {
         "data": 3.55,
         "options": {
             "label": "Gas Price:",
-            "helper": "Enter Gas Price in Your Neighborhood"
+            "helper": "Enter Gas Price in Your Neighborhood",
+            "size": 5
         },
         "schema": {
-            minimum: 2.10,
-            maximum: 3.25
+            "minimum": 2.10,
+            "maximum": 3.25
         }
     });
 });
                     </script>
+                            <h3>Example 3: </h3>
+                            <h4>Number field with exclusiveMinimum and exclusiveMaximum schema property.</h4>
+                            <div id="field3">
+                            </div>
+                            <script type="text/javascript" id="field3-script">
+$(function() {
+    $("#field3").alpaca({
+        "data": 21.5,
+        "options": {
+            "label": "Facebook Stock Price",
+            "helper": "Enter your predicted facebook stock price in 6 months."
+        },
+        "schema": {
+            "minimum": 10.2,
+            "maximum": 21.5,
+            "exclusiveMinimum": true,
+            "exclusiveMaximum": true
+        }
+    });
+});
+                            </script>
                         </div>
                         <div class="clear height-fix"></div>
                     </div>
