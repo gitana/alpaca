@@ -8,11 +8,5 @@
 		"type": "git", 
 		"url": "git://github.com/gitana/alpaca.git"
 	},
-    "version": "1.0.2-SNAPSHOT",
-	"volo": {
-		"url": "http://www.alpacajs.org/downloads/alpaca-{version}-all.zip",
-		"dependencies": {
-			"jquery": "jquery/jquery"
-		}		
-	}
+    "version": "1.0.2-SNAPSHOT"
 }
