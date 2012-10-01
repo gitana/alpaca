@@ -1,0 +1,24 @@
+<?xml version='1.0'?>
+<project name="Sample Build File" basedir="." default="build">
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="setup" description="Creates all required directories" depends="clean">
+        <mkdir dir="build"/>
+    </target>
+
+    <target name="build" description="Creates all required directories" depends="setup">
+
+        <!-- run the node command to build -->
+        <!-- Node.js must be installed -->
+        <exec executable="node">
+            <arg value="thirdparty/r.js"/>
+            <arg value="-o"/>
+            <arg value="app.build.js"/>
+        </exec>
+
+    </target>
+
+</project>

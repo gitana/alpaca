@@ -65,8 +65,8 @@
 
     <target name="concat-js" description="Concat all javascript files" depends="prep">
 
-        <!-- Concatenate all Alpaca files into a single JS file -->
-        <concat destfile="${prep.dir}/js/${appkey}-${version}-single.js">
+        <!-- Concatenate files for Alpaca Core -->
+        <concat destfile="${prep.dir}/js/${appkey}-standalone-core.js">
             <filelist dir="${prep.dir}/lib">
                 <file name="base.js"/>
                 <file name="validator.js"/>
@@ -89,7 +89,7 @@
                 <file name="Connector.js"/>
                 <file name="Form.js"/>
 
-                <!--Alpaca Base Fields-->
+                <!--Alpaca Core Fields-->
                 <file name="fields/basic/TextField.js"/>
                 <file name="fields/basic/TextAreaField.js"/>
                 <file name="fields/basic/CheckBoxField.js"/>
@@ -101,9 +101,15 @@
                 <file name="fields/basic/ArrayField.js"/>
                 <file name="fields/basic/ObjectField.js"/>
                 <file name="fields/basic/AnyField.js"/>
-                <!--End of Alpaca Base Fields-->
+                <!--End of Alpaca Core Fields-->
 
-                <!--Alpaca Other Fields-->
+                <file name="views/DefaultViewLanguagePacks.js"/>
+            </filelist>
+        </concat>
+
+        <!-- Concatenate files for Alpaca Extras -->
+        <concat destfile="${prep.dir}/js/${appkey}-standalone-extras.js">
+            <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
                 <file name="fields/advanced/DateField.js"/>
                 <file name="fields/advanced/EmailField.js"/>
@@ -120,36 +126,46 @@
                 <file name="fields/advanced/TimeField.js"/>
                 <file name="fields/advanced/UpperCaseField.js"/>
                 <file name="fields/advanced/WysiwygField.js"/>
-                <!--End of Alpaca Other Fields-->
-
-                <file name="views/DefaultViewLanguagePacks.js"/>
             </filelist>
         </concat>
 
-        <!-- Wrap the single JS file with an AMD wrapper -->
-        <loadresource property="singlejs">
-            <file file="${prep.dir}/js/${appkey}-${version}-single.js"/>
-        </loadresource>
-        <copy file="${prep.dir}/lib/amd/wrapper.js" tofile="${prep.dir}/js/${appkey}-${version}-single-wrapped.js" overwrite="true" filtering="true">
-            <filterchain>
-                <tokenfilter>
-                    <replacestring from="/** BUILD_INSERT_SINGLE_JS **/" to="${singlejs}"/>
-                </tokenfilter>
-            </filterchain>
-        </copy>
-        <concat destfile="${package.dir}/js/${appkey}-${version}-full.js">
-            <filelist dir="${prep.dir}">
-                <file name="license.txt"/>
-            </filelist>
+        <!-- Concatenate all files -->
+        <concat destfile="${prep.dir}/js/${appkey}-standalone.js">
             <filelist dir="${prep.dir}/js">
-                <file name="${appkey}-${version}-single-wrapped.js"/>
+                <file name="${appkey}-standalone-core.js"/>
+                <file name="${appkey}-standalone-extras.js"/>
             </filelist>
         </concat>
-        <delete file="${prep.dir}/js/${appkey}-${version}-single.js"/>
-        <delete file="${prep.dir}/js/${appkey}-${version}-single-wrapped.js"/>
+
+        <!-- wrap the Alpaca "core" as an AMD module -->
+        <antcall target="amd">
+            <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone-core.js"/>
+            <param name="outputFile" value="${package.dir}/js/${appkey}-core.js"/>
+            <param name="name" value="alpaca" />
+            <param name="dependencies" value="['jquery']" />
+        </antcall>
+        <delete file="${prep.dir}/js/${appkey}-standalone-core.js"/>
+
+        <!-- wrap the Alpaca "extras" as an AMD module -->
+        <antcall target="amd">
+            <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone-extras.js"/>
+            <param name="outputFile" value="${package.dir}/js/${appkey}-extras.js"/>
+            <param name="name" value="alpaca-extras" />
+            <param name="dependencies" value="['alpaca']" />
+        </antcall>
+        <delete file="${prep.dir}/js/${appkey}-standalone-extras.js"/>
+
+        <!-- wrap Alpaca as an AMD module -->
+        <antcall target="amd">
+            <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone.js"/>
+            <param name="outputFile" value="${package.dir}/js/${appkey}.js"/>
+            <param name="name" value="alpaca" />
+            <param name="dependencies" value="['jquery']" />
+        </antcall>
+        <delete file="${prep.dir}/js/${appkey}-standalone.js"/>
 
         <!-- Tests -->
-        <concat destfile="${package.dir}/js/${appkey}-${version}-tests.js">
+        <concat destfile="${package.dir}/js/${appkey}-tests.js">
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
             </filelist>
@@ -186,10 +202,14 @@
                 <file name="forms/EditForm.js"/>
             </filelist>
         </concat>
-        <copy file="${package.dir}/js/${appkey}-${version}-full.js" tofile="${package.dir}/js/${appkey}-${version}.js"/>
+
+        <!-- create a "full" version of Alpaca to preserve everything (builder reflection helpers) -->
+        <copy file="${package.dir}/js/${appkey}.js" tofile="${package.dir}/js/${appkey}-full.js"/>
+
+        <!-- strip down the Alpaca file so it does not include builder helpers (reflection) -->
         <replaceregexp match=",//__BUILDER_HELPERS(.*?)//__END_OF_BUILDER_HELPERS"
                        replace="" flags="gs">
-            <fileset dir="${package.dir}/js" includes="${appkey}-${version}.js"/>
+            <fileset dir="${package.dir}/js" includes="${appkey}.js"/>
         </replaceregexp>
         <copy todir="${package.dir}/lib">
             <fileset dir="${prep.dir}/lib">
@@ -201,7 +221,7 @@
     </target>
 
     <target name="concat-css" description="Concat all css files" depends="prep">
-        <concat destfile="${package.dir}/css/${appkey}-${version}-core.css">
+        <concat destfile="${package.dir}/css/${appkey}-core.css">
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
             </filelist>
@@ -210,7 +230,15 @@
                 <file name="alpaca.css"/>
             </filelist>
         </concat>
-        <concat destfile="${package.dir}/css/${appkey}-${version}.css">
+        <concat destfile="${package.dir}/css/${appkey}-extras.css">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
+            <filelist dir="${prep.dir}/css">
+                <file name="jquery-ui-latest.custom.css"/>
+            </filelist>
+        </concat>
+        <concat destfile="${package.dir}/css/${appkey}.css">
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
             </filelist>
@@ -220,7 +248,7 @@
                 <file name="jquery-ui-latest.custom.css"/>
             </filelist>
         </concat>
-        <concat destfile="${package.dir}/css/${appkey}-${version}-mobile.css">
+        <concat destfile="${package.dir}/css/${appkey}-mobile.css">
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
             </filelist>
@@ -263,15 +291,15 @@
 
     <target name="prep-html" description="Prepare all htmls" depends="compress">
         <replaceregexp match="&lt;!--Alpaca JavaScript--&gt;(.*?)&lt;!--End of Alpaca JavaScript--&gt;"
-                       replace='&lt;script type="text\/javascript" src="../../../js/${appkey}-${version}-full.min.js"&gt;&lt;/script&gt;' flags="gs">
+                       replace='&lt;script type="text\/javascript" src="../../../js/${appkey}.min.js"&gt;&lt;/script&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="examples/**/*.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca CSS--&gt;(.*?)&lt;!--End of Alpaca CSS--&gt;"
-                       replace='&lt;link type="text\/css" href="../../../css/${appkey}-${version}.min.css" rel="stylesheet" /&gt;' flags="gs">
+                       replace='&lt;link type="text\/css" href="../../../css/${appkey}.min.css" rel="stylesheet" /&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="examples/**/*.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca Mobile CSS--&gt;(.*?)&lt;!--End of Alpaca Mobile CSS--&gt;"
-                       replace='&lt;link type="text\/css" href="../../../css/${appkey}-${version}-mobile.min.css" rel="stylesheet" /&gt;' flags="gs">
+                       replace='&lt;link type="text\/css" href="../../../css/${appkey}-mobile.min.css" rel="stylesheet" /&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="examples/mobile/**/*.html"/>
         </replaceregexp>
         <replaceregexp match="../../../js/alpaca"
@@ -291,27 +319,27 @@
             <fileset dir="${prep.dir}" includes="examples/**/wysiwyg*.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca JavaScript--&gt;(.*?)&lt;!--End of Alpaca JavaScript--&gt;"
-                       replace='&lt;script type="text\/javascript" src="js/${appkey}-${version}-full.min.js"&gt;&lt;/script&gt;' flags="gs">
+                       replace='&lt;script type="text\/javascript" src="js/${appkey}.min.js"&gt;&lt;/script&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="index.html"/>
             <fileset dir="${prep.dir}" includes="resources.html"/>
             <fileset dir="${prep.dir}" includes="tutorials.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca CSS--&gt;(.*?)&lt;!--End of Alpaca CSS--&gt;"
-                       replace='&lt;link type="text\/css" href="css/${appkey}-${version}.min.css" rel="stylesheet" /&gt;' flags="gs">
+                       replace='&lt;link type="text\/css" href="css/${appkey}.min.css" rel="stylesheet" /&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="index.html"/>
             <fileset dir="${prep.dir}" includes="resources.html"/>
             <fileset dir="${prep.dir}" includes="tutorials.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca JavaScript--&gt;(.*?)&lt;!--End of Alpaca JavaScript--&gt;"
-                       replace='&lt;script type="text\/javascript" src="../js/${appkey}-${version}-full.min.js"&gt;&lt;/script&gt;' flags="gs">
+                       replace='&lt;script type="text\/javascript" src="../js/${appkey}.min.js"&gt;&lt;/script&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="tests/index.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca CSS--&gt;(.*?)&lt;!--End of Alpaca CSS--&gt;"
-                       replace='&lt;link type="text\/css" href="../css/${appkey}-${version}.min.css" rel="stylesheet" /&gt;' flags="gs">
+                       replace='&lt;link type="text\/css" href="../css/${appkey}.min.css" rel="stylesheet" /&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="tests/index.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca Test JavaScript--&gt;(.*?)&lt;!--End of Alpaca Test JavaScript--&gt;"
-                       replace='&lt;script type="text\/javascript" src="../js/${appkey}-${version}-tests.min.js"&gt;&lt;/script&gt;' flags="gs">
+                       replace='&lt;script type="text\/javascript" src="../js/${appkey}-tests.min.js"&gt;&lt;/script&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="tests/index.html"/>
         </replaceregexp>
         <copy todir="${package.dir}/examples">
@@ -336,13 +364,13 @@
     </target>
 
     <target name="package" depends="prep-html">
-        <zip destfile="${prep.dir}/${appkey}-${version}-all.zip">
+        <zip destfile="${prep.dir}/${appkey}.zip">
             <fileset dir="${package.dir}">
                 <exclude name="**/.DS_Store/*"/>
                 <exclude name="**/.idea/*"/>
             </fileset>
         </zip>
-        <zip destfile="${prep.dir}/${appkey}-${version}.zip">
+        <zip destfile="${prep.dir}/${appkey}-basic.zip">
             <fileset dir="${package.dir}">
                 <include name="css/**/*"/>
                 <include name="js/**/*"/>
@@ -353,14 +381,6 @@
         </zip>
         <copy todir="${package.dir}/downloads">
             <fileset dir="${prep.dir}" includes="*.zip"/>
-        </copy>
-        <copy todir="${package.dir}/js">
-            <fileset dir="${package.dir}/js"/>
-            <globmapper from="${appkey}-${version}*.js" to="${appkey}-latest*.js"/>
-        </copy>
-        <copy todir="${package.dir}/css">
-            <fileset dir="${package.dir}/css"/>
-            <globmapper from="${appkey}-${version}*.css" to="${appkey}-latest*.css"/>
         </copy>
     </target>
 
@@ -394,5 +414,33 @@
         <copy todir="${local.docroot.basepath}/${appkey}">
             <fileset refid="alpaca-files"/>
         </copy>
+    </target>
+
+    <target name="amd">
+
+        <!-- load the script -->
+        <loadresource property="script">
+            <file file="${scriptFile}"/>
+        </loadresource>
+
+        <!-- create a temp file holding our AMD wrapped script -->
+        <copy file="${prep.dir}/lib/amd/wrapper.js" tofile="${scriptFile}.temp" overwrite="true" filtering="true">
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="/** BUILD_INSERT_SCRIPT **/" to="${script}"/>
+                    <replacestring from="/** BUILD_INSERT_NAME **/" to="${name}"/>
+                    <replacestring from="/** BUILD_INSERT_DEPENDENCIES **/" to="${dependencies}"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+        <concat destfile="${outputFile}">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
+            <filelist>
+                <file name="${scriptFile}.temp"/>
+            </filelist>
+        </concat>
+        <delete file="${scriptFile}.temp"/>
     </target>
 </project>

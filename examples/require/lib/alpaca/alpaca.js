@@ -4421,393 +4421,7 @@ var equiv = function () {
          */
         getType: function() {
 
-        },//__BUILDER_HELPERS
-
-        /**
-         * Finds if this field is a container of other fields.
-         *
-         * @returns {Boolean} True if it is a container, false otherwise.
-         */
-        isContainer: function() {
-            return false;
-        },
-
-        /**
-         * Returns field title.
-         *
-         * @returns {String} Field title.
-         */
-        getTitle: function() {
-
-        },
-
-        /**
-         * Returns field description.
-         *
-         * @returns {String} Field description.
-         */
-        getDescription: function() {
-
-        },
-
-        /**
-         * Returns JSON schema of the schema properties that are managed by this class.
-         *
-         * @private
-         * @returns {Object} JSON schema of the schema properties that are managed by this class.
-         */
-        getSchemaOfSchema: function() {
-            var schemaOfSchema = {
-                "title": this.getTitle(),
-                "description": this.getDescription(),
-                "type": "object",
-                "properties": {
-                    "title": {
-                        "title": "Title",
-                        "description": "Short description of the property.",
-                        "type": "string"
-                    },
-                    "description": {
-                        "title": "Description",
-                        "description": "Detailed description of the property.",
-                        "type": "string"
-                    },
-                    "readonly": {
-                        "title": "Readonly",
-                        "description": "Property will be readonly if true.",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "required": {
-                        "title": "Required",
-                        "description": "Property value must be set if true.",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "default": {
-                        "title": "Default",
-                        "description": "Default value of the property.",
-                        "type": "any"
-                    },
-                    "type": {
-                        "title": "Type",
-                        "description": "Data type of the property.",
-                        "type": "string",
-                        "readonly": true
-                    },
-                    "format": {
-                        "title": "Format",
-                        "description": "Data format of the property.",
-                        "type": "string"
-                    },
-                    "disallow": {
-                        "title": "Disallow",
-                        "description": "List of disallowed values for the property.",
-                        "type": "array"
-                    },
-                    "dependencies": {
-                        "title": "Dependencies",
-                        "description": "List of property dependencies.",
-                        "type": "array"
-                    }
-                }
-            };
-            if (this.getType && !Alpaca.isValEmpty(this.getType())) {
-                schemaOfSchema.properties.type['default'] = this.getType();
-                schemaOfSchema.properties.type['enum'] = [this.getType()];
-            }
-            return schemaOfSchema;
-        },
-
-        /**
-         * Returns Alpaca options for the schema properties that managed by this class.
-         *
-         * @private
-         * @returns {Object} Alpaca options for the schema properties that are managed by this class.
-         */
-        getOptionsForSchema: function() {
-            return {
-                "fields": {
-                    "title": {
-                        "helper": "Field short description",
-                        "type": "text"
-                    },
-                    "description": {
-                        "helper": "Field detailed description",
-                        "type": "textarea"
-                    },
-                    "readonly": {
-                        "helper": "Field will be read only if checked",
-                        "rightLabel":"Is this field read only ?",
-                        "type": "checkbox"
-                    },
-                    "required": {
-                        "helper": "Field value must be set if checked",
-                        "rightLabel":"Is this field required ?",
-                        "type": "checkbox"
-                    },
-                    "default": {
-                        "helper": "Field default value",
-                        "type": "textarea"
-                    },
-                    "type": {
-                        "helper": "Field data type",
-                        "type": "text"
-                    },
-                    "format": {
-                        "type": "select",
-                        "dataSource": function(field, callback) {
-                            for (var key in Alpaca.defaultFormatFieldMapping) {
-                                field.selectOptions.push({
-                                    "value": key,
-                                    "text": key
-                                });
-                            }
-                            if (callback) {
-                                callback();
-                            }
-                        }
-                    },
-                    "disallow": {
-                        "helper": "Disallowed values for the field",
-                        "itemLabel":"Value",
-                        "type": "array"
-                    },
-                    "dependencies": {
-                        "helper": "Field Dependencies",
-                        "multiple":true,
-                        "size":3,
-                        "type": "select",
-                        "dataSource": function (field, callback) {
-                            if (field.parent && field.parent.schemaParent && field.parent.schemaParent.parent) {
-                                for (var key in field.parent.schemaParent.parent.childrenByPropertyId) {
-                                    if (key != field.parent.schemaParent.propertyId) {
-                                        field.selectOptions.push({
-                                            "value": key,
-                                            "text": key
-                                        });
-                                    }
-                                }
-                            }
-                            if (callback) {
-                                callback();
-                            }
-                        }
-                    }
-                }
-            }
-        },
-
-        /**
-         * Returns JSON schema of the Alpaca options that are managed by this class.
-         *
-         * @private
-         * @returns {Object} JSON schema of the Alpaca options that are managed by this class.
-         */
-        getSchemaOfOptions: function() {
-            var schemaOfOptions = {
-                "title": "Options for " + this.getTitle(),
-                "description": this.getDescription() + " (Options)",
-                "type": "object",
-                "properties": {
-                    "renderForm": {},
-                    "form":{},
-                    "id": {
-                        "title": "Field Id",
-                        "description": "Unique field id. Auto-generated if not provided.",
-                        "type": "string"
-                    },
-                    "type": {
-                        "title": "Field Type",
-                        "description": "Field type.",
-                        "type": "string",
-                        "default": this.getFieldType(),
-                        "readonly": true
-                    },
-                    "validate": {
-                        "title": "Validation",
-                        "description": "Field validation is required if true.",
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "showMessages": {
-                        "title": "Show Messages",
-                        "description": "Display validation messages if true.",
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "disabled": {
-                        "title": "Disabled",
-                        "description": "Field will be disabled if true.",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "readonly": {
-                        "title": "Readonly",
-                        "description": "Field will be readonly if true.",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "hidden": {
-                        "title": "Hidden",
-                        "description": "Field will be hidden if true.",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "label": {
-                        "title": "Label",
-                        "description": "Field label.",
-                        "type": "string"
-                    },
-                    "helper": {
-                        "title": "Helper",
-                        "description": "Field help message.",
-                        "type": "string"
-                    },
-                    "fieldClass": {
-                        "title": "Style Class",
-                        "description": "Additional field style class.",
-                        "type": "string"
-                    },
-                    "hideInitValidationError" : {
-                        "title": "Hide Initial Validation Errors",
-                        "description" : "Hide initial validation errors if true.",
-                        "type": "boolean",
-                        "default": false
-                    }
-                }
-            };
-            if (this.isTopLevel()) {
-                schemaOfOptions.properties.renderForm = {
-                    "title": "Render Form",
-                    "description": "Render a FORM tag as the container for the rest of fields if true.",
-                    "type": "boolean",
-                    "default": false
-                };
-
-                schemaOfOptions.properties.form = {
-                    "title": "Form",
-                    "description": "Options for rendering the FORM tag.",
-                    "type": "object",
-                    "dependencies" : "renderForm",
-                    "properties": {
-                        "attributes": {
-                            "title": "Form Attributes",
-                            "description": "List of attributes for the FORM tag.",
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "title": "Id",
-                                    "description": "Unique form id. Auto-generated if not provided.",
-                                    "type": "string"
-                                },
-                                "action": {
-                                    "title": "Action",
-                                    "description": "Form submission endpoint",
-                                    "type": "string"
-                                },
-                                "method": {
-                                    "title": "Method",
-                                    "description": "Form submission method",
-                                    "enum":["post","get"],
-                                    "type": "string"
-                                },
-                                "name": {
-                                    "title": "Name",
-                                    "description": "Form name",
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                delete schemaOfOptions.properties.renderForm;
-                delete schemaOfOptions.properties.form;
-            }
-
-            return schemaOfOptions;
-        },
-
-        /**
-         * Returns Alpaca options for the Alpaca options that are managed by this class.
-         *
-         * @private
-         * @returns {Object} Alpaca options for the Alpaca options that are managed by this class.
-         */
-        getOptionsForOptions: function() {
-            var optionsForOptions = {
-                "type": "object",
-                "fields": {
-                    "id": {
-                        "type": "text",
-                        "readonly": true
-                    },
-                    "type": {
-                        "type": "text"
-                    },
-                    "validate": {
-                        "rightLabel":"Is validation enforced ?",
-                        "type": "checkbox"
-                    },
-                    "showMessages": {
-                        "rightLabel":"Show validation messages ?",
-                        "type": "checkbox"
-                    },
-                    "disabled": {
-                        "rightLabel":"Disable this field ?",
-                        "type": "checkbox"
-                    },
-                    "label": {
-                        "type": "text"
-                    },
-                    "helper": {
-                        "type": "textarea"
-                    },
-                    "fieldClass": {
-                        "type": "text"
-                    },
-                    "hideInitValidationError": {
-                        "rightLabel":"Hide initial validation errors ?",
-                        "type": "checkbox"
-                    }
-                }
-            };
-            if (this.isTopLevel()) {
-                optionsForOptions.fields.renderForm = {
-                    "type": "checkbox",
-                    "rightLabel": "Yes"
-                };
-                optionsForOptions.fields.form = {
-                    "type": "object",
-                    "dependencies" : {
-                        "renderForm" : true
-                    },
-                    "fields": {
-                        "attributes": {
-                            "type": "object",
-                            "fields": {
-                                "id": {
-                                    "type": "text",
-                                    "readonly": true
-                                },
-                                "action": {
-                                    "type": "text"
-                                },
-                                "method": {
-                                    "type": "select"
-                                },
-                                "name": {
-                                    "type": "text"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return optionsForOptions;
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     // Registers additional messages
@@ -4988,68 +4602,7 @@ var equiv = function () {
          * @param {Object} e Click event.
          */
         onClick: function(e) {
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Field#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "enum": {
-                        "title": "Enumeration",
-                        "description": "List of options for the property value.",
-                        "type": "array"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Field#getOptionsForSchema
-         */
-        getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "enum": {
-                        "itemLabel":"Value",
-                        "type": "array"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Field#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "name": {
-                        "title": "Field name",
-                        "description": "Field name.",
-                        "type": "string"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Field#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "name": {
-                        "type": "text"
-                    }
-                }
-            });
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     // Registers additional messages
@@ -5395,68 +4948,7 @@ var equiv = function () {
              * @param onSuccess onSuccess callback.
              */
             renderItems: function(onSuccess) {
-            },//__BUILDER_HELPERS
-
-            /**
-             * @see Alpaca.Field#isContainer
-             */
-            isContainer: function() {
-                return true;
-            },
-
-            /**
-             * @private
-             * @see Alpaca.Field#getSchemaOfOptions
-             */
-            getSchemaOfOptions: function() {
-                return Alpaca.merge(this.base(), {
-                    "properties": {
-                        "collapsible": {
-                            "title": "Collapsible",
-                            "description": "Field set is collapsible if true",
-                            "type": "boolean",
-                            "default": true
-                        },
-                        "collapsed": {
-                            "title": "Collapsed",
-                            "description": "Field set is initially collapsibled if true",
-                            "type": "boolean",
-                            "default": false
-                        },
-                        "legendStyle": {
-                            "title": "Legend Style",
-                            "description": "Field set legend style",
-                            "type": "string",
-                            "enum":["button","link"],
-                            "default": "button"
-                        }
-                    }
-                });
-            },
-
-            /**
-             * @private
-             * @see Alpaca.Field#getOptionsForOptions
-             */
-            getOptionsForOptions: function() {
-                return Alpaca.merge(this.base(), {
-                    "fields": {
-                        "collapsible": {
-                            "rightLabel": "Field set collapsible ?",
-                            "helper": "Field set is collapsible if checked",
-                            "type": "checkbox"
-                        },
-                        "collapsed": {
-                            "rightLabel": "Field set initially collapsed ?",
-                            "description": "Field set is initially collapsed if checked",
-                            "type": "checkbox"
-                        },
-                        "legendStyle": {
-                            "type":"select"
-                        }
-                    }
-                });
-            }//__END_OF_BUILDER_HELPERS
+            }
         });
 
 })(jQuery);
@@ -6293,121 +5785,7 @@ var equiv = function () {
          */
         focus: function() {
             this.field.focus();
-        },//__BUILDER_HELPERS
-        
-        /**
-         * @private
-         * @see Alpaca.ControlField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {                
-                    "minLength": {
-                        "title": "Minimal Length",
-                        "description": "Minimal length of the property value.",
-                        "type": "number"
-                    },
-                    "maxLength": {
-                        "title": "Maximum Length",
-                        "description": "Maximum length of the property value.",
-                        "type": "number"
-                    },
-                    "pattern": {
-                        "title": "Pattern",
-                        "description": "Regular expression for the property value.",
-                        "type": "string"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.ControlField#getOptionsForSchema
-         */
-        getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {                
-                    "minLength": {
-                        "type": "integer"
-                    },
-                    "maxLength": {
-                        "type": "integer"
-                    },
-                    "pattern": {
-                        "type": "text"
-                    }
-                }
-            });
-        },
-		
-        /**
-         * @private
-         * @see Alpaca.ControlField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {                
-                    "size": {
-                        "title": "Field Size",
-                        "description": "Field size.",
-                        "type": "number",
-						"default":40
-                    },
-                    "maskString": {
-                        "title": "Mask Expression",
-                        "description": "Expression for the field mask. Field masking will be enabled if not empty.",
-                        "type": "string"
-                    }
-                }
-            });
-        },    
-		
-        /**
-         * @private
-         * @see Alpaca.ControlField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {                
-                    "size": {
-                        "type": "integer"
-                    },
-                    "maskString": {
-                        "helper": "a - an alpha character;9 - a numeric character;* - an alphanumeric character",
-                        "type": "text"
-                    }
-                }
-            });
-        },    
-				    
-        /**
-         * @see Alpaca.Field#getTitle
-         */
-        getTitle: function() {
-            return "Single-Line Text";
-        },
-        
-        /**
-         * @see Alpaca.Field#getDescription
-         */
-        getDescription: function() {
-            return "Text field for single-line text.";
-        },
-        
-        /**
-         * @see Alpaca.Field#getType
-         */
-        getType: function() {
-            return "string";
-        },
-		
-        /**
-         * @see Alpaca.Field#getFieldType
-         */
-        getFieldType: function() {
-            return "text";
-        }//__END_OF_BUILDER_HELPERS
+        }
         
     });
     
@@ -6489,68 +5867,7 @@ var equiv = function () {
          */
         getValue: function() {
             return $(this.field).val();
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "rows": {
-                        "title": "Rows",
-                        "description": "Number of rows",
-                        "type": "number",
-                        "default": 5
-                    },
-                    "cols": {
-                        "title": "Columns",
-                        "description": "Number of columns",
-                        "type": "number",
-                        "default": 40
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "rows": {
-                        "type": "integer"
-                    },
-                    "cols": {
-                        "type": "integer"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Multi-Line Text";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Textare field for multiple line text.";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "textarea";
-        }//__END_OF_BUILDER_HELPERS
+        }
 
     });
 
@@ -6678,65 +5995,7 @@ var equiv = function () {
              */
             enable: function() {
                 this.field.disabled = false;
-            },//__BUILDER_HELPERS
-
-            /**
-             * @private
-             * @see Alpaca.ControlField#getSchemaOfOptions
-             */
-            getSchemaOfOptions: function() {
-                return Alpaca.merge(this.base(), {
-                    "properties": {
-                        "rightLabel": {
-                            "title": "Option Label",
-                            "description": "Optional right-hand side label for checkbox field.",
-                            "type": "string"
-                        }
-                    }
-                });
-            },
-
-            /**
-             * @private
-             * @see Alpaca.ControlField#getOptionsForOptions
-             */
-            getOptionsForOptions: function() {
-                return Alpaca.merge(this.base(), {
-                    "fields": {
-                        "rightLabel": {
-                            "type": "text"
-                        }
-                    }
-                });
-            },
-
-            /**
-             * @see Alpaca.Field#getTitle
-             */
-            getTitle: function() {
-                return "Checkbox Field";
-            },
-
-            /**
-             * @see Alpaca.Field#getDescription
-             */
-            getDescription: function() {
-                return "Checkbox Field for boolean data.";
-            },
-
-            /**
-             * @see Alpaca.Field#getType
-             */
-            getType: function() {
-                return "boolean";
-            },
-
-            /**
-             * @see Alpaca.Field#getFieldType
-             */
-            getFieldType: function() {
-                return "checkbox";
-            }//__END_OF_BUILDER_HELPERS
+            }
 
         });
 
@@ -6802,28 +6061,7 @@ var equiv = function () {
 			if (this.fieldContainer) {
 				this.fieldContainer.addClass("alpaca-controlfield-file");
 			}            			
-        },//__BUILDER_HELPERS
-		
-		/**
-         * @see Alpaca.Fields.TextField#getTitle
-		 */
-		getTitle: function() {
-			return "File Field";
-		},
-		
-		/**
-         * @see Alpaca.Fields.TextField#getDescription
-		 */
-		getDescription: function() {
-			return "Field for uploading files.";
-		},
-
-		/**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "file";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
     
     Alpaca.registerTemplate("controlFieldFile", '<input type="file" id="${id}" {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="readonly"{{/if}} {{if options.name}}name="${options.name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
@@ -6998,63 +6236,7 @@ var equiv = function () {
             } else {
                 this._renderField(onSuccess);
             }
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.ControlField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "enum": {
-                        "title": "Enumeration",
-                        "description": "List of field value options",
-                        "type": "array",
-                        "required": true
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.ControlField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "optionLabels": {
-                        "title": "Option Labels",
-                        "description": "Labels for options. It can either be a map object or an array field that maps labels to items defined by enum schema property one by one.",
-                        "type": "array"
-                    },
-                    "dataSource": {
-                        "title": "Option Datasource",
-                        "description": "Datasource for generating list of options.",
-                        "type": "string"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.ControlField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "optionLabels": {
-                        "itemLabel":"Label",
-                        "type": "array"
-                    },
-                    "dataSource": {
-                        "type": "text"
-                    }
-                }
-            });
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 })(jQuery);
 (function($){
@@ -7179,44 +6361,7 @@ var equiv = function () {
                 _this.setValue(v);
                 _this.renderValidationState();
             });
-        },//__BUILDER_HELPERS
-		
-        /**
-         * @private
-         * @see Alpaca.Fields.ListField#getSchemaOfOptions
-         */
-		getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(),{
-				"properties": {
-					"name": {
-						"title": "Field name",
-						"description": "Field name.",
-						"type": "string"
-					}
-				}
-			});
-        },
-        
-		/**
-         * @see Alpaca.Field#getTitle
-		 */
-		getTitle: function() {
-			return "Radio Group Field";
-		},
-		
-		/**
-         * @see Alpaca.Field#getDescription
-		 */
-		getDescription: function() {
-			return "Radio Group Field with list of options.";
-		},
-
-		/**
-         * @see Alpaca.Field#getFieldType
-         */
-        getFieldType: function() {
-            return "radio";
-        }//__END_OF_BUILDER_HELPERS
+        }
         
     });
     
@@ -7333,69 +6478,7 @@ var equiv = function () {
                 _this.setValue(v);
                 _this.renderValidationState();
             });
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.ListField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "multiple": {
-                        "title": "Mulitple Selection",
-                        "description": "Allow multiple selection if true",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "size": {
-                        "title": "Displayed Options",
-                        "description": "Number of options to be shown",
-                        "type": "number"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.ListField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "multiple": {
-                        "rightLabel": "Allow mulitple selection ?",
-                        "helper": "Allow multiple selection if checked",
-                        "type": "checkbox"
-                    },
-                    "size": {
-                        "type": "integer"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @see Alpaca.Field#getTitle
-         */
-        getTitle: function() {
-            return "Dropdown Select";
-        },
-
-        /**
-         * @see Alpaca.Field#getDescription
-         */
-        getDescription: function() {
-            return "Dropdown select field.";
-        },
-
-        /**
-         * @see Alpaca.Field#getFieldType
-         */
-        getFieldType: function() {
-            return "select";
-        }//__END_OF_BUILDER_HELPERS
+        }
 
     });
 
@@ -7582,99 +6665,7 @@ var equiv = function () {
             }
             
             return true;
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            return Alpaca.merge(this.base(), {
-				"properties": {
-					"minimum": {
-						"title": "Minimum",
-						"description": "Minimum value of the property.",
-						"type": "number"
-					},
-					"maximum": {
-						"title": "Maximum",
-						"description": "Maximum value of the property.",
-						"type": "number"
-					},
-					"exclusiveMinimum": {
-						"title": "Exclusive Minimum",
-						"description": "Property value can not equal the number defined by the minimum schema property.",
-						"type": "boolean",
-						"default": false
-					},
-					"exclusiveMaximum": {
-						"title": "Exclusive Maximum",
-						"description": "Property value can not equal the number defined by the maximum schema property.",
-						"type": "boolean",
-						"default": false
-					}
-				}				
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsSchema
-         */
-        getOptionsForSchema: function() {
-			return Alpaca.merge(this.base(), {
-				"fields": {
-					"minimum": {
-						"title": "Minimum",
-						"description": "Minimum value of the property",
-						"type": "number"
-					},
-					"maximum": {
-						"title": "Maximum",
-						"description": "Maximum value of the property",
-						"type": "number"
-					},
-					"exclusiveMinimum": {
-						"rightLabel": "Exclusive minimum ?",
-						"helper": "Field value must be greater than but not equal to this number if checked",
-						"type": "checkbox"
-					},
-					"exclusiveMaximum": {
-						"rightLabel": "Exclusive Maximum ?",
-						"helper": "Field value must be less than but not equal to this number if checked",
-						"type": "checkbox"
-					}
-				}
-			});
-		},
-
-		/**
-         * @see Alpaca.Fields.TextField#getTitle
-		 */
-		getTitle: function() {
-			return "Number Field";
-		},
-		
-		/**
-         * @see Alpaca.Fields.TextField#getDescription
-		 */
-		getDescription: function() {
-			return "Field for float numbers.";
-		},
-
-		/**
-         * @see Alpaca.Fields.TextField#getType
-         */
-        getType: function() {
-            return "number";
-        },
-
-		/**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "number";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
     
     // Additional Registrations
@@ -8189,147 +7180,7 @@ var equiv = function () {
             };
 
             return baseStatus && valInfo["valueNotUnique"]["status"] && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"];
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.ContainerField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            var properties = {
-                "properties": {
-                    "items": {
-                        "title": "Array Items",
-                        "description": "Schema for array items.",
-                        "type": "object",
-                        "properties": {
-                            "minItems": {
-                                "title": "Minimum Items",
-                                "description": "Minimum number of items.",
-                                "type": "number"
-                            },
-                            "maxItems": {
-                                "title": "Maximum Items",
-                                "description": "Maximum number of items.",
-                                "type": "number"
-                            },
-                            "uniqueItems": {
-                                "title": "Items Unique",
-                                "description": "Item values should be unique if true.",
-                                "type": "boolean",
-                                "default": false
-                            }
-                        }
-                    }
-                }
-            };
-
-            if (this.children && this.children[0]) {
-                Alpaca.merge(properties.properties.items.properties, this.children[0].getSchemaOfSchema())
-            }
-
-            return Alpaca.merge(this.base(), properties);
-        },
-
-        /**
-         * @private
-         * @see Alpaca.ContainerField#getOptionsForSchema
-         */
-        getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "items": {
-                        "type": "object",
-                        "fields": {
-                            "minItems": {
-                                "type": "integer"
-                            },
-                            "maxItems": {
-                                "type": "integer"
-                            },
-                            "uniqueItems": {
-                                "type": "checkbox"
-                            }
-                        }
-                    }
-                }
-            });
-        },
-        /**
-         * @private
-         * @see Alpaca.ContainerField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            var properties = {
-                "properties": {
-                    "items": {
-                        "title": "Array Items",
-                        "description": "Options for array items.",
-                        "type": "object",
-                        "properties": {
-                            "toolbarSticky": {
-                                "title": "Sticky Toolbar",
-                                "description": "Array item toolbar will be aways on if true.",
-                                "type": "boolean",
-                                "default": false
-                            }
-                        }
-                    }
-                }
-            };
-
-            if (this.children && this.children[0]) {
-                Alpaca.merge(properties.properties.items.properties, this.children[0].getSchemaOfSchema())
-            }
-
-            return Alpaca.merge(this.base(), properties);
-        },
-
-        /**
-         * @private
-         * @see Alpaca.ContainerField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "items": {
-                        "type": "object",
-                        "fields": {
-                            "toolbarSticky": {
-                                "type": "checkbox"
-                            }
-                        }
-                    }
-                }
-            });
-        },
-        /**
-         * @see Alpaca.ContainerField#getTitle
-         */
-        getTitle: function() {
-            return "Array Field";
-        },
-
-        /**
-         * @see Alpaca.ContainerField#getDescription
-         */
-        getDescription: function() {
-            return "Field for list of items with same data type or structure.";
-        },
-
-        /**
-         * @see Alpaca.ContainerField#getType
-         */
-        getType: function() {
-            return "array";
-        },
-
-        /**
-         * @see Alpaca.ContainerField#getFiledType
-         */
-        getFieldType: function() {
-            return "array";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerTemplate("itemLabel", '{{if options.itemLabel}}<div class="alpaca-controlfield-label"><div>${options.itemLabel}{{if index}} <span class="alpaca-item-label-counter">${index}</span>{{/if}}</div></div>{{/if}}');
@@ -8943,100 +7794,7 @@ var equiv = function () {
                 if (i < this.totalSteps - 1) {
                     $("#stepDesc" + i).addClass("current-has-next");
                 }
-            },//__BUILDER_HELPERS
-
-            /**
-             * @private
-             * @see Alpaca.ContainerField#getSchemaOfSchema
-             */
-            getSchemaOfSchema: function() {
-                var properties = {
-                    "properties": {
-                        "properties": {
-                            "title": "Field Properties",
-                            "description": "List of Field Properties",
-                            "type": "object"
-                        }
-                    }
-                };
-
-                var fieldsProperties = properties.properties.properties;
-
-                fieldsProperties.properties = {};
-
-                if (this.children) {
-                    for (var i = 0; i < this.children.length; i++) {
-                        var propertyId = this.children[i].propertyId;
-                        fieldsProperties.properties[propertyId] = this.children[i].getSchemaOfSchema();
-                        fieldsProperties.properties[propertyId].title = propertyId + " :: " + fieldsProperties.properties[propertyId].title;
-                    }
-                }
-
-                return Alpaca.merge(this.base(), properties);
-            },
-
-            /**
-             * @private
-             * @see Alpaca.ContainerField#getSchemaOfOptions
-             */
-            getSchemaOfOptions: function() {
-                var schemaOfOptions = Alpaca.merge(this.base(), {
-                    "properties": {
-                    }
-                });
-
-                var properties = {
-                    "properties": {
-                        "properties": {
-                            "title": "Field Option Properties",
-                            "description": "List of field option properties",
-                            "type": "object"
-                        }
-                    }
-                };
-
-                var fieldsProperties = properties.properties.properties;
-
-                fieldsProperties.properties = {};
-
-                if (this.children) {
-                    for (var i = 0; i < this.children.length; i++) {
-                        var propertyId = this.children[i].propertyId;
-                        fieldsProperties.properties[propertyId] = this.children[i].getSchemaOfOptions();
-                        fieldsProperties.properties[propertyId].title = propertyId + " :: " + fieldsProperties.properties[propertyId].title;
-                    }
-                }
-
-                return Alpaca.merge(schemaOfOptions, properties);
-            },
-
-            /**
-             * @see Alpaca.Field#getTitle
-             */
-            getTitle: function() {
-                return "Composite Field";
-            },
-
-            /**
-             * @see Alpaca.Field#getDescription
-             */
-            getDescription: function() {
-                return "Composite field for containing other fields";
-            },
-
-            /**
-             * @see Alpaca.Field#getType
-             */
-            getType: function() {
-                return "object";
-            },
-
-            /**
-             * @see Alpaca.Field#getFieldType
-             */
-            getFieldType: function() {
-                return "object";
-            }//__END_OF_BUILDER_HELPERS
+            }
 
         });
 
@@ -9153,79 +7911,7 @@ var equiv = function () {
          */
         focus: function() {
             this.field.focus();
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.ControlField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.ControlField#getOptionsForSchema
-         */
-        getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.ControlField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.ControlField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                }
-            });
-        },
-
-        /**
-         * @see Alpaca.Field#getTitle
-         */
-        getTitle: function() {
-            return "Any Field";
-        },
-
-        /**
-         * @see Alpaca.Field#getDescription
-         */
-        getDescription: function() {
-            return "Any field.";
-        },
-
-        /**
-         * @see Alpaca.Field#getType
-         */
-        getType: function() {
-            return "any";
-        },
-
-        /**
-         * @see Alpaca.Field#getFieldType
-         */
-        getFieldType: function() {
-            return "any";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerTemplate("controlFieldAny", '<input type="text" id="${id}" size="40" {{if options.readonly}}readonly="readonly"{{/if}} {{if options.name}}name="${options.name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
@@ -9233,6 +7919,86 @@ var equiv = function () {
     Alpaca.registerDefaultSchemaFieldMapping("any", "any");
 })(jQuery);
 (function($) {
+
+	var Alpaca = $.alpaca;
+
+	Alpaca.registerView ({
+		"id": "VIEW_WEB_EDIT",
+		"messages": {
+			"zh_CN": {
+				required: "&#27492;&#22495;&#24517;&#39035;",
+				invalid: "&#27492;&#22495;&#19981;&#21512;&#26684;",
+				months: ["&#19968;&#26376;", "&#20108;&#26376;", "&#19977;&#26376;", "&#22235;&#26376;", "&#20116;&#26376;", "&#20845;&#26376;", "&#19971;&#26376;", "&#20843;&#26376;", "&#20061;&#26376;", "&#21313;&#26376;", "&#21313;&#19968;&#26376;", "&#21313;&#20108;&#26376;"],
+				timeUnits: {
+					SECOND: "&#31186;",
+					MINUTE: "&#20998;",
+					HOUR: "&#26102;",
+					DAY: "&#26085;",
+					MONTH: "&#26376;",
+					YEAR: "&#24180;"
+				},
+				"notOptional": "&#27492;&#22495;&#38750;&#20219;&#36873;",
+				"disallowValue": "&#38750;&#27861;&#36755;&#20837;&#21253;&#25324; {0}.",
+				"invalidValueOfEnum": "&#20801;&#35768;&#36755;&#20837;&#21253;&#25324; {0}.",
+				"notEnoughItems": "&#26368;&#23567;&#20010;&#25968; {0}",
+				"tooManyItems": "&#26368;&#22823;&#20010;&#25968; {0}",
+				"valueNotUnique": "&#36755;&#20837;&#20540;&#19981;&#29420;&#29305;",
+				"notAnArray": "&#19981;&#26159;&#25968;&#32452;",
+				"invalidDate": "&#26085;&#26399;&#26684;&#24335;&#22240;&#35813;&#26159; {0}",
+				"invalidEmail": "&#20234;&#22969;&#20799;&#26684;&#24335;&#19981;&#23545;, ex: admin@gitanasoftware.com",
+				"stringNotAnInteger": "&#19981;&#26159;&#25972;&#25968;.",
+				"invalidIPv4": "&#19981;&#26159;&#21512;&#27861;IP&#22320;&#22336;, ex: 192.168.0.1",
+				"stringValueTooSmall": "&#26368;&#23567;&#20540;&#26159; {0}",
+				"stringValueTooLarge": "&#26368;&#22823;&#20540;&#26159; {0}",
+				"stringValueTooSmallExclusive": "&#20540;&#24517;&#39035;&#22823;&#20110; {0}",
+				"stringValueTooLargeExclusive": "&#20540;&#24517;&#39035;&#23567;&#20110; {0}",
+				"stringDivisibleBy": "&#20540;&#24517;&#39035;&#33021;&#34987; {0} &#25972;&#38500;",
+				"stringNotANumber": "&#19981;&#26159;&#25968;&#23383;.",
+				"invalidPassword": "&#38750;&#27861;&#23494;&#30721;",
+				"invalidPhone": "&#38750;&#27861;&#30005;&#35805;&#21495;&#30721;, ex: (123) 456-9999",
+				"invalidPattern": "&#27492;&#22495;&#39035;&#26377;&#26684;&#24335; {0}",
+				"stringTooShort": "&#27492;&#22495;&#33267;&#23569;&#38271;&#24230; {0}",
+				"stringTooLong": "&#27492;&#22495;&#26368;&#22810;&#38271;&#24230; {0}"
+			
+			},
+			"es_ES": {
+				required: "Este campo es required",
+				invalid: "Este campo es inv�lido",
+				months: ["Enero", "Febrero", "Marzo", "Abril", "Puede", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+				timeUnits: {
+					SECOND: "segundos",
+					MINUTE: "minutos",
+					HOUR: "horas",
+					DAY: "d�as",
+					MONTH: "meses",
+					YEAR: "a�os"
+				},
+				"notOptional": "Este campo no es opcional.",
+				"disallowValue": "{0} son los valores rechazados.",
+				"invalidValueOfEnum": "Este campo debe tener uno de los valores adentro {0}.",
+				"notEnoughItems": "El n�mero m�nimo de art�culos es {0}",
+				"tooManyItems": "El n�mero m�ximo de art�culos es {0}",
+				"valueNotUnique": "Los valores no son �nicos",
+				"notAnArray": "Este valor no es un arsenal",
+				"invalidDate": "Fecha inv�lida para el formato {0}",
+				"invalidEmail": "Email address inv�lido, ex: admin@gitanasoftware.com",
+				"stringNotAnInteger": "Este valor no es un n�mero entero.",
+				"invalidIPv4": "Direcci&#243;n inv�lida IPv4, ex: 192.168.0.1",
+				"stringValueTooSmall": "El valor m�nimo para este campo es {0}",
+				"stringValueTooLarge": "El valor m�ximo para este campo es {0}",
+				"stringValueTooSmallExclusive": "El valor de este campo debe ser mayor que {0}",
+				"stringValueTooLargeExclusive": "El valor de este campo debe ser menos que {0}",
+				"stringDivisibleBy": "El valor debe ser divisible cerca {0}",
+				"stringNotANumber": "Este valor no es un n�mero.",
+				"invalidPassword": "Contrase�a inv�lida",
+				"invalidPhone": "N�mero de tel�fono inv�lido, ex: (123) 456-9999",
+				"invalidPattern": "Este campo debe tener patr&#243;n {0}",
+				"stringTooShort": "Este campo debe contener por lo menos {0} n�meros o caracteres",
+				"stringTooLong": "Este campo debe contener a lo m�s {0} n�meros o caracteres"
+			}
+		}
+	});
+})(jQuery);(function($) {
 
     var Alpaca = $.alpaca;
 
@@ -9398,74 +8164,7 @@ var equiv = function () {
             if (onSuccess) {
                 onSuccess();
             }
-        },//__BUILDER_HELPERS
-
-        /**
-         * @see Alpaca.Field#isContainer
-         */
-        isContainer: function() {
-            return false;
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.ObjectField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "validateAddress": {
-                        "title": "Address Validation",
-                        "description": "Enable address validation if true",
-                        "type": "boolean",
-                        "default": true
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.ObjectField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "validateAddress": {
-                        "helper": "Address validation if checked",
-                        "rightLabel": "Enable Google Map for address validation?",
-                        "type": "checkbox"
-                    }
-                }
-            });
-        },
-        /**
-         * @see Alpaca.Fields.ObjectField#getTitle
-         */
-        getTitle: function() {
-            return "Address";
-        },
-
-        /**
-         * @see Alpaca.Fields.ObjectField#getDescription
-         */
-        getDescription: function() {
-            return "Standard US Address with Street, City, State and Zip. Also comes with support for Google map.";
-        },
-
-        /**
-         * @see Alpaca.Fields.ObjectField#getType
-         */
-        getType: function() {
-            return "any";
-        },
-
-        /**
-         * @see Alpaca.Fields.ObjectField#getFieldType
-         */
-        getFieldType: function() {
-            return "address";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerFieldClass("address", Alpaca.Fields.AddressField);
@@ -9582,101 +8281,7 @@ var equiv = function () {
             }
 
             this.base(val);
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "format": {
-                        "title": "Format",
-                        "description": "Property data format",
-                        "type": "string",
-                        "default":"date",
-                        "enum" : ["date"],
-                        "readonly":true
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsForSchema
-         */
-        getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "format": {
-                        "type": "text"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "dateFormat": {
-                        "title": "Date Format",
-                        "description": "Date format",
-                        "type": "string",
-                        "default": Alpaca.defaultDateFormat
-                    },
-                    "dateFormatRegex": {
-                        "title": "Format Regular Expression",
-                        "description": "Regular expression for validation date format",
-                        "type": "string",
-                        "default": Alpaca.regexps.date
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "dateFormat": {
-                        "type": "text"
-                    },
-                    "dateFormatRegex": {
-                        "type": "text"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Date Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Date Field.";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "date";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerMessages({
@@ -9746,70 +8351,7 @@ var equiv = function () {
             }
 
             return baseStatus;
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            var pattern = (this.schema && this.schema.pattern) ? this.schema.pattern : Alpaca.regexps.email;
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "pattern": {
-                        "title": "Pattern",
-                        "description": "Field Pattern in Regular Expression",
-                        "type": "string",
-                        "default": pattern,
-                        "enum":[pattern],
-                        "readonly": true
-                    },
-                    "format": {
-                        "title": "Format",
-                        "description": "Property data format",
-                        "type": "string",
-                        "default":"email",
-                        "enum":["email"],
-                        "readonly":true
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsForSchema
-         */
-        getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "format": {
-                        "type": "text"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Email Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Email Field.";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "email";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerMessages({
@@ -9947,117 +8489,7 @@ var equiv = function () {
             }
 
             return true;
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.NumberField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "minimum": {
-                        "title": "Minimum",
-                        "description": "Minimum value of the property",
-                        "type": "integer"
-                    },
-                    "maximum": {
-                        "title": "Maximum",
-                        "description": "Maximum value of the property",
-                        "type": "integer"
-                    },
-                    "divisibleBy": {
-                        "title": "Divisible By",
-                        "description": "Property value must be divisible by this number",
-                        "type": "integer"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.NumberField#getOptionsForSchema
-         */
-        getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "minimum": {
-                        "helper": "Minimum value of the field",
-                        "type": "integer"
-                    },
-                    "maximum": {
-                        "helper": "Maximum value of the field",
-                        "type": "integer"
-                    },
-                    "divisibleBy": {
-                        "helper": "Property value must be divisible by this number",
-                        "type": "integer"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.NumberField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "slider": {
-                        "title": "Slider",
-                        "description": "Generate slider control if true",
-                        "type": "boolean",
-                        "default": false
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.NumberField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "slider": {
-                        "rightLabel": "Slider control ?",
-                        "helper": "Generate slider control if selected",
-                        "type": "checkbox"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getTitle
-         */
-        getTitle: function() {
-            return "Integer Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getDescription
-         */
-        getDescription: function() {
-            return "Integer Field.";
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getType
-         */
-        getType: function() {
-            return "integer";
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getFieldType
-         */
-        getFieldType: function() {
-            return "integer";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     // Additional Registrations
@@ -10128,69 +8560,7 @@ var equiv = function () {
             }
             
             return baseStatus;
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            var pattern = (this.schema && this.schema.pattern)? this.schema.pattern : Alpaca.regexps.ipv4;
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "pattern": {
-                        "title": "Pattern",
-                        "description": "Field Pattern in Regular Expression",
-                        "type": "string",
-                        "default": pattern,
-                        "readonly": true
-                    },                    
-					"format": {
-                        "title": "Format",
-                        "description": "Property data format",
-                        "type": "string",
-                        "enum": ["ip-address"],
-						"default":"ip-address",
-						"readonly":true
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsForSchema
-         */
-		getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(),{
-				"fields": {
-					"format": {
-						"type": "text"
-					}
-				}
-			});
-        },
-        
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "IP Address Field";
-        },
-        
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "IP Address Field.";
-        },
-
-		/**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "ipv4";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
     
     Alpaca.registerMessages({
@@ -10325,28 +8695,7 @@ var equiv = function () {
                 _this.renderValidationState();
             });
             this.field.attr('title','Type Ctrl+L to format and validate the JSON string.');
-        },//__BUILDER_HELPERS
-
-		/**
-         * @see Alpaca.Fields.TextAreaField#getTitle
-		 */
-		getTitle: function() {
-			return "JSON Editor";
-		},
-
-		/**
-         * @see Alpaca.Fields.TextAreaField#getDescription
-		 */
-		getDescription: function() {
-			return "Editor for JSON objects with basic validation and formatting.";
-		},
-
-		/**
-         * @see Alpaca.Fields.TextAreaField#getFieldType
-         */
-        getFieldType: function() {
-            return "json";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     // Additional Registrations
@@ -10612,117 +8961,7 @@ var equiv = function () {
             }
 
             return true;
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.NumberField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "minimum": {
-                        "title": "Minimum",
-                        "description": "Minimum value of the property",
-                        "type": "integer"
-                    },
-                    "maximum": {
-                        "title": "Maximum",
-                        "description": "Maximum value of the property",
-                        "type": "integer"
-                    },
-                    "divisibleBy": {
-                        "title": "Divisible By",
-                        "description": "Property value must be divisible by this number",
-                        "type": "integer"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.NumberField#getOptionsForSchema
-         */
-        getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "minimum": {
-                        "helper": "Minimum value of the field",
-                        "type": "integer"
-                    },
-                    "maximum": {
-                        "helper": "Maximum value of the field",
-                        "type": "integer"
-                    },
-                    "divisibleBy": {
-                        "helper": "Property value must be divisible by this number",
-                        "type": "integer"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.NumberField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "slider": {
-                        "title": "Slider",
-                        "description": "Generate slider control if true",
-                        "type": "boolean",
-                        "default": false
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.NumberField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "slider": {
-                        "rightLabel": "Slider control ?",
-                        "helper": "Generate slider control if selected",
-                        "type": "checkbox"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getTitle
-         */
-        getTitle: function() {
-            return "Integer Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getDescription
-         */
-        getDescription: function() {
-            return "Integer Field.";
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getType
-         */
-        getType: function() {
-            return "integer";
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getFieldType
-         */
-        getFieldType: function() {
-            return "integer";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     // Additional Registrations
@@ -10792,28 +9031,7 @@ var equiv = function () {
                 var v = _this.getValue();
                 _this.setValue(v);
             });
-        },//__BUILDER_HELPERS
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Lowercase Text";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Text Field for lowercase text.";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "lowercase";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerFieldClass("lowercase", Alpaca.Fields.LowerCaseField);
@@ -10936,28 +9154,7 @@ var equiv = function () {
 			if (this.fieldContainer) {
 				this.fieldContainer.addClass('alpaca-controlfield-map');
 			}
-        },//__BUILDER_HELPERS
-
-		/**
-         * @see Alpaca.Fields.TextAreaField#getTitle
-		 */
-		getTitle: function() {
-			return "Map Field";
-		},
-
-		/**
-         * @see Alpaca.Fields.TextAreaField#getDescription
-		 */
-		getDescription: function() {
-			return "Field for objects with key/value pairs that share the same schema for values.";
-		},
-
-		/**
-         * @see Alpaca.Fields.TextAreaField#getFieldType
-         */
-        getFieldType: function() {
-            return "map";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerFieldClass("map", Alpaca.Fields.MapField);
@@ -11030,70 +9227,7 @@ var equiv = function () {
             }
             
             return baseStatus;
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            var pattern = (this.schema && this.schema.pattern)? this.schema.pattern : /^[0-9a-zA-Z\x20-\x7E]*$/;
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "pattern": {
-                        "title": "Pattern",
-                        "description": "Field Pattern in Regular Expression",
-                        "type": "string",
-                        "default": this.schema.pattern,
-                        "enum":[pattern],
-                        "readonly": true
-                    },                    
-					"format": {
-                        "title": "Format",
-                        "description": "Property data format",
-                        "type": "string",
-						"default":"password",
-                        "enum":["password"],
-						"readonly":true
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsForSchema
-         */
-		getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(),{
-				"fields": {
-					"format": {
-						"type": "text"
-					}
-				}
-			});
-        },
-        
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Password Field";
-        },
-        
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Password Field.";
-        },
-
-		/**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "password";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
     
     Alpaca.registerTemplate("controlFieldPassword", '<input type="password" id="${id}" {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="readonly"{{/if}} {{if options.name}}name="${options.name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
@@ -11173,28 +9307,7 @@ var equiv = function () {
                 var v = _this.getValue();
                 _this.setValue(v);
             });
-        },//__BUILDER_HELPERS
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Personal Name";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Text Field for personal name with captical letter for first letter & after hyphen, space or apostrophe.";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "personalname";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerFieldClass("personalname", Alpaca.Fields.PersonalNameField);
@@ -11266,87 +9379,7 @@ var equiv = function () {
             }
 
             return baseStatus;
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            var pattern = (this.schema && this.schema.pattern) ? this.schema.pattern : Alpaca.regexps.phone;
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "pattern": {
-                        "title": "Pattern",
-                        "description": "Field Pattern in Regular Expression",
-                        "type": "string",
-                        "default": pattern,
-                        "enum":[pattern],
-                        "readonly": true
-                    },
-                    "format": {
-                        "title": "Format",
-                        "description": "Property data format",
-                        "type": "string",
-                        "default":"phone",
-                        "enum":["phone"],
-                        "readonly":true
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsForSchema
-         */
-        getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "format": {
-                        "type": "text"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "maskString": {
-                        "title": "Field Mask String",
-                        "description": "Expression for field mask",
-                        "type": "string",
-                        "default": "(999) 999-9999"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Phone Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Phone Field.";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "phone";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerMessages({
@@ -11443,59 +9476,7 @@ var equiv = function () {
 
             this.setValue(trimmed);
 
-        },//__BUILDER_HELPERS
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "separator": {
-                        "title": "Separator",
-                        "description": "Separator used to split tags.",
-                        "type": "string",
-                        "default":","
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "separator": {
-                        "type": "text"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Tag Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Text field for entering list of tags separated by delimiter.";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "tag";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerFieldClass("tag", Alpaca.Fields.TagField);
@@ -11592,117 +9573,7 @@ var equiv = function () {
             }
             //valitime the time without the help of timepicker.parseTime
             return value.match(this.options.timeFormatRegex);
-        },//__BUILDER_HELPERS
-
-        /**
-         * @see Alpaca.Fields.TextField#setValue
-         */
-        setValue: function(val) {
-            // skip out if no time
-            if (val == "") {
-                this.base(val);
-                return;
-            }
-
-            this.base(val);
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfSchema
-         */
-        getSchemaOfSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "format": {
-                        "title": "Format",
-                        "description": "Property data format",
-                        "type": "string",
-                        "default":"time",
-                        "enum" : ["time"],
-                        "readonly":true
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsForSchema
-         */
-        getOptionsForSchema: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "format": {
-                        "type": "text"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "properties": {
-                    "timeFormat": {
-                        "title": "Time Format",
-                        "description": "Time format",
-                        "type": "string",
-                        "default": "hh:mm:ss"
-                    },
-                    "timeFormatRegex": {
-                        "title": "Format Regular Expression",
-                        "description": "Regular expression for validation time format",
-                        "type": "string",
-                        "default": /^(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])$/
-                    },
-                    "maskString": {
-                        "default" : "99:99:99"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getOptionsForOptions
-         */
-        getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
-                "fields": {
-                    "timeFormat": {
-                        "type": "text"
-                    },
-                    "timeFormatRegex": {
-                        "type": "text"
-                    }
-                }
-            });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Time Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Field for time.";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "time";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerMessages({
@@ -11771,28 +9642,7 @@ var equiv = function () {
                 var v = _this.getValue();
                 _this.setValue(v);
             });
-        },//__BUILDER_HELPERS
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Uppercase Text";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Text Field for uppercase text.";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "uppercase";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
 
     Alpaca.registerFieldClass("uppercase", Alpaca.Fields.UpperCaseField);
@@ -11855,114 +9705,13 @@ var equiv = function () {
 			if (this.fieldContainer) {
 				this.fieldContainer.addClass('alpaca-controlfield-wysiwyg');
 			}			
-        },//__BUILDER_HELPERS
-		
-		/**
-         * @see Alpaca.Fields.TextAreaField#getTitle
-		 */
-		getTitle: function() {
-			return "Wysiwyg Editor";
-		},
-		
-		/**
-         * @see Alpaca.Fields.TextAreaField#getDescription
-		 */
-		getDescription: function() {
-			return "Wysiwyd editor for multi-line text.";
-		},
-
-		/**
-         * @see Alpaca.Fields.TextAreaField#getFieldType
-         */
-        getFieldType: function() {
-            return "wysiwyg";
-        }//__END_OF_BUILDER_HELPERS
+        }
     });
     
     Alpaca.registerFieldClass("wysiwyg", Alpaca.Fields.WysiwygField);
     
 })(jQuery);
-(function($) {
 
-	var Alpaca = $.alpaca;
-
-	Alpaca.registerView ({
-		"id": "VIEW_WEB_EDIT",
-		"messages": {
-			"zh_CN": {
-				required: "&#27492;&#22495;&#24517;&#39035;",
-				invalid: "&#27492;&#22495;&#19981;&#21512;&#26684;",
-				months: ["&#19968;&#26376;", "&#20108;&#26376;", "&#19977;&#26376;", "&#22235;&#26376;", "&#20116;&#26376;", "&#20845;&#26376;", "&#19971;&#26376;", "&#20843;&#26376;", "&#20061;&#26376;", "&#21313;&#26376;", "&#21313;&#19968;&#26376;", "&#21313;&#20108;&#26376;"],
-				timeUnits: {
-					SECOND: "&#31186;",
-					MINUTE: "&#20998;",
-					HOUR: "&#26102;",
-					DAY: "&#26085;",
-					MONTH: "&#26376;",
-					YEAR: "&#24180;"
-				},
-				"notOptional": "&#27492;&#22495;&#38750;&#20219;&#36873;",
-				"disallowValue": "&#38750;&#27861;&#36755;&#20837;&#21253;&#25324; {0}.",
-				"invalidValueOfEnum": "&#20801;&#35768;&#36755;&#20837;&#21253;&#25324; {0}.",
-				"notEnoughItems": "&#26368;&#23567;&#20010;&#25968; {0}",
-				"tooManyItems": "&#26368;&#22823;&#20010;&#25968; {0}",
-				"valueNotUnique": "&#36755;&#20837;&#20540;&#19981;&#29420;&#29305;",
-				"notAnArray": "&#19981;&#26159;&#25968;&#32452;",
-				"invalidDate": "&#26085;&#26399;&#26684;&#24335;&#22240;&#35813;&#26159; {0}",
-				"invalidEmail": "&#20234;&#22969;&#20799;&#26684;&#24335;&#19981;&#23545;, ex: admin@gitanasoftware.com",
-				"stringNotAnInteger": "&#19981;&#26159;&#25972;&#25968;.",
-				"invalidIPv4": "&#19981;&#26159;&#21512;&#27861;IP&#22320;&#22336;, ex: 192.168.0.1",
-				"stringValueTooSmall": "&#26368;&#23567;&#20540;&#26159; {0}",
-				"stringValueTooLarge": "&#26368;&#22823;&#20540;&#26159; {0}",
-				"stringValueTooSmallExclusive": "&#20540;&#24517;&#39035;&#22823;&#20110; {0}",
-				"stringValueTooLargeExclusive": "&#20540;&#24517;&#39035;&#23567;&#20110; {0}",
-				"stringDivisibleBy": "&#20540;&#24517;&#39035;&#33021;&#34987; {0} &#25972;&#38500;",
-				"stringNotANumber": "&#19981;&#26159;&#25968;&#23383;.",
-				"invalidPassword": "&#38750;&#27861;&#23494;&#30721;",
-				"invalidPhone": "&#38750;&#27861;&#30005;&#35805;&#21495;&#30721;, ex: (123) 456-9999",
-				"invalidPattern": "&#27492;&#22495;&#39035;&#26377;&#26684;&#24335; {0}",
-				"stringTooShort": "&#27492;&#22495;&#33267;&#23569;&#38271;&#24230; {0}",
-				"stringTooLong": "&#27492;&#22495;&#26368;&#22810;&#38271;&#24230; {0}"
-			
-			},
-			"es_ES": {
-				required: "Este campo es required",
-				invalid: "Este campo es inv�lido",
-				months: ["Enero", "Febrero", "Marzo", "Abril", "Puede", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-				timeUnits: {
-					SECOND: "segundos",
-					MINUTE: "minutos",
-					HOUR: "horas",
-					DAY: "d�as",
-					MONTH: "meses",
-					YEAR: "a�os"
-				},
-				"notOptional": "Este campo no es opcional.",
-				"disallowValue": "{0} son los valores rechazados.",
-				"invalidValueOfEnum": "Este campo debe tener uno de los valores adentro {0}.",
-				"notEnoughItems": "El n�mero m�nimo de art�culos es {0}",
-				"tooManyItems": "El n�mero m�ximo de art�culos es {0}",
-				"valueNotUnique": "Los valores no son �nicos",
-				"notAnArray": "Este valor no es un arsenal",
-				"invalidDate": "Fecha inv�lida para el formato {0}",
-				"invalidEmail": "Email address inv�lido, ex: admin@gitanasoftware.com",
-				"stringNotAnInteger": "Este valor no es un n�mero entero.",
-				"invalidIPv4": "Direcci&#243;n inv�lida IPv4, ex: 192.168.0.1",
-				"stringValueTooSmall": "El valor m�nimo para este campo es {0}",
-				"stringValueTooLarge": "El valor m�ximo para este campo es {0}",
-				"stringValueTooSmallExclusive": "El valor de este campo debe ser mayor que {0}",
-				"stringValueTooLargeExclusive": "El valor de este campo debe ser menos que {0}",
-				"stringDivisibleBy": "El valor debe ser divisible cerca {0}",
-				"stringNotANumber": "Este valor no es un n�mero.",
-				"invalidPassword": "Contrase�a inv�lida",
-				"invalidPhone": "N�mero de tel�fono inv�lido, ex: (123) 456-9999",
-				"invalidPattern": "Este campo debe tener patr&#243;n {0}",
-				"stringTooShort": "Este campo debe contener por lo menos {0} n�meros o caracteres",
-				"stringTooLong": "Este campo debe contener a lo m�s {0} n�meros o caracteres"
-			}
-		}
-	});
-})(jQuery);
     };
 
     /**
@@ -11975,7 +9724,7 @@ var equiv = function () {
     if ( typeof define === "function" && define.amd) {
 
         // load via amd into target namespace
-        define( "alpaca", ["jquery"], function ($) {
+        define( 'alpaca', ['jquery'], function ($) {
             return init.call();
         });
     }
