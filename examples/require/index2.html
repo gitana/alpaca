@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Alpaca - HTML5 Forms for jQuery - Text Field</title>
+    <script type="text/javascript" src="lib/jquery/jquery.js"></script>
+    <script type="text/javascript" src="lib/alpaca/alpaca.js"></script>
+    <link type="text/css" href="lib/alpaca/alpaca.css" rel="stylesheet"/>
+</head>
+<body>
+<div class='container_12'>
+    <div class="actual-body">
+        <div class="grid_3">
+            <div class="container_12 side-bar">
+            </div>
+        </div>
+
+        <div class="grid_9">
+            <div class="container_12">
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class='grid_12 alpaca-example-header' id='text-field' alpaca-types='text'>
+                            <h1>Text Field</h1>
+                        </div>
+                        <div class='grid_12 alpaca-example-case'>
+                            <h3>Example 1: </h3>
+                            <h4>Simple text field with only the data parameter.</h4>
+
+                            <div id="field1">
+                            </div>
+                            <script type="text/javascript" id="field1-script">
+$(function() {
+    $("#field1").alpaca({
+        "data": "I Love Alpaca Ice Cream!"
+    });
+});
+                            </script>
+                            <p/>
+
+                            <h3>Example 2: </h3>
+                            <h4>Text field with data, schema and options parameters. The initial data will fail the
+                                validation since its length is not within the range defined by the schema.</h4>
+
+                            <div id="field2">
+                            </div>
+                            <script type="text/javascript" id="field2-script">
+$(function() {
+    $("#field2").alpaca({
+        "data": "Mint Chocolate",
+        "options": {
+            "label": "Ice Cream",
+            "helper": "Your favorite ice cream?",
+            "size": 30
+        },
+        "schema": {
+            "minLength": 3,
+            "maxLength": 8
+        }
+    });
+});
+                            </script>
+                            <p/>
+
+                            <h3>Example 3: </h3>
+                            <h4>Text field with data, schema, options and view parameters. The view parameter is
+                                for injecting additional styles to make the field label float to the left of the
+                                text field.</h4>
+
+                            <div id="field3">
+                            </div>
+                            <script type="text/javascript" id="field3-script">
+$(function() {
+    $("#field3").alpaca({
+        "data": "Mint",
+        "options": {
+            "label": "Ice Cream",
+            "helper": "Your favorite ice cream?",
+            "size": 30
+        },
+        "schema": {
+            "minLength": 3,
+            "maxLength": 8
+        },
+        "view": {
+            "parent": "VIEW_WEB_EDIT",
+            "styles": {
+                ".alpaca-controlfield-label": {
+                    "float": "left",
+                    "padding": "6px 0.3em 0 0"
+                }
+            }
+        }
+    });
+});
+                            </script>
+                            <p/>
+                            <h3>Example 4: </h3>
+                            <h4>Text field with a mask. This feature is based on Josh Bush's <a
+                                    href="http://digitalbush.com/projects/masked-input-plugin/">Masked Input Plugin</a>.It
+                                allows a user to more easily enter fixed width input where you would like them to enter
+                                the data in a certain format (dates,phone numbers, etc).
+                                <p/>
+                                The maskString parameter supports following predefined characters:
+                                <ul>
+                                    <li>a - Represents an alpha character (A-Z,a-z)</li>
+                                    <li>9 - Represents a numeric character (0-9)</li>
+                                    <li>* - Represents an alphanumeric character (A-Z,a-z,0-9)</li>
+                                </ul>
+                            </h4>
+
+                            <div id="field4">
+                            </div>
+                            <script type="text/javascript" id="field4-script">
+$(function() {
+    $("#field4").alpaca({
+        "data": "123-45-6789",
+        "options": {
+            "label": "Social Security Number",
+            "helper": "Please enter your social security number.",
+            "size": 30,
+            "maskString": "999-99-9999"
+        }
+    });
+});
+                            </script>
+                        </div>
+                        <div class="clear height-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

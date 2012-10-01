@@ -1418,7 +1418,7 @@
         } else {
             return $("<div></div>").append(this.clone()).html();
         }
-    }
+    };
 
     /**
      * @ignore
@@ -1432,5 +1432,16 @@
             $(this).replaceWith(copy_to);
         });
     };
+
+    /**
+     * Support for AMD (Asynchronous Module Definition).
+     * https://github.com/amdjs/amdjs-api/wiki/AMD
+     *
+     * If the browser supports AMD, then we use the define() method to claim the "alpaca" name.
+     * We also mark that we depend on "jquery".
+     */
+    if ( typeof define === "function" && define.amd) {
+        define( "alpaca", ["jquery"], function ($) { return Alpaca; } );
+    }
 
 })(jQuery);

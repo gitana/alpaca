@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Alpaca - HTML5 Forms for jQuery - Text Field (using Require)</title>
+    <script data-main="main" src="thirdparty/require.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css"/>
+</head>
+<body>
+<div class='container_12'>
+    <div class="actual-body">
+        <div class="grid_3">
+            <div class="container_12 side-bar">
+            </div>
+        </div>
+
+        <div class="grid_9">
+            <div class="container_12">
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class='grid_12 alpaca-example-header' id='text-field' alpaca-types='text'>
+                            <h1>Text Field</h1>
+                        </div>
+                        <div class='grid_12 alpaca-example-case'>
+                            <h3>Example 1: </h3>
+                            <h4>Simple text field with only the data parameter.</h4>
+
+                            <div id="field1">
+                            </div>
+                            <p/>
+
+                            <h3>Example 2: </h3>
+                            <h4>Text field with data, schema and options parameters. The initial data will fail the
+                                validation since its length is not within the range defined by the schema.</h4>
+
+                            <div id="field2">
+                            </div>
+                            <p/>
+
+                            <h3>Example 3: </h3>
+                            <h4>Text field with data, schema, options and view parameters. The view parameter is
+                                for injecting additional styles to make the field label float to the left of the
+                                text field.</h4>
+
+                            <div id="field3">
+                            </div>
+                            <p/>
+                            <h3>Example 4: </h3>
+                            <h4>Text field with a mask. This feature is based on Josh Bush's <a
+                                    href="http://digitalbush.com/projects/masked-input-plugin/">Masked Input Plugin</a>.It
+                                allows a user to more easily enter fixed width input where you would like them to enter
+                                the data in a certain format (dates,phone numbers, etc).
+                                <p/>
+                                The maskString parameter supports following predefined characters:
+                                <ul>
+                                    <li>a - Represents an alpha character (A-Z,a-z)</li>
+                                    <li>9 - Represents a numeric character (0-9)</li>
+                                    <li>* - Represents an alphanumeric character (A-Z,a-z,0-9)</li>
+                                </ul>
+                            </h4>
+
+                            <div id="field4">
+                            </div>
+                        </div>
+                        <div class="clear height-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

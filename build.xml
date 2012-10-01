@@ -64,10 +64,9 @@
     </target>
 
     <target name="concat-js" description="Concat all javascript files" depends="prep">
-        <concat destfile="${package.dir}/js/${appkey}-${version}-full.js">
-            <filelist dir="${prep.dir}">
-                <file name="license.txt"/>
-            </filelist>
+
+        <!-- Concatenate all Alpaca files into a single JS file -->
+        <concat destfile="${prep.dir}/js/${appkey}-${version}-single.js">
             <filelist dir="${prep.dir}/lib">
                 <file name="base.js"/>
                 <file name="validator.js"/>
@@ -126,6 +125,30 @@
                 <file name="views/DefaultViewLanguagePacks.js"/>
             </filelist>
         </concat>
+
+        <!-- Wrap the single JS file with an AMD wrapper -->
+        <loadresource property="singlejs">
+            <file file="${prep.dir}/js/${appkey}-${version}-single.js"/>
+        </loadresource>
+        <copy file="${prep.dir}/lib/amd/wrapper.js" tofile="${prep.dir}/js/${appkey}-${version}-single-wrapped.js" overwrite="true" filtering="true">
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="/** BUILD_INSERT_SINGLE_JS **/" to="${singlejs}"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+        <concat destfile="${package.dir}/js/${appkey}-${version}-full.js">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
+            <filelist dir="${prep.dir}/js">
+                <file name="${appkey}-${version}-single-wrapped.js"/>
+            </filelist>
+        </concat>
+        <delete file="${prep.dir}/js/${appkey}-${version}-single.js"/>
+        <delete file="${prep.dir}/js/${appkey}-${version}-single-wrapped.js"/>
+
+        <!-- Tests -->
         <concat destfile="${package.dir}/js/${appkey}-${version}-tests.js">
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
