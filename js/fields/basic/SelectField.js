@@ -118,13 +118,13 @@
                 "properties": {
                     "multiple": {
                         "title": "Mulitple Selection",
-                        "description": "Allow multiple selection if true",
+                        "description": "Allow multiple selection if true.",
                         "type": "boolean",
                         "default": false
                     },
                     "size": {
                         "title": "Displayed Options",
-                        "description": "Number of options to be shown",
+                        "description": "Number of options to be shown.",
                         "type": "number"
                     }
                 }
