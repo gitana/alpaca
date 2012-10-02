@@ -173,6 +173,28 @@ $(function() {
     });
 });
                     </script>
+                    <h3>Example 5: </h3>
+					<h4>Select field with an onField event listener option that reacts to select change event.</h4>
+                    <div id="field5">
+                    </div>
+                    <script type="text/javascript"id="field5-script">
+$(function() {
+    $("#field5").alpaca({
+        "data": "Coffee",
+        "options": {
+            "label": "Ice cream",
+            "helper": "Guess my favorite ice cream?",
+            "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"],
+            "onFieldChange" : function(e) {
+                alert("Current select is " + this.getValue());
+            }
+        },
+        "schema": {
+            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+        }
+    });
+});
+                    </script>
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

@@ -913,6 +913,15 @@
             this.field.blur(function(e) {
                 _this.onBlur(e);
             });
+            // register general event handlers through options
+            $.each(this.options, function(key, func) {
+                if (Alpaca.startsWith(key,'onField') && Alpaca.isFunction(func)) {
+                    var event = key.substring(7).toLowerCase();
+                    _this.field.on(event, function(e) {
+                        func.call(_this,e);
+                    });
+                }
+            })
         },
 
         /**
