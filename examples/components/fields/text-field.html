@@ -203,7 +203,7 @@ $(function() {
                             </script>
                             <p/>
                             <h3>Example 5: </h3>
-                            <h4>Text field with an event listener option that prints out your input in an outside div in revere order.</h4>
+                            <h4>Text field with an event listener option that listens to keypress event and then prints out your input in an outside div in reverse order.</h4>
 
                             <div id="output">
                             </div>
@@ -213,7 +213,7 @@ $(function() {
 $(function() {
     $("#field5").alpaca({
         "options": {
-            "label": "Echo",
+            "label": "Echo Your Input",
             "helper": "Type whatever you want to type.",
             "onFieldKeyup": function(e) {
                 $('#output').html(this.getValue().split("").reverse().join(""));
