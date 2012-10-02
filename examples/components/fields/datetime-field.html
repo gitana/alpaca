@@ -2,16 +2,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca - HTML5 Forms for jQuery - Customer Profile Edit Form</title>
-        <meta name="keywords" content="alpaca,forms,create,gitana" />
-        <meta name="description" content="Customer Profile Form with Custom View Template." />
+        <title>Alpaca - HTML5 Forms for jQuery - Datetime Field</title>
+        <meta name="keywords" content="alpaca,forms,miscellaneous,gitana" />
+        <meta name="description" content="Miscellaneous Field Examples for Alpaca Forms." />
         <meta name="author" content="Gitana Software Inc." />
         <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
-        <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <script type="text/javascript" src="../../../lib/jquery-latest.min.js"></script>
         <!--Custom jQuery UI Library-->
         <script type="text/javascript" src="../../../lib/jquery-ui-latest.custom.min.js"></script>
         <!--End of Custom jQuery UI Library-->
+        <script type="text/javascript" src="../../../lib/jquery-ui-timepicker-addon.0.9.9.min.js"></script>
 
         <!--Alpaca JavaScript-->
         <script type="text/javascript" src="../../../lib/base.js"></script>
@@ -100,16 +100,16 @@
 		                <a href="../../../index.html">Home</a>
 		                <a href="../../../resources.html#downloads">Downloads</a>
 		                <a href="../../../tutorials.html">Tutorials</a>
-		                <a href="../../components/fields/text-field.html">Components</a>
+		                <a href="javascript:void(0);" class="current">Components</a>
 		                <a href="../../../resources.html#documentation">Documentation</a>
 		                <a href="../../../resources.html#unittests">Tests</a>
-		                <a href="javascript:void(0);" class="current">Forms</a>
+		                <a href="../../forms/customer-profile/edit-form.html">Forms</a>
 		                <a href="../../../resources.html#mobile">Mobile</a>
 		            </div>
 		        </div>
 		    </div>
 			</div>
-		</header>	
+		</header>
 <div class='container_12'>
     <div class="actual-body">
         <div class="grid_3">
@@ -121,21 +121,59 @@
             <div class="container_12">
                 <div class="widget">
                     <div class="widget-body">
-            <div class='grid_12 alpaca-example-header' id='customer-profile-edit' alpaca-types='form'>
-        <h1>Alpaca Farm Ice Cream Customer Profile</h1>
+            <div class='grid_12 alpaca-example-header' id='datetime-field' alpaca-types='datetime'>
+                <h1>Datetime Field</h1>
             </div>
-            <div class='grid_12 alpaca-example-case'>
-                    <h3>Edit Form for Existing Customer</h3>
-                    <h4>This example loads <a href="./data.json" target="_source">data</a>, <a href="./options.json" target="_source">options</a> and <a href="./schema.json" target="_source">schema</a> parameters through ajax calls.</h4>
+                        <div class='grid_12 alpaca-example-case'>
+                    <h3>Example 1: </h3>
+                    <h4>Single datetime field.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
-$(function() {
-    $("#field1").alpaca({
-        "data": "./data.json",
-        "options": "./options.json",
-        "schema": "./schema.json"
-    });
+$("#field1").alpaca({
+    "schema": {
+        "format": "datetime"
+    }
+});
+                    </script>
+                    <h3>Example 2: </h3>
+                    <h4>Multiple datetime fields.</h4>
+                    <div id="field2">
+                    </div>
+                    <script type="text/javascript" id="field2-script">
+$("#field2").alpaca({
+    "data" : {
+        "start" : "10/12/2012 01:20",
+        "end" : "10/15/2012 18:55"
+    },
+    "schema": {
+        "type" : "object",
+        "properties" : {
+            "start" : {
+                "title" : "Start",
+                "description" : "Select your start datetime.",
+                "format": "datetime"
+            },
+            "end" : {
+                "title" : "End",
+                "description" : "Select your end datetime.",
+                "format": "datetime"
+            }
+        }
+    },
+    "options" : {
+        "renderForm":true,
+        "form":{
+            "attributes":{
+                "action":"../../endpoints/echo.php",
+                "method":"post"
+            },
+            "buttons":{
+                "submit":{},
+                "reset":{}
+            }
+        }
+    }
 });
                     </script>
                         </div>

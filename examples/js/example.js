@@ -188,6 +188,11 @@ $(function() {
                 "link":"../../components/fields/date-field.html"
             },
             {
+                "id":"datetime-field",
+                "title":"Datetime Field",
+                "link":"../../components/fields/datetime-field.html"
+            },
+            {
                 "id":"phone-field",
                 "title":"Phone Field",
                 "link":"../../components/fields/phone-field.html"

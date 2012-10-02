@@ -112,6 +112,7 @@
             <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
                 <file name="fields/advanced/DateField.js"/>
+                <file name="fields/advanced/DatetimeField.js"/>
                 <file name="fields/advanced/EmailField.js"/>
                 <file name="fields/advanced/IntegerField.js"/>
                 <file name="fields/advanced/IPv4Field.js"/>
@@ -215,6 +216,7 @@
             <fileset dir="${prep.dir}/lib">
                 <include name="jquery-latest.min.js"/>
                 <include name="jquery-ui-latest.custom.min.js"/>
+                <include name="jquery-ui-timepicker-addon.0.9.9.min.js"/>
                 <include name="jquery.wysiwyg/**/*"/>
             </fileset>
         </copy>

@@ -361,6 +361,11 @@ textarea.sample-code {
     font-size: 12px;
 }
 
+/* date datatime picker */
+.ui-widget.ui-datepicker {
+    font-size: 12px;
+}
+
 /* Embedded youtube videos */
 .embedded-youtube {
     text-align: center;
