@@ -291,7 +291,7 @@
 
     <target name="prep-html" description="Prepare all htmls" depends="compress">
         <replaceregexp match="&lt;!--Alpaca JavaScript--&gt;(.*?)&lt;!--End of Alpaca JavaScript--&gt;"
-                       replace='&lt;script type="text\/javascript" src="../../../js/${appkey}.min.js"&gt;&lt;/script&gt;' flags="gs">
+                       replace='&lt;script type="text\/javascript" src="../../../js/${appkey}-full.min.js"&gt;&lt;/script&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="examples/**/*.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca CSS--&gt;(.*?)&lt;!--End of Alpaca CSS--&gt;"
