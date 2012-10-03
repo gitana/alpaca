@@ -77,15 +77,51 @@
              * @see Alpaca.Fields.TextField#getValue
              */
             getValue: function() {
-                /*
-                if (this.base()) {
+                return this.base();
+            },
+
+            /**
+             * Returns field value in datetime.
+             *
+             * @returns {Date} Field value.
+             */
+            getDatetime: function() {
+                try {
                     return this.field.datetimepicker('getDate');
-                } else {
-                    return this.base();
+                } catch (e) {
+                    return this.getValue();
                 }
-                */
-                this.base();
             },//__BUILDER_HELPERS
+
+            /**
+             * @private
+             * @see Alpaca.ControlField#getSchemaOfOptions
+             */
+            getSchemaOfOptions: function() {
+                return Alpaca.merge(this.base(), {
+                    "properties": {
+                        "datetime": {
+                            "title": "Timepicker options",
+                            "description": "Options that are supported by the <a href='http://trentrichardson.com/examples/timepicker/'>jQuery timepicker addon</a>.",
+                            "type": "any"
+                        }
+                    }
+                });
+            },
+
+            /**
+             * @private
+             * @see Alpaca.ControlField#getOptionsForOptions
+             */
+            getOptionsForOptions: function() {
+                return Alpaca.merge(this.base(), {
+                    "fields": {
+                        "datetime": {
+                            "type": "any"
+                        }
+                    }
+                });
+            },
 
             /**
              * @see Alpaca.Fields.TextField#getTitle
@@ -98,7 +134,7 @@
              * @see Alpaca.Fields.TextField#getDescription
              */
             getDescription: function() {
-                return "Datetime Field.";
+                return "Datetime Field based on Trent Richardson's <a href='http://trentrichardson.com/examples/timepicker/'>jQuery timepicker addon</a>.";
             },
 
             /**

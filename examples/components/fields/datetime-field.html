@@ -137,7 +137,7 @@ $("#field1").alpaca({
 });
                     </script>
                     <h3>Example 2: </h3>
-                    <h4>Multiple datetime fields.</h4>
+                    <h4>Multiple datetime fields wrapped in a FORM.</h4>
                     <div id="field2">
                     </div>
                     <script type="text/javascript" id="field2-script">
@@ -173,6 +173,34 @@ $("#field2").alpaca({
                 "reset":{}
             }
         }
+    }
+});
+                    </script>
+                    <h3>Example 3: </h3>
+                    <h4>Datetime field with timepicker options and a button that returns field value as date.</h4>
+                    <div id="field3">
+                    </div>
+                    <script type="text/javascript" id="field3-script">
+$("#field3").alpaca({
+    "schema": {
+        "title" : "Datetime",
+        "description" : "Pick your datetime.",
+        "format": "datetime"
+    },
+    "options": {
+        "datetime": {
+            "showSecond": true,
+            "timeFormat": 'hh:mm:ss',
+            "stepHour": 2,
+            "stepMinute": 10,
+            "stepSecond": 10
+        }
+    },
+    "postRender": function(form) {
+        var button = $("<div><button>Get Datetime</button></div>");
+        button.click(function() {
+            alert(form.getDatetime());
+        }).appendTo($("#field3"));
     }
 });
                     </script>
