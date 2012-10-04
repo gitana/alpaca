@@ -63,6 +63,9 @@
                 this.lazyLoading = false;
                 if (!Alpaca.isEmpty(this.options.lazyLoading)) {
                     this.lazyLoading = this.options.lazyLoading;
+                    if (this.lazyLoading) {
+                        this.options.collapsed = true;
+                    }
                     //delete this.options.lazyLoading;
                 }
                 // holders of references to children
@@ -351,6 +354,12 @@
             getSchemaOfOptions: function() {
                 return Alpaca.merge(this.base(), {
                     "properties": {
+                        "lazyLoading": {
+                            "title": "Lazy Loading",
+                            "description": "Child fields will only be rendered when the fieldset is expanded if this option is set true.",
+                            "type": "boolean",
+                            "default": false
+                        },
                         "collapsible": {
                             "title": "Collapsible",
                             "description": "Field set is collapsible if true.",
@@ -381,6 +390,11 @@
             getOptionsForOptions: function() {
                 return Alpaca.merge(this.base(), {
                     "fields": {
+                        "lazyLoading": {
+                            "rightLabel": "Lazy loading child fields ?",
+                            "helper": "Lazy loading will be enabled if checked.",
+                            "type": "checkbox"
+                        },
                         "collapsible": {
                             "rightLabel": "Field set collapsible ?",
                             "helper": "Field set is collapsible if checked.",
