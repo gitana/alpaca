@@ -353,19 +353,19 @@
                     "properties": {
                         "collapsible": {
                             "title": "Collapsible",
-                            "description": "Field set is collapsible if true",
+                            "description": "Field set is collapsible if true.",
                             "type": "boolean",
                             "default": true
                         },
                         "collapsed": {
                             "title": "Collapsed",
-                            "description": "Field set is initially collapsibled if true",
+                            "description": "Field set is initially collapsed if true.",
                             "type": "boolean",
                             "default": false
                         },
                         "legendStyle": {
                             "title": "Legend Style",
-                            "description": "Field set legend style",
+                            "description": "Field set legend style.",
                             "type": "string",
                             "enum":["button","link"],
                             "default": "button"
@@ -383,12 +383,12 @@
                     "fields": {
                         "collapsible": {
                             "rightLabel": "Field set collapsible ?",
-                            "helper": "Field set is collapsible if checked",
+                            "helper": "Field set is collapsible if checked.",
                             "type": "checkbox"
                         },
                         "collapsed": {
                             "rightLabel": "Field set initially collapsed ?",
-                            "description": "Field set is initially collapsed if checked",
+                            "description": "Field set is initially collapsed if checked.",
                             "type": "checkbox"
                         },
                         "legendStyle": {

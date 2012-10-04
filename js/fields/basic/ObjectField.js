@@ -606,8 +606,8 @@
                 var properties = {
                     "properties": {
                         "properties": {
-                            "title": "Field Properties",
-                            "description": "List of Field Properties",
+                            "title": "Properties",
+                            "description": "List of child properties.",
                             "type": "object"
                         }
                     }
@@ -640,15 +640,15 @@
 
                 var properties = {
                     "properties": {
-                        "properties": {
-                            "title": "Field Option Properties",
-                            "description": "List of field option properties",
+                        "fields": {
+                            "title": "Field Options",
+                            "description": "List of options for child fields.",
                             "type": "object"
                         }
                     }
                 };
 
-                var fieldsProperties = properties.properties.properties;
+                var fieldsProperties = properties.properties.fields;
 
                 fieldsProperties.properties = {};
 
