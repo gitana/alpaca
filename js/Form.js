@@ -171,6 +171,13 @@
                 this.field.attr(this.attributes);
             }
 
+            // populate the buttons as well
+            this.buttons = {};
+            var _this = this;
+            $.each($('input', this.container),function(k,v) {
+                $(v).addClass('alpaca-form-button');
+                _this.buttons[$(v).attr('data-key')] = $(v);
+            })
         },
 
         /**
