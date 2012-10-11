@@ -71,7 +71,7 @@
          * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
-            return "Text Field for lowercase text.";
+            return "Text field for lowercase text.";
         },
 
         /**

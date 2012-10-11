@@ -138,17 +138,17 @@
                 "properties": {
                     "minimum": {
                         "title": "Minimum",
-                        "description": "Minimum value of the property",
+                        "description": "Minimum value of the property.",
                         "type": "integer"
                     },
                     "maximum": {
                         "title": "Maximum",
-                        "description": "Maximum value of the property",
+                        "description": "Maximum value of the property.",
                         "type": "integer"
                     },
                     "divisibleBy": {
                         "title": "Divisible By",
-                        "description": "Property value must be divisible by this number",
+                        "description": "Property value must be divisible by this number.",
                         "type": "integer"
                     }
                 }
@@ -163,15 +163,15 @@
             return Alpaca.merge(this.base(), {
                 "fields": {
                     "minimum": {
-                        "helper": "Minimum value of the field",
+                        "helper": "Minimum value of the field.",
                         "type": "integer"
                     },
                     "maximum": {
-                        "helper": "Maximum value of the field",
+                        "helper": "Maximum value of the field.",
                         "type": "integer"
                     },
                     "divisibleBy": {
-                        "helper": "Property value must be divisible by this number",
+                        "helper": "Property value must be divisible by this number.",
                         "type": "integer"
                     }
                 }
@@ -187,7 +187,7 @@
                 "properties": {
                     "slider": {
                         "title": "Slider",
-                        "description": "Generate slider control if true",
+                        "description": "Generate jQuery UI slider control with the field if true.",
                         "type": "boolean",
                         "default": false
                     }
@@ -204,7 +204,7 @@
                 "fields": {
                     "slider": {
                         "rightLabel": "Slider control ?",
-                        "helper": "Generate slider control if selected",
+                        "helper": "Generate slider control if selected.",
                         "type": "checkbox"
                     }
                 }
@@ -222,7 +222,7 @@
          * @see Alpaca.Fields.NumberField#getDescription
          */
         getDescription: function() {
-            return "Integer Field.";
+            return "Field for integers.";
         },
 
         /**
