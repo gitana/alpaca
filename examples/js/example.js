@@ -92,6 +92,16 @@ $(function() {
                     "link":"../../forms/customer-profile/edit-readonly-form.html"
                 }
             ]
+        },
+        {
+            "title": "Login Form",
+            "examples": [
+                {
+                    "id":"simple-login-localized",
+                    "title":"Localized Login Form",
+                    "link":"../../forms/login/localized-login-form.html"
+                }
+            ]
         }
     ];
 
