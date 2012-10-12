@@ -39,12 +39,17 @@
     	postRender: function() {
             this.base();            
 			// see if we can render jWysiwyg
+            var _this = this;
             var wysiwygOptions = this.options.wysiwyg ? this.options.wysiwyg : {};
 			if (this.field.wysiwyg) {
 				if (this.options.onDemand && !this.isWyswygLoaded) {
-                    this.field.hover(function() {
-                        $(this).wysiwyg(wysiwygOptions);
-                        this.isWyswygLoaded = true;
+                    this.outerEl.delegate("textarea", "mouseenter", function() {
+                        _this.wyswygLoaded = $(this).wysiwyg(wysiwygOptions);
+                        _this.isWyswygLoaded = true;
+                    });
+                    this.outerEl.delegate(".wysiwyg", "mouseleave", function() {
+                        _this.wyswygLoaded.wysiwyg('destroy');
+                        _this.isWyswygLoaded = false;
                     });
                 } else {
                     this.field.wysiwyg(wysiwygOptions);
@@ -56,6 +61,46 @@
 			}			
         },//__BUILDER_HELPERS
 		
+        /**
+         * @private
+         * @see Alpaca.ControlField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "wysiwyg": {
+                        "title": "Editor options",
+                        "description": "Options that are supported by the <a href='https://github.com/akzhan/jwysiwyg'>jQuery WYSIWYG plugin</a>.",
+                        "type": "any"
+                    },
+                    "onDemand": {
+                        "title": "On Demand",
+                        "description": "If true, WYSIWYG editor will only be enabled when the field is hovered.",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @see Alpaca.ControlField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "wysiwyg": {
+                        "type": "any"
+                    },
+                    "onDemand": {
+                        "type": "checkbox",
+                        "rightLabel": "Make the editor on-demand?"
+                    }
+                }
+            });
+        },
+
 		/**
          * @see Alpaca.Fields.TextAreaField#getTitle
 		 */
@@ -67,7 +112,7 @@
          * @see Alpaca.Fields.TextAreaField#getDescription
 		 */
 		getDescription: function() {
-			return "Wysiwyd editor for multi-line text.";
+			return "Wysiwyg editor for multi-line text which is based on Akzhan Abdulin's <a href='https://github.com/akzhan/jwysiwyg'>jQuery WYSIWYG plugin</a>.";
 		},
 
 		/**

@@ -127,18 +127,85 @@
             </div>
                         <div class='grid_12 alpaca-example-case'>
                     <h3>Example 1: </h3>
+                    <h4>WYSIWYG editor with full list of buttons.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
 $(function() {
     $("#field1").alpaca({
-        "data": "Ice cream or ice-cream is a frozen dessert usually made from dairy products, such as milk and cream, and often combined with fruits or other ingredients and flavours.",
+        "data": "Ice cream is a <b>frozen</b> dessert usually made from "
+            + "<i>dairy products</i>,<p/> such as milk and cream, "
+            + "and often combined with fruits or other ingredients and flavors.",
         "options": {
             "type": "wysiwyg"
         }
     });
 });
                     </script>
+                    <h3>Example 2: </h3>
+                    <h4>WYSIWYG editor with selected list of buttons.</h4>
+                    <div id="field2">
+                    </div>
+                    <script type="text/javascript" id="field2-script">
+$(function() {
+    $("#field2").alpaca({
+        "data": "Ice cream is a <b>frozen</b> dessert usually made from "
+            + "<i>dairy products</i>,<p/> such as milk and cream, "
+            + "and often combined with fruits or other ingredients and flavors.",
+        "options": {
+            "type": "wysiwyg",
+            "wysiwyg" : {
+                "controls": {
+                    "html": { "visible": true },
+                    "createLink": { "visible": false },
+                    "unLink": { "visible": false },
+                    "h1": { "visible": false },
+                    "h2": { "visible": false },
+                    "h3": { "visible": false },
+                    "indent": { "visible": false },
+                    "insertHorizontalRule": { "visible": false },
+                    "insertImage": { "visible": false },
+                    "insertOrderedList": { "visible": false },
+                    "insertTable": { "visible": false },
+                    "insertUnorderedList": { "visible": false },
+                    "justifyCenter": { "visible": false },
+                    "justifyFull": { "visible": false },
+                    "justifyLeft": { "visible": false },
+                    "justifyRight": { "visible": false },
+                    "outdent": { "visible": false },
+                    "redo": { "visible": false },
+                    "removeFormat": { "visible": false },
+                    "subscript": { "visible": false },
+                    "superscript": { "visible": false },
+                    "undo": { "visible": false },
+                    "code": { "visible": false },
+                    "strikeThrough": { "visible": false }
+                }
+            }
+        }
+    });
+});
+                    </script>
+                            <h3>Example 3: </h3>
+                            <h4>WYSIWYG editor with on-demand option. Move your mouse over the textarea and see the difference it makes.</h4>
+                            <div id="field3">
+                            </div>
+                            <script type="text/javascript" id="field3-script">
+$(function() {
+    $("#field3").alpaca({
+        "data": "Ice cream is a <b>frozen</b> dessert usually made from "
+            + "<i>dairy products</i>,<p/> such as milk and cream, "
+            + "and often combined with fruits or other ingredients and flavors.",
+        "options": {
+            "type": "wysiwyg",
+            "onDemand": true,
+            "rows": 10,
+            "cols": 60
+        }
+    });
+});
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>
