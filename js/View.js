@@ -215,12 +215,17 @@
          * @returns {Any} configuration mapping to the given id
          */
         _getConfigVal : function (configVal, configId) {
+            console.log(configId + "-" + Alpaca.isArray(configId));
             if (Alpaca.isArray(configId)) {
+                console.log("Found array");
                 for (var i = 0; i < configId.length && !Alpaca.isEmpty(configVal); i++) {
                     configVal = configVal[configId[i]];
                 }
             } else {
-                configVal = configVal[configId];
+                console.log("Not an array "+configVal);
+                if (!Alpaca.isEmpty(configVal)) {
+                    configVal = configVal[configId];
+                }
             }
             return configVal;
         }

@@ -313,6 +313,15 @@ $(function() {
             }
         ]
     }, {
+        "title": "Preview",
+        "examples": [
+            {
+                "id":"preview",
+                "title":"Preview",
+                "link":"../../components/preview/preview-examples.html"
+            }
+        ]
+    }, {
         "title": "API",
         "examples": [
             {
