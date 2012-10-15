@@ -220,7 +220,9 @@
                     configVal = configVal[configId[i]];
                 }
             } else {
-                configVal = configVal[configId];
+                if (!Alpaca.isEmpty(configVal)) {
+                    configVal = configVal[configId];
+                }
             }
             return configVal;
         }
