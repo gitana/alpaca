@@ -176,10 +176,16 @@
             var _this = this;
             $.each($('.alpaca-form-button', this.container),function(k,v) {
                 $(v).mousedown(function() {
-                    var _this = this;
+                    var _this = $(this);
+                    _this.attr("button-pushed","true");
                     setTimeout(function() {
-                        _this.click();
+                        if (_this.attr("button-pushed") && _this.attr("button-pushed") == "true" ) {
+                            _this.click();
+                        }
                     }, 150);
+                });
+                $(v).click(function() {
+                    $(this).removeAttr("button-pushed");
                 });
                 _this.buttons[$(v).attr('data-key')] = $(v);
             })
