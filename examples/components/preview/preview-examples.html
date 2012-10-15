@@ -122,35 +122,56 @@
     </div>
     <div class='grid_12 alpaca-example-case'>
                     <h3>Example 1: </h3>
-					<h4>Example for pre-registered web display view.</h4>
+					<h4>This example uses the pre-registered VIEW_WEB_DISPLAY view to render the form in display mode.</h4>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
 $(function() {
     $("#field1").alpaca({
-        "data": "Alpaca Farm Offers Best Home Made Ice Cream!",
-        "render": function(field) {
-            field.render('VIEW_WEB_DISPLAY');
-        }
+        "data": {
+            "name":"Betty Icecream Lover",
+            "age":10,
+            "gender":"Female",
+            "member":true,
+            "icecream":"Chocolate",
+            "phone":"(123)456-7890",
+            "address":{
+                "street":[
+                    "100 Main Street",
+                    "Suite 200"
+                ],
+                "city":"Burlington",
+                "state":"MA",
+                "zip":"18210"
+            }
+        },
+        "view": "VIEW_WEB_DISPLAY"
     });
 });
                     </script>
                     <h3>Example 2: </h3>
-					<h4>Example for full template.</h4>
-                    <div id="field2">
+        <h4>Instead of rendering the display view field by field as in the previous example, Alpaca also lets us provide
+            a global preview template and feeds it with both the data and options parameters.</h4>
+        <h4>Alpaca uses <a href="https://github.com/jquery/jquery-tmpl">jQuery jquery-tmpl Plugin</a> as its templating
+            engine.</h4>
+
+        <div id="field2">
                     </div>
                     <script type="text/javascript" id="field2-script">
 $(function() {
     $("#field2").alpaca({
         "data": "Alpaca Farm Offers Best Home Made Ice Cream!",
+        "options": {
+            "helper": "Family Owned Business Since 1996!"
+        },
         "view": {
-            "globalTemplate": '<div>Our Tagline: ${data}</div>'
+            "globalTemplate": '<div><div>Our Tagline: ${data}</div><div>${options.helper}</div></div>'
         }
     });
 });
                     </script>
                     <h3>Example 3: </h3>
-					<h4>Example with <a href="./preview-data.json" target="_source">data</a> and  global <a href="./preview-template.html" target="_source">template</a> loaded through ajax call.</h4>
+					<h4>Example with <a href="./preview-data.json" target="_source">data</a> and <a href="./preview-template.html" target="_source">global preview template</a> loaded through ajax call.</h4>
                     <div id="field3">
                     </div>
                     <script type="text/javascript"id="field3-script">
