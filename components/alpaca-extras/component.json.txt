@@ -1,5 +1,5 @@
 {
-    "name": "alpaca",
+    "name": "alpaca-extras",
     "description": "Easy Web Forms for jQuery",
     "homepage": "http://www.alpacajs.org",
     "keywords": ["alpaca", "web", "forms", "javascript", "jquery", "html5"],
@@ -8,8 +8,9 @@
 		"type": "git", 
 		"url": "git://github.com/gitana/alpaca.git"
 	},
-    "version": "1.0.2-SNAPSHOT",
+    "version": "/** VERSION **/",
+    "main": ["alpaca-extras.js", "alpaca-extras.css"],
     "dependencies": {
-        "jquery": "1.8.2"
+        "jquery": "*"
     }
 }

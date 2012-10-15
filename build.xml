@@ -138,29 +138,32 @@
             </filelist>
         </concat>
 
-        <!-- wrap the Alpaca "core" as an AMD module -->
-        <antcall target="amd">
+        <!-- wrap the Alpaca "core" with UMD -->
+        <antcall target="umd">
             <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone-core.js"/>
             <param name="outputFile" value="${package.dir}/js/${appkey}-core.js"/>
-            <param name="name" value="alpaca" />
+            <param name="name" value="alpaca-core" />
+            <param name="variableName" value="Alpaca" />
             <param name="dependencies" value="['jquery']" />
         </antcall>
         <delete file="${prep.dir}/js/${appkey}-standalone-core.js"/>
 
-        <!-- wrap the Alpaca "extras" as an AMD module -->
-        <antcall target="amd">
+        <!-- wrap the Alpaca "extras" with UMD -->
+        <antcall target="umd">
             <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone-extras.js"/>
             <param name="outputFile" value="${package.dir}/js/${appkey}-extras.js"/>
             <param name="name" value="alpaca-extras" />
-            <param name="dependencies" value="['alpaca']" />
+            <param name="variableName" value="Alpaca" />
+            <param name="dependencies" value="['alpaca-core']" />
         </antcall>
         <delete file="${prep.dir}/js/${appkey}-standalone-extras.js"/>
 
-        <!-- wrap Alpaca as an AMD module -->
-        <antcall target="amd">
+        <!-- wrap Alpaca with UMD -->
+        <antcall target="umd">
             <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone.js"/>
             <param name="outputFile" value="${package.dir}/js/${appkey}.js"/>
             <param name="name" value="alpaca" />
+            <param name="variableName" value="Alpaca" />
             <param name="dependencies" value="['jquery']" />
         </antcall>
         <delete file="${prep.dir}/js/${appkey}-standalone.js"/>
@@ -390,6 +393,69 @@
         </copy>
     </target>
 
+	<!-- Packages up the Web Components -->
+    <target name="components" depends="package">
+		<mkdir dir="${package.dir}/components"/>
+		
+		<!-- Alpaca Core ("alpaca-core") -->
+		<mkdir dir="${package.dir}/components/alpaca-core"/>		
+		<copy todir="${package.dir}/components/alpaca-core">
+			<fileset dir="${package.dir}/js">
+				<include name="alpaca-core.js" />
+			</fileset>
+			<fileset dir="${package.dir}/css">
+				<include name="alpaca-core.css" />
+				<include name="images/**" />
+			</fileset>
+		</copy>
+        <copy file="${project.dir}/components/alpaca-core/component.json.txt" tofile="${package.dir}/components/alpaca-core/component.json" overwrite="true" filtering="true">
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="/** VERSION **/" to="${version}"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+
+		<!-- Alpaca Extras ("alpaca-extras") -->
+		<mkdir dir="${package.dir}/components/alpaca-extras"/>		
+		<copy todir="${package.dir}/components/alpaca-extras">
+			<fileset dir="${package.dir}/js">
+				<include name="alpaca-extras.js" />
+			</fileset>
+			<fileset dir="${package.dir}/css">
+				<include name="alpaca-extras.css" />
+				<include name="images/**" />
+			</fileset>
+		</copy>
+        <copy file="${project.dir}/components/alpaca-extras/component.json.txt" tofile="${package.dir}/components/alpaca-extras/component.json" overwrite="true" filtering="true">
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="/** VERSION **/" to="${version}"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+
+		<!-- Alpaca ("alpaca") -->
+		<mkdir dir="${package.dir}/components/alpaca"/>		
+		<copy todir="${package.dir}/components/alpaca">
+			<fileset dir="${package.dir}/js">
+				<include name="alpaca.js" />
+			</fileset>
+			<fileset dir="${package.dir}/css">
+				<include name="alpaca.css" />
+				<include name="images/**" />
+			</fileset>
+		</copy>
+        <copy file="${project.dir}/components/alpaca/component.json.txt" tofile="${package.dir}/components/alpaca/component.json" overwrite="true" filtering="true">
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="/** VERSION **/" to="${version}"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+
+    </target>
+
     <target name="clean">
         <delete dir="${build.dir}"/>
     </target>
@@ -422,26 +488,23 @@
         </copy>
     </target>
 
-    <target name="amd">
-
-        <!-- load the script -->
+    <target name="umd">
         <loadresource property="script">
             <file file="${scriptFile}"/>
         </loadresource>
-
-        <!-- create a temp file holding our AMD wrapped script -->
-        <copy file="${prep.dir}/lib/amd/wrapper.js" tofile="${scriptFile}.temp" overwrite="true" filtering="true">
+        <copy file="${prep.dir}/lib/umd/wrapper.js" tofile="${scriptFile}.temp" overwrite="true" filtering="true">
             <filterchain>
                 <tokenfilter>
                     <replacestring from="/** BUILD_INSERT_SCRIPT **/" to="${script}"/>
                     <replacestring from="/** BUILD_INSERT_NAME **/" to="${name}"/>
                     <replacestring from="/** BUILD_INSERT_DEPENDENCIES **/" to="${dependencies}"/>
+                    <replacestring from="/** BUILD_INSERT_VARIABLE_NAME **/" to="${variableName}"/>
                 </tokenfilter>
             </filterchain>
         </copy>
         <concat destfile="${outputFile}">
             <filelist dir="${prep.dir}">
-                <file name="license.txt"/>
+                <file name="js/license.js"/>
             </filelist>
             <filelist>
                 <file name="${scriptFile}.temp"/>
@@ -449,4 +512,5 @@
         </concat>
         <delete file="${scriptFile}.temp"/>
     </target>
+
 </project>

@@ -1,0 +1,16 @@
+{
+    "name": "alpaca",
+    "description": "Easy Web Forms for jQuery",
+    "homepage": "http://www.alpacajs.org",
+    "keywords": ["alpaca", "web", "forms", "javascript", "jquery", "html5"],
+    "author": "Gitana Software <info@cloudcms.com>",
+    "repository": {
+		"type": "git", 
+		"url": "git://github.com/gitana/alpaca.git"
+	},
+    "version": "/** VERSION **/",
+    "main": ["alpaca.js", "alpaca.css"],
+    "dependencies": {
+        "jquery": "*"
+    }
+}
