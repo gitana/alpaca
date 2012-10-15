@@ -198,12 +198,6 @@ $(function() {
                 form.registerSubmitHandler(function(e) {
                     return (renderedField.isValid(true));
                 });
-                form.buttons['submit'].mousedown(function() {
-                    var _this = this;
-                    setTimeout(function(){
-                        _this.click();
-                    },150);
-                });
             }
         }
     });

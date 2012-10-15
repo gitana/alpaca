@@ -174,8 +174,13 @@
             // populate the buttons as well
             this.buttons = {};
             var _this = this;
-            $.each($('input', this.container),function(k,v) {
-                $(v).addClass('alpaca-form-button');
+            $.each($('.alpaca-form-button', this.container),function(k,v) {
+                $(v).mousedown(function() {
+                    var _this = this;
+                    setTimeout(function() {
+                        _this.click();
+                    }, 150);
+                });
                 _this.buttons[$(v).attr('data-key')] = $(v);
             })
         },
