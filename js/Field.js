@@ -60,10 +60,10 @@
             if (!this.schema) {
                 this.schema = {};
             }
-            if (!this.options.label && this.schema.title) {
+            if (this.options.label == null && this.schema.title != null) {
                 this.options.label = this.schema.title;
             }
-            if (!this.options.helper && this.schema.description) {
+            if (this.options.helper == null && this.schema.description != null) {
                 this.options.helper = this.schema.description;
             }
 
@@ -169,7 +169,7 @@
                 }
             }
             // last try to see if we can populate the label from propertyId
-            if (!this.options.label && this.propertyId) {
+            if (this.options.label == null && this.propertyId) {
                 this.options.label = this.propertyId;
             }
             // set default name value if it is not provided through options.
