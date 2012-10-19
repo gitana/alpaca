@@ -11,6 +11,7 @@
     "version": "/** VERSION **/",
     "main": ["alpaca-core.js", "alpaca-core.css"],
     "dependencies": {
-        "jquery": "*"
+        "jquery": "*",
+        "jquery-tmpl": "*"
     }
 }

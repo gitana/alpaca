@@ -63,10 +63,43 @@
         </copy>
     </target>
 
+    <!-- Core files for Alpaca -->
+    <filelist id="alpaca-files-core">
+        <file name="Alpaca.js"/>
+        <file name="views/DefaultView.js"/>
+        <file name="views/ListView.js"/>
+        <file name="views/MobileView.js"/>
+        <file name="views/LayoutView.js"/>
+
+        <file name="View.js"/>
+
+        <file name="Field.js"/>
+        <file name="ControlField.js"/>
+        <file name="ContainerField.js"/>
+        <file name="Connector.js"/>
+        <file name="Form.js"/>
+
+        <!--Alpaca Core Fields-->
+        <file name="fields/basic/TextField.js"/>
+        <file name="fields/basic/TextAreaField.js"/>
+        <file name="fields/basic/CheckBoxField.js"/>
+        <file name="fields/basic/FileField.js"/>
+        <file name="fields/basic/ListField.js"/>
+        <file name="fields/basic/RadioField.js"/>
+        <file name="fields/basic/SelectField.js"/>
+        <file name="fields/basic/NumberField.js"/>
+        <file name="fields/basic/ArrayField.js"/>
+        <file name="fields/basic/ObjectField.js"/>
+        <file name="fields/basic/AnyField.js"/>
+        <!--End of Alpaca Core Fields-->
+
+        <file name="views/DefaultViewLanguagePacks.js"/>
+    </filelist>
+
     <target name="concat-js" description="Concat all javascript files" depends="prep">
 
-        <!-- Concatenate files for Alpaca Core -->
-        <concat destfile="${prep.dir}/js/${appkey}-standalone-core.js">
+        <!-- Standalone: "alpaca-core" -->
+        <concat destfile="${package.dir}/js/${appkey}-core.js">
             <filelist dir="${prep.dir}/lib">
                 <file name="base.js"/>
                 <file name="validator.js"/>
@@ -107,8 +140,11 @@
             </filelist>
         </concat>
 
-        <!-- Concatenate files for Alpaca Extras -->
-        <concat destfile="${prep.dir}/js/${appkey}-standalone-extras.js">
+        <!-- Standalone: "alpaca-extras" -->
+        <concat destfile="${package.dir}/js/${appkey}-extras.js">
+            <filelist dir="${prep.dir}/lib">
+                <file name="jquery-ui-latest.custom.min.js"/>
+            </filelist>
             <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
                 <file name="fields/advanced/DateField.js"/>
@@ -130,43 +166,13 @@
             </filelist>
         </concat>
 
-        <!-- Concatenate all files -->
-        <concat destfile="${prep.dir}/js/${appkey}-standalone.js">
-            <filelist dir="${prep.dir}/js">
-                <file name="${appkey}-standalone-core.js"/>
-                <file name="${appkey}-standalone-extras.js"/>
+        <!-- Standalone: "alpaca" -->
+        <concat destfile="${package.dir}/js/${appkey}.js">
+            <filelist dir="${package.dir}/js">
+                <file name="${appkey}-core.js"/>
+                <file name="${appkey}-extras.js"/>
             </filelist>
         </concat>
-
-        <!-- wrap the Alpaca "core" with UMD -->
-        <antcall target="umd">
-            <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone-core.js"/>
-            <param name="outputFile" value="${package.dir}/js/${appkey}-core.js"/>
-            <param name="name" value="alpaca-core" />
-            <param name="variableName" value="Alpaca" />
-            <param name="dependencies" value="['jquery']" />
-        </antcall>
-        <delete file="${prep.dir}/js/${appkey}-standalone-core.js"/>
-
-        <!-- wrap the Alpaca "extras" with UMD -->
-        <antcall target="umd">
-            <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone-extras.js"/>
-            <param name="outputFile" value="${package.dir}/js/${appkey}-extras.js"/>
-            <param name="name" value="alpaca-extras" />
-            <param name="variableName" value="Alpaca" />
-            <param name="dependencies" value="['alpaca-core']" />
-        </antcall>
-        <delete file="${prep.dir}/js/${appkey}-standalone-extras.js"/>
-
-        <!-- wrap Alpaca with UMD -->
-        <antcall target="umd">
-            <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone.js"/>
-            <param name="outputFile" value="${package.dir}/js/${appkey}.js"/>
-            <param name="name" value="alpaca" />
-            <param name="variableName" value="Alpaca" />
-            <param name="dependencies" value="['jquery']" />
-        </antcall>
-        <delete file="${prep.dir}/js/${appkey}-standalone.js"/>
 
         <!-- Tests -->
         <concat destfile="${package.dir}/js/${appkey}-tests.js">
@@ -223,6 +229,88 @@
                 <include name="jquery.wysiwyg/**/*"/>
             </fileset>
         </copy>
+
+
+        <!--                                                                                 -->
+        <!--                                                                                 -->
+        <!--                                   COMPONENTS                                    -->
+        <!--                                                                                 -->
+        <!--                                                                                 -->
+
+        <!-- NOTE: these get build into the prep directory only -->
+
+        <!-- Component: "alpaca-core" -->
+        <concat destfile="${prep.dir}/js/${appkey}-component-core.js">
+            <filelist dir="${prep.dir}/lib">
+                <file name="base.js"/>
+                <file name="validator.js"/>
+                <!--<file name="jquery.tmpl.js"/>-->
+                <file name="equiv_and_hoozit.js"/>
+                <file name="jquery.maskedinput-1.3.js"/>
+            </filelist>
+            <filelist dir="${prep.dir}/js">
+                <file name="Alpaca.js"/>
+                <file name="views/DefaultView.js"/>
+                <file name="views/ListView.js"/>
+                <file name="views/MobileView.js"/>
+                <file name="views/LayoutView.js"/>
+
+                <file name="View.js"/>
+
+                <file name="Field.js"/>
+                <file name="ControlField.js"/>
+                <file name="ContainerField.js"/>
+                <file name="Connector.js"/>
+                <file name="Form.js"/>
+
+                <!--Alpaca Core Fields-->
+                <file name="fields/basic/TextField.js"/>
+                <file name="fields/basic/TextAreaField.js"/>
+                <file name="fields/basic/CheckBoxField.js"/>
+                <file name="fields/basic/FileField.js"/>
+                <file name="fields/basic/ListField.js"/>
+                <file name="fields/basic/RadioField.js"/>
+                <file name="fields/basic/SelectField.js"/>
+                <file name="fields/basic/NumberField.js"/>
+                <file name="fields/basic/ArrayField.js"/>
+                <file name="fields/basic/ObjectField.js"/>
+                <file name="fields/basic/AnyField.js"/>
+                <!--End of Alpaca Core Fields-->
+
+                <file name="views/DefaultViewLanguagePacks.js"/>
+            </filelist>
+        </concat>
+
+        <!-- Component: "alpaca-extras" -->
+        <concat destfile="${prep.dir}/js/${appkey}-component-extras.js">
+            <filelist dir="${prep.dir}/js">
+                <file name="fields/advanced/AddressField.js"/>
+                <file name="fields/advanced/DateField.js"/>
+                <file name="fields/advanced/DatetimeField.js"/>
+                <file name="fields/advanced/EmailField.js"/>
+                <file name="fields/advanced/IntegerField.js"/>
+                <file name="fields/advanced/IPv4Field.js"/>
+                <file name="fields/advanced/JSONField.js"/>
+                <file name="fields/advanced/IntegerField.js"/>
+                <file name="fields/advanced/LowerCaseField.js"/>
+                <file name="fields/advanced/MapField.js"/>
+                <file name="fields/advanced/PasswordField.js"/>
+                <file name="fields/advanced/PersonalNameField.js"/>
+                <file name="fields/advanced/PhoneField.js"/>
+                <file name="fields/advanced/TagField.js"/>
+                <file name="fields/advanced/TimeField.js"/>
+                <file name="fields/advanced/UpperCaseField.js"/>
+                <file name="fields/advanced/WysiwygField.js"/>
+            </filelist>
+        </concat>
+
+        <!-- Component: "alpaca" -->
+        <concat destfile="${prep.dir}/js/${appkey}-component.js">
+            <filelist dir="${prep.dir}/js">
+                <file name="${appkey}-component-core.js"/>
+                <file name="${appkey}-component-extras.js"/>
+            </filelist>
+        </concat>
     </target>
 
     <target name="concat-css" description="Concat all css files" depends="prep">
@@ -372,7 +460,8 @@
         </copy>
     </target>
 
-    <target name="package" depends="prep-html">
+    <!-- Packages up the Distribution (and components) -->
+    <target name="package" depends="prep-html, components">
         <zip destfile="${prep.dir}/${appkey}.zip">
             <fileset dir="${package.dir}">
                 <exclude name="**/.DS_Store/*"/>
@@ -394,17 +483,14 @@
     </target>
 
 	<!-- Packages up the Web Components -->
-    <target name="components" depends="package">
+    <target name="components">
 		<mkdir dir="${package.dir}/components"/>
 		
 		<!-- Alpaca Core ("alpaca-core") -->
-		<mkdir dir="${package.dir}/components/alpaca-core"/>		
-		<copy todir="${package.dir}/components/alpaca-core">
-			<fileset dir="${package.dir}/js">
-				<include name="alpaca-core.js" />
-			</fileset>
-			<fileset dir="${package.dir}/css">
-				<include name="alpaca-core.css" />
+		<mkdir dir="${package.dir}/components/${appkey}-core"/>
+		<copy todir="${package.dir}/components/${appkey}-core">
+            <fileset dir="${package.dir}/css">
+				<include name="${appkey}-core.css" />
 				<include name="images/**" />
 			</fileset>
 		</copy>
@@ -415,14 +501,19 @@
                 </tokenfilter>
             </filterchain>
         </copy>
+        <antcall target="umd">
+            <param name="scriptFile" value="${prep.dir}/js/${appkey}-component-core.js"/>
+            <param name="outputFile" value="${package.dir}/components/alpaca-core/${appkey}-core.js"/>
+            <param name="name" value="alpaca-core" />
+            <param name="variableName" value="Alpaca" />
+            <param name="dependencies" value="['jquery', 'jquery-tmpl']" />
+        </antcall>
 
-		<!-- Alpaca Extras ("alpaca-extras") -->
-		<mkdir dir="${package.dir}/components/alpaca-extras"/>		
-		<copy todir="${package.dir}/components/alpaca-extras">
-			<fileset dir="${package.dir}/js">
-				<include name="alpaca-extras.js" />
-			</fileset>
-			<fileset dir="${package.dir}/css">
+
+        <!-- Alpaca Extras ("alpaca-extras") -->
+		<mkdir dir="${package.dir}/components/alpaca-extras"/>
+        <copy todir="${package.dir}/components/alpaca-extras">
+            <fileset dir="${package.dir}/css">
 				<include name="alpaca-extras.css" />
 				<include name="images/**" />
 			</fileset>
@@ -434,13 +525,17 @@
                 </tokenfilter>
             </filterchain>
         </copy>
+        <antcall target="umd">
+            <param name="scriptFile" value="${prep.dir}/js/${appkey}-component-extras.js"/>
+            <param name="outputFile" value="${package.dir}/components/alpaca-core/${appkey}-extras.js"/>
+            <param name="name" value="alpaca-extras" />
+            <param name="variableName" value="Alpaca" />
+            <param name="dependencies" value="['alpaca-core']" />
+        </antcall>
 
-		<!-- Alpaca ("alpaca") -->
-		<mkdir dir="${package.dir}/components/alpaca"/>		
-		<copy todir="${package.dir}/components/alpaca">
-			<fileset dir="${package.dir}/js">
-				<include name="alpaca.js" />
-			</fileset>
+        <!-- Alpaca ("alpaca") -->
+		<mkdir dir="${package.dir}/components/alpaca"/>
+        <copy todir="${package.dir}/components/alpaca">
 			<fileset dir="${package.dir}/css">
 				<include name="alpaca.css" />
 				<include name="images/**" />
@@ -453,6 +548,13 @@
                 </tokenfilter>
             </filterchain>
         </copy>
+        <antcall target="umd">
+            <param name="scriptFile" value="${prep.dir}/js/${appkey}-component.js"/>
+            <param name="outputFile" value="${package.dir}/components/alpaca/${appkey}.js"/>
+            <param name="name" value="alpaca" />
+            <param name="variableName" value="Alpaca" />
+            <param name="dependencies" value="['jquery', 'jquery-tmpl']" />
+        </antcall>
 
     </target>
 
@@ -512,5 +614,28 @@
         </concat>
         <delete file="${scriptFile}.temp"/>
     </target>
+
+    <target name="update-local-components" depends="package">
+
+        <!-- "alpaca" -->
+        <copy todir="/projects/components/alpaca">
+            <fileset dir="${package.dir}/components/alpaca"/>
+        </copy>
+        <copy todir="/projects/cloudcms-application-appstudio/public/components/alpaca">
+            <fileset dir="${package.dir}/components/alpaca"/>
+        </copy>
+
+        <!-- "alpaca-core" -->
+        <copy todir="/projects/components/alpaca-core">
+            <fileset dir="${package.dir}/components/alpaca-core"/>
+        </copy>
+
+        <!-- "alpaca-extras" -->
+        <copy todir="/projects/components/alpaca-extras">
+            <fileset dir="${package.dir}/components/alpaca-extras"/>
+        </copy>
+
+    </target>
+
 
 </project>
