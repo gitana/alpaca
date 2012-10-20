@@ -177,7 +177,7 @@ $(function() {
 					<h4>Select field with an onField event listener option that reacts to select change event.</h4>
                     <div id="field5">
                     </div>
-                    <script type="text/javascript"id="field5-script">
+                    <script type="text/javascript" id="field5-script">
 $(function() {
     $("#field5").alpaca({
         "data": "Coffee",
@@ -191,6 +191,33 @@ $(function() {
         },
         "schema": {
             "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+        }
+    });
+});
+                    </script>
+                    <h3>Example 6: </h3>
+					<h4>Multiple select field for array data.</h4>
+                    <div id="field6">
+                    </div>
+                    <script type="text/javascript" id="field6-script">
+$(function() {
+    $("#field6").alpaca({
+        "data": ["Vanilla", "Chocolate"],
+        "schema" : {
+            "type": "array",
+            "items": {
+                "title": "Ice Cream",
+                "type": "string",
+                "enum" : ["Vanilla", "Chocolate", "Strawberry", "Mint"],
+                "minItems": 2,
+                "maxItems": 3
+            }
+        },
+        "options": {
+            "label": "Ice cream",
+            "helper": "Guess my favorite ice cream?",
+            "type": "select",
+            "size": 5
         }
     });
 });

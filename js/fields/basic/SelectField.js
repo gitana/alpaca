@@ -56,11 +56,28 @@
         },
 
         /**
+         * @see Alpaca.ListField#getEnum
+         */
+        getEnum: function() {
+            if (this.schema) {
+                if (this.schema["enum"]) {
+                    return this.schema["enum"];
+                } else if (this.schema["type"] && this.schema["type"] == "array" && this.schema["items"] && this.schema["items"]["enum"]) {
+                    return this.schema["items"]["enum"];
+                }
+            }
+        },
+
+        /**
          * @private
          */
         _renderField: function(onSuccess) {
 
             var controlFieldTemplate;
+
+            if (this.schema["type"] && this.schema["type"] == "array") {
+                this.options.multiple = true;
+            }
 
             if (this.options.multiple && Alpaca.isArray(this.data)) {
                 controlFieldTemplate = this.view.getTemplate("controlFieldSelectMultiple");
@@ -95,6 +112,35 @@
         },
 
         /**
+         * Validate against enum property.
+         *
+         * @returns {Boolean} True if the element value is part of the enum list, false otherwise.
+         */
+        _validateEnum: function() {
+            if (this.schema["enum"]) {
+                var val = this.data;
+                if (!this.schema.required && Alpaca.isValEmpty(val)) {
+                    return true;
+                }
+                if (this.options.multiple) {
+                    var isValid = true;
+                    var _this = this;
+                    $.each(val, function(i,v) {
+                        if ($.inArray(v, _this.schema["enum"]) <= -1) {
+                            isValid = false;
+                            return false;
+                        }
+                    });
+                    return isValid;
+                } else {
+                    return ($.inArray(val, this.schema["enum"]) > -1);
+                }
+            } else {
+                return true;
+            }
+        },
+
+        /**
          * @see Alpaca.Field#onChange
          */
         onChange: function(e) {
@@ -107,6 +153,55 @@
                 _this.setValue(v);
                 _this.renderValidationState();
             });
+        },
+
+        /**
+         * Validates if number of items has been less than minItems.
+         * @returns {Boolean} true if number of items has been less than minItems
+         */
+        _validateMinItems: function() {
+            if (this.schema.items && this.schema.items.minItems) {
+                if ($(":selected",this.field).length < this.schema.items.minItems) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        /**
+         * Validates if number of items has been over maxItems.
+         * @returns {Boolean} true if number of items has been over maxItems
+         */
+        _validateMaxItems: function() {
+            if (this.schema.items && this.schema.items.maxItems) {
+                if ($(":selected",this.field).length > this.schema.items.maxItems) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        /**
+         * @see Alpaca.ContainerField#handleValidate
+         */
+        handleValidate: function() {
+            var baseStatus = this.base();
+
+            var valInfo = this.validation;
+
+            var status = this._validateMaxItems();
+            valInfo["tooManyItems"] = {
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("tooManyItems"), [this.schema.items.maxItems]),
+                "status": status
+            };
+
+            status = this._validateMinItems();
+            valInfo["notEnoughItems"] = {
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("notEnoughItems"), [this.schema.items.minItems]),
+                "status": status
+            };
+
+            return baseStatus && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"];
         },//__BUILDER_HELPERS
 
         /**
