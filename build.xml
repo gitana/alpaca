@@ -142,9 +142,11 @@
 
         <!-- Standalone: "alpaca-extras" -->
         <concat destfile="${package.dir}/js/${appkey}-extras.js">
+            <!--
             <filelist dir="${prep.dir}/lib">
                 <file name="jquery-ui-latest.custom.min.js"/>
             </filelist>
+            -->
             <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
                 <file name="fields/advanced/DateField.js"/>
