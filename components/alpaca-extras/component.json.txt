@@ -11,6 +11,7 @@
     "version": "/** VERSION **/",
     "main": ["alpaca-extras.js", "alpaca-extras.css"],
     "dependencies": {
-        "jquery": "*"
+        "alpaca-core": "*",
+        "jquery-ui": "*"
     }
 }
