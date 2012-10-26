@@ -33,7 +33,7 @@
             if (Alpaca.isObject(view) && Alpaca.isEmpty(this.viewObject.parent) && Alpaca.isEmpty(this.viewObject.id)/*this.viewObject.id != Alpaca.defaultView*/) {
                 this.viewObject.parent = Alpaca.defaultView;
                 if (this.getGlobalTemplate()) {
-                   this.viewObject.parent = 'VIEW::WEB_DISPLAY';
+                   this.viewObject.parent = 'VIEW_WEB_DISPLAY';
                 }
             }
 
