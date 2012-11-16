@@ -239,7 +239,59 @@ $(function() {
         }
     });
 });
-                    </script>					
+                    </script>
+                    <h3>Example 7: </h3>
+					<h4>Array field name.</h4>
+                    <div id="field7">
+                    </div>
+                    <script type="text/javascript" id="field7-script">
+$(function() {
+    $("#field7").alpaca({
+        "schema": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "enum": ["internal", "external"]
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
+            }
+        },
+        "options" : {
+            "toolbarSticky": true,
+            "renderForm": true,
+            "fields": {
+                "item": {
+                    "fields": {
+                        "type": {
+                            "label": "Type",
+                            "optionLabels": ["Internal", "External"]
+                        },
+                        "url": {
+                            "label": "URL"
+                        }
+                    }
+                }
+            },
+            "form": {
+                "attributes": {
+                    "action": "save",
+                    "method": "post",
+                    "enctype": "multipart/form-data"
+                },
+                "buttons": {
+                    "submit": {}
+                }
+            }
+        }
+    });
+});
+                    </script>
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

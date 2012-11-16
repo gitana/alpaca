@@ -182,10 +182,12 @@
                     }
                     if (lastSegment) {
                         this.options.name = this.parent.options.name + "_" + lastSegment;
+                        this.nameCalculated = true;
                     }
                 } else {
                     if (this.path) {
                        this.options.name = this.path.replace(/\//g,"").replace(/\[/g,"_").replace(/\]/g,"");
+                       this.nameCalculated = true;
                     }
                 }
             }
