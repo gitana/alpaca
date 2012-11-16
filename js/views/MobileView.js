@@ -30,21 +30,22 @@
             invalid: "Invalid Field"
         },
         "render": function(field, renderedCallback) {
-            if (field.container.attr('id').indexOf('-mobile-page') == -1) {
-                $('<div data-role="page" data-header="' + field.container.attr('data-header') + '" data-theme="' + field.container.attr('data-theme') + '" id="' + field.id + '-mobile-page" data-add-back-btn="true"><div data-role="header" data-theme="' + field.container.attr('data-theme') + '"><h1>' + field.container.attr('data-header') + '</h1></div></div>').hide().appendTo(field.container);
-                field.container = $('#' + field.id + '-mobile-page', field.container);
-            } else {
-                //field.container.empty();
-                //field.container.append('<h1>' + field.container.attr('data-header') + '</h1>');
-            }
-            field.render(renderedCallback);
-        },
+
+            field.render(function(field) {
+                refreshPageForField(field.getEl());
+                renderedCallback.call(field);
+            });
+
+        }
+        /*
+        ,
         "postRender": function(renderedControl) {
             renderedControl.container.page().show();
             renderedControl.container.find('.ui-select').find('.ui-btn').addClass('ui-corner-all');
             $('.ui-collapsible-heading', renderedControl.container).css('margin', '0');
             $('.ui-collapsible-heading > a', renderedControl.container).addClass('ui-corner-top ui-corner-bottom');
         }
+        */
     });
 
     Alpaca.registerView({
@@ -68,7 +69,7 @@
             controlFieldContainer: '<div data-replace="true">{{html this.html}}</div>',
             controlField: '{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"controlFieldLabel")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldContainer",true)}}{{/wrap}}{{html Alpaca.fieldTemplate(this,"controlFieldHelper")}}{{/wrap}}',
             // Templates for container fields
-            fieldSetOuterEl: '<fieldset data-role="collapsible" id="${id}" data-collapsed="{{if options.collapsed}}true{{else}}false{{/if}}">{{html this.html}}</fieldset>',
+            fieldSetOuterEl: '<fieldset id="${id}" data-collapsed="{{if options.collapsed}}true{{else}}false{{/if}}">{{html this.html}}</fieldset>',
             fieldSetMessage: '<div>* ${message}</div>',
             fieldSetLegend: '{{if options.label}}<legend for="${id}" class="{{if options.labelClass}}${options.labelClass}{{/if}}">${options.label}</legend>{{/if}}',
             fieldSetHelper: '{{if options.helper}}<h3 class="{{if options.helperClass}}${options.helperClass}{{/if}}">${options.helper}</h3>{{/if}}',
@@ -90,20 +91,35 @@
             invalid: "Invalid Field"
         },
         "render": function(field, renderedCallback) {
-            if (field.container.attr('id').indexOf('-mobile-page') == -1) {
-                $('<div data-role="page" data-header="' + field.container.attr('data-header') + '" data-theme="' + field.container.attr('data-theme') + '" id="' + field.id + '-mobile-page" data-add-back-btn="true"><div data-role="header" data-theme="' + field.container.attr('data-theme') + '"><h1>' + field.container.attr('data-header') + '</h1></div></div>').hide().appendTo(field.container);
-                field.container = $('#' + field.id + '-mobile-page', field.container);
-            } else {
-                //field.container.empty();
-                //field.container.append('<h1>' + field.container.attr('data-header') + '</h1>');
-            }
-            field.render(renderedCallback);
-        },
+
+            field.render(function(field) {
+                refreshPageForField(field.getEl());
+                renderedCallback.call(field);
+            });
+
+        }
+        /*
+        ,
         "postRender": function(renderedControl) {
             renderedControl.container.page().show();
             renderedControl.container.find('.ui-select').find('.ui-btn').addClass('ui-corner-all');
             $('.ui-collapsible-heading', renderedControl.container).css('margin', '0');
             $('.ui-collapsible-heading > a', renderedControl.container).addClass('ui-corner-top ui-corner-bottom');
         }
+        */
     });
+
+    var refreshPageForField = function(fieldEl)
+    {
+        // find the data-role="page" and refresh it
+        var el = fieldEl;
+        while (el != null && el.attr("data-role") !== "page")
+        {
+            el = el.parent();
+        }
+        if (el != null) {
+            $(el).trigger('pagecreate');
+        }
+    };
+
 })(jQuery);
