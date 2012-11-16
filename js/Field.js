@@ -173,16 +173,7 @@
                 this.options.label = this.propertyId;
             }
             // set default name value if it is not provided through options.
-            var nameRecalculate = this.options.nameRecalculate ? true : false;
-            var parent = this.parent;
-            while (!nameRecalculate && parent) {
-                if (parent && parent.options.nameRecalculate) {
-                    nameRecalculate = true;
-                }
-                parent = parent.parent;
-            }
-
-            if (!this.options.name || nameRecalculate) {
+            if (!this.options.name) {
                 // has path?
                 if (this.parent && this.parent.options.name && this.path) {
                     var lastSegment = this.path.substring(this.path.lastIndexOf('/')+1);
@@ -191,10 +182,12 @@
                     }
                     if (lastSegment) {
                         this.options.name = this.parent.options.name + "_" + lastSegment;
+                        this.nameCalculated = true;
                     }
                 } else {
                     if (this.path) {
                        this.options.name = this.path.replace(/\//g,"").replace(/\[/g,"_").replace(/\]/g,"");
+                       this.nameCalculated = true;
                     }
                 }
             }

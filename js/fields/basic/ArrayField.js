@@ -106,6 +106,65 @@
         },
 
         /**
+         * Recursive function for Update child field path and name.
+         */
+        updateChildrenPathAndName: function(parent) {
+            var _this = this;
+            if (parent.children) {
+                $.each(parent.children, function(i, v) {
+                    if (parent.prePath && Alpaca.startsWith(v.path,parent.prePath)) {
+                        v.prePath = v.path;
+                        v.path = v.path.replace(parent.prePath,parent.path);
+                    }
+                    // re-calculate name
+                    if (parent.preName && Alpaca.startsWith(v.options.name, parent.preName)) {
+                        v.preName = v.options.name;
+                        v.options.name = v.options.name.replace(parent.preName, parent.options.name);
+                        $(v.field).attr('name', v.options.name);
+                    }
+                    _this.updateChildrenPathAndName(v);
+                });
+            }
+        },
+
+        /**
+         * Update field path and name when an array item is removed, inserted or switched.
+         */
+        updatePathAndName: function() {
+            var _this = this;
+            if (this.children) {
+                $.each(this.children,function(i,v) {
+                    var idx = v.path.lastIndexOf('/');
+                    var lastSegment = v.path.substring(idx+1);
+                    if (lastSegment.indexOf("[") != -1 && lastSegment.indexOf("]") != -1) {
+                        lastSegment = lastSegment.substring(lastSegment.indexOf("[") + 1, lastSegment.indexOf("]"));
+                    }
+                    if (lastSegment != i) {
+                        v.prePath = v.path;
+                        v.path = v.path.substring(0, idx) + "/[" + i + "]";
+
+                    }
+                    // re-calculate name
+                    if (v.nameCalculated) {
+                        v.preName = v.options.name;
+                        if (v.parent && v.parent.options.name && v.path) {
+                            v.options.name = v.parent.options.name + "_" + i;
+                        } else {
+                            if (v.path) {
+                                v.options.name = v.path.replace(/\//g, "").replace(/\[/g, "_").replace(/\]/g, "");
+                            }
+                        }
+                        $(v.field).attr('name', v.options.name);
+                    }
+                    if (!v.prePath) {
+                        v.prePath = v.path;
+                    }
+                    _this.updateChildrenPathAndName(v);
+                });
+            }
+        },
+
+        /**
          * Moves child up or down
          * @param {String} fromId Id of the child to be moved.
          * @param {Boolean} isUp true if the moving is upwards
@@ -137,6 +196,7 @@
                             var tmp = _this.children[index];
                             _this.children[index] = _this.children[toIndex];
                             _this.children[toIndex] = tmp;
+                            _this.updatePathAndName();
                             return false;
                         }
                     }
@@ -157,6 +217,7 @@
                 $('#' + id + "-item-container", this.outerEl).remove();
                 this.renderValidationState();
                 this.updateToolbarItemsStatus();
+                this.updatePathAndName();
             }
         },
 
@@ -333,7 +394,6 @@
 
                 if (fieldOptions == null && _this.options && _this.options.fields && _this.options.fields["item"]) {
                     fieldOptions = _this.options.fields["item"];
-                    fieldOptions.nameRecalculate = true;
                 }
 
                 var containerElem = _this.renderItemContainer(insertAfterId);
@@ -350,6 +410,7 @@
                         fieldControl.parent = _this;
                         // setup item path
                         fieldControl.path = _this.path + "[" + index + "]";
+                        fieldControl.nameCalculated = true;
                         fieldControl.render();
                         containerElem.attr("id", fieldControl.getId() + "-item-container");
                         containerElem.attr("alpaca-id", fieldControl.getId());
@@ -367,6 +428,7 @@
                         _this.addChild(fieldControl, index);
                         _this.renderToolbar(containerElem);
                         _this.renderValidationState();
+                        _this.updatePathAndName();
                     }
                 });
 
