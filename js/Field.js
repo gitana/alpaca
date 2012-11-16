@@ -173,7 +173,16 @@
                 this.options.label = this.propertyId;
             }
             // set default name value if it is not provided through options.
-            if (!this.options.name) {
+            var nameRecalculate = this.options.nameRecalculate ? true : false;
+            var parent = this.parent;
+            while (!nameRecalculate && parent) {
+                if (parent && parent.options.nameRecalculate) {
+                    nameRecalculate = true;
+                }
+                parent = parent.parent;
+            }
+
+            if (!this.options.name || nameRecalculate) {
                 // has path?
                 if (this.parent && this.parent.options.name && this.path) {
                     var lastSegment = this.path.substring(this.path.lastIndexOf('/')+1);

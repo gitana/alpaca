@@ -333,6 +333,7 @@
 
                 if (fieldOptions == null && _this.options && _this.options.fields && _this.options.fields["item"]) {
                     fieldOptions = _this.options.fields["item"];
+                    fieldOptions.nameRecalculate = true;
                 }
 
                 var containerElem = _this.renderItemContainer(insertAfterId);
