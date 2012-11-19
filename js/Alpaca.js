@@ -1311,6 +1311,12 @@
          * @returns {Alpaca.Field} New field instance.
          */
         init : function(el, data, options, schema, view, callback, renderedCallback, connector, errorCallback) {
+
+            // if jQuery Mobile is present, fall back to VIEW_MOBILE_EDIT
+            if ($.mobile) {
+                this.defaultView = "VIEW_MOBILE_EDIT";
+            }
+
             var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);
             Alpaca.fieldInstances[field.getId()] = field;
 

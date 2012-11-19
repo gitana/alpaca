@@ -47,8 +47,10 @@
             this.view = new Alpaca.View(view, this);
 
             // things we can draw off the options
+            var noOptions = false;
             if (!this.options) {
                 this.options = {};
+                noOptions = true;
             }
             this.id = this.options.id;
             this.type = this.options.type;
@@ -57,15 +59,19 @@
             if (!this.id) {
                 this.id = Alpaca.generateId();
             }
+            var noSchema = false;
             if (!this.schema) {
                 this.schema = {};
+                noSchema = true;
             }
             if (this.options.label == null && this.schema.title != null) {
                 this.options.label = this.schema.title;
             }
+            /*
             if (this.options.helper == null && this.schema.description != null) {
                 this.options.helper = this.schema.description;
             }
+            */
 
             if (Alpaca.isEmpty(this.options.readonly) && !Alpaca.isEmpty(this.schema.readonly)) {
                 this.options.readonly = this.schema.readonly;

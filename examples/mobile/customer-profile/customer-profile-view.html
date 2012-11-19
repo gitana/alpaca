@@ -2,11 +2,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-        <script src="http://code.jquery.com/jquery-latest.min.js">
-        </script>
-        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.js">
-        </script>
+        <link rel="stylesheet" href="../../lib/jquerymobile/css/themes/default/jquery.mobile-1.2.0.css" />
+        <script src="../../lib/jquerymobile/js/jquery.js"></script>
+        <script src="../../lib/jquerymobile/js/jquery.mobile-1.2.0.js"></script>
 
         <!--Alpaca JavaScript-->
         <script type="text/javascript" src="../../../lib/base.js"></script>
@@ -71,19 +69,31 @@
         <!--Alpaca Mobile CSS-->
         <link type="text/css" href="../../../css/alpaca-mobile.css" rel="stylesheet"/>
         <!--End of Alpaca Mobile CSS-->
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#field1").alpaca({
+                    "data": "./customer-profile-data.json",
+                    "options": "./customer-profile-options.json",
+                    "schema": "./customer-profile-schema.json",
+                    "view": "VIEW_MOBILE_DISPLAY"
+                });
+            });
+        </script>
+
     </head>
     <body>
-        <div data-role="page" data-theme="b" id="field1" data-header="Customer Profile">
-            <script type="text/javascript" id="field1-script">
-                $(document).ready(function() {
-                    $("#field1").alpaca({
-                        "data": "./customer-profile-data.json",
-                        "options": "./customer-profile-options.json",
-                        "schema": "./customer-profile-schema.json",
-                        "view": "VIEW_MOBILE_DISPLAY"
-                    });
-                });
-            </script>
+        <div data-role="page" data-theme="c" data-content-theme="c">
+            <div data-role="header" data-position="fixed">
+                <button data-icon="back" data-transition="slide" data-rel="back">Back</button>
+                <h1>Customer Profile</h1>
+            </div>
+            <div data-role="content">
+                <div id="field1"></div>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h4>Copyright &copy; 2012 My Company | All Rights Reserved</h4>
+            </div>
         </div>
     </body>
 </html>

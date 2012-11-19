@@ -74,9 +74,10 @@
         /**
          * @private
          */
-        _renderField: function(onSuccess){            
+        _renderField: function(onSuccess){
+
             var controlFieldTemplate = this.view.getTemplate("controlFieldRadio");
-            
+
             if (controlFieldTemplate) {
                 this.field = $.tmpl(controlFieldTemplate, {
                     "id": this.getId(),
@@ -105,7 +106,7 @@
 			if (this.fieldContainer) {
 				this.fieldContainer.addClass('alpaca-controlfield-radio');
 			}
-        },        
+        },
         
         /**
          * @see Alpaca.ControlField#onClick

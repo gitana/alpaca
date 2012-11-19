@@ -1,17 +1,17 @@
 {
-    "title":"Customer Profile",
-    "description":"Alpaca Farm Ice Cream Customer Profile Form.",
-    "type":"object",
-    "properties":{
-        "name":{
-            "title":"Name",
-            "description":"Enter your full name.",
-            "type":"string"
+    "title": "Customer Profile",
+    "description": "Alpaca Farm Ice Cream Customer Profile Form.",
+    "type": "object",
+    "properties": {
+        "name": {
+            "title": "Name",
+            "description": "The name of the customer",
+            "type": "string"
         },
         "age":{
-            "title":"Age",
-            "description":"Enter your age.",
-            "type":"number"
+            "title": "Age",
+            "description": "The age of the customer",
+            "type": "number"
         },
         "gender":{
             "title":"Gender",
@@ -23,8 +23,7 @@
         },
         "member":{
             "title":"Member",
-            "type":"boolean",
-            "description":"Are you a memeber?"
+            "type":"boolean"
         },
         "icecream":{
             "title":"Favorite",

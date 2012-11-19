@@ -3,16 +3,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title>Alpaca on Mobile</title>
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-        <script src="http://code.jquery.com/jquery-latest.min.js">
-        </script>
-        <script language=javascript>
-            $(document).bind("mobileinit", function () {
-                 $.mobile.ajaxLinksEnabled = false;
-            });
-        </script>
-        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js">
-        </script>
+        <link rel="stylesheet" href="../lib/jquerymobile/css/themes/default/jquery.mobile-1.2.0.css" />
+        <script src="../lib/jquerymobile/js/jquery.js"></script>
+        <script src="../lib/jquerymobile/js/jquery.mobile-1.2.0.js"></script>
 
         <!--Alpaca JavaScript-->
         <script type="text/javascript" src="../../lib/base.js"></script>
@@ -79,12 +72,17 @@
         <!--End of Alpaca Mobile CSS-->
     </head>
     <body>
-        <div data-role="page" data-theme="b" id="nav">
+        <div data-role="page" data-theme="c" data-content-theme="c">
+            <div data-role="header" data-position="fixed">
+                <h1>Alpaca on Mobile</h1>
+            </div>
             <div style="text-align:center;">
-                <h1><img src="../css/images/alpaca.png" alt="Alpaca Mobile Forms"/></h1>
-                <h1>
+                <br/>
+                <img src="../css/images/alpaca.png" alt="Alpaca Mobile Forms"/>
+                <br/>
+                <h3>
                     Alpaca on Mobile
-                </h1>
+                </h3>
             </div>
             <div data-role="content">
                 <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
@@ -92,14 +90,14 @@
                         Forms
                     </li>
                     <li>
-                        <a href="customer-profile/customer-profile.html">Customer Profile (Edit)</a>
+                        <a href="customer-profile/customer-profile.html" data-ajax="false">Customer Profile (Edit)</a>
                     </li>
                     <li>
-                        <a href="customer-profile/customer-profile-view.html">Customer Profile (View)</a>
+                        <a href="customer-profile/customer-profile-view.html" data-ajax="false">Customer Profile (View)</a>
                     </li>
                 </ul>
             </div>
-            <div data-role="footer" data-theme="b">
+            <div data-role="footer" data-position="fixed">
 		        <h4>Copyright &copy; 2012 Gitana Software | All Rights Reserved</h4>
 	        </div>
         </div>
