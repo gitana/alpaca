@@ -205,7 +205,27 @@ $(function() {
     });
 });
                             </script>
-
+                            <h3>Example 4: </h3>
+                            <h4>WYSIWYG editor with validation.</h4>
+                            <div id="field4">
+                            </div>
+                            <script type="text/javascript" id="field4-script">
+$(function() {
+    $("#field4").alpaca({
+        "data": "picture",
+        "options": {
+            "type": "wysiwyg",
+            "onDemand": true,
+            "rows": 10,
+            "cols": 60
+        },
+        "schema": {
+            "type" : "string",
+            "enum": ["pen","eraser","book"]
+        }
+    });
+});
+                            </script>
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

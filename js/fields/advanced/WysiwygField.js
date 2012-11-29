@@ -55,10 +55,14 @@
                     this.field.wysiwyg(wysiwygOptions);
                     this.isWyswygLoaded = true;
                 }
+                this.outerEl.delegate(".wysiwyg", "mouseleave", function() {
+                    _this.data = _this.getValue();
+                    _this.renderValidationState();
+                });
 			}
 			if (this.fieldContainer) {
 				this.fieldContainer.addClass('alpaca-controlfield-wysiwyg');
-			}			
+			}
         },//__BUILDER_HELPERS
 		
         /**
