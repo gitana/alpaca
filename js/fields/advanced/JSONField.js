@@ -29,8 +29,8 @@
          * @see Alpaca.ContainerField#getValue
          */
         setValue: function(value) {
-            if (Alpaca.isObject(value)) {
-                value = JSON.stringify(value, null, ' ');
+            if (Alpaca.isObject(value) || typeof(value) == "object") {
+                value = JSON.stringify(value, null, 3);
             }
             this.base(value);
         },
@@ -83,7 +83,7 @@
             try {
                 var obj = JSON.parse(textValue);
                 // format the string as well
-                this.setValue(JSON.stringify(obj, null, ' '));
+                this.setValue(JSON.stringify(obj, null, 3));
                 return {
                     "status" : true
                 };
