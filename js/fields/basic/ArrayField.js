@@ -264,58 +264,60 @@
          * @param {Object} containerElem Toolbar container.
          */
         renderToolbar: function(containerElem) {
-            var _this = this;
-            var id = containerElem.attr('alpaca-id');
-            var fieldControl = this.childrenById[id];
-            var itemToolbarTemplate = this.view.getTemplate("arrayItemToolbar");
-            if (itemToolbarTemplate) {
-                var toolbarElem = $.tmpl(itemToolbarTemplate, {
-                    "id": id
-                });
-                if (toolbarElem.attr("id") == null) {
-                    toolbarElem.attr("id", id + "-item-toolbar");
-                }
-                // add actions to toolbar buttons
-                var addButton = $('.alpaca-fieldset-array-item-toolbar-add', toolbarElem);
-                if (_this.buttonBeautifier) {
-                    _this.buttonBeautifier.call(_this,addButton, _this.addIcon);
-                }
-                addButton.click(function() {
-                    var currentItemVal = fieldControl.getValue();
-                    var newContainerElem = _this.addItem(containerElem.index() + 1, null, Alpaca.isValEmpty(currentItemVal) ? null : fieldControl.getValue(), id);
-                    _this.enrichElements(newContainerElem);
-                    return false;
-                });
-                var removeButton = $('.alpaca-fieldset-array-item-toolbar-remove', toolbarElem);
-                if (_this.buttonBeautifier) {
-                    _this.buttonBeautifier.call(_this,removeButton, _this.removeIcon);
-                }
-                removeButton.click(function() {
-                    _this.removeItem(id);
-                });
-                var upButton = $('.alpaca-fieldset-array-item-toolbar-up', toolbarElem);
-                if (_this.buttonBeautifier) {
-                    _this.buttonBeautifier.call(_this,upButton, _this.upIcon);
-                }
-                upButton.click(function() {
-                    _this.moveItem(id, true);
-                });
-                var downButton = $('.alpaca-fieldset-array-item-toolbar-down', toolbarElem);
-                if (_this.buttonBeautifier) {
-                    _this.buttonBeautifier.call(_this,downButton, _this.downIcon);
-                }
-                downButton.click(function() {
-                    _this.moveItem(id, false);
-                });
-                if (this.options.toolbarSticky) {
-                    toolbarElem.prependTo(containerElem);
-                } else {
-                    toolbarElem.hide().prependTo(containerElem);
-                    containerElem.hover(function() {
-                        $('.alpaca-fieldset-array-item-toolbar', this).show();
-                    }, function() {
-                        $('.alpaca-fieldset-array-item-toolbar', this).hide();
+            if (!this.options.readonly) {
+                var _this = this;
+                var id = containerElem.attr('alpaca-id');
+                var fieldControl = this.childrenById[id];
+                var itemToolbarTemplate = this.view.getTemplate("arrayItemToolbar");
+                if (itemToolbarTemplate) {
+                    var toolbarElem = $.tmpl(itemToolbarTemplate, {
+                        "id": id
                     });
+                    if (toolbarElem.attr("id") == null) {
+                        toolbarElem.attr("id", id + "-item-toolbar");
+                    }
+                    // add actions to toolbar buttons
+                    var addButton = $('.alpaca-fieldset-array-item-toolbar-add', toolbarElem);
+                    if (_this.buttonBeautifier) {
+                        _this.buttonBeautifier.call(_this,addButton, _this.addIcon);
+                    }
+                    addButton.click(function() {
+                        var currentItemVal = fieldControl.getValue();
+                        var newContainerElem = _this.addItem(containerElem.index() + 1, null, Alpaca.isValEmpty(currentItemVal) ? null : fieldControl.getValue(), id);
+                        _this.enrichElements(newContainerElem);
+                        return false;
+                    });
+                    var removeButton = $('.alpaca-fieldset-array-item-toolbar-remove', toolbarElem);
+                    if (_this.buttonBeautifier) {
+                        _this.buttonBeautifier.call(_this,removeButton, _this.removeIcon);
+                    }
+                    removeButton.click(function() {
+                        _this.removeItem(id);
+                    });
+                    var upButton = $('.alpaca-fieldset-array-item-toolbar-up', toolbarElem);
+                    if (_this.buttonBeautifier) {
+                        _this.buttonBeautifier.call(_this,upButton, _this.upIcon);
+                    }
+                    upButton.click(function() {
+                        _this.moveItem(id, true);
+                    });
+                    var downButton = $('.alpaca-fieldset-array-item-toolbar-down', toolbarElem);
+                    if (_this.buttonBeautifier) {
+                        _this.buttonBeautifier.call(_this,downButton, _this.downIcon);
+                    }
+                    downButton.click(function() {
+                        _this.moveItem(id, false);
+                    });
+                    if (this.options.toolbarSticky) {
+                        toolbarElem.prependTo(containerElem);
+                    } else {
+                        toolbarElem.hide().prependTo(containerElem);
+                        containerElem.hover(function() {
+                            $('.alpaca-fieldset-array-item-toolbar', this).show();
+                        }, function() {
+                            $('.alpaca-fieldset-array-item-toolbar', this).hide();
+                        });
+                    }
                 }
             }
         },
