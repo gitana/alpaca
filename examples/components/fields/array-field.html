@@ -292,6 +292,138 @@ $(function() {
     });
 });
                     </script>
+                    <h3>Example 8: </h3>
+					<h4>Nested Array field name.</h4>
+                    <div id="field8">
+                    </div>
+                    <script type="text/javascript" id="field8-script">
+$(function() {
+    $("#field8").alpaca({
+        schema: {
+            "type": "object",
+            "readonly": false,
+            "properties": {
+                "propertyId": {
+                    "type": "string",
+                    "default": "id"
+                },
+                "title": {
+                    "type": "string",
+                    "required": true,
+                    "default": "title"
+                },
+                "subTitle": {
+                    "type": "string",
+                    "default": "subtitle"
+                },
+                "array_clips": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "guid": {
+                                "type": "string",
+                                "default": "guid"
+                            },
+                            "title": {
+                                "type": "string",
+                                "default": "title"
+                            },
+                            "array_clipMedias": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mediaUrl": {
+                                            "type": "string",
+                                            "format": "uri"
+                                        },
+                                        "duration": {
+                                            "type": "string",
+                                            "default": "duration"
+                                        },
+                                        "fileSize": {
+                                            "type": "number",
+                                            "default": 100
+                                        }
+                                    }
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+            }
+        },
+        "options": {
+            "renderForm":true,
+            "fields":{
+                "propertyId": {
+                    "label": "Property Id",
+                    "readonly": true,
+                    "hidden": true
+                },
+                "title": {
+                    "label": "Channel Title"
+                },
+                "subTitle": {
+                    "label": "Description"
+                },
+                "array_videoClips": {
+                    "label": "Clip Details",
+                    "toolbarSticky": true,
+                    "collapsed": true,
+                    "fields": {
+                        "item": {
+                            "fields": {
+                                "guid": {
+                                    "label": "Clip ID"
+                                },
+                                "title": {
+                                    "label": "Clip Title"
+                                },
+                                "array_videoClipMedias": {
+                                    "label": "Clip Medias",
+                                    "toolbarSticky": true,
+                                    "collapsed": true,
+                                    "fields": {
+                                        "item": {
+                                            "fields": {
+                                                "mediaUrl": {
+                                                    "label": "Media URL",
+                                                    "helper": "Sample URL: "
+                                                },
+                                                "duration": {
+                                                    "label": "Duration",
+                                                    "helper": "secs or mm:ss"
+                                                },
+                                                "fileSize": {
+                                                    "label": "File Size"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "form":{
+                "attributes":{
+                    "action":"save",
+                    "method":"post",
+                    "enctype":"multipart/form-data"
+                },
+                "buttons":{
+                    "submit":{}
+                }
+            }
+        }
+    });
+});
+                    </script>
                         </div>
                         <div class="clear height-fix"></div>
                     </div>
