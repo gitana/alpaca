@@ -117,10 +117,12 @@
                         v.path = v.path.replace(parent.prePath,parent.path);
                     }
                     // re-calculate name
-                    if (parent.preName && Alpaca.startsWith(v.options.name, parent.preName)) {
-                        v.preName = v.options.name;
-                        v.options.name = v.options.name.replace(parent.preName, parent.options.name);
-                        $(v.field).attr('name', v.options.name);
+                    if (parent.preName && Alpaca.startsWith(v.name, parent.preName)) {
+                        v.preName = v.name;
+                        v.name = v.name.replace(parent.preName, parent.name);
+                        if (v.field) {
+                            $(v.field).attr('name', v.name);
+                        }
                     }
                     _this.updateChildrenPathAndName(v);
                 });
@@ -146,15 +148,15 @@
                     }
                     // re-calculate name
                     if (v.nameCalculated) {
-                        v.preName = v.options.name;
-                        if (v.parent && v.parent.options.name && v.path) {
-                            v.options.name = v.parent.options.name + "_" + i;
+                        v.preName = v.name;
+                        if (v.parent && v.parent.name && v.path) {
+                            v.name = v.parent.name + "_" + i;
                         } else {
                             if (v.path) {
-                                v.options.name = v.path.replace(/\//g, "").replace(/\[/g, "_").replace(/\]/g, "");
+                                v.name = v.path.replace(/\//g, "").replace(/\[/g, "_").replace(/\]/g, "");
                             }
                         }
-                        $(v.field).attr('name', v.options.name);
+                        $(v.field).attr('name', v.name);
                     }
                     if (!v.prePath) {
                         v.prePath = v.path;

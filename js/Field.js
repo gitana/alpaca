@@ -178,21 +178,27 @@
             if (this.options.label == null && this.propertyId) {
                 this.options.label = this.propertyId;
             }
+
+            // make a copy of name field
+            if (this.options.name) {
+                this.name = this.options.name;
+            }
+
             // set default name value if it is not provided through options.
-            if (!this.options.name) {
+            if (!this.name) {
                 // has path?
-                if (this.parent && this.parent.options.name && this.path) {
+                if (this.parent && this.parent.name && this.path) {
                     var lastSegment = this.path.substring(this.path.lastIndexOf('/')+1);
                     if (lastSegment.indexOf("[") != -1 && lastSegment.indexOf("]") != -1) {
                         lastSegment = lastSegment.substring(lastSegment.indexOf("[") + 1, lastSegment.indexOf("]"));
                     }
                     if (lastSegment) {
-                        this.options.name = this.parent.options.name + "_" + lastSegment;
+                        this.name = this.parent.name + "_" + lastSegment;
                         this.nameCalculated = true;
                     }
                 } else {
                     if (this.path) {
-                       this.options.name = this.path.replace(/\//g,"").replace(/\[/g,"_").replace(/\]/g,"");
+                       this.name = this.path.replace(/\//g,"").replace(/\[/g,"_").replace(/\]/g,"");
                        this.nameCalculated = true;
                     }
                 }

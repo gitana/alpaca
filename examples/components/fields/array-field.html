@@ -307,16 +307,42 @@ $(function() {
                     "type": "string",
                     "default": "id"
                 },
+                "titleNodeRef": {
+                    "type": "string",
+                    "default": "titleNodeRef"
+                },
                 "title": {
                     "type": "string",
                     "required": true,
-                    "default": "title"
+                    "default": "channelName"
                 },
                 "subTitle": {
                     "type": "string",
                     "default": "subtitle"
                 },
-                "array_clips": {
+                "visitTheSiteUrl": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "alwaysDisplayNew": {
+                     "type":"boolean",
+                     "default": false
+                },
+                "genericShareKey": {
+                    "type": "string"
+                },
+                "genericShareValue": {
+                    "type": "string"
+                },
+                "trackingProperty": {
+                    "type": "string",
+                    "required": true
+                },
+                "bestBuyUrl": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "array_videoClips": {
                     "type": "array",
                     "items": {
                         "type": "object",
@@ -325,11 +351,51 @@ $(function() {
                                 "type": "string",
                                 "default": "guid"
                             },
+                            "clipNodeRef": {
+                                "type": "string",
+                                "default": "clipNodeRef"
+                            },
                             "title": {
                                 "type": "string",
                                 "default": "title"
                             },
-                            "array_clipMedias": {
+                            "twitterText": {
+                                "type": "string",
+                                "default": "twitterText"
+                            },
+                            "ageGateFlag": {
+                                 "type":"boolean",
+                                 "default": false
+                            },
+                            "isDefaultClip": {
+                                 "type":"boolean",
+                                 "default": false
+                            },
+                            "isPlayableOnPreviews": {
+                                 "type":"boolean",
+                                 "default": false
+                            },
+                            "isPlayableOnSite": {
+                                 "type":"boolean",
+                                 "default": false
+                            },
+                            "isShareable": {
+                                 "type":"boolean",
+                                 "default": false
+                            },
+                            "isPlayableOnMobileFlag": {
+                                 "type":"boolean",
+                                 "default": false
+                            },
+                            "clipShareImage": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "miniUrl": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "array_videoClipMedias": {
                                 "type": "array",
                                 "items": {
                                     "type": "object",
@@ -345,12 +411,22 @@ $(function() {
                                         "fileSize": {
                                             "type": "number",
                                             "default": 100
+                                        },
+                                        "mimetype": {
+                                            "type": "string",
+                                            "default": "mimetype"
+                                        },
+                                        "height": {
+                                            "type": "number",
+                                            "default": 0
+                                        },
+                                        "width": {
+                                            "type": "number",
+                                            "default": 0
                                         }
                                     }
                                 }
-
                             }
-
                         }
                     }
                 }
@@ -364,11 +440,37 @@ $(function() {
                     "readonly": true,
                     "hidden": true
                 },
+                "titleNodeRef": {
+                  "hidden": true
+                },
                 "title": {
                     "label": "Channel Title"
                 },
                 "subTitle": {
-                    "label": "Description"
+                  "label": "Description"
+                },
+                "visitTheSiteUrl": {
+                    "label": "Visit the Site URL"
+                },
+                "ageGateIdentifier": {
+                    "label": "Age Gate ID"
+                },
+                "alwaysDisplayNew": {
+                    "label": "",
+                    "rightLabel":"Always Display New"
+                },
+                "genericShareKey": {
+                    "label": "Generic Key"
+                },
+                "genericShareValue": {
+                    "label": "Generic Value"
+                },
+                "trackingProperty": {
+                    "label": "Tracking Property"
+                },
+                "bestBuyUrl": {
+                    "label": "Best Buy URL",
+                    "helper": "Sample URL: http://www.bestbuy.com/site/The+Smurfs+-+Blu-ray+3D/3968078.p?id=2284719&skuId=3968078"
                 },
                 "array_videoClips": {
                     "label": "Clip Details",
@@ -380,8 +482,45 @@ $(function() {
                                 "guid": {
                                     "label": "Clip ID"
                                 },
+                                "clipNodeRef": {
+                                    "hidden": false,
+                                    "readonly": true
+                                },
                                 "title": {
                                     "label": "Clip Title"
+                                },
+                                "twitterText": {
+                                    "label": "Twitter Text"
+                                },
+                                "ageGateFlag": {
+                                    "label": "",
+                                    "rightLabel":"AgeGate Flag"
+                                },
+                                "isDefaultClip": {
+                                    "label": "",
+                                    "rightLabel":"Set Clip as Default"
+                                },
+                                "isPlayableOnPreviews": {
+                                    "label": "Should this clip",
+                                    "rightLabel":"Appear on Previews & Clips?"
+                                },
+                                "isPlayableOnSite": {
+                                    "label": "",
+                                    "rightLabel":"Appear on this site?"
+                                },
+                                "isShareable": {
+                                    "label": "",
+                                    "rightLabel":"Be shareable?"
+                                },
+                                "isPlayableOnMobileFlag": {
+                                    "label": "",
+                                    "rightLabel":"Appear in mobile apps?"
+                                },
+                                "clipShareImage": {
+                                    "label": "Share Image"
+                                },
+                                "miniUrl": {
+                                    "label": "Main URL"
                                 },
                                 "array_videoClipMedias": {
                                     "label": "Clip Medias",
@@ -391,15 +530,24 @@ $(function() {
                                         "item": {
                                             "fields": {
                                                 "mediaUrl": {
-                                                    "label": "Media URL",
-                                                    "helper": "Sample URL: "
+                                                 "label": "Media URL",
+                                                  "helper": "Sample URL: http://flash.sonypictures.com/video/homevideo/totalrecall/TOTALRECALL_DIGITAL_800x448.mp4"
                                                 },
                                                 "duration": {
-                                                    "label": "Duration",
-                                                    "helper": "secs or mm:ss"
+                                                  "label": "Duration",
+                                                  "helper": "secs or mm:ss"
                                                 },
                                                 "fileSize": {
-                                                    "label": "File Size"
+                                                  "label": "File Size"
+                                                },
+                                                "mimetype": {
+                                                  "label": "Mime Type"
+                                                },
+                                                "height": {
+                                                  "label": "Height"
+                                                },
+                                                "width": {
+                                                  "label": "Width"
                                                 }
                                             }
                                         }
@@ -407,23 +555,22 @@ $(function() {
                                 }
                             }
                         }
+                      }
                     }
-                }
+                  },
+        "form":{
+            "attributes":{
+              "action":"save",
+              "method":"post",
+              "enctype":"multipart/form-data"
             },
-            "form":{
-                "attributes":{
-                    "action":"save",
-                    "method":"post",
-                    "enctype":"multipart/form-data"
-                },
-                "buttons":{
-                    "submit":{}
-                }
+            "buttons":{
+              "submit":{}
             }
+          }
         }
     });
-});
-                    </script>
+});                    </script>
                         </div>
                         <div class="clear height-fix"></div>
                     </div>
