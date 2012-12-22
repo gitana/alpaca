@@ -46,6 +46,7 @@
             if (this.controlFieldTemplate) {
                 this.field = $.tmpl(this.controlFieldTemplate, {
                     "id": this.getId(),
+                    "name": this.name,
                     "options": this.options
                 });
                 this.injectField(this.field);

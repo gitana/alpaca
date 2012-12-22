@@ -91,6 +91,7 @@
                     "options": this.options,
                     "required": this.schema.required,
                     "selectOptions": this.selectOptions,
+                    "name": this.name,
                     "data": this.data
                 });
                 this.injectField(this.field);
