@@ -67,11 +67,11 @@
             if (this.options.label == null && this.schema.title != null) {
                 this.options.label = this.schema.title;
             }
-            /*
+
             if (this.options.helper == null && this.schema.description != null) {
                 this.options.helper = this.schema.description;
             }
-            */
+
 
             if (Alpaca.isEmpty(this.options.readonly) && !Alpaca.isEmpty(this.schema.readonly)) {
                 this.options.readonly = this.schema.readonly;
@@ -591,8 +591,9 @@
                 if (this.validate()) {
                     this.getEl().addClass("alpaca-field-valid");
                 } else {
-                    this.getStyleInjection("error",this.getEl());
+                    //this.getStyleInjection("error",this.getEl());
                     if (!this.hideInitValidationError) {
+                        this.getStyleInjection("error",this.getEl());
                         this.getEl().addClass("alpaca-field-invalid");
                     } else {
                         this.getEl().addClass("alpaca-field-invalid-hidden");

@@ -270,7 +270,11 @@
             var itemToolbarTemplate = this.view.getTemplate("arrayItemToolbar");
             if (itemToolbarTemplate) {
                 var toolbarElem = $.tmpl(itemToolbarTemplate, {
-                    "id": id
+                    "id": id,
+                    "moveUpLabel": _this.options.moveUpLabel ? _this.options.moveUpLabel : "Move Up",
+                    "moveDownLabel": _this.options.moveDownLabel ? _this.options.moveDownLabel : "Move Down",
+                    "removeItemLabel": _this.options.removeItemLabel ? _this.options.removeItemLabel : "Remove Item",
+                    "addItemLabel": _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item"
                 });
                 if (toolbarElem.attr("id") == null) {
                     toolbarElem.attr("id", id + "-item-toolbar");
@@ -330,7 +334,8 @@
             var itemToolbarTemplate = this.view.getTemplate("arrayToolbar");
             if (itemToolbarTemplate) {
                 var toolbarElem = $.tmpl(itemToolbarTemplate, {
-                    "id": id
+                    "id": id,
+                    "addItemLabel": _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item"
                 });
                 if (toolbarElem.attr("id") == null) {
                     toolbarElem.attr("id", id + "-array-toolbar");
@@ -385,6 +390,20 @@
          * @param {String} insertAfterId Where the item will be inserted
          */
         addItem: function(index, fieldOptions, value, insertAfterId) {
+            this._addItem(index, fieldOptions, value, insertAfterId);
+        },
+
+        /**
+         * Internal method for adding an item.
+         *
+         * @param index
+         * @param fieldOptions
+         * @param value
+         * @param insertAfterId
+         * @return {*}
+         * @private
+         */
+        _addItem: function(index, fieldOptions, value, insertAfterId) {
             var _this = this;
             if (_this._validateEqualMaxItems()) {
                 var itemSchema;
@@ -705,8 +724,8 @@
     });
 
     Alpaca.registerTemplate("itemLabel", '{{if options.itemLabel}}<div class="alpaca-controlfield-label"><div>${options.itemLabel}{{if index}} <span class="alpaca-item-label-counter">${index}</span>{{/if}}</div></div>{{/if}}');
-    Alpaca.registerTemplate("arrayToolbar", '<span class="ui-widget ui-corner-all alpaca-fieldset-array-toolbar"><button class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">Add Item</button></span>');
-    Alpaca.registerTemplate("arrayItemToolbar", '<div class="ui-widget-header ui-corner-all alpaca-fieldset-array-item-toolbar"><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add">Add Item</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove">Remove Item</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up">Move Up</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down">Move Down</button></div>');
+    Alpaca.registerTemplate("arrayToolbar", '<span class="ui-widget ui-corner-all alpaca-fieldset-array-toolbar"><button class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">${addItemLabel}</button></span>');
+    Alpaca.registerTemplate("arrayItemToolbar", '<div class="ui-widget-header ui-corner-all alpaca-fieldset-array-item-toolbar"><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add">${addItemLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove">${removeItemLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up">${moveUpLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down">${moveDownLabel}</button></div>');
     Alpaca.registerMessages({
         "notEnoughItems": "The minimum number of items is {0}",
         "tooManyItems": "The maximum number of items is {0}",

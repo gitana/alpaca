@@ -40,6 +40,7 @@
             "downIcon" : "ui-icon-circle-arrow-s",
             "wizardPreIcon" : "ui-icon-triangle-1-w",
             "wizardNextIcon" : "ui-icon-triangle-1-e",
+            "wizardDoneIcon" : "ui-icon-triangle-1-e",
             "buttonBeautifier"  : function(button, iconClass, withText) {
                 button.addClass("ui-button ui-widget ui-state-default ui-corner-all");
                 if (withText) {
@@ -130,6 +131,7 @@
             "wizardNavBar" : '<div></div>',
             "wizardPreButton" : '<button>Back</button>',
             "wizardNextButton" : '<button>Next</button>',
+            "wizardDoneButton" : '<button>Done</button>',
             "wizardStatusBar" : '<ol id="${id}">{{each(i,v) titles}}<li id="stepDesc${i}"><div><strong><span>${v.title}</span>${v.description}</strong></div></li>{{/each}}</ol>'
         },
         "messages":

@@ -49,12 +49,16 @@
                 }
                 this.wizardPreIcon = "";
                 this.wizardNextIcon = "";
+                this.wizardDoneIcon= "";
                 if (this.view.style && Alpaca.styleInjections[this.view.style]) {
                     if (Alpaca.styleInjections[this.view.style]["wizardPreIcon"]) {
                         this.wizardPreIcon = Alpaca.styleInjections[this.view.style]["wizardPreIcon"];
                     }
                     if (Alpaca.styleInjections[this.view.style]["wizardNextIcon"]) {
                         this.wizardNextIcon = Alpaca.styleInjections[this.view.style]["wizardNextIcon"];
+                    }
+                    if (Alpaca.styleInjections[this.view.style]["wizardDoneIcon"]) {
+                        this.wizardDoneIcon = Alpaca.styleInjections[this.view.style]["wizardDoneIcon"];
                     }
                 }
             },
@@ -131,6 +135,11 @@
                 if (this.isTopLevel()) {
                     if (this.view) {
                         this.wizardConfigs = this.view.getWizard();
+                        if (this.wizardConfigs) {
+                            if (Alpaca.isUndefined(this.wizardConfigs.validation)) {
+                                this.wizardConfigs.validation = true;
+                            }
+                        }
                         var layoutTemplate = this.view.getLayout().template;
                         if (this.wizardConfigs && this.wizardConfigs.renderWizard) {
                             if (layoutTemplate) {
@@ -404,15 +413,16 @@
                     }
 
                     if (i == 0) {
-                        _this._createNextButton(i);
+                        _this._createNextButton(i, true);
                         _this._selectStep(i);
                     } else if (i == count - 1) {
                         $("#step" + i).hide();
                         _this._createPrevButton(i);
+                        _this._createDoneButton(i, true);
                     } else {
                         $("#step" + i).hide();
                         _this._createPrevButton(i);
-                        _this._createNextButton(i);
+                        _this._createNextButton(i, true);
                     }
                     //$("#step" + i + "-nav-bar").buttonset();
                 });
@@ -520,8 +530,9 @@
              * Creates an "prev" button.
              *
              * @param {Integer} i Step number.
+             * @param [boolean] whether to add a clear div at the end
              */
-            _createPrevButton: function(i) {
+            _createPrevButton: function(i, clear) {
                 var stepName = "step" + i;
                 var _this = this;
 
@@ -529,6 +540,7 @@
                 if (wizardPreButtonTemplate) {
                     var wizardPreButtonElement = $.tmpl(wizardPreButtonTemplate, {});
                     wizardPreButtonElement.attr("id", stepName + '-button-pre');
+                    wizardPreButtonElement.addClass("alpaca-wizard-button-pre");
                     if (_this.buttonBeautifier) {
                         _this.buttonBeautifier.call(_this, wizardPreButtonElement, this.wizardPreIcon,true );
                     }
@@ -539,6 +551,9 @@
                         return false;
                     });
                     $("#" + stepName + "-nav-bar").append(wizardPreButtonElement);
+                    if (clear) {
+                        $("#" + stepName + "-nav-bar").parent().append("<div style='clear:both'></div>");
+                    }
                 }
 
             },
@@ -547,8 +562,9 @@
              * Creates a "next" button.
              *
              * @param {Integer} i Step number.
+             * @param [boolean] whether to add a clear div at the end
              */
-            _createNextButton: function(i) {
+            _createNextButton: function(i, clear) {
                 var stepName = "step" + i;
                 var _this = this;
 
@@ -556,29 +572,83 @@
                 if (wizardNextButtonTemplate) {
                     var wizardNextButtonElement = $.tmpl(wizardNextButtonTemplate, {});
                     wizardNextButtonElement.attr("id", stepName + '-button-next');
+                    wizardNextButtonElement.addClass("alpaca-wizard-button-next");
                     if (_this.buttonBeautifier) {
                         _this.buttonBeautifier.call(_this, wizardNextButtonElement, this.wizardNextIcon,true );
                     }
-                    wizardNextButtonElement.click(function() {
-                        var valid = true;
+                    wizardNextButtonElement.click(function(stepCount) {
+                        return function() {
+                            var valid = true;
 
-                        if (_this.view && _this.wizardConfigs && _this.wizardConfigs.validation) {
-                            $.each(_this.stepBindings, function(propertyId, step) {
-                                if (step == i + 1 && valid) {
-                                    valid = _this.childrenByPropertyId[propertyId].validate();
+                            if (_this.view && _this.wizardConfigs && _this.wizardConfigs.validation) {
+
+                                // if auto-wizard, process bindings one at a time
+                                if (_this.stepBindings) {
+                                     $.each(_this.stepBindings, function(propertyId, step) {
+                                         if (step == stepCount + 1 && valid) {
+                                             valid = _this.childrenByPropertyId[propertyId].validate();
+                                             _this.childrenByPropertyId[propertyId].validate();
+                                         }
+                                     });
                                 }
-                            });
+                                else
+                                {
+                                    // walk through children for this step
+                                    for (var x = 0; x < _this.children.length; x++) {
+                                        if (valid) {
+                                            valid = _this.children[x].validate();
+                                            _this.children[x].renderValidationState();
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (valid) {
+                                $("#" + stepName).hide();
+                                $("#step" + (stepCount + 1)).show();
+                                _this._selectStep(stepCount + 1);
+                            }
+                            return false;
                         }
-                        if (valid) {
-                            $("#" + stepName).hide();
-                            $("#step" + (i + 1)).show();
-                            _this._selectStep(i + 1);
-                        }
-                        return false;
-                    });
+                    }(i));
 
                     $("#" + stepName + "-nav-bar").append(wizardNextButtonElement);
+                    if (clear) {
+                        $("#" + stepName + "-nav-bar").parent().append("<div style='clear:both'></div>");
+                    }
                 }
+            },
+
+            /**
+             * Creates a "done" button.
+             *
+             * @param {Integer} i Step number.
+             * @param [boolean] whether to add a clear div at the end
+             */
+            _createDoneButton: function(i, clear) {
+                var stepName = "step" + i;
+                var _this = this;
+
+                var wizardDoneButtonTemplate = this.view.getTemplate("wizardDoneButton");
+                if (wizardDoneButtonTemplate) {
+                    var wizardDoneButtonElement = $.tmpl(wizardDoneButtonTemplate, {});
+                    wizardDoneButtonElement.attr("id", stepName + '-button-done');
+                    wizardDoneButtonElement.addClass("alpaca-wizard-button-done");
+                    if (_this.buttonBeautifier) {
+                        _this.buttonBeautifier.call(_this, wizardDoneButtonElement, this.wizardDoneIcon,true );
+                    }
+                    wizardDoneButtonElement.click(function() {
+
+                        // TODO: finish the wizard
+
+                        return false;
+                    });
+                    $("#" + stepName + "-nav-bar").append(wizardDoneButtonElement);
+                    if (clear) {
+                        $("#" + stepName + "-nav-bar").parent().append("<div style='clear:both'></div>");
+                    }
+                }
+
             },
 
             /**
