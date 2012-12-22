@@ -34,7 +34,7 @@
             if (this.options.name) {
 				this.name = this.options.name;
 			}
-			else {
+			else if (!this.name) {
 				this.name = this.getId()+"-name";
 			}
         },

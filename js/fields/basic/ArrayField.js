@@ -117,10 +117,12 @@
                         v.path = v.path.replace(parent.prePath,parent.path);
                     }
                     // re-calculate name
-                    if (parent.preName && Alpaca.startsWith(v.options.name, parent.preName)) {
-                        v.preName = v.options.name;
-                        v.options.name = v.options.name.replace(parent.preName, parent.options.name);
-                        $(v.field).attr('name', v.options.name);
+                    if (parent.preName && Alpaca.startsWith(v.name, parent.preName)) {
+                        v.preName = v.name;
+                        v.name = v.name.replace(parent.preName, parent.name);
+                        if (v.field) {
+                            $(v.field).attr('name', v.name);
+                        }
                     }
                     _this.updateChildrenPathAndName(v);
                 });
@@ -264,62 +266,64 @@
          * @param {Object} containerElem Toolbar container.
          */
         renderToolbar: function(containerElem) {
-            var _this = this;
-            var id = containerElem.attr('alpaca-id');
-            var fieldControl = this.childrenById[id];
-            var itemToolbarTemplate = this.view.getTemplate("arrayItemToolbar");
-            if (itemToolbarTemplate) {
-                var toolbarElem = $.tmpl(itemToolbarTemplate, {
-                    "id": id,
-                    "moveUpLabel": _this.options.moveUpLabel ? _this.options.moveUpLabel : "Move Up",
-                    "moveDownLabel": _this.options.moveDownLabel ? _this.options.moveDownLabel : "Move Down",
-                    "removeItemLabel": _this.options.removeItemLabel ? _this.options.removeItemLabel : "Remove Item",
-                    "addItemLabel": _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item"
-                });
-                if (toolbarElem.attr("id") == null) {
-                    toolbarElem.attr("id", id + "-item-toolbar");
-                }
-                // add actions to toolbar buttons
-                var addButton = $('.alpaca-fieldset-array-item-toolbar-add', toolbarElem);
-                if (_this.buttonBeautifier) {
-                    _this.buttonBeautifier.call(_this,addButton, _this.addIcon);
-                }
-                addButton.click(function() {
-                    var currentItemVal = fieldControl.getValue();
-                    var newContainerElem = _this.addItem(containerElem.index() + 1, null, Alpaca.isValEmpty(currentItemVal) ? null : fieldControl.getValue(), id);
-                    _this.enrichElements(newContainerElem);
-                    return false;
-                });
-                var removeButton = $('.alpaca-fieldset-array-item-toolbar-remove', toolbarElem);
-                if (_this.buttonBeautifier) {
-                    _this.buttonBeautifier.call(_this,removeButton, _this.removeIcon);
-                }
-                removeButton.click(function() {
-                    _this.removeItem(id);
-                });
-                var upButton = $('.alpaca-fieldset-array-item-toolbar-up', toolbarElem);
-                if (_this.buttonBeautifier) {
-                    _this.buttonBeautifier.call(_this,upButton, _this.upIcon);
-                }
-                upButton.click(function() {
-                    _this.moveItem(id, true);
-                });
-                var downButton = $('.alpaca-fieldset-array-item-toolbar-down', toolbarElem);
-                if (_this.buttonBeautifier) {
-                    _this.buttonBeautifier.call(_this,downButton, _this.downIcon);
-                }
-                downButton.click(function() {
-                    _this.moveItem(id, false);
-                });
-                if (this.options.toolbarSticky) {
-                    toolbarElem.prependTo(containerElem);
-                } else {
-                    toolbarElem.hide().prependTo(containerElem);
-                    containerElem.hover(function() {
-                        $('.alpaca-fieldset-array-item-toolbar', this).show();
-                    }, function() {
-                        $('.alpaca-fieldset-array-item-toolbar', this).hide();
+            if (!this.options.readonly) {
+                var _this = this;
+                var id = containerElem.attr('alpaca-id');
+                var fieldControl = this.childrenById[id];
+                var itemToolbarTemplate = this.view.getTemplate("arrayItemToolbar");
+                if (itemToolbarTemplate) {
+                    var toolbarElem = $.tmpl(itemToolbarTemplate, {
+                        "id": id,
+                        "moveUpLabel": _this.options.moveUpLabel ? _this.options.moveUpLabel : "Move Up",
+                        "moveDownLabel": _this.options.moveDownLabel ? _this.options.moveDownLabel : "Move Down",
+                        "removeItemLabel": _this.options.removeItemLabel ? _this.options.removeItemLabel : "Remove Item",
+                        "addItemLabel": _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item"
                     });
+                    if (toolbarElem.attr("id") == null) {
+                        toolbarElem.attr("id", id + "-item-toolbar");
+                    }
+                    // add actions to toolbar buttons
+                    var addButton = $('.alpaca-fieldset-array-item-toolbar-add', toolbarElem);
+                    if (_this.buttonBeautifier) {
+                        _this.buttonBeautifier.call(_this,addButton, _this.addIcon);
+                    }
+                    addButton.click(function() {
+                        var currentItemVal = fieldControl.getValue();
+                        var newContainerElem = _this.addItem(containerElem.index() + 1, null, Alpaca.isValEmpty(currentItemVal) ? null : fieldControl.getValue(), id);
+                        _this.enrichElements(newContainerElem);
+                        return false;
+                    });
+                    var removeButton = $('.alpaca-fieldset-array-item-toolbar-remove', toolbarElem);
+                    if (_this.buttonBeautifier) {
+                        _this.buttonBeautifier.call(_this,removeButton, _this.removeIcon);
+                    }
+                    removeButton.click(function() {
+                        _this.removeItem(id);
+                    });
+                    var upButton = $('.alpaca-fieldset-array-item-toolbar-up', toolbarElem);
+                    if (_this.buttonBeautifier) {
+                        _this.buttonBeautifier.call(_this,upButton, _this.upIcon);
+                    }
+                    upButton.click(function() {
+                        _this.moveItem(id, true);
+                    });
+                    var downButton = $('.alpaca-fieldset-array-item-toolbar-down', toolbarElem);
+                    if (_this.buttonBeautifier) {
+                        _this.buttonBeautifier.call(_this,downButton, _this.downIcon);
+                    }
+                    downButton.click(function() {
+                        _this.moveItem(id, false);
+                    });
+                    if (this.options.toolbarSticky) {
+                        toolbarElem.prependTo(containerElem);
+                    } else {
+                        toolbarElem.hide().prependTo(containerElem);
+                        containerElem.hover(function() {
+                            $('.alpaca-fieldset-array-item-toolbar', this).show();
+                        }, function() {
+                            $('.alpaca-fieldset-array-item-toolbar', this).hide();
+                        });
+                    }
                 }
             }
         },
@@ -334,8 +338,7 @@
             var itemToolbarTemplate = this.view.getTemplate("arrayToolbar");
             if (itemToolbarTemplate) {
                 var toolbarElem = $.tmpl(itemToolbarTemplate, {
-                    "id": id,
-                    "addItemLabel": _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item"
+                    "id": id
                 });
                 if (toolbarElem.attr("id") == null) {
                     toolbarElem.attr("id", id + "-array-toolbar");
@@ -390,20 +393,6 @@
          * @param {String} insertAfterId Where the item will be inserted
          */
         addItem: function(index, fieldOptions, value, insertAfterId) {
-            this._addItem(index, fieldOptions, value, insertAfterId);
-        },
-
-        /**
-         * Internal method for adding an item.
-         *
-         * @param index
-         * @param fieldOptions
-         * @param value
-         * @param insertAfterId
-         * @return {*}
-         * @private
-         */
-        _addItem: function(index, fieldOptions, value, insertAfterId) {
             var _this = this;
             if (_this._validateEqualMaxItems()) {
                 var itemSchema;
@@ -724,8 +713,8 @@
     });
 
     Alpaca.registerTemplate("itemLabel", '{{if options.itemLabel}}<div class="alpaca-controlfield-label"><div>${options.itemLabel}{{if index}} <span class="alpaca-item-label-counter">${index}</span>{{/if}}</div></div>{{/if}}');
-    Alpaca.registerTemplate("arrayToolbar", '<span class="ui-widget ui-corner-all alpaca-fieldset-array-toolbar"><button class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">${addItemLabel}</button></span>');
-    Alpaca.registerTemplate("arrayItemToolbar", '<div class="ui-widget-header ui-corner-all alpaca-fieldset-array-item-toolbar"><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add">${addItemLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove">${removeItemLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up">${moveUpLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down">${moveDownLabel}</button></div>');
+    Alpaca.registerTemplate("arrayToolbar", '<span class="ui-widget ui-corner-all alpaca-fieldset-array-toolbar"><button class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">Add Item</button></span>');
+    Alpaca.registerTemplate("arrayItemToolbar", '<div class="ui-widget-header ui-corner-all alpaca-fieldset-array-item-toolbar"><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add">Add Item</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove">Remove Item</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up">Move Up</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down">Move Down</button></div>');
     Alpaca.registerMessages({
         "notEnoughItems": "The minimum number of items is {0}",
         "tooManyItems": "The maximum number of items is {0}",

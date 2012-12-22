@@ -292,6 +292,90 @@ $(function() {
     });
 });
                     </script>
+                    <h3>Example 8: </h3>
+					<h4>Nested Array field name.</h4>
+                    <div id="field8">
+                    </div>
+                    <script type="text/javascript" id="field8-script">
+$(function() {
+    $("#field8").alpaca({
+        schema: {
+            "type": "object",
+            "readonly": false,
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "required": true,
+                    "default": "channelName"
+                },
+                "array_videoClips": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "array_videoClipMedias": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mediaUrl": {
+                                            "type": "string",
+                                            "format": "uri"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "options": {
+            "renderForm":true,
+            "fields":{
+                "title": {
+                    "label": "Channel Title"
+                },
+                "array_videoClips": {
+                    "label": "Clip Details",
+                    "toolbarSticky": true,
+                    "collapsed": true,
+                    "fields": {
+                        "item": {
+                            "fields": {
+                                "array_videoClipMedias": {
+                                    "label": "Clip Medias",
+                                    "toolbarSticky": true,
+                                    "collapsed": true,
+                                    "fields": {
+                                        "item": {
+                                            "fields": {
+                                                "mediaUrl": {
+                                                 "label": "Media URL",
+                                                  "helper": "Sample URL"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                      }
+                    }
+                  },
+        "form":{
+            "attributes":{
+              "action":"save",
+              "method":"post",
+              "enctype":"multipart/form-data"
+            },
+            "buttons":{
+              "submit":{}
+            }
+          }
+        }
+    });
+});                    </script>
                         </div>
                         <div class="clear height-fix"></div>
                     </div>
