@@ -25,6 +25,7 @@
             "options": {
                 "label": "Ice Cream",
                 "helper": "Your favorite ice cream?",
+                "placeholder": "Enter an Ice Cream flavor",
                 "size": 30
             },
             "schema": {
@@ -32,11 +33,12 @@
                 "maxLength": 8
             },
             "postRender": function (renderedField) {
-                expect(10);
+                expect(11);
                 var inputElem = $('#text-2 input:text');
                 ok(inputElem.length, 'Text input field generated.');
                 equal(inputElem.val(), 'Mint Chocolate', 'Input field value populated correctly.');
-                equal(inputElem.attr('size'), 30, 'Input field size set.');
+                equal(inputElem.attr('size'), "30", 'Input field size set.');
+                equal(inputElem.attr('placeholder'), "Enter an Ice Cream flavor", 'Input field placeholder set.');
                 var labelElem = $('#text-2 .alpaca-controlfield-label>div');
                 ok(labelElem.length, 'Input field label generated.');
                 equal(labelElem.text(), 'Ice Cream', 'Label text populated correctly.');
@@ -54,13 +56,14 @@
     });
 
     // Test case 3 : Text field with data, schema, options and custom view.
-    test("Text field with data, schema and options", function() {
+    test("Text field with data, schema, options and custom view", function() {
         stop();
         $("#text-3").alpaca({
             "data": "Mint",
             "options": {
                 "label": "Ice Cream",
                 "helper": "Your favorite ice cream?",
+                "placeholder": "Enter an Ice Cream flavor",
                 "size": 30
             },
             "schema": {
@@ -77,11 +80,12 @@
                 }
             },
             "postRender": function (renderedField) {
-                expect(11);
+                expect(12);
                 var inputElem = $('#text-3 input:text');
                 ok(inputElem.length, 'Text input field generated.');
                 equal(inputElem.val(), 'Mint', 'Input field value populated correctly.');
-                equal(inputElem.attr('size'), 30, 'Input field size set.');
+                equal(inputElem.attr('size'), "30", 'Input field size set.');
+                equal(inputElem.attr('placeholder'), "Enter an Ice Cream flavor", 'Input field placeholder set.');
                 var labelElem = $('#text-3 .alpaca-controlfield-label>div');
                 ok(labelElem.length, 'Input field label generated.');
                 equal(labelElem.text(), 'Ice Cream', 'Label value populated correctly.');
