@@ -256,6 +256,11 @@
                         "title": "Mask Expression",
                         "description": "Expression for the field mask. Field masking will be enabled if not empty.",
                         "type": "string"
+                    },
+                    "placeholder": {
+                        "title": "Field Placeholder",
+                        "description": "Field placeholder.",
+                        "type": "string"
                     }
                 }
             });
