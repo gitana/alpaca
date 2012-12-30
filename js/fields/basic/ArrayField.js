@@ -394,6 +394,20 @@
          * @param {String} insertAfterId Where the item will be inserted
          */
         addItem: function(index, fieldOptions, value, insertAfterId) {
+            return this.addItem(index, fieldOptions, value, insertAfterId);
+        },
+
+        /**
+         * Workhorse method for addItem.
+         *
+         * @param index
+         * @param fieldOptions
+         * @param value
+         * @param insertAfterId
+         * @return {*}
+         * @private
+         */
+        _addItem: function(index, fieldOptions, value, insertAfterId) {
             var _this = this;
             if (_this._validateEqualMaxItems()) {
                 var itemSchema;
