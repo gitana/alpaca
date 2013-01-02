@@ -394,7 +394,7 @@
          * @param {String} insertAfterId Where the item will be inserted
          */
         addItem: function(index, fieldOptions, value, insertAfterId) {
-            return this.addItem(index, fieldOptions, value, insertAfterId);
+            return this._addItem(index, fieldOptions, value, insertAfterId);
         },
 
         /**
