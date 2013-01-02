@@ -148,15 +148,15 @@
                     }
                     // re-calculate name
                     if (v.nameCalculated) {
-                        v.preName = v.options.name;
-                        if (v.parent && v.parent.options.name && v.path) {
-                            v.options.name = v.parent.options.name + "_" + i;
+                        v.preName = v.name;
+                        if (v.parent && v.parent.name && v.path) {
+                            v.name = v.parent.name + "_" + i;
                         } else {
                             if (v.path) {
-                                v.options.name = v.path.replace(/\//g, "").replace(/\[/g, "_").replace(/\]/g, "");
+                                v.name = v.path.replace(/\//g, "").replace(/\[/g, "_").replace(/\]/g, "");
                             }
                         }
-                        $(v.field).attr('name', v.options.name);
+                        $(v.field).attr('name', v.name);
                     }
                     if (!v.prePath) {
                         v.prePath = v.path;
