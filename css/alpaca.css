@@ -781,9 +781,10 @@ fieldset.alpaca-view-web-edit-yaml .ui-button-icon-only .ui-button-text, .ui-but
 	padding: 2px;
 }
 
+/*
 fieldset.alpaca-view-web-edit-list legend {
-    /* to make chrome not wrapping text */
+    // to make chrome not wrapping text 
     font-size: 1.01em
-}
+}*/
 
 /* END styles for the view VIEW_WEB_EDIT_YAML */
