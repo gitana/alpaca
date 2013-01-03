@@ -13,7 +13,7 @@
         "legendStyle": "link",
         "templates": {
             // Templates for control fields
-            "controlFieldOuterEl": '<span class="alpaca-view-web-edit-yaml"{{if options.helper}} title="${options.helper}"{{/if}}>{{html this.html}}</span>',
+            "controlFieldOuterEl": '<span class="alpaca-view-web-edit-yaml" title="${options.helper}">{{html this.html}}</span>',
             "controlFieldMessage": '<div><span class="ui-icon ui-icon-alert"></span><span class="alpaca-controlfield-message-text">${message}</span></div>',
             "controlFieldLabel": '{{if options.label}}<label for="${id}" class="{{if options.labelClass}}${options.labelClass}{{/if}}">${options.label}</label>{{/if}}',
             "controlFieldHelper": '<span style="display:none" />',
