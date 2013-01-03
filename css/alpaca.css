@@ -684,17 +684,22 @@ fieldset.alpaca-view-web-edit-yaml legend.alpaca-fieldset-legend span {
     display: none;
 }
 
+/* make the fonts the right size */
+fieldset.alpaca-view-web-edit-yaml legend.alpaca-fieldset-legend {
+	font-size: 1em;
+}
+
 fieldset.alpaca-view-web-edit-yaml.fieldset-collapsed {
     border: none;
     margin: 1px 1px 1px 1px;
 }
 
 fieldset.alpaca-view-web-edit-yaml legend.alpaca-fieldset-legend.legend-expanded:after {
-    content: url("down.png");
+    content: url("../css/images/down.png");
     padding-left: 5px;
 }
 fieldset.alpaca-view-web-edit-yaml legend.alpaca-fieldset-legend.legend-collapsed:after {
-    content: url("left.png");
+    content: url("../css/images/left.png");
     padding-left: 5px;
 }
 
@@ -713,9 +718,6 @@ fieldset.alpaca-view-web-edit-yaml {
     font-family: courier;
     padding-right: 1em;
     padding-top: 0px;
-    /*border-left: none;
-    border-bottom: none;
-    border-right: none;*/
 }
 
 fieldset.alpaca-view-web-edit-yaml div.alpaca-controlfield-checkbox {

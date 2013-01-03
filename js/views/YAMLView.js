@@ -13,10 +13,10 @@
         "legendStyle": "link",
         "templates": {
             // Templates for control fields
-            "controlFieldOuterEl": '<span class="alpaca-view-web-edit-yaml">{{html this.html}}</span>',
+            "controlFieldOuterEl": '<span class="alpaca-view-web-edit-yaml"{{if options.helper}} title="${options.helper}"{{/if}}>{{html this.html}}</span>',
             "controlFieldMessage": '<div><span class="ui-icon ui-icon-alert"></span><span class="alpaca-controlfield-message-text">${message}</span></div>',
             "controlFieldLabel": '{{if options.label}}<label for="${id}" class="{{if options.labelClass}}${options.labelClass}{{/if}}">${options.label}</label>{{/if}}',
-            "controlFieldHelper": '{{if options.helper}}<div class="{{if options.helperClass}}${options.helperClass}{{/if}}"><span class="ui-icon ui-icon-info"></span><span class="alpaca-controlfield-helper-text">${options.helper}</span></div>{{/if}}',
+            "controlFieldHelper": '<span style="display:none" />',
             "controlFieldContainer": '<div>{{html this.html}}</div>',
             "controlField": '{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"controlFieldLabel")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldContainer",true)}}{{html Alpaca.fieldTemplate(this,"controlFieldHelper")}}{{/wrap}}{{/wrap}}',
             // Templates for container fields
