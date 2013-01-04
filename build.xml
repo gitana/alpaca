@@ -356,6 +356,12 @@
         </concat>
     </target>
 
+    <target name="test" description="Compile the javascript and css" depends="concat-js,concat-css">
+        <copy todir="${package.dir}/css/images">
+            <fileset dir="${prep.dir}/css/images" includes="**/*"/>
+        </copy>
+    </target>
+
     <target name="compress" description="Compress the javascript and css" depends="concat-js,concat-css">
         <echo>Compressing Javascript...</echo>
         <apply executable="java" parallel="false" dest="${build.dir}/package">
