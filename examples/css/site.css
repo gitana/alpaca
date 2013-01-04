@@ -19,7 +19,8 @@ body {
 
 h1, h2, h3, h4, h5, h6, .btn, nav, label {
     /*font-family: Mentone-SemiBold, 'Mentone SemiBold', 'Trebuchet MS', sans-serif;*/
-	font-weight: 200 !important;
+	font-weight: 400 !important;
+    /*text-shadow: 1px 1px #222 !important;*/
 }
 
 h2 {
@@ -31,10 +32,11 @@ h1 img {
 }
 
 h1 span {
-	font-size: 32px;
+	font-size: 28px;
     padding-left: 40px;
     vertical-align: middle;
-	font-weight: 200 !important;
+	font-weight: 600 !important;
+    text-shadow: 2px 2px #222 !important;
 }
 
 p {
@@ -42,6 +44,7 @@ p {
 	font-size: 18px;
 	color: #222;;
 	font-weight: 200 !important;
+    text-shadow: 1px 1px #eee;
 }
 
 h2 a {
@@ -60,6 +63,7 @@ pre ol.linenums {
 .copyright {
     text-align: center;
     margin: 10px 0;
+    margin-top: 30px !important;
 }
 
 div.step:not(:first-child)
@@ -107,14 +111,15 @@ div.step > p, div.step > pre, div.step > div {
 }
 
 .resource-bar {
-    color: #b2b2b2;
 }
 
 .resource-bar a {
     text-decoration: none;
-    color: #b2b2b2;
+    color: #bbb;
 	padding-right: 15px;
 	padding-left: 15px;
+    text-shadow: 1px 1px #222 !important;
+    font-weight: 200;
 }
 
 .resource-bar a:hover {
@@ -137,7 +142,8 @@ img.resource-icon {
     border-radius: 5px 5px 5px 5px;
     margin-bottom: 10px;
     margin-top: 25px;
-    background-color: #313131;
+    /*background-color: #313131;*/
+    background-color: #2A2C35;
     clear: both;
 }
 
@@ -146,6 +152,8 @@ img.resource-icon {
     border-radius: 5px 5px 0 0;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
     margin-right: 4px;
+    padding-left: 10px;
+    color: #eee;
 }
 
 .widget-title h2 {
@@ -171,7 +179,7 @@ img.resource-icon {
 header {
     /**background-color:#121212;**/
 	background-color: #333;
-    color: #fff;
+    color: #eee;
     width: 100%;
     /**height: 140px;**/
 	height: 175px;
@@ -369,4 +377,33 @@ textarea.sample-code {
 /* Embedded youtube videos */
 .embedded-youtube {
     text-align: center;
+}
+
+header
+{
+    background: url(images/header-background.png) 0 0 repeat-x !important;
+}
+
+header > div
+{
+    background: url(images/rays-big.png) !important;
+    height: 100%;
+}
+
+.widget-body H3
+{
+    color: #444 !important;
+    text-shadow: 1px 1px #eee !important;
+    font-weight: 300 !important;
+}
+
+.embedded-youtube IFRAME
+{
+    border: 1px black solid;
+}
+
+.loading
+{
+    color: white !important;
+    text-shadow: 0px 0px !important;
 }
