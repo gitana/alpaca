@@ -472,14 +472,17 @@
 
         /**
          * Registers a view.
+         * 
+         * If a view with the same ID exists, overload it.
          *
          * @param {Object} view View to be registered.
+         * @returns {String} new view id
          */
         registerView: function(view) {
-            var type = view.id;
-            if (!Alpaca.isEmpty(type) && this.isValidViewId(type)) {
-                if (this.views[type]) {
-                    var oldView = this.views[type];
+            var id = view.id;
+            if (!Alpaca.isEmpty(id) && this.isValidViewId(id)) {
+                if (this.views[id]) {
+                    var oldView = this.views[id];
                     if (view.description) {
                         oldView["description"] = view.description;
                     }
@@ -502,7 +505,7 @@
                         Alpaca.merge(oldView.messages, view.messages);
                     }
                 } else {
-                    this.views[type] = view;
+                    this.views[id] = view;
                 }
 
                 // Compile Top-Level Templates
@@ -532,7 +535,7 @@
             } else {
                 alert("Invalid View ID (must starts with " + this.viewIdPrefix + ")");
             }
-            return type;
+            return id;
         },
 
         /**
