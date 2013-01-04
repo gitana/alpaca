@@ -100,6 +100,9 @@
 
         <!-- Standalone: "alpaca-core" -->
         <concat destfile="${package.dir}/js/${appkey}-core.js">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>	
             <filelist dir="${prep.dir}/lib">
                 <file name="base.js"/>
                 <file name="validator.js"/>
@@ -142,6 +145,9 @@
 
         <!-- Standalone: "alpaca-extras" -->
         <concat destfile="${package.dir}/js/${appkey}-extras.js">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>		
             <!--
             <filelist dir="${prep.dir}/lib">
                 <file name="jquery-ui-latest.custom.min.js"/>
@@ -243,6 +249,9 @@
 
         <!-- Component: "alpaca-core" -->
         <concat destfile="${prep.dir}/js/${appkey}-component-core.js">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>		
             <filelist dir="${prep.dir}/lib">
                 <file name="base.js"/>
                 <file name="validator.js"/>
@@ -285,6 +294,9 @@
 
         <!-- Component: "alpaca-extras" -->
         <concat destfile="${prep.dir}/js/${appkey}-component-extras.js">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>	
             <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
                 <file name="fields/advanced/DateField.js"/>
@@ -608,7 +620,7 @@
         </copy>
         <concat destfile="${outputFile}">
             <filelist dir="${prep.dir}">
-                <file name="js/license.js"/>
+                <file name="license.txt"/>
             </filelist>
             <filelist>
                 <file name="${scriptFile}.temp"/>
