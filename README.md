@@ -14,8 +14,9 @@ We've collected videos, tutorials, API documentation and much more to help you g
 
 ### Discussion Board
 
-If you have a question about Alpaca, please visit the Alpaca Forums at http://www.cloudcms.org/forums/categories/alpaca.  This
-is a place where we encourage the community and developer community to get together to support one another in their Alpaca-related
+If you have a question about Alpaca, please visit the [Alpaca Forums](http://www.cloudcms.org/forums/categories/alpaca).
+
+This is a place where we encourage the community and developer community to get together to support one another in their Alpaca-related
 projects.
 
 ### Authors
