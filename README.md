@@ -8,8 +8,9 @@ Alpaca is an open-source, community-led project licensed under Apache 2.0.
 
 ### Project Home Page
 
-For information about the Alpaca Project, visit its home page at http://www.alpacajs.org.  We've collected videos, tutorials,
-API documentation and much more to help you get started.
+For information about the Alpaca Project, visit its home page at http://www.alpacajs.org.
+
+We've collected videos, tutorials, API documentation and much more to help you get started.
 
 ### Discussion Board
 
@@ -19,9 +20,10 @@ projects.
 
 ### Authors
 
-* @drq
-* @uzquiano
++ [@drq](http://github.com/drq)
++ [@uzquiano](http://github.com/uzquiano)
++ [@cloudcms](http://github.com/cloudcms)
 
 Thanks for assistance and contributions:
 
-* @Maethorin
++ [@Maethorin](http://github.com/Maethorin)
