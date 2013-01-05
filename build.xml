@@ -58,6 +58,7 @@
                 <include name="index.html"/>
                 <include name="resources.html"/>
                 <include name="tutorials.html"/>
+                <include name="consulting.html"/>
                 <include name="license.txt"/>
             </fileset>
         </copy>
@@ -434,12 +435,14 @@
             <fileset dir="${prep.dir}" includes="index.html"/>
             <fileset dir="${prep.dir}" includes="resources.html"/>
             <fileset dir="${prep.dir}" includes="tutorials.html"/>
+            <fileset dir="${prep.dir}" includes="consulting.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca CSS--&gt;(.*?)&lt;!--End of Alpaca CSS--&gt;"
                        replace='&lt;link type="text\/css" href="css/${appkey}.min.css" rel="stylesheet" /&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="index.html"/>
             <fileset dir="${prep.dir}" includes="resources.html"/>
             <fileset dir="${prep.dir}" includes="tutorials.html"/>
+            <fileset dir="${prep.dir}" includes="consulting.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca JavaScript--&gt;(.*?)&lt;!--End of Alpaca JavaScript--&gt;"
                        replace='&lt;script type="text\/javascript" src="../js/${appkey}.min.js"&gt;&lt;/script&gt;' flags="gs">
@@ -467,6 +470,7 @@
                 <include name="index.html"/>
                 <include name="resources.html"/>
                 <include name="tutorials.html"/>
+                <include name="consulting.html"/>
             </fileset>
         </copy>
         <copy todir="${package.dir}/css/images">
