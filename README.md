@@ -6,12 +6,22 @@ Alpaca is built around JSON-Schema for expression of the form object model, type
 
 Alpaca is an open-source, community-led project licensed under Apache 2.0.
 
-### Resources
+### Project Home Page
 
-* Home http://www.alpacajs.org/
+For information about the Alpaca Project, visit its home page at http://www.alpacajs.org.  We've collected videos, tutorials,
+API documentation and much more to help you get started.
 
-* JavaScript docs http://www.alpacajs.org/js-doc/allclasses.html
+### Discussion Board
 
-### Maintainers
-* Yong Qu     drq@cloudcms.com
-* Michael Uzquiano     uzi@cloudcms.com
+If you have a question about Alpaca, please visit the Alpaca Forums at http://www.cloudcms.org/forums/categories/alpaca.  This
+is a place where we encourage the community and developer community to get together to support one another in their Alpaca-related
+projects.
+
+### Authors
+
+* @drq
+* @uzquiano
+
+Thanks for assistance and contributions:
+
+* @Maethorin
