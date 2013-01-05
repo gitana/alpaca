@@ -609,7 +609,7 @@
                 var afterStatus = this.isValid();
 
                 // Allow for the message to change
-                if (this.options.showMessages && !this.hideInitValidationError) {
+                if (this.options.showMessages /*&& !this.hideInitValidationError*/) {
                     if (!this.initializing) {
                         var messages = [];
                         for (var messageId in this.validation) {
