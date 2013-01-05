@@ -93,6 +93,14 @@
     <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
+    <script>
+        $.fn.center = function () {
+            this.css("position","absolute");
+            this.css("top", ($(window).height() - this.height()) / 2+$(window).scrollTop() + "px");
+            this.css("left", ( $(window).width() - this.width() ) / 2+$(window).scrollLeft() + "px");
+            return this;
+        };
+    </script>
 </head>
 <body>
     <header>
@@ -150,6 +158,7 @@
     </footer>
 
     <script>
+
         $(document).ready(function() {
 
             $("#contactus").alpaca({
@@ -250,7 +259,7 @@
             };
 
             jQuery.blockUI(config);
-            jQuery('.blockUI').center(true);
+            jQuery('.blockUI.blockMsg').center(true);
         };
 
         var getParameterByName = function(name)
