@@ -438,8 +438,8 @@ legend.alpaca-fieldset-legend {
     margin-right: 4px;
 }
 
-.alpaca-form-buttons-container input:hover {
-    background-color: #FFFFCC;
+.alpaca-form-buttons-container input.alpaca-form-button:hover {
+    background: #FFFFCC;
 }
 
 /**
