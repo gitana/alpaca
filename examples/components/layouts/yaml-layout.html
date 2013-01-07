@@ -1,20 +1,74 @@
 <html>
 <head>
+    <meta charset="utf-8">
     <script type="text/javascript" src="../../../lib/jquery-latest.min.js"></script>
     <script type="text/javascript" src="../../../js/alpaca.js"></script>
     <script type="text/javascript" src="http://nodeca.github.com/js-yaml/js/js-yaml.js"></script>
     <script type="text/javascript" src="http://raw.github.com/jeffsu/json2yaml/master/src/json2yaml.js"></script>
     <link type="text/css" href="../../../css/alpaca.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.8.0/build/cssreset/reset-min.css&amp;3.8.0/build/cssfonts/fonts-min.css&amp;3.8.0/build/cssbase/base-min.css">
+    <script src="http://yui.yahooapis.com/3.8.0/build/yui/yui-min.js"></script>
+    <title>YAML view example</title>
 </head>
-<body>
-    <div id="form1"></div>
-    <div id="data1"></div>
+<body class="yui3-skin-sam">
+<!-- styles for the modalTextArea -->
+<style type="text/css">
+.yui3-panel {
+    outline: none;
+}
+.yui3-panel-content .yui3-widget-hd {
+    font-weight: bold;
+}
+.yui3-panel-content .yui3-widget-bd {
+    padding: 15px;
+}
+.yui3-panel-content label {
+    margin-right: 30px;
+}
+.yui3-panel-content fieldset {
+    border: none;
+    padding: 0;
+}
+.yui3-panel-content input[type="text"] {
+    border: none;
+    border: 1px solid #ccc;
+    padding: 3px 7px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: 100%;
+    width: 200px;
+}
+
+
+</style>
+
+
+<!-- div for modal textarea -->
+<div id="modalTextAreaPanelContent" style="display: none;">
+    <div class="yui3-widget-bd">
+        <form>
+            <fieldset>
+                <p>
+		    <textarea id="modalTextAreaPanelYAML"></textarea>
+                </p>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+
+<!--alapaca divs -->
+<div id="form1"></div>
+<div id="data1"></div>
      
     <script type="text/javascript">
 
     var doStuff = function(id) {
 		var obj = Alpaca.fieldInstances[id];
-		alert(json2yaml(obj.getValue()));
+		yaml = doModalTextArea('edit YAML', json2yaml(obj.getValue()), function(yaml) {obj.setValue(jsyaml.load(yaml))});
+		//alert(json2yaml(obj.getValue()));
     };
 
     $(function() {
@@ -115,6 +169,64 @@
     });
     </script>
 
+<script type="text/javascript">
+var panel;
+var doOk;
+
+var doModalTextArea = function(title, data, processText) {
+	YUI().use('panel', function (Y) {
+       		panel.setStdModContent(Y.WidgetStdMod.HEADER, title);
+		Y.one('#modalTextAreaPanelContent')._node.style.display = "";
+		Y.one('#modalTextAreaPanelYAML')._node.value = data;
+		panel.show();
+		doOK = function() {
+			yaml = Y.one('#modalTextAreaPanelYAML')._node.value;
+			processText(yaml);
+		};
+	});
+}
+
+YUI().use('panel', function (Y) {
+
+    // Create the main modal form.
+    panel = new Y.Panel({
+        srcNode      : '#modalTextAreaPanelContent',
+        headerContent: 'Edit YAML',
+        width        : 250,
+        zIndex       : 5,
+        centered     : true,
+        modal        : true,
+        visible      : false,
+        render       : true,
+        plugins      : [Y.Plugin.Drag]
+    });
+
+    panel.addButton({
+        value  : 'OK',
+        section: Y.WidgetStdMod.FOOTER,
+        action : function (e) {
+            e.preventDefault();
+            doOK();
+	    panel.hide();
+        }
+    });
+
+    panel.addButton({
+        value  : 'Cancel',
+        section: Y.WidgetStdMod.FOOTER,
+        action : function (e) {
+            e.preventDefault();
+	    panel.hide();
+        }
+    });
+
+});
+
+
+</script>
+
 </body>
 </html>
+
+
 

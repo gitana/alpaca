@@ -737,10 +737,6 @@ fieldset.alpaca-view-web-edit-yaml input, select, label {
     font-family: courier;
 }
 
-span.alpaca-view-web-edit-yaml label.alpaca-controlfield-label:after {
-    content: ":";
-}
-
 span.alpaca-view-web-edit-yaml .alpaca-controlfield-label {
     width: 175px;
     padding-top: 3px;
