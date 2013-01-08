@@ -84,7 +84,7 @@
                 if (data.length > i) {
                     childField.setValue(data[i]);
 		} else {
-		    
+		    this.removeItem(childField.id); //remove child items if there are more children than in data
                 }
             }
 
