@@ -665,10 +665,6 @@ li.alpaca-fieldset-itemcontainer-list-view-top {
 }
 
 
-
-
-
-
 /* BEGIN styles for the view VIEW_WEB_EDIT_YAML */
 
 fieldset.alpaca-view-web-edit-yaml.alpaca-fieldset {
@@ -778,14 +774,6 @@ fieldset.alpaca-view-web-edit-yaml div.alpaca-fieldset-array-item-toolbar {
 
 fieldset.alpaca-view-web-edit-yaml .ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text {
 	padding: 2px;
-}
-
-/* the extra button */
-fieldset.alpaca-view-web-edit-yaml button.alpaca-yaml-extra-button {
-    position: absolute;
-    z-index: 99999;
-    right: 15px;
-    top: 5px;
 }
 
 /* END styles for the view VIEW_WEB_EDIT_YAML */

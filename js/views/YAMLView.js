@@ -20,7 +20,7 @@
             "controlFieldContainer": '<div>{{html this.html}}</div>',
             "controlField": '{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"controlFieldLabel")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldContainer",true)}}{{html Alpaca.fieldTemplate(this,"controlFieldHelper")}}{{/wrap}}{{/wrap}}',
             // Templates for container fields
-            "fieldSetOuterEl": '<fieldset class="alpaca-view-web-edit-yaml">{{html this.html}}{{if options.extra_button_function}}<button class="alpaca-yaml-extra-button" onclick="${options.extra_button_function}(\'${id}\');">${options.extra_button_title}</button>{{/if}}</fieldset>',
+            "fieldSetOuterEl": '<fieldset class="alpaca-view-web-edit-yaml">{{html this.html}}</fieldset>',
             "fieldSetMessage": '<div><span class="ui-icon ui-icon-alert alpaca-fieldset-message-list-view"></span><span>${message}</span></div>',
             "fieldSetLegend": '{{if options.label}}<legend class="{{if options.labelClass}}${options.labelClass}{{/if}}">${options.label}</legend>{{/if}}',
             "fieldSetHelper": '{{if options.helper}}<div class="{{if options.helperClass}}${options.helperClass}{{/if}}">${options.helper}</div>{{/if}}',

@@ -50,7 +50,7 @@
         <form>
             <fieldset>
                 <p>
-		    <textarea id="modalTextAreaPanelYAML"></textarea>
+		    <textarea id="modalTextAreaPanelYAML" style="width: 400px; height: 300px;"></textarea>
                 </p>
             </fieldset>
         </form>
@@ -62,11 +62,13 @@
 <!--alapaca divs -->
 <div id="form1"></div>
 <div id="data1"></div>
+<input type="button" id="form1-button" value="Show YAML">
+<input type="button" id="edit-yaml-button" value="Edit YAML">
      
     <script type="text/javascript">
 
-    var doStuff = function(id) {
-		var obj = Alpaca.fieldInstances[id];
+    var doStuff = function() {
+		var obj = Alpaca.fieldInstances['alpaca1'];
 		yaml = doModalTextArea('edit YAML', json2yaml(obj.getValue()), function(yaml) {obj.setValue(jsyaml.load(yaml))});
 		//alert(json2yaml(obj.getValue()));
     };
@@ -128,7 +130,6 @@
 			}
     		},
 		"options": {
-			"extra_button_function" : "doStuff",
 			"fields": {
 				"name": {
 					"hidden": false,
@@ -136,7 +137,6 @@
 					"helper" : "this is a useful description"
 				},
 				"sub_string_array": {
-					"extra_button_function" : "doStuff",
 					"fields" : {
 						"item" : {
 							"placeholder": "Type something..."
@@ -157,7 +157,6 @@
 					}
 				},
 				"sub_object_array" : {
-					"extra_button_function" : "doStuff",
 					"dependencies" : {
 						"want_more" : "show me an object array"
 					}
@@ -165,6 +164,15 @@
 			}
 		},
 		"view": "VIEW_WEB_EDIT_YAML",
+		"postRender": function(renderedForm) {
+			$('#form1-button').click(function() {
+				var msg = json2yaml($("#form1").alpaca().getValue());
+				alert(msg);
+			});
+			$('#edit-yaml-button').click(function() {
+				doStuff();
+			});
+		}
     	});
     });
     </script>
@@ -192,7 +200,6 @@ YUI().use('panel', function (Y) {
     panel = new Y.Panel({
         srcNode      : '#modalTextAreaPanelContent',
         headerContent: 'Edit YAML',
-        width        : 250,
         zIndex       : 5,
         centered     : true,
         modal        : true,

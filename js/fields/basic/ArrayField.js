@@ -77,13 +77,23 @@
             if (!data || !Alpaca.isArray(data)) {
                 return;
             }
+
             // set fields
             for (var i = 0; i < this.children.length; i++) {
                 var childField = this.children[i];
-                if (data.length < i) {
+                if (data.length > i) {
                     childField.setValue(data[i]);
+		} else {
+		    
                 }
             }
+
+            //fieldSetting = jQuery.extend({}, this.options.fields["item"]);
+	    //if the number of items in the data is greater than the number of existing child elements
+	    while(i < data.length) {
+                this.addItem(i, null, data[i]); //use the default value
+		i++;
+	    }
         },
 
         /**
