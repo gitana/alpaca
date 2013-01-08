@@ -25,6 +25,7 @@
 
     <script type="text/javascript" src="../../../js/views/DefaultView.js"></script>
     <script type="text/javascript" src="../../../js/views/ListView.js"></script>
+    <script type="text/javascript" src="../../../js/views/TableView.js"></script>
     <script type="text/javascript" src="../../../js/views/MobileView.js"></script>
     <script type="text/javascript" src="../../../js/views/LayoutView.js"></script>
 
@@ -125,84 +126,75 @@
                 <div class="widget">
                     <div class="widget-body">
                         <div class='grid_12 alpaca-example-header' id='simple-login-localized' alpaca-types='form'>
-                            <h1>Simple Login Form</h1>
+                            <h1>Form with Multiple Views</h1>
                         </div>
                         <div class='grid_12 alpaca-example-case'>
-                            <h3>Localized simple login form with custom validation message and submit handler.</h3>
+                            <h3>Switch views using the selector.</h3>
                             <h4></h4>
 
-                            <div id="field1">
+                            <div id="selector1"></div>
+
+                            <div>
+                                <div style="width: 60%; float:left;">
+                                    <div id="field1"></div>
+                                </div>
+                                <div style="width: 30%; float:right" style="height: 150px">
+                                    <div id="logo1"></div>
+                                </div>
                             </div>
-                            <script type="text/javascript" id="field1-script">
+
+                            <div class="clear"></div>
+
+                            <script type="text/javascript">
 $(function() {
-    Alpaca.setDefaultLocale("es_ES");
-    $("#field1").alpaca({
+
+    // selector
+    $("#selector1").alpaca({
         "schema": {
-            "type":"object",
-            "properties": {
-                "username": {
-                    "type":"string",
-                    "title":"Username",
-                    "required":true,
-                    "pattern":"^[a-zA-Z0-9_]+$"
-                },
-                "password": {
-                    "type":"string",
-                    "title":"Password",
-                    "required":true,
-                    "pattern":"^[a-zA-Z0-9_]+$"
-                }
-            }
+            "type": "string",
+            "enum": [
+                "VIEW_WEB_EDIT",
+                "VIEW_WEB_EDIT_LIST",
+                "VIEW_WEB_EDIT_TABLE"
+            ],
+            "default": "VIEW_WEB_EDIT"
         },
-        "options":{
-            "renderForm":true,
-            "form":{
-                "attributes":{
-                    "action":"../../endpoints/echo.php",
-                    "method":"post"
-                },
-                "buttons":{
-                    "submit":{}
-                }
-            },
-            "fields": {
-                "username": {
-                    "size": 20,
-                    "label": "Nombre de usuario",
-                    "helper": "Por favor, introduzca su nombre de usuario."
-                },
-                "password": {
-                    "type" : "password",
-                    "size": 20,
-                    "label": "contraseña",
-                    "helper": "Por favor, introduzca su contraseña."
-                }
-            }
-        },
-        "data": {
-            "username": "1234",
-            "password": "@@@"
-        },
-        "view" :{
-            "fields": {
-                "/username": {
-                    "messages": {
-                        "es_ES": {
-                            "invalidPattern": "Nombre de usuario no válido!"
-                        }
-                    }
-                }
-            }
-        },
-        "postRender": function (renderedField) {
-            var form = renderedField.form;
-            if (form) {
-                form.registerSubmitHandler(function(e) {
-                    return (renderedField.isValid(true));
-                });
+        "options": {
+            "type": "select",
+            "onFieldChange" : function(e) {
+
+                var viewId = this.getValue();
+                f(viewId);
             }
         }
     });
+
+    var f = function(viewId)
+    {
+        $("#field1").empty();
+
+        $("#field1").alpaca({
+            "schema": {
+                "type":"object",
+                "properties": {
+                    "name": {
+                        "type":"string"
+                    }
+                }
+            },
+            "options":{
+                "fields": {
+                    "name": {
+                        "size": 20,
+                        "label": "Name"
+                    }
+                }
+            },
+            "view": viewId
+        });
+    };
+
+    f("VIEW_WEB_EDIT");
 });
                             </script>
                         </div>

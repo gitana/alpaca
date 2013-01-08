@@ -704,6 +704,7 @@
          * @returns {Object} Object rendered by field level template.
          */
         fieldTemplate: function(object, name, wrap) {
+
             if (!name)
                 name = "controlFieldLabel";
             var template = this.getTemplate(name, object.data);
@@ -1411,6 +1412,7 @@
         var newArgs = [].concat(this, args);
 
         // hand back the field instance
+        debugger;
         return Alpaca.apply(this, newArgs);
     };
 
