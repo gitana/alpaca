@@ -508,6 +508,7 @@
          */
         setValue: function(value) {
             this.data = value;
+            this.triggerUpdate();
         },
 
         /**
