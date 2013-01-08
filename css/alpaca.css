@@ -665,4 +665,115 @@ li.alpaca-fieldset-itemcontainer-list-view-top {
 }
 
 
+/* BEGIN styles for the view VIEW_WEB_EDIT_YAML */
 
+fieldset.alpaca-view-web-edit-yaml.alpaca-fieldset {
+    border: solid 1px;
+    border-radius: 5px;
+    margin: 1px 0 0 0;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+/*hide the arrow icon before the fieldset name*/
+fieldset.alpaca-view-web-edit-yaml legend.alpaca-fieldset-legend span {
+    display: none;
+}
+
+/* make the fonts the right size */
+fieldset.alpaca-view-web-edit-yaml legend.alpaca-fieldset-legend {
+	font-size: 1em;
+}
+
+fieldset.alpaca-view-web-edit-yaml.fieldset-collapsed {
+    border: none;
+    margin: 1px 1px 1px 1px;
+}
+
+fieldset.alpaca-view-web-edit-yaml legend.alpaca-fieldset-legend.legend-expanded:after {
+    content: url("../css/images/down.png");
+    padding-left: 5px;
+}
+fieldset.alpaca-view-web-edit-yaml legend.alpaca-fieldset-legend.legend-collapsed:after {
+    content: url("../css/images/left.png");
+    padding-left: 5px;
+}
+
+/*sort out the text boxes so that they disappear when not focussed */
+fieldset.alpaca-view-web-edit-yaml span:not(.alpaca-field-focused) div.alpaca-controlfield-text input {
+    background: none;
+    border: none;
+    box-shadow: none;
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-bottom: 2px;
+    margin-right: 2px;
+}
+
+fieldset.alpaca-view-web-edit-yaml {
+    font-family: courier;
+    padding-right: 1em;
+    padding-top: 0px;
+}
+
+fieldset.alpaca-view-web-edit-yaml div.alpaca-controlfield-checkbox {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+fieldset.alpaca-view-web-edit-yaml div.alpaca-controlfield-select {
+	margin-bottom: 1px;
+}
+fieldset.alpaca-view-web-edit-yaml div.alpaca-controlfield-radio div.alpaca-controlfield-radio {
+	padding-top: 3px;
+	padding-bottom: 4px;
+}
+
+fieldset.alpaca-view-web-edit-yaml input, select, label {
+    font-family: courier;
+}
+
+span.alpaca-view-web-edit-yaml .alpaca-controlfield-label {
+    width: 175px;
+    padding-top: 3px;
+    padding-left: 3px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+span.alpaca-view-web-edit-yaml div.alpaca-controlfield-container {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+span.alpaca-view-web-edit-yaml div.alpaca-controlfield-container input, select {
+	padding: 1px 1px 1px 1px;
+}
+
+fieldset.alpaca-view-web-edit-yaml span.alpaca-field {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+fieldset.alpaca-view-web-edit-yaml ol.alpaca-fieldset-items-container {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+
+/* make the array item toolbar float, without displacing any other elements */
+fieldset.alpaca-view-web-edit-yaml div.alpaca-fieldset-array-item-toolbar {
+    position: absolute;
+    z-index: 99999;
+    right: 15px;
+}
+
+
+fieldset.alpaca-view-web-edit-yaml .ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text {
+	padding: 2px;
+}
+
+/* END styles for the view VIEW_WEB_EDIT_YAML */
