@@ -777,3 +777,53 @@ fieldset.alpaca-view-web-edit-yaml .ui-button-icon-only .ui-button-text, .ui-but
 }
 
 /* END styles for the view VIEW_WEB_EDIT_YAML */
+
+/* BEGIN styles for the view VIEW_WEB_EDIT_INLINE */
+
+.alpaca-inline .alpaca-inline-item-container {
+    float: left;
+}
+
+.alpaca-inline-item-container .alpaca-inline .alpaca-fieldset, .alpaca-inline-item-container  .alpaca-fieldset.alpaca-inline {
+	margin: 0 1.5em;
+	padding: 0;
+}
+
+.alpaca-inline-item-container .alpaca-fieldset-array-item-toolbar {
+	width: 60px;
+	float: right;
+	margin-top: 0.7em;
+}
+
+.alpaca-inline .alpaca-fieldset-items-container {
+	margin: 0em 1em;
+	padding: 0;
+}
+
+.alpaca-inline select {
+	min-width: 0px;
+}
+
+#module-settings input:focus, textarea:focus {
+	border-width: 1px;
+}
+
+
+/* To Remove up/down buttons on items
+
+.alpaca-inline-item-container .alpaca-fieldset-array-item-toolbar .alpaca-fieldset-array-item-toolbar-up,
+.alpaca-inline-item-container .alpaca-fieldset-array-item-toolbar .alpaca-fieldset-array-item-toolbar-down {
+{
+	display: none;
+}
+*/
+
+/* To hide labels of inlined fields
+
+.alpaca-inline-item-container .alpaca-inline .alpaca-controlfield-label, .alpaca-inline-item-container .alpaca-inline .alpaca-fieldset-legend {
+	display: none;
+}
+
+*/
+
+/* END styles for the view VIEW_WEB_EDIT_INLINE */
