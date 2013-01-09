@@ -79,14 +79,20 @@
             }
 
             // set fields
-            for (var i = 0; i < this.children.length; i++) {
-                var childField = this.children[i];
-                if (data.length > i) {
-                    childField.setValue(data[i]);
+            // Use Array rows if available, create new ones otherwise                                          
+            for (var i = 0; i < data.length; i++) {
+                if (this.children.length > i) {
+                    var childField = this.children[i];
+	            childField.setValue(data[i]);
 		} else {
-		    this.removeItem(childField.id); //remove child items if there are more children than in data
+                    var fieldSetting;
+                    if (this.options && this.options.fields && this.options.fields["item"]) {
+                        fieldSetting = this.options.fields["item"];
+                    }
+                    this.addItem(i, fieldSetting, data[i]);
                 }
             }
+
 
             //fieldSetting = jQuery.extend({}, this.options.fields["item"]);
 	    //if the number of items in the data is greater than the number of existing child elements
