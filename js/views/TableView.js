@@ -14,17 +14,15 @@
         "templates": {
 
             // Templates for control fields
-            "controlFieldOuterEl": '<tr style="background-color:yellow; padding: 10px;">{{html this.html}}</tr>',
-            "controlFieldLabel": '<td>{{if options.label}}<label style="background-color:blue; padding:10px" for="${id}" class="{{if options.labelClass}}${options.labelClass}{{/if}}">${options.label}</label>{{/if}}</td>',
-            "controlFieldContainer": '<td style="background-color:green; padding: 10px;">{{html this.html}}</td>',
+            "controlFieldOuterEl": null,
+            "controlFieldLabel": '<td>{{if options.label}}<label for="${id}" class="{{if options.labelClass}}${options.labelClass}{{/if}}">${options.label}</label>{{/if}}</td>',
+            "controlFieldContainer": '<td data-control="append">{{html this.html}}</td>',
             "controlFieldMessage": '<div><span class="ui-icon ui-icon-alert"></span><span class="alpaca-controlfield-message-text">${message}</span></div>',
-            "controlFieldHelper": '{{if options.helper}}<div style="background-color:pink; padding:10px"  class="{{if options.helperClass}}${options.helperClass}{{/if}}"><span class="ui-icon ui-icon-info"></span><span class="alpaca-controlfield-helper-text">${options.helper}</span></div>{{/if}}',
+            "controlFieldHelper": '{{if options.helper}}<div class="{{if options.helperClass}}${options.helperClass}{{/if}}"><span class="ui-icon ui-icon-info"></span><span class="alpaca-controlfield-helper-text">${options.helper}</span></div>{{/if}}',
             "controlField":
-                '{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldOuterEl",true)}}' +
-                    '{{html Alpaca.fieldTemplate(this,"controlFieldLabel")}}' +
-                    '{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldContainer",true)}}' +
-                        '{{html Alpaca.fieldTemplate(this,"controlFieldHelper")}}' +
-                    '{{/wrap}}' +
+                '{{html Alpaca.fieldTemplate(this,"controlFieldLabel")}}' +
+                '{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldContainer",true)}}' +
+                    '{{html Alpaca.fieldTemplate(this,"controlFieldHelper")}}' +
                 '{{/wrap}}',
 
             // Templates for container fields
@@ -44,9 +42,8 @@
             "/": {
                 "templates": {
                     // Templates for container fields
-                    "fieldSetItemsContainer": '<table style="background-color:red; padding: 10px">{{html this.html}}</table>',
-                    //"fieldSetItemContainer": '<tr class="alpaca-fieldset-itemcontainer-table-view-top"></tr>'
-                    "fieldSetItemContainer": '<tr data-replace="true" style="background-color:orange; padding: 10px"></tr>'
+                    "fieldSetItemsContainer": '<table class="alpaca-fieldset-itemscontainer-list-view-top">{{html this.html}}</table>',
+                    "fieldSetItemContainer": '<tr class="alpaca-fieldset-itemscontainer-list-view-top"></tr>'
                 }
             }
         }

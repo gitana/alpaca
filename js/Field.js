@@ -310,8 +310,25 @@
                 "view": this.view.viewObject,
                 "path": this.path
             }, {});
+
+            // TODO: Alpaca currently assumes that everything under parentEl is the control itself
+            // the workaround for TABLE view is unaccomodating toward this
+            // a click on the label behaves like a click on the cell
+            // this needs more work
             renderedDomElement.appendTo(parentEl);
-            this.setEl(renderedDomElement);
+
+            // if we got back multiple dom elements, then look for the dom element where "data-control" has a value of
+            //   "append" = place the control into this dom element
+            var newEl = renderedDomElement;
+            if (renderedDomElement.size() > 1) {
+                renderedDomElement.each(function(k,v) {
+                    if ($(this).attr("data-control") == "append") {
+                        newEl = $(this);
+                    }
+                });
+            }
+            //this.setEl(renderedDomElement);
+            this.setEl(newEl);
 
             if (!this.singleLevelRendering) {
                 this.renderField(onSuccess);
@@ -508,6 +525,7 @@
          */
         setValue: function(value) {
             this.data = value;
+            this.triggerUpdate();
         },
 
         /**
@@ -609,7 +627,7 @@
                 var afterStatus = this.isValid();
 
                 // Allow for the message to change
-                if (this.options.showMessages && !this.hideInitValidationError) {
+                if (this.options.showMessages /*&& !this.hideInitValidationError*/) {
                     if (!this.initializing) {
                         var messages = [];
                         for (var messageId in this.validation) {

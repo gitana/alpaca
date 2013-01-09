@@ -8,20 +8,24 @@ Alpaca is an open-source, community-led project licensed under Apache 2.0.
 
 ### Project Home Page
 
-For information about the Alpaca Project, visit its home page at http://www.alpacajs.org.  We've collected videos, tutorials,
-API documentation and much more to help you get started.
+For information about the Alpaca Project, visit its home page at http://www.alpacajs.org.
+
+We've collected videos, tutorials, API documentation and much more to help you get started.
 
 ### Discussion Board
 
-If you have a question about Alpaca, please visit the Alpaca Forums at http://www.cloudcms.org/forums/categories/alpaca.  This
-is a place where we encourage the community and developer community to get together to support one another in their Alpaca-related
+If you have a question about Alpaca, please visit the [Alpaca Forums](http://www.cloudcms.org/forums/categories/alpaca).
+
+This is a place where we encourage the community and developer community to get together to support one another in their Alpaca-related
 projects.
 
 ### Authors
 
-* @drq
-* @uzquiano
++ [@drq](http://github.com/drq)
++ [@uzquiano](http://github.com/uzquiano)
++ [@cloudcms](http://github.com/cloudcms)
 
 Thanks for assistance and contributions:
 
-* @Maethorin
++ [@Maethorin](http://github.com/Maethorin)
++ [@jlanders68](http://github.com/jlanders68)

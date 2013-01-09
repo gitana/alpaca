@@ -310,6 +310,16 @@ $(function() {
                 "id":"layout-two-column",
                 "title":"Two-Column",
                 "link":"../../components/layouts/two-column-layout.html"
+            },
+            {
+                "id":"layout-table",
+                "title":"Table",
+                "link":"../../components/layouts/table-layout/table-layout.html"
+            },
+            {
+                "id":"layout-yaml",
+                "title":"YAML",
+                "link":"../../components/layouts/yaml-layout/yaml-layout.html"
             }
         ]
     }, {

@@ -1412,7 +1412,6 @@
         var newArgs = [].concat(this, args);
 
         // hand back the field instance
-        debugger;
         return Alpaca.apply(this, newArgs);
     };
 
