@@ -1396,6 +1396,21 @@
             }
             // if we have data, bind it in
             return new fieldClass(el, data, options, schema, view, connector);
+        },
+
+        /**
+         * Provides a backwards-compatible version of the former jQuery 1.8.3 parseJSON function (this was changed
+         * for jQuery 1.9.0 and introduces all kinds of issues).
+         *
+         * @param text
+         */
+        parseJSON: function(text)
+        {
+            if (!text) {
+                return null;
+            }
+
+            return $.parseJSON(text);
         }
     });
 

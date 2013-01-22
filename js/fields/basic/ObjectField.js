@@ -38,7 +38,7 @@
                         return;
                     } else {
                         try {
-                            this.data = $.parseJSON(this.data);
+                            this.data = Alpaca.parseJSON(this.data);
                             if (!Alpaca.isObject(this.data)) {
                                 return;
                             }

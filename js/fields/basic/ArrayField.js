@@ -38,7 +38,7 @@
                     return;
                 } else {
                     try {
-                        this.data = $.parseJSON(this.data);
+                        this.data = Alpaca.parseJSON(this.data);
                         if (!Alpaca.isArray(this.data)) {
                             return;
                         }
@@ -83,17 +83,16 @@
                 var childField = this.children[i];
                 if (data.length > i) {
                     childField.setValue(data[i]);
-		} else {
-		    this.removeItem(childField.id); //remove child items if there are more children than in data
+		        } else {
+		            this.removeItem(childField.id); //remove child items if there are more children than in data
                 }
             }
 
-            //fieldSetting = jQuery.extend({}, this.options.fields["item"]);
-	    //if the number of items in the data is greater than the number of existing child elements
-	    while(i < data.length) {
+	        // if the number of items in the data is greater than the number of existing child elements
+	        while(i < data.length) {
                 this.addItem(i, null, data[i]); //use the default value
-		i++;
-	    }
+		        i++;
+	        }
         },
 
         /**
