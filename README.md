@@ -12,6 +12,10 @@ For information about the Alpaca Project, visit its home page at http://www.alpa
 
 We've collected videos, tutorials, API documentation and much more to help you get started.
 
+### Compatibility
+
+Alpaca is compatible with jQuery 1.8.x and jQuery 1.9.0 using the jQuery Migrate Plugin.
+
 ### Discussion Board
 
 If you have a question about Alpaca, please visit the [Alpaca Forums](http://www.cloudcms.org/forums/categories/alpaca).
@@ -29,3 +33,4 @@ Thanks for assistance and contributions:
 
 + [@Maethorin](http://github.com/Maethorin)
 + [@jlanders68](http://github.com/jlanders68)
++ [@JocelynDelalande](http://github.com/JocelynDelalande)
