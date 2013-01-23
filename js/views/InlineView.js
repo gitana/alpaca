@@ -12,7 +12,7 @@
         "style":"jquery-ui",
         "displayReadonly":true,
         "templates": {
-            "fieldSetOuterEl": '<div class="{{if options.inline}}alpaca-inline{{/if}}">{{html this.html}}</div>',
+            "fieldSetOuterEl": '<fieldset class="{{if options.inline}}alpaca-inline{{/if}}">{{html this.html}}</fieldset>',
             "fieldSetItemContainer": '<div class="alpaca-inline-item-container"></div>',            
             arrayItemToolbar: '<div class="alpaca-fieldset-array-item-toolbar" data-role="controlgroup" data-type="horizontal" data-mini="true">'
                 +'<span class="alpaca-fieldset-array-item-toolbar-add" data-role="button" data-icon="add" data-iconpos="notext">Add</span>'
