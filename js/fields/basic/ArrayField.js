@@ -297,8 +297,7 @@
                         _this.buttonBeautifier.call(_this,addButton, _this.addIcon);
                     }
                     addButton.click(function() {
-                        var currentItemVal = fieldControl.getValue();
-                        var newContainerElem = _this.addItem(containerElem.index() + 1, null, Alpaca.isValEmpty(currentItemVal) ? null : fieldControl.getValue(), id);
+                        var newContainerElem = _this.addItem(containerElem.index() + 1, null, null, id);
                         _this.enrichElements(newContainerElem);
                         return false;
                     });
