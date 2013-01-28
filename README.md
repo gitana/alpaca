@@ -112,7 +112,7 @@ for your web server, you can run the QUnit tests by opening a web browser and po
 http://localhost/alpaca/tests/index.html
 ```
 
-### Questions?
+### Questions??
 
 If you have any questions, please feel free to submit and issue or ask on the [Alpaca Discussion Forums](http://www.cloudcms.org/forums/categories/alpaca).
 
