@@ -23,6 +23,99 @@ If you have a question about Alpaca, please visit the [Alpaca Forums](http://www
 This is a place where we encourage the community and developer community to get together to support one another in their Alpaca-related
 projects.
 
+### Contributions
+
+In the spirit of open source software development, Alpaca always encourages community code contribution.
+
+### Building Alpaca
+
+In order to build Alpaca, you need to have [Apache Ant](http://ant.apache.org/) installed on your machine.  Ant executes a build script
+(build.xml) to assemble the Alpaca build products.
+
+First, clone a copy of the Alpaca git repo by running:
+
+````bash
+git clone git://github.com/gitana/alpaca.git
+```
+
+Make sure you have `ant` installed by testing:
+
+```bash
+ant -version
+```
+
+You can then build Alpaca by running:
+
+```bash
+ant clean package
+```
+
+The built version of Alpaca will be put in the `build/package` subdirectory.  This directory contains the Alpaca web site
+(the same site that is deployed to [http://www.alpacajs.org](http://www.alpacajs.org)) along with all of the build
+products.  These build products include:
+
+#### Alpaca JavaScript and CSS
+
+The assets you need to reference for the built version of Alpaca are these:
+
+ * /js/alpaca.js
+ * /css
+
+The `alpaca.js` file contains all of the basic and advanced fields.  If you only want the basic fields, you can reference the
+`alpaca-core.js` file instead.
+
+#### Alpaca ZIP distributions
+
+The build also produces two ZIP files which contain all of the assets.
+
+ * /downloads/alpaca.zip
+ * /downloads/alpaca-basic.zip (just the basic fields)
+
+#### Alpaca Components
+
+If you're using AMD to include Alpaca, the AMD files are located in:
+
+ * /components/alpaca (all fields)
+ * /components/alpaca-core (just the basic fields)
+ * /components/alpaca-extra (just the advanced fields)
+
+#### Tests
+
+The unit tests are build and located in the `/tests` directory.
+
+### Running the Unit Tests
+
+The unit tests are written using QUnit.  You will need to run them using your web browser but in order to do that, you
+first need to mount the `build/package` directory into your web server.  The Ant script provides a helper target to
+let you do this.
+
+First, create a file called `custom-local.properties` in the root of your Alpaca project.  In it, define a single
+property that points to the destination where you would like your Alpaca build directory to be copied.  This should be
+a virtual directory under your web server.
+
+Here is an example:
+
+```
+local.docroot.basepath=/var/www
+```
+
+Then, run the following:
+
+````bash
+ant full
+```
+
+This will build Alpaca and copy the resulting assets to `/var/www/alpaca`.  If you've set up `/var/www` as the docroot
+for your web server, you can run the QUnit tests by opening a web browser and pointing to:
+
+```
+http://localhost/alpaca/tests/index.html
+```
+
+### Questions?
+
+If you have any questions, please feel free to submit and issue or ask on the [Alpaca Discussion Forums](http://www.cloudcms.org/forums/categories/alpaca).
+
 ### Authors
 
 + [@drq](http://github.com/drq)
