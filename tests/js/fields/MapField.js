@@ -2,7 +2,7 @@
 
     module("fields: map");
 
-    // Test case 1 : Upper case field.
+    // Test case 1 : map field.
     test("Map field.", function() {
         stop();
         $("#map-1").alpaca({
@@ -53,6 +53,9 @@
             },
             "postRender": function (renderedField) {
                 expect(15);
+
+                // click on the "toolbar add" button to create a new element
+                // the new element will be empty which will be invalid since we require a key
                 var arrayToolBarAddButton = $('#map-1 .alpaca-fieldset-array-item-toolbar-add');
                 ok(arrayToolBarAddButton.length, 'Array toolbar with add button generated.');
                 arrayToolBarAddButton.click(function() {
@@ -78,17 +81,16 @@
                     var arrayMessageElem = $('#map-1 #' + arrayId + '-field-message-0 > .alpaca-controlfield-message-text');
                     ok(arrayMessageElem.length, 'Array invalid message generated.');
                     equal(arrayMessageElem.text(), renderedField.view.getMessage("keyNotUnique"), 'Array invalid text populated correctly.');
-                    inputElem0.blur(function() {
-                        if (inputElem0.val() == 'john326') {
-                            var invalidElem = $('#map-1 fieldset.alpaca-field-invalid');
-                            ok(invalidElem.length == 0, 'Array marked as valid with new key.');
-                            var updatedVal = renderedField.getValue();
-                            ok(updatedVal['john316']!= null, 'Map value contains john316 key');
-                            ok(updatedVal['john326']!= null, 'Map value contains john326 key');
-                        }
-                    });
-                    inputElem0.val('john326');
-                    inputElem0.blur();
+
+                    // now fill in the new entry using john326, should then be valid
+                    var objectFieldSetItem2 = $('#map-1 .alpaca-fieldset-items-container fieldset:eq(1)');
+                    $('input:text:eq(0)', objectFieldSetItem2).val("john326").blur();
+                    // verify it's now valid
+                    var invalidElem = $('#map-1 fieldset.alpaca-field-invalid');
+                    ok(invalidElem.length == 0, 'Array marked as valid with new key.');
+                    var updatedVal = renderedField.getValue();
+                    ok(updatedVal['john316']!= null, 'Map value contains john316 key');
+                    ok(updatedVal['john326']!= null, 'Map value contains john326 key');
                 });
                 arrayToolBarAddButton.click();
                 start();

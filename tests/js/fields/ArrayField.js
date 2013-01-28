@@ -31,7 +31,9 @@
                     addButton.click(function() {
                         var newInputElem = $('#array-1 input:text:eq(1)');
                         ok(newInputElem.length, 'New text input field generated.');
-                        equal(newInputElem.val(), 'test1', 'New input field value populated correctly.');
+                        //equal(newInputElem.val(), 'test1', 'New input field value populated correctly.');
+                        // new elements populate with empty value
+                        equal(newInputElem.val(), '', 'New input field value populated correctly.');
                         // simulate remove
                         var newId = newInputElem.attr('id');
                         var newItemArrayBar = $("#array-1 #" + newId + "-item-container > .alpaca-fieldset-array-item-toolbar");
@@ -139,7 +141,9 @@
                     addButton.click(function() {
                         var newInputElem = $('#array-2 input:text:eq(1)');
                         ok(newInputElem.length, 'New text input field generated.');
-                        equal(newInputElem.val(), 'M', 'New input field value populated correctly.');
+                        //equal(newInputElem.val(), 'M', 'New input field value populated correctly.');
+                        // new elements populate with empty value
+                        equal(newInputElem.val(), '', 'New input field value populated correctly.');
                         var arrayMessageElem = $('#array-2 #' + arrayId + '-field-message-0');
                         ok(arrayMessageElem.length == 0, 'Array invalid message removed.');
                         itemArrayBar = $("#array-2 #" + id + "-item-container > .alpaca-fieldset-array-item-toolbar");
