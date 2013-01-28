@@ -169,6 +169,9 @@
             errorCallback(loadError);
             return null;
         });
+
+        // hand back the field
+        return $(el);
     };
 
     /**
