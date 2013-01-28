@@ -125,4 +125,4 @@ Thanks for assistance and contributions:
 + [@Maethorin](http://github.com/Maethorin)
 + [@jlanders68](http://github.com/jlanders68)
 + [@JocelynDelalande](http://github.com/JocelynDelalande)
-+ [@Ognian)(http://www.github.com/Ognian)
++ [@Ognian](http://www.github.com/Ognian)
