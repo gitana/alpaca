@@ -388,6 +388,7 @@
 
             newContainer.attr("id", fieldControl.getId() + "-item-container");
             newContainer.attr("alpaca-id", fieldControl.getId());
+            newContainer.addClass("alpaca-item-container");
 
             $(".alpaca-fieldset-array-item-toolbar", newContainer).remove();
             this.renderToolbar(newContainer);
@@ -445,6 +446,7 @@
                         fieldControl.render();
                         containerElem.attr("id", fieldControl.getId() + "-item-container");
                         containerElem.attr("alpaca-id", fieldControl.getId());
+                        containerElem.addClass("alpaca-item-container");
                         // render item label if needed
                         if (_this.options && _this.options.itemLabel) {
                             var itemLabelTemplate = _this.view.getTemplate("itemLabel");

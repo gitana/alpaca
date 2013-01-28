@@ -209,6 +209,7 @@
                         fieldControl.render();
                         containerElem.attr("id", fieldControl.getId() + "-item-container");
                         containerElem.attr("alpaca-id", fieldControl.getId());
+                        containerElem.addClass("alpaca-fieldset-item-container");
                         // remember the control
                         if (Alpaca.isEmpty(insertAfterId)) {
                             _this.addChild(fieldControl);
