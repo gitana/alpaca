@@ -235,6 +235,7 @@
              * @see Alpaca.Field#destroy
              */
             destroy: function() {
+
                 Alpaca.each(this.children, function() {
                     this.destroy();
                 });

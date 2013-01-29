@@ -129,28 +129,28 @@ input:focus, textarea:focus {
 }
 
 .alpaca-controlfield-date input {
-    background: url("../css/images/alpaca-icons.png") no-repeat right -5px;
+    background: url("./images/alpaca-icons.png") no-repeat right -5px;
 }
 
 .alpaca-controlfield-phone {
 }
 
 .alpaca-controlfield-phone input {
-    background: url("../css/images/alpaca-icons.png") no-repeat right -85px;
+    background: url("./images/alpaca-icons.png") no-repeat right -85px;
 }
 
 .alpaca-controlfield-email {
 }
 
 .alpaca-controlfield-email input {
-    background: url("../css/images/alpaca-icons.png") no-repeat right -45px;
+    background: url("./images/alpaca-icons.png") no-repeat right -45px;
 }
 
 .alpaca-controlfield-time {
 }
 
 .alpaca-controlfield-time input {
-    background: url("../css/images/alpaca-icons.png") no-repeat right -125px;
+    background: url("./images/alpaca-icons.png") no-repeat right -125px;
 }
 
 .alpaca-controlfield-password {
@@ -691,15 +691,15 @@ fieldset.alpaca-view-web-edit-yaml.fieldset-collapsed {
 }
 
 fieldset.alpaca-view-web-edit-yaml legend.alpaca-fieldset-legend.legend-expanded:after {
-    content: url("../css/images/down.png");
+    content: url("./images/down.png");
     padding-left: 5px;
 }
 fieldset.alpaca-view-web-edit-yaml legend.alpaca-fieldset-legend.legend-collapsed:after {
-    content: url("../css/images/left.png");
+    content: url("./images/left.png");
     padding-left: 5px;
 }
 
-/*sort out the text boxes so that they disappear when not focussed */
+/*sort out the text boxes so that they disappear when not focused */
 fieldset.alpaca-view-web-edit-yaml span:not(.alpaca-field-focused) div.alpaca-controlfield-text input {
     background: none;
     border: none;

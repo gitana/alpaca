@@ -314,6 +314,15 @@
          * Purge any event listeners and remove the form from the DOM.
          */
         destroy: function() {
+
+            // clean up Alpaca.fieldInstances static reference (used for convenience access to previous rendered fields)
+            if (Alpaca && Alpaca.fieldInstances) {
+                delete Alpaca.fieldInstances[this.getId()];
+                Alpaca.fieldInstances[this.getId()] = null;
+            }
+
+            this.topControl.destroy();
+
             this.getEl().remove();
         },
 

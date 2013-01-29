@@ -609,11 +609,21 @@
         <copy todir="${local.docroot.basepath}/${appkey}">
             <fileset refid="alpaca-files"/>
         </copy>
+        <copy todir="${local.docroot.basepath}/${appkey}">
+			<fileset dir="${project.dir}/build/package">
+		        <include name="components/**/*"/>
+			</fileset>
+        </copy>
     </target>
 
     <target name="full" depends="webserver-clean">
         <copy todir="${local.docroot.basepath}/${appkey}">
             <fileset refid="alpaca-files"/>
+        </copy>
+        <copy todir="${local.docroot.basepath}/${appkey}">
+			<fileset dir="${project.dir}/build/package">
+		        <include name="components/**/*"/>
+			</fileset>
         </copy>
     </target>
 

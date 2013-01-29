@@ -1162,21 +1162,6 @@
             return obj1;
         },
 
-        /*
-        cloneObject : function(obj) {
-            var clone = {};
-
-            for (var i in obj) {
-                if (Alpaca.isObject(obj[i])) {
-                    clone[i] = Alpaca.cloneObject(obj[i]);
-                } else {
-                    clone[i] = obj[i];
-                }
-            }
-
-            return clone;
-        },
-        */
         /**
          * Clones an object.
          *

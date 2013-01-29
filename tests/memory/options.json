@@ -1,0 +1,29 @@
+{
+    "renderForm":true,
+    "form":{
+        "attributes":{
+            "action":"../../endpoints/echo.php",
+            "method":"post"
+        },
+        "buttons":{
+            "submit":{},
+            "reset":{}
+        }
+    },
+    "fields":{
+        "name":{
+            "hideInitValidationError" : true
+        },
+        "photo":{
+            "type":"file",
+            "styled": true
+        },
+        "member":{
+            "rightLabel":"Alpaca Club Member"
+        },
+        "address":{
+            "type":"address",
+            "addressValidation":true
+        }       
+    }
+}
