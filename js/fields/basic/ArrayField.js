@@ -59,6 +59,14 @@
                 toolbarSticky = this.options.toolbarSticky;
             }
 
+            if (Alpaca.isEmpty(this.options.showMoveUpItemButton)) {
+                this.options.showMoveUpItemButton = true;
+            }
+
+            if (Alpaca.isEmpty(this.options.showMoveDownItemButton)) {
+                this.options.showMoveDownItemButton = true;
+            }
+
             this.options.toolbarSticky = toolbarSticky;
 
             // Enable forceRevalidation option so that any change in children will trigger parent's revalidation.
@@ -738,7 +746,7 @@
 
     Alpaca.registerTemplate("itemLabel", '{{if options.itemLabel}}<div class="alpaca-controlfield-label"><div>${options.itemLabel}{{if index}} <span class="alpaca-item-label-counter">${index}</span>{{/if}}</div></div>{{/if}}');
     Alpaca.registerTemplate("arrayToolbar", '<span class="ui-widget ui-corner-all alpaca-fieldset-array-toolbar"><button class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">${addItemLabel}</button></span>');
-    Alpaca.registerTemplate("arrayItemToolbar", '<div class="ui-widget-header ui-corner-all alpaca-fieldset-array-item-toolbar"><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add">${addItemLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove">${removeItemLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up">${moveUpItemLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down">${moveDownItemLabel}</button></div>');
+    Alpaca.registerTemplate("arrayItemToolbar", '<div class="ui-widget-header ui-corner-all alpaca-fieldset-array-item-toolbar"><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add">${addItemLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove">${removeItemLabel}</button>{{if showMoveUpItemButton}}<button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up">${moveUpItemLabel}</button>{{/if}}{{if showMoveDownItemButton}}<button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down">${moveDownItemLabel}</button>{{/if}}</div>');
     Alpaca.registerMessages({
         "notEnoughItems": "The minimum number of items is {0}",
         "tooManyItems": "The maximum number of items is {0}",
