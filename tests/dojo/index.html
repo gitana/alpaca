@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+
+<head>
+    <title>DOJO loader Test</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+
+    <!-- stylesheets -->
+    <!--this contains jquery already-->
+    <link type="text/css" href="../../components/alpaca/alpaca.css" rel="stylesheet"/>
+
+    <!-- third-party javascript -->
+    <!--replace the below CDN with a local DOJO SDK to get better error reporting-->
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js" data-dojo-config="async: false
+    ,'dojo-publish-privates':1, trace:{'loader-finish-exec':1}
+    , packages: [
+            {
+                'name': 'jquery',
+                'location':'/modules/alpaca/build/package/lib',
+                'main': 'jquery-latest.min'
+            },
+            {
+                'name': 'jquery-ui',
+                'location':'/modules/alpaca/build/package/lib',
+                'main': 'jquery-ui-latest.custom.min'
+            },
+            {
+                'name': 'jquery.tmpl',
+                'location':'/modules/alpaca/lib',
+                'main': 'jquery.tmpl'
+            },
+            {
+                'name': 'alpaca',
+                'location':'/modules/alpaca/build/package/components/alpaca',
+                'main': 'alpaca'
+            }
+    ]
+    "></script>
+
+
+</head>
+<body>
+<div id="spa">
+
+    <button id="toggle">Toggle</button>
+
+    <br/>
+
+    <div id="form"></div>
+
+</div>
+</body>
+
+
+<script type="text/javascript">
+    //needed to load jquery, required by alpaca.js
+    define.amd.jQuery = true;
+
+    //the "main" function
+    require([
+        "jquery",
+        "jquery-ui",
+        "jquery.tmpl",
+        "alpaca",
+        "dojo/domReady!" ],
+            function (jquery, jq_ui, jq_tmpl, alpacax) {
+
+                function initView() {
+
+                    jQuery.noConflict();  // can be used to give up the $ function !!!
+
+
+                    var detailAlpacaControlField;
+
+                    jquery("#toggle").click(function () {
+
+                        if (!detailAlpacaControlField) {
+                            //alpaca test
+                            jquery("#form")
+                                    .alpaca({
+                                        "data": "./data.json",
+                                        "schema": "./schema.json",
+                                        "options": "./options.json",
+                                        "view": "./view.json",
+                                        "postRender": function (renderedField) {
+                                            detailAlpacaControlField = renderedField.form; //depending on what we have build a view or a form !!!
+                                            //detailAlpacaControlField = Alpaca("#form");
+                                        }
+                                    });
+                            //alpaca test end
+                        }
+                        else {
+                            detailAlpacaControlField.destroy();
+                            detailAlpacaControlField = null;
+                        }
+                    });
+                }
+
+                Alpaca.setDefaultLocale("de_AT");
+                initView();
+            });
+</script>
+
+
+</html>
