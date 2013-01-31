@@ -312,18 +312,19 @@
 
         /**
          * Purge any event listeners and remove the form from the DOM.
+         *
+         * @param [Boolean] skipParent when true, the form cleans up without traversing through parent child controls
          */
-        destroy: function() {
-
-            // clean up Alpaca.fieldInstances static reference (used for convenience access to previous rendered fields)
-            if (Alpaca && Alpaca.fieldInstances) {
-                delete Alpaca.fieldInstances[this.getId()];
-                Alpaca.fieldInstances[this.getId()] = null;
-            }
-
-            this.topControl.destroy();
+        destroy: function(skipParent) {
 
             this.getEl().remove();
+
+            // we allow form.destroy() which tells parent control to destroy
+            // if skipParent == true, then we do not call up (invoked from container)
+            if (!skipParent)
+            {
+                this.parent.destroy();
+            }
         },
 
         /**

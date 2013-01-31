@@ -236,11 +236,18 @@
              */
             destroy: function() {
 
+                // if this container is DOM-wrapped with a form, then release the form
+                if (this.form) {
+                    this.form.destroy(true); // pass in true so that we don't call back recursively
+                    delete this.form;
+                }
+
+                // destroy any child controls
                 Alpaca.each(this.children, function() {
                     this.destroy();
                 });
 
-                // destroy ourselves
+                // call up to base method
                 this.base();
             },
 

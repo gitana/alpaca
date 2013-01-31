@@ -834,10 +834,12 @@
 
             // clean up Alpaca.fieldInstances static reference (used for convenience access to previous rendered fields)
             if (Alpaca && Alpaca.fieldInstances) {
-                delete Alpaca.fieldInstances[this.getId()];
-                Alpaca.fieldInstances[this.getId()] = null;
+                if (Alpaca.fieldInstances[this.getId()]) {
+                    delete Alpaca.fieldInstances[this.getId()];
+                }
             }
 
+            // clean up DOM
             this.getEl().remove();
         },
 

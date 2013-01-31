@@ -7,34 +7,33 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-
     <!-- stylesheets -->
     <!--this contains jquery already-->
     <link type="text/css" href="../../components/alpaca/alpaca.css" rel="stylesheet"/>
 
     <!-- third-party javascript -->
     <!--replace the below CDN with a local DOJO SDK to get better error reporting-->
-    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js" data-dojo-config="async: false
+    <script src="./lib/dojo.js.uncompressed.js" data-dojo-config="async: false
     ,'dojo-publish-privates':1, trace:{'loader-finish-exec':1}
     , packages: [
             {
                 'name': 'jquery',
-                'location':'/modules/alpaca/build/package/lib',
+                'location':'./',
                 'main': 'jquery-latest.min'
             },
             {
                 'name': 'jquery-ui',
-                'location':'/modules/alpaca/build/package/lib',
+                'location':'./',
                 'main': 'jquery-ui-latest.custom.min'
             },
             {
                 'name': 'jquery.tmpl',
-                'location':'/modules/alpaca/lib',
+                'location':'./',
                 'main': 'jquery.tmpl'
             },
             {
                 'name': 'alpaca',
-                'location':'/modules/alpaca/build/package/components/alpaca',
+                'location':'../../../components/alpaca',
                 'main': 'alpaca'
             }
     ]
@@ -56,6 +55,7 @@
 
 
 <script type="text/javascript">
+
     //needed to load jquery, required by alpaca.js
     define.amd.jQuery = true;
 
@@ -86,8 +86,9 @@
                                         "options": "./options.json",
                                         "view": "./view.json",
                                         "postRender": function (renderedField) {
-                                            detailAlpacaControlField = renderedField.form; //depending on what we have build a view or a form !!!
+                                            //detailAlpacaControlField = renderedField.form; //depending on what we have build a view or a form !!!
                                             //detailAlpacaControlField = Alpaca("#form");
+                                            detailAlpacaControlField = renderedField;
                                         }
                                     });
                             //alpaca test end
