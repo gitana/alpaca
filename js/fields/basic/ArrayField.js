@@ -294,7 +294,9 @@
                         "moveUpItemLabel": _this.options.moveUpItemLabel ? _this.options.moveUpItemLabel : "Move Up",
                         "moveDownItemLabel": _this.options.moveDownItemLabel ? _this.options.moveDownItemLabel : "Move Down",
                         "removeItemLabel": _this.options.removeItemLabel ? _this.options.removeItemLabel : "Remove Item",
-                        "addItemLabel": _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item"
+                        "addItemLabel": _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item",
+                        "showMoveDownItemButton": _this.options.showMoveDownItemButton,
+                        "showMoveUpItemButton": _this.options.showMoveUpItemButton
                     });
                     if (toolbarElem.attr("id") == null) {
                         toolbarElem.attr("id", id + "-item-toolbar");
