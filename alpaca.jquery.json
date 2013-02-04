@@ -1,10 +1,10 @@
 {
     "name": "alpaca",
-    "title": "Alpaca",
-    "description": "jQuery plugin for easy JSON Schema forms",
+    "title": "Alpaca Forms",
+    "description": "jQuery plugin for Easy Forms",
     "keywords": [
-        "forms",
         "form",
+        "forms",
         "json",
         "jsonschema",
         "json-schema",
@@ -15,7 +15,7 @@
         "jquery-mobile",
         "html5"
     ],
-    "version": "1.0.3",
+    "version": "1.0.4",
     "author": {
         "name": "Cloud CMS",
         "url": "https://github.com/gitana/alpaca"
