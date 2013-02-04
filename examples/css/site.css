@@ -327,8 +327,10 @@ table {
 }
 
 a {
-    color: #0088CC;
+    /*color: #0088CC;*/
+    color: #0066AA;
     text-decoration: none;
+    font-weight: 600;
 }
 
 .btn:hover {
