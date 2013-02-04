@@ -1,0 +1,43 @@
+{
+    "name": "alpaca",
+    "title": "Alpaca",
+    "description": "jQuery plugin for easy JSON Schema forms",
+    "keywords": [
+        "forms",
+        "form",
+        "json",
+        "json schema",
+        "json-schema",
+        "bootstrap",
+        "jquery ui",
+        "jquery-ui",
+        "jquery mobile",
+        "jquerymobile",
+        "html5"
+    ],
+    "version": "1.0.4",
+    "author": {
+        "name": "Cloud CMS",
+        "url": "https://github.com/gitana/alpaca"
+    },
+    "maintainers": [
+        {
+            "name": "Michael Uzquiano",
+            "email": "uzi@cloudcms.com",
+            "url": "http://www.cloudcms.com"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "Apache 2.0",
+            "url": "https://github.com/gitana/alpaca/blob/master/license.txt"
+        }
+    ],
+    "bugs": "https://github.com/gitana/alpaca/issues",
+    "homepage": "https://github.com/gitana/alpaca",
+    "docs": "http://www.alpacajs.org",
+    "download": "http://www.alpacajs.org/resources.html",
+    "dependencies": {
+        "jquery": ">=1.7"
+    }
+}

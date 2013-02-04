@@ -312,7 +312,7 @@
             }, {});
 
             // TODO: Alpaca currently assumes that everything under parentEl is the control itself
-            // the workaround for TABLE view is unaccomodating toward this
+            // the workaround for TABLE view is unaccommodating toward this
             // a click on the label behaves like a click on the cell
             // this needs more work
             renderedDomElement.appendTo(parentEl);
