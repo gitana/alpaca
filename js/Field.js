@@ -439,7 +439,8 @@
             // finished initializing
             this.initializing = false;
 
-            this.hideInitValidationError = Alpaca.isValEmpty(this.options.hideInitValidationError) ? false : this.options.hideInitValidationError;
+            var defaultHideInitValidationError = (this.view.type == 'create');
+            this.hideInitValidationError = Alpaca.isValEmpty(this.options.hideInitValidationError) ? defaultHideInitValidationError : this.options.hideInitValidationError;
 
             // final call to update validation state
             if (this.view.type != 'view') {
@@ -697,10 +698,17 @@
                 // Push the message
                 this.validation[valId] = valInfo;
 
-                if (valInfo && !valInfo.status) {
-                    this.getEl().removeClass("alpaca-field-valid");
-                    this.getStyleInjection("error",this.getEl());
-                    this.getEl().addClass("alpaca-field-invalid");
+                if (!this.hideInitValidationError) {
+
+                    // we don't markup invalidation state for readonly fields
+                    if (!this.options.readonly)
+                    {
+                        if (valInfo && !valInfo.status) {
+                            this.getEl().removeClass("alpaca-field-valid");
+                            this.getStyleInjection("error",this.getEl());
+                            this.getEl().addClass("alpaca-field-invalid");
+                        }
+                    }
                 }
 
                 // Push the message
@@ -709,21 +717,28 @@
                 // Allow for the message to change
                 if (this.options.showMessages) {
                     if (!this.initializing) {
-                        var messages = [];
-                        for (var messageId in this.validation) {
-                            if (!this.validation[messageId]["status"]) {
-                                messages.push(this.validation[messageId]["message"]);
+
+                        if (!this.hideInitValidationError) {
+
+                            // we don't markup invalidation state for readonly fields
+                            if (!this.options.readonly)
+                            {
+                                var messages = [];
+                                for (var messageId in this.validation) {
+                                    if (!this.validation[messageId]["status"]) {
+                                        messages.push(this.validation[messageId]["message"]);
+                                    }
+                                }
+                                this.displayMessage(messages, beforeStatus);
                             }
                         }
-                        this.displayMessage(messages, beforeStatus);
                     }
                 }
-                // Revalidate parents if validation state changed
 
+                // Revalidate parents if validation state changed
                 if (this.isValid() && this.parent && this.parent.renderValidationState) {
                     this.parent.renderValidationState();
                 }
-
 
             }
         },
