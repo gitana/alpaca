@@ -3,8 +3,8 @@
     "title": "Alpaca",
     "description": "jQuery plugin for easy JSON Schema forms",
     "keywords": [
-        "forms",
         "form",
+        "forms",
         "json",
         "jsonschema",
         "json-schema",
