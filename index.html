@@ -100,16 +100,16 @@
     <div class="widget-body">
 
         <p>
-			Alpaca is a plugin for <a href="http://jquery.com/" target="_blank">jQuery</a>, 
-			<a href="http://jqueryui.com" target="_blank">jQuery UI</a> and 
-			<a href="http://jquerymobile.com/">jQuery Mobile</a> that makes it easy to render HTML5 Web Forms
-			for web and mobile applications.
+            Alpaca is a Forms Engine that makes it easy to generate beautiful, interactive forms for web and mobile
+            applications running on <a href="http://jquery.com/" target="_blank">jQuery</a>, <a href="http://jquerymobile.com/">jQuery Mobile</a>,
+            <a href="http://jqueryui.com" target="_blank">jQuery UI</a> and <a href="http://twitter.github.com/bootstrap" target="_blank">Twitter Bootstrap</a>.
+
 		</p>
 		<p>
 			Alpaca is built around <a href="http://json-schema.org/" target="_blank">JSON-Schema</a> for expression of the 
 			form object model, types, properties, validation logic and
 			constraints.  It provides a comprehensive and extensible control library with support for wizards, layout, I18N
-			and pluggable templating engines (like EJS and jQuery Templating).
+			and pluggable templating engines (like EJS and jQuery tmpl).
 		</p>
 		<p>
 			Alpaca is an <a href="https://github.com/gitana/alpaca" target="_blank">open-source, community-led project</a> 
@@ -210,49 +210,90 @@ $(function() {
 </div>
 
 
-<div class="widget">
-    <div class="widget-title">
-        <h2><a name="downloads">Getting Started</a></h2>
+<div>
+    <div style="width: 70%; float:left">
+
+        <div class="widget">
+            <div class="widget-title">
+                <h2><a name="downloads">Getting Started</a></h2>
+            </div>
+            <div class="widget-body">
+
+                <p>
+                    It's easy to get started.  You can grab the code and drop it into your new or existing projects.  You can also download
+                    the source code, build it yourself and customize Alpaca for your own projects.
+                </p>
+
+                <h3>Downloads</h3>
+                <p>
+                    We offer <a href="resources.html#downloads">releases</a> as well as <a href="resources.html#downloads">snapshot builds</a>
+                    of Alpaca.
+                </p>
+
+                <h3>Source Code</h3>
+                <p>
+                    Join the <a href="http://www.github.com/gitana/alpaca" target="_blank">Alpaca Project</a> on GitHub to
+                    access the source and contribute to the growing Alpaca Community!  Alpaca is licensed under the Apache 2.0
+                    open source license.
+                </p>
+
+                <h3>Tutorials</h3>
+                <p>
+                    At the top of this page, you'll find links to
+                    <a href="tutorials.html">tutorials</a> and <a href="resources.html#documentation">documentation</a>.  We also
+                    provide demonstrations and examples of
+                    <a href="examples/forms/customer-profile/edit-form.html">complex forms</a> and
+                    <a href="resources.html#mobile">mobile applications</a> using jQuery Mobile.
+                </p>
+
+                <h3>API</h3>
+                <p>
+                    We provide an
+                    <a href="examples/components/fields/text-field.html">API and Component Reference</a> that describes all of the nifty
+                    components and controls that are available out-of-the-box.  This will give you an idea of how to build your own
+                    extensions.
+                    <br/>
+                    <br/>
+                    All of our <a href="resources.html#unittests">Unit Tests</a> are online.
+                    <br/>
+                </p>
+
+            </div>
+        </div>
+
     </div>
-    <div class="widget-body">
-	
-		<p>
-			It's easy to get started.  You can grab the code and drop it into your new or existing projects.  You can also download
-			the source code, build it yourself and customize Alpaca for your own projects.
-		</p>
-		
-        <h3>Downloads</h3>
-        <p>
-			We offer <a href="resources.html#downloads">releases</a> as well as <a href="resources.html#downloads">snapshot builds</a>
-			of Alpaca.
-        </p>
+    <div style="width: 30%; float:right;">
 
-        <h3>Source Code</h3>
-		<p>
-            Join the <a href="http://www.github.com/gitana/alpaca" target="_blank">Alpaca Project</a> on GitHub to
-            access the source and contribute to the growing Alpaca Community!  Alpaca is licensed under the Apache 2.0
-            open source license.
-        </p>
+        <div class="widget" style="margin-left: 20px">
+            <div class="widget-title">
+                <h2><a name="downloads">Newsletter!</a></h2>
+            </div>
+            <div class="widget-body">
 
-        <h3>Tutorials</h3>
-		<p>
-			At the top of this page, you'll find links to
-			<a href="tutorials.html">tutorials</a> and <a href="resources.html#documentation">documentation</a>.  We also
-			provide demonstrations and examples of
-			<a href="examples/forms/customer-profile/edit-form.html">complex forms</a> and
-			<a href="resources.html#mobile">mobile applications</a> using jQuery Mobile.
-        </p>
+                <p>
+                Keep up to date on new library controls, themes, examples and releases.
+                </p>
 
-        <h3>API</h3>
-			We provide an
-			<a href="examples/components/fields/text-field.html">API and Component Reference</a> that describes all of the nifty
-			components and controls that are available out-of-the-box.  This will give you an idea of how to build your own
-			extensions.
-			<br/>
-			<br/>
-			All of our <a href="resources.html#unittests">Unit Tests</a> are online.
-			<br/>
-        </p>
+                <!-- Begin MailChimp Signup Form -->
+                <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+                <style type="text/css">
+                    #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+                        /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+       We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+                </style>
+                <div id="mc_embed_signup">
+                    <form action="http://cloudcms.us4.list-manage.com/subscribe/post?u=f769658b4522502e43fbe1ced&amp;id=b6715354ab" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                        <label for="mce-EMAIL">Subscribe to our mailing list</label>
+                        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required style="width: 100%">
+                        <div class="clear"></div>
+                        <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                    </form>
+                </div>
+
+                <!--End mc_embed_signup-->
+
+            </div>
+        </div>
 
     </div>
 </div>
