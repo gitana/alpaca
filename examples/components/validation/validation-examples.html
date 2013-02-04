@@ -360,6 +360,37 @@ $(function() {
             </script>
 
 
+            <h3>Example 10: </h3>
+            <h4>DEBUG loggings of ignored fields outside schema</h4>
+
+            <div id="field10"></div>
+            <script type="text/javascript" id="field10-script">
+                Alpaca.logLevel = Alpaca.DEBUG;
+                $(function() {
+                    $("#field10").alpaca({
+                        "data": {
+                            "name": "Eddie Van Halen",
+                            "job": "guitarist",
+                            "rating": 10,
+                            "country": "Netherlands"
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "job": {
+                                    "type": "string",
+                                    "readonly": true,
+                                    "enum": ["guitarist", "drummer", "singer"]
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+
 
                         </div>
                         <div class="clear height-fix"></div>

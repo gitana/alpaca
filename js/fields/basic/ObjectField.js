@@ -40,6 +40,7 @@
                         try {
                             this.data = Alpaca.parseJSON(this.data);
                             if (!Alpaca.isObject(this.data)) {
+                                Alpaca.logWarn("ObjectField parsed data but it was not an object: " + JSON.stringify(this.data));
                                 return;
                             }
                         } catch (e) {
@@ -233,6 +234,17 @@
              */
             renderItems: function() {
                 var _this = this;
+
+                // we keep a map of all of the properties in our original data object
+                // as we render elements out of the schema, we remove from the dataProperties map
+                // whatever is leftover are the data properties that were NOT rendered because they were not part
+                // of the schema
+                // we use this for debugging
+                var extraDataProperties = {};
+                for (var dataKey in _this.data) {
+                    extraDataProperties[dataKey] = dataKey;
+                }
+
                 var properties = _this.data;
                 if (_this.schema && _this.schema.properties) {
                     properties = _this.schema.properties;
@@ -247,7 +259,25 @@
                         itemData = _this.data[propertyId];
                     }
                     _this.addItem(propertyId, fieldSetting, itemData);
+
+                    // remove from extraDataProperties helper
+                    delete extraDataProperties[propertyId];
                 }
+
+                // If the schema and the data line up perfectly, then there will be no properties in the data that are
+                // not also in the schema, and thus, extraDataProperties will be empty.
+                //
+                // On the other hand, if there are some properties in data that were not in schema, then they will
+                // remain in extraDataProperties and we can inform developers for debugging purposes
+                //
+                var extraDataKeys = [];
+                for (var extraDataKey in extraDataProperties) {
+                    extraDataKeys.push(extraDataKey);
+                }
+                if (extraDataKeys.length > 0) {
+                    Alpaca.logDebug("There were " + extraDataKeys.length + " extra data keys that were not part of the schema " + JSON.stringify(extraDataKeys));
+                }
+
                 // loop through all items to check their dependencies
                 for (var propertyId in properties) {
                     if (_this.schema && _this.schema.properties && _this.schema.properties[propertyId]) {

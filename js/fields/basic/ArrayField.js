@@ -40,6 +40,7 @@
                     try {
                         this.data = Alpaca.parseJSON(this.data);
                         if (!Alpaca.isArray(this.data)) {
+                            Alpaca.logWarn("ArrayField parsed data but it was not an array: " + JSON.stringify(this.data));
                             return;
                         }
                     } catch (e) {
