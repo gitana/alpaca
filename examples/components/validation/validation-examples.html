@@ -318,6 +318,49 @@ $(function() {
     });
 });
             </script>
+
+            <h3>Example 9: </h3>
+            <h4>No validation of readonly fields.</h4>
+
+            <div>
+                Is this form valid?
+                <div id="x1"></div>
+                <div id="x2"></div>
+            </div>
+            <div id="field9"></div>
+            <script type="text/javascript" id="field9-script">
+                var data = {
+                    "name": "Eddie Van Halen",
+                    "job": "virtuoso"
+                };
+                var schema = {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "job": {
+                            "type": "string",
+                            "readonly": true,
+                            "enum": ["guitarist", "drummer", "singer"]
+                        }
+                    }
+                };
+                $(function() {
+                    $("#field9").alpaca({
+                        "data": data,
+                        "schema": schema,
+                        "postRender": function(control) {
+
+                            $("#x1").html(" -> validator says: " + Validator.validate(data, schema).valid);
+                            $("#x2").html(" -> Alpaca says: " + control.isValid(true));
+                        }
+                    });
+                });
+            </script>
+
+
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

@@ -607,20 +607,20 @@
 
             if (this.options.validate) {
 
-                // only validate for non-readonly fields
-                if (!this.options.readonly)
-                {
-                    // remove all previous markers
-                    this.getStyleInjection("removeError",this.getEl());
-                    this.getEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
+                // remove all previous markers
+                this.getStyleInjection("removeError",this.getEl());
+                this.getEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
 
-                    var beforeStatus = this.isValid();
+                var beforeStatus = this.isValid();
 
-                    // this runs validation
-                    if (this.validate()) {
-                        this.getEl().addClass("alpaca-field-valid");
-                    } else {
-                        //this.getStyleInjection("error",this.getEl());
+                // this runs validation
+                if (this.validate()) {
+                    this.getEl().addClass("alpaca-field-valid");
+                } else {
+
+                    // we don't markup invalidation state for readonly fields
+                    if (!this.options.readonly)
+                    {
                         if (!this.hideInitValidationError) {
                             this.getStyleInjection("error",this.getEl());
                             this.getEl().addClass("alpaca-field-invalid");
@@ -628,12 +628,25 @@
                             this.getEl().addClass("alpaca-field-invalid-hidden");
                         }
                     }
+                    else
+                    {
+                        // this field is invalid and is also read-only, so we're not supposed to inform the end-user
+                        // within the UI (since there is nothing we can do about it)
+                        // here, we log a message to debug to inform the developer
+                        Alpaca.logWarn("The field (id=" + this.getId() + ", title=" + this.getTitle() + ", label=" + this.options.label + ") is invalid and also read-only");
+                    }
+                }
 
-                    var afterStatus = this.isValid();
+                var afterStatus = this.isValid();
 
-                    // Allow for the message to change
-                    if (this.options.showMessages /*&& !this.hideInitValidationError*/) {
-                        if (!this.initializing) {
+                // Allow for the message to change
+                if (this.options.showMessages) {
+
+                    if (!this.initializing) {
+
+                        // we don't markup invalidation state for readonly fields
+                        if (!this.options.readonly)
+                        {
                             var messages = [];
                             for (var messageId in this.validation) {
                                 if (!this.validation[messageId]["status"]) {
@@ -643,21 +656,22 @@
                             this.displayMessage(messages, beforeStatus);
                         }
                     }
-                    // Re-validate parents if validation state changed
-                    var forceRevalidation = false;
-                    var parent = this.parent;
-                    while (parent) {
-                        // if parent has custom validator, it should re-validate.
-                        if (parent.options && (parent.options.forceRevalidation || parent.options.validator)) {
-                            forceRevalidation = true;
-                        }
-                        parent = parent.parent;
-                    }
-                    if ((beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) || forceRevalidation) {
-                        this.parent.renderValidationState();
-                    }
-                    this._validateCustomValidator();
                 }
+                // Re-validate parents if validation state changed
+                var forceRevalidation = false;
+                var parent = this.parent;
+                while (parent) {
+                    // if parent has custom validator, it should re-validate.
+                    if (parent.options && (parent.options.forceRevalidation || parent.options.validator)) {
+                        forceRevalidation = true;
+                    }
+                    parent = parent.parent;
+                }
+                if ((beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) || forceRevalidation) {
+                    this.parent.renderValidationState();
+                }
+                this._validateCustomValidator();
+
             }
         },
 

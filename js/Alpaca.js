@@ -1405,6 +1405,54 @@
         }
     });
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // LOGGER
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    Alpaca.DEBUG = 0;
+    Alpaca.INFO = 1;
+    Alpaca.WARN = 2;
+    Alpaca.ERROR = 3;
+
+    // by default, logging only shows warnings and above
+    // to debug, set Alpaca.logLevel = Alpaca.DEBUG
+    Alpaca.logLevel = Alpaca.WARN;
+
+    Alpaca.logDebug = function(obj) {
+        Alpaca.log(Alpaca.DEBUG, obj);
+    };
+    Alpaca.logInfo = function(obj) {
+        Alpaca.log(Alpaca.INFO, obj);
+    };
+    Alpaca.logWarn = function(obj) {
+        Alpaca.log(Alpaca.WARN, obj);
+    };
+    Alpaca.logError = function(obj) {
+        Alpaca.log(Alpaca.ERROR, obj);
+    };
+
+    Alpaca.log = function(level, obj) {
+
+        var methodMap = {
+            0: 'debug',
+            1: 'info',
+            2: 'warn',
+            3: 'error'
+        };
+
+        if (Alpaca.logLevel <= level)
+        {
+            var method = methodMap[level];
+            if (typeof console !== 'undefined' && console[method])
+            {
+                console[method].call(console, obj);
+            }
+        }
+    };
+
     $.alpaca = window.Alpaca = Alpaca;
 
     /**
