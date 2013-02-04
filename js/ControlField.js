@@ -141,6 +141,10 @@
                 _this.onKeyUp(e);
             });
 
+            this.field.keydown(function(e) {
+                _this.onKeyDown(e);
+            });
+
             this.field.click(function(e) {
                 _this.onClick(e);
             });
@@ -148,19 +152,31 @@
         },
 
         /**
-         * Handler for key press event.
+         * Callback for when a key press event is received for the field control.
          *
-         * @param {Object} e Key press event.
+         * @param {Object} e keypress event
          */
         onKeyPress: function(e) {
         },
 
         /**
-         * Handler for key up event.
+         * Callback for when a key down event is received for the field control.
          *
-         * @param {Object} e Key up event.
+         * @param {Object} e keydown event
+         */
+        onKeyDown: function(e) {
+
+        },
+
+        /**
+         * Callback for when a key up event is received for the field control.
+         *
+         * @param {Object} e keyup event
          */
         onKeyUp: function(e) {
+
+            // update the UI validation state
+            this.renderValidationState();
         },
 
         /**

@@ -604,54 +604,60 @@
          * of the field. If necessary, displays validation messages as well.
          */
         renderValidationState: function() {
+
             if (this.options.validate) {
-                // remove all previous markers
-                this.getStyleInjection("removeError",this.getEl());
-                this.getEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
 
-                var beforeStatus = this.isValid();
+                // only validate for non-readonly fields
+                if (!this.options.readonly)
+                {
+                    // remove all previous markers
+                    this.getStyleInjection("removeError",this.getEl());
+                    this.getEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
 
-                // this runs validation
-                if (this.validate()) {
-                    this.getEl().addClass("alpaca-field-valid");
-                } else {
-                    //this.getStyleInjection("error",this.getEl());
-                    if (!this.hideInitValidationError) {
-                        this.getStyleInjection("error",this.getEl());
-                        this.getEl().addClass("alpaca-field-invalid");
+                    var beforeStatus = this.isValid();
+
+                    // this runs validation
+                    if (this.validate()) {
+                        this.getEl().addClass("alpaca-field-valid");
                     } else {
-                        this.getEl().addClass("alpaca-field-invalid-hidden");
-                    }
-                }
-
-                var afterStatus = this.isValid();
-
-                // Allow for the message to change
-                if (this.options.showMessages /*&& !this.hideInitValidationError*/) {
-                    if (!this.initializing) {
-                        var messages = [];
-                        for (var messageId in this.validation) {
-                            if (!this.validation[messageId]["status"]) {
-                                messages.push(this.validation[messageId]["message"]);
-                            }
+                        //this.getStyleInjection("error",this.getEl());
+                        if (!this.hideInitValidationError) {
+                            this.getStyleInjection("error",this.getEl());
+                            this.getEl().addClass("alpaca-field-invalid");
+                        } else {
+                            this.getEl().addClass("alpaca-field-invalid-hidden");
                         }
-                        this.displayMessage(messages, beforeStatus);
                     }
-                }
-                // Re-validate parents if validation state changed
-                var forceRevalidation = false;
-                var parent = this.parent;
-                while (parent) {
-                    // if parent has custom validator, it should re-validate.
-                    if (parent.options && (parent.options.forceRevalidation || parent.options.validator)) {
-                        forceRevalidation = true;
+
+                    var afterStatus = this.isValid();
+
+                    // Allow for the message to change
+                    if (this.options.showMessages /*&& !this.hideInitValidationError*/) {
+                        if (!this.initializing) {
+                            var messages = [];
+                            for (var messageId in this.validation) {
+                                if (!this.validation[messageId]["status"]) {
+                                    messages.push(this.validation[messageId]["message"]);
+                                }
+                            }
+                            this.displayMessage(messages, beforeStatus);
+                        }
                     }
-                    parent = parent.parent;
+                    // Re-validate parents if validation state changed
+                    var forceRevalidation = false;
+                    var parent = this.parent;
+                    while (parent) {
+                        // if parent has custom validator, it should re-validate.
+                        if (parent.options && (parent.options.forceRevalidation || parent.options.validator)) {
+                            forceRevalidation = true;
+                        }
+                        parent = parent.parent;
+                    }
+                    if ((beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) || forceRevalidation) {
+                        this.parent.renderValidationState();
+                    }
+                    this._validateCustomValidator();
                 }
-                if ((beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) || forceRevalidation) {
-                    this.parent.renderValidationState();
-                }
-                this._validateCustomValidator();
             }
         },
 
@@ -955,6 +961,12 @@
             this.field.blur(function(e) {
                 _this.onBlur(e);
             });
+            this.field.mouseover(function(e) {
+                _this.onMouseOver(e);
+            });
+            this.field.mouseout(function(e) {
+                _this.onMouseOut(e);
+            });
             // register general event handlers through options
             $.each(this.options, function(key, func) {
                 if (Alpaca.startsWith(key,'onField') && Alpaca.isFunction(func)) {
@@ -967,9 +979,11 @@
         },
 
         /**
-         * Handler for the event that highlights the entire field.
+         * Callback for when the field receives focus.
          *
-         * @param e Event.
+         * Default behavior is for the entire field to highlight.
+         *
+         * @param e dom event
          */
         onFocus: function(e) {
             this.getEl().removeClass("alpaca-field-empty");
@@ -977,19 +991,23 @@
         },
 
         /**
-         * Handler for the event that un-highlights the entire field.
+         * Callback for when the field loses focus (blurs).
          *
-         * @param e Event.
+         * Default behavior is for the entire field to un-highlight.
+         *
+         * @param e dom event
          */
         onBlur: function(e) {
             this.getEl().removeClass("alpaca-field-focused");
 
-            // set class from state
+            // update the UI validation state
             this.renderValidationState();
         },
 
         /**
-         * Handler for the field value change event.
+         * Callback for when the field's value changes.
+         *
+         * Default behavior is to update the control's value and notify.
          *
          * @param e Event.
          */
@@ -997,6 +1015,24 @@
             // store back into data element
             this.data = this.getValue();
             this.triggerUpdate();
+        },
+
+        /**
+         * Callback for when the mouse moves over a field.
+         *
+         * @param e
+         */
+        onMouseOver: function(e) {
+
+        },
+
+        /**
+         * Callback for when the mouse moves out of the field.
+         *
+         * @param e
+         */
+        onMouseOut: function(e) {
+
         },
 
         /**

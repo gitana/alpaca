@@ -688,6 +688,42 @@
                                 "default": false
                             }
                         }
+                    },
+                    "moveUpItemLabel": {
+                        "title": "Move Up Item Label",
+                        "description": "The label to use for the toolbar's 'move up' button.",
+                        "type": "string",
+                        "default": "Move Up"
+                    },
+                    "moveDownItemLabel": {
+                        "title": "Move Down Item Label",
+                        "description": "The label to use for the toolbar's 'move dwn' button.",
+                        "type": "string",
+                        "default": "Move Down"
+                    },
+                    "removeItemLabel": {
+                        "title": "Remove Item Label",
+                        "description": "The label to use for the toolbar's 'remove item' button.",
+                        "type": "string",
+                        "default": "Remove Item"
+                    },
+                    "addItemLabel": {
+                        "title": "Add Item Label",
+                        "description": "The label to use for the toolbar's 'add item' button.",
+                        "type": "string",
+                        "default": "Add Item"
+                    },
+                    "showMoveDownItemButton": {
+                        "title": "Show Move Down Item Button",
+                        "description": "Whether to show to the 'Move Down' button on the toolbar.",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "showMoveUpItemButton": {
+                        "title": "Show Move Up Item Button",
+                        "description": "Whether to show the 'Move Up' button on the toolbar.",
+                        "type": "boolean",
+                        "default": true
                     }
                 }
             };
