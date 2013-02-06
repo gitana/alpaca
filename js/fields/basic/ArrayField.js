@@ -289,50 +289,72 @@
                 var id = containerElem.attr('alpaca-id');
                 var fieldControl = this.childrenById[id];
                 var itemToolbarTemplate = this.view.getTemplate("arrayItemToolbar");
-                if (itemToolbarTemplate) {
+	            if (itemToolbarTemplate) {
+
+		            // Base buttons : add & remove
+                    var buttonsDef = [
+                        {
+                            feature: "add",
+                            icon: _this.addIcon,
+                            label: _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item",
+	                        clickCallback: function() {
+		                        var newContainerElem = _this.addItem(containerElem.index() + 1, null, null, id);
+		                        _this.enrichElements(newContainerElem);
+		                        return false;
+	                        }
+                        },
+                        {
+                            feature: "remove",
+                            icon: _this.removeIcon,
+                            label: _this.options.removeItemLabel ? _this.options.removeItemLabel : "Remove Item",
+                            clickCallback: function() {
+                                _this.removeItem(id);
+                            }
+                        }
+                    ];
+
+		            // Optional buttons : up & down
+		            if (_this.options.showMoveUpItemButton) {
+			            buttonsDef.push({
+				            feature: "up",
+                            icon: _this.upIcon,
+				            label: _this.options.moveUpItemLabel ? _this.options.moveUpItemLabel : "Move Up",
+				            clickCallback: function() {
+					            _this.moveItem(id, true);
+                            }
+			            });
+		            }
+
+		            if (_this.options.showMoveDownItemButton) {
+			            buttonsDef.push({
+				            feature: "down",
+                            icon: _this.downIcon,
+				            label: _this.options.moveDownItemLabel ? _this.options.moveDownItemLabel : "Move Down",
+                            clickCallback: function() {
+	                            _this.moveItem(id, false);
+                            }
+			            });
+		            }
+
                     var toolbarElem = $.tmpl(itemToolbarTemplate, {
                         "id": id,
-                        "moveUpItemLabel": _this.options.moveUpItemLabel ? _this.options.moveUpItemLabel : "Move Up",
-                        "moveDownItemLabel": _this.options.moveDownItemLabel ? _this.options.moveDownItemLabel : "Move Down",
-                        "removeItemLabel": _this.options.removeItemLabel ? _this.options.removeItemLabel : "Remove Item",
-                        "addItemLabel": _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item",
-                        "showMoveDownItemButton": _this.options.showMoveDownItemButton,
-                        "showMoveUpItemButton": _this.options.showMoveUpItemButton
+                        "buttons": buttonsDef
                     });
                     if (toolbarElem.attr("id") == null) {
                         toolbarElem.attr("id", id + "-item-toolbar");
                     }
-                    // add actions to toolbar buttons
-                    var addButton = $('.alpaca-fieldset-array-item-toolbar-add', toolbarElem);
-                    if (_this.buttonBeautifier) {
-                        _this.buttonBeautifier.call(_this,addButton, _this.addIcon);
+
+
+                    // Process all buttons
+                    for (var i in buttonsDef) {
+                        var def = buttonsDef[i];
+	                    var el = toolbarElem.find('.alpaca-fieldset-array-item-toolbar-'+def.feature);
+                        el.click(def.clickCallback);
+                        if (_this.buttonBeautifier) {
+                            _this.buttonBeautifier.call(_this,el, def.icon);
+                        }
                     }
-                    addButton.click(function() {
-                        var newContainerElem = _this.addItem(containerElem.index() + 1, null, null, id);
-                        _this.enrichElements(newContainerElem);
-                        return false;
-                    });
-                    var removeButton = $('.alpaca-fieldset-array-item-toolbar-remove', toolbarElem);
-                    if (_this.buttonBeautifier) {
-                        _this.buttonBeautifier.call(_this,removeButton, _this.removeIcon);
-                    }
-                    removeButton.click(function() {
-                        _this.removeItem(id);
-                    });
-                    var upButton = $('.alpaca-fieldset-array-item-toolbar-up', toolbarElem);
-                    if (_this.buttonBeautifier) {
-                        _this.buttonBeautifier.call(_this,upButton, _this.upIcon);
-                    }
-                    upButton.click(function() {
-                        _this.moveItem(id, true);
-                    });
-                    var downButton = $('.alpaca-fieldset-array-item-toolbar-down', toolbarElem);
-                    if (_this.buttonBeautifier) {
-                        _this.buttonBeautifier.call(_this,downButton, _this.downIcon);
-                    }
-                    downButton.click(function() {
-                        _this.moveItem(id, false);
-                    });
+
                     if (this.options.toolbarSticky) {
                         toolbarElem.prependTo(containerElem);
                     } else {
@@ -785,7 +807,7 @@
 
     Alpaca.registerTemplate("itemLabel", '{{if options.itemLabel}}<div class="alpaca-controlfield-label"><div>${options.itemLabel}{{if index}} <span class="alpaca-item-label-counter">${index}</span>{{/if}}</div></div>{{/if}}');
     Alpaca.registerTemplate("arrayToolbar", '<span class="ui-widget ui-corner-all alpaca-fieldset-array-toolbar"><button class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">${addItemLabel}</button></span>');
-    Alpaca.registerTemplate("arrayItemToolbar", '<div class="ui-widget-header ui-corner-all alpaca-fieldset-array-item-toolbar"><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-add">${addItemLabel}</button><button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-remove">${removeItemLabel}</button>{{if showMoveUpItemButton}}<button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-up">${moveUpItemLabel}</button>{{/if}}{{if showMoveDownItemButton}}<button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-down">${moveDownItemLabel}</button>{{/if}}</div>');
+    Alpaca.registerTemplate("arrayItemToolbar", '<div class="ui-widget-header ui-corner-all alpaca-fieldset-array-item-toolbar">{{each buttons}}<button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-${$value.feature}">${$value.label}</button>{{/each}}</div>');
     Alpaca.registerMessages({
         "notEnoughItems": "The minimum number of items is {0}",
         "tooManyItems": "The maximum number of items is {0}",
