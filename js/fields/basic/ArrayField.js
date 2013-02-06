@@ -297,9 +297,9 @@
                             feature: "add",
                             icon: _this.addIcon,
                             label: _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item",
-	                        clickCallback: function() {
-		                        var newContainerElem = _this.addItem(containerElem.index() + 1, null, null, id);
-		                        _this.enrichElements(newContainerElem);
+	                        clickCallback: function(id, arrayField) {
+		                        var newContainerElem = arrayField.addItem(containerElem.index() + 1, null, null, id);
+		                        arrayField.enrichElements(newContainerElem);
 		                        return false;
 	                        }
                         },
@@ -307,8 +307,8 @@
                             feature: "remove",
                             icon: _this.removeIcon,
                             label: _this.options.removeItemLabel ? _this.options.removeItemLabel : "Remove Item",
-                            clickCallback: function() {
-                                _this.removeItem(id);
+	                        clickCallback: function(id, arrayField) {
+                                arrayField.removeItem(id);
                             }
                         }
                     ];
@@ -319,8 +319,8 @@
 				            feature: "up",
                             icon: _this.upIcon,
 				            label: _this.options.moveUpItemLabel ? _this.options.moveUpItemLabel : "Move Up",
-				            clickCallback: function() {
-					            _this.moveItem(id, true);
+				            clickCallback: function(id, arrayField) {
+					            arrayField.moveItem(id, true);
                             }
 			            });
 		            }
@@ -330,8 +330,8 @@
 				            feature: "down",
                             icon: _this.downIcon,
 				            label: _this.options.moveDownItemLabel ? _this.options.moveDownItemLabel : "Move Down",
-                            clickCallback: function() {
-	                            _this.moveItem(id, false);
+				            clickCallback: function(id, arrayField) {
+					            arrayField.moveItem(id, false);
                             }
 			            });
 		            }
@@ -344,15 +344,16 @@
                         toolbarElem.attr("id", id + "-item-toolbar");
                     }
 
-
                     // Process all buttons
-                    for (var i in buttonsDef) {
-                        var def = buttonsDef[i];
-	                    var el = toolbarElem.find('.alpaca-fieldset-array-item-toolbar-'+def.feature);
-                        el.click(def.clickCallback);
-                        if (_this.buttonBeautifier) {
-                            _this.buttonBeautifier.call(_this,el, def.icon);
-                        }
+		            for (var i in buttonsDef) {
+			            (function() { // closure to prevent "def" leaking
+				            var def = buttonsDef[i];
+				            var el = toolbarElem.find('.alpaca-fieldset-array-item-toolbar-'+def.feature);
+				            el.click(function(e) {return def.clickCallback(id, _this, e)});
+				            if (_this.buttonBeautifier) {
+					            _this.buttonBeautifier.call(_this,el, def.icon);
+				            }
+			            })();
                     }
 
                     if (this.options.toolbarSticky) {
