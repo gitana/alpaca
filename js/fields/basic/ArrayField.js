@@ -337,8 +337,8 @@
 		            }
 
 		            // Extra buttons : user-defined
-		            if (_this.options.extraToolbarButtons) {
-			            buttonsDef = $.merge(buttonsDef,_this.options.extraToolbarButtons);
+		            if (_this.options.items && _this.options.items.extraToolbarButtons) {
+			            buttonsDef = $.merge(buttonsDef,_this.options.items.extraToolbarButtons);
 		            }
 
                     var toolbarElem = $.tmpl(itemToolbarTemplate, {
