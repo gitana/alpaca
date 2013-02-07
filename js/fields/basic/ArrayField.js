@@ -336,6 +336,11 @@
 			            });
 		            }
 
+		            // Extra buttons : user-defined
+		            if (_this.options.extraToolbarButtons) {
+			            buttonsDef = $.merge(buttonsDef,_this.options.extraToolbarButtons);
+		            }
+
                     var toolbarElem = $.tmpl(itemToolbarTemplate, {
                         "id": id,
                         "buttons": buttonsDef
@@ -710,8 +715,14 @@
                                 "description": "Array item toolbar will be aways on if true.",
                                 "type": "boolean",
                                 "default": false
+                            },
+	                        "extraToolbarButtons": {
+                                "title": "Extra Toolbar buttons",
+                                "description": "Buttons to be added next to add/remove/up/down, see examples",
+                                "type": "array",
+                                "default": undefined
                             }
-                        }
+                        },
                     },
                     "moveUpItemLabel": {
                         "title": "Move Up Item Label",
