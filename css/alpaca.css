@@ -108,7 +108,7 @@ select {
 
 input:focus, textarea:focus {
     outline: none;
-    border: 2px solid #058cf5;
+    border: 1px solid #058cf5;
 }
 
 .alpaca-field-readonly input, .alpaca-field-readonly textarea, input[readonly], textarea[readonly] {
