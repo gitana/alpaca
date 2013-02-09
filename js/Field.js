@@ -1378,6 +1378,12 @@
                         "description" : "Hide initial validation errors if true.",
                         "type": "boolean",
                         "default": false
+                    },
+                    "focus": {
+                        "title": "Configures how to set the initial focus for the form",
+                        "description": "If true, the initial focus for the form will be set to the first child element (usually the first field in the form).  If a field name or path is provided, then the specified child field will receive focus.  For example, you might set focus to 'name' (selecting the 'name' field) or you might set it to 'client/name' which picks the 'name' field on the 'client' object.",
+                        "type": "any",
+                        "default": true
                     }
                 }
             };
@@ -1420,6 +1426,11 @@
                                     "title": "Name",
                                     "description": "Form name",
                                     "type": "string"
+                                },
+                                "focus": {
+                                    "title": "Focus",
+                                    "description": "Focus Setting",
+                                    "type": "any"
                                 }
                             }
                         }

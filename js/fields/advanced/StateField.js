@@ -167,7 +167,7 @@
          * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
-            return "State Field.";
+            return "Provides a dropdown selector of states and/or territories in the United States, keyed by their two-character code.";
         },
 
         /**

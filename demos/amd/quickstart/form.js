@@ -1,4 +1,4 @@
-$(document).ready(function() {
+define(["jquery", "alpaca"], function($) {
 
     /**
      * Initial data
@@ -9,7 +9,9 @@ $(document).ready(function() {
      */
     var data = {
         "name": "Inigo Montoya",
-        "age": 29
+        "age": 29,
+        "phone": "414-111-2222",
+        "country": "usa"
     };
 
     /**
@@ -35,6 +37,13 @@ $(document).ready(function() {
                 "type": "number",
                 "minimum": 0,
                 "maximum": 50
+            },
+            "phone": {
+                "type": "string"
+            },
+            "country": {
+                "type": "string",
+                "required": true
             }
         }
     };
@@ -55,7 +64,13 @@ $(document).ready(function() {
                 "type": "text"
             },
             "age": {
-                "type": "text"
+                "type": "number"
+            },
+            "phone": {
+                "type": "phone"
+            },
+            "country": {
+                "type": "country"
             }
         }
     };
@@ -73,29 +88,6 @@ $(document).ready(function() {
     };
 
     /**
-     * If you'd like to define a custom layout (html) file for your form, you first define a new view.
-     * A view points to a layout file.  It also lets you override validation messages and other properties
-     * about the UI.
-     */
-    //var view = null;
-    var view = Alpaca.registerView({
-        "id": "VIEW_CUSTOM",
-        "parent": "VIEW_WEB_CREATE",
-        "title": "Custom View",
-        "layout" : {
-            "template": './layout.html',
-            "fields": {
-                "name": "fields",
-                "age": "fields"
-            }
-        },
-        "messages": {
-            "stringValueTooSmall": "Please enter a positive value, good sir!",
-            "stringValueTooLarge": "Please enter a value less than 50 ({0} is too large)"
-        }
-     });
-
-    /**
      * Render the form.
      *
      * We call alpaca() with the data, schema and options to tell Alpaca to render into the selected dom element(s).
@@ -105,7 +97,7 @@ $(document).ready(function() {
         "data": data,
         "schema": schema,
         "options": options,
-        "postRender": postRenderCallback,
-        "view": (view ? view.id : null)
+        "postRender": postRenderCallback
     });
+
 });

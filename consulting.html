@@ -26,6 +26,7 @@
     <script type="text/javascript" src="js/views/ListView.js"></script>
     <script type="text/javascript" src="js/views/MobileView.js"></script>
     <script type="text/javascript" src="js/views/LayoutView.js"></script>
+    <script type="text/javascript" src="js/views/TableView.js"></script>
 
     <script type="text/javascript" src="js/View.js"></script>
 
@@ -93,7 +94,7 @@
     <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
-    <script>
+    <script type="text/javascript">
         $.fn.center = function () {
             this.css("position","absolute");
             this.css("top", ($(window).height() - this.height()) / 2+$(window).scrollTop() + "px");
@@ -101,6 +102,7 @@
             return this;
         };
     </script>
+
 </head>
 <body>
     <header>
@@ -148,7 +150,7 @@
                         </p>
                         <div width="100%" align="center">
 
-                            <div id="contactus" style="font-size: 15px"></div>
+                            <div id="contactus" style="font-size: 13px"></div>
 
                         </div>
                     </div>
@@ -161,7 +163,7 @@
     <footer>
         <div class="container_12">
             <div class="grid_12 copyright">
-                Copyright &copy; 2012 Gitana Software | All Rights Reserved
+                Copyright &copy; 2013 Gitana Software, Inc. | All Rights Reserved
             </div>
         </div>
     </footer>
@@ -170,28 +172,37 @@
 
         $(document).ready(function() {
 
+            Alpaca.logLevel = Alpaca.DEBUG;
+
             $("#contactus").alpaca({
+                "view": "VIEW_WEB_CREATE_TABLE",
                 "schema": {
                     "type": "object",
                     "properties": {
                         "name": {
-                            "type": "string"
+                            "type": "string",
+                            "required": true
                         },
                         "email": {
-                            "type": "string"
+                            "type": "string",
+                            "required": true
                         },
                         "company": {
-                            "type": "string"
+                            "type": "string",
+                            "required": true
                         },
                         "phone": {
-                            "type": "string"
+                            "type": "string",
+                            "required": true
                         },
                         "comments": {
-                            "type": "string"
+                            "type": "string",
+                            "required": true
                         },
                         "newsletter": {
                             "type": "boolean",
-                            "default": true
+                            "default": true,
+                            "required": true
                         },
                         "redirectUri": {
                             "type": "string",
@@ -236,6 +247,7 @@
                             "rightLabel": "Sign up for the Cloud CMS Newsletter"
                         },
                         "redirectUri": {
+                            "label": false,
                             "hidden": true
                         }
                     }

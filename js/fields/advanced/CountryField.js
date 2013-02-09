@@ -114,7 +114,7 @@
          * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
-            return "Country Field.";
+            return "Provides a dropdown selector of countries keyed by their ISO3 code.  The names of the countries are read from the I18N bundle for the current locale.";
         },
 
         /**

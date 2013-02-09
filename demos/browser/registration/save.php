@@ -78,7 +78,6 @@
     echo "cambridgeTour: " . $cambridgeTour . "<br/>";
     echo "travel: " . $travel . "<br/>";
     echo "labWebsite: " . $labWebsite . "<br/>";
-    echo "photoFile: " . $photoFile . "<br/>";
     echo "researchDescription: " . $researchDescription . "<br/>";
 
     //

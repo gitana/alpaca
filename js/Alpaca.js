@@ -158,13 +158,50 @@
             loadAllConnector = new Alpaca.Connector('default');
         }
 
+        // wrap rendered callback to allow for UI treatment (dom focus, etc)
+        if (!options) {
+            options = {};
+        }
+        if (Alpaca.isUndefined(options.focus)) {
+            options.focus = true; // first element in form
+        }
+        var _renderedCallback = function(control)
+        {
+            // auto-set the focus?
+            if (options && options.focus)
+            {
+                if (options.focus === true)
+                {
+                    // pick first element in form
+                    if (control.children && control.children.length > 0) {
+                        if (control.children.field && control.children.field.length > 0) {
+                            $(control.children[0].field[0]).focus()
+                        }
+                    }
+                }
+                else
+                {
+                    // pick a named control
+                    var child = control.getControlByPath(options.focus);
+                    if (child && child.field && child.field.length > 0) {
+                        $(child.field[0]).focus();
+                    }
+                }
+            }
+
+            if (renderedCallback)
+            {
+                renderedCallback(control);
+            }
+        };
+
         loadAllConnector.loadAll({
             "data":data,
             "options": options,
             "schema": schema,
             "view": view
         }, function(loadedData, loadedOptions, loadedSchema, loadedView) {
-            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, callback, renderedCallback, connector, errorCallback);
+            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, callback, _renderedCallback, connector, errorCallback);
         }, function (loadError) {
             errorCallback(loadError);
             return null;
@@ -1309,6 +1346,18 @@
             // if jQuery Mobile is present, fall back to VIEW_MOBILE_EDIT
             if ($.mobile) {
                 this.defaultView = "VIEW_MOBILE_EDIT";
+            }
+
+            // debugging: if the view isn't available, we want to report it right away
+            // Alpaca has default behaviors, such as falling back to other views, but we need to let the developer
+            // know in debug mode
+            if (Alpaca.isString(view)) {
+                var determinedView = this.getView(view);
+                if (determinedView.id != view)
+                {
+                    Alpaca.logDebug("The specified view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.");
+                    Alpaca.logDebug("Resolved view was: " + determinedView.id);
+                }
             }
 
             var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);

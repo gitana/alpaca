@@ -51,7 +51,7 @@
                 });
                 this.injectField(this.field);
             }
-            
+
             if (onSuccess) {
                 onSuccess();
             }
@@ -62,6 +62,7 @@
          */
         postRender: function() {
             this.base();
+
             // mask it
             if ( this.field && this.field.mask && this.options.maskString) {
                 this.field.mask(this.options.maskString);

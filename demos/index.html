@@ -4,48 +4,170 @@
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <title>Alpaca Demos</title>
 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- jquery -->
+        <script type="text/javascript" src="../lib/jquery-latest.min.js"></script>
+
+        <!-- Bootstrap -->
+        <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link type="text/css" href="../lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
         <script type="text/javascript" src="../lib/bootstrap/js/bootstrap.js"></script>
 
+        <script type="text/javascript" src="index.js"></script>
+        <link type="text/css" href="index.css" rel="stylesheet" />
     </head>
-    <body>
+    <body data-spy="scroll" data-target=".demo-nav">
 
-        <h1>Alpaca Demos</h1>
+        <div class="container">
 
-        <p>
-            This page provides a listing of pre-built demos for Alpaca.
-        </p>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="navbar navbar-static-top">
+                        <div class="navbar-inner">
+                            <a class="brand" href="#">Alpaca</a>
+                            <ul class="nav">
+                                <li class="active"><a href="#">Demos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <ul>
-            <li>
-                <a href="browser/quickstart">Quick Start (Browser)</a>
-                <br/>
-                An empty Alpaca project that you can use as a template for building your own forms ready-to-run in the browser.
-                All of the Alpaca dependencies are loaded using SCRIPT tags.  Adjust the source code to fit your own schema,
-                options and layout needs.
-            </li>
-            <li>
-                <a href="browser/registration">Registration (Browser)</a>
-                <br/>
-                A sample registration form that uses a custom layout and custom validation messages.  The results of the form
-                are posted to a server-side PHP file for capture into a database.  The storage into the DB is left as an
-                exercise for the end user.
-            </li>
-            <li>
-                <a href="browser/registration-bootstrap">Registration with Bootstrap (Browser)</a>
-                <br/>
-                The same sample registration form using Twitter Bootstrap for its user interface.  Twitter Bootstrap is a
-                really nice and lightweight responsive UI framework.  Alpaca renders Twitter Bootstrap friendly forms
-                for your end users.
-            </li>
-        </ul>
+            <div class="row-fluid sep1">
+                <div class="span4">
+                    <ul class="nav nav-tabs nav-stacked demo-nav">
+                        <li id="navWelcome" class="active"><a href="#browser">Welcome</a></li>
+                        <li id="navBrowser"><a href="#browser">Browser</a></li>
+                        <li id="navAMD"><a href="#amd">AMD</a></li>
+                        <li id="navBootstrap"><a href="#bootstrap">Bootstrap</a></li>
+                    </ul>
+                </div>
+                <div class="span8">
 
-        <h1>Getting Started</h1>
+                    <a name="welcome"></a>
+                    <div>
 
-        <p>
-            These demos ship with the Alpaca source code.  Each demo is standalone and utilizes JS files that are stored locally.
-            To update each demo's dependencies, simply run <code>ant</code>.
-        </p>
+                        <h1>Alpaca Demonstrations</h1>
+
+                        <p>
+                            This page provides a number of pre-built demonstrations of fully-constructed forms using Alpaca
+                            with a combination of effective technologies including jQuery, Twitter Bootstrap, jQuery Mobile
+                            and the Dojo Toolkit.
+                        </p>
+                        <p>
+                            Furthermore, these demonstrations are packaged along with the Alpaca release so that developers
+                            can get a quick start on building their own forms.  In many cases, existing forms can simply be
+                            taken and modified.
+                        </p>
+
+                        <h2>Developers</h2>
+
+                        <p>
+                            These demonstrations are located under the <code>/demos</code> directory that is shipped as a distribution.
+                            You can also download the source from <a href="http://www.github.com/gitana/alpaca">GitHub</a>.
+                        </p>
+                        <p>
+                            If you choose to download a distribution, everything is already set.  Just go to the <code>/demos</code>
+                            directory and all of the files you need will be there.  Each demo is located in its own directory.
+                        </p>
+                        <p>
+                            If you've synced the code from GitHub, then please do the following:
+                        </p>
+                        <ol>
+                            <li>Run <code>ant</code> to build Alpaca locally.</li>
+                            <li>Navigate to the <code>/demos</code> directory and you will see a list of demos.</li>
+                            <li>Within each demo folder, you can run <code>ant</code> to pull in local copies of all dependencies,
+                            such as Twitter Bootstrap, jQuery and, of course, Alpaca itself.</li>
+                        </ol>
+                        <p>
+                            All of the dependencies will be pulled into a <code>lib</code> directory.  Once done, your Alpaca form
+                            project will be entirely standalone.  You can copy the folder to anyplace you'd like such as a PHP server,
+                            a NodeJS server or even right to your desktop.
+                        </p>
+                    </div>
+
+                    <a name="browser"></a>
+                    <div>
+                        <h2>Browser Demonstrations</h2>
+                        <p>
+                            Alpaca runs right inside a browser running on the web or on a mobile device.  These projects
+                            introduce Alpaca to a web site by simply including the <code>alpaca.css</code> and <code>alpaca.js</code>
+                            files, respectively.
+                        </p>
+
+                        <ul>
+                            <li>
+                                <a href="browser/quickstart">Quick Start</a>
+                                <br/>
+                                An empty Alpaca project that you can use as a template for building your own forms ready-to-run in the browser.
+                                All of the Alpaca dependencies are loaded using SCRIPT tags.  Adjust the source code to fit your own schema,
+                                options and layout needs.
+                            </li>
+                            <li>
+                                <a href="browser/registration">Registration</a>
+                                <br/>
+                                A sample registration form that uses a custom layout and custom validation messages.  The results of the form
+                                are posted to a server-side PHP file for capture into a database.  The storage into the DB is left as an
+                                exercise for the end user.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a name="amd"></a>
+                    <div>
+                        <h2>AMD Demonstrations</h2>
+                        <p>
+                            Alpaca also comes packaged as an AMD (Asynchronous Module Definition) file.  If you're building large
+                            web application projects, we strongly suggest considering AMD as it helps to make dependency
+                            management much easier.
+                        </p>
+                        <ul>
+                            <li>
+                                <a href="amd/quickstart">Quick Start</a>
+                                <br/>
+                                An empty Alpaca project that you can use as a template for building your own forms.
+                                All of the dependencies are loaded via require() and define() methods.
+                                Adjust the source code to fit your own schema, options and layout needs.
+                            </li>
+                            <li>
+                                <a href="amd/registration">Registration</a>
+                                <br/>
+                                A sample registration form that uses a custom layout and custom validation messages.  The results of the form
+                                are posted to a server-side PHP file for capture into a database.  The storage into the DB is left as an
+                                exercise for the end user.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a name="bootstrap"></a>
+                    <div>
+                        <h2>Twitter Bootstrap Demonstrations</h2>
+                        <p>
+                            Alpaca natively renders into Twitter Bootstrap.  Bootstrap is a UI framework that provides
+                            responsive design for your web sites.  It also provides convenient formatting for a number of
+                            HTML elements.
+                        </p>
+                        <ul>
+                            <li>
+                                <a href="bootstrap/quickstart">Quick Start</a>
+                                <br/>
+                                An empty Alpaca project that you can use as a template for building your own forms.
+                                Adjust the source code to fit your own schema, options and layout needs.
+                            </li>
+                            <li>
+                                <a href="bootstrap/registration">Registration</a>
+                                <br/>
+                                A sample registration form that uses a custom layout and custom validation messages.  The results of the form
+                                are posted to a server-side PHP file for capture into a database.  The storage into the DB is left as an
+                                exercise for the end user.
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
     </body>
 </html>

@@ -31,6 +31,7 @@
         setup: function() {
 
             this.schema.pattern = Alpaca.regexps.url;
+            this.schema.format = "uri";
 
             this.base();
         },
@@ -72,7 +73,7 @@
          * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
-            return "URL Field.";
+            return "Provides a text control with validation for an internet web address.";
         },
 
         /**

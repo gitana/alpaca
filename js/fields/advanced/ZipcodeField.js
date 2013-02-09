@@ -141,7 +141,7 @@
          * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
-            return "Zipcode Field.";
+            return "Provides a five or nine-digital US zipcode control with validation.";
         },
 
         /**
