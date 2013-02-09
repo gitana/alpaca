@@ -49,4 +49,14 @@
         }
 
     });
+
+    Alpaca.registerView({
+        "id": "VIEW_WEB_CREATE_TABLE",
+        "parent": 'VIEW_WEB_EDIT_TABLE',
+        "title": "Default Web Create View Table Stle",
+        "description":"Default web create view (Table Style) which doesn't bind initial data.",
+        "type": "create",
+        "displayReadonly":false
+    });
+
 })(jQuery);

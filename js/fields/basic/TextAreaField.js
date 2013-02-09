@@ -53,6 +53,48 @@
         },
 
         /**
+         * @see Alpaca.ControlField#handleValidate
+         */
+        handleValidate: function() {
+            var baseStatus = this.base();
+
+            var valInfo = this.validation;
+
+            var status =  this._validateWordCount();
+            valInfo["wordLimitExceeded"] = {
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("wordLimitExceeded"), [this.options.wordlimit]),
+                "status": status
+            };
+
+            return baseStatus && valInfo["wordLimitExceeded"]["status"];
+        },
+
+        /**
+         * Validate for word limit.
+         *
+         * @returns {Boolean} True if the number of words is equal to or less than the word limit.
+         */
+        _validateWordCount: function() {
+
+            if (this.options.wordlimit && this.options.wordlimit > -1)
+            {
+                var val = this.data;
+
+                if (val)
+                {
+                    var wordcount = val.split(" ").length;
+                    if (wordcount > this.options.wordlimit)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        },
+
+
+        /**
          *@see Alpaca.Fields.TextField#setValue
          */
         setValue: function(value) {
@@ -87,6 +129,12 @@
                         "description": "Number of columns",
                         "type": "number",
                         "default": 40
+                    },
+                    "wordlimit": {
+                        "title": "Word Limit",
+                        "description": "Limits the number of words allowed in the text area.",
+                        "type": "number",
+                        "default": -1
                     }
                 }
             });
@@ -104,6 +152,9 @@
                     },
                     "cols": {
                         "type": "integer"
+                    },
+                    "wordlimit": {
+                        "type": "integer"
                     }
                 }
             });
@@ -120,7 +171,7 @@
          * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
-            return "Textare field for multiple line text.";
+            return "Textarea field for multiple line text.";
         },
 
         /**
@@ -130,6 +181,10 @@
             return "textarea";
         }//__END_OF_BUILDER_HELPERS
 
+    });
+
+    Alpaca.registerMessages({
+        "wordLimitExceeded": "The maximum word limit of {0} has been exceeded."
     });
 
     Alpaca.registerTemplate("controlFieldTextarea", '<textarea id="${id}" {{if options.rows}}rows="${options.rows}"{{/if}} {{if options.cols}}cols="${options.cols}"{{/if}} {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each options.data}}data-${fieldId}="${value}"{{/each}}/>');

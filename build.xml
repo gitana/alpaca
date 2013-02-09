@@ -13,6 +13,7 @@
     <property name="css.dir" value="${project.dir}/css"/>
     <property name="examples.dir" value="${project.dir}/examples"/>
     <property name="tests.dir" value="${project.dir}/tests"/>
+    <property name="quickstart.dir" value="${project.dir}/demos"/>
 
     <property name="build.dir" value="${project.dir}/build"/>
 
@@ -32,10 +33,12 @@
         <mkdir dir="${prep.dir}/css"/>
         <mkdir dir="${prep.dir}/tests"/>
         <mkdir dir="${prep.dir}/examples"/>
+        <mkdir dir="${prep.dir}/quickstart"/>
         <mkdir dir="${package.dir}"/>
         <mkdir dir="${package.dir}/js"/>
         <mkdir dir="${package.dir}/lib"/>
         <mkdir dir="${package.dir}/examples"/>
+        <mkdir dir="${package.dir}/quickstart"/>
 
         <copy todir="${prep.dir}/js">
             <fileset dir="${js.dir}"/>
@@ -51,6 +54,9 @@
         </copy>
         <copy todir="${prep.dir}/tests">
             <fileset dir="${tests.dir}"/>
+        </copy>
+        <copy todir="${prep.dir}/quickstart">
+            <fileset dir="demos"/>
         </copy>
         <copy todir="${prep.dir}/">
             <fileset dir="${project.dir}">
@@ -178,6 +184,11 @@
                 <file name="fields/advanced/TimeField.js"/>
                 <file name="fields/advanced/UpperCaseField.js"/>
                 <file name="fields/advanced/WysiwygField.js"/>
+
+                <file name="fields/advanced/StateField.js"/>
+                <file name="fields/advanced/CountryField.js"/>
+                <file name="fields/advanced/ZipcodeField.js"/>
+                <file name="fields/advanced/URLField.js"/>
             </filelist>
         </concat>
 
@@ -325,6 +336,11 @@
                 <file name="fields/advanced/TimeField.js"/>
                 <file name="fields/advanced/UpperCaseField.js"/>
                 <file name="fields/advanced/WysiwygField.js"/>
+
+                <file name="fields/advanced/StateField.js"/>
+                <file name="fields/advanced/CountryField.js"/>
+                <file name="fields/advanced/ZipcodeField.js"/>
+                <file name="fields/advanced/URLField.js"/>
             </filelist>
         </concat>
 
@@ -600,6 +616,7 @@
         <include name="js/**/*"/>
         <include name="lib/**/*"/>
         <include name="tests/**/*"/>
+        <include name="quickstart/**/*"/>
         <include name="examples/**/*"/>
         <include name="*.html"/>
         <include name="favicon.ico"/>
@@ -616,7 +633,7 @@
         </copy>
     </target>
 
-    <target name="full" depends="webserver-clean">
+    <target name="full" depends="webserver-clean, install-demo-local-dependencies">
         <copy todir="${local.docroot.basepath}/${appkey}">
             <fileset refid="alpaca-files"/>
         </copy>
@@ -668,6 +685,19 @@
         <copy todir="/projects/components/alpaca-extras">
             <fileset dir="${package.dir}/components/alpaca-extras"/>
         </copy>
+
+    </target>
+
+    <target name="install-demo-local-dependencies">
+
+        <!-- basic -->
+        <ant antfile="demos/browser/quickstart/build.xml" />
+
+        <!-- registration -->
+        <ant antfile="demos/browser/registration/build.xml" />
+
+        <!-- registration-bootstrap -->
+        <ant antfile="demos/browser/registration-bootstrap/build.xml" />
 
     </target>
 

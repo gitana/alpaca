@@ -130,7 +130,11 @@
         _validatePattern: function() {
             if (this.schema.pattern) {
 	            var val = this.getValue();
-                if (!Alpaca.isValEmpty(val) && !val.match(this.schema.pattern)) {
+                if (Alpaca.isEmpty(val)) {
+                    val = "";
+                }
+                //if (!Alpaca.isValEmpty(val) && !val.match(this.schema.pattern)) {
+                if (!val.match(this.schema.pattern)) {
                     return false;
                 }
             }
@@ -146,11 +150,14 @@
         _validateMinLength: function() {
 			if (!Alpaca.isEmpty(this.schema.minLength)) {
 				var val = this.getValue();
-				if (!Alpaca.isEmpty(val)) {
+                if (Alpaca.isEmpty(val)) {
+                    val = "";
+                }
+				//if (!Alpaca.isEmpty(val)) {
 					if (val.length < this.schema.minLength) {
 						return false;
 					}
-				}
+				//}
 			}
 			return true;
 		},
@@ -163,11 +170,14 @@
         _validateMaxLength: function() {
 			if (!Alpaca.isEmpty(this.schema.maxLength)) {
 				var val = this.getValue();
-				if (!Alpaca.isEmpty(val)) {
+                if (Alpaca.isEmpty(val)) {
+                    val = "";
+                }
+                //if (!Alpaca.isEmpty(val)) {
 					if (val.length > this.schema.maxLength) {
 						return false;
 					}
-				}
+				//}
 			}
             return true;
         },

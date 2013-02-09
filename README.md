@@ -116,9 +116,10 @@ the [Alpaca Discussion Forums](http://www.cloudcms.org/forums/categories/alpaca)
 
 ## Authors
 
-+ [@drq](http://github.com/drq)
-+ [@uzquiano](http://github.com/uzquiano)
 + [@cloudcms](http://github.com/cloudcms)
++ [@uzquiano](http://github.com/uzquiano)
++ [@drq](http://github.com/drq)
+
 
 Thanks for assistance and contributions:
 

@@ -107,6 +107,39 @@
         },
 
         /**
+         * Determines whether the top control is entirely valid.
+         *
+         * @return {*}
+         */
+        isFormValid: function()
+        {
+            // re-compute validation for the full control set
+            this.topControl.validate(true);
+
+            return this.topControl.isValid(true);
+        },
+
+        enableSubmitButton: function()
+        {
+            $(".alpaca-form-button-submit").attr("disabled", false);
+        },
+
+        disableSubmitButton: function()
+        {
+            $(".alpaca-form-button-submit").attr("disabled", true);
+        },
+
+        adjustSubmitButtonState: function()
+        {
+            this.disableSubmitButton();
+
+            if (this.isFormValid())
+            {
+                this.enableSubmitButton();
+            }
+        },
+
+        /**
          * Responsible for fetching any templates needed so as to render the
          * current mode for this field.
          *
@@ -175,6 +208,8 @@
             this.buttons = {};
             var _this = this;
             $.each($('.alpaca-form-button', this.container),function(k,v) {
+
+                // TODO: this is technically wrong since we only want to trap for left-mousedown...
                 $(v).mousedown(function() {
                     var _this = $(this);
                     _this.attr("button-pushed","true");
@@ -253,9 +288,25 @@
             if (this.field) {
                 var v = this.getValue();
                 $(this.field).submit(v, function(e) {
-                    return _this.onSubmit(e);
+
+                    // make a last check to ensure the form is valid
+                    if (_this.isFormValid())
+                    {
+                        return _this.onSubmit(e);
+                    }
+
+
                 });
             }
+
+            // listen for fieldupdates and determine whether the form is valid.
+            // if so, enable the submit button...
+            // otherwise, disable it
+            $(_this.topControl.getEl()).bind("fieldupdate", function() {
+                _this.adjustSubmitButtonState();
+            });
+
+            this.adjustSubmitButtonState();
         },
 
         /**

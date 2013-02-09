@@ -39,6 +39,11 @@
     margin: 2px;
 }
 
+.alpaca-controlfield * {
+    background: transparent;
+}
+
+
 .alpaca-controlfield-container {
     display: inline-block;
     padding-top: 4px;

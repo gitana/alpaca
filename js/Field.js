@@ -746,9 +746,20 @@
         /**
          * Validates this field and returns whether it is in a valid state.
          *
+         * @param [Boolean] validateChildren whether to child controls.
+         *
          * @returns {Boolean} True if value of this field is valid, false otherwise.
          */
-        validate: function() {
+        validate: function(validateChildren) {
+
+            // if validateChildren, then walk recursively down into child elements
+            if (this.children && validateChildren) {
+                for (var i = 0; i < this.children.length; i++) {
+                    var child = this.children[i];
+                    child.validate(validateChildren);
+                }
+            }
+
             // skip out if we haven't yet bound any data into this control
             // the control can still be considered to be initializing
             var status = true;
@@ -953,20 +964,23 @@
          * @return {Boolean} True if the field is valid, false otherwise.
          */
         isValid: function(checkChildren) {
+
+            if (checkChildren && this.children)
+            {
+                for (var i = 0; i < this.children.length; i++) {
+                    var child = this.children[i];
+                    if (!child.isValid(checkChildren)) {
+                        return false;
+                    }
+                }
+            }
+
             if ($.isEmptyObject(this.validation)) {
                 return true;
             } else {
                 for (var key in this.validation) {
                     if (!this.validation[key].status) {
                         return false;
-                    }
-                }
-                if (this.children && checkChildren) {
-                    for (var i = 0; i < this.children.length; i++) {
-                        var child = this.children[i];
-                        if (!child.isValid(checkChildren)) {
-                            return false;
-                        }
                     }
                 }
                 return true;

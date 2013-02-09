@@ -175,8 +175,13 @@
          */
         onKeyUp: function(e) {
 
-            // update the UI validation state
-            this.renderValidationState();
+            // if the field is currently invalid, then we provide early feedback to the user as to when they enter
+            // a value that switches into a valid state
+            // otherwise, we wait on blur() until we invalidate
+            if (!this.isValid())
+            {
+                this.renderValidationState();
+            }
         },
 
         /**
