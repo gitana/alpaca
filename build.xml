@@ -534,6 +534,7 @@
 		<copy todir="${package.dir}/components/${appkey}-core">
             <fileset dir="${package.dir}/css">
 				<include name="${appkey}-core.css" />
+                <include name="${appkey}-mobile.css" />
 				<include name="images/**" />
 			</fileset>
 		</copy>
@@ -558,6 +559,7 @@
         <copy todir="${package.dir}/components/alpaca-extras">
             <fileset dir="${package.dir}/css">
 				<include name="alpaca-extras.css" />
+                <include name="alpaca-mobile.css" />
 				<include name="images/**" />
 			</fileset>
 		</copy>
@@ -581,6 +583,7 @@
         <copy todir="${package.dir}/components/alpaca">
 			<fileset dir="${package.dir}/css">
 				<include name="alpaca.css" />
+                <include name="alpaca-mobile.css" />
 				<include name="images/**" />
 			</fileset>
 		</copy>
