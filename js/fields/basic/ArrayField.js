@@ -50,6 +50,10 @@
             }
             this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle) ? "button" : this.view.toolbarStyle;
 
+            if (!this.options.items) {
+                this.options.items = {};
+            }
+
             var toolbarSticky = false;
 
             if (!Alpaca.isEmpty(this.view.toolbarSticky)) {
@@ -60,12 +64,12 @@
                 toolbarSticky = this.options.toolbarSticky;
             }
 
-            if (Alpaca.isEmpty(this.options.showMoveUpItemButton)) {
-                this.options.showMoveUpItemButton = true;
+            if (Alpaca.isEmpty(this.options.items.showMoveUpItemButton)) {
+                this.options.items.showMoveUpItemButton = true;
             }
 
-            if (Alpaca.isEmpty(this.options.showMoveDownItemButton)) {
-                this.options.showMoveDownItemButton = true;
+            if (Alpaca.isEmpty(this.options.items.showMoveDownItemButton)) {
+                this.options.items.showMoveDownItemButton = true;
             }
 
             this.options.toolbarSticky = toolbarSticky;
@@ -296,7 +300,7 @@
                         {
                             feature: "add",
                             icon: _this.addIcon,
-                            label: _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item",
+                            label: (_this.options.items && _this.options.items.addItemLabel) ? _this.options.items.addItemLabel : "Add Item",
 	                        clickCallback: function(id, arrayField) {
 		                        var newContainerElem = arrayField.addItem(containerElem.index() + 1, null, null, id);
 		                        arrayField.enrichElements(newContainerElem);
@@ -306,7 +310,7 @@
                         {
                             feature: "remove",
                             icon: _this.removeIcon,
-                            label: _this.options.removeItemLabel ? _this.options.removeItemLabel : "Remove Item",
+                            label: (_this.options.items && _this.options.items.removeItemLabel) ? _this.options.items.removeItemLabel : "Remove Item",
 	                        clickCallback: function(id, arrayField) {
                                 arrayField.removeItem(id);
                             }
@@ -314,22 +318,22 @@
                     ];
 
 		            // Optional buttons : up & down
-		            if (_this.options.showMoveUpItemButton) {
+		            if ((_this.options.items && _this.options.items.showMoveUpItemButton)) {
 			            buttonsDef.push({
 				            feature: "up",
                             icon: _this.upIcon,
-				            label: _this.options.moveUpItemLabel ? _this.options.moveUpItemLabel : "Move Up",
+				            label: (_this.options.items && _this.options.items.moveUpItemLabel) ? _this.options.items.moveUpItemLabel : "Move Up",
 				            clickCallback: function(id, arrayField) {
 					            arrayField.moveItem(id, true);
                             }
 			            });
 		            }
 
-		            if (_this.options.showMoveDownItemButton) {
+		            if ((_this.options.items && _this.options.items.showMoveDownItemButton)) {
 			            buttonsDef.push({
 				            feature: "down",
                             icon: _this.downIcon,
-				            label: _this.options.moveDownItemLabel ? _this.options.moveDownItemLabel : "Move Down",
+				            label: (_this.options.items && _this.options.items.moveDownItemLabel) ? _this.options.items.moveDownItemLabel : "Move Down",
 				            clickCallback: function(id, arrayField) {
 					            arrayField.moveItem(id, false);
                             }
@@ -386,7 +390,7 @@
             if (itemToolbarTemplate) {
                 var toolbarElem = $.tmpl(itemToolbarTemplate, {
                     "id": id,
-                    "addItemLabel": _this.options.addItemLabel ? _this.options.addItemLabel : "Add Item"
+                    "addItemLabel": (_this.options.items && _this.options.items.addItemLabel) ? _this.options.items.addItemLabel : "Add Item"
                 });
                 if (toolbarElem.attr("id") == null) {
                     toolbarElem.attr("id", id + "-array-toolbar");
@@ -705,60 +709,60 @@
         getSchemaOfOptions: function() {
             var properties = {
                 "properties": {
+                    "toolbarSticky": {
+                        "title": "Sticky Toolbar",
+                        "description": "Array item toolbar will be aways on if true.",
+                        "type": "boolean",
+                        "default": false
+                    },
                     "items": {
                         "title": "Array Items",
                         "description": "Options for array items.",
                         "type": "object",
                         "properties": {
-                            "toolbarSticky": {
-                                "title": "Sticky Toolbar",
-                                "description": "Array item toolbar will be aways on if true.",
-                                "type": "boolean",
-                                "default": false
-                            },
 	                        "extraToolbarButtons": {
                                 "title": "Extra Toolbar buttons",
                                 "description": "Buttons to be added next to add/remove/up/down, see examples",
                                 "type": "array",
                                 "default": undefined
+                            },
+                            "moveUpItemLabel": {
+                                "title": "Move Up Item Label",
+                                "description": "The label to use for the toolbar's 'move up' button.",
+                                "type": "string",
+                                "default": "Move Up"
+                            },
+                            "moveDownItemLabel": {
+                                "title": "Move Down Item Label",
+                                "description": "The label to use for the toolbar's 'move down' button.",
+                                "type": "string",
+                                "default": "Move Down"
+                            },
+                            "removeItemLabel": {
+                                "title": "Remove Item Label",
+                                "description": "The label to use for the toolbar's 'remove item' button.",
+                                "type": "string",
+                                "default": "Remove Item"
+                            },
+                            "addItemLabel": {
+                                "title": "Add Item Label",
+                                "description": "The label to use for the toolbar's 'add item' button.",
+                                "type": "string",
+                                "default": "Add Item"
+                            },
+                            "showMoveDownItemButton": {
+                                "title": "Show Move Down Item Button",
+                                "description": "Whether to show to the 'Move Down' button on the toolbar.",
+                                "type": "boolean",
+                                "default": true
+                            },
+                            "showMoveUpItemButton": {
+                                "title": "Show Move Up Item Button",
+                                "description": "Whether to show the 'Move Up' button on the toolbar.",
+                                "type": "boolean",
+                                "default": true
                             }
-                        },
-                    },
-                    "moveUpItemLabel": {
-                        "title": "Move Up Item Label",
-                        "description": "The label to use for the toolbar's 'move up' button.",
-                        "type": "string",
-                        "default": "Move Up"
-                    },
-                    "moveDownItemLabel": {
-                        "title": "Move Down Item Label",
-                        "description": "The label to use for the toolbar's 'move dwn' button.",
-                        "type": "string",
-                        "default": "Move Down"
-                    },
-                    "removeItemLabel": {
-                        "title": "Remove Item Label",
-                        "description": "The label to use for the toolbar's 'remove item' button.",
-                        "type": "string",
-                        "default": "Remove Item"
-                    },
-                    "addItemLabel": {
-                        "title": "Add Item Label",
-                        "description": "The label to use for the toolbar's 'add item' button.",
-                        "type": "string",
-                        "default": "Add Item"
-                    },
-                    "showMoveDownItemButton": {
-                        "title": "Show Move Down Item Button",
-                        "description": "Whether to show to the 'Move Down' button on the toolbar.",
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "showMoveUpItemButton": {
-                        "title": "Show Move Up Item Button",
-                        "description": "Whether to show the 'Move Up' button on the toolbar.",
-                        "type": "boolean",
-                        "default": true
+                        }
                     }
                 }
             };
@@ -777,12 +781,12 @@
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
                 "fields": {
+                    "toolbarSticky": {
+                        "type": "checkbox"
+                    },
                     "items": {
                         "type": "object",
                         "fields": {
-                            "toolbarSticky": {
-                                "type": "checkbox"
-                            }
                         }
                     }
                 }
