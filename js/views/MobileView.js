@@ -31,12 +31,14 @@
         },
         "render": function(field, renderedCallback) {
 
+            var self = this;
+
             field.render(function(field) {
 
                 refreshPageForField(field.getEl());
 
                 if (renderedCallback) {
-                    renderedCallback.call(field);
+                    renderedCallback.call(self, field);
                 }
             });
 
@@ -97,12 +99,14 @@
         },
         "render": function(field, renderedCallback) {
 
+            var self = this;
+
             field.render(function(field) {
 
                 refreshPageForField(field.getEl());
 
                 if (renderedCallback) {
-                    renderedCallback.call(field);
+                    renderedCallback.call(self, field);
                 }
             });
 
@@ -130,5 +134,15 @@
             $(el).trigger('pagecreate');
         }
     };
+
+    Alpaca.registerView({
+        "id": "VIEW_MOBILE_CREATE",
+        "parent": 'VIEW_MOBILE_EDIT',
+        "title": "Default Mobile Create View",
+        "description":"Default mobile create view which doesn't bind initial data.",
+        "type": "create",
+        "displayReadonly":false
+    });
+
 
 })(jQuery);

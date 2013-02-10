@@ -702,6 +702,10 @@
         <ant dir="demos/bootstrap/quickstart" />
         <ant dir="demos/bootstrap/registration" />
 
+        <!-- jquerymobile demos -->
+        <ant dir="demos/jquerymobile/quickstart" />
+        <ant dir="demos/jquerymobile/registration" />
+
     </target>
 
 
