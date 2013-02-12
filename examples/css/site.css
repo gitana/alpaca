@@ -444,3 +444,18 @@ header > div
 .front-ui-images SPAN.jqueryui
 {
 }
+
+.front-ui-examples
+{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.front-ui-examples SPAN
+{
+    width: 250px;
+    height: 50px;
+    border: 1px #ccc solid;
+    padding: 5px;
+    margin: 5px;
+}
