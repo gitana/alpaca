@@ -1561,7 +1561,7 @@
         {
             var self = this;
 
-            var t1 = new Date().getTime();
+            //var t1 = new Date().getTime();
 
             var report = {
                 "errors": [],
@@ -1571,8 +1571,8 @@
 
             var finalCallback = function()
             {
-                var t2 = new Date().getTime();
-                console.log("Compilation Exited in: " + (t2-t1)+ " ms");
+                //var t2 = new Date().getTime();
+                //console.log("Compilation Exited in: " + (t2-t1)+ " ms");
 
                 cb(report);
             };
