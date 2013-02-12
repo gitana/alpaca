@@ -141,9 +141,9 @@
                                 this.wizardConfigs.validation = true;
                             }
                         }
-                        var layoutTemplate = this.view.getLayout().template;
+                        var layoutTemplateDescriptor = this.view.getLayout().templateDescriptor;
                         if (this.wizardConfigs && this.wizardConfigs.renderWizard) {
-                            if (layoutTemplate) {
+                            if (layoutTemplateDescriptor) {
                                 //Wizard based on layout
                                 this.wizard();
                             } else {
@@ -193,7 +193,7 @@
                     "data" : value,
                     "options": fieldOptions,
                     "schema" : itemSchema,
-                    "view" : this.view.viewObject.id ? this.view.viewObject.id : this.view.viewObject,
+                    "view" : this.view.id ? this.view.id : this.view,
                     "connector": this.connector,
                     "notTopLevel":true,
                     "render" : function(fieldControl) {
@@ -392,12 +392,14 @@
              */
             wizard: function() {
 
+                var _this = this;
+
                 var element = this.outerEl;
                 var steps = $('.alpaca-wizard-step', element);
                 var count = steps.size();
 
                 this.totalSteps = count;
-                var _this = this;
+
                 var stepTitles = [];
                 if (this.wizardConfigs.stepTitles) {
                     stepTitles = this.wizardConfigs.stepTitles;
@@ -427,17 +429,17 @@
                 steps.each(function(i) {
 
                     var stepId = 'step' + i;
-                    var wizardStepTemplate = _this.view.getTemplate("wizardStep");
-                    if (wizardStepTemplate) {
-                        var wizardStepElement = $.tmpl(wizardStepTemplate, {});
+                    var wizardStepTemplateDescriptor = _this.view.getTemplateDescriptor("wizardStep");
+                    if (wizardStepTemplateDescriptor) {
+                        var wizardStepElement = _this.view.tmpl(wizardStepTemplateDescriptor, {});
                         wizardStepElement.attr("id", stepId);
                         $(this).wrap(wizardStepElement);
                     }
 
                     var navBarId = stepId + '-nav-bar';
-                    var wizardNavBarTemplate = _this.view.getTemplate("wizardNavBar");
-                    if (wizardNavBarTemplate) {
-                        var wizardNavBarElement = $.tmpl(wizardNavBarTemplate, {});
+                    var wizardNavBarTemplateDescriptor = _this.view.getTemplateDescriptor("wizardNavBar");
+                    if (wizardNavBarTemplateDescriptor) {
+                        var wizardNavBarElement = _this.view.tmpl(wizardNavBarTemplateDescriptor, {});
                         wizardNavBarElement.attr("id", navBarId);
                         wizardNavBarElement.addClass('alpaca-wizard-nav-bar');
                         $(this).append(wizardNavBarElement);
@@ -463,6 +465,8 @@
              * Renders a configuration-based wizard without a layout template.
              */
             autoWizard: function() {
+
+                var _this = this;
 
                 var totalSteps = this.wizardConfigs.steps;
 
@@ -498,17 +502,17 @@
                     }
 
                     var stepId = 'step' + i;
-                    var wizardStepTemplate = this.view.getTemplate("wizardStep");
-                    if (wizardStepTemplate) {
-                        var wizardStepElement = $.tmpl(wizardStepTemplate, {});
+                    var wizardStepTemplateDescriptor = this.view.getTemplateDescriptor("wizardStep");
+                    if (wizardStepTemplateDescriptor) {
+                        var wizardStepElement = _this.view.tmpl(wizardStepTemplateDescriptor, {});
                         wizardStepElement.attr("id", stepId);
                         $(tmpArray.join(',')).wrapAll(wizardStepElement);
                     }
 
                     var navBarId = stepId + '-nav-bar';
-                    var wizardNavBarTemplate = this.view.getTemplate("wizardNavBar");
-                    if (wizardNavBarTemplate) {
-                        var wizardNavBarElement = $.tmpl(wizardNavBarTemplate, {});
+                    var wizardNavBarTemplateDescriptor = this.view.getTemplateDescriptor("wizardNavBar");
+                    if (wizardNavBarTemplateDescriptor) {
+                        var wizardNavBarElement = _this.view.tmpl(wizardNavBarTemplateDescriptor, {});
                         wizardNavBarElement.attr("id", navBarId);
                         wizardNavBarElement.addClass('alpaca-wizard-nav-bar');
                         $('#' + stepId, this.outerEl).append(wizardNavBarElement);
@@ -542,11 +546,14 @@
              * @param {Object} stepTitles Step titles.
              */
             _renderWizardStatusBar: function(stepTitles) {
+
+                var _this = this;
+
                 var wizardStatusBar = this.wizardConfigs.statusBar;
                 if (wizardStatusBar && stepTitles) {
-                    var wizardStatusBarTemplate = this.view.getTemplate("wizardStatusBar");
-                    if (wizardStatusBarTemplate) {
-                        var wizardStatusBarElement = $.tmpl(wizardStatusBarTemplate, {
+                    var wizardStatusBarTemplateDescriptor = this.view.getTemplateDescriptor("wizardStatusBar");
+                    if (wizardStatusBarTemplateDescriptor) {
+                        var wizardStatusBarElement = _this.view.tmpl(wizardStatusBarTemplateDescriptor, {
                             "id": this.getId() + "-wizard-status-bar",
                             "titles": stepTitles
                         });
@@ -567,9 +574,9 @@
                 var stepName = "step" + i;
                 var _this = this;
 
-                var wizardPreButtonTemplate = this.view.getTemplate("wizardPreButton");
-                if (wizardPreButtonTemplate) {
-                    var wizardPreButtonElement = $.tmpl(wizardPreButtonTemplate, {});
+                var wizardPreButtonTemplateDescriptor = this.view.getTemplateDescriptor("wizardPreButton");
+                if (wizardPreButtonTemplateDescriptor) {
+                    var wizardPreButtonElement = _this.view.tmpl(wizardPreButtonTemplateDescriptor, {});
                     wizardPreButtonElement.attr("id", stepName + '-button-pre');
                     wizardPreButtonElement.addClass("alpaca-wizard-button-pre");
                     if (_this.buttonBeautifier) {
@@ -599,9 +606,9 @@
                 var stepName = "step" + i;
                 var _this = this;
 
-                var wizardNextButtonTemplate = this.view.getTemplate("wizardNextButton");
-                if (wizardNextButtonTemplate) {
-                    var wizardNextButtonElement = $.tmpl(wizardNextButtonTemplate, {});
+                var wizardNextButtonTemplateDescriptor = this.view.getTemplateDescriptor("wizardNextButton");
+                if (wizardNextButtonTemplateDescriptor) {
+                    var wizardNextButtonElement = _this.view.tmpl(wizardNextButtonTemplateDescriptor, {});
                     wizardNextButtonElement.attr("id", stepName + '-button-next');
                     wizardNextButtonElement.addClass("alpaca-wizard-button-next");
                     if (_this.buttonBeautifier) {
@@ -660,9 +667,9 @@
                 var stepName = "step" + i;
                 var _this = this;
 
-                var wizardDoneButtonTemplate = this.view.getTemplate("wizardDoneButton");
-                if (wizardDoneButtonTemplate) {
-                    var wizardDoneButtonElement = $.tmpl(wizardDoneButtonTemplate, {});
+                var wizardDoneButtonTemplateDescriptor = this.view.getTemplateDescriptor("wizardDoneButton");
+                if (wizardDoneButtonTemplateDescriptor) {
+                    var wizardDoneButtonElement = _this.view.tmpl(wizardDoneButtonTemplateDescriptor, {});
                     wizardDoneButtonElement.attr("id", stepName + '-button-done');
                     wizardDoneButtonElement.addClass("alpaca-wizard-button-done");
                     if (_this.buttonBeautifier) {

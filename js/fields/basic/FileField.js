@@ -30,7 +30,7 @@
          */
         setup: function() {
             this.base();            
-            this.controlFieldTemplate = this.view.getTemplate("controlFieldFile");
+            this.controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldFile");
         },
                 
         /**

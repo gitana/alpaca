@@ -73,20 +73,21 @@
          */
         _renderField: function(onSuccess) {
 
-            var controlFieldTemplate;
+            var _this = this;
 
             if (this.schema["type"] && this.schema["type"] == "array") {
                 this.options.multiple = true;
             }
 
+            var controlFieldTemplateDescriptor;
             if (this.options.multiple && Alpaca.isArray(this.data)) {
-                controlFieldTemplate = this.view.getTemplate("controlFieldSelectMultiple");
+                controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldSelectMultiple");
             } else {
-                controlFieldTemplate = this.view.getTemplate("controlFieldSelect");
+                controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldSelect");
             }
 
-            if (controlFieldTemplate) {
-                this.field = $.tmpl(controlFieldTemplate, {
+            if (controlFieldTemplateDescriptor) {
+                this.field = _this.view.tmpl(controlFieldTemplateDescriptor, {
                     "id": this.getId(),
                     "options": this.options,
                     "required": this.schema.required,

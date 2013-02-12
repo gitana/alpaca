@@ -39,7 +39,7 @@
                 this.options.cols = 40;
             }
 
-            this.controlFieldTemplate = this.view.getTemplate("controlFieldTextarea");
+            this.controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldTextarea");
         },
 
         /**

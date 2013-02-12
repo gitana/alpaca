@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Alpaca - Easy HTML5 Forms for jQuery</title>
+    <title>Alpaca - Easy Forms for jQuery</title>
     <meta name="keywords"
           content="jquery forms,JSON forms"/>
     <meta name="description"
@@ -10,72 +10,40 @@
     <meta name="author" content="Gitana Software Inc."/>
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 
-    <script type="text/javascript" src="lib/jquery-latest.min.js">
-    </script>
-    <!--Alpaca JavaScript-->
-    <script type="text/javascript" src="lib/base.js"></script>
-    <script type="text/javascript" src="lib/validator.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="./lib/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="./lib/jquery.tmpl.js"></script>
 
-    <script type="text/javascript" src="lib/jquery.tmpl.js"></script>
-    <script type="text/javascript" src="lib/equiv_and_hoozit.js"></script>
-    <script type="text/javascript" src="lib/jquery.maskedinput-1.3.1.js"></script>
+    <!-- Alpaca -->
+    <script type="text/javascript" src="./components/alpaca/alpaca.js"></script>
+    <link type="text/css" href="./components/alpaca/alpaca.css" rel="stylesheet"/>
 
-    <script type="text/javascript" src="js/Alpaca.js"></script>
+    <!-- jQuery UI Theme -->
+    <link type="text/css" href="./examples/lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
 
-    <script type="text/javascript" src="js/views/DefaultView.js"></script>
-    <script type="text/javascript" src="js/views/ListView.js"></script>
-    <script type="text/javascript" src="js/views/MobileView.js"></script>
-    <script type="text/javascript" src="js/views/LayoutView.js"></script>
+    <!-- Additional CSS -->
+    <link type="text/css" href="./examples/css/960.fluid.css" rel="stylesheet"/>
 
-    <script type="text/javascript" src="js/View.js"></script>
+    <!-- Web Site -->
+    <script type="text/javascript" src="./examples/lib/google-code-prettify/prettify.min.js"></script>
+    <script type="text/javascript" src="./examples/js/themeswitchertool.js"></script>
+    <script type="text/javascript" src="./examples/js/example.js"></script>
+    <script type="text/javascript" src="./examples/js/footer.js"></script>
+    <link type="text/css" href="./examples/css/site.css" rel="stylesheet"/>
+    <link type="text/css" href="./examples/lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+    <script type="text/javascript" src="./examples/lib/tweet/jquery.tweet.js"></script>
+    <link type="text/css" href="./examples/lib/tweet/jquery.tweet.css" rel="stylesheet"/>
 
-    <script type="text/javascript" src="js/Field.js"></script>
-    <script type="text/javascript" src="js/ControlField.js"></script>
-    <script type="text/javascript" src="js/ContainerField.js"></script>
-    <script type="text/javascript" src="js/Connector.js"></script>
-    <script type="text/javascript" src="js/Form.js"></script>
+    <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
-    <!--Alpaca Base Fields-->
-    <script type="text/javascript" src="js/fields/basic/TextField.js"></script>
-    <script type="text/javascript" src="js/fields/basic/TextAreaField.js"></script>
-    <script type="text/javascript" src="js/fields/basic/CheckBoxField.js"></script>
-    <script type="text/javascript" src="js/fields/basic/FileField.js"></script>
-    <script type="text/javascript" src="js/fields/basic/ListField.js"></script>
-    <script type="text/javascript" src="js/fields/basic/RadioField.js"></script>
-    <script type="text/javascript" src="js/fields/basic/SelectField.js"></script>
-    <script type="text/javascript" src="js/fields/basic/NumberField.js"></script>
-    <script type="text/javascript" src="js/fields/basic/ArrayField.js"></script>
-    <script type="text/javascript" src="js/fields/basic/ObjectField.js"></script>
-    <script type="text/javascript" src="js/fields/basic/AnyField.js"></script>
-    <!--End of Alpaca Base Fields-->
-
-    <script type="text/javascript" src="js/views/DefaultViewLanguagePacks.js"></script>
-
-    <!--End of Alpaca JavaScript-->
-
-    <script type="text/javascript" src="examples/lib/google-code-prettify/prettify.min.js"></script>
-    <script type="text/javascript" src="examples/lib/tweet/jquery.tweet.js"></script>
-    <script type="text/javascript" src="examples/js/footer.js"></script>
-
-    <!--Alpaca CSS-->
-    <link type="text/css" href="css/960.fluid.css" rel="stylesheet"/>
-    <link type="text/css" href="css/alpaca.css" rel="stylesheet"/>
-    <link type="text/css" href="css/jquery-ui-latest.custom.css" rel="stylesheet"/>
-    <!--End of Alpaca CSS-->
-    <link type="text/css" href="examples/css/site.css" rel="stylesheet"/>
-
-    <link type="text/css" href="examples/lib/google-code-prettify/prettify.css" rel="stylesheet"/>
-    <link type="text/css" href="examples/lib/tweet/jquery.tweet.css" rel="stylesheet"/>
-
-	<script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
-	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 <body>
 <header>
 	<div class='container_12'>
     <div class='actual-body'>
         <div class='grid_12'>
-            <h1><img src="examples/img/alpaca.png"><span>Easy HTML5 Forms for jQuery</span></h1>
+            <h1><img src="examples/img/alpaca.png"><span>Easy Forms for jQuery</span></h1>
             <div class="resource-bar">
                 <a href="index.html" class="current">Home</a>
                 <a href="resources.html">Downloads</a>
@@ -100,19 +68,41 @@
     <div class="widget-body">
 
         <p>
-            Alpaca is a Forms Engine that makes it easy to generate beautiful, interactive forms for web and mobile
-            applications running on <a href="http://jquery.com/" target="_blank">jQuery</a>, <a href="http://jquerymobile.com/">jQuery Mobile</a>,
-            <a href="http://jqueryui.com" target="_blank">jQuery UI</a> and <a href="http://twitter.github.com/bootstrap" target="_blank">Twitter Bootstrap</a>.
-
+            Alpaca is the Easy Forms Engine for jQuery.
+        </p>
+        <p>
+            It is built around <a href="http://json-schema.org/" target="_blank">JSON schema</a> to keep things simple.
+            Using Alpaca, you can express your forms object model,
+            types, properties and validation logic.  Forms rendered with Alpaca provide intuitive interfaces for
+            your users while giving your business an assurance of data compliance.
+        </p>
+        <p>
+            Alpaca comes pre-configured to work nicely with the following web frameworks:
+        </p>
+        <div align="center" class="front-ui-images">
+            <span class="bootstrap">
+                <a href="http://twitter.github.com/bootstrap" target="_blank">
+                    <img src="./examples/img/ui/bootstrap.png" alt="Twitter Bootstrap" title="Twitter Bootstrap">
+                </a>
+            </span>
+            <span class="jquerymobile">
+                <a href="http://jquerymobile.com" target="_blank">
+                    <img src="./examples/img/ui/jquery-mobile.png" alt="JQuery Mobile" title="JQuery Mobile">
+                </a>
+            </span>
+            <span class="jqueryui">
+                <a href="http://jqueryui.com" target="_blank">
+                    <img src="./examples/img/ui/jquery-ui.jpg" alt="JQuery UI" title="JQuery UI">
+                </a>
+            </span>
+        </div>
+		<p>
+            The Alpaca library is pre-packaged with controls, wizards, layouts, I18N support and pluggable template
+            engines.  We ship with support for jQuery Tmpl, EJS and Handlebars.  Documentation and API information
+            is provided so that you can extend Alpaca as you see fit.
 		</p>
 		<p>
-			Alpaca is built around <a href="http://json-schema.org/" target="_blank">JSON-Schema</a> for expression of the 
-			form object model, types, properties, validation logic and
-			constraints.  It provides a comprehensive and extensible control library with support for wizards, layout, I18N
-			and pluggable templating engines (like EJS and jQuery tmpl).
-		</p>
-		<p>
-			Alpaca is an <a href="https://github.com/gitana/alpaca" target="_blank">open-source, community-led project</a> 
+			Alpaca is an community-led <a href="https://github.com/gitana/alpaca" target="_blank">open-source project</a>
 			licensed under Apache 2.0.
 		</p>
     </div>
@@ -128,11 +118,10 @@
     <img src="examples/img/step-1.png"/>
 
     <p>
-        Copy the following HTML into your web page's <code>&lt;head/&gt;</code> block.
+        Copy the following two lines into your web's <code>&lt;head/&gt;</code> block after jQuery:
     </p>
 
 <pre class="prettyprint linenums">
-&lt;script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="http://www.alpacajs.org/js/alpaca.min.js"&gt;&lt;/script&gt;
 &lt;link type="text/css" href="http://www.alpacajs.org/css/alpaca.min.css" rel="stylesheet"/&gt;
 </pre>
@@ -141,7 +130,7 @@
     <img src="examples/img/step-2.png"/>
 
     <p>
-		Add a <code>&lt;div&gt;</code> tag to your HTML page and call <code>$.alpaca()</code> with your form data.
+		Add a <code>&lt;div&gt;</code> tag to your HTML page and call <code>$.alpaca()</code> with your form data:
     </p>
 
 <pre class="prettyprint linenums">

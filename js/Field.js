@@ -16,11 +16,11 @@
          * @param {Any} data Field data.
          * @param {Object} options Field options.
          * @param {Object} schema Field schema.
-         * @param {Object|String} view Field view.
+         * @param {String} viewId view id
          * @param {Alpaca.Connector} connector Field connector.
          * @param {Function} errorCallback Error callback.
          */
-        constructor: function(container, data, options, schema, view, connector, errorCallback) {
+        constructor: function(container, data, options, schema, viewId, connector, errorCallback) {
             // mark that we are initializing
             this.initializing = true;
 
@@ -44,7 +44,8 @@
             // check if this field rendering is single-level or not
             this.singleLevelRendering = false;
 
-            this.view = new Alpaca.View(view, this);
+            // set a runtime view
+            this.view = new Alpaca.RuntimeView(viewId, this);
 
             // things we can draw off the options
             var noOptions = false;
@@ -64,11 +65,11 @@
                 this.schema = {};
                 noSchema = true;
             }
-            if (this.options.label == null && this.schema.title != null) {
+            if (!this.options.label && this.schema.title != null) {
                 this.options.label = this.schema.title;
             }
 
-            if (this.options.helper == null && this.schema.description != null) {
+            if (!this.options.helper && this.schema.description != null) {
                 this.options.helper = this.schema.description;
             }
 
@@ -106,16 +107,30 @@
         /**
          * Sets up default rendition template from view.
          */
-        setDefaultTemplate: function() {
-            var globalTemplate = this.view.getGlobalTemplate();
-            var layoutTemplate = this.view.getLayout().template;
-            if (globalTemplate) {
-                this.setTemplate(globalTemplate);
-                this.singleLevelRendering = true;
-            } else if (layoutTemplate) {
-                this.setTemplate(layoutTemplate);
-            } else {
-                this.setTemplate(this.view.getTemplate(this.getDefaultFieldTemplateId()));
+        setDefaultTemplateDescriptor: function() {
+
+            var viewTemplateDescriptor = this.view.getTemplateDescriptor(this.getDefaultFieldTemplateId());
+            var globalTemplateDescriptor = this.view.getGlobalTemplateDescriptor();
+            var layout = this.view.getLayout();
+
+            // we only allow the global or layout template to be applied to the top-most field
+            var trip = false;
+            if (!this.parent)
+            {
+                if (globalTemplateDescriptor) {
+                    this.setTemplateDescriptor(globalTemplateDescriptor);
+                    this.singleLevelRendering = true;
+                    trip = true;
+                }
+                else if (layout && layout.templateDescriptor) {
+                    this.setTemplateDescriptor(layout.templateDescriptor);
+                    trip = true;
+                }
+            }
+
+            if (!trip && viewTemplateDescriptor)
+            {
+                this.setTemplateDescriptor(viewTemplateDescriptor);
             }
         },
 
@@ -129,7 +144,7 @@
                 this.data = this.getValue();
             }
 
-            this.setDefaultTemplate();
+            this.setDefaultTemplateDescriptor();
 
             // JSON SCHEMA
             if (Alpaca.isUndefined(this.schema.required)) {
@@ -226,7 +241,7 @@
                 this.options.form.viewType = /*this.viewType*/this.view.type;
                 var form = this.form;
                 if (!form) {
-                    form = new Alpaca.Form(this.container, this.options.form, this.view.viewObject, this.connector, this.errorCallback);
+                    form = new Alpaca.Form(this.container, this.options.form, this.view.id, this.connector, this.errorCallback);
                 }
                 form.render(function(form) {
                     // load the appropriate template and render it
@@ -263,6 +278,8 @@
         },
 
         /**
+         * NOTE: this is no longer needed since all templates are compiled and cached on init.
+         *
          * Responsible for fetching any templates needed so as to render the
          * current mode for this field.
          *
@@ -276,38 +293,15 @@
         _processRender: function(parentEl, onSuccess) {
             var _this = this;
 
-            // lookup the template we should use to render
-            var template = this.getTemplate();
+            var templateDescriptor = this.getTemplateDescriptor();
 
-            // if we have a template to load, load it and then render
-            this.connector.loadTemplate(template, function(loadedTemplate) {
-                var tmp = loadedTemplate;
-                if ($(tmp)[0] && $(tmp)[0].tagName.toLowerCase() == 'script' && $(tmp).attr('type') == 'text/x-jquery-tmpl') {
-                    loadedTemplate = $(tmp).html();
-                }
-                _this._renderLoadedTemplate(parentEl, loadedTemplate, onSuccess);
-            }, function(error) {
-                _this.errorCallback(error);
-            });
-        },
-
-        /**
-         * Renders the loaded template.
-         *
-         * @internal
-         *
-         * @param {Object} parentEl Field container.
-         * @param {String} templateString Template for rendering.
-         * @param {Function} onSuccess onSuccess callback.
-         */
-        _renderLoadedTemplate: function(parentEl, templateString, onSuccess) {
             // render field template
-            var renderedDomElement = $.tmpl(templateString, {
+            var renderedDomElement = _this.view.tmpl(templateDescriptor, {
                 "id": this.getId(),
                 "options": this.options,
                 "schema": this.schema,
                 "data": this.data,
-                "view": this.view.viewObject,
+                "view": this.view,
                 "path": this.path
             }, {});
 
@@ -536,28 +530,21 @@
         },
 
         /**
-         * Returns the field template.
+         * Returns the field template descriptor.
          *
-         * @returns {String} Field template.
+         * @returns {Object} template descriptor
          */
-        getTemplate: function() {
-            return this.template;
+        getTemplateDescriptor: function() {
+            return this.templateDescriptor;
         },
 
         /**
-         * Sets the field template.
+         * Sets the field template descriptor.
          *
-         * @param {String} template Template to be set.
+         * @param {Object} template descriptor
          */
-        setTemplate: function(template) {
-            // if template is a function, evaluate it to get a string
-            if (Alpaca.isFunction(template)) {
-                template = template();
-            }
-            // trim for good measure
-            template = $.trim(template);
-
-            this.template = template;
+        setTemplateDescriptor: function(templateDescriptor) {
+            this.templateDescriptor = templateDescriptor;
         },
 
         /**
@@ -576,9 +563,9 @@
             if (messages && messages.length > 0) {
                 $.each(messages, function(index, message) {
                     if (message.length > 0) {
-                        var messageTemplate = _this.view.getTemplate("controlFieldMessage");
-                        if (messageTemplate) {
-                            _this.messageElement = $.tmpl(messageTemplate, {
+                        var messageTemplateDescriptor = _this.view.getTemplateDescriptor("controlFieldMessage");
+                        if (messageTemplateDescriptor) {
+                            _this.messageElement = _this.view.tmpl(messageTemplateDescriptor, {
                                 "message": message
                             });
                             _this.getStyleInjection('errorMessage',_this.messageElement);

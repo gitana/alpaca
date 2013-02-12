@@ -18,7 +18,7 @@
          * @param {Alpaca.Connector} connector Field connector.
          * @param {Function} errorCallback Error callback.
          */
-        constructor: function(container, options, view, connector, errorCallback) {
+        constructor: function(container, options, viewId, connector, errorCallback) {
             var _this = this;
 
             // container
@@ -73,8 +73,8 @@
 
             this.viewType = options.viewType;
 
-            // set a view
-            this.view = new Alpaca.View(view, this);
+            // set a runtime view
+            this.view = new Alpaca.RuntimeView(viewId, this);
         },
 
         /**
@@ -85,7 +85,7 @@
         render: function(onSuccess) {
             var _this = this;
 
-            this.template = this.view.getTemplate("form");
+            this.templateDescriptor = this.view.getTemplateDescriptor("form");
 
             // remove the previous outerEl if it exists
             if (this.outerEl) {
@@ -122,11 +122,19 @@
         enableSubmitButton: function()
         {
             $(".alpaca-form-button-submit").attr("disabled", false);
+
+            if ($.mobile) {
+                try { $(".alpaca-form-button-submit").button('refresh'); } catch (e) { }
+            }
         },
 
         disableSubmitButton: function()
         {
             $(".alpaca-form-button-submit").attr("disabled", true);
+
+            if ($.mobile) {
+                try { $(".alpaca-form-button-submit").button('refresh'); } catch (e) { }
+            }
         },
 
         adjustSubmitButtonState: function()
@@ -152,34 +160,14 @@
             var _this = this;
 
             // lookup the template we should use to render
-            var template = this.getTemplate();
+            var templateDescriptor = this.getTemplateDescriptor();
 
-            this.connector.loadTemplate(template, function(loadedTemplate) {
-                _this._renderLoadedTemplate(parentEl, loadedTemplate, onSuccess);
-            }, function(error) {
-                alert(error);
-            });
-
-            if (onSuccess)
-                onSuccess();
-        },
-
-        /**
-         * Renders the loaded template.
-         *
-         * @private
-         *
-         * @param {Object} parentEl Field container.
-         * @param {String} templateString Template.
-         * @param {Function} onSuccess onSuccess callback.
-         */
-        _renderLoadedTemplate: function(parentEl, templateString, onSuccess) {
             var context = {
                 id: this.getId(),
                 options: this.options,
-                view: this.view.viewObject
+                view: this.view
             };
-            var renderedDomElement = $.tmpl(templateString, context, {});
+            var renderedDomElement = _this.view.tmpl(templateDescriptor, context, {});
             renderedDomElement.appendTo(parentEl);
 
             this.outerEl = renderedDomElement;
@@ -223,7 +211,9 @@
                     $(this).removeAttr("button-pushed");
                 });
                 _this.buttons[$(v).attr('data-key')] = $(v);
-            })
+            });
+
+            onSuccess();
         },
 
         /**
@@ -419,24 +409,17 @@
          *
          * @returns {Object|String} template Form template.
          */
-        getTemplate: function() {
-            return this.template;
+        getTemplateDescriptor: function() {
+            return this.templateDescriptor;
         },
 
         /**
          * Sets the form template.
          *
-         * @param {String} template Template to be set
+         * @param {String} templateDescriptor Template to be set
          */
-        setTemplate: function(template) {
-            // if template is a function, evaluate it to get a string
-            if (Alpaca.isFunction(template)) {
-                template = template();
-            }
-            // trim for good measure
-            template = $.trim(template);
-
-            this.template = template;
+        setTemplateDescriptor: function(templateDescriptor) {
+            this.templateDescriptor = templateDescriptor;
         }
     });
 

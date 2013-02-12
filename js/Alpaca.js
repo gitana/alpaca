@@ -65,6 +65,7 @@
         var errorCallback = null;
         var connector = null;
         var notTopLevel = false;
+        var initialSettings = {};
 
         if (args.length == 1) {
             // hands back the field instance that is bound directly under the specified element
@@ -103,6 +104,12 @@
                 renderedCallback = args[1].postRender;
                 errorCallback = args[1].error;
                 connector = args[1].connector;
+                if (args[1].ui) {
+                    initialSettings["ui"] = args[1].ui;
+                }
+                if (args[1].type) {
+                    initialSettings["type"] = args[1].type;
+                }
                 if (!Alpaca.isEmpty(args[1].notTopLevel)) {
                     notTopLevel = args[1].notTopLevel;
                 }
@@ -115,9 +122,14 @@
             }
         }
 
+        // if no error callback is provided, we fall back to a browser alert
         if (Alpaca.isEmpty(errorCallback)) {
             errorCallback = function(error) {
-                alert(error.message);
+                var message = error.message;
+                if (message && Alpaca.isObject(message)) {
+                    message = JSON.stringify(message);
+                }
+                alert("Alpaca error was caught with default error handler: " + message);
             };
         }
 
@@ -201,7 +213,7 @@
             "schema": schema,
             "view": view
         }, function(loadedData, loadedOptions, loadedSchema, loadedView) {
-            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, callback, _renderedCallback, connector, errorCallback);
+            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, initialSettings, callback, _renderedCallback, connector, errorCallback);
         }, function (loadError) {
             errorCallback(loadError);
             return null;
@@ -507,117 +519,40 @@
          * @returns {String} A valid unique view id.
          */
         generateViewId : function () {
-            return this.viewIdPrefix + "VIEW_" + this.generateId();
+            return this.viewIdPrefix + this.generateId();
         },
 
         /**
-         * Registers a view.
-         * 
-         * If a view with the same ID exists, overload it.
+         * Registers a view with the framework.
          *
-         * @param {Object} view View to be registered.
-         * @returns {String} new view id
+         * @param viewObject
          */
-        registerView: function(view) {
-            var id = view.id;
-            if (!Alpaca.isEmpty(id) && this.isValidViewId(id)) {
-                if (this.views[id]) {
-                    var oldView = this.views[id];
-                    if (view.description) {
-                        oldView["description"] = view.description;
-                    }
-                    if (view.type) {
-                        oldView["type"] = view.type;
-                    }
-                    if (view.id) {
-                        oldView["id"] = view.id;
-                    }
-                    if (view.templates) {
-                        if (!oldView.templates) {
-                            oldView.templates = {};
-                        }
-                        Alpaca.merge(oldView.templates, view.templates);
-                    }
-                    if (view.messages) {
-                        if (!oldView.messages) {
-                            oldView.messages = {};
-                        }
-                        Alpaca.merge(oldView.messages, view.messages);
-                    }
-                } else {
-                    this.views[id] = view;
-                }
+        registerView: function(viewObject)
+        {
+            var id = viewObject.id;
 
-                // Compile Top-Level Templates
-                /*
-                 for (var templateId in view.templates) {
-                 var template = view.templates[templateId];
-                 if (!Alpaca.startsWith(template, view.id) && (templateId != "fieldOuterEl" && templateId != "controlFieldContainer" && templateId != "fieldSetOuterEl" && templateId != "itemsContainer")) {
-                 $.template(view.id + "_" + templateId, template);
-                 view.templates[templateId] = view.id + "_" + templateId;
-                 }
-                 }
-                 */
-                var tmpTemplates = Alpaca.cloneObject(view.templates);
-                for (var templateId in tmpTemplates) {
-                    var template = view.templates[templateId];
-                    if (Alpaca.isString(template) && !Alpaca.startsWith(template, view.id)) {
-                        view.templates[view.id + "_" + templateId + "_src"] = template;
-                        if (template && !Alpaca.isUri(template)) {
-                            $.template(view.id + "_" + templateId, template);
-                            view.templates[templateId] = view.id + "_" + templateId;
-                        } else {
-                            view.templates[templateId] = template;
-                        }
-                    }
-                }
-
-            } else {
-                alert("Invalid View ID (must starts with " + this.viewIdPrefix + ")");
+            if (!id)
+            {
+                Alpaca.logError("Cannot register view with missing view id: " + id);
+                throw new Error("Cannot register view with missing view id: " + id);
             }
-            return id;
+
+            var existingView = this.views[id];
+            if (existingView)
+            {
+                Alpaca.mergeObject(existingView, viewObject);
+            }
+            else
+            {
+                this.views[id] = viewObject;
+            }
+
         },
 
         /**
          * Default view.
          */
         defaultView : "VIEW_WEB_EDIT",
-
-        /**
-         * Gets view for a given id.
-         *
-         * @param {String}viewId The view id.
-         *
-         * @returns {Object} The view mapped to the given view id.
-         */
-        getView: function(viewId) {
-            if (viewId && this.views.hasOwnProperty(viewId)) {
-                return this.views[viewId];
-            } else {
-                return this.views[this.defaultView];
-            }
-        },
-
-        /**
-         * Returns view type.
-         *
-         * @param {Object|String} view view
-         * @returns {String} view type
-         */
-        getViewType: function(view) {
-            if (Alpaca.isString(view)) {
-                view = this.getView(view);
-            }
-            if (Alpaca.isObject(view)) {
-                if (view.type) {
-                    return view.type;
-                } else if (view.parent) {
-                    return this.getViewType(view.parent);
-                } else {
-                    return null;
-                }
-            }
-        },
 
         /**
          * Sets default view as the view with a given id.
@@ -631,37 +566,69 @@
         },
 
         /**
+         * Retrieves a compiled view by view id.
+         *
+         * @param viewId
+         * @return {*}
+         */
+        getCompiledView: function(viewId)
+        {
+            return this.compiledViews[viewId];
+        },
+
+        /**
+         * Resolves which view handles a given theme and type of operation.
+         *
+         * @param {String} ui
+         * @param {String} type
+         *
+         * @returns {String} the view id
+         */
+        lookupCompiledView: function(ui, type)
+        {
+            var theViewId = null;
+
+            for (var viewId in this.compiledViews)
+            {
+                var view = this.compiledViews[viewId];
+
+                if (view.ui == ui && view.type == type)
+                {
+                    theViewId = viewId;
+                    break;
+                }
+            }
+
+            return theViewId;
+        },
+
+        /**
          * Registers a template to a view.
          *
          * @param {String} templateId Template id.
-         * @param {String} template Template being registered.
-         * @param {String} viewId Id of the view that the template being registered to.
+         * @param {String|Object} template Either the text of the template or an object containing { "type": "<templateEngineIdentifier>", "template": "<markup>" }
+         * @param [String] viewId the optional view id.  If none is provided, then all registrations are to the default view.
          */
-        registerTemplate: function(templateId, template, viewId) {
-            var view = this.getView(viewId);
-
-            if (!view) {
-                if (viewId) {
-                    view = this.views[viewId] = {};
-                } else {
-                    view = this.views[this.defaultView] = {};
-                }
+        registerTemplate: function(templateId, template, viewId)
+        {
+            if (!viewId)
+            {
+                viewId = this.defaultView;
             }
-            if (view) {
-                if (!view.templates) {
-                    view.templates = {};
-                }
-                //view.templates[templateId] = template;
-                // Compile Template
 
-                if (template && !Alpaca.isUri(template)) {
-                    $.template(view.id + "_" + templateId, template);
-                    view.templates[templateId] = view.id + "_" + templateId;
-                } else {
-                    view.templates[templateId] = template;
-                }
-
+            if (!this.views[viewId])
+            {
+                this.views[viewId] = {};
+                this.views[viewId].id = viewId;
             }
+
+            if (!this.views[viewId].templates)
+            {
+                this.views[viewId].templates = {};
+            }
+
+            this.views[viewId].templates[templateId] = template;
+
         },
 
         /**
@@ -683,25 +650,27 @@
          * @param {String} message Message to be registered
          * @param {String} viewId Id of the view that the message being registered to.
          */
-        registerMessage: function(messageId, message, viewId) {
-            var view = this.getView(viewId);
+        registerMessage: function(messageId, message, viewId)
+        {
+            if (!viewId)
+            {
+                viewId = this.defaultView;
+            }
 
-            if (!view) {
-                if (viewId) {
-                    this.views[viewId] = {};
-                    view = this.views[viewId];
-                } else {
-                    this.views[this.defaultView] = {};
-                    view = this.views[this.defaultView];
-                }
+            if (!this.views[viewId])
+            {
+                this.views[viewId] = {};
+                this.views[viewId].id = viewId;
             }
-            if (view) {
-                if (!view.messages) {
-                    view.messages = {};
-                }
-                view.messages[messageId] = message;
+
+            if (!this.views[viewId].messages)
+            {
+                this.views[viewId].messages = {};
             }
+
+            this.views[viewId].messages[messageId] = message;
         },
+
         /**
          * Registers messages with a view.
          *
@@ -715,6 +684,17 @@
                 }
             }
         },
+
+
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // STATIC HELPER METHODS (CALLED FROM WITHIN TEMPLATES)
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /**
          * @private
@@ -748,23 +728,37 @@
          */
         fieldTemplate: function(object, name, wrap) {
 
+            var _this = this;
+
+            var field = object.data;
+            var view = object.data.view;
+
+            var html = "";
+
             if (!name)
                 name = "controlFieldLabel";
-            var template = this.getTemplate(name, object.data);
+
+            // determine which compiled template to use for this template name
+            var templateDescriptor = this.getTemplateDescriptor(view, name, field);
             if (wrap) {
-                if (this.getTemplate(template + "_src", object.data)) {
-                    template = this.getTemplate(template + "_src", object.data);
-                }
+
+                // for wrapping, we get the html source and hand it back
+                // first we apply any attr and classes we need
+
+                // get the html source
+                var template = templateDescriptor.template.value;
                 if ($('.alpaca' + this.fieldTemplatePostfix[name], $(template)).length == 0) {
                     if (this.fieldTemplatePostfix[name]) {
-                        template = $(template).addClass("alpaca" + this.fieldTemplatePostfix[name]).outerHTML(true);
-                    } else {
-                        template = $(template).outerHTML(true);
+                        template = $(template).addClass("alpaca" + this.fieldTemplatePostfix[name]);
                     }
                 }
-                return template;
-            } else {
-                var label = $.tmpl(template, object.data);
+                html = $(template).outerHTML(true);
+            }
+            else
+            {
+                // for non-wrapped, we execute the template straight away
+
+                var label = view.tmpl(templateDescriptor, object.data);
                 if (label) {
                     if (this.fieldTemplatePostfix[name]) {
                         if ($('.alpaca' + this.fieldTemplatePostfix[name], label).length == 0) {
@@ -774,60 +768,22 @@
                             label.attr("id", object.data.id + this.fieldTemplatePostfix[name]);
                         }
                     }
-                    return label.outerHTML(true);
+                    html = label.outerHTML(true);
                 } else {
-                    return "";
+                    html = "";
                 }
             }
+
+            return html;
         },
 
-        /**
-         * @private
-         *
-         * @returns The field template for given id.
-         */
-        getTemplate: function(templateId, field) {
 
-            var view = field.view;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // END OF STATIC HELPER METHODS
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            if (Alpaca.isObject(view)) {
-                var template = this._getTemplate(templateId, view, field.path);
-                if (!Alpaca.isEmpty(template)) {
-                    return template;
-                }
-                // Try to see if we can pick up default template
-                view = this.defaultView;
-            }
-
-            if (Alpaca.isString(view)) {
-                view = this.getView(view);
-                return this._getTemplate(templateId, view, field.path);
-            }
-            return null;
-        },
-
-        /**
-         * @private
-         * Internal method for template lookup through view hierarchy.
-         *
-         * @param {Object} templateId Template id.
-         * @param {Object} view View.
-         * @param {String} path Template path.
-         */
-        _getTemplate: function(templateId, view, path) {
-            if (view && view.fields && view.fields[path] && view.fields[path].templates && view.fields[path].templates[templateId]) {
-                return view.fields[path].templates[templateId];
-            }
-            if (view && view.templates && view.templates[templateId]) {
-                return view.templates[templateId];
-            } else {
-                if (view && view.parent) {
-                    return this._getTemplate(templateId, this.views[view.parent], path);
-                } else {
-                    return null;
-                }
-            }
-        },
 
 
         /**
@@ -1168,37 +1124,39 @@
         },
 
         /**
-         * Merges json obj2 into obj1 using a recursive approach. The merge will include empty values
+         * Merges json "source" into "target" using a recursive approach. The merge will include empty values
          * of obj2 properties.
          *
-         * @param {Object} obj1 Source object.
-         * @param {Object} obj2 Destination object
+         * @param {Object} target Target object.
+         * @param {Object} source Source object.
          *
          * @returns {Object} Merged object
          */
-        mergeObject : function(obj1, obj2) {
-            if (!obj1) {
-                obj1 = {};
-            }
-            for (var key in obj2) {
-                if (!Alpaca.isFunction(obj2[key])) {
-                    if (Alpaca.isValEmpty(obj2[key])) {
-                        if (!Alpaca.isEmpty(obj1[key])) {
-                            obj1[key] = obj2[key];
-                        }
-                    } else {
-                        if (Alpaca.isObject(obj2[key])) {
-                            if (!obj1[key]) {
-                                obj1[key] = {};
+        mergeObject : function(target, source) {
+
+            if (source && target)
+            {
+                for (var key in source) {
+                    if (!Alpaca.isFunction(source[key])) {
+                        if (Alpaca.isValEmpty(source[key])) {
+                            if (!Alpaca.isEmpty(target[key])) {
+                                target[key] = source[key];
                             }
-                            obj1[key] = Alpaca.mergeObject(obj1[key], obj2[key]);
                         } else {
-                            obj1[key] = obj2[key];
+                            if (Alpaca.isObject(source[key])) {
+                                if (!target[key]) {
+                                    target[key] = {};
+                                }
+                                target[key] = Alpaca.mergeObject(target[key], source[key]);
+                            } else {
+                                target[key] = source[key];
+                            }
                         }
                     }
                 }
             }
-            return obj1;
+
+            return target;
         },
 
         /**
@@ -1334,6 +1292,7 @@
          * @param {Object} options Field options.
          * @param {Object} schema Field schema.
          * @param {Object|String} view Field view.
+         * @param {Object} initialSettings any additional settings provided to the top-level Alpaca object
          * @param {Function} callback Render callback.
          * @param {Function} renderedCallback Post-render callback.
          * @param {Alpaca.connector} connector Field connector.
@@ -1341,24 +1300,157 @@
          *
          * @returns {Alpaca.Field} New field instance.
          */
-        init : function(el, data, options, schema, view, callback, renderedCallback, connector, errorCallback) {
+        init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback) {
 
-            // if jQuery Mobile is present, fall back to VIEW_MOBILE_EDIT
+            var self = this;
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // COMPILATION
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // if they provided an inline view object, we assign an id and store onto views map
+            // so that it gets compiled along with the rest
+            if (Alpaca.isObject(view)) {
+                var viewId = view.id;
+                if (!viewId) {
+                    view.id = this.generateViewId();
+                }
+                this.registerView(view);
+                view = view.id;
+            }
+
+            // compile all of the views and templates
+            this.compile(function(report) {
+
+                if (report.errors && report.errors.length > 0)
+                {
+                    for (var i = 0; i < report.errors.length; i++)
+                    {
+                        var viewId = report.errors[i].viewId;
+                        var templateId = report.errors[i].templateId;
+                        var err = report.errors[i].err;
+
+                        Alpaca.logError("The template: " + templateId + " for view: " + viewId + " failed to compile");
+                        Alpaca.logError(JSON.stringify(err));
+                    }
+
+                    throw new Error("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
+                }
+
+                self._init(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback);
+            });
+        },
+
+        _init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback)
+        {
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // VIEW RESOLUTION
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            // make some intelligent guesses about what view id we might default to in case they want to use
+            // auto-view selection.  We detect jquery-ui, bootstrap and jquerymobile.
+            var fallbackUI = null;
+            var fallbackType = null;
+            var fallbackViewId = null;
+
+            // if jQuery Mobile is present, fall back to VIEW_MOBILE_EDIT or VIEW_MOBILE_CREATE
             if ($.mobile) {
-                this.defaultView = "VIEW_MOBILE_EDIT";
+                fallbackUI = "mobile";
+                if (data) {
+                    fallbackType = "edit";
+                    fallbackViewId = "VIEW_MOBILE_EDIT";
+                }
+                else {
+                    fallbackType = "create";
+                    fallbackViewId = "VIEW_MOBILE_CREATE";
+                }
+            }
+
+            // if Twitter Bootstrap is present, fall back to VIEW_BOOTSTRAP_EDIT or VIEW_BOOTSTRAP_CREATE
+            var bootstrapDetected = (typeof $().modal == 'function');
+            if (bootstrapDetected) {
+                fallbackUI = "bootstrap";
+                if (data) {
+                    fallbackType = "edit";
+                    fallbackViewId = "VIEW_BOOTSTRAP_EDIT";
+                } else {
+                    fallbackType = "create";
+                    fallbackViewId = "VIEW_BOOTSTRAP_CREATE";
+                }
+            }
+
+            // if no view provided, but they provided "ui" and optionally "type", then we try to auto-select the view
+            if (!view)
+            {
+                var ui = initialSettings.ui;
+                var type = initialSettings.type;
+
+                if (!ui)
+                {
+                    if (!fallbackUI) {
+                        fallbackUI = Alpaca.defaultUI;
+                    }
+                    if (fallbackUI) {
+                        ui = fallbackUI;
+                    }
+                }
+
+                if (ui) {
+                    if (!type) {
+                        type = fallbackType ? fallbackType : "edit";
+                    }
+
+                    Alpaca.logDebug("No view provided but found request for UI: " + ui + " and type: " + type);
+
+                    // see if we can auto-select a view
+                    view = this.lookupCompiledView(ui, type);
+                    if (view) {
+                        Alpaca.logDebug("Found view: " + view);
+                    } else {
+                        Alpaca.logDebug("No view found for UI: " + ui + " and type: " + type);
+                    }
+                }
+            }
+
+            // if still no view, then default fallback to our detected view or the default
+            if (!view)
+            {
+                Alpaca.logDebug("A view was not specified.");
+                if (fallbackViewId)
+                {
+                    Alpaca.logDebug("Falling back to detected view: " + fallbackViewId);
+                    view = fallbackViewId;
+                }
+                else
+                {
+                    Alpaca.logDebug("Falling back to default view: " + this.defaultView);
+                    view = this.defaultView;
+                }
             }
 
             // debugging: if the view isn't available, we want to report it right away
-            // Alpaca has default behaviors, such as falling back to other views, but we need to let the developer
-            // know in debug mode
-            if (Alpaca.isString(view)) {
-                var determinedView = this.getView(view);
-                if (determinedView.id != view)
+            if (Alpaca.isString(view))
+            {
+                if (!this.compiledViews[view])
                 {
-                    Alpaca.logDebug("The specified view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.");
-                    Alpaca.logDebug("Resolved view was: " + determinedView.id);
+                    Alpaca.logError("The desired view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.");
+                    throw new Error("The desired view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.");
                 }
             }
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // FIELD INSTANTIATION
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
             var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);
             Alpaca.fieldInstances[field.getId()] = field;
@@ -1453,6 +1545,375 @@
             }
 
             return $.parseJSON(text);
+        },
+
+        /**
+         * Compiles all of the views, normalizing them for use by Alpaca.
+         * Also compiles any templates that the views may reference.
+         *
+         * @param cb the callback that gets fired once compilation has ended
+         */
+        compile: function(cb)
+        {
+            var self = this;
+
+            //var t1 = new Date().getTime();
+
+            // compile all of the views
+            if (!Alpaca.compiledViews) {
+                Alpaca.compiledViews = {};
+            }
+            this.compiledViews = Alpaca.compiledViews;
+            for (var viewId in this.views) {
+                if (!this.compiledViews[viewId])
+                {
+                    var compiledView = new Alpaca.CompiledView(viewId);
+                    if (compiledView.compile())
+                    {
+                        this.compiledViews[viewId] = compiledView;
+                    }
+                    else
+                    {
+                        Alpaca.logError("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
+                        throw new Error("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
+                    }
+                }
+            }
+
+
+            // now compile all of the templates
+
+            var report = {
+                "errors": [],
+                "count": 0,
+                "successCount": 0
+            };
+            var compileTemplateCallback = function(err, viewId, compiledTemplateId, totalCalls)
+            {
+                report.count++;
+                if (err)
+                {
+                    report.errors.push({
+                        "view": viewId,
+                        "template": compiledTemplateId,
+                        "err": err
+                    });
+                }
+                else
+                {
+                    report.successCount++;
+                }
+
+                if (report.count == totalCalls)
+                {
+                    //var t2 = new Date().getTime();
+                    //console.log("Compilation took: " + (t2-t1) + " ms");
+
+                    cb(report);
+                }
+            };
+
+            var compileTemplate = function(compiledView, compiledTemplateId, template, totalCalls, callback)
+            {
+                var type = null;
+                if (Alpaca.isObject(template)) {
+                    type = template.type;
+                    template = template.template;
+                }
+
+                // if type isn't resolved, assume jquery tmpl()
+                if (!type)
+                {
+                    type = "text/x-jquery-tmpl";
+                }
+
+                // look up the template processor
+                var engine = Alpaca.TemplateEngineRegistry.find(type);
+                if (!engine)
+                {
+                    Alpaca.logError("Cannot find template engine for type: " + type);
+                    var err = new Error("Cannot find template engine for type: " + type);
+                    callback(err, viewId, templateId, totalCalls);
+                }
+
+                var cacheKey = viewId + "_" + compiledTemplateId;
+                if (!engine.isCached(cacheKey))
+                {
+                    // compile the template
+                    engine.compile(cacheKey, template, function(err, data) {
+
+                        callback(err, viewId, compiledTemplateId, totalCalls);
+
+                    });
+                }
+                else
+                {
+                    // already compiled, so skip
+                    callback(null, viewId, compiledTemplateId, totalCalls);
+                }
+            };
+
+            // count the total number of compileTemplate calls we're going to make
+            var totalCalls = 0;
+            for (var viewId in this.views)
+            {
+                var compiledView = this.compiledViews[viewId];
+
+                // field templates
+                if (compiledView.templates)
+                {
+                    for (var templateId in compiledView.templates)
+                    {
+                        totalCalls++;
+                    }
+                }
+
+                // layout template
+                if (compiledView.layout && compiledView.layout.template)
+                {
+                    totalCalls++;
+                }
+
+                // global template
+                if (compiledView.globalTemplate)
+                {
+                    totalCalls++;
+                }
+
+                // field level templates
+                if (compiledView.fields)
+                {
+                    for (var path in compiledView.fields)
+                    {
+                        if (compiledView.fields[path].templates)
+                        {
+                            for (var templateId in compiledView.fields[path].templates)
+                            {
+                                totalCalls++;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            // walk each view and compile each template
+            // each compileTemplate() call is asynchronous so we wait for it to return
+            // and collect compilation counts
+            for (var viewId in this.views)
+            {
+                var compiledView = this.compiledViews[viewId];
+
+                // view templates
+                if (compiledView.templates)
+                {
+                    for (var templateId in compiledView.templates)
+                    {
+                        var template = compiledView.templates[templateId];
+
+                        compileTemplate(compiledView, "view-" + templateId, template, totalCalls, compileTemplateCallback);
+                    }
+                }
+
+                // field level templates
+                if (compiledView.fields)
+                {
+                    for (var path in compiledView.fields)
+                    {
+                        if (compiledView.fields[path].templates)
+                        {
+                            for (var templateId in compiledView.fields[path].templates)
+                            {
+                                var template = compiledView.fields[path].templates[templateId];
+
+                                compileTemplate(compiledView, "field-" + path + "-" + templateId, template, totalCalls, compileTemplateCallback);
+                            }
+                        }
+                    }
+                }
+
+                // layout template
+                if (compiledView.layout && compiledView.layout.template)
+                {
+                    var template = compiledView.layout.template;
+
+                    compileTemplate(compiledView, "layoutTemplate", template, totalCalls, compileTemplateCallback);
+                }
+
+                // global template
+                if (compiledView.globalTemplate)
+                {
+                    var template = compiledView.globalTemplate;
+
+                    compileTemplate(compiledView, "globalTemplate", template, totalCalls, compileTemplateCallback);
+                }
+            }
+        },
+
+        /**
+         * Looks up the proper template to be used to handle a requested template id for a view and a field.
+         * Performs an override lookup to find the proper template.
+         *
+         * Hands back a descriptor of everything that is known about the resolved template.
+         *
+         * @param view
+         * @param templateId
+         * @param field
+         * @return {Object}
+         */
+        getTemplateDescriptor: function(view, templateId, field)
+        {
+            var descriptor = {};
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // FIGURE OUT WHERE THE TEMPLATE IS IN THE VIEW CONFIGURATION (RESPECTING FIELD OVERRIDES)
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+
+            var _template;
+            var _templateType;
+
+            // first consider template level
+            if (view.templates && view.templates[templateId])
+            {
+                _template = view.templates[templateId];
+                _templateType = "view";
+            }
+
+            // now allow for field overrides
+            if (field && field.path)
+            {
+                var path = field.path;
+
+                if (view && view.fields && view.fields[path] && view.fields[path].templates && view.fields[path].templates[templateId])
+                {
+                    _template = view.fields[path].templates[templateId];
+                    _templateType = "field";
+                }
+            }
+
+            // finally there are some hardcoded values
+            if (templateId == "globalTemplate") {
+                _template = "globalTemplate";
+                _templateType = "global";
+            }
+
+            if (templateId == "layoutTemplate") {
+                _template = "layoutTemplate";
+                _templateType = "layout";
+            }
+
+            descriptor.template = {};
+            descriptor.template.id = templateId;
+            descriptor.template.type = _templateType;
+            descriptor.template.value = _template;
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // ENGINE PROPERTIES
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+
+            var type = null;
+            var template = _template;
+            if (Alpaca.isObject(template)) {
+                type = template.type;
+                template = template.template;
+            }
+
+            // if type isn't resolved, assume jquery tmpl()
+            if (!type)
+            {
+                type = "text/x-jquery-tmpl";
+            }
+
+            var engine = Alpaca.TemplateEngineRegistry.find(type);
+            if (!engine)
+            {
+                Alpaca.logError("Cannot find template engine for type: " + type);
+                throw new Error("Cannot find template engine for type: " + type);
+            }
+
+            descriptor.engine = {};
+            descriptor.engine.type = type;
+            descriptor.engine.id = engine.id;
+
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // NOW DETERMINE THE COMPILED TEMPLATE ID FOR THIS TEMPLATE
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////////
+
+            var compiledTemplateId = null;
+            if (_templateType == "view")
+            {
+                compiledTemplateId = "view-" + templateId;
+            }
+            else if (_templateType == "field")
+            {
+                compiledTemplateId = "field-" + field.path + "-" + templateId;
+            }
+            else if (_templateType == "layout")
+            {
+                compiledTemplateId = "layoutTemplate";
+            }
+            else if (_templateType == "global")
+            {
+                compiledTemplateId = "globalTemplate";
+            }
+
+            descriptor.compiledTemplateId = compiledTemplateId;
+
+            // verify it is in cache
+            var cacheKey = view.id + "_" + compiledTemplateId;
+            if (!engine.isCached(cacheKey))
+            {
+                // well, it isn't actually a compiled template
+                // thus, we cannot in the end produce a descriptor for it
+                return null;
+            }
+
+            descriptor.cache = {};
+            descriptor.cache.key = cacheKey;
+
+            return descriptor;
+        },
+
+        /**
+         * Executes a template.
+         *
+         * @param view
+         * @param templateDescriptor
+         * @param model
+         */
+        tmpl: function(view, templateDescriptor, model)
+        {
+            if (Alpaca.isString(view)) {
+                view = this.compiledViews[view];
+            }
+
+            var engineType = templateDescriptor.engine.type;
+            var compiledTemplateId = templateDescriptor.compiledTemplateId;
+
+            var engine = Alpaca.TemplateEngineRegistry.find(engineType);
+            if (!engine)
+            {
+                Alpaca.logError("Cannot find template engine for type: " + engineType);
+                throw new Error("Cannot find template engine for type: " + engineType);
+            }
+
+            // execute the template
+            var cacheKey = view.id + "_" + compiledTemplateId;
+            var html = engine.execute(cacheKey, model, function(err) {
+                Alpaca.logWarn("The compiled template: " + compiledTemplateId + " for view: " + view.id + " failed to execute: " + JSON.stringify(err));
+                throw new Error("The compiled template: " + compiledTemplateId + " for view: " + view.id + " failed to execute: " + JSON.stringify(err));
+            });
+
+            return $(html);
         }
     });
 

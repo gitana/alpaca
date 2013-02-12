@@ -35,7 +35,7 @@
                 this.schema.pattern = Alpaca.regexps.password;
             }
             
-            this.controlFieldTemplate = this.view.getTemplate("controlFieldPassword");
+            this.controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldPassword");
         },
 
         /**
@@ -126,7 +126,7 @@
             return "password";
         }//__END_OF_BUILDER_HELPERS
     });
-    
+
     Alpaca.registerTemplate("controlFieldPassword", '<input type="password" id="${id}" {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
     Alpaca.registerMessages({
         "invalidPassword": "Invalid Password"

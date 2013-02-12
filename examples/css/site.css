@@ -2,7 +2,7 @@ html, body {
     /**font-family: 'Trebuchet MS', tahoma, arial, helvetica, sans-serif;**/
 	font-weight: 200 !important;
 	font-family: 'museo-sans','HelveticaNeue',Helvetica,Arial,sans-serif;
-	font-size: 18px;
+	font-size: 16px;
 	vertical-align: baseline;
     min-width: 980px;
     margin: auto;
@@ -41,10 +41,20 @@ h1 span {
 
 p {
     /**font-size: 1.2em;**/
-	font-size: 18px;
+	font-size: 16px;
 	color: #222;;
 	font-weight: 200 !important;
     text-shadow: 1px 1px #eee;
+}
+
+code {
+    color: #222222;
+    font-family: "Courier New",sans-serif;
+    font-size: 16px;
+    font-weight: 600 !important;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-shadow: 1px 1px #EEEEEE;
 }
 
 h2 a {
@@ -330,7 +340,7 @@ a {
     /*color: #0088CC;*/
     color: #0066AA;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .btn:hover {
@@ -396,7 +406,7 @@ header > div
 {
     color: #444 !important;
     text-shadow: 1px 1px #eee !important;
-    font-weight: 300 !important;
+    font-weight: 400 !important;
 }
 
 .embedded-youtube IFRAME
@@ -408,4 +418,29 @@ header > div
 {
     color: white !important;
     text-shadow: 0px 0px !important;
+}
+
+.front-ui-images
+{
+    height: 130px;
+}
+
+.front-ui-images img
+{
+    width: 250px;
+    height: 125px;
+    border: 1px #ccc solid;
+    padding: 3px;
+}
+
+.front-ui-images SPAN.bootstrap
+{
+}
+
+.front-ui-images SPAN.jquerymobile
+{
+}
+
+.front-ui-images SPAN.jqueryui
+{
 }

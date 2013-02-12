@@ -73,6 +73,13 @@
     <!-- Core files for Alpaca -->
     <filelist id="alpaca-files-core">
         <file name="Alpaca.js"/>
+
+        <file name="TemplateEngineRegistry.js"/>
+        <file name="AbstractTemplateEngine.js"/>
+        <file name="JQueryTemplateEngine.js"/>
+        <file name="EJSTemplateEngine.js"/>
+        <file name="HandlebarsTemplateEngine.js"/>
+
         <file name="views/DefaultView.js"/>
         <file name="views/ListView.js"/>
         <file name="views/TableView.js"/>
@@ -80,8 +87,11 @@
         <file name="views/InlineView.js"/>
         <file name="views/MobileView.js"/>
         <file name="views/LayoutView.js"/>
+        <file name="views/BootstrapView.js"/>
+        <file name="views/JQueryUIView.js"/>
 
-        <file name="View.js"/>
+        <file name="CompiledView.js"/>
+        <file name="RuntimeView.js"/>
 
         <file name="Field.js"/>
         <file name="ControlField.js"/>
@@ -122,6 +132,13 @@
             </filelist>
             <filelist dir="${prep.dir}/js">
                 <file name="Alpaca.js"/>
+
+                <file name="TemplateEngineRegistry.js"/>
+                <file name="AbstractTemplateEngine.js"/>
+                <file name="JQueryTemplateEngine.js"/>
+                <file name="EJSTemplateEngine.js"/>
+                <file name="HandlebarsTemplateEngine.js"/>
+
                 <file name="views/DefaultView.js"/>
                 <file name="views/ListView.js"/>
                 <file name="views/TableView.js"/>
@@ -129,8 +146,11 @@
 				<file name="views/InlineView.js"/>
                 <file name="views/MobileView.js"/>
                 <file name="views/LayoutView.js"/>
+                <file name="views/BootstrapView.js"/>
+                <file name="views/JQueryUIView.js"/>
 
-                <file name="View.js"/>
+                <file name="CompiledView.js"/>
+                <file name="RuntimeView.js"/>
 
                 <file name="Field.js"/>
                 <file name="ControlField.js"/>
@@ -161,11 +181,6 @@
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
             </filelist>		
-            <!--
-            <filelist dir="${prep.dir}/lib">
-                <file name="jquery-ui-latest.custom.min.js"/>
-            </filelist>
-            -->
             <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
                 <file name="fields/advanced/DateField.js"/>
@@ -250,9 +265,9 @@
         <copy todir="${package.dir}/lib">
             <fileset dir="${prep.dir}/lib">
                 <include name="jquery-latest.min.js"/>
-                <include name="jquery-ui-latest.custom.min.js"/>
                 <include name="jquery-ui-timepicker-addon.js"/>
                 <include name="jquery.wysiwyg/**/*"/>
+                <include name="jquery-ui-latest/**/*"/>
             </fileset>
         </copy>
 
@@ -279,6 +294,13 @@
             </filelist>
             <filelist dir="${prep.dir}/js">
                 <file name="Alpaca.js"/>
+
+                <file name="TemplateEngineRegistry.js"/>
+                <file name="AbstractTemplateEngine.js"/>
+                <file name="JQueryTemplateEngine.js"/>
+                <file name="EJSTemplateEngine.js"/>
+                <file name="HandlebarsTemplateEngine.js"/>
+
                 <file name="views/DefaultView.js"/>
                 <file name="views/ListView.js"/>
                 <file name="views/TableView.js"/>
@@ -286,8 +308,11 @@
 				<file name="views/InlineView.js"/>
                 <file name="views/MobileView.js"/>
                 <file name="views/LayoutView.js"/>
+                <file name="views/BootstrapView.js"/>
+                <file name="views/JQueryUIView.js"/>
 
-                <file name="View.js"/>
+                <file name="CompiledView.js"/>
+                <file name="RuntimeView.js"/>
 
                 <file name="Field.js"/>
                 <file name="ControlField.js"/>
@@ -317,7 +342,7 @@
         <concat destfile="${prep.dir}/js/${appkey}-component-extras.js">
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
-            </filelist>	
+            </filelist>
             <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
                 <file name="fields/advanced/DateField.js"/>
@@ -359,7 +384,6 @@
                 <file name="license.txt"/>
             </filelist>
             <filelist dir="${prep.dir}/css">
-                <file name="960.fluid.css"/>
                 <file name="alpaca.css"/>
             </filelist>
         </concat>
@@ -367,18 +391,13 @@
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
             </filelist>
-            <filelist dir="${prep.dir}/css">
-                <file name="jquery-ui-latest.custom.css"/>
-            </filelist>
         </concat>
         <concat destfile="${package.dir}/css/${appkey}.css">
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
             </filelist>
             <filelist dir="${prep.dir}/css">
-                <file name="960.fluid.css"/>
                 <file name="alpaca.css"/>
-                <file name="jquery-ui-latest.custom.css"/>
             </filelist>
         </concat>
         <concat destfile="${package.dir}/css/${appkey}-mobile.css">
@@ -387,6 +406,22 @@
             </filelist>
             <filelist dir="${prep.dir}/css">
                 <file name="alpaca-mobile.css"/>
+            </filelist>
+        </concat>
+        <concat destfile="${package.dir}/css/${appkey}-bootstrap.css">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
+            <filelist dir="${prep.dir}/css">
+                <file name="alpaca-bootstrap.css"/>
+            </filelist>
+        </concat>
+        <concat destfile="${package.dir}/css/${appkey}-jqueryui.css">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
+            <filelist dir="${prep.dir}/css">
+                <file name="alpaca.css"/>
             </filelist>
         </concat>
     </target>
@@ -505,13 +540,13 @@
 
     <!-- Packages up the Distribution (and components) -->
     <target name="package" depends="prep-html, components">
-        <zip destfile="${prep.dir}/${appkey}.zip">
+        <zip destfile="${prep.dir}/${appkey}-distribution.zip">
             <fileset dir="${package.dir}">
                 <exclude name="**/.DS_Store/*"/>
                 <exclude name="**/.idea/*"/>
             </fileset>
         </zip>
-        <zip destfile="${prep.dir}/${appkey}-basic.zip">
+        <zip destfile="${prep.dir}/${appkey}-basic-distribution.zip">
             <fileset dir="${package.dir}">
                 <include name="css/**/*"/>
                 <include name="js/**/*"/>
@@ -523,6 +558,30 @@
         <copy todir="${package.dir}/downloads">
             <fileset dir="${prep.dir}" includes="*.zip"/>
         </copy>
+
+        <!-- component zips -->
+        <zip destfile="${package.dir}/downloads/components/alpaca-component.zip">
+            <fileset dir="${package.dir}/components/alpaca">
+                <include name="**/*"/>
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </zip>
+        <zip destfile="${package.dir}/downloads/components/alpaca-core-component.zip">
+            <fileset dir="${package.dir}/components/alpaca-core">
+                <include name="**/*"/>
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </zip>
+        <zip destfile="${package.dir}/downloads/components/alpaca-extras-component.zip">
+            <fileset dir="${package.dir}/components/alpaca-extras">
+                <include name="**/*"/>
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </zip>
+
     </target>
 
 	<!-- Packages up the Web Components -->
@@ -535,6 +594,8 @@
             <fileset dir="${package.dir}/css">
 				<include name="${appkey}-core.css" />
                 <include name="${appkey}-mobile.css" />
+                <include name="${appkey}-bootstrap.css" />
+                <include name="${appkey}-jqueryui.css" />
 				<include name="images/**" />
 			</fileset>
 		</copy>
@@ -558,8 +619,10 @@
 		<mkdir dir="${package.dir}/components/alpaca-extras"/>
         <copy todir="${package.dir}/components/alpaca-extras">
             <fileset dir="${package.dir}/css">
-				<include name="alpaca-extras.css" />
-                <include name="alpaca-mobile.css" />
+				<include name="${appkey}-extras.css" />
+                <include name="${appkey}-mobile.css" />
+                <include name="${appkey}-bootstrap.css" />
+                <include name="${appkey}-jqueryui.css" />
 				<include name="images/**" />
 			</fileset>
 		</copy>
@@ -582,8 +645,10 @@
 		<mkdir dir="${package.dir}/components/alpaca"/>
         <copy todir="${package.dir}/components/alpaca">
 			<fileset dir="${package.dir}/css">
-				<include name="alpaca.css" />
-                <include name="alpaca-mobile.css" />
+				<include name="${appkey}.css" />
+                <include name="${appkey}-mobile.css" />
+                <include name="${appkey}-bootstrap.css" />
+                <include name="${appkey}-jqueryui.css" />
 				<include name="images/**" />
 			</fileset>
 		</copy>
@@ -604,7 +669,7 @@
 
     </target>
 
-    <target name="clean">
+    <target name="clean" depends="clean-demos-local-dependencies">
         <delete dir="${build.dir}"/>
     </target>
 
@@ -636,7 +701,7 @@
         </copy>
     </target>
 
-    <target name="full" depends="webserver-clean, install-demo-local-dependencies">
+    <target name="full" depends="webserver-clean, install-demos-local-dependencies">
         <copy todir="${local.docroot.basepath}/${appkey}">
             <fileset refid="alpaca-files"/>
         </copy>
@@ -644,6 +709,11 @@
 			<fileset dir="${project.dir}/build/package">
 		        <include name="components/**/*"/>
 			</fileset>
+        </copy>
+        <copy todir="${local.docroot.basepath}/${appkey}">
+            <fileset dir="${project.dir}/build/package">
+                <include name="downloads/**/*"/>
+            </fileset>
         </copy>
     </target>
 
@@ -691,7 +761,27 @@
 
     </target>
 
-    <target name="install-demo-local-dependencies">
+    <target name="clean-demos-local-dependencies">
+
+        <!-- browser demos -->
+        <ant dir="demos/browser/quickstart" target="clean" />
+        <ant dir="demos/browser/registration" target="clean" />
+
+        <!-- amd demos -->
+        <ant dir="demos/amd/quickstart" target="clean" />
+        <ant dir="demos/amd/registration" target="clean" />
+
+        <!-- bootstrap demos -->
+        <ant dir="demos/bootstrap/quickstart" target="clean" />
+        <ant dir="demos/bootstrap/registration" target="clean" />
+
+        <!-- jquerymobile demos -->
+        <ant dir="demos/jquerymobile/quickstart" target="clean" />
+        <ant dir="demos/jquerymobile/registration" target="clean" />
+
+    </target>
+
+    <target name="install-demos-local-dependencies" depends="clean-demos-local-dependencies">
 
         <!-- browser demos -->
         <ant dir="demos/browser/quickstart" />

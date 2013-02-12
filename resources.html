@@ -2,25 +2,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Alpaca - Easy HTML5 Forms for jQuery - Resources</title>
+    <title>Alpaca - Easy Forms for jQuery - Resources</title>
     <meta name="keywords"
           content="jquery forms,JSON forms"/>
     <meta name="description"
           content="Alpaca is a client-side, cross-platform, JSON based forms engine for rendering elegant forms. It comes with comprehensive control library and support for validation, wizard, layout, templating, preview, i18n etc. Built upon jQuery library, jQuery UI and jQuery Mobile, it can be easily extended for additional form controls."/>
     <meta name="author" content="Gitana Software Inc."/>
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-    <script type="text/javascript" src="lib/jquery-latest.min.js">
-    </script>
 
-    <script type="text/javascript" src="examples/lib/tweet/jquery.tweet.js"></script>
-    <script type="text/javascript" src="examples/js/footer.js"></script>
-    <!--Alpaca CSS-->
-    <link type="text/css" href="css/960.fluid.css" rel="stylesheet"/>
-    <link type="text/css" href="css/alpaca.css" rel="stylesheet"/>
-    <link type="text/css" href="css/jquery-ui-latest.custom.css" rel="stylesheet"/>
-    <!--End of Alpaca CSS-->
-    <link type="text/css" href="examples/css/site.css" rel="stylesheet"/>
-    <link type="text/css" href="examples/lib/tweet/jquery.tweet.css" rel="stylesheet"/>
+    <!-- jQuery -->
+    <script type="text/javascript" src="./lib/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="./lib/jquery.tmpl.js"></script>
+
+    <!-- Alpaca -->
+    <script type="text/javascript" src="./components/alpaca/alpaca.js"></script>
+    <link type="text/css" href="./components/alpaca/alpaca.css" rel="stylesheet"/>
+
+    <!-- jQuery UI Theme -->
+    <link type="text/css" href="./examples/lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
+
+    <!-- Additional CSS -->
+    <link type="text/css" href="./examples/css/960.fluid.css" rel="stylesheet"/>
+
+    <!-- Web Site -->
+    <script type="text/javascript" src="./examples/lib/google-code-prettify/prettify.min.js"></script>
+    <script type="text/javascript" src="./examples/js/themeswitchertool.js"></script>
+    <script type="text/javascript" src="./examples/js/example.js"></script>
+    <script type="text/javascript" src="./examples/js/footer.js"></script>
+    <link type="text/css" href="./examples/css/site.css" rel="stylesheet"/>
+    <link type="text/css" href="./examples/lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+    <script type="text/javascript" src="./examples/lib/tweet/jquery.tweet.js"></script>
+    <link type="text/css" href="./examples/lib/tweet/jquery.tweet.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -31,12 +43,12 @@
 		<div class='container_12'>
 	    <div class='actual-body'>
 	        <div class='grid_12'>
-	            <h1><img src="examples/img/alpaca.png"><span>Easy HTML5 Forms for jQuery</span></h1>
+	            <h1><img src="examples/img/alpaca.png"><span>Easy Forms for jQuery</span></h1>
                 <div class="resource-bar">
                     <a href="index.html">Home</a>
                     <a href="resources.html" class="current">Downloads</a>
                     <a href="examples/components/fields/text-field.html">Documentation</a>
-                    <a href="examples/forms/custom-profile/edit-custom-view-form.html">Forms</a>
+                    <a href="examples/forms/customer-profile/edit-form.html">Forms</a>
                     <a href="resources.html#mobile">Mobile</a>
                     <a href="tutorials.html">Tutorials</a>
                     <a href="consulting.html">Consulting</a>
@@ -53,43 +65,84 @@
         <h2><a name="downloads">Downloads</a></h2>
     </div>
     <div class="widget-body">
+
+        <h2>Current Version (1.0.5)</h2>
+
+        <h3>Zip Files</h3>
         <p>
-            Alpaca core zip contains Alpaca JavaScript library, stylesheet related files and other supporting libraries.
-            Download for Alpaca examples is a self-contained zip which includes everything
-            for you to run them locally. For examples that load data through Ajax calls, you will need
-            to run them under a web server.
-        </p>
-
-        <h3>Current Version (1.0.5)</h3>
-
-        <ul>
-            <li>
-                <a href="downloads/alpaca-basic.zip" rel='web' target="_blank">Alpaca Core Zip</a>
-            </li>
-            <li>
-               <a href="downloads/alpaca-all.zip" rel='web' target="_blank">Alpaca Examples Zip</a>
-            </li>
-        </ul>
-
-        <h3>AMD/RequireJS Components</h3>
-        <p>
-            If you're using AMD (Asynchronous Module Definitions) to build RequireJS, Twitter Bower or other such-powered
-            modular applications, you should check out the Cloud CMS Components Library on GitHub.  We've hosted Alpaca
-            there along with many other components for use in your application.
+            These zip files pre-package the assets required to introduce Alpaca to your web applications.
         </p>
         <ul>
             <li>
-                <a target="_blank" href="https://github.com/cloudcms-components" rel='web' target="_blank">Cloud CMS Web Components</a>
+                <a href="downloads/alpaca-distribution.zip" rel='web' target="_blank">Alpaca</a>
+            </li>
+            <li>
+                <a href="downloads/alpaca-basic-distribution.zip" rel='web' target="_blank">Alpaca (Core + Foundation Controls)</a>
             </li>
         </ul>
 
-        <h3>Alpaca on GitHub</h3>
-
+        <h3>AMD/Browser Components</h3>
         <p>
-            All Alpaca source code is kept under GitHub, which you can <a
-                href="https://github.com/gitana/alpaca">browse online</a>.
+            Alpaca is packaged to support AMD (Asynchronous Module Definition) format for RequireJS, Dojo, Twitter Bower
+            and other build tools.  These AMD modules will also work very nicely in your browser outside of an AMD
+            loader.
+        </p>
+        <ul>
+            <li>
+                <a target="_blank" href="downloads/components/alpaca-component.zip">Alpaca</a>
+            </li>
+            <li>
+                <a target="_blank" href="downloads/components/alpaca-core-component.zip">Alpaca (Core + Foundation Controls)</a>
+            </li>
+            <li>
+                <a target="_blank" href="downloads/components/alpaca-extras-component.zip">Alpaca (Extra Controls)</a>
+            </li>
+        </ul>
+
+        <h3>Build from Source</h3>
+        <p>
+            You can build from source by checking out the code from <a href="https://github.com/gitana/alpaca">our project on GitHub</a>.
         </p>
 
+        <h3>Installation</h3>
+        <p>
+            Alpaca provides consists of the core engine, a foundation collection of field controls and an extra set of field controls.  Only the
+            foundation set of field controls is required to render some really nice forms.  However, if you want to spice things up, the extra
+            controls are quite useful.
+        </p>
+        <p>
+            Including Alpaca on your page is as simple as including the <code>alpaca.js</code> and appropriate <code>alpaca.css</code> file.
+            There are multiple CSS files and you should choose the one you wish to use for the framework in which you are developing.
+        </p>
+        <div align="center" style="padding-top: 20px; padding-bottom: 20px;">
+            <table>
+                <tr>
+                    <th>File</th>
+                    <th>Framework</th>
+                </tr>
+                <tr>
+                    <td><code>alpaca-bootstrap.css</code></td>
+                    <td>Twitter Bootstrap</td>
+                </tr>
+                <tr>
+                    <td><code>alpaca-jqueryui.css</code></td>
+                    <td>JQuery UI</td>
+                </tr>
+                <tr>
+                    <td><code>alpaca-mobile.css</code></td>
+                    <td>JQuery Mobile</td>
+                </tr>
+                <tr>
+                    <td><code>alpaca.js</code></td>
+                    <td>No framework.  Naked or barebones CSS.</td>
+                </tr>
+            </table>
+        </div>
+        <p>
+            In general, you should be sure to include your rendering framework (such as jQuery Mobile or Twitter Bootstrap) ahead of
+            your Alpaca files.  That way, if you're loading in a browser, Alpaca can detect these frameworks and aid in the
+            configuration.
+        </p>
     </div>
 </div>
 

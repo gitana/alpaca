@@ -32,7 +32,7 @@
         setup: function() {
             this.base();
 
-            this.controlFieldTemplate = this.view.getTemplate("controlFieldAny");
+            this.controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldAny");
         },
 
         /**
@@ -40,8 +40,8 @@
          */
         renderField: function(onSuccess) {
 
-            if (this.controlFieldTemplate) {
-                this.field = $.tmpl(this.controlFieldTemplate, {
+            if (this.controlFieldTemplateDescriptor) {
+                this.field = this.view.tmpl(this.controlFieldTemplateDescriptor, {
                     "id": this.getId(),
                     "name": this.name,
                     "options": this.options
