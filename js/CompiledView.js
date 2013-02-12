@@ -132,6 +132,9 @@
                 mergeMap(this, element, "wizard");
                 mergeMap(this, element, "fields");
                 mergeMap(this, element, "layout");
+
+                // compiled templates
+                mergeMap(this, element, "compiledTemplates");
             }
 
             Alpaca.logDebug("View compilation complete for view: " + this.id);

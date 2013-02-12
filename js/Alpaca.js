@@ -1317,6 +1317,10 @@
                 if (!viewId) {
                     view.id = this.generateViewId();
                 }
+                var parentId = view.parent;
+                if (!parentId) {
+                    view.parent = "VIEW_WEB_EDIT"; // assume
+                }
                 this.registerView(view);
                 view = view.id;
             }
@@ -1557,39 +1561,66 @@
         {
             var self = this;
 
-            //var t1 = new Date().getTime();
-
-            // compile all of the views
-            if (!Alpaca.compiledViews) {
-                Alpaca.compiledViews = {};
-            }
-            this.compiledViews = Alpaca.compiledViews;
-            for (var viewId in this.views) {
-                if (!this.compiledViews[viewId])
-                {
-                    var compiledView = new Alpaca.CompiledView(viewId);
-                    if (compiledView.compile())
-                    {
-                        this.compiledViews[viewId] = compiledView;
-                    }
-                    else
-                    {
-                        Alpaca.logError("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
-                        throw new Error("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
-                    }
-                }
-            }
-
-
-            // now compile all of the templates
+            var t1 = new Date().getTime();
 
             var report = {
                 "errors": [],
                 "count": 0,
                 "successCount": 0
             };
-            var compileTemplateCallback = function(err, viewId, compiledTemplateId, totalCalls)
+
+            var finalCallback = function()
             {
+                var t2 = new Date().getTime();
+                console.log("Compilation Exited in: " + (t2-t1)+ " ms");
+
+                cb(report);
+            };
+
+
+            var normalizeViews = function()
+            {
+                // compile all of the views
+                // the result of this compile step is a normalize view (called a CompiledView)
+                if (!Alpaca.compiledViews) {
+                    Alpaca.compiledViews = {};
+                }
+                self.compiledViews = Alpaca.compiledViews;
+                for (var viewId in self.views) {
+                    if (!self.compiledViews[viewId])
+                    {
+                        var compiledView = new Alpaca.CompiledView(viewId);
+                        if (compiledView.compile())
+                        {
+                            self.compiledViews[viewId] = compiledView;
+                        }
+                        else
+                        {
+                            Alpaca.logError("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
+                            throw new Error("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
+                        }
+                    }
+                }
+
+                finalCallback();
+            };
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // VIEW TEMPLATE COMPILATION
+            //
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // for all of the views (the original ones, not the compiled ones), walk through them and find any
+            // and all templates that need to be compiled
+            // compile each and store in a "compiledTemplates" object
+
+            var viewCompileCallback = function(err, view, compiledTemplateId, cacheKey, totalCalls)
+            {
+                var viewId = view.id;
+
                 report.count++;
                 if (err)
                 {
@@ -1602,19 +1633,32 @@
                 else
                 {
                     report.successCount++;
+
+                    // mark onto the view that the template was compiled for this view
+                    // this maps [compiledTemplateId] -> [cacheKey]
+                    view.compiledTemplates[compiledTemplateId] = cacheKey;
                 }
 
                 if (report.count == totalCalls)
                 {
                     //var t2 = new Date().getTime();
                     //console.log("Compilation took: " + (t2-t1) + " ms");
-
-                    cb(report);
+                    if (report.errors.length > 0)
+                    {
+                        finalCallback();
+                    }
+                    else
+                    {
+                        // looks good, so now proceed to normalizing views
+                        normalizeViews();
+                    }
                 }
             };
 
-            var compileTemplate = function(compiledView, compiledTemplateId, template, totalCalls, callback)
+            var compileViewTemplate = function(view, compiledTemplateId, template, totalCalls)
             {
+                var viewId = view.id;
+
                 var type = null;
                 if (Alpaca.isObject(template)) {
                     type = template.type;
@@ -1633,7 +1677,7 @@
                 {
                     Alpaca.logError("Cannot find template engine for type: " + type);
                     var err = new Error("Cannot find template engine for type: " + type);
-                    callback(err, viewId, templateId, totalCalls);
+                    viewCompileCallback(err, view, compiledTemplateId, cacheKey, totalCalls);
                 }
 
                 var cacheKey = viewId + "_" + compiledTemplateId;
@@ -1641,112 +1685,90 @@
                 {
                     // compile the template
                     engine.compile(cacheKey, template, function(err, data) {
-
-                        callback(err, viewId, compiledTemplateId, totalCalls);
-
+                        viewCompileCallback(err, view, compiledTemplateId, cacheKey, totalCalls);
                     });
                 }
                 else
                 {
                     // already compiled, so skip
-                    callback(null, viewId, compiledTemplateId, totalCalls);
+                    viewCompileCallback(null, view, compiledTemplateId, cacheKey, totalCalls);
                 }
             };
 
-            // count the total number of compileTemplate calls we're going to make
-            var totalCalls = 0;
+            // walk through every match and store in an array of functions we'll call
+            var functionArray = [];
             for (var viewId in this.views)
             {
-                var compiledView = this.compiledViews[viewId];
+                var view = this.views[viewId];
+                view.compiledTemplates = {};
 
-                // field templates
-                if (compiledView.templates)
+                // view templates
+                if (view.templates)
                 {
-                    for (var templateId in compiledView.templates)
+                    for (var templateId in view.templates)
                     {
-                        totalCalls++;
+                        var template = view.templates[templateId];
+
+                        functionArray.push(function(view, compiledTemplateId, template) {
+                            return function(totalCalls) {
+                                compileViewTemplate(view, compiledTemplateId, template, totalCalls);
+                            };
+                        }(view, "view-" + templateId, template));
+                    }
+                }
+
+                // field level templates
+                if (view.fields)
+                {
+                    for (var path in view.fields)
+                    {
+                        if (view.fields[path].templates)
+                        {
+                            for (var templateId in view.fields[path].templates)
+                            {
+                                var template = view.fields[path].templates[templateId];
+
+                                functionArray.push(function(view, compiledTemplateId, template) {
+                                    return function(totalCalls) {
+                                        compileViewTemplate(view, compiledTemplateId, template, totalCalls);
+                                    };
+                                }(view, "field-" + path + "-" + templateId, template));
+                            }
+                        }
                     }
                 }
 
                 // layout template
-                if (compiledView.layout && compiledView.layout.template)
+                if (view.layout && view.layout.template)
                 {
-                    totalCalls++;
+                    var template = view.layout.template;
+
+                    functionArray.push(function(view, compiledTemplateId, template) {
+                        return function(totalCalls) {
+                            compileViewTemplate(view, compiledTemplateId, template, totalCalls);
+                        };
+                    }(view, "layoutTemplate", template));
                 }
 
                 // global template
-                if (compiledView.globalTemplate)
+                if (view.globalTemplate)
                 {
-                    totalCalls++;
-                }
+                    var template = view.globalTemplate;
 
-                // field level templates
-                if (compiledView.fields)
-                {
-                    for (var path in compiledView.fields)
-                    {
-                        if (compiledView.fields[path].templates)
-                        {
-                            for (var templateId in compiledView.fields[path].templates)
-                            {
-                                totalCalls++;
-                            }
-                        }
-                    }
+                    functionArray.push(function(view, compiledTemplateId, template) {
+                        return function(totalCalls) {
+                            compileViewTemplate(view, compiledTemplateId, template, totalCalls);
+                        };
+                    }(view, "globalTemplate", template));
                 }
             }
 
-
-            // walk each view and compile each template
-            // each compileTemplate() call is asynchronous so we wait for it to return
-            // and collect compilation counts
-            for (var viewId in this.views)
+            // now invoke all of the functions
+            // this tells each template to compile
+            var totalCalls = functionArray.length;
+            for (var i = 0; i < functionArray.length; i++)
             {
-                var compiledView = this.compiledViews[viewId];
-
-                // view templates
-                if (compiledView.templates)
-                {
-                    for (var templateId in compiledView.templates)
-                    {
-                        var template = compiledView.templates[templateId];
-
-                        compileTemplate(compiledView, "view-" + templateId, template, totalCalls, compileTemplateCallback);
-                    }
-                }
-
-                // field level templates
-                if (compiledView.fields)
-                {
-                    for (var path in compiledView.fields)
-                    {
-                        if (compiledView.fields[path].templates)
-                        {
-                            for (var templateId in compiledView.fields[path].templates)
-                            {
-                                var template = compiledView.fields[path].templates[templateId];
-
-                                compileTemplate(compiledView, "field-" + path + "-" + templateId, template, totalCalls, compileTemplateCallback);
-                            }
-                        }
-                    }
-                }
-
-                // layout template
-                if (compiledView.layout && compiledView.layout.template)
-                {
-                    var template = compiledView.layout.template;
-
-                    compileTemplate(compiledView, "layoutTemplate", template, totalCalls, compileTemplateCallback);
-                }
-
-                // global template
-                if (compiledView.globalTemplate)
-                {
-                    var template = compiledView.globalTemplate;
-
-                    compileTemplate(compiledView, "globalTemplate", template, totalCalls, compileTemplateCallback);
-                }
+                functionArray[i](totalCalls);
             }
         },
 
@@ -1868,9 +1890,11 @@
 
             descriptor.compiledTemplateId = compiledTemplateId;
 
+
+            // look up the cacheKey for this compiled template id
             // verify it is in cache
-            var cacheKey = view.id + "_" + compiledTemplateId;
-            if (!engine.isCached(cacheKey))
+            var cacheKey = view.compiledTemplates[compiledTemplateId];
+            if (!cacheKey || !engine.isCached(cacheKey))
             {
                 // well, it isn't actually a compiled template
                 // thus, we cannot in the end produce a descriptor for it
@@ -1907,7 +1931,7 @@
             }
 
             // execute the template
-            var cacheKey = view.id + "_" + compiledTemplateId;
+            var cacheKey = templateDescriptor.cache.key;
             var html = engine.execute(cacheKey, model, function(err) {
                 Alpaca.logWarn("The compiled template: " + compiledTemplateId + " for view: " + view.id + " failed to execute: " + JSON.stringify(err));
                 throw new Error("The compiled template: " + compiledTemplateId + " for view: " + view.id + " failed to execute: " + JSON.stringify(err));
