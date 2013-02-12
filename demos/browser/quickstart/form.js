@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+	// To turn on debugging, uncomment this line
+	// Alpaca.logLevel = Alpaca.DEBUG;
+	
     /**
      * Initial data
      *
@@ -97,6 +100,7 @@ $(document).ready(function() {
         "data": data,
         "schema": schema,
         "options": options,
-        "postRender": postRenderCallback
+        "postRender": postRenderCallback,
+		"ui": "jquery-ui"
     });
 });

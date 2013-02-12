@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+	// disable ajax since jQuery Mobile clobbers enctype="multipart/form-data" and converts to urlencoded
+	// @see http://forum.jquery.com/topic/jquery-mobile-seems-to-clobber-ability-to-upload-files-via-forms
+	$.mobile.ajaxEnabled = false;
+
     /**
      * Initial data
      *

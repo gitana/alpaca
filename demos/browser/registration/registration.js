@@ -313,9 +313,11 @@ $(document).ready(function() {
      * If you'd like to define a custom layout (html) file for your form, you first define a new view.
      */
     Alpaca.registerView({
-        "id": "VIEW_WEB_REGISTRATION",
+        "id": "VIEW_REGISTRATION_CREATE",
         "parent": "VIEW_WEB_CREATE_TABLE",
         "title": "Registration Create View for the Web",
+		"ui": "jquery-ui",
+		"style": "jquery-ui",
         "layout" : {
             "template": './registration-layout.html',
             "bindings": {
@@ -364,7 +366,6 @@ $(document).ready(function() {
         "schema": schema,
         "options": options,
         "postRender": postRenderCallback,
-        "view": "VIEW_WEB_REGISTRATION",
-        "style":"bootstrap"
+        "view": "VIEW_REGISTRATION_CREATE"
     });
 });

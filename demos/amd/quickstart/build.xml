@@ -23,8 +23,13 @@
         <copy todir="lib" file="../../../lib/jquery-latest.min.js" />
         <copy todir="lib" file="../../../lib/jquery.tmpl.js" />
 
-        <!-- jquery-ui partial dependency -->
-        <copy todir="lib" file="../../../lib/jquery-ui-latest.custom.min.js" />
+		<!-- jquery ui minimal runtime set -->
+        <copy todir="lib/jquery-ui-latest">
+	        <fileset dir="../../../lib/jquery-ui-latest">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+		</copy>
 
         <!-- require.js -->
         <copy todir="lib" file="../../../lib/requirejs/require.js" />

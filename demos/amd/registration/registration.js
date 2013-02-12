@@ -316,6 +316,8 @@ define(["jquery", "alpaca"], function($) {
         "id": "VIEW_WEB_REGISTRATION",
         "parent": "VIEW_WEB_CREATE_TABLE",
         "title": "Registration Create View for the Web",
+		"ui": "jquery-ui",
+		"style": "jquery-ui",
         "layout" : {
             "template": './registration-layout.html',
             "bindings": {
@@ -364,7 +366,6 @@ define(["jquery", "alpaca"], function($) {
         "schema": schema,
         "options": options,
         "postRender": postRenderCallback,
-        "view": "VIEW_WEB_REGISTRATION",
-        "style":"bootstrap"
+        "view": "VIEW_WEB_REGISTRATION"
     });
 });

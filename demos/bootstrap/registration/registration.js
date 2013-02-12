@@ -314,7 +314,7 @@ $(document).ready(function() {
      */
     Alpaca.registerView({
         "id": "VIEW_WEB_REGISTRATION",
-        "parent": "VIEW_WEB_CREATE_TABLE",
+        "parent": "VIEW_BOOTSTRAP_CREATE",
         "title": "Registration Create View for the Web",
         "layout" : {
             "template": './registration-layout.html',
@@ -364,7 +364,6 @@ $(document).ready(function() {
         "schema": schema,
         "options": options,
         "postRender": postRenderCallback,
-        "view": "VIEW_WEB_REGISTRATION",
-        "style":"bootstrap"
+        "view": "VIEW_WEB_REGISTRATION"
     });
 });

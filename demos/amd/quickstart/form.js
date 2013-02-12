@@ -97,7 +97,8 @@ define(["jquery", "alpaca"], function($) {
         "data": data,
         "schema": schema,
         "options": options,
-        "postRender": postRenderCallback
+        "postRender": postRenderCallback,
+		"ui": "jquery-ui"
     });
 
 });
