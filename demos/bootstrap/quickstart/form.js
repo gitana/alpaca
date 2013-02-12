@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+//	Alpaca.logLevel = Alpaca.DEBUG;
+
     /**
      * Initial data
      *
@@ -97,6 +99,8 @@ $(document).ready(function() {
         "data": data,
         "schema": schema,
         "options": options,
-        "postRender": postRenderCallback
+        "postRender": postRenderCallback,
+        "ui": "bootstrap",
+        "type": "create"
     });
 });

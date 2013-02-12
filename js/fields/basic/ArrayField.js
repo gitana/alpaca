@@ -292,12 +292,13 @@
          * @param {Object} containerElem Toolbar container.
          */
         renderToolbar: function(containerElem) {
+            var _this = this;
+
             if (!this.options.readonly) {
-                var _this = this;
                 var id = containerElem.attr('alpaca-id');
                 var fieldControl = this.childrenById[id];
-                var itemToolbarTemplate = this.view.getTemplate("arrayItemToolbar");
-	            if (itemToolbarTemplate) {
+                var itemToolbarTemplateDescriptor = this.view.getTemplateDescriptor("arrayItemToolbar");
+	            if (itemToolbarTemplateDescriptor) {
 
 		            // Base buttons : add & remove
                     var buttonsDef = [
@@ -349,7 +350,7 @@
 			            buttonsDef = $.merge(buttonsDef,_this.options.items.extraToolbarButtons);
 		            }
 
-                    var toolbarElem = $.tmpl(itemToolbarTemplate, {
+                    var toolbarElem = _this.view.tmpl(itemToolbarTemplateDescriptor, {
                         "id": id,
                         "buttons": buttonsDef
                     });
@@ -390,9 +391,9 @@
         renderArrayToolbar: function(containerElem) {
             var _this = this;
             var id = containerElem.attr('alpaca-id');
-            var itemToolbarTemplate = this.view.getTemplate("arrayToolbar");
-            if (itemToolbarTemplate) {
-                var toolbarElem = $.tmpl(itemToolbarTemplate, {
+            var itemToolbarTemplateDescriptor = this.view.getTemplateDescriptor("arrayToolbar");
+            if (itemToolbarTemplateDescriptor) {
+                var toolbarElem = _this.view.tmpl(itemToolbarTemplateDescriptor, {
                     "id": id,
                     "addItemLabel": (_this.options.items && _this.options.items.addItemLabel) ? _this.options.items.addItemLabel : "Add Item"
                 });
@@ -480,7 +481,7 @@
                     "data" : value,
                     "options": fieldOptions,
                     "schema" : itemSchema,
-                    "view" : this.view.viewObject.id ? this.view.viewObject.id : this.view.viewObject,
+                    "view" : this.view.id ? this.view.id : this.view,
                     "connector": this.connector,
                     "notTopLevel":true,
                     "render" : function(fieldControl) {
@@ -495,8 +496,8 @@
                         containerElem.addClass("alpaca-item-container");
                         // render item label if needed
                         if (_this.options && _this.options.itemLabel) {
-                            var itemLabelTemplate = _this.view.getTemplate("itemLabel");
-                            var itemLabelElem = $.tmpl(itemLabelTemplate, {
+                            var itemLabelTemplateDescriptor = _this.view.getTemplateDescriptor("itemLabel");
+                            var itemLabelElem = _this.view.tmpl(itemLabelTemplateDescriptor, {
                                 "options": _this.options,
                                 "index": index ? index + 1 : 1,
                                 "id": _this.id

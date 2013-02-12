@@ -116,9 +116,9 @@
             },
 
             /**
-             * @see Alpaca.Field#setDefaultTemplate
+             * @see Alpaca.Field#setDefaultTemplateDescriptor
              */
-            setDefaultTemplate: function() {
+            setDefaultTemplateDescriptor: function() {
                 this.base();
             },
 
@@ -260,9 +260,11 @@
              * @param {String} propertyId Child item property ID.
              */
             renderItemContainer: function(insertAfterId, parent, propertyId) {
-                var itemContainerTemplate = this.view.getTemplate("fieldSetItemContainer");
-                if (itemContainerTemplate) {
-                    var containerElem = $.tmpl(itemContainerTemplate, {});
+                var _this = this;
+
+                var itemContainerTemplateDescriptor = this.view.getTemplateDescriptor("fieldSetItemContainer");
+                if (itemContainerTemplateDescriptor) {
+                    var containerElem = _this.view.tmpl(itemContainerTemplateDescriptor, {});
                     if (containerElem.attr('data-replace') == 'true') {
                         return this.fieldContainer;
                     } else {

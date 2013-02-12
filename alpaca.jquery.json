@@ -1,7 +1,7 @@
 {
     "name": "alpaca",
     "title": "Alpaca Forms",
-    "description": "jQuery plugin for Easy Forms",
+    "description": "Easy Forms for jQuery",
     "keywords": [
         "form",
         "forms",
@@ -15,10 +15,10 @@
         "jquery-mobile",
         "html5"
     ],
-    "version": "1.0.5",
+    "version": "1.0.6",
     "author": {
         "name": "Cloud CMS",
-        "url": "https://github.com/gitana/alpaca"
+        "url": "http://www.cloudcms.com"
     },
     "maintainers": [
         {

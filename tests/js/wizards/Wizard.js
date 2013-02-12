@@ -109,7 +109,7 @@
             "options": "../examples/components/wizards/customer-profile-options.json",
             "schema": "../examples/components/wizards/customer-profile-schema.json",
             "view": {
-                "parent": "VIEW_WEB_EDIT_LIST",
+                "parent": "VIEW_JQUERYUI_EDIT_LIST",
                 "layout": {
                     "template": '../examples/components/wizards/wizard-template.html',
                     "bindings": {

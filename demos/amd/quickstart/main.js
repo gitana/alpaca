@@ -11,7 +11,7 @@ require.config({
         },
         {
             "name": "jquery-ui",
-            "main": "../jquery-ui-latest.custom.min"
+            "main": "../jquery-ui-latest/jquery-ui-latest.custom.min"
         },
         {
             "name": "alpaca",

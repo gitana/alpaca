@@ -76,10 +76,11 @@
          */
         _renderField: function(onSuccess){
 
-            var controlFieldTemplate = this.view.getTemplate("controlFieldRadio");
+            var _this = this;
 
-            if (controlFieldTemplate) {
-                this.field = $.tmpl(controlFieldTemplate, {
+            var controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldRadio");
+            if (controlFieldTemplateDescriptor) {
+                this.field = _this.view.tmpl(controlFieldTemplateDescriptor, {
                     "id": this.getId(),
                     "options": this.options,
                     "selectOptions": this.selectOptions,

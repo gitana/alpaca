@@ -1,4 +1,9 @@
+// set up default ui for Alpaca
+// this tells Alpaca to fall back to the "jquery-ui" user interface if nothing else is specified
+Alpaca.defaultUI = "jquery-ui";
+
 $(function() {
+
     // Add theme switcher
     function addThemeSwitcher(container, position) {
         var pos = {

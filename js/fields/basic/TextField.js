@@ -35,16 +35,18 @@
                 this.options.size = 40;
             }
             
-            this.controlFieldTemplate = this.view.getTemplate("controlFieldText");
+            this.controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldText");
         },
         
         /**
          * @see Alpaca.ControlField#renderField
          */
         renderField: function(onSuccess) {
-        
-            if (this.controlFieldTemplate) {
-                this.field = $.tmpl(this.controlFieldTemplate, {
+
+            var _this = this;
+
+            if (this.controlFieldTemplateDescriptor) {
+                this.field = _this.view.tmpl(this.controlFieldTemplateDescriptor, {
                     "id": this.getId(),
                     "name": this.name,
                     "options": this.options

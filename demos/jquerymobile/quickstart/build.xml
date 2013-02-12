@@ -32,9 +32,6 @@
         <copy todir="lib" file="../../../lib/jquery-latest.min.js" />
         <copy todir="lib" file="../../../lib/jquery.tmpl.js" />
 
-        <!-- jquery-ui partial dependency -->
-        <copy todir="lib" file="../../../lib/jquery-ui-latest.custom.min.js" />
-
     </target>
 
 </project>

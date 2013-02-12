@@ -1,0 +1,25 @@
+.alpaca-controlfield-helper-text
+{
+    vertical-align: bottom;
+    padding-left: 4px;
+}
+
+.alpaca-controlfield-phone input
+{
+    background: none;
+}
+
+.alpaca-controlfield-email input
+{
+    background: none;
+}
+
+.alpaca-controlfield-time input
+{
+    background: none;
+}
+
+.alpaca-controlfield-date input
+{
+    background: none;
+}

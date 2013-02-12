@@ -49,10 +49,13 @@
              * @see Alpaca.ControlField#renderField
              */
             renderField: function(onSuccess) {
-                var controlFieldTemplate = this.view.getTemplate("controlFieldCheckbox");
 
-                if (controlFieldTemplate) {
-                    this.field = $.tmpl(controlFieldTemplate, {
+                var _this = this;
+
+                var controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldCheckbox");
+
+                if (controlFieldTemplateDescriptor) {
+                    this.field = _this.view.tmpl(controlFieldTemplateDescriptor, {
                         "id": this.getId(),
                         "name": this.name,
                         "options": this.options
