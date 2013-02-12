@@ -265,9 +265,15 @@
         <copy todir="${package.dir}/lib">
             <fileset dir="${prep.dir}/lib">
                 <include name="jquery-latest.min.js"/>
+                <include name="jquery.tmpl.js"/>
                 <include name="jquery-ui-timepicker-addon.js"/>
                 <include name="jquery.wysiwyg/**/*"/>
                 <include name="jquery-ui-latest/**/*"/>
+                <include name="bootstrap/**/*"/>
+                <include name="handlebars/**/*"/>
+                <include name="ejs/**/*"/>
+                <include name="jquerymobile/**/*"/>
+                <include name="requirejs/**/*"/>
             </fileset>
         </copy>
 

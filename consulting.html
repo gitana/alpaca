@@ -37,6 +37,8 @@
     <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
+    <script type="text/javascript" src="./examples/lib/jquery.blockui.js"></script>
+
     <script type="text/javascript">
         $.fn.center = function () {
             this.css("position","absolute");
@@ -144,8 +146,7 @@
                         },
                         "newsletter": {
                             "type": "boolean",
-                            "default": true,
-                            "required": true
+                            "default": true
                         },
                         "redirectUri": {
                             "type": "string",
@@ -179,7 +180,7 @@
                         },
                         "phone": {
                             "label": "Phone Number",
-                            "type": "phone"
+                            "type": "text"
                         },
                         "comments": {
                             "label": "Project Description",
