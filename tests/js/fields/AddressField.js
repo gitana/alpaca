@@ -33,7 +33,7 @@
                 var selectOptionElems = $('select > option', inputElem);
                 equal(selectOptionElems.length, 60, 'Address state select field generated correctly.');
                 var zipElem = $('.alpaca-fieldset-items-container input[name="zip"]', inputElem);
-                ok(zipElem.length, 'Address zip field correctly.');
+                ok(zipElem.length, 'Address zip field generated correctly.');
                 equal(zipElem.attr('size'), 5, 'Address zip field generated with right size.');
                 zipElem.focus(function() {
                     equal(zipElem.val(), "_____", "Address zip field text mask generated correctly.");

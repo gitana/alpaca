@@ -88,6 +88,7 @@
                 }
             };
 
+            /*
             var mergeMap = function(target, source, propertyId)
             {
                 var sourceMap = source[propertyId];
@@ -101,7 +102,23 @@
                     Alpaca.mergeObject(target[propertyId], JSON.parse(JSON.stringify(sourceMap)));
                 }
             };
-            
+            */
+
+            var mergeMap = function(target, source, propertyId)
+            {
+                var sourceMap = source[propertyId];
+                if (sourceMap)
+                {
+                    if (!target[propertyId])
+                    {
+                        target[propertyId] = {};
+                    }
+
+                    //Alpaca.merge(sourceMap, target[propertyId]);
+                    Alpaca.mergeObject2(sourceMap, target[propertyId]);
+                }
+            };
+
             // walk forward and apply
             for (var i = 0; i < chain.length; i++)
             {

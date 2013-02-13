@@ -319,6 +319,11 @@ $(function() {
                 "id":"template-wizard",
                 "title":"Template Wizard",
                 "link":"../../components/wizards/wizard.html"
+            },
+            {
+                "id":"template-wizard-validation",
+                "title":"Wizard with Validation",
+                "link":"../../components/wizards/wizard-validation.html"
             }
         ]
     }, {

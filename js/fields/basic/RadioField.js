@@ -88,9 +88,18 @@
 					"name": this.name,
                     "data": this.data
                 });
-                if ($("input:radio:checked",this.field).length == 0) {
-                	$("input:radio:first",this.field).attr("checked","checked");
+
+                // if autoSelectFirst and nothing currently checked, then pick first item in the value list
+                // set data and visually select it
+                if (this.options.emptySelectFirst) {
+
+                    this.data = this.selectOptions[0].value;
+
+                    if ($("input:radio:checked",this.field).length == 0) {
+                        $("input:radio:first",this.field).attr("checked","checked");
+                    }
                 }
+
                 this.injectField(this.field);
             }
             
@@ -135,7 +144,13 @@
 						"title": "Field name",
 						"description": "Field name.",
 						"type": "string"
-					}
+					},
+                    "emptySelectFirst": {
+                        "title": "Empty Select First",
+                        "description": "If the data is empty, then automatically select the first item in the list.",
+                        "type": "boolean",
+                        "default": true
+                    }
 				}
 			});
         },
