@@ -556,9 +556,9 @@
         displayMessage: function(messages, beforeStatus) {
             // remove the message element if it exists
             var _this = this;
-            if (beforeStatus == false) {
+            //if (beforeStatus == false) {
                 $("[id^='" + _this.getId() + "-field-message']", _this.getEl()).remove();
-            }
+            //}
             // add message and generate it
             if (messages && messages.length > 0) {
                 $.each(messages, function(index, message) {
@@ -590,77 +590,110 @@
         /**
          * Injects styles to the DOM of the rendered field reflects the validation state
          * of the field. If necessary, displays validation messages as well.
+         *
+         * @param {Boolean} checkChildren whether to render the validation state for any child fields
          */
-        renderValidationState: function() {
+        renderValidationState: function(checkChildren) {
 
-            if (this.options.validate) {
+            // internal method for conducting either a depth first validation of child fields
+            // or a trickle up re-validation of dependent parents
+            // this method gets called with the context (this) == field
+            var _rvc = function(checkChildren, diving)
+            {
+                if (this.options.validate) {
 
-                // remove all previous markers
-                this.getStyleInjection("removeError",this.getEl());
-                this.getEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
-
-                var beforeStatus = this.isValid();
-
-                // this runs validation
-                if (this.validate()) {
-                    this.getEl().addClass("alpaca-field-valid");
-                } else {
-
-                    // we don't markup invalidation state for readonly fields
-                    if (!this.options.readonly)
+                    // if we're instructed to check children, always go depth first right away
+                    if (checkChildren && this.children)
                     {
-                        if (!this.hideInitValidationError) {
-                            this.getStyleInjection("error",this.getEl());
-                            this.getEl().addClass("alpaca-field-invalid");
-                        } else {
-                            this.getEl().addClass("alpaca-field-invalid-hidden");
+                        for (var i = 0; i < this.children.length; i++) {
+                            _rvc.call(this.children[i], checkChildren, true);
                         }
                     }
-                    else
-                    {
-                        // this field is invalid and is also read-only, so we're not supposed to inform the end-user
-                        // within the UI (since there is nothing we can do about it)
-                        // here, we log a message to debug to inform the developer
-                        Alpaca.logWarn("The field (id=" + this.getId() + ", title=" + this.getTitle() + ", label=" + this.options.label + ") is invalid and also read-only");
-                    }
-                }
 
-                var afterStatus = this.isValid();
+                    // clear out previous validation UI markers
+                    this.getStyleInjection("removeError",this.getEl());
+                    this.getEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
 
-                // Allow for the message to change
-                if (this.options.showMessages) {
+                    // current validation status
+                    var beforeStatus = this.isValid();
 
-                    if (!this.initializing) {
+                    // now run the validation
+                    if (this.validate()) {
+
+                        // mark valid
+                        this.getEl().addClass("alpaca-field-valid");
+
+                    } else {
 
                         // we don't markup invalidation state for readonly fields
                         if (!this.options.readonly)
                         {
-                            var messages = [];
-                            for (var messageId in this.validation) {
-                                if (!this.validation[messageId]["status"]) {
-                                    messages.push(this.validation[messageId]["message"]);
-                                }
+                            if (!this.hideInitValidationError) {
+                                this.getStyleInjection("error",this.getEl());
+                                this.getEl().addClass("alpaca-field-invalid");
+                            } else {
+                                this.getEl().addClass("alpaca-field-invalid-hidden");
                             }
-                            this.displayMessage(messages, beforeStatus);
+                        }
+                        else
+                        {
+                            // this field is invalid and is also read-only, so we're not supposed to inform the end-user
+                            // within the UI (since there is nothing we can do about it)
+                            // here, we log a message to debug to inform the developer
+                            Alpaca.logWarn("The field (id=" + this.getId() + ", title=" + this.getTitle() + ", label=" + this.options.label + ") is invalid and also read-only");
                         }
                     }
-                }
-                // Re-validate parents if validation state changed
-                var forceRevalidation = false;
-                var parent = this.parent;
-                while (parent) {
-                    // if parent has custom validator, it should re-validate.
-                    if (parent.options && (parent.options.forceRevalidation || parent.options.validator)) {
-                        forceRevalidation = true;
-                    }
-                    parent = parent.parent;
-                }
-                if ((beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) || forceRevalidation) {
-                    this.parent.renderValidationState();
-                }
-                this._validateCustomValidator();
 
-            }
+                    // now check whether valid
+                    var afterStatus = this.isValid();
+
+                    // Allow for the message to change
+                    if (this.options.showMessages) {
+
+                        if (!this.initializing) {
+
+                            // we don't markup invalidation state for readonly fields
+                            if (!this.options.readonly)
+                            {
+                                var messages = [];
+                                for (var messageId in this.validation) {
+                                    if (!this.validation[messageId]["status"]) {
+                                        messages.push(this.validation[messageId]["message"]);
+                                    }
+                                }
+                                this.displayMessage(messages, beforeStatus);
+                            }
+                        }
+                    }
+
+                    // if the validations state changed and we're not "diving", then it means we're at the top field
+                    // of our depth-first dive.
+                    //
+                    // a change to the validation state means that any fields dependent on us should have their validation
+                    // checked, thus we allow for trickle-up validation here
+
+                    if (!diving)
+                    {
+                        var forceRevalidation = false;
+                        var parent = this.parent;
+                        while (parent) {
+                            // if parent has custom validator, it should re-validate.
+                            if (parent.options && (parent.options.forceRevalidation || parent.options.validator)) {
+                                forceRevalidation = true;
+                            }
+                            parent = parent.parent;
+                        }
+                        if ((beforeStatus != afterStatus && this.parent && this.parent.renderValidationState) || forceRevalidation) {
+                            this.parent.renderValidationState();
+                        }
+                    }
+
+                    // apply custom validation
+                    this._validateCustomValidator();
+                }
+            };
+
+            _rvc.call(this, checkChildren, false);
         },
 
         showHiddenMessages: function() {
@@ -1420,6 +1453,29 @@
                                     "type": "any"
                                 }
                             }
+                        },
+                        "buttons": {
+                            "title": "Form Buttons",
+                            "description": "Configuration for form-bound buttons",
+                            "type": "object",
+                            "properties": {
+                                "submit": {
+                                    "type": "object",
+                                    "title": "Submit Button",
+                                    "required": false
+                                },
+                                "reset": {
+                                    "type": "object",
+                                    "title": "Reset button",
+                                    "required": false
+                                }
+                            }
+                        },
+                        "toggleSubmitValidState": {
+                            "title": "Toggle Submit Valid State",
+                            "description": "Toggle the validity state of the Submit button",
+                            "type": "boolean",
+                            "default": true
                         }
                     }
                 }

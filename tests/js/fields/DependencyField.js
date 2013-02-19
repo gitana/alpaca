@@ -2,8 +2,8 @@
 
     module("fields: dependency");
 
-    // Test case 1 : Field dependecy through schema dependency properties.
-    test("Field dependecy through schema dependency properties.", function() {
+    // Test case 1 : Field dependency through schema dependency properties.
+    test("Field dependency through schema dependency properties.", function() {
         stop();
         $("#dependency-1").alpaca({
             "data": {},

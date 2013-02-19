@@ -2,11 +2,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca - HTML5 Forms for jQuery - Dependency Field</title>
-        <meta name="keywords" content="alpaca,forms,dependency field,gitana" />
-        <meta name="description" content="Dependency Field Examples for Alpaca Forms." />
+        <title>Alpaca - HTML5 Forms for jQuery - Registration Form with Click Validation</title>
+        <meta name="keywords" content="alpaca,forms,create,gitana" />
+        <meta name="description" content="Customer Profile Form with Custom View Template." />
         <meta name="author" content="Gitana Software Inc." />
         <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
         <!-- jQuery -->
         <script type="text/javascript" src="../../../lib/jquery-latest.min.js"></script>
@@ -46,8 +47,8 @@
                     <div class="resource-bar">
                         <a href="../../../index.html">Home</a>
                         <a href="../../../resources.html">Downloads</a>
-                        <a href="javascript:void(0);" class="current">Documentation</a>
-                        <a href="../../forms/customer-profile/edit-form.html">Forms</a>
+                        <a href="../../../examples/components/fields/text-field.html">Documentation</a>
+                        <a href="javascript:void(0);" class="current">Forms</a>
                         <a href="../../../resources.html#mobile">Mobile</a>
                         <a href="../../../tutorials.html">Tutorials</a>
                         <a href="../../../consulting.html">Consulting</a>
@@ -55,7 +56,7 @@
                 </div>
 		    </div>
 			</div>
-		</header>
+		</header>	
 <div class='container_12'>
     <div class="actual-body">
         <div class="grid_3">
@@ -67,42 +68,94 @@
             <div class="container_12">
                 <div class="widget">
                     <div class="widget-body">
-            <div class='grid_12 alpaca-example-header' id='dependency-field' alpaca-types=''>
-                <h1>Dependency Fields</h1>
+            <div class='grid_12 alpaca-example-header' id='simple' alpaca-types='form'>
+                <h1>Registration Form #2</h1>
             </div>
             <div class='grid_12 alpaca-example-case'>
-                    <h3>Ice Cream Picker Field: </h3>
-					<h4>Field dependency through schema dependency properties.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
+                <p>
+                    This form expands the three-field registration form to include manual submit validation.  The state
+                    of the submit button does not change as the values of the form are filled out.  However, once the
+                    submit button is clicked, we manually handle some validation and take care of submitting the form
+                    on our own.
+                </p>
+                <div id="field1"></div>
+                <script type="text/javascript" id="field1-script">
 $(function() {
     $("#field1").alpaca({
-        "data": {},
+        "view": "VIEW_JQUERYUI_CREATE",
         "schema": {
-            "title": "Ice Cream Picker",
-            "description": "Select Your Favorite Ice Cream",
             "type": "object",
             "properties": {
-                "fan": {
-                    "title": "Alpaca Ice Cream Lover?",
-                    "type": "boolean",
-                    "description": "Say YES If You Are Truly An Alpaca Ice Cream Lover."
+                "name": {
+                    "type": "string",
+                    "required": true
                 },
-                "icecream": {
-                    "title": "Favorite Ice Cream",
-                    "type": "String",
-                    "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
-                    "dependencies": "fan"
+                "birthday": {
+                    "type": "text",
+                    "format": "date",
+                    "required": true
                 },
-                "topping": {
-                    "title": "Favorite Topping",
-                    "type": "String",
-                    "enum": ["Marshmelllow", "Chocolate Chip", "Caramel", "Cookie Dough"],
-                    "dependencies": ["icecream"]
+                "preference": {
+                    "type": "text",
+                    "enum": ["orlando", "tokyo", "amsterdam"],
+                    "required": true,
+                    "default": "orlando"
                 }
             }
+        },
+        "options": {
+            "renderForm": true,
+            "form": {
+                "buttons": {
+                    "submit":{}
+                },
+                "toggleSubmitValidState": false
+            },
+            "fields": {
+                "name": {
+                    "label": "Your Name"
+                },
+                "birthday": {
+                    "label": "Your Birthday"
+                },
+                "preference": {
+                    "label": "Your Destination",
+                    "type": "select",
+                    "optionLabels": ["Orlando, USA", "Tokyo, Japan", "Amsterdam, Netherlands"]
+                }
+            }
+        },
+        "postRender": function(renderedField) {
+
+            var form = renderedField.form;
+            if (form) {
+                form.registerSubmitHandler(function(e, form) {
+
+                    // validate the entire form (top control + all children)
+                    form.validate(true);
+
+                    // draw the validation state (top control + all children)
+                    form.renderValidationState(true);
+
+                    // now display something
+                    if (form.isFormValid())
+                    {
+                        var value = form.getValue();
+
+                        alert("The form looks good!  Name: " + value.name + ", Birthday: " + value.birthday + ", Preference: " + value.preference);
+                    }
+                    else
+                    {
+                        alert("There are problems with the form.  Please make the any necessary corrections.");
+                    }
+
+                    e.stopPropagation();
+
+                    return false;
+                });
+            }
         }
+
     });
 });
                     </script>

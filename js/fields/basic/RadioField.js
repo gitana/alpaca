@@ -37,6 +37,12 @@
 			else if (!this.name) {
 				this.name = this.getId()+"-name";
 			}
+
+            // empty select first to false by default
+            if (Alpaca.isUndefined(this.options.emptySelectFirst))
+            {
+                this.options.emptySelectFirst = false;
+            }
         },
 		        
         /**
@@ -89,9 +95,9 @@
                     "data": this.data
                 });
 
-                // if autoSelectFirst and nothing currently checked, then pick first item in the value list
+                // if emptySelectFirst and nothing currently checked, then pick first item in the value list
                 // set data and visually select it
-                if (this.options.emptySelectFirst) {
+                if (this.options.emptySelectFirst && this.selectOptions && this.selectOptions.length > 0) {
 
                     this.data = this.selectOptions[0].value;
 
@@ -149,7 +155,7 @@
                         "title": "Empty Select First",
                         "description": "If the data is empty, then automatically select the first item in the list.",
                         "type": "boolean",
-                        "default": true
+                        "default": false
                     }
 				}
 			});
