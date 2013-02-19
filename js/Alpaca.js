@@ -335,7 +335,11 @@
 
             if (Alpaca.isArray(thing) || Alpaca.isObject(thing))
             {
-                copy = JSON.parse(JSON.stringify(thing));
+                copy = Alpaca.cloneObject(thing);
+            }
+            else
+            {
+                copy = thing;
             }
 
             return copy;

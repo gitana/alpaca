@@ -502,8 +502,10 @@
                                 if (stepBindings) {
                                     $.each(stepBindings, function(propertyId, step) {
                                         valid = valid & _this.childrenByPropertyId[propertyId].validate();
+                                        _this.childrenByPropertyId[propertyId].renderValidationState();
                                     });
                                 }
+
                             }
 
                             return valid;
@@ -823,10 +825,6 @@
                                 // TODO: fire click handler?
                                 if (_this.wizardConfigs.buttons.done && _this.wizardConfigs.buttons.done.onClick) {
                                     _this.wizardConfigs.buttons.done.onClick();
-                                }
-
-                                if (Alpaca.wizardDoneHandler) {
-                                    Alpaca.wizardDoneHandler();
                                 }
                             }
 

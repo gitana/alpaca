@@ -13,13 +13,13 @@
         <script type="text/javascript" src="../../../lib/jquery-latest.min.js"></script>
         <script type="text/javascript" src="../../../lib/jquery.tmpl.js"></script>
 
-        <!-- jQuery UI Theme -->
-        <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
-        <link type="text/css" href="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
-
         <!-- Alpaca -->
         <script type="text/javascript" src="../../../components/alpaca/alpaca.js"></script>
         <link type="text/css" href="../../../components/alpaca/alpaca.css" rel="stylesheet"/>
+
+        <!-- jQuery UI Support -->
+        <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
+        <link type="text/css" href="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
 
         <!-- Additional CSS -->
         <link type="text/css" href="../../css/960.fluid.css" rel="stylesheet"/>
@@ -68,26 +68,34 @@
             <div class="container_12">
                 <div class="widget">
                     <div class="widget-body">
+
+
+
             <div class='grid_12 alpaca-example-header' id='template-wizard' alpaca-types=''>
-                <h1>Wizard Through Layout with Validation</h1>
+                <h1>Wizard with Validation</h1>
             </div>
             <div class='grid_12 alpaca-example-case'>
-                    <h3>Customer Profile: </h3>
-                    <h4>Wizard element injections are based on field to template region bindings which are defined by the templates properties of the field view parameter. 
-                        Wizard template uses alpaca-wizard-step class to mark the wizard step. 
-                        This example loades <a href="./wizard-template.html" target="_source">template</a>, <a href="./customer-profile-data.json" target="_source">data</a>, 
-						<a href="./customer-profile-schema.json" target="_source">schema</a> and <a href="./customer-profile-options.json" target="_source">options</a> 
-						parameters through ajax calls.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript"id="field1-script">
+                <p>
+                    This example uses Alpaca to configure a three-step wizard for content entry.  Between each step of the wizard, the user
+                    can click <i>Next</i> or <i>Previous</i> to navigate between the steps.  At the end of the wizard, a <i>Done</i>
+                    button can be used to complete the wizard.
+                </p>
+                <p>
+                    Validation is enabled between each step of the wizard so that the state of the elements within the current step of the
+                    wizard are validated ahead of continuation of the wizard flow.  In addition, click handlers are set up to alert when
+                    transitions between steps occur.
+                </p>
+                <div style="border: 1px #ccc solid; border-radius: 7px; padding: 10px">
+                    <div id="field1"></div>
+                </div>
+
+                <script type="text/javascript"id="field1-script">
 $(function() {
     $("#field1").alpaca({
-        "data": "./customer-profile-data.json",
         "schema": "./customer-profile-schema.json",
         "options": "./customer-profile-options.json",
         "view": {
-            "parent": "VIEW_JQUERYUI_EDIT_LIST",
+            "parent": "VIEW_JQUERYUI_CREATE_LIST",
             "layout": {
                 "template": './wizard-template.html',
                 "bindings": {
@@ -106,25 +114,37 @@ $(function() {
                 "statusBar": true,
                 "buttons": {
                     "done": {
-                        "validateOnClick": true
+                        "validateOnClick": true,
+                        "onClick": function() {
+                            alert("Fired done.onClick handler");
+                        }
                     },
                     "next": {
-                        "validateOnClick": true
+                        "validateOnClick": true,
+                        "onClick": function() {
+                            alert("Fired next.onClick handler");
+                        }
                     },
                     "prev": {
-                        "validateOnClick": true
+                        "validateOnClick": true,
+                        "onClick": function() {
+                            alert("Fired prev.onClick handler");
+                        }
                     }
                 }
             }
         }
     });
-    Alpaca.wizardDoneHandler = function() {
-        alert("Wizard finished");
-    };
 });
                     </script>
-                        </div>
-                        <div class="clear height-fix"></div>
+
+
+                </div>
+                <div class="clear height-fix"></div>
+
+
+
+
                     </div>
                 </div>
             </div>
