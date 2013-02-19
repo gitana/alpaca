@@ -707,7 +707,7 @@
         </copy>
     </target>
 
-    <target name="full" depends="webserver-clean, install-demos-local-dependencies">
+    <target name="full" depends="webserver-clean, package, install-demos-local-dependencies">
         <copy todir="${local.docroot.basepath}/${appkey}">
             <fileset refid="alpaca-files"/>
         </copy>
