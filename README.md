@@ -1,10 +1,27 @@
-# Alpaca - Easy Web Forms for jQuery #
+# Alpaca - Easy Forms for jQuery #
 
-Alpaca is a plugin for jQuery, jQuery UI and jQuery Mobile that makes it easy to render beautiful HTML5 Web Forms for web and mobile applications.
+Alpaca is the Easy Forms Engine for jQuery and Twitter Bootstrap.
 
-Alpaca is built around JSON-Schema for expression of the form object model, types, properties, validation logic and constraints. It provides a comprehensive and extensible control library with support for wizards, layout, I18N and pluggable templating engines (like EJS and jQuery Templating).
+It is built around JSON schema to keep things simple. Using Alpaca, you can express your forms object model, types, properties and validation logic. Forms rendered with Alpaca provide intuitive interfaces for your users while giving your business an assurance of data compliance.
 
-Alpaca is an open-source, community-led project licensed under Apache 2.0.
+Alpaca comes pre-configured to work nicely with the following web frameworks:
+
+- jQuery
+- Twitter Bootstrap
+- jQuery UI
+- jQuery Mobile
+- Barebones (empty CSS)
+     
+The Alpaca library is pre-packaged with controls, wizards, layouts, I18N support and pluggable template engines. We ship with support for jQuery Tmpl, EJS and Handlebars. Documentation and API information is provided so that you can extend Alpaca as you see fit.
+
+The philosophy behind Alpaca is that you should design your forms once and have them work on lots of different devices and UI engines without recoding. Here is a sample registration form written once and rendered using four different approaches:
+
+- [Twitter Bootstrap](http://www.alpacajs.org/demos/bootstrap/registration)
+- [jQuery Mobile](http://www.alpacajs.org/demos/jquerymobile/registration)
+- [jQuery UI](http://www.alpacajs.org/demos/browser/registration)
+- [With AMD and RequireJS](http://www.alpacajs.org/demos/amd/registration)
+
+Alpaca is an community-led open-source project licensed under Apache 2.0.
 
 ## Project Home Page
 
