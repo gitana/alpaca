@@ -20,7 +20,8 @@
             "enum":[
                 "Male",
                 "Female"
-            ]
+            ],
+            "required": true
         },
         "photo":{
             "title":"Photo",

@@ -2,11 +2,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title>Alpaca - HTML5 Forms for jQuery - IPV4 Field</title>
-        <meta name="keywords" content="alpaca,forms,miscellaneous,gitana" />
-        <meta name="description" content="Miscellaneous Field Examples for Alpaca Forms." />
+        <title>Alpaca - HTML5 Forms for jQuery - Registration Form with Auto Validation</title>
+        <meta name="keywords" content="alpaca,forms,create,gitana" />
+        <meta name="description" content="Customer Profile Form with Custom View Template." />
         <meta name="author" content="Gitana Software Inc." />
         <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+        <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
         <!-- jQuery -->
         <script type="text/javascript" src="../../../lib/jquery-latest.min.js"></script>
@@ -46,8 +47,8 @@
                     <div class="resource-bar">
                         <a href="../../../index.html">Home</a>
                         <a href="../../../resources.html">Downloads</a>
-                        <a href="javascript:void(0);" class="current">Documentation</a>
-                        <a href="../../forms/customer-profile/edit-form.html">Forms</a>
+                        <a href="../../../examples/components/fields/text-field.html">Documentation</a>
+                        <a href="javascript:void(0);" class="current">Forms</a>
                         <a href="../../../resources.html#mobile">Mobile</a>
                         <a href="../../../tutorials.html">Tutorials</a>
                         <a href="../../../consulting.html">Consulting</a>
@@ -55,7 +56,7 @@
                 </div>
 		    </div>
 			</div>
-		</header>
+		</header>	
 <div class='container_12'>
     <div class="actual-body">
         <div class="grid_3">
@@ -67,20 +68,61 @@
             <div class="container_12">
                 <div class="widget">
                     <div class="widget-body">
-            <div class='grid_12 alpaca-example-header' id='ipv4-field' alpaca-types='ipv4'>
-                <h1>IP address field</h1>
+            <div class='grid_12 alpaca-example-header' id='simple' alpaca-types='form'>
+                <h1>Registration Form #1</h1>
             </div>
-                        <div class='grid_12 alpaca-example-case'>
-                    <h3>IP Address Field: </h3>
-                    <h4>IP address field.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$("#field1").alpaca({
-    "data": "100.60",
-    "schema": {
-        "format": "ip-address"
-    }
+            <div class='grid_12 alpaca-example-case'>
+                <p>
+                    Here is a very simple example of a three-field registration form.  The submit button is not available until
+                    all of the fields have been filled in and are in a valid state.
+                </p>
+                <div id="field1"></div>
+                <script type="text/javascript" id="field1-script">
+$(function() {
+    $("#field1").alpaca({
+        "view": "VIEW_JQUERYUI_CREATE",
+        "schema": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "required": true
+                },
+                "birthday": {
+                    "type": "text",
+                    "format": "date",
+                    "required": true
+                },
+                "preference": {
+                    "type": "text",
+                    "enum": ["orlando", "tokyo", "amsterdam"],
+                    "default": "orlando",
+                    "required": true
+                }
+            }
+        },
+        "options": {
+            "renderForm": true,
+            "form": {
+                "buttons": {
+                    "submit":{}
+                }
+            },
+            "fields": {
+                "name": {
+                    "label": "Your Name"
+                },
+                "birthday": {
+                    "label": "Your Birthday"
+                },
+                "preference": {
+                    "label": "Your Destination",
+                    "type": "select",
+                    "optionLabels": ["Orlando, USA", "Tokyo, Japan", "Amsterdam, Netherlands"]
+                }
+            }
+        }
+    });
 });
                     </script>
                         </div>

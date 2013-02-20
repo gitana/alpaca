@@ -16,7 +16,8 @@
             "postRender": function (renderedField) {
                 expect(4);
                 equal($('#editform-1 input:text[readOnly]').length, 7, 'Right number of readonly text input fields rendered.');
-                equal($('#editform-1 input:radio[readOnly]').length, 3, 'Right number of readonly radio input fields rendered.');
+                // this was 3 but it's now 2 since we set to required
+                equal($('#editform-1 input:radio[readOnly]').length, 2, 'Right number of readonly radio input fields rendered.');
                 equal($('#editform-1 select[readOnly]').length, 1, 'Right number of readonly select input fields rendered.');
                 equal($('#editform-2 span.alpaca-controlfield:hidden').length, 0, 'No hidden field.');
                 start();

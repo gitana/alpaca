@@ -71,6 +71,13 @@
                 this.attributes.id = this.id;
             }
 
+            // if we have a submit button specified, and toggleSubmitValidState isn't defined, set to true by default
+            // don't allow the form to submit unless valid
+            if (this.options.buttons && this.options.buttons.submit && Alpaca.isUndefined(this.options.toggleSubmitValidState))
+            {
+                this.options.toggleSubmitValidState = true;
+            }
+
             this.viewType = options.viewType;
 
             // set a runtime view
@@ -116,7 +123,15 @@
             // re-compute validation for the full control set
             this.topControl.validate(true);
 
-            return this.topControl.isValid(true);
+            var valid = this.topControl.isValid(true);
+            this.renderValidationState();
+
+            return valid;
+        },
+
+        validate: function(children)
+        {
+            return this.topControl.validate(children);
         },
 
         enableSubmitButton: function()
@@ -279,34 +294,40 @@
                 var v = this.getValue();
                 $(this.field).submit(v, function(e) {
 
-                    // make a last check to ensure the form is valid
-                    if (_this.isFormValid())
-                    {
-                        return _this.onSubmit(e);
-                    }
-
-
+                    return _this.onSubmit(e, _this);
                 });
             }
 
             // listen for fieldupdates and determine whether the form is valid.
             // if so, enable the submit button...
             // otherwise, disable it
-            $(_this.topControl.getEl()).bind("fieldupdate", function() {
-                _this.adjustSubmitButtonState();
-            });
+            if (this.options.toggleSubmitValidState)
+            {
+                $(_this.topControl.getEl()).bind("fieldupdate", function() {
+                    _this.adjustSubmitButtonState();
+                });
 
-            this.adjustSubmitButtonState();
+                this.adjustSubmitButtonState();
+            }
         },
 
         /**
          * Handles form submit events.
          *
          * @param {Object} e Submit event.
+         * @param {Object} form the form
          */
-        onSubmit: function(e) {
+        onSubmit: function(e, form) {
             if (this.submitHandler) {
-                return this.submitHandler(e);
+                e.stopPropagation();
+
+                var v = this.submitHandler(e, form);
+                if (Alpaca.isUndefined(v)) {
+                    v = false;
+                }
+
+                return v;
+
             }
         },
 
@@ -324,10 +345,12 @@
         /**
          * Displays validation information of all fields of this form.
          *
+         * @param {Boolean} checkChildren whether to render validation state for child fields
+         *
          * @returns {Object} Form validation state.
          */
-        renderValidationState: function() {
-            this.topControl.renderValidationState();
+        renderValidationState: function(checkChildren) {
+            this.topControl.renderValidationState(checkChildren);
         },
 
         /**
@@ -421,6 +444,7 @@
         setTemplateDescriptor: function(templateDescriptor) {
             this.templateDescriptor = templateDescriptor;
         }
+
     });
 
 })(jQuery);

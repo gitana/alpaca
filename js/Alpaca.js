@@ -325,6 +325,27 @@
         },
 
         /**
+         * Produces a copy of the given JS value.
+         *
+         * @param thing
+         * @return {*}
+         */
+        copyOf: function(thing) {
+            var copy = thing;
+
+            if (Alpaca.isArray(thing) || Alpaca.isObject(thing))
+            {
+                copy = Alpaca.cloneObject(thing);
+            }
+            else
+            {
+                copy = thing;
+            }
+
+            return copy;
+        },
+
+        /**
          * Splices a string.
          *
          * @param {String} source Source string to be spliced.
@@ -1136,25 +1157,68 @@
 
             if (source && target)
             {
-                for (var key in source) {
-                    if (!Alpaca.isFunction(source[key])) {
-                        if (Alpaca.isValEmpty(source[key])) {
-                            if (!Alpaca.isEmpty(target[key])) {
-                                target[key] = source[key];
-                            }
-                        } else {
-                            if (Alpaca.isObject(source[key])) {
-                                if (!target[key]) {
-                                    target[key] = {};
-                                }
-                                target[key] = Alpaca.mergeObject(target[key], source[key]);
-                            } else {
-                                target[key] = source[key];
-                            }
-                        }
+                return this.mergeObject2(source, target);
+            }
+
+            return null;
+        },
+
+        mergeObject2: function(source, target)
+        {
+            var isArray = Alpaca.isArray;
+            var isObject = Alpaca.isObject;
+            var isUndefined = Alpaca.isUndefined;
+            var copyOf = Alpaca.copyOf;
+
+            var _merge = function(source, target)
+            {
+                if (isArray(source))
+                {
+                    if (isArray(target))
+                    {
+                        // merge array elements
+                        $.each(source, function(index) {
+                            target.push(copyOf(source[index]));
+                        });
+                    }
+                    else
+                    {
+                        // something is already in the target that isn't an ARRAY
+                        // skip
                     }
                 }
-            }
+                else if (isObject(source))
+                {
+                    if (isObject(target))
+                    {
+                        // merge object properties
+                        $.each(source, function(key) {
+
+                            if (isUndefined(target[key])) {
+                                target[key] = copyOf(source[key]);
+                            } else {
+                                target[key] = _merge(source[key], target[key]);
+                            }
+
+                        });
+                    }
+                    else
+                    {
+                        // something is already in the target that isn't an OBJECT
+                        // skip
+                    }
+
+                }
+                else
+                {
+                    // otherwise, it's a scalar, always overwrite
+                    target = copyOf(source);
+                }
+
+                return target;
+            };
+
+            _merge(source, target)
 
             return target;
         },

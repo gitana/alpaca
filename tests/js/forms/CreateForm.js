@@ -22,7 +22,9 @@
                 equal($('#createform-1 input:text:eq(2)').val(), '', 'Data not bounded for phone text field.');
                 equal($('#createform-1 input:text:eq(3)').val(), '', 'Data not bounded for city text field.');
                 equal($('#createform-1 input:text:eq(4)').val(), '', 'Data not bounded for zip text field.');
-                equal($('#createform-1 input:radio:checked').val(), '', 'Data not bounded for gender radio field.');
+                //equal($('#createform-1 input:radio:checked').val(), '', 'Data not bounded for gender radio field.');
+                // the radio should actually be unbound because we let it float on non-enum'd value, which is now supported
+                equal(0, $('#createform-1 input:radio:checked').length, "Radio was allowed to float");
                 equal($('#createform-1 select:eq(0) > option:selected').val(), '', 'Data not bounded for favorite select field.');
                 equal($('#createform-1 select:eq(1) > option:selected').val(), '', 'Data not bounded for state select field.');
                 var inputElem = $('#createform-1 input:checkbox');

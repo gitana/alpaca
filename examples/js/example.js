@@ -71,6 +71,22 @@ $(function() {
     // Example JSON
     var formExamples = [
         {
+            "title": "Simple Forms",
+            "examples": [
+                {
+                    "id":"simple-simple1",
+                    "title":"Registration #1 (Auto Validation)",
+                    "link":"../../forms/simple/simple1.html"
+                },
+                {
+                    "id":"simple-simple2",
+                    "title":"Registration #2 (Click Validation)",
+                    "link":"../../forms/simple/simple2.html"
+                }
+            ]
+
+        },
+        {
             "title": "Customer Profile",
             "examples": [
                 {
@@ -319,6 +335,11 @@ $(function() {
                 "id":"template-wizard",
                 "title":"Template Wizard",
                 "link":"../../components/wizards/wizard.html"
+            },
+            {
+                "id":"template-wizard-validation",
+                "title":"Wizard with Validation",
+                "link":"../../components/wizards/wizard-validation.html"
             }
         ]
     }, {

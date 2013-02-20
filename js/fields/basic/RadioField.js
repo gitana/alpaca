@@ -37,6 +37,12 @@
 			else if (!this.name) {
 				this.name = this.getId()+"-name";
 			}
+
+            // empty select first to false by default
+            if (Alpaca.isUndefined(this.options.emptySelectFirst))
+            {
+                this.options.emptySelectFirst = false;
+            }
         },
 		        
         /**
@@ -88,9 +94,18 @@
 					"name": this.name,
                     "data": this.data
                 });
-                if ($("input:radio:checked",this.field).length == 0) {
-                	$("input:radio:first",this.field).attr("checked","checked");
+
+                // if emptySelectFirst and nothing currently checked, then pick first item in the value list
+                // set data and visually select it
+                if (this.options.emptySelectFirst && this.selectOptions && this.selectOptions.length > 0) {
+
+                    this.data = this.selectOptions[0].value;
+
+                    if ($("input:radio:checked",this.field).length == 0) {
+                        $("input:radio:first",this.field).attr("checked","checked");
+                    }
                 }
+
                 this.injectField(this.field);
             }
             
@@ -135,7 +150,13 @@
 						"title": "Field name",
 						"description": "Field name.",
 						"type": "string"
-					}
+					},
+                    "emptySelectFirst": {
+                        "title": "Empty Select First",
+                        "description": "If the data is empty, then automatically select the first item in the list.",
+                        "type": "boolean",
+                        "default": false
+                    }
 				}
 			});
         },

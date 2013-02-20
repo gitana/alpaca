@@ -178,7 +178,17 @@
             // if the field is currently invalid, then we provide early feedback to the user as to when they enter
             // a value that switches into a valid state
             // otherwise, we wait on blur() until we invalidate
-            if (!this.isValid())
+
+            // was the control valid previously?
+            var wasValid = this.isValid();
+
+            // validate
+            //this.validate();
+
+            // is the control valid now?
+            //var nowValid = this.isValid();
+
+            if (!wasValid)
             {
                 this.renderValidationState();
             }

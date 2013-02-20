@@ -137,9 +137,39 @@
                     if (this.view) {
                         this.wizardConfigs = this.view.getWizard();
                         if (this.wizardConfigs) {
+
+                            // set up defaults for wizard
                             if (Alpaca.isUndefined(this.wizardConfigs.validation)) {
                                 this.wizardConfigs.validation = true;
                             }
+                            if (!this.wizardConfigs.buttons) {
+                                this.wizardConfigs.buttons = {};
+                            }
+
+                            // done
+                            if (!this.wizardConfigs.buttons.done) {
+                                this.wizardConfigs.buttons.done = {};
+                            }
+                            if (Alpaca.isUndefined(this.wizardConfigs.buttons.done.validateOnClick)) {
+                                this.wizardConfigs.buttons.done.validateOnClick = true;
+                            }
+
+                            // prev
+                            if (!this.wizardConfigs.buttons.prev) {
+                                this.wizardConfigs.buttons.prev = {};
+                            }
+                            if (Alpaca.isUndefined(this.wizardConfigs.buttons.prev.validateOnClick)) {
+                                this.wizardConfigs.buttons.prev.validateOnClick = true;
+                            }
+
+                            // next
+                            if (!this.wizardConfigs.buttons.next) {
+                                this.wizardConfigs.buttons.next = {};
+                            }
+                            if (Alpaca.isUndefined(this.wizardConfigs.buttons.next.validateOnClick)) {
+                                this.wizardConfigs.buttons.next.validateOnClick = true;
+                            }
+
                         }
                         var layoutTemplateDescriptor = this.view.getLayout().templateDescriptor;
                         if (this.wizardConfigs && this.wizardConfigs.renderWizard) {
@@ -428,6 +458,8 @@
 
                 steps.each(function(i) {
 
+                    var wizardStepTargetId = $(this).attr("id");
+
                     var stepId = 'step' + i;
                     var wizardStepTemplateDescriptor = _this.view.getTemplateDescriptor("wizardStep");
                     if (wizardStepTemplateDescriptor) {
@@ -445,19 +477,53 @@
                         $(this).append(wizardNavBarElement);
                     }
 
+                    // collect all of the stepBindings for this step
+                    var stepBindings = {};
+                    var bindings = _this.view.getLayout().bindings;
+                    for (var fieldId in bindings)
+                    {
+                        var bindingTargetId = bindings[fieldId];
+
+                        if (bindingTargetId == wizardStepTargetId)
+                        {
+                            stepBindings[fieldId] = wizardStepTargetId;
+                        }
+                    }
+
+                    var vFunc = function(stepCount, stepBindings)
+                    {
+                        return function() {
+
+                            var valid = true;
+
+                            if (_this.wizardConfigs && _this.wizardConfigs.validation) {
+
+                                // if auto-wizard, process bindings one at a time
+                                if (stepBindings) {
+                                    $.each(stepBindings, function(propertyId, step) {
+                                        valid = valid & _this.childrenByPropertyId[propertyId].validate();
+                                        _this.childrenByPropertyId[propertyId].renderValidationState();
+                                    });
+                                }
+
+                            }
+
+                            return valid;
+                        };
+                    }(i, stepBindings);
+
                     if (i == 0) {
-                        _this._createNextButton(i, true);
+                        _this._createNextButton(i, true, vFunc);
                         _this._selectStep(i);
                     } else if (i == count - 1) {
                         $("#step" + i).hide();
-                        _this._createPrevButton(i);
-                        _this._createDoneButton(i, true);
+                        _this._createPrevButton(i, false);
+                        _this._createDoneButton(i, true, vFunc);
                     } else {
                         $("#step" + i).hide();
-                        _this._createPrevButton(i);
-                        _this._createNextButton(i, true);
+                        _this._createPrevButton(i, false);
+                        _this._createNextButton(i, true, vFunc);
                     }
-                    //$("#step" + i + "-nav-bar").buttonset();
                 });
             },
 
@@ -487,8 +553,6 @@
                         stepBindings[propertyId] = 1;
                     }
                 }
-
-                this.stepBindings = stepBindings;
 
                 for (var i = 0; i < totalSteps; i++) {
                     var step = i + 1;
@@ -525,18 +589,44 @@
                 }
 
                 for (var i = 0; i < totalSteps; i++) {
+
+                    var vFunc = function(stepCount, stepBindings)
+                    {
+                        return function() {
+
+                            var valid = true;
+
+                            if (_this.view && _this.wizardConfigs && _this.wizardConfigs.validation) {
+
+                                // if auto-wizard, process bindings one at a time
+                                if (stepBindings) {
+                                    $.each(stepBindings, function(propertyId, step) {
+                                        if (step == stepCount + 1 && valid) {
+                                            valid = _this.childrenByPropertyId[propertyId].validate();
+                                            _this.childrenByPropertyId[propertyId].validate();
+                                        }
+                                    });
+                                }
+                            }
+
+                            return valid;
+
+                        };
+                    }(i, stepBindings);
+
+
                     if (i == 0) {
-                        this._createNextButton(i);
-                        this._selectStep(i);
+                        _this._createNextButton(i, false, vFunc);
+                        _this._selectStep(i);
                     } else if (i == totalSteps - 1) {
                         $("#step" + i).hide();
-                        this._createPrevButton(i);
+                        _this._createPrevButton(i, false);
+                        _this._createDoneButton(i, true, vFunc);
                     } else {
                         $("#step" + i).hide();
-                        this._createPrevButton(i);
-                        this._createNextButton(i);
+                        _this._createPrevButton(i, false);
+                        _this._createNextButton(i, false, vFunc);
                     }
-                    //$("#step" + i + "-nav-bar").buttonset();
                 }
             },
 
@@ -569,8 +659,17 @@
              *
              * @param {Integer} i Step number.
              * @param [boolean] whether to add a clear div at the end
+             * @param [validationFunction] function test whether the button should be allowed to proceed
              */
-            _createPrevButton: function(i, clear) {
+            _createPrevButton: function(i, clear, validationFunction) {
+
+                // only apply validation if configured to do so
+                if (this.wizardConfigs.buttons && this.wizardConfigs.buttons.prev) {
+                    if (!this.wizardConfigs.buttons.prev.validateOnClick) {
+                        validationFunction = null;
+                    }
+                }
+
                 var stepName = "step" + i;
                 var _this = this;
 
@@ -582,12 +681,33 @@
                     if (_this.buttonBeautifier) {
                         _this.buttonBeautifier.call(_this, wizardPreButtonElement, this.wizardPreIcon,true );
                     }
-                    wizardPreButtonElement.click(function() {
-                        $("#" + stepName).hide();
-                        $("#step" + (i - 1)).show();
-                        _this._selectStep(i - 1);
-                        return false;
-                    });
+
+                    // when they click "prev", run validation function first to make sure they're allowed to proceed
+                    wizardPreButtonElement.click(function(stepName, stepCount, validationFunction) {
+
+                        return function() {
+                            var valid = true;
+
+                            if (validationFunction)
+                            {
+                                valid = validationFunction(stepName, stepCount);
+                            }
+
+                            if (valid) {
+                                $("#" + stepName).hide();
+                                $("#step" + (i - 1)).show();
+                                _this._selectStep(i - 1);
+
+                                // TODO: fire click handler?
+                                if (_this.wizardConfigs.buttons.prev && _this.wizardConfigs.buttons.prev.onClick) {
+                                    _this.wizardConfigs.buttons.prev.onClick();
+                                }
+                            }
+
+                            return false;
+                        };
+                    }(stepName, i, validationFunction));
+
                     $("#" + stepName + "-nav-bar").append(wizardPreButtonElement);
                     if (clear) {
                         $("#" + stepName + "-nav-bar").parent().append("<div style='clear:both'></div>");
@@ -601,8 +721,17 @@
              *
              * @param {Integer} i Step number.
              * @param [boolean] whether to add a clear div at the end
+             * @param [validationFunction] function test whether the button should be allowed to proceed
              */
-            _createNextButton: function(i, clear) {
+            _createNextButton: function(i, clear, validationFunction) {
+
+                // only apply validation if configured to do so
+                if (this.wizardConfigs.buttons && this.wizardConfigs.buttons.next) {
+                    if (!this.wizardConfigs.buttons.next.validateOnClick) {
+                        validationFunction = null;
+                    }
+                }
+
                 var stepName = "step" + i;
                 var _this = this;
 
@@ -614,41 +743,32 @@
                     if (_this.buttonBeautifier) {
                         _this.buttonBeautifier.call(_this, wizardNextButtonElement, this.wizardNextIcon,true );
                     }
-                    wizardNextButtonElement.click(function(stepCount) {
+
+                    // when they click "next", run validation function first to make sure they're allowed to proceed
+                    wizardNextButtonElement.click(function(stepName, stepCount, validationFunction) {
+
                         return function() {
                             var valid = true;
 
-                            if (_this.view && _this.wizardConfigs && _this.wizardConfigs.validation) {
-
-                                // if auto-wizard, process bindings one at a time
-                                if (_this.stepBindings) {
-                                     $.each(_this.stepBindings, function(propertyId, step) {
-                                         if (step == stepCount + 1 && valid) {
-                                             valid = _this.childrenByPropertyId[propertyId].validate();
-                                             _this.childrenByPropertyId[propertyId].validate();
-                                         }
-                                     });
-                                }
-                                else
-                                {
-                                    // walk through children for this step
-                                    for (var x = 0; x < _this.children.length; x++) {
-                                        if (valid) {
-                                            valid = _this.children[x].validate();
-                                            _this.children[x].renderValidationState();
-                                        }
-                                    }
-                                }
+                            if (validationFunction)
+                            {
+                                valid = validationFunction(stepName, stepCount);
                             }
 
                             if (valid) {
                                 $("#" + stepName).hide();
                                 $("#step" + (stepCount + 1)).show();
                                 _this._selectStep(stepCount + 1);
+
+                                // TODO: fire click handler?
+                                if (_this.wizardConfigs.buttons.next && _this.wizardConfigs.buttons.next.onClick) {
+                                    _this.wizardConfigs.buttons.next.onClick();
+                                }
                             }
+
                             return false;
-                        }
-                    }(i));
+                        };
+                    }(stepName, i, validationFunction));
 
                     $("#" + stepName + "-nav-bar").append(wizardNextButtonElement);
                     if (clear) {
@@ -662,8 +782,17 @@
              *
              * @param {Integer} i Step number.
              * @param [boolean] whether to add a clear div at the end
+             * @param [validationFunction] function test whether the button should be allowed to proceed
              */
-            _createDoneButton: function(i, clear) {
+            _createDoneButton: function(i, clear, validationFunction) {
+
+                // only apply validation if configured to do so
+                if (this.wizardConfigs.buttons && this.wizardConfigs.buttons.done) {
+                    if (!this.wizardConfigs.buttons.done.validateOnClick) {
+                        validationFunction = null;
+                    }
+                }
+
                 var stepName = "step" + i;
                 var _this = this;
 
@@ -675,12 +804,34 @@
                     if (_this.buttonBeautifier) {
                         _this.buttonBeautifier.call(_this, wizardDoneButtonElement, this.wizardDoneIcon,true );
                     }
-                    wizardDoneButtonElement.click(function() {
 
-                        // TODO: finish the wizard
+                    // when they click "done", run validation function first to make sure they're allowed to proceed
+                    wizardDoneButtonElement.click(function(stepName, stepCount, validationFunction) {
 
-                        return false;
-                    });
+                        return function() {
+                            var valid = true;
+
+                            if (validationFunction)
+                            {
+                                valid = validationFunction(stepName, stepCount);
+                            }
+
+                            if (valid) {
+                                $("#" + stepName + "-nav-bar").append(wizardDoneButtonElement);
+                                if (clear) {
+                                    $("#" + stepName + "-nav-bar").parent().append("<div style='clear:both'></div>");
+                                }
+
+                                // TODO: fire click handler?
+                                if (_this.wizardConfigs.buttons.done && _this.wizardConfigs.buttons.done.onClick) {
+                                    _this.wizardConfigs.buttons.done.onClick();
+                                }
+                            }
+
+                            return false;
+                        };
+                    }(stepName, i, validationFunction));
+
                     $("#" + stepName + "-nav-bar").append(wizardDoneButtonElement);
                     if (clear) {
                         $("#" + stepName + "-nav-bar").parent().append("<div style='clear:both'></div>");

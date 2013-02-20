@@ -174,4 +174,14 @@
         "ui": "jquery-ui"
     });
 
+    Alpaca.registerView({
+        "id": "VIEW_JQUERYUI_CREATE_LIST",
+        "parent": 'VIEW_WEB_CREATE_LIST',
+        "title": "JQuery UI Create View List Style",
+        "description": "JQuery UI create view based on list styles.",
+        "style": "jquery-ui",
+        "ui": "jquery-ui"
+    });
+
+
 })(jQuery);

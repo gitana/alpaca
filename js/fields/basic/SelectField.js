@@ -26,6 +26,19 @@
         },
 
         /**
+         * @see Alpaca.Fields.ListField#setup
+         */
+        setup: function(){
+            this.base();
+
+            // empty select first to false by default
+            if (Alpaca.isUndefined(this.options.emptySelectFirst))
+            {
+                this.options.emptySelectFirst = false;
+            }
+        },
+
+        /**
          * @see Alpaca.Field#getValue
          */
         getValue: function() {
@@ -95,6 +108,16 @@
                     "name": this.name,
                     "data": this.data
                 });
+
+                // if emptySelectFirst and nothing currently checked, then pick first item in the value list
+                // set data and visually select it
+                if (Alpaca.isUndefined(this.data) && this.options.emptySelectFirst && this.selectOptions && this.selectOptions.length > 0) {
+
+                    this.data = this.selectOptions[0].value;
+
+                    //$("select",this.field).val("0");
+                }
+
                 this.injectField(this.field);
             }
 
@@ -223,6 +246,12 @@
                         "title": "Displayed Options",
                         "description": "Number of options to be shown.",
                         "type": "number"
+                    },
+                    "emptySelectFirst": {
+                        "title": "Empty Select First",
+                        "description": "If the data is empty, then automatically select the first item in the list.",
+                        "type": "boolean",
+                        "default": false
                     }
                 }
             });
