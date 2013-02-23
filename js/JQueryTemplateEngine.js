@@ -36,7 +36,27 @@
             var html = null;
             try
             {
-                html = $.tmpl(cacheKey, model);
+                var _html = $.tmpl(cacheKey, model);
+                _html = _html.outerHTML();
+
+                // strip out the _tmplitem attribute if it is sticking around anywhere
+                var i = -1;
+                do
+                {
+                    i = _html.indexOf("_tmplitem=");
+                    if (i > -1)
+                    {
+                        var j = _html.indexOf(" ", i);
+                        if (j > -1)
+                        {
+                            _html = _html.substring(0, i) + _html.substring(j);
+                        }
+                    }
+                }
+                while (i > -1);
+
+                // convert back to dom
+                html = $(_html);
             }
             catch (e)
             {
