@@ -246,6 +246,9 @@
                 this.renderValidationState();
                 this.updateToolbarItemsStatus();
                 this.updatePathAndName();
+
+                // trigger update handler
+                this.triggerUpdate();
             }
         },
 
