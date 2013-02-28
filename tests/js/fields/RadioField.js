@@ -46,13 +46,15 @@
                 var radioElems = $('#radio-2 input:radio');
                 equal(radioElems.length, 3, 'Right number of radio controls generated.');
                 var radioCheckedElem = $('#radio-2 input:radio:checked');
-                equal(radioCheckedElem.length, 1, "Checked radio control found.");
-                equal(radioCheckedElem.val(), "Vanilla", "Right radio control checked.");
+                equal(radioCheckedElem.length, 0, "Checked radio control not found.");
+                //equal(radioCheckedElem.val(), "Vanilla", "Right radio control checked.");
+                ok(!radioCheckedElem.val(), "No radio control checked.");
                 var invalidElem = $('#radio-2 .alpaca-field-invalid');
                 ok(invalidElem.length, 'Field marked as invalid with value Coffee2.');
                 var messageElem = $('#radio-2 .alpaca-controlfield-message-text');
                 ok(messageElem.length, 'Field invalid message generated.');
-                equal(messageElem.text(), Alpaca.substituteTokens(renderedField.view.getMessage("invalidValueOfEnum"), ["Vanilla,Chocolate,Coffee"]), 'Invalid message text populated correctly.');
+                var subst = Alpaca.substituteTokens(renderedField.view.getMessage("invalidValueOfEnum"), ["Vanilla,Chocolate,Coffee"]);
+                ok(messageElem.text().indexOf(subst) > -1, 'Invalid message text populated correctly.');
                 var rightLabelElem0 = $('#radio-2 .alpaca-controlfield-radio-label:eq(0)');
                 ok(rightLabelElem0.length, 'First option right label generated.');
                 equal(rightLabelElem0.text(),'Vanilla Flavor','First option right label text populated correctly.')

@@ -30,7 +30,9 @@
          */
         setup: function() {
             this.base();
-            this.isWyswygLoaded = false;
+
+            // instantiated plugin reference
+            this.plugin = null;
         },
         
         /**
@@ -42,20 +44,33 @@
             var _this = this;
             var wysiwygOptions = this.options.wysiwyg ? this.options.wysiwyg : {};
 			if (this.field.wysiwyg) {
-				if (this.options.onDemand && !this.isWyswygLoaded) {
-                    this.outerEl.delegate("textarea", "mouseenter", function() {
-                        _this.wyswygLoaded = $(this).wysiwyg(wysiwygOptions);
-                        _this.isWyswygLoaded = true;
+
+                if (this.options.onDemand)
+                {
+                    this.outerEl.find("textarea").mouseover(function() {
+
+                        if (!_this.plugin)
+                        {
+                            _this.plugin = $(this).wysiwyg(wysiwygOptions);
+
+                            _this.outerEl.find(".wysiwyg").mouseout(function() {
+
+                                if (_this.plugin) {
+                                    _this.plugin.wysiwyg('destroy');
+                                }
+
+                                _this.plugin = null;
+
+                            });
+                        }
                     });
-                    this.outerEl.delegate(".wysiwyg", "mouseleave", function() {
-                        _this.wyswygLoaded.wysiwyg('destroy');
-                        _this.isWyswygLoaded = false;
-                    });
-                } else {
-                    this.field.wysiwyg(wysiwygOptions);
-                    this.isWyswygLoaded = true;
                 }
-                this.outerEl.delegate(".wysiwyg", "mouseleave", function() {
+                else
+                {
+                    this.plugin = this.field.wysiwyg(wysiwygOptions);
+                }
+
+                this.outerEl.find(".wysiwyg").mouseout(function() {
                     _this.data = _this.getValue();
                     _this.renderValidationState();
                 });
