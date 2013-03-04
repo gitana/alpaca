@@ -30,7 +30,24 @@
          */
         setup: function() {
             this.base();
-
+            if (Alpaca.isEmpty(this.data)) {
+                return;
+            }
+            if (!Alpaca.isArray(this.data)) {
+                if (!Alpaca.isString(this.data)) {
+                    return;
+                } else {
+                    try {
+                        this.data = Alpaca.parseJSON(this.data);
+                        if (!Alpaca.isArray(this.data)) {
+                            Alpaca.logWarn("ArrayField parsed data but it was not an array: " + JSON.stringify(this.data));
+                            return;
+                        }
+                    } catch (e) {
+                        this.data = [this.data];
+                    }
+                }
+            }
             this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle) ? "button" : this.view.toolbarStyle;
 
             if (!this.options.items) {
@@ -63,27 +80,6 @@
                     "forceRevalidation" : true
                 });
             }
-
-
-            if (Alpaca.isEmpty(this.data)) {
-                return;
-            }
-            if (!Alpaca.isArray(this.data)) {
-                if (!Alpaca.isString(this.data)) {
-                    return;
-                } else {
-                    try {
-                        this.data = Alpaca.parseJSON(this.data);
-                        if (!Alpaca.isArray(this.data)) {
-                            Alpaca.logWarn("ArrayField parsed data but it was not an array: " + JSON.stringify(this.data));
-                            return;
-                        }
-                    } catch (e) {
-                        this.data = [this.data];
-                    }
-                }
-            }
-
         },
 
         /**
