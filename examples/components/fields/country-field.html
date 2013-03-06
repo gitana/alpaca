@@ -76,8 +76,8 @@
                         <div class='grid_12 alpaca-example-case'>
 
                             <!-- example #1 -->
-                            <h3>Country Field #1: </h3>
-                            <h4>Country field with default settings.</h4>
+                            <h2>Country Field #1: </h2>
+                            <p>Country field with default settings.</p>
                             <div id="field1"></div>
                             <script type="text/javascript" id="field1-script">
                                 $("#field1").alpaca({
@@ -88,8 +88,8 @@
                             </script>
 
                             <!-- example #2 -->
-                            <h3>Country Field #2: </h3>
-                            <h4>Country field with names capitalized.</h4>
+                            <h2>Country Field #2: </h2>
+                            <p>Country field with names capitalized.</p>
                             <div id="field2">
                             </div>
                             <script type="text/javascript" id="field2-script">
@@ -100,6 +100,23 @@
                                     }
                                 });
                             </script>
+
+                            <!-- example #3 -->
+                            <h2>Country Field #3: </h2>
+                            <p>Country field rendered in display-only mode.</p>
+                            <div id="field3">
+                            </div>
+                            <script type="text/javascript" id="field3-script">
+                                $("#field3").alpaca({
+                                    "data": "USA",
+                                    "options": {
+                                        "type": "country",
+                                        "label": "Country"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
 
                         <div class="clear height-fix"></div>

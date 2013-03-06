@@ -71,313 +71,368 @@
                 <h1>Object Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-					<h4>Simple object field for object data type.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$(function() {
-    $("#field1").alpaca({
-        "data": {
-            name: "Taylor Swift",
-            age: 18
-        }
-    });
-});
-                    </script>
-                    <h3>Example 2: </h3>
-					<h4>Object field with schema parameter.</h4>
-                    <div id="field2">
-                    </div>
-                    <script type="text/javascript" id="field2-script">
-$(function() {
-    $("#field2").alpaca({
-        "data": {
-            name: "Taylor Swift",
-            age: 18
-        },
-        "schema": {
-            "title": "Customer Profile",
-            "description": "Customer Contact Information",
-            "type": "object",
-            "properties": {
-                "name": {
-                    "title": "Full Name",
-                    "description": "Enter Your Full Name",
-                    "type": "string"
-                },
-                "age": {
-                    "title": "Age",
-                    "type": "number"
-                }
-            }
-        }
-    });
-});
-                    </script>
-                    <h3>Example 3: </h3>
-					<h4>Object field with schema and options parameters.</h4>
-                    <div id="field3">
-                    </div>
-                    <script type="text/javascript" id="field3-script">
-$(function() {
-    $("#field3").alpaca({
-        "data": {
-            name: "James Bond",
-            age: 45,
-            icecream: ["Chocolate", "Vanilla", "Strawberry"],
-            address: {
-                street: ["100 Main Street", "Suite 200"],
-                city: "Burlington",
-                state: "MA",
-                zip: "18210"
-            }
-        },
-        "schema": {
-            "title": "Customer Profile",
-            "description": "Alpaca Ice Cream Customer Profile",
-            "type": "object",
-            "properties": {
-                "name": {
-                    "title": "Full Name",
-                    "type": "string"
-                },
-                "age": {
-                    "title": "Age",
-                    "type": "number"
-                },
-                "icecream": {
-                    "title": "Favorite Ice Cream",
-                    "type": "array"
-                },
-                "address": {
-                    "title": "Home Address",
-                    "type": "object",
-                    "properties": {
-                        "street": {
-                            "title": "Street Address",
-                            "type": "array",
-                            "items": {
-                                "type": "string",
-                                "maxLength": 30,
-                                "minItems": 1,
-                                "maxItems": 3
-                            }
-                        },
-                        "city": {
-                            "title": "City",
-                            "type": "string"
-                        },
-                        "state": {
-                            "title": "State",
-                            "type": "string"
-                        },
-                        "zip": {
-                            "title": "Zip Code",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "options": {
-            "fields": {
-                "address": {
-                    "fields": {
-                        "street": {
-                            "collapsed": true,
-                            "itemLabel": "Line"
-                        }
-                    }
-                }
-            }
-        }
-    });
-});
-                    </script>
-                    <h3>Example 4: </h3>
-					<h4>Object field with schema, options and view parameter.</h4>
-                    <div id="field4">
-                    </div>
-                    <script type="text/javascript" id="field4-script">
-$(function() {
-    $("#field4").alpaca({
-        "data": {
-            name: "James Bond",
-            age: 45,
-            icecream: ["Chocolate", "Vanilla", "Strawberry"],
-            address: {
-                street: ["100 Main Street", "Suite 200"],
-                city: "Burlington",
-                state: "MA",
-                zip: "18210"
-            }
-        },
-        "view": "VIEW_WEB_EDIT_LIST",
-        "schema": {
-            "title": "Customer Profile",
-            "description": "Alpaca Ice Cream Customer Profile",
-            "type": "object",
-            "properties": {
-                "name": {
-                    "title": "Full Name",
-                    "description": "Enter Your Full Name",
-                    "type": "string"
-                },
-                "age": {
-                    "title": "Age",
-                    "type": "number"
-                },
-                "icecream": {
-                    "title": "Favorite Ice Cream",
-                    "description": "Enter Your Favorite Icecream",
-                    "type": "array"
-                },
-                "address": {
-                    "title": "Home Address",
-                    "type": "object",
-                    "properties": {
-                        "street": {
-                            "title": "Street",
-                            "type": "array",
-                            "items": {
-                                "type": "string",
-                                "maxLength": 30,
-                                "minItems": 1,
-                                "maxItems": 3
-                            }
-                        },
-                        "city": {
-                            "title": "City",
-                            "type": "string"
-                        },
-                        "state": {
-                            "title": "State",
-                            "type": "string"
-                        },
-                        "zip": {
-                            "title": "Zip Code",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "options": {
-            "fields": {
-                "address": {
-                    "fields": {
-                        "street": {
-                            "collapsed": true,
-                            "itemLabel": "Line"
-                        }
-                    }
-                }
-            }
-        }
-    });
-});
-                    </script>
-                    <h3>Example 5: </h3>
-					<h4>Object field with default value.</h4>
-                    <div id="field5">
-                    </div>
-                    <script type="text/javascript" id="field5-script">
-$(function() {
-    $("#field5").alpaca({
-        "schema": {
-            "title": "Customer Profile",
-            "description": "Customer Contact Information",
-            "type": "object",
-            "default": '{"name":"Taylor Swift","age":18}',
-            "properties": {
-                "name": {
-                    "title": "Full Name",
-                    "description": "Enter Your Full Name",
-                    "type": "string"
-                },
-                "age": {
-                    "title": "Age",
-                    "type": "number"
-                }
-            }
-        }
-    });
-});
-                    </script>
-                    <h3>Example 6: </h3>
-					<h4>Object field with lazy loading option. The lazy loading option is useful for improving performance of rendering forms for large schemas.</h4>
-                    <div id="field6">
-                    </div>
-                    <script type="text/javascript" id="field6-script">
-$(function() {
-    $("#field6").alpaca({
-        "data": {
-            name: "James Bond",
-            address: {
-                street: ["100 Main Street", "Suite 200"],
-                city: "Burlington",
-                state: "MA",
-                zip: "18210"
-            }
-        },
-        "view": "VIEW_WEB_EDIT_LIST",
-        "schema": {
-            "title": "Customer Profile",
-            "description": "Alpaca Ice Cream Customer Profile",
-            "type": "object",
-            "properties": {
-                "name": {
-                    "title": "Full Name",
-                    "description": "Enter Your Full Name",
-                    "type": "string"
-                },
-                "address": {
-                    "title": "Home Address",
-                    "type": "object",
-                    "properties": {
-                        "street": {
-                            "title": "Street",
-                            "type": "array",
-                            "items": {
-                                "type": "string",
-                                "maxLength": 30,
-                                "minItems": 1,
-                                "maxItems": 3
-                            }
-                        },
-                        "city": {
-                            "title": "City",
-                            "type": "string"
-                        },
-                        "state": {
-                            "title": "State",
-                            "type": "string"
-                        },
-                        "zip": {
-                            "title": "Zip Code",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "options": {
-            "fields": {
-                "address": {
-                    "lazyLoading": true,
-                    "fields": {
-                        "street": {
-                            "collapsed": true,
-                            "itemLabel": "Line"
-                        }
-                    }
-                }
-            }
-        }
-    });
-});
-                    </script>
+
+                        <!-- example #1 -->
+                        <h2>Example 1: </h2>
+                        <p>Simple object field for object data type.</p>
+                        <div id="field1"></div>
+                        <script type="text/javascript" id="field1-script">
+                            $(function() {
+                                $("#field1").alpaca({
+                                    "data": {
+                                        name: "Taylor Swift",
+                                        age: 18
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <!-- example #2 -->
+                        <h2>Example 2: </h2>
+                        <p>Object field with schema parameter.</p>
+                        <div id="field2">
+                        </div>
+                        <script type="text/javascript" id="field2-script">
+                            $(function() {
+                                $("#field2").alpaca({
+                                    "data": {
+                                        name: "Taylor Swift",
+                                        age: 18
+                                    },
+                                    "schema": {
+                                        "title": "Customer Profile",
+                                        "description": "Customer Contact Information",
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "title": "Full Name",
+                                                "description": "Enter Your Full Name",
+                                                "type": "string"
+                                            },
+                                            "age": {
+                                                "title": "Age",
+                                                "type": "number"
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <!-- example #3 -->
+                        <h2>Example 3: </h2>
+                        <p>Object field with schema and options parameters.</p>
+                        <div id="field3"></div>
+                        <script type="text/javascript" id="field3-script">
+                            $(function() {
+                                $("#field3").alpaca({
+                                    "data": {
+                                        name: "James Bond",
+                                        age: 45,
+                                        icecream: ["Chocolate", "Vanilla", "Strawberry"],
+                                        address: {
+                                            street: ["100 Main Street", "Suite 200"],
+                                            city: "Burlington",
+                                            state: "MA",
+                                            zip: "18210"
+                                        }
+                                    },
+                                    "schema": {
+                                        "title": "Customer Profile",
+                                        "description": "Alpaca Ice Cream Customer Profile",
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "title": "Full Name",
+                                                "type": "string"
+                                            },
+                                            "age": {
+                                                "title": "Age",
+                                                "type": "number"
+                                            },
+                                            "icecream": {
+                                                "title": "Favorite Ice Cream",
+                                                "type": "array"
+                                            },
+                                            "address": {
+                                                "title": "Home Address",
+                                                "type": "object",
+                                                "properties": {
+                                                    "street": {
+                                                        "title": "Street Address",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "maxLength": 30,
+                                                            "minItems": 1,
+                                                            "maxItems": 3
+                                                        }
+                                                    },
+                                                    "city": {
+                                                        "title": "City",
+                                                        "type": "string"
+                                                    },
+                                                    "state": {
+                                                        "title": "State",
+                                                        "type": "string"
+                                                    },
+                                                    "zip": {
+                                                        "title": "Zip Code",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "options": {
+                                        "fields": {
+                                            "address": {
+                                                "fields": {
+                                                    "street": {
+                                                        "collapsed": true,
+                                                        "itemLabel": "Line"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <!-- example #4 -->
+                        <h2>Example 4: </h2>
+                        <p>Object field with schema, options and view parameter.</p>
+                        <div id="field4"></div>
+                        <script type="text/javascript" id="field4-script">
+                            $(function() {
+                                $("#field4").alpaca({
+                                    "data": {
+                                        name: "James Bond",
+                                        age: 45,
+                                        icecream: ["Chocolate", "Vanilla", "Strawberry"],
+                                        address: {
+                                            street: ["100 Main Street", "Suite 200"],
+                                            city: "Burlington",
+                                            state: "MA",
+                                            zip: "18210"
+                                        }
+                                    },
+                                    "view": "VIEW_WEB_EDIT_LIST",
+                                    "schema": {
+                                        "title": "Customer Profile",
+                                        "description": "Alpaca Ice Cream Customer Profile",
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "title": "Full Name",
+                                                "description": "Enter Your Full Name",
+                                                "type": "string"
+                                            },
+                                            "age": {
+                                                "title": "Age",
+                                                "type": "number"
+                                            },
+                                            "icecream": {
+                                                "title": "Favorite Ice Cream",
+                                                "description": "Enter Your Favorite Icecream",
+                                                "type": "array"
+                                            },
+                                            "address": {
+                                                "title": "Home Address",
+                                                "type": "object",
+                                                "properties": {
+                                                    "street": {
+                                                        "title": "Street",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "maxLength": 30,
+                                                            "minItems": 1,
+                                                            "maxItems": 3
+                                                        }
+                                                    },
+                                                    "city": {
+                                                        "title": "City",
+                                                        "type": "string"
+                                                    },
+                                                    "state": {
+                                                        "title": "State",
+                                                        "type": "string"
+                                                    },
+                                                    "zip": {
+                                                        "title": "Zip Code",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "options": {
+                                        "fields": {
+                                            "address": {
+                                                "fields": {
+                                                    "street": {
+                                                        "collapsed": true,
+                                                        "itemLabel": "Line"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <!-- example #5 -->
+                        <h2>Example 5: </h2>
+                        <p>Object field with default value.</p>
+                        <div id="field5"></div>
+                        <script type="text/javascript" id="field5-script">
+                            $(function() {
+                                $("#field5").alpaca({
+                                    "schema": {
+                                        "title": "Customer Profile",
+                                        "description": "Customer Contact Information",
+                                        "type": "object",
+                                        "default": '{"name":"Taylor Swift","age":18}',
+                                        "properties": {
+                                            "name": {
+                                                "title": "Full Name",
+                                                "description": "Enter Your Full Name",
+                                                "type": "string"
+                                            },
+                                            "age": {
+                                                "title": "Age",
+                                                "type": "number"
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <!-- example #6 -->
+                        <h2>Example 6: </h2>
+                        <p>Object field with lazy loading option. The lazy loading option is useful for improving performance of rendering forms for large schemas.</p>
+                        <div id="field6"></div>
+                        <script type="text/javascript" id="field6-script">
+                            $(function() {
+                                $("#field6").alpaca({
+                                    "data": {
+                                        name: "James Bond",
+                                        address: {
+                                            street: ["100 Main Street", "Suite 200"],
+                                            city: "Burlington",
+                                            state: "MA",
+                                            zip: "18210"
+                                        }
+                                    },
+                                    "view": "VIEW_WEB_EDIT_LIST",
+                                    "schema": {
+                                        "title": "Customer Profile",
+                                        "description": "Alpaca Ice Cream Customer Profile",
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "title": "Full Name",
+                                                "description": "Enter Your Full Name",
+                                                "type": "string"
+                                            },
+                                            "address": {
+                                                "title": "Home Address",
+                                                "type": "object",
+                                                "properties": {
+                                                    "street": {
+                                                        "title": "Street",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "maxLength": 30,
+                                                            "minItems": 1,
+                                                            "maxItems": 3
+                                                        }
+                                                    },
+                                                    "city": {
+                                                        "title": "City",
+                                                        "type": "string"
+                                                    },
+                                                    "state": {
+                                                        "title": "State",
+                                                        "type": "string"
+                                                    },
+                                                    "zip": {
+                                                        "title": "Zip Code",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "options": {
+                                        "fields": {
+                                            "address": {
+                                                "lazyLoading": true,
+                                                "fields": {
+                                                    "street": {
+                                                        "collapsed": true,
+                                                        "itemLabel": "Line"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <!-- example #8 -->
+                        <h2>Example 8: </h2>
+                        <p>Object field rendered in display-only mode. The <code>gender</code> field is hidden.</p>
+                        <div id="field8">
+                        </div>
+                        <script type="text/javascript" id="field8-script">
+                            $(function() {
+                                $("#field8").alpaca({
+                                    "data": {
+                                        name: "Taylor Swift",
+                                        age: 18,
+                                        gender: "female"
+                                    },
+                                    "schema": {
+                                        "title": "Customer Profile",
+                                        "description": "Customer Contact Information",
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "title": "Full Name",
+                                                "description": "Enter Your Full Name",
+                                                "type": "string"
+                                            },
+                                            "age": {
+                                                "title": "Age",
+                                                "type": "number"
+                                            },
+                                            "gender": {
+                                                "title": "Gender",
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "options": {
+                                        "fields": {
+                                            "gender": {
+                                                "hidden": true
+                                            }
+                                        }
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            });
+                        </script>
+
+
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

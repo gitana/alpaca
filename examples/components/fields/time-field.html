@@ -71,10 +71,11 @@
                 <h1>Time Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-                    <h4>Time field with valid time.</h4>
-                    <div id="field1">
-                    </div>
+
+                    <!-- example #1 -->
+                    <h2>Example 1: </h2>
+                    <p>Time field with valid time.</p>
+                    <div id="field1"></div>
                     <script type="text/javascript" id="field1-script">
 $("#field1").alpaca({
     "data": "13:12:34",
@@ -83,10 +84,11 @@ $("#field1").alpaca({
     }
 });
                     </script>
-                    <h3>Example 2: </h3>
-                    <h4>Time field with invalid time.</h4>
-                    <div id="field2">
-                    </div>
+
+                    <!-- example #2 -->
+                    <h2>Example 2: </h2>
+                    <p>Time field with invalid time.</p>
+                    <div id="field2"></div>
                     <script type="text/javascript" id="field2-script">
 $("#field2").alpaca({
     "data": "05:77:34",
@@ -95,6 +97,22 @@ $("#field2").alpaca({
     }
 });
                     </script>
+
+                    <!-- example #3 -->
+                    <h2>Example 3: </h2>
+                    <p>Time field in display-only mode.</p>
+                    <div id="field3"></div>
+                    <script type="text/javascript" id="field3-script">
+                        $("#field3").alpaca({
+                            "data": "05:77:34",
+                            "options": {
+                                "type": "time"
+                            },
+                            "view": "VIEW_WEB_DISPLAY"
+                        });
+                    </script>
+
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

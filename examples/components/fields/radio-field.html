@@ -71,71 +71,99 @@
                 <h1>Radio Button Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-					<h4>Radio button field with data, options and schema parameters. As default, radio group field will be rendered if schema enum properties has 3 or less options.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript"id="field1-script">
-$(function() {
-    $("#field1").alpaca({
-        "data": "Coffee",
-        "options": {
-            "label": "Ice cream",
-            "helper": "Guess my favorite ice cream?"
-        },
-        "schema": {
-            "enum": ["Vanilla", "Chocolate", "Coffee"]
-        }
-    });
-});
-                    </script>
-                    <h3>Example 2: </h3>
-					<h4>Required radio button field with option labels.</h4>
-                    <div id="field2">
-                    </div>
-                    <script type="text/javascript"id="field2-script">
-$(function() {
-    $("#field2").alpaca({
-        "data": "Coffee2",
-        "options": {
-            "label": "Ice cream",
-            "helper": "Guess my favorite ice cream?",
-            "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"]
-        },
-        "schema": {
-            "required": true,
-            "enum": ["Vanilla", "Chocolate", "Coffee"]
-        }
-    });
-});
-                    </script>
-                    <h3>Example 3: </h3>
-					<h4>Radio button field with more than 3 options and custom option labels.</h4>
-                    <div id="field3">
-                    </div>
-                    <script type="text/javascript"id="field3-script">
-$(function() {
-    $("#field3").alpaca({
-        "data": "green",
-        "options": {
-            "type" : "radio",
-            "label": "Favorite Color",
-            "helper": "Pick your favorite color",
-            "optionLabels": {
-                "red" : "Red",
-                "green" : "Green",
-                "blue" : "Blue",
-                "white" : "White",
-                "black" : "Black"
-            }
-        },
-        "schema": {
-            "required": true,
-            "enum": ["red", "green", "blue","white","black"]
-        }
-    });
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Example 1: </h2>
+                            <p>Radio button field with data, options and schema parameters. As default, radio group field will be rendered if schema enum properties has 3 or less options.</p>
+                            <div id="field1">
+                            </div>
+                            <script type="text/javascript"id="field1-script">
+                                $(function() {
+                                    $("#field1").alpaca({
+                                        "data": "Coffee",
+                                        "options": {
+                                            "label": "Ice cream",
+                                            "helper": "Guess my favorite ice cream?"
+                                        },
+                                        "schema": {
+                                            "enum": ["Vanilla", "Chocolate", "Coffee"]
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Example 2: </h2>
+                            <p>Required radio button field with option labels.</p>
+                            <div id="field2">
+                            </div>
+                            <script type="text/javascript"id="field2-script">
+                                $(function() {
+                                    $("#field2").alpaca({
+                                        "data": "Coffee2",
+                                        "options": {
+                                            "label": "Ice cream",
+                                            "helper": "Guess my favorite ice cream?",
+                                            "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"]
+                                        },
+                                        "schema": {
+                                            "required": true,
+                                            "enum": ["Vanilla", "Chocolate", "Coffee"]
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #3 -->
+                            <h2>Example 3: </h2>
+                            <p>Radio button field with more than 3 options and custom option labels.</p>
+                            <div id="field3"></div>
+                            <script type="text/javascript"id="field3-script">
+                                $(function() {
+                                    $("#field3").alpaca({
+                                        "data": "green",
+                                        "options": {
+                                            "type" : "radio",
+                                            "label": "Favorite Color",
+                                            "helper": "Pick your favorite color",
+                                            "optionLabels": {
+                                                "red" : "Red",
+                                                "green" : "Green",
+                                                "blue" : "Blue",
+                                                "white" : "White",
+                                                "black" : "Black"
+                                            }
+                                        },
+                                        "schema": {
+                                            "required": true,
+                                            "enum": ["red", "green", "blue","white","black"]
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #4 -->
+                            <h2>Example 4: </h2>
+                            <p>Radio button in display-only mode.</p>
+                            <div id="field4">
+                            </div>
+                            <script type="text/javascript"id="field4-script">
+                                $(function() {
+                                    $("#field4").alpaca({
+                                        "data": "Coffee",
+                                        "options": {
+                                            "label": "Ice cream",
+                                            "helper": "Guess my favorite ice cream?"
+                                        },
+                                        "schema": {
+                                            "enum": ["Vanilla", "Chocolate", "Coffee"]
+                                        },
+                                        "view": "VIEW_WEB_DISPLAY"
+                                    });
+                                });
+                            </script>
+
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

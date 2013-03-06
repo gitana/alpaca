@@ -71,11 +71,14 @@
                             <h1>Text Field</h1>
                         </div>
                         <div class='grid_12 alpaca-example-case'>
-                            <h3>Example 1: </h3>
-                            <h4>Simple text field with only the data parameter.</h4>
 
-                            <div id="field1">
-                            </div>
+
+                            <!-- example #1 -->
+                            <h2>Example 1: </h2>
+                            <p>
+                                Simple text field with only the data parameter.
+                            </p>
+                            <div id="field1"></div>
                             <script type="text/javascript" id="field1-script">
 $(function() {
     $("#field1").alpaca({
@@ -85,12 +88,13 @@ $(function() {
                             </script>
                             <p/>
 
-                            <h3>Example 2: </h3>
-                            <h4>Text field with data, schema and options parameters. The initial data will fail the
-                                validation since its length is not within the range defined by the schema.</h4>
-
-                            <div id="field2">
-                            </div>
+                            <!-- example #2 -->
+                            <h2>Example 2: </h2>
+                            <hp>
+                                Text field with data, schema and options parameters. The initial data will fail the
+                                validation since its length is not within the range defined by the schema.
+                            </p>
+                            <div id="field2"></div>
                             <script type="text/javascript" id="field2-script">
 $(function() {
     $("#field2").alpaca({
@@ -110,13 +114,15 @@ $(function() {
                             </script>
                             <p/>
 
-                            <h3>Example 3: </h3>
-                            <h4>Text field with data, schema, options and view parameters. The view parameter is
-                                for injecting additional styles to make the field label float to the left of the
-                                text field.</h4>
 
-                            <div id="field3">
-                            </div>
+                            <!-- example #3 -->
+                            <h2>Example 3: </h2>
+                            <p>
+                                Text field with data, schema, options and view parameters. The view parameter is
+                                for injecting additional styles to make the field label float to the left of the
+                                text field.
+                            </p>
+                            <div id="field3"></div>
                             <script type="text/javascript" id="field3-script">
 $(function() {
     $("#field3").alpaca({
@@ -143,22 +149,25 @@ $(function() {
 });
                             </script>
                             <p/>
-                            <h3>Example 4: </h3>
-                            <h4>Text field with a mask. This feature is based on Josh Bush's <a
+
+                            <!-- example #4 -->
+                            <h2>Example 4: </h2>
+                            <p>
+                                Text field with a mask. This feature is based on Josh Bush's <a
                                     href="http://digitalbush.com/projects/masked-input-plugin/">Masked Input Plugin</a>.It
                                 allows a user to more easily enter fixed width input where you would like them to enter
                                 the data in a certain format (dates,phone numbers, etc).
-                                <p/>
+                            </p>
+                            <p>
                                 The maskString parameter supports following predefined characters:
-                                <ul>
-                                    <li>a - Represents an alpha character (A-Z,a-z)</li>
-                                    <li>9 - Represents a numeric character (0-9)</li>
-                                    <li>* - Represents an alphanumeric character (A-Z,a-z,0-9)</li>
-                                </ul>
-                            </h4>
+                            </p>
+                            <ul>
+                                <li>a - Represents an alpha character (A-Z,a-z)</li>
+                                <li>9 - Represents a numeric character (0-9)</li>
+                                <li>* - Represents an alphanumeric character (A-Z,a-z,0-9)</li>
+                            </ul>
 
-                            <div id="field4">
-                            </div>
+                            <div id="field4"></div>
                             <script type="text/javascript" id="field4-script">
 $(function() {
     $("#field4").alpaca({
@@ -172,14 +181,15 @@ $(function() {
     });
 });
                             </script>
-                            <p/>
-                            <h3>Example 5: </h3>
-                            <h4>Text field with an event listener option that listens to keypress event and then prints out your input in an outside div in reverse order.</h4>
 
-                            <div id="output">
-                            </div>
-                            <div id="field5">
-                            </div>
+
+                            <!-- example #5 -->
+                            <h2>Example 5: </h2>
+                            <p>
+                                Text field with an event listener option that listens to keypress event and then prints out your input in an outside div in reverse order.
+                            </p>
+                            <div id="output"></div>
+                            <div id="field5"></div>
                             <script type="text/javascript" id="field5-script">
 $(function() {
     $("#field5").alpaca({
@@ -193,6 +203,29 @@ $(function() {
     });
 });
                             </script>
+
+
+                            <!-- example 6 -->
+                            <h2>Example 6: </h2>
+                            <p>Displays a text field using a display-only view.  The text field simply prints out and is not editable.</p>
+
+                            <div id="field6">
+                            </div>
+                            <script type="text/javascript" id="field6-script">
+                                $(function() {
+                                    $("#field6").alpaca({
+                                        "data": "Hello World",
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "options": {
+                                            "label": "Text Value"
+                                        },
+                                        "view": "VIEW_WEB_DISPLAY"
+                                    });
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

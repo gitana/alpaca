@@ -71,20 +71,37 @@
                 <h1>Any Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-					<h4>Text field will be rendered for any data type if options parameter is not provided for actural control field type.
-					Check out <a href="address-field.html">Combo Field Example</a> for how to render any data type with user specified control field.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$("#field1").alpaca({
-    "data": "",
-    "schema": {
-        "title": "Home Address",
-        "type": "any"
-    }
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h3>Example 1: </h3>
+                            <h4>Text field will be rendered for any data type if options parameter is not provided for the actual control field type.
+                                Check out <a href="address-field.html">Combo Field Example</a> for how to render any data type with user specified control field.</h4>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $("#field1").alpaca({
+                                    "data": "",
+                                    "schema": {
+                                        "title": "Home Address",
+                                        "type": "any"
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h3>Example 2: </h3>
+                            <h4>The Any field rendered in a display-only mode.</h4>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $("#field2").alpaca({
+                                    "data": "3900 Kirkland Street, Cambridge MA 02138",
+                                    "schema": {
+                                        "title": "Home Address",
+                                        "type": "any"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

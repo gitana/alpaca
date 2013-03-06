@@ -71,18 +71,37 @@
                 <h1>IP address field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>IP Address Field: </h3>
-                    <h4>IP address field.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$("#field1").alpaca({
-    "data": "100.60",
-    "schema": {
-        "format": "ip-address"
-    }
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>IP Address Field: </h2>
+                            <p>IP address field.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $("#field1").alpaca({
+                                    "data": "100.60",
+                                    "schema": {
+                                        "format": "ip-address"
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>IP Address Field: </h2>
+                            <p>IP address field rendered in display-only mode.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $("#field2").alpaca({
+                                    "data": "128.253.180.2",
+                                    "schema": {
+                                        "format": "ip-address"
+                                    },
+                                    "options": {
+                                        "label": "IP Address"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

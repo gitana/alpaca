@@ -30,6 +30,7 @@
          */
         postRender: function() {
             this.base();
+
             if (this.fieldContainer) {
                 this.fieldContainer.addClass('alpaca-controlfield-uppercase');
             }
@@ -39,6 +40,7 @@
          * @see Alpaca.Fields.TextField#setValue
          */
         setValue: function(val) {
+
             var upperValue = val.toUpperCase();
 
             if (upperValue != this.getValue()) {

@@ -71,18 +71,37 @@
                 <h1>Phone Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Phone Field: </h3>
-					<h4>Phone field with input mask.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$("#field1").alpaca({
-    "data": "",
-    "schema": {
-        "format": "phone"
-    }
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Phone Field: </h2>
+                            <p>Phone field with input mask.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $("#field1").alpaca({
+                                    "data": "",
+                                    "schema": {
+                                        "format": "phone"
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Phone Field: </h2>
+                            <p>Phone field with in display-only model</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $("#field2").alpaca({
+                                    "data": "123-456-7890",
+                                    "schema": {
+                                        "format": "phone"
+                                    },
+                                    "options": {
+                                        "label": "Phone Number"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

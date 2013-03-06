@@ -72,50 +72,79 @@
                 <h1>Integer Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-					<h4>Integer field with data,options and schema parameters.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$(function() {
-    $("#field1").alpaca({
-        "data": 17,
-        "options": {
-            "type": "integer",
-            "label": "Age:",
-            "helper": "Guess Talyor Swift's Age"
-        },
-        "schema": {
-            "minimum": 18,
-            "maximum": 25,
-            "exclusiveMinimum": true,
-            "exclusiveMaximum": true,
-            "divisibleBy": 2
-        }
-    });
-});
-                    </script>
-                    <h3>Example 2: </h3>
-					<h4>Integer field with jQuery UI slider control.</h4>
-                    <div id="field2">
-                    </div>
-                    <script type="text/javascript" id="field2-script">
-$(function() {
-    $("#field2").alpaca({
-        "data": 18,
-        "options": {
-            "type": "integer",
-            "label": "Snow Days:",
-            "helper": "Number of Snow Days in January 2011",
-            "slider": true
-        },
-        "schema": {
-            "minimum": 1,
-            "maximum": 31
-        }
-    });
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Example 1:</h2>
+                            <p>Integer field with data,options and schema parameters.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $(function() {
+                                    $("#field1").alpaca({
+                                        "data": 17,
+                                        "options": {
+                                            "type": "integer",
+                                            "label": "Age:",
+                                            "helper": "Guess Taylor Swift's Age"
+                                        },
+                                        "schema": {
+                                            "minimum": 18,
+                                            "maximum": 25,
+                                            "exclusiveMinimum": true,
+                                            "exclusiveMaximum": true,
+                                            "divisibleBy": 2
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Example #2:</h2>
+                            <p>Integer field with jQuery UI slider control.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $(function() {
+                                    $("#field2").alpaca({
+                                        "data": 18,
+                                        "options": {
+                                            "type": "integer",
+                                            "label": "Snow Days:",
+                                            "helper": "Number of Snow Days in January 2011",
+                                            "slider": true
+                                        },
+                                        "schema": {
+                                            "minimum": 1,
+                                            "maximum": 31
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #3 -->
+                            <h2>Example 3:</h2>
+                            <p>Integer field rendered in display-only mode.</p>
+                            <div id="field3"></div>
+                            <script type="text/javascript" id="field3-script">
+                                $(function() {
+                                    $("#field3").alpaca({
+                                        "data": 17,
+                                        "options": {
+                                            "type": "integer",
+                                            "label": "Age:",
+                                            "helper": "Guess Taylor Swift's Age"
+                                        },
+                                        "schema": {
+                                            "minimum": 18,
+                                            "maximum": 25,
+                                            "exclusiveMinimum": true,
+                                            "exclusiveMaximum": true,
+                                            "divisibleBy": 2
+                                        },
+                                        "view": "VIEW_WEB_DISPLAY"
+                                    });
+                                });
+                            </script>
+
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

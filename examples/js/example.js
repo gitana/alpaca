@@ -118,6 +118,11 @@ $(function() {
                     "id":"customer-profile-edit-readonly",
                     "title":"Edit (Readonly)",
                     "link":"../../forms/customer-profile/edit-readonly-form.html"
+                },
+                {
+                    "id":"customer-profile-display",
+                    "title":"Display Only",
+                    "link":"../../forms/customer-profile/display-form.html"
                 }
             ]
         },

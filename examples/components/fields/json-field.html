@@ -71,25 +71,49 @@
                 <h1>JSON Editor Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-                    <h4>JSON Editor field with valid json.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$("#field1").alpaca({
-    "data": {
-        "properties" : {
-            "text1" : "Text1",
-            "text2" : "Text2"
-        }
-    },
-    "options": {
-        "type": "json",
-        "rows": 12,
-        "cols": 80
-    }
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Example 1: </h2>
+                            <p>JSON Editor field with valid json.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $("#field1").alpaca({
+                                    "data": {
+                                        "properties" : {
+                                            "text1" : "Text1",
+                                            "text2" : "Text2"
+                                        }
+                                    },
+                                    "options": {
+                                        "type": "json",
+                                        "rows": 12,
+                                        "cols": 80
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Example 2: </h2>
+                            <p>JSON Editor field rendered in display-only mode.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $("#field2").alpaca({
+                                    "data": {
+                                        "properties" : {
+                                            "text1" : "Text1",
+                                            "text2" : "Text2"
+                                        }
+                                    },
+                                    "options": {
+                                        "type": "json",
+                                        "rows": 12,
+                                        "cols": 80,
+                                        "label": "JSON"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

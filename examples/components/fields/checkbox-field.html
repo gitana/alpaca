@@ -71,32 +71,51 @@
                 <h1>Checkbox Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-					<h4>Simple checkbox field for boolean data.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$(function() {
-    $("#field1").alpaca({
-        "data": false
-    });
-});
-                    </script>
-                    <h3>Example 2: </h3>
-					<h4>Checkbox field with both field label and right label.</h4>
-                    <div id="field2">
-                    </div>
-                    <script type="text/javascript" id="field2-script">
-$(function() {
-    $("#field2").alpaca({
-        "data": true,
-        "options": {
-            "label": "Question:",
-            "rightLabel": "Do you like Alpaca?"
-        }
-    });
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Example 1: </h2>
+                            <p>Simple checkbox field for boolean data.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $(function() {
+                                    $("#field1").alpaca({
+                                        "data": false
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Example 2: </h2>
+                            <p>Checkbox field with both field label and right label.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $(function() {
+                                    $("#field2").alpaca({
+                                        "data": true,
+                                        "options": {
+                                            "label": "Question:",
+                                            "rightLabel": "Do you like Alpaca?"
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #3 -->
+                            <h2>Example 3: </h2>
+                            <p>Simple checkbox field rendered in display-only mode.</p>
+                            <div id="field3"></div>
+                            <script type="text/javascript" id="field3-script">
+                                $(function() {
+                                    $("#field3").alpaca({
+                                        "data": false,
+                                        "view": "VIEW_WEB_DISPLAY",
+                                        "options": {
+                                            "label": "Registered?"
+                                        }
+                                    });
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

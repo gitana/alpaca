@@ -21,6 +21,9 @@
          * @param {Function} errorCallback Error callback.
          */
         constructor: function(container, data, options, schema, viewId, connector, errorCallback) {
+
+            var self = this;
+
             // mark that we are initializing
             this.initializing = true;
 
@@ -91,6 +94,12 @@
 
             // backup data
             this.backupData = Alpaca.cloneObject(this.data);
+
+            // helper function to determine if we're in a display-only mode
+            this.isDisplayOnly = function()
+            {
+                return (self.view.type == "view");
+            }
 
         },
 
@@ -295,12 +304,19 @@
 
             var templateDescriptor = this.getTemplateDescriptor();
 
+            // the data we'll render
+            var theData = this.data;
+            // if we're in display-only mode, and theData is an object, convert to string
+            if (this.isDisplayOnly() && typeof(theData) == "object") {
+                theData = JSON.stringify(theData);
+            }
+
             // render field template
             var renderedDomElement = _this.view.tmpl(templateDescriptor, {
                 "id": this.getId(),
                 "options": this.options,
                 "schema": this.schema,
-                "data": this.data,
+                "data": theData,
                 "view": this.view,
                 "path": this.path
             }, {});
@@ -324,15 +340,40 @@
             //this.setEl(renderedDomElement);
             this.setEl(newEl);
 
-            // TODO: this is confusing - what is this aiming to achieve?
-            // TODO: adjusted so that this only executes for non-display views
-            //if (!this.singleLevelRendering) {
+
+            ///
+            // in the case of a control field, the renderedDomElement is the control field rendered using the template
+            // 'templateDescriptor' which is the controlField template from the view
+            //
+            // this renderedDomElement services as a container for the control field itself which we can now render INTO
+            // the renderedDomElement if we want.
+            //
+            // however, if we're in DISPLAY_ONLY mode (i.e. view.type == "view") then the controlField will have already
+            // rendered a simple textual representation of the data
+            //
+            // therefore, if we're in DISPLAY_ONLY mode, we do not want to render the field control (which would be something
+            // like an INPUT field).  therefore, if we're rendering a control (like a text field), then we should stop now
+            // otherwise, if we are a ContainerField, then we do want to continue so that any children can process
+            //
+            // in addition, if we're in singleLevelRendering (in which case the top most global template has taken care
+            // of rendering everything), then we do not want to render the field.
             if (!this.singleLevelRendering) {
-                this.renderField(function() {
+
+                if (!this.isDisplayOnly() || (!this.isControlField))
+                {
+                    this.renderField(function() {
+                        if (onSuccess) {
+                            onSuccess(this);
+                        }
+                    });
+                }
+                else
+                {
                     if (onSuccess) {
                         onSuccess(this);
                     }
-                });
+                }
+
             } else {
                 if (onSuccess) {
                     onSuccess(this);
@@ -398,11 +439,6 @@
                     $(':checkbox', this.getEl()).attr('disabled', 'disabled');
                 }
 
-                // hidden
-                if (this.options.hidden) {
-                    this.getEl().hide();
-                }
-
                 // Support for custom CSS class for the field
                 var fieldClass = this.options["fieldClass"];
                 if (fieldClass) {
@@ -427,14 +463,21 @@
                 if (this.options.disabled) {
                     this.disable();
                 }
+
                 // bind data
                 if (this.view.type && this.view.type == 'edit') {
                     this.bindData();
                 }
+
                 // initialize events (after part of the dom)
                 if (this.view.type && this.view.type != 'view') {
                     this.initEvents();
                 }
+            }
+
+            // hidden
+            if (this.options.hidden) {
+                this.getEl().hide();
             }
 
             // finished initializing

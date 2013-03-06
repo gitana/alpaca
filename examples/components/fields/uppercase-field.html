@@ -71,18 +71,43 @@
                 <h1>Uppercase Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Upper Case Field: </h3>
-                    <h4>Upper case field.</h4>
-                    <div id="field0">
-                    </div>
-                    <script type="text/javascript" id="field0-script">
-$("#field0").alpaca({
-    "data": "Ice cream is wonderful.",
-    "schema": {
-        "format": "uppercase"
-    }
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Upper Case Field #1: </h2>
+                            <p>
+                                The upper case field will automatically format any input to upper-case.
+                            </p>
+                            <div id="field0">
+                            </div>
+                            <script type="text/javascript" id="field0-script">
+                                $("#field0").alpaca({
+                                    "data": "Ice cream is wonderful!",
+                                    "schema": {
+                                        "format": "uppercase"
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Upper Case Field #2: Display-only </h2>
+                            <p>
+                                This example uses a display-only view to show the value.
+                            </p>
+                            <div id="field2">
+                            </div>
+                            <script type="text/javascript" id="field2-script">
+                                $("#field2").alpaca({
+                                    "data": "Ice cream is wonderful!",
+                                    "schema": {
+                                        "format": "uppercase"
+                                    },
+                                    "options": {
+                                        "label": "Attention"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

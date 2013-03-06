@@ -73,26 +73,55 @@
                             <h1>Address Field</h1>
                         </div>
                         <div class='grid_12 alpaca-example-case'>
-                            <h3>Address Field: </h3>
-                            <h4>Address field with google map.</h4>
 
-                            <div id="field1">
-                            </div>
+                            <!-- example #1 -->
+                            <h2>Example #1: </h2>
+                            <p>Address field with google map.</p>
+                            <div id="field1"></div>
                             <script type="text/javascript" id="field1-script">
-$(function() {
-    $("#field1").alpaca({
-        "data": {},
-        "options": {
-            "type": "address",
-            "addressValidation": true
-        },
-        "schema": {
-            "title": "Home Address",
-            "type": "any"
-        }
-    });
-});
+                                $(function() {
+                                    $("#field1").alpaca({
+                                        "data": {},
+                                        "options": {
+                                            "type": "address",
+                                            "addressValidation": true
+                                        },
+                                        "schema": {
+                                            "title": "Home Address",
+                                            "type": "any"
+                                        }
+                                    });
+                                });
                             </script>
+
+                            <!-- example #2 -->
+                            <h2>Example #2: </h2>
+                            <p>Address field rendered in display-only mode.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $(function() {
+                                    $("#field2").alpaca({
+                                        "data": {
+                                            "street": [
+                                                "308 Eddy Street",
+                                                "Apartment #3"
+                                            ],
+                                            "city": "Ithaca",
+                                            "state": "NY",
+                                            "zip": "14850"
+                                        },
+                                        "options": {
+                                            "type": "address"
+                                        },
+                                        "schema": {
+                                            "title": "Home Address",
+                                            "type": "any"
+                                        },
+                                        "view": "VIEW_WEB_DISPLAY"
+                                    });
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

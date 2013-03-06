@@ -72,87 +72,108 @@
                 <h1>Datetime Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-                    <h4>Single datetime field.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$("#field1").alpaca({
-    "schema": {
-        "format": "datetime"
-    }
-});
-                    </script>
-                    <h3>Example 2: </h3>
-                    <h4>Multiple datetime fields wrapped in a FORM.</h4>
-                    <div id="field2">
-                    </div>
-                    <script type="text/javascript" id="field2-script">
-$("#field2").alpaca({
-    "data" : {
-        "start" : "10/12/2012 01:20",
-        "end" : "10/15/2012 18:55"
-    },
-    "schema": {
-        "type" : "object",
-        "properties" : {
-            "start" : {
-                "title" : "Start",
-                "description" : "Select your start datetime.",
-                "format": "datetime"
-            },
-            "end" : {
-                "title" : "End",
-                "description" : "Select your end datetime.",
-                "format": "datetime"
-            }
-        }
-    },
-    "options" : {
-        "renderForm":true,
-        "form":{
-            "attributes":{
-                "action":"../../endpoints/echo.php",
-                "method":"post"
-            },
-            "buttons":{
-                "submit":{},
-                "reset":{}
-            }
-        }
-    }
-});
-                    </script>
-                    <h3>Example 3: </h3>
-                    <h4>Datetime field with timepicker options and a button that returns field value as date.</h4>
-                    <div id="field3">
-                    </div>
-                    <script type="text/javascript" id="field3-script">
-$("#field3").alpaca({
-    "schema": {
-        "title" : "Datetime",
-        "description" : "Pick your datetime.",
-        "format": "datetime"
-    },
-    "options": {
-        "datetime": {
-            "showSecond": true,
-            "timeFormat": 'hh:mm:ss.lZ',
-            "dateFormat": 'yy-mm-dd',
-            "separator": 'T',
-            "stepHour": 2,
-            "stepMinute": 10,
-            "stepSecond": 10
-        }
-    },
-    "postRender": function(form) {
-        var button = $("<div><button>Get Datetime</button></div>");
-        button.click(function() {
-            alert(form.getDatetime());
-        }).appendTo($("#field3"));
-    }
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Example 1: </h2>
+                            <p>Single datetime field.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $("#field1").alpaca({
+                                    "schema": {
+                                        "format": "datetime"
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Example 2: </h2>
+                            <p>Multiple datetime fields wrapped in a FORM.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $("#field2").alpaca({
+                                    "data" : {
+                                        "start" : "10/12/2012 01:20",
+                                        "end" : "10/15/2012 18:55"
+                                    },
+                                    "schema": {
+                                        "type" : "object",
+                                        "properties" : {
+                                            "start" : {
+                                                "title" : "Start",
+                                                "description" : "Select your start datetime.",
+                                                "format": "datetime"
+                                            },
+                                            "end" : {
+                                                "title" : "End",
+                                                "description" : "Select your end datetime.",
+                                                "format": "datetime"
+                                            }
+                                        }
+                                    },
+                                    "options" : {
+                                        "renderForm":true,
+                                        "form":{
+                                            "attributes":{
+                                                "action":"../../endpoints/echo.php",
+                                                "method":"post"
+                                            },
+                                            "buttons":{
+                                                "submit":{},
+                                                "reset":{}
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #3 -->
+                            <h2>Example 3: </h2>
+                            <p>Datetime field with timepicker options and a button that returns field value as date.</p>
+                            <div id="field3"></div>
+                            <script type="text/javascript" id="field3-script">
+                                $("#field3").alpaca({
+                                    "schema": {
+                                        "title" : "Datetime",
+                                        "description" : "Pick your datetime.",
+                                        "format": "datetime"
+                                    },
+                                    "options": {
+                                        "datetime": {
+                                            "showSecond": true,
+                                            "timeFormat": 'hh:mm:ss.lZ',
+                                            "dateFormat": 'yy-mm-dd',
+                                            "separator": 'T',
+                                            "stepHour": 2,
+                                            "stepMinute": 10,
+                                            "stepSecond": 10
+                                        }
+                                    },
+                                    "postRender": function(form) {
+                                        var button = $("<div><button>Get Datetime</button></div>");
+                                        button.click(function() {
+                                            alert(form.getDatetime());
+                                        }).appendTo($("#field3"));
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #4 -->
+                            <h2>Example 4: </h2>
+                            <p>Single datetime field rendered in display-only mode.</p>
+                            <div id="field4"></div>
+                            <script type="text/javascript" id="field4-script">
+                                $("#field4").alpaca({
+                                    "data" : "02/05/2013 05:00",
+                                    "schema": {
+                                        "format": "datetime"
+                                    },
+                                    "options": {
+                                        "label": "The current date and time"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

@@ -71,26 +71,49 @@
                 <h1>File Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-                    <h4>File field.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$(function() {
-    $("#field1").alpaca({
-        "data": "",
-        "options": {
-            "type": "file",
-            "label": "Ice Cream Photo:",
-            "helper": "Pick your favorite ice cream picture."
-        },
-        "schema": {
-            "type": "string",
-            "format": "uri"
-        }
-    });
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Example 1: </h2>
+                            <p>File field.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $(function() {
+                                    $("#field1").alpaca({
+                                        "data": "",
+                                        "options": {
+                                            "type": "file",
+                                            "label": "Ice Cream Photo:",
+                                            "helper": "Pick your favorite ice cream picture."
+                                        },
+                                        "schema": {
+                                            "type": "string",
+                                            "format": "uri"
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <h2>Example 2: </h2>
+                            <p>File field rendered in display-only mode.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $(function() {
+                                    $("#field2").alpaca({
+                                        "data": "/abc.html",
+                                        "options": {
+                                            "type": "file",
+                                            "label": "Ice Cream Photo:",
+                                            "helper": "Pick your favorite ice cream picture."
+                                        },
+                                        "schema": {
+                                            "type": "string",
+                                            "format": "uri"
+                                        },
+                                        "view": "VIEW_WEB_DISPLAY"
+                                    });
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

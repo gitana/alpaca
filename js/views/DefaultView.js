@@ -290,16 +290,22 @@
             "fieldSetOuterEl": '<div class="ui-widget ui-widget-content">{{html this.html}}</div>',
             "fieldSetLegend": '{{if options.label}}<div class="{{if options.labelClass}}${options.labelClass}{{/if}}">${options.label}</div>{{/if}}',
             "fieldSetItemsContainer": '<div>{{html this.html}}</div>',
-            "fieldSet": '{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"fieldSetLegend")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetItemsContainer",true)}}{{/wrap}}{{/wrap}}'
-        }
+            "fieldSet": '{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"fieldSetLegend")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetItemsContainer",true)}}{{/wrap}}{{/wrap}}',
+
+            "controlFieldContainer": '<div>{{html this.html}}</div>',
+
+            "arrayToolbar": '',
+            "arrayItemToolbar": ''
+}
     });
 
     Alpaca.registerView({
         "id":"VIEW_WEB_EDIT",
-        "parent": "VIEW_WEB_DISPLAY",
+        "parent": "VIEW_BASE",
         "title":"Default Web Edit View",
         "description":"Default web edit view which goes though field hierarchy.",
         "type":"edit",
+        "platform": "web",
         "displayReadonly":true,
         "templates": {
             // Templates for control fields

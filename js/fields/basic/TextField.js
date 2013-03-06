@@ -34,7 +34,7 @@
             if (!this.options.size) {
                 this.options.size = 40;
             }
-            
+
             this.controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldText");
         },
         
@@ -47,20 +47,12 @@
 
             if (this.controlFieldTemplateDescriptor) {
 
-                // if we're display-only mode, then we don't render a control
-                if (this.view.type != "view")
-                {
-                    this.field = _this.view.tmpl(this.controlFieldTemplateDescriptor, {
-                        "id": this.getId(),
-                        "name": this.name,
-                        "options": this.options
-                    });
-                    this.injectField(this.field);
-                }
-                else
-                {
-                    Alpaca.logDebug("Skipping render fo control field: " + this.path + " because the current view is display-only");
-                }
+                this.field = _this.view.tmpl(this.controlFieldTemplateDescriptor, {
+                    "id": this.getId(),
+                    "name": this.name,
+                    "options": this.options
+                });
+                this.injectField(this.field);
             }
 
             if (onSuccess) {
@@ -339,7 +331,7 @@
         }//__END_OF_BUILDER_HELPERS
         
     });
-    
+
     Alpaca.registerTemplate("controlFieldText", '<input type="text" id="${id}"  {{if options.placeholder}}placeholder="${options.placeholder}"{{/if}} {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
     Alpaca.registerMessages({
         "invalidPattern": "This field should have pattern {0}",

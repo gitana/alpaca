@@ -71,328 +71,352 @@
                 <h1>Array Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-					<h4>Array field for an array of text items.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$(function() {
-    $("#field1").alpaca({
-        "data": ["test1", "test2", "test3"]
-    });
-});
-                    </script>
-                    <h3>Example 2: </h3>
-					<h4>Array field with options for sticky toolbar, min items, max items etc.</h4>
-                    <div id="field2">
-                    </div>
-                    <script type="text/javascript" id="field2-script">
-$(function() {
-    $("#field2").alpaca({
-        "data": ["Mint Chocolate"],
-        "options": {
-            "label": "Ice Cream",
-            "helper": "Favorite Ice Cream",
-            "itemLabel": "Favorite",
-            "toolbarSticky" : true,
-            "fields" : {
-                "item" : {
-                    "size" : 20
-                }
-            }
-        },
-        "schema": {
-            "description": "My Favorite Ice Creams",
-            "type": "array",
-            "items": {
-                "title": "Ice Cream",
-                "type": "string",
-                "minLength": 3,
-                "maxLength": 8,
-                "minItems": 2,
-                "maxItems": 5
-            }
-        }
-    });
-});
-                    </script>
-                    <h3>Example 3: </h3>
-					<h4>Array field with array default value.</h4>
-                    <div id="field3">
-                    </div>
-                    <script type="text/javascript" id="field3-script">
-$(function() {
-    $("#field3").alpaca({
-        "schema": {
-            "description": "My Favorite Ice Creams",
-            "type": "array",
-            "default": '["Vanilla","Mint","Moose Track"]',
-            "items": {
-                "title": "Ice Cream",
-                "type": "string",
-                "minLength": 3,
-                "maxLength": 8,
-                "minItems": 2,
-                "maxItems": 5
-            }
-        }
-    });
-});
-                    </script>
-                    <h3>Example 4: </h3>
-					<h4>Array field with string default value.</h4>					
-                    <div id="field4">
-                    </div>
-                    <script type="text/javascript" id="field4-script">
-$(function() {
-    $("#field4").alpaca({
-        "schema": {
-            "description": "My Favorite Ice Creams",
-            "type": "array",
-            "default": "Vanilla",
-            "items": {
-                "title": "Ice Cream",
-                "type": "string"
-            }
-        }
-    });
-});
-                    </script>
-                    <h3>Example 5: </h3>
-					<h4>Array field with item type as object.</h4>	
-                    <div id="field5">
-                    </div>
-                    <script type="text/javascript" id="field5-script">
-$(function() {
-    $("#field5").alpaca({
-        "schema": {
-            "description": "My Favorite Ice Creams",
-            "type": "array",
-            "items": {
-                "title": "Ice Cream",
-                "type": "object",
-                "properties": {
-                    "flavor": {
-                        "title": "Flavor",
-                        "description": "Ice cream flavor",
-                        "type": "string"
-                    },
-                    "topping": {
-                        "title": "Topping",
-                        "description": "Ice cream topping",
-                        "type": "string"
-                    }
-                }
-            }
-        }
-    });
-});
-                    </script>
-                    <h3>Example 6: </h3>
-					<h4>Nested array field.</h4>					
-                    <div id="field6">
-                    </div>
-                    <script type="text/javascript" id="field6-script">
-$(function() {
-    $("#field6").alpaca({
-        "schema": {
-            "description": "Ice Cream Prices",
-            "type": "array",
-            "items": {
-                "title": "Flavor Price",
-                "type": "array",
-                "items": {
-                    "title": "Price",
-                    "type": "number"
-                }
-            }
-        }
-    });
-});
-                    </script>
-                    <h3>Example 7: </h3>
-					<h4>Array field name.</h4>
-                    <div id="field7">
-                    </div>
-                    <script type="text/javascript" id="field7-script">
-$(function() {
-    $("#field7").alpaca({
-        "schema": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "enum": ["internal", "external"]
-                    },
-                    "url": {
-                        "type": "string",
-                        "format": "uri"
-                    }
-                }
-            }
-        },
-        "options" : {
-            "toolbarSticky": true,
-            "renderForm": true,
-            "fields": {
-                "item": {
-                    "fields": {
-                        "type": {
-                            "label": "Type",
-                            "optionLabels": ["Internal", "External"]
-                        },
-                        "url": {
-                            "label": "URL"
-                        }
-                    }
-                }
-            },
-            "form": {
-                "attributes": {
-                    "action": "save",
-                    "method": "post",
-                    "enctype": "multipart/form-data"
-                },
-                "buttons": {
-                    "submit": {}
-                }
-            }
-        }
-    });
-});
-                    </script>
-                    <h3>Example 8: </h3>
-					<h4>Nested Array field name.</h4>
-                    <div id="field8">
-                    </div>
-                    <script type="text/javascript" id="field8-script">
-$(function() {
-    $("#field8").alpaca({
-        schema: {
-            "type": "object",
-            "readonly": false,
-            "properties": {
-                "title": {
-                    "type": "string",
-                    "required": true,
-                    "default": "channelName"
-                },
-                "array_videoClips": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "array_videoClipMedias": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "mediaUrl": {
-                                            "type": "string",
-                                            "format": "uri"
+
+                            <!-- example #1 -->
+                            <h2>Example 1: </h2>
+                            <p>Array field for an array of text items.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $(function() {
+                                    $("#field1").alpaca({
+                                        "data": ["test1", "test2", "test3"]
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Example 2: </h2>
+                            <p>Array field with options for sticky toolbar, min items, max items etc.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $(function() {
+                                    $("#field2").alpaca({
+                                        "data": ["Mint Chocolate"],
+                                        "options": {
+                                            "label": "Ice Cream",
+                                            "helper": "Favorite Ice Cream",
+                                            "itemLabel": "Favorite",
+                                            "toolbarSticky" : true,
+                                            "fields" : {
+                                                "item" : {
+                                                    "size" : 20
+                                                }
+                                            }
+                                        },
+                                        "schema": {
+                                            "description": "My Favorite Ice Creams",
+                                            "type": "array",
+                                            "items": {
+                                                "title": "Ice Cream",
+                                                "type": "string",
+                                                "minLength": 3,
+                                                "maxLength": 8,
+                                                "minItems": 2,
+                                                "maxItems": 5
+                                            }
                                         }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "options": {
-            "renderForm":true,
-            "fields":{
-                "title": {
-                    "label": "Channel Title"
-                },
-                "array_videoClips": {
-                    "label": "Clip Details",
-                    "toolbarSticky": true,
-                    "collapsed": true,
-                    "fields": {
-                        "item": {
-                            "fields": {
-                                "array_videoClipMedias": {
-                                    "label": "Clip Medias",
-                                    "toolbarSticky": true,
-                                    "collapsed": true,
-                                    "fields": {
-                                        "item": {
-                                            "fields": {
-                                                "mediaUrl": {
-                                                 "label": "Media URL",
-                                                  "helper": "Sample URL"
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #3 -->
+                            <h2>Example 3: </h2>
+                            <p>Array field with array default value.</p>
+                            <div id="field3"></div>
+                            <script type="text/javascript" id="field3-script">
+                                $(function() {
+                                    $("#field3").alpaca({
+                                        "schema": {
+                                            "description": "My Favorite Ice Creams",
+                                            "type": "array",
+                                            "default": '["Vanilla","Mint","Moose Track"]',
+                                            "items": {
+                                                "title": "Ice Cream",
+                                                "type": "string",
+                                                "minLength": 3,
+                                                "maxLength": 8,
+                                                "minItems": 2,
+                                                "maxItems": 5
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #4 -->
+                            <h2>Example 4: </h2>
+                            <p>Array field with string default value.</p>
+                            <div id="field4"></div>
+                            <script type="text/javascript" id="field4-script">
+                                $(function() {
+                                    $("#field4").alpaca({
+                                        "schema": {
+                                            "description": "My Favorite Ice Creams",
+                                            "type": "array",
+                                            "default": "Vanilla",
+                                            "items": {
+                                                "title": "Ice Cream",
+                                                "type": "string"
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #5 -->
+                            <h2>Example 5: </h2>
+                            <p>Array field with item type as object.</p>
+                            <div id="field5"></div>
+                            <script type="text/javascript" id="field5-script">
+                                $(function() {
+                                    $("#field5").alpaca({
+                                        "schema": {
+                                            "description": "My Favorite Ice Creams",
+                                            "type": "array",
+                                            "items": {
+                                                "title": "Ice Cream",
+                                                "type": "object",
+                                                "properties": {
+                                                    "flavor": {
+                                                        "title": "Flavor",
+                                                        "description": "Ice cream flavor",
+                                                        "type": "string"
+                                                    },
+                                                    "topping": {
+                                                        "title": "Topping",
+                                                        "description": "Ice cream topping",
+                                                        "type": "string"
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                }
-                            }
-                        }
-                      }
-                    }
-                  },
-        "form":{
-            "attributes":{
-              "action":"save",
-              "method":"post",
-              "enctype":"multipart/form-data"
-            },
-            "buttons":{
-              "submit":{}
-            }
-          }
-        }
-    });
-});                 </script>
+                                    });
+                                });
+                            </script>
 
-                    <!-- example 9 -->
-                    <h3>Example 9: </h3>
-					<h4>Array field with an extra "clear" button on each item.</h4>
-                    <div id="field9"></div>
-                    <script type="text/javascript" id="field9-script">
-$(function() {
-    $("#field9").alpaca({
-        "data": ["test1", "test2", "test3"],
-        "options": {
-          "items": {
-            "extraToolbarButtons" : [{
-              "feature": "clear",
-              "icon": "ui-icon-cancel",
-              "label": "Clear inputs",
-              "clickCallback": function(id, arrayField) {
-                var item = arrayField.childrenById[id];
-                $(item.field).val('');
-              }
-            }]
-          }
-        }
-    });
-});
-</script>
-                    <!-- example 10 -->
-                    <h3>Example 10: </h3>
-                    <h4>Array field with up and down buttons disabled and custom button text.</h4>
-                    <div id="field10">
-                    </div>
-                    <script type="text/javascript" id="field10-script">
-                        $(function() {
-                            $("#field10").alpaca({
-                                "data": ["test1", "test2", "test3"],
-                                "options": {
-                                    "items": {
-                                        "moveUpItemLabel" : "Get on up",
-                                        "moveDownItemLabel": "Get down",
-                                        "removeItemLabel": "Begone ye' item",
-                                        "addItemLabel": "I addeth thee",
-                                        "showMoveDownItemButton": false,
-                                        "showMoveUpItemButton": false
-                                    }
-                                }
-                            });
-                        });
-                    </script>
+                            <!-- example #6 -->
+                            <h2>Example 6: </h2>
+                            <p>Nested array field.</p>
+                            <div id="field6"></div>
+                            <script type="text/javascript" id="field6-script">
+                                $(function() {
+                                    $("#field6").alpaca({
+                                        "schema": {
+                                            "description": "Ice Cream Prices",
+                                            "type": "array",
+                                            "items": {
+                                                "title": "Flavor Price",
+                                                "type": "array",
+                                                "items": {
+                                                    "title": "Price",
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #7 -->
+                            <h2>Example 7: </h2>
+                            <p>Array field name.</p>
+                            <div id="field7">
+                            </div>
+                            <script type="text/javascript" id="field7-script">
+                                $(function() {
+                                    $("#field7").alpaca({
+                                        "schema": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "type": {
+                                                        "enum": ["internal", "external"]
+                                                    },
+                                                    "url": {
+                                                        "type": "string",
+                                                        "format": "uri"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "options" : {
+                                            "toolbarSticky": true,
+                                            "renderForm": true,
+                                            "fields": {
+                                                "item": {
+                                                    "fields": {
+                                                        "type": {
+                                                            "label": "Type",
+                                                            "optionLabels": ["Internal", "External"]
+                                                        },
+                                                        "url": {
+                                                            "label": "URL"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "form": {
+                                                "attributes": {
+                                                    "action": "save",
+                                                    "method": "post",
+                                                    "enctype": "multipart/form-data"
+                                                },
+                                                "buttons": {
+                                                    "submit": {}
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #8 -->
+                            <h2>Example 8: </h2>
+                            <p>Nested Array field name.</p>
+                            <div id="field8"></div>
+                            <script type="text/javascript" id="field8-script">
+                                $(function() {
+                                    $("#field8").alpaca({
+                                        schema: {
+                                            "type": "object",
+                                            "readonly": false,
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "required": true,
+                                                    "default": "channelName"
+                                                },
+                                                "array_videoClips": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "array_videoClipMedias": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "mediaUrl": {
+                                                                            "type": "string",
+                                                                            "format": "uri"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "options": {
+                                            "renderForm":true,
+                                            "fields":{
+                                                "title": {
+                                                    "label": "Channel Title"
+                                                },
+                                                "array_videoClips": {
+                                                    "label": "Clip Details",
+                                                    "toolbarSticky": true,
+                                                    "collapsed": true,
+                                                    "fields": {
+                                                        "item": {
+                                                            "fields": {
+                                                                "array_videoClipMedias": {
+                                                                    "label": "Clip Medias",
+                                                                    "toolbarSticky": true,
+                                                                    "collapsed": true,
+                                                                    "fields": {
+                                                                        "item": {
+                                                                            "fields": {
+                                                                                "mediaUrl": {
+                                                                                    "label": "Media URL",
+                                                                                    "helper": "Sample URL"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "form":{
+                                                "attributes":{
+                                                    "action":"save",
+                                                    "method":"post",
+                                                    "enctype":"multipart/form-data"
+                                                },
+                                                "buttons":{
+                                                    "submit":{}
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example 9 -->
+                            <h2>Example 9: </h2>
+                            <p>Array field with an extra "clear" button on each item.</p>
+                            <div id="field9"></div>
+                            <script type="text/javascript" id="field9-script">
+                                $(function() {
+                                    $("#field9").alpaca({
+                                        "data": ["test1", "test2", "test3"],
+                                        "options": {
+                                            "items": {
+                                                "extraToolbarButtons" : [{
+                                                    "feature": "clear",
+                                                    "icon": "ui-icon-cancel",
+                                                    "label": "Clear inputs",
+                                                    "clickCallback": function(id, arrayField) {
+                                                        var item = arrayField.childrenById[id];
+                                                        $(item.field).val('');
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example 10 -->
+                            <h2>Example 10: </h2>
+                            <p>Array field with up and down buttons disabled and custom button text.</p>
+                            <div id="field10">
+                            </div>
+                            <script type="text/javascript" id="field10-script">
+                                $(function() {
+                                    $("#field10").alpaca({
+                                        "data": ["test1", "test2", "test3"],
+                                        "options": {
+                                            "items": {
+                                                "moveUpItemLabel" : "Get on up",
+                                                "moveDownItemLabel": "Get down",
+                                                "removeItemLabel": "Begone ye' item",
+                                                "addItemLabel": "I addeth thee",
+                                                "showMoveDownItemButton": false,
+                                                "showMoveUpItemButton": false
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #11 -->
+                            <h2>Example 11: </h2>
+                            <p>Array field rendered in display-only mode.</p>
+                            <div id="field11"></div>
+                            <script type="text/javascript" id="field11-script">
+                                $(function() {
+                                    $("#field11").alpaca({
+                                        "data": ["test1", "test2", "test3"],
+                                        "view": "VIEW_WEB_DISPLAY"
+                                    });
+                                });
+                            </script>
 
 
                         </div>

@@ -71,18 +71,34 @@
                 <h1>Lowercase Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Lower Case Field: </h3>
-                    <h4>Lower case field.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$("#field1").alpaca({
-    "data": "Ice cream is wonderful.",
-    "schema": {
-        "format": "lowercase"
-    }
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Lower Case Field: </h2>
+                            <p>Lower case field.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $("#field1").alpaca({
+                                    "data": "Ice cream is wonderful.",
+                                    "schema": {
+                                        "format": "lowercase"
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Lower Case Field: </h2>
+                            <p>Lower case field rendered in a display-only view.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $("#field2").alpaca({
+                                    "data": "Ice cream is wonderful.",
+                                    "schema": {
+                                        "format": "lowercase"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

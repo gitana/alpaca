@@ -71,127 +71,156 @@
                 <h1>Select Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-					<h4>Select field with data, options and schema parameters. As default, select field will be rendered if schema enum property has more than 3 options.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript"id="field1-script">
-$(function() {
-    $("#field1").alpaca({
-        "data": "Coffee",
-        "options": {
-            "label": "Ice cream",
-            "helper": "Guess my favorite ice cream?"
-        },
-        "schema": {
-            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
-        }
-    });
-});
-                    </script>
-                    <h3>Example 2: </h3>
-					<h4>Select field with option labels.</h4>
-                    <div id="field2">
-                    </div>
-                    <script type="text/javascript"id="field2-script">
-$(function() {
-    $("#field2").alpaca({
-        "data": "Coffee",
-        "options": {
-            "label": "Ice cream",
-            "helper": "Guess my favorite ice cream?",
-            "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"]
-        },
-        "schema": {
-            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
-        }
-    });
-});
-                    </script>
-                    <h3>Example 3: </h3>
-					<h4>Select field with options loaded from external <a href="./data/icecream-list.html" target="_datasource">data source</a>.</h4>
-                    <div id="field3">
-                    </div>
-                    <script type="text/javascript"id="field3-script">
-$(function() {
-    $("#field3").alpaca({
-        "options": {
-            "label": "Ice cream",
-            "helper": "Guess my favorite ice cream?",
-            "type": "select",
-            "dataSource": "./data/icecream-list.html"
-        }
-    });
-});
-                    </script>
-                    <h3>Example 4: </h3>
-					<h4>Multiple select field with options loaded from external <a href="./data/icecream-list.html" target="_datasource">data source</a>.</h4>
-                    <div id="field4">
-                    </div>
-                    <script type="text/javascript"id="field4-script">
-$(function() {
-    $("#field4").alpaca({
-        "data": ["Vanilla", "Chocolate"],
-        "options": {
-            "label": "Ice cream",
-            "helper": "Guess my favorite ice cream?",
-            "type": "select",
-            "multiple": true,
-            "size": 3,
-            "dataSource": "./data/icecream-list.html"
-        }
-    });
-});
-                    </script>
-                    <h3>Example 5: </h3>
-					<h4>Select field with an onField event listener option that reacts to select change event.</h4>
-                    <div id="field5">
-                    </div>
-                    <script type="text/javascript" id="field5-script">
-$(function() {
-    $("#field5").alpaca({
-        "data": "Coffee",
-        "options": {
-            "label": "Ice cream",
-            "helper": "Guess my favorite ice cream?",
-            "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"],
-            "onFieldChange" : function(e) {
-                alert("Current select is " + this.getValue());
-            }
-        },
-        "schema": {
-            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
-        }
-    });
-});
-                    </script>
-                    <h3>Example 6: </h3>
-					<h4>Multiple select field for array data.</h4>
-                    <div id="field6">
-                    </div>
-                    <script type="text/javascript" id="field6-script">
-$(function() {
-    $("#field6").alpaca({
-        "data": ["Vanilla", "Chocolate"],
-        "schema" : {
-            "type": "array",
-            "items": {
-                "title": "Ice Cream",
-                "type": "string",
-                "enum" : ["Vanilla", "Chocolate", "Strawberry", "Mint"],
-                "minItems": 2,
-                "maxItems": 3
-            }
-        },
-        "options": {
-            "label": "Ice cream",
-            "helper": "Guess my favorite ice cream?",
-            "type": "select",
-            "size": 5
-        }
-    });
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Example 1: </h2>
+                            <p>Select field with data, options and schema parameters. As default, select field will be rendered if schema enum property has more than 3 options.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript"id="field1-script">
+                                $(function() {
+                                    $("#field1").alpaca({
+                                        "data": "Coffee",
+                                        "options": {
+                                            "label": "Ice cream",
+                                            "helper": "Guess my favorite ice cream?"
+                                        },
+                                        "schema": {
+                                            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Example 2: </h2>
+                            <p>Select field with option labels.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript"id="field2-script">
+                                $(function() {
+                                    $("#field2").alpaca({
+                                        "data": "Coffee",
+                                        "options": {
+                                            "label": "Ice cream",
+                                            "helper": "Guess my favorite ice cream?",
+                                            "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"]
+                                        },
+                                        "schema": {
+                                            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #3 -->
+                            <h2>Example 3: </h2>
+                            <p>Select field with options loaded from external <a href="./data/icecream-list.html" target="_datasource">data source</a>.</p>
+                            <div id="field3"></div>
+                            <script type="text/javascript"id="field3-script">
+                                $(function() {
+                                    $("#field3").alpaca({
+                                        "options": {
+                                            "label": "Ice cream",
+                                            "helper": "Guess my favorite ice cream?",
+                                            "type": "select",
+                                            "dataSource": "./data/icecream-list.html"
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #4 -->
+
+                            <h2>Example 4: </h2>
+                            <p>Multiple select field with options loaded from external <a href="./data/icecream-list.html" target="_datasource">data source</a>.</p>
+                            <div id="field4">
+                            </div>
+                            <script type="text/javascript"id="field4-script">
+                                $(function() {
+                                    $("#field4").alpaca({
+                                        "data": ["Vanilla", "Chocolate"],
+                                        "options": {
+                                            "label": "Ice cream",
+                                            "helper": "Guess my favorite ice cream?",
+                                            "type": "select",
+                                            "multiple": true,
+                                            "size": 3,
+                                            "dataSource": "./data/icecream-list.html"
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #5 -->
+                            <h2>Example 5: </h2>
+                            <p>Select field with an onField event listener option that reacts to select change event.</p>
+                            <div id="field5"></div>
+                            <script type="text/javascript" id="field5-script">
+                                $(function() {
+                                    $("#field5").alpaca({
+                                        "data": "Coffee",
+                                        "options": {
+                                            "label": "Ice cream",
+                                            "helper": "Guess my favorite ice cream?",
+                                            "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"],
+                                            "onFieldChange" : function(e) {
+                                                alert("Current select is " + this.getValue());
+                                            }
+                                        },
+                                        "schema": {
+                                            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #6 -->
+                            <h2>Example 6: </h2>
+                            <p>Multiple select field for array data.</p>
+                            <div id="field6"></div>
+                            <script type="text/javascript" id="field6-script">
+                                $(function() {
+                                    $("#field6").alpaca({
+                                        "data": ["Vanilla", "Chocolate"],
+                                        "schema" : {
+                                            "type": "array",
+                                            "items": {
+                                                "title": "Ice Cream",
+                                                "type": "string",
+                                                "enum" : ["Vanilla", "Chocolate", "Strawberry", "Mint"],
+                                                "minItems": 2,
+                                                "maxItems": 3
+                                            }
+                                        },
+                                        "options": {
+                                            "label": "Ice cream",
+                                            "helper": "Guess my favorite ice cream?",
+                                            "type": "select",
+                                            "size": 5
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #7 -->
+                            <h2>Example 7: </h2>
+                            <p>Select field in display-only mode</p>
+                            <div id="field7"></div>
+                            <script type="text/javascript"id="field7-script">
+                                $(function() {
+                                    $("#field7").alpaca({
+                                        "data": "Coffee",
+                                        "options": {
+                                            "label": "Ice cream",
+                                            "helper": "Guess my favorite ice cream?"
+                                        },
+                                        "schema": {
+                                            "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+                                        },
+                                        "view": "VIEW_WEB_DISPLAY"
+                                    });
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

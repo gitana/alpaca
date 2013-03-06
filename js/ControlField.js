@@ -23,6 +23,10 @@
          */
         constructor: function(container, data, options, schema, view, connector, errorCallback) {
             this.base(container, data, options, schema, view, connector, errorCallback);
+
+            // tag to flag that this is a control field
+            // used by Field base class to determine whether to traverse into this during a display-only rendering
+            this.isControlField = true;
         },
 
         /**

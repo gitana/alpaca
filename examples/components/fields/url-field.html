@@ -107,6 +107,26 @@
                                     }
                                 });
                             </script>
+
+                            <!-- example #3 -->
+                            <h3>URL Field #3: </h3>
+                            <h4>URL field - display only</h4>
+                            <div id="field3">
+                            </div>
+                            <script type="text/javascript" id="field3-script">
+                                $("#field3").alpaca({
+                                    "data": "http://www.cloudcms.com",
+                                    "options": {
+                                        "type": "url",
+                                        "label": "Web Address"
+                                    },
+                                    "schema": {
+                                        "format": "uri"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

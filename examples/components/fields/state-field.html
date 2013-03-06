@@ -76,8 +76,9 @@
                         <div class='grid_12 alpaca-example-case'>
 
                             <!-- example #1 -->
-                            <h3>State Field #1: </h3>
-                            <h4>State field with US territories and states.</h4>
+                            <!--
+                            <h2>State Field #1: </h2>
+                            <p>State field with US territories and states.</p>
                             <div id="field1"></div>
                             <script type="text/javascript" id="field1-script">
                                 $("#field1").alpaca({
@@ -86,10 +87,12 @@
                                     }
                                 });
                             </script>
+                            -->
 
                             <!-- example #2 -->
-                            <h3>State Field #2: </h3>
-                            <h4>State field with US states only and capitalized</h4>
+                            <!--
+                            <h2>State Field #2: </h2>
+                            <p>State field with US states only and capitalized</p>
                             <div id="field2">
                             </div>
                             <script type="text/javascript" id="field2-script">
@@ -102,14 +105,16 @@
                                     }
                                 });
                             </script>
+                            -->
 
                             <!-- example #3 -->
-                            <h3>State Field #3: </h3>
-                            <h4>State field with US states only and state codes.</h4>
+                            <!--
+                            <h2>State Field #3: </h2>
+                            <p>State field with US states only and state codes.</p>
                             <div id="field3">
                             </div>
                             <script type="text/javascript" id="field3-script">
-                                $("#field2").alpaca({
+                                $("#field3").alpaca({
                                     "options": {
                                         "type": "state",
                                         "includeStates": true,
@@ -118,6 +123,27 @@
                                     }
                                 });
                             </script>
+                            -->
+
+                            <!-- example #4 -->
+                            <h2>State Field #4: </h2>
+                            <p>State field rendered in a display-only view.</p>
+                            <div id="field4">
+                            </div>
+                            <script type="text/javascript" id="field4-script">
+                                $("#field4").alpaca({
+                                    "data": "WI",
+                                    "options": {
+                                        "type": "state",
+                                        "includeStates": true,
+                                        "includeTerritories": false,
+                                        "format": "code",
+                                        "label": "State"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
 
                         <div class="clear height-fix"></div>

@@ -119,7 +119,7 @@
             // apply additional css
             $(this.fieldContainer).addClass("alpaca-addressfield");
 
-            if (this.options.addressValidation) {
+            if (this.options.addressValidation && !this.isDisplayOnly()) {
                 $('<div style="clear:both;"></div>').appendTo(this.fieldContainer);
                 var mapButton = $('<div class="alpaca-form-button">Google Map</div>').appendTo(this.fieldContainer);
                 if (mapButton.button) {

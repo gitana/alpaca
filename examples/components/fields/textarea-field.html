@@ -71,8 +71,10 @@
                 <h1>Textarea Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-					<h4>Simple textarea field.</h4>
+
+                    <!-- example #1 -->
+                    <h2>Example 1: </h2>
+					<p>Simple textarea field.</p>
                     <div id="field1">
                     </div>
                     <script type="text/javascript" id="field1-script">
@@ -85,8 +87,10 @@ $(function() {
     });
 });
 					</script>
-                    <h3>Example 2: </h3>
-					<h4>Textarea field with options parameter.</h4>
+
+                    <!-- example #2 -->
+                    <h2>Example 2: </h2>
+					<p>Textarea field with options parameter.</p>
                     <div id="field2">
                     </div>
                     <script type="text/javascript" id="field2-script">
@@ -103,6 +107,30 @@ $(function() {
     });
 });
                     </script>
+
+                    <!-- example #3 -->
+                    <h2>Example 3: </h2>
+                    <p>
+                        Textarea field rendered in display-only mode.
+                    </p>
+                    <div id="field3"></div>
+                    <script type="text/javascript" id="field3-script">
+                        $(function() {
+                            $("#field3").alpaca({
+                                "data":"Ice cream or ice-cream is a frozen dessert usually made from dairy products, such as milk and cream, and often combined with fruits or other ingredients and flavours.",
+                                "options": {
+                                    "type": "textarea",
+                                    "label": "Receipt",
+                                    "helper": "Receipt for Best Homemade Ice Cream",
+                                    "rows": 6,
+                                    "cols": 80
+                                },
+                                "view": "VIEW_WEB_DISPLAY"
+                            });
+                        });
+                    </script>
+
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

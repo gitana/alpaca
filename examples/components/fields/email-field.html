@@ -70,18 +70,37 @@
                 <h1>Email Field</h1>
             </div>
                         <div class='grid_12 alpaca-example-case'>
-                    <h3>Email Field: </h3>
-					<h4>Email field.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
-$("#field1").alpaca({
-    "data": "support",
-    "schema": {
-        "format": "email"
-    }
-});
-                    </script>
+
+                            <!-- example #1 -->
+                            <h2>Example #1: </h2>
+                            <p>Email field.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $("#field1").alpaca({
+                                    "data": "support",
+                                    "schema": {
+                                        "format": "email"
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Example #2: </h2>
+                            <p>Email field rendered in display-only mode.</p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $("#field2").alpaca({
+                                    "data": "support",
+                                    "schema": {
+                                        "format": "email"
+                                    },
+                                    "options": {
+                                        "label": "Email Address"
+                                    },
+                                    "view": "VIEW_WEB_DISPLAY"
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>
