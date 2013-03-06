@@ -70,16 +70,20 @@
             var _this = this;
             if (this.options.slider) {
                 if (!Alpaca.isEmpty(this.schema.maximum) && !Alpaca.isEmpty(this.schema.minimum)) {
-                    this.field.after('<div id="slider"></div>');
-                    this.slider = $('#slider', this.field.parent()).slider({
-                        value: this.getValue(),
-                        min: this.schema.minimum,
-                        max: this.schema.maximum,
-                        slide: function(event, ui) {
-                            _this.setValue(ui.value);
-                            _this.renderValidationState();
-                        }
-                    });
+
+                    if (this.field)
+                    {
+                        this.field.after('<div id="slider"></div>');
+                        this.slider = $('#slider', this.field.parent()).slider({
+                            value: this.getValue(),
+                            min: this.schema.minimum,
+                            max: this.schema.maximum,
+                            slide: function(event, ui) {
+                                _this.setValue(ui.value);
+                                _this.renderValidationState();
+                            }
+                        });
+                    }
                 }
             }
             if (this.fieldContainer) {

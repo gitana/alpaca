@@ -43,14 +43,18 @@
             postRender: function() {
                 var _this = this;
                 this.base();
-                if (this.field.datetimepicker) {
-                    this.field.hover(function() {
-                        if (!$(this).hasClass('hasDatepicker')) {
-                            $(this).datetimepicker(_this.options.datetime ? _this.options.datetime : {});
+
+                if (this.field)
+                {
+                    if (this.field.datetimepicker) {
+                        this.field.hover(function() {
+                            if (!$(this).hasClass('hasDatepicker')) {
+                                $(this).datetimepicker(_this.options.datetime ? _this.options.datetime : {});
+                            }
+                        });
+                        if (this.fieldContainer) {
+                            this.fieldContainer.addClass('alpaca-controlfield-datetime');
                         }
-                    });
-                    if (this.fieldContainer) {
-                        this.fieldContainer.addClass('alpaca-controlfield-datetime');
                     }
                 }
             },

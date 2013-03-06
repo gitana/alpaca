@@ -632,9 +632,10 @@
          */
         registerTemplate: function(templateId, template, viewId)
         {
+            // if no view specified, fall back to the base view which is "VIEW_BASE"
             if (!viewId)
             {
-                viewId = this.defaultView;
+                viewId = "VIEW_BASE";
             }
 
             if (!this.views[viewId])
@@ -673,9 +674,10 @@
          */
         registerMessage: function(messageId, message, viewId)
         {
+            // if no view specified, fall back to the base view which is "VIEW_BASE"
             if (!viewId)
             {
-                viewId = this.defaultView;
+                viewId = "VIEW_BASE";
             }
 
             if (!this.views[viewId])

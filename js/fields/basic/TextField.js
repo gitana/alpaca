@@ -46,12 +46,21 @@
             var _this = this;
 
             if (this.controlFieldTemplateDescriptor) {
-                this.field = _this.view.tmpl(this.controlFieldTemplateDescriptor, {
-                    "id": this.getId(),
-                    "name": this.name,
-                    "options": this.options
-                });
-                this.injectField(this.field);
+
+                // if we're display-only mode, then we don't render a control
+                if (this.view.type != "view")
+                {
+                    this.field = _this.view.tmpl(this.controlFieldTemplateDescriptor, {
+                        "id": this.getId(),
+                        "name": this.name,
+                        "options": this.options
+                    });
+                    this.injectField(this.field);
+                }
+                else
+                {
+                    Alpaca.logDebug("Skipping render fo control field: " + this.path + " because the current view is display-only");
+                }
             }
 
             if (onSuccess) {
@@ -65,13 +74,17 @@
         postRender: function() {
             this.base();
 
-            // mask it
-            if ( this.field && this.field.mask && this.options.maskString) {
-                this.field.mask(this.options.maskString);
+            if (this.field)
+            {
+                // mask it
+                if ( this.field && this.field.mask && this.options.maskString) {
+                    this.field.mask(this.options.maskString);
+                }
+                if (this.fieldContainer) {
+                    this.fieldContainer.addClass('alpaca-controlfield-text');
+                }
             }
-			if (this.fieldContainer) {
-				this.fieldContainer.addClass('alpaca-controlfield-text');
-			}			
+
         },
 
         

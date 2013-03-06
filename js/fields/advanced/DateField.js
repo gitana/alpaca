@@ -29,6 +29,7 @@
          * @see Alpaca.Fields.TextField#setup
          */
         setup: function() {
+
             this.base();
 
             if (!this.options.dateFormat) {
@@ -44,14 +45,18 @@
          */
         postRender: function() {
             this.base();
-            if (this.field.datepicker) {
+
+            if (this.field && $.datepicker)
+            {
                 this.field.datepicker({
                     "dateFormat":  this.options.dateFormat
                 });
+
                 if (this.fieldContainer) {
                     this.fieldContainer.addClass('alpaca-controlfield-date');
                 }
             }
+
         },
 
         /**

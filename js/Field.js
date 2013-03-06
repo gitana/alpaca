@@ -324,8 +324,15 @@
             //this.setEl(renderedDomElement);
             this.setEl(newEl);
 
+            // TODO: this is confusing - what is this aiming to achieve?
+            // TODO: adjusted so that this only executes for non-display views
+            //if (!this.singleLevelRendering) {
             if (!this.singleLevelRendering) {
-                this.renderField(onSuccess);
+                this.renderField(function() {
+                    if (onSuccess) {
+                        onSuccess(this);
+                    }
+                });
             } else {
                 if (onSuccess) {
                     onSuccess(this);

@@ -370,7 +370,7 @@ a {
 
 textarea.sample-code {
     font-family: "Courier New";
-    font-size: 0.6em;
+    /*font-size: 0.6em;*/
     font-style: italic;
 }
 .input-xxlarge {

@@ -42,8 +42,10 @@
             this.base();            
 			// see if we can render jWysiwyg
             var _this = this;
-            var wysiwygOptions = this.options.wysiwyg ? this.options.wysiwyg : {};
-			if (this.field.wysiwyg) {
+
+            if (this.field && $.wysiwyg)
+            {
+                var wysiwygOptions = this.options.wysiwyg ? this.options.wysiwyg : {};
 
                 if (this.options.onDemand)
                 {
@@ -74,7 +76,8 @@
                     _this.data = _this.getValue();
                     _this.renderValidationState();
                 });
-			}
+            }
+
 			if (this.fieldContainer) {
 				this.fieldContainer.addClass('alpaca-controlfield-wysiwyg');
 			}

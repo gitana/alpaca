@@ -100,30 +100,36 @@
          */
     	postRender: function() {
             this.base();
-			if (this.fieldContainer) {
-				this.fieldContainer.addClass('alpaca-controlfield-json');
-			}
-            // Some auto-formatting capabilities
             var _this = this;
-            this.field.bind('keypress', function(e) {
-                //console.log(e.which);
-                if (e.which == 34) {
-                    _this.field.insertAtCaret('"');
-                }
-                if (e.which == 123) {
-                    _this.field.insertAtCaret('}');
-                }
-                if (e.which == 91) {
-                    _this.field.insertAtCaret(']');
-                }
-            });
-            this.field.bind('keypress', 'Ctrl+l', function() {
-                _this.getEl().removeClass("alpaca-field-focused");
 
-                // set class from state
-                _this.renderValidationState();
-            });
-            this.field.attr('title','Type Ctrl+L to format and validate the JSON string.');
+            if (this.field)
+            {
+                // Some auto-formatting capabilities
+                this.field.bind('keypress', function(e) {
+                    //console.log(e.which);
+                    if (e.which == 34) {
+                        _this.field.insertAtCaret('"');
+                    }
+                    if (e.which == 123) {
+                        _this.field.insertAtCaret('}');
+                    }
+                    if (e.which == 91) {
+                        _this.field.insertAtCaret(']');
+                    }
+                });
+                this.field.bind('keypress', 'Ctrl+l', function() {
+                    _this.getEl().removeClass("alpaca-field-focused");
+
+                    // set class from state
+                    _this.renderValidationState();
+                });
+                this.field.attr('title','Type Ctrl+L to format and validate the JSON string.');
+            }
+
+            if (this.fieldContainer) {
+                this.fieldContainer.addClass('alpaca-controlfield-json');
+            }
+
         },//__BUILDER_HELPERS
 
 		/**
