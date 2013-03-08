@@ -70,9 +70,13 @@
                         $(this).removeAttr('checked');
                     }
                 });
-                if ($("input:radio:checked",this.field).length == 0) {
-                	$("input:radio:first",this.field).attr("checked","checked");
+
+                if (this.options.emptySelectFirst) {
+                    if ($("input:radio:checked",this.field).length == 0) {
+                        $("input:radio:first",this.field).attr("checked","checked");
+                    }
                 }
+
                 this.base(val);
             }
         },
