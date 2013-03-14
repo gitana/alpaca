@@ -63,6 +63,7 @@
                 <include name="favicon.ico"/>
                 <include name="index.html"/>
                 <include name="resources.html"/>
+                <include name="download.html"/>
                 <include name="tutorials.html"/>
                 <include name="consulting.html"/>
                 <include name="license.txt"/>
@@ -502,6 +503,7 @@
                        replace='&lt;script type="text\/javascript" src="js/${appkey}.min.js"&gt;&lt;/script&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="index.html"/>
             <fileset dir="${prep.dir}" includes="resources.html"/>
+            <fileset dir="${prep.dir}" includes="download.html"/>
             <fileset dir="${prep.dir}" includes="tutorials.html"/>
             <fileset dir="${prep.dir}" includes="consulting.html"/>
         </replaceregexp>
@@ -509,6 +511,7 @@
                        replace='&lt;link type="text\/css" href="css/${appkey}.min.css" rel="stylesheet" /&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="index.html"/>
             <fileset dir="${prep.dir}" includes="resources.html"/>
+            <fileset dir="${prep.dir}" includes="download.html"/>
             <fileset dir="${prep.dir}" includes="tutorials.html"/>
             <fileset dir="${prep.dir}" includes="consulting.html"/>
         </replaceregexp>
@@ -537,6 +540,7 @@
                 <include name="favicon.ico"/>
                 <include name="index.html"/>
                 <include name="resources.html"/>
+                <include name="download.html"/>
                 <include name="tutorials.html"/>
                 <include name="consulting.html"/>
             </fileset>
