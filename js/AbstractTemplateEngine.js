@@ -16,7 +16,7 @@
             this.cleanMarkup = function(html)
             {
                 // convert to a dom briefly
-                var dom = $(html);
+                var dom = Alpaca.safeDomParse(html);
 
                 // if if starts with a script tag, then we strip that out
                 if ($(dom).length == 1)
@@ -101,7 +101,7 @@
             {
                 var html = template;
                 if (html instanceof jQuery) {
-                    html = $(template).outerHTML();
+                    html = Alpaca.safeDomParse(template).outerHTML();
                 }
 
                 self._compile(cacheKey, html, callback);
@@ -119,7 +119,8 @@
                 html = "";
             }
 
-            html = html.trim();
+            // trim the html
+            html = Alpaca.trim(html);
 
             if (html.toLowerCase().indexOf("<script") == 0)
             {
@@ -165,7 +166,7 @@
             var strip_script = function(html)
             {
                 // if if starts with a script tag, then we strip that out
-                var dom = $(html);
+                var dom = Alpaca.safeDomParse(html);
                 if ($(dom).length == 1)
                 {
                     if ($(dom)[0].nodeName.toLowerCase() == "script")

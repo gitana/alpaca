@@ -104,31 +104,6 @@
         },
 
         /**
-         *
-         * Compiles a template and hands back a template id that can be used to execute it.
-         *
-         * @param {String} templateThing either an ID for an existing template
-         * @param {String} templateId template id.
-         *
-         * @returns {Object|String} The template mapped to the given id.
-         */
-        /*
-        getTemplate : function (templateThing)
-        {
-            var tmp = this.getViewParam(["templates", templateId]);
-            if (!tmp)
-            {
-                Alpaca.logError("Cannot find template: " + templateId + " for view: " + this.id);
-            }
-
-            if ($(tmp)[0] && $(tmp)[0].tagName.toLowerCase() == 'script' && $(tmp).attr('type') == 'text/x-jquery-tmpl') {
-                tmp = $(tmp).html();
-            }
-            return tmp;
-        },
-        */
-
-        /**
          * Hands back the compiled template id for a given template.
          *
          * @param templateId

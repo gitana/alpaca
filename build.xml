@@ -125,6 +125,7 @@
             </filelist>	
             <filelist dir="${prep.dir}/lib">
                 <file name="base.js"/>
+                <file name="json2.js"/>
                 <file name="validator.js"/>
                 <file name="jquery.tmpl.js"/>
                 <file name="equiv_and_hoozit.js"/>
@@ -293,6 +294,7 @@
             </filelist>		
             <filelist dir="${prep.dir}/lib">
                 <file name="base.js"/>
+                <file name="json2.js"/>
                 <file name="validator.js"/>
                 <!--<file name="jquery.tmpl.js"/>-->
                 <file name="equiv_and_hoozit.js"/>

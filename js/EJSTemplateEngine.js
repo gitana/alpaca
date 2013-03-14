@@ -27,6 +27,7 @@
             catch (e)
             {
                 callback(e);
+                return;
             }
 
             Alpaca.TemplateCache[cacheKey] = ejs;
@@ -47,6 +48,7 @@
             catch (e)
             {
                 callback(e);
+                return null;
             }
 
             return html;

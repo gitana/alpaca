@@ -24,6 +24,7 @@
             catch (e)
             {
                 callback(e);
+                return;
             }
 
             Alpaca.TemplateCache[cacheKey] = template;
@@ -44,6 +45,7 @@
             catch (e)
             {
                 callback(e);
+                return null;
             }
 
             return html;

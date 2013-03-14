@@ -316,6 +316,50 @@
         },
 
         /**
+         * Strips any excess whitespace characters from the given text.
+         * Returns the trimmed string.
+         *
+         * @param str
+         *
+         * @return trimmed string
+         */
+        trim: function(text)
+        {
+            var trimmed = text;
+
+            if (trimmed && Alpaca.isString(trimmed))
+            {
+                trimmed = trimmed.replace(/^\s+|\s+$/g, '');
+            }
+
+            return trimmed;
+        },
+
+        /**
+         * Provides a safe conversion of an HTML textual string into a DOM object.
+         *
+         * @param x
+         * @return {*}
+         */
+        safeDomParse: function(x)
+        {
+            if (x && Alpaca.isString(x))
+            {
+                // Correct for the fact that jQuery 9 is a bit sensitive with respect to string characters
+                // http://stackoverflow.com/questions/14347611/jquery-1-9-client-side-template-syntax-error-unrecognized-expression
+                //
+                // ensure that html doesn't start with spaces, carriage returns or anything evil
+
+                x = Alpaca.trim(x);
+
+                // convert to dom
+                x = $(x);
+            }
+
+            return x;
+        },
+
+        /**
          * Finds whether a variable is empty.
          * @param {Any} obj The variable being evaluated.
          * @returns {Boolean} True if the variable is empty, false otherwise.
@@ -770,12 +814,12 @@
 
                 // get the html source
                 var template = templateDescriptor.template.value;
-                if ($('.alpaca' + this.fieldTemplatePostfix[name], $(template)).length == 0) {
+                if ($('.alpaca' + this.fieldTemplatePostfix[name], Alpaca.safeDomParse(template)).length == 0) {
                     if (this.fieldTemplatePostfix[name]) {
-                        template = $(template).addClass("alpaca" + this.fieldTemplatePostfix[name]);
+                        template = Alpaca.safeDomParse(template).addClass("alpaca" + this.fieldTemplatePostfix[name]);
                     }
                 }
-                html = $(template).outerHTML(true);
+                html = Alpaca.safeDomParse(template).outerHTML(true);
             }
             else
             {
@@ -2003,7 +2047,7 @@
                 throw new Error("The compiled template: " + compiledTemplateId + " for view: " + view.id + " failed to execute: " + JSON.stringify(err));
             });
 
-            return $(html);
+            return Alpaca.safeDomParse(html);
         }
     });
 
@@ -2047,10 +2091,25 @@
 
         if (Alpaca.logLevel <= level)
         {
-            var method = methodMap[level];
             if (typeof console !== 'undefined' && console[method])
             {
-                console[method].call(console, obj);
+                var method = methodMap[level];
+
+                if ("debug" == method) {
+                    console.debug(obj);
+                }
+                else if ("info" == method) {
+                    console.info(obj);
+                }
+                else if ("warn" == method) {
+                    console.warn(obj);
+                }
+                else if ("error" == method) {
+                    console.error(obj);
+                }
+                else {
+                    console.log(obj);
+                }
             }
         }
     };
