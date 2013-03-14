@@ -8,6 +8,8 @@
     <meta name="description"
           content="Alpaca is a client-side, cross-platform, JSON based forms engine for rendering elegant forms. It comes with comprehensive control library and support for validation, wizard, layout, templating, preview, i18n etc. Built upon jQuery library, jQuery UI and jQuery Mobile, it can be easily extended for additional form controls."/>
     <meta name="author" content="Gitana Software Inc."/>
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 
     <!-- jQuery -->
@@ -46,7 +48,7 @@
 	            <h1><img src="examples/img/alpaca.png"><span>Easy Forms for jQuery</span></h1>
                 <div class="resource-bar">
                     <a href="index.html">Home</a>
-                    <a href="resources.html">Downloads</a>
+                    <a href="download.html">Download</a>
                     <a href="examples/components/fields/text-field.html">Documentation</a>
                     <a href="examples/forms/customer-profile/edit-form.html">Forms</a>
                     <a href="resources.html#mobile">Mobile</a>
@@ -108,10 +110,12 @@
     </p>
 
     <div class="container_12">
-        <div class='grid_6'>
+        <div class='grid_12'>
             <div id="form1"  class="tutorial-example"></div>
         </div>
-        <div class='grid_6'>
+    </div>
+    <div class="container_12">
+        <div class='grid_12'>
 <pre class="prettyprint linenums">
 &lt;div id="form1"&gt;
 &lt;/div&gt;
@@ -163,10 +167,12 @@ $(function() {
     </p>
 
     <div class="container_12">
-        <div class='grid_6'>
+        <div class='grid_12'>
             <div id="form2" class="tutorial-example"></div>
         </div>
-        <div class='grid_6'>
+    </div>
+    <div class="container_12">
+        <div class='grid_12'>
 <pre class="prettyprint linenums">
 &lt;div id="form1"&gt;
 &lt;/div&gt;
@@ -270,10 +276,12 @@ $(function() {
     </p>
 
     <div class="container_12">
-        <div class='grid_6'>
+        <div class='grid_12'>
             <div id="form3" class="tutorial-example"></div>
         </div>
-        <div class='grid_6'>
+    </div>
+    <div class="container_12">
+        <div class='grid_12'>
 <pre class="prettyprint linenums">
 &lt;div id="form1"&gt;
 &lt;/div&gt;
@@ -281,8 +289,8 @@ $(function() {
 $(function() {
   $("#form1").alpaca({
     "data": {
-      "name": "Britney Spears",
-      "feedback": "Alpaca is very cute.",
+      "name": "Diego Maradona",
+      "feedback": "Very impressive.",
       "ranking": "excellent"
     },
     "schema": {
@@ -372,11 +380,13 @@ $(function() {
     </p>
 
     <div class="container_12">
-        <div class='grid_6'>
+        <div class='grid_12'>
             <div id="form4" class="tutorial-example"></div>
             <div class="tutorial-example"><input type="button" id="form4-button" value="Save"/></div>
         </div>
-        <div class='grid_6'>
+    </div>
+    <div class="container_12">
+        <div class='grid_12'>
 <pre class="prettyprint linenums">
 &lt;div id="form1"&gt;&lt;/div&gt;
 &lt;div&gt;
@@ -386,8 +396,8 @@ $(function() {
 $(function() {
   $("#form1").alpaca({
     "data": {
-      "name": "Britney Spears",
-      "feedback": "Alpaca is very cute.",
+      "name": "Diego Maradona",
+      "feedback": "Very impressive.",
       "ranking": "excellent"
     },
     "schema": {
@@ -435,7 +445,6 @@ $(function() {
         }
       }
     },
-    "view" : "VIEW_WEB_EDIT_LIST",
     "postRender": function(renderedForm) {
       $('#form4-button').click(function() {
         if (renderedForm.isValid(true)) {
@@ -570,8 +579,8 @@ $(function() {
     });
     $('#form3').alpaca({
         "data" : {
-            "name" : "Britney Spears",
-            "feedback" : "Alpaca is very cute.",
+            "name" : "Diego Maradona",
+            "feedback" : "Very impressive.",
             "ranking" : "excellent"
         },
         "schema" : {
@@ -631,8 +640,8 @@ $(function() {
     });
     $('#form4').alpaca({
         "data" : {
-            "name" : "Britney Spears",
-            "feedback" : "Alpaca is very cute.",
+            "name" : "Diego Maradona",
+            "feedback" : "Very impressive.",
             "ranking" : "excellent"
         },
         "schema" : {
@@ -678,7 +687,6 @@ $(function() {
                 }
             }
         },
-        "view" : "VIEW_WEB_EDIT_LIST",
         "postRender": function(renderedForm) {
             $('#form4-button').click(function() {
                 if (renderedForm.isValid(true)) {

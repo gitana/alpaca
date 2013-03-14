@@ -8,6 +8,8 @@
     <meta name="description"
           content="Alpaca is a client-side, cross-platform, JSON based forms engine for rendering elegant forms. It comes with comprehensive control library and support for validation, wizard, layout, templating, preview, i18n etc. Built upon jQuery library, jQuery UI and jQuery Mobile, it can be easily extended for additional form controls."/>
     <meta name="author" content="Gitana Software Inc."/>
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 
     <!-- jQuery -->
@@ -40,22 +42,22 @@
 </head>
 <body>
 <header>
-	<div class='container_12'>
-    <div class='actual-body'>
-        <div class='grid_12'>
-            <h1><img src="examples/img/alpaca.png"><span>Easy Forms for jQuery</span></h1>
-            <div class="resource-bar">
-                <a href="index.html" class="current">Home</a>
-                <a href="resources.html">Downloads</a>
-                <a href="examples/components/fields/text-field.html">Documentation</a>
-                <a href="examples/forms/customer-profile/edit-form.html">Forms</a>
-                <a href="resources.html#mobile">Mobile</a>
-                <a href="tutorials.html">Tutorials</a>
-                <a href="consulting.html">Consulting</a>
+    <div class='container_12'>
+        <div class='actual-body'>
+            <div class='grid_12'>
+                <h1><img src="examples/img/alpaca.png"><span>Easy Forms for jQuery</span></h1>
+                <div class="resource-bar">
+                    <a href="index.html" class="current">Home</a>
+                    <a href="download.html">Download</a>
+                    <a href="examples/components/fields/text-field.html">Documentation</a>
+                    <a href="examples/forms/customer-profile/edit-form.html">Forms</a>
+                    <a href="resources.html#mobile">Mobile</a>
+                    <a href="tutorials.html">Tutorials</a>
+                    <a href="consulting.html">Consulting</a>
+                </div>
             </div>
         </div>
     </div>
-	</div>
 </header>
 <div class='container_12'>
 <div class="actual-body">
@@ -96,11 +98,11 @@
                 </a>
             </span>
         </div>
-		<p>
+        <p>
             The Alpaca library is pre-packaged with controls, wizards, layouts, I18N support and pluggable template
             engines.  We ship with support for jQuery Tmpl, EJS and Handlebars.  Documentation and API information
             is provided so that you can extend Alpaca as you see fit.
-		</p>
+        </p>
         <p>
             The philosophy behind Alpaca is that you should design your forms once and have them work on lots of
             different devices and UI engines without recoding.
@@ -122,37 +124,37 @@
                 <a href="./demos/amd/registration" target="_blank">With AMD and RequireJS</a>
             </span>
         </div>
-		<p>
-			Alpaca is an community-led <a href="https://github.com/gitana/alpaca" target="_blank">open-source project</a>
-			licensed under Apache 2.0.
-		</p>
+        <p>
+            Alpaca is an community-led <a href="https://github.com/gitana/alpaca" target="_blank">open-source project</a>
+            licensed under Apache 2.0.
+        </p>
     </div>
 </div>
 
 <div class="widget">
-<div class="widget-title">
-    <h2>How do I use Alpaca?</h2>
-</div>
-<div class="widget-body">
-<div class="step">
-	
-    <img src="examples/img/step-1.png"/>
+    <div class="widget-title">
+        <h2>How do I use Alpaca?</h2>
+    </div>
+    <div class="widget-body">
+        <div class="step">
 
-    <p>
-        Copy the following two lines into your web's <code>&lt;head/&gt;</code> block after jQuery:
-    </p>
+            <img src="examples/img/step-1.png"/>
+
+            <p>
+                Copy the following two lines into your web's <code>&lt;head/&gt;</code> block after jQuery:
+            </p>
 
 <pre class="prettyprint linenums">
 &lt;script type="text/javascript" src="http://www.alpacajs.org/js/alpaca.min.js"&gt;&lt;/script&gt;
 &lt;link type="text/css" href="http://www.alpacajs.org/css/alpaca.min.css" rel="stylesheet"/&gt;
 </pre>
-</div><!-- end step -->
-<div class="step">
-    <img src="examples/img/step-2.png"/>
+        </div><!-- end step -->
+        <div class="step">
+            <img src="examples/img/step-2.png"/>
 
-    <p>
-		Add a <code>&lt;div&gt;</code> tag to your HTML page and call <code>$.alpaca()</code> with your form data:
-    </p>
+            <p>
+                Add a <code>&lt;div&gt;</code> tag to your HTML page and call <code>$.alpaca()</code> with your form data:
+            </p>
 
 <pre class="prettyprint linenums">
 &lt;div id="form1"&gt;&lt;/div&gt;
@@ -180,21 +182,21 @@ $(function() {
 });
 &lt;/script&gt;
 </pre>
-</div><!-- end step -->
+        </div><!-- end step -->
 
-<div class="step">
-    <img src="examples/img/step-3.png"/>
+        <div class="step">
+            <img src="examples/img/step-3.png"/>
 
-    <p>
-		Enjoy your newly rendered Alpaca form.
-	</p>
+            <p>
+                Enjoy your newly rendered Alpaca form.
+            </p>
 
-    <div class="container_12">
-	    <div id="form1" class="tutorial-example"></div>
-    </div>
-</div><!-- end step -->
+            <div class="container_12">
+                <div id="form1" class="tutorial-example"></div>
+            </div>
+        </div><!-- end step -->
 
-</div><!-- end widget-body -->
+    </div><!-- end widget-body -->
 </div><!-- end widget -->
 
 <div class="widget">
@@ -206,74 +208,199 @@ $(function() {
             <a href="http://www.youtube.com/watch?v=mK4BXiGNbvA" target="_blank">Getting Started with Alpaca (Part 1)</a>
         </p>
         <p class="embedded-youtube">
-            <iframe width="640" height="360" src="http://www.youtube.com/embed/mK4BXiGNbvA" frameborder="0" allowfullscreen></iframe>
+        <iframe width="640" height="360" src="http://www.youtube.com/embed/mK4BXiGNbvA" frameborder="0" allowfullscreen></iframe>
         </p>
         <br/>
         <p align="center">
             <a href="http://www.youtube.com/watch?v=9i2pml9p45Q">Getting Started with Alpaca (Part 2)</a>
         </p>
         <p class="embedded-youtube">
-            <iframe width="640" height="360" src="http://www.youtube.com/embed/9i2pml9p45Q" frameborder="0" allowfullscreen></iframe>
+        <iframe width="640" height="360" src="http://www.youtube.com/embed/9i2pml9p45Q" frameborder="0" allowfullscreen></iframe>
         </p>
 
     </div>
 </div>
 
+<div>
+    <div class="widget">
+        <div class="widget-title">
+            <h2><a name="gettingstarted">Browser Support</a></h2>
+        </div>
+        <div class="widget-body">
+
+            <p>
+                Alpaca is a JavaScript library that uses jQuery and runs in most modern web browsers.  With every release of Alpaca,
+                we run a library of unit tests across a matrix of operating systems, browsers and versions.  As the project grows,
+                we are expanding this matrix to include more combinations and testing.
+            </p>
+
+            <p>
+                The table below shows our tested stack.  If not shown, it means that Alpaca hasn't been tested on that platform and
+                browser combination.  For combinations not shown, please feel free to evaluate on your own.  There is a good chance
+                Alpaca will run just fine.
+            </p>
+
+            <table class="browser-stack" style="width:100%">
+                <thead>
+                    <th>Browser</th>
+                    <th>Windows</th>
+                    <th>Mac OSX</th>
+                    <th>iOS</th>
+                    <th>Android</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chrome</td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                        </td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                        </td>
+                        <td>
+                            <!-- not applicable -->
+                            -
+                        </td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                            <!-- not applicable -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                        </td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                        </td>
+                        <td>
+                            <!-- not applicable -->
+                            -
+                        </td>
+                        <td>
+                            <!-- not applicable -->
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                        </td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                        </td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                        </td>
+                        <td>
+                            <!-- not applicable -->
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Opera</td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                        </td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                        </td>
+                        <td>
+                            <!-- not tested -->
+                            -
+                        </td>
+                        <td>
+                            <!-- not applicable -->
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>IE</td>
+                        <td>
+                            <img src="examples/img/stack/supported-yes.png">
+                            <br/>
+                            (IE 9 and beyond)
+                        </td>
+                        <td>
+                            <!-- not applicable -->
+                            -
+                        </td>
+                        <td>
+                            <!-- not applicable -->
+                            -
+                        </td>
+                        <td>
+                            <!-- not applicable -->
+                            -
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br/>
+
+        </div>
+    </div>
+
+</div>
+
 
 <div>
-        <div class="widget">
-            <div class="widget-title">
-                <h2><a name="downloads">Getting Started</a></h2>
-            </div>
-            <div class="widget-body">
-
-                <p>
-                    It's easy to get started.  You can grab the code and drop it into your new or existing projects.  You can also download
-                    the source code, build it yourself and customize Alpaca for your own projects.
-                </p>
-
-                <h3>Downloads</h3>
-                <p>
-                    We offer <a href="resources.html#downloads">releases</a> as well as <a href="resources.html#downloads">snapshot builds</a>
-                    of Alpaca.
-                </p>
-
-                <h3>Source Code</h3>
-                <p>
-                    Join the <a href="http://www.github.com/gitana/alpaca" target="_blank">Alpaca Project</a> on GitHub to
-                    access the source and contribute to the growing Alpaca Community!  Alpaca is licensed under the Apache 2.0
-                    open source license.
-                </p>
-
-                <h3>Tutorials</h3>
-                <p>
-                    At the top of this page, you'll find links to
-                    <a href="tutorials.html">tutorials</a> and <a href="resources.html#documentation">documentation</a>.  We also
-                    provide demonstrations and examples of
-                    <a href="examples/forms/customer-profile/edit-form.html">complex forms</a> and
-                    <a href="resources.html#mobile">mobile applications</a> using jQuery Mobile.
-                </p>
-
-                <h3>Community Forums</h3>
-                <p>
-					If you have a question about Alpaca, please visit the <a href="http://www.cloudcms.org">Alpaca Forums</a>.  We're pulling together
-					Alpaca developers and users from within the community to help support one another with their Alpaca-related projects.
-                </p>
-
-                <h3>API</h3>
-                <p>
-                    We provide an
-                    <a href="examples/components/fields/text-field.html">API and Component Reference</a> that describes all of the nifty
-                    components and controls that are available out-of-the-box.  This will give you an idea of how to build your own
-                    extensions.
-                    <br/>
-                    <br/>
-                    All of our <a href="resources.html#unittests">Unit Tests</a> are online.
-                    <br/>
-                </p>
-
-            </div>
+    <div class="widget">
+        <div class="widget-title">
+            <h2><a name="gettingstarted">Getting Started</a></h2>
         </div>
+        <div class="widget-body">
+
+            <p>
+                It's easy to get started.  You can grab the code and drop it into your new or existing projects.  You can also download
+                the source code, build it yourself and customize Alpaca for your own projects.
+            </p>
+
+            <h3>Download</h3>
+            <p>
+                We offer <a href="download.html#releases">official releases</a> for Alpaca for use in production environments
+                as well as <a href="download.html#snapshots">development snapshot builds</a> for use in test.
+            </p>
+
+            <h3>Source Code</h3>
+            <p>
+                Join the <a href="http://www.github.com/gitana/alpaca" target="_blank">Alpaca Project</a> on GitHub to
+                access the source and contribute to the growing Alpaca Community!  Alpaca is licensed under the Apache 2.0
+                open source license.
+            </p>
+
+            <h3>Tutorials</h3>
+            <p>
+                At the top of this page, you'll find links to
+                <a href="tutorials.html">tutorials</a> and <a href="resources.html#documentation">documentation</a>.  We also
+                provide demonstrations and examples of
+                <a href="examples/forms/customer-profile/edit-form.html">complex forms</a> and
+                <a href="resources.html#mobile">mobile applications</a> using jQuery Mobile.
+            </p>
+
+            <h3>Community Forums</h3>
+            <p>
+                If you have a question about Alpaca, please visit the <a href="http://www.cloudcms.org">Alpaca Forums</a>.  We're pulling together
+                Alpaca developers and users from within the community to help support one another with their Alpaca-related projects.
+            </p>
+
+            <h3>API</h3>
+            <p>
+                We provide an
+                <a href="examples/components/fields/text-field.html">API and Component Reference</a> that describes all of the nifty
+                components and controls that are available out-of-the-box.  This will give you an idea of how to build your own
+                extensions.
+                <br/>
+                <br/>
+                All of our <a href="resources.html#unittests">Unit Tests</a> are online.
+                <br/>
+            </p>
+
+        </div>
+    </div>
 
 </div>
 
@@ -287,24 +414,24 @@ $(function() {
 
 
 <script>
-$("#form1").alpaca({
-  "schema": {
-    "title":"User Feedback",
-    "description":"What do you think about Alpaca?",
-    "type":"object",
-    "properties": {
-      "name": {
-        "type":"string",
-        "title":"Name"
-      },
-      "ranking": {
-        "type":"string",
-        "title":"Ranking",
-        "enum":['excellent','not too shabby','alpaca built my hotrod']
-      }
-    }
-  }
-});
+    $("#form1").alpaca({
+        "schema": {
+            "title":"User Feedback",
+            "description":"What do you think about Alpaca?",
+            "type":"object",
+            "properties": {
+                "name": {
+                    "type":"string",
+                    "title":"Name"
+                },
+                "ranking": {
+                    "type":"string",
+                    "title":"Ranking",
+                    "enum":['excellent','not too shabby','alpaca built my hotrod']
+                }
+            }
+        }
+    });
 </script>
 <script>
     window.prettyPrint && prettyPrint();

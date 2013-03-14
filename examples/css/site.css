@@ -19,7 +19,7 @@ body {
 
 h1, h2, h3, h4, h5, h6, .btn, nav, label {
     /*font-family: Mentone-SemiBold, 'Mentone SemiBold', 'Trebuchet MS', sans-serif;*/
-	font-weight: 400 !important;
+	font-weight: 200 !important;
     /*text-shadow: 1px 1px #222 !important;*/
 }
 
@@ -216,8 +216,13 @@ footer {
 
 .alpaca-example-sidebar ul li {
     padding: 2px 2px 2px 4px;
-    margin: 1px;
-    font-weight: normal;
+    margin: 1px !important;
+    font-weight: 100 !important;
+    border: 1px white solid;
+}
+
+.alpaca-example-sidebar ul li.ui-state-hover {
+    border: 1px #999999 solid;
 }
 
 .alpaca-example-sidebar ul li a {
@@ -340,7 +345,7 @@ a {
     /*color: #0088CC;*/
     color: #0066AA;
     text-decoration: none;
-    font-weight: 400;
+    /**font-weight: 400;**/
 }
 
 .btn:hover {
@@ -406,7 +411,7 @@ header > div
 {
     color: #444 !important;
     text-shadow: 1px 1px #eee !important;
-    font-weight: 400 !important;
+    font-weight: 300 !important;
 }
 
 .embedded-youtube IFRAME
@@ -458,4 +463,80 @@ header > div
     border: 1px #ccc solid;
     padding: 5px;
     margin: 5px;
+}
+
+
+.widget-body H2
+{
+    /*margin-top: 0px !important;*/
+    margin-bottom: 0px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+P.release-date
+{
+    padding: 0px !important;
+    margin: 0px !important;
+    font-weight: 300 !important;
+    font-size: 14px;
+}
+
+
+.browser-stack
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 12px;
+    /**margin: 45px;**/
+    /**width: 480px;**/
+    text-align: left;
+    border-collapse: collapse;
+}
+.browser-stack thead th.rounded-company
+{
+    background: #b9c9fe url('table-images/left.png') left -1px no-repeat;
+}
+.browser-stack thead th.rounded-q4
+{
+    background: #b9c9fe url('table-images/right.png') right -1px no-repeat;
+}
+.browser-stack th
+{
+    padding: 8px;
+    font-weight: normal;
+    font-size: 13px;
+    color: #039;
+    background: #b9c9fe;
+}
+.browser-stack td
+{
+    padding: 8px;
+    background: #e8edff;
+    border-top: 1px solid #fff;
+    color: #669;
+}
+.browser-stack tfoot td.rounded-foot-left
+{
+    background: #e8edff url('table-images/botleft.png') left bottom no-repeat;
+}
+.browser-stack tfoot td.rounded-foot-right
+{
+    background: #e8edff url('table-images/botright.png') right bottom no-repeat;
+}
+.browser-stack tbody tr:hover td
+{
+    background: #d0dafd;
+}
+
+.browser-stack tbody tr td
+{
+    text-align: center;
+    align: center;
+}
+
+.browser-stack thead th
+{
+    text-align: center;
+    align: center;
+    font-weight: 800 !important;
 }

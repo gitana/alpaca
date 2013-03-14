@@ -1,7 +1,7 @@
 {
     "name": "alpaca",
     "title": "Alpaca Forms",
-    "description": "Easy Forms for jQuery",
+    "description": "Easy Forms Engine for jQuery / Bootstrap.",
     "keywords": [
         "form",
         "forms",
@@ -36,7 +36,7 @@
     "bugs": "https://github.com/gitana/alpaca/issues",
     "homepage": "https://github.com/gitana/alpaca",
     "docs": "http://www.alpacajs.org",
-    "download": "http://www.alpacajs.org/resources.html",
+    "download": "http://www.alpacajs.org/download.html",
     "dependencies": {
         "jquery": ">=1.7"
     }
