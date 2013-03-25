@@ -12,7 +12,7 @@
     "main": ["alpaca.js", "alpaca.css"],
     "dependencies": {
         "jquery": "*",
-        "jquery.tmpl": "*",
+        "jquery-tmpl": "*",
         "jquery-ui": "*"
     }
 }

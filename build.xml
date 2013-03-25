@@ -579,20 +579,6 @@
                 <exclude name="**/.idea/*"/>
             </fileset>
         </zip>
-        <zip destfile="${package.dir}/downloads/components/alpaca-core-component.zip">
-            <fileset dir="${package.dir}/components/alpaca-core">
-                <include name="**/*"/>
-                <exclude name="**/.DS_Store/*"/>
-                <exclude name="**/.idea/*"/>
-            </fileset>
-        </zip>
-        <zip destfile="${package.dir}/downloads/components/alpaca-extras-component.zip">
-            <fileset dir="${package.dir}/components/alpaca-extras">
-                <include name="**/*"/>
-                <exclude name="**/.DS_Store/*"/>
-                <exclude name="**/.idea/*"/>
-            </fileset>
-        </zip>
 
     </target>
 
@@ -759,16 +745,6 @@
         <!-- "alpaca" -->
         <copy todir="/projects/components/alpaca">
             <fileset dir="${package.dir}/components/alpaca"/>
-        </copy>
-
-        <!-- "alpaca-core" -->
-        <copy todir="/projects/components/alpaca-core">
-            <fileset dir="${package.dir}/components/alpaca-core"/>
-        </copy>
-
-        <!-- "alpaca-extras" -->
-        <copy todir="/projects/components/alpaca-extras">
-            <fileset dir="${package.dir}/components/alpaca-extras"/>
         </copy>
 
     </target>
