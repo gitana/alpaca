@@ -609,7 +609,7 @@
             <param name="outputFile" value="${package.dir}/components/alpaca-core/${appkey}-core.js"/>
             <param name="name" value="alpaca-core" />
             <param name="variableName" value="Alpaca" />
-            <param name="dependencies" value="['jquery', 'jquery.tmpl']" />
+            <param name="dependencies" value="['jquery', 'jquery-tmpl']" />
         </antcall>
 
 
@@ -662,7 +662,7 @@
             <param name="outputFile" value="${package.dir}/components/alpaca/${appkey}.js"/>
             <param name="name" value="alpaca" />
             <param name="variableName" value="Alpaca" />
-            <param name="dependencies" value="['jquery', 'jquery.tmpl', 'jquery-ui']" />
+            <param name="dependencies" value="['jquery', 'jquery-tmpl', 'jquery-ui']" />
         </antcall>
 
     </target>
