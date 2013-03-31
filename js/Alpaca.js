@@ -2155,4 +2155,18 @@
         });
     };
 
+    /**
+     * When dom elements are removed, we fire the special "destroyed" event to allow for late cleanup of any Alpaca code
+     * that might be in-memory and linked to the dom element.
+     *
+     * @type {Object}
+     */
+    $.event.special.destroyed = {
+        remove: function(o) {
+            if (o.handler) {
+                o.handler();
+            }
+        }
+    };
+
 })(jQuery);

@@ -259,6 +259,26 @@ input:focus, textarea:focus {
 .alpaca-controlfield-file {
 }
 
+/**
+ * Editor Field
+ */
+.alpaca-controlfield-editor
+{
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border: 1px #ccc solid;
+}
+
+.alpaca-controlfield-editor .control-field-editor-el
+{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right:0
+}
+
 .alpaca-controlfield-file-custom-input {
     position: absolute;
     height: 100px;

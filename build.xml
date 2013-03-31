@@ -187,6 +187,7 @@
                 <file name="fields/advanced/AddressField.js"/>
                 <file name="fields/advanced/DateField.js"/>
                 <file name="fields/advanced/DatetimeField.js"/>
+                <file name="fields/advanced/EditorField.js"/>
                 <file name="fields/advanced/EmailField.js"/>
                 <file name="fields/advanced/IntegerField.js"/>
                 <file name="fields/advanced/IPv4Field.js"/>
@@ -356,6 +357,7 @@
                 <file name="fields/advanced/AddressField.js"/>
                 <file name="fields/advanced/DateField.js"/>
                 <file name="fields/advanced/DatetimeField.js"/>
+                <file name="fields/advanced/EditorField.js"/>
                 <file name="fields/advanced/EmailField.js"/>
                 <file name="fields/advanced/IntegerField.js"/>
                 <file name="fields/advanced/IPv4Field.js"/>

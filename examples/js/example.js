@@ -23,47 +23,99 @@ $(function() {
     $.each($("div[id^='field'],table[id^='field']"), function() {
         var currentId = $(this).attr('id');
 
-        var code = $.trim($('#' + currentId + '-script').html());
+        var readCode = function(id)
+        {
+            var code = $.trim($('#' + id + '-script').html());
 
-        // do some code cleanup
-        code = js_beautify(code, {
-            "indent_size": 3,
-            "preserve_newlines": false
-        });
+            // do some code cleanup
+            code = js_beautify(code, {
+                "indent_size": 3,
+                "preserve_newlines": false
+            });
 
-        $(this).after('<div class="clear" style="min-height:10px;"></div><div class="controls"><textarea class="input-xxlarge sample-code" id="' + currentId + '-code" rows="10" style="display:none;">' + code +'</textarea></div><div class="code-block" id="' + currentId + '-block"><pre id="' + currentId + '-pre" class="prettyprint linenums"></pre></div><div class="btn-toolbar"><a class="btn run" target-id="' + currentId + '" href="javascript:void(0);">Run &raquo;</a><a class="btn view" target-id="' + currentId + '" href="javascript:void(0);" style="display:none;">View Code</a><a class="btn edit" target-id="' + currentId + '" href="javascript:void(0);">Edit Code</a><a class="btn reset" target-id="' + currentId + '" href="javascript:void(0);">Reset</a></div><div class="clear" style="min-height:10px;"></div>').append('<div class="gitana-clear"></div>');;
-        $('#' + currentId + '-pre').html(code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
-    });
+            return code;
+        };
 
-    $('.btn.run').click(function() {
-        var targetId = $(this).attr('target-id');
-        $('#' + targetId).empty();
-        var code = $('textarea[id="' + targetId + "-code" + '"]').val();
-        eval(code);
-    });
+        var code = readCode(currentId);
 
-    $('.btn.view').click(function() {
-        var targetId = $(this).attr('target-id');
-        var code = $('textarea[id="' + targetId + "-code" + '"]').val();
-        $('#' + targetId + '-block pre').empty().html(prettyPrintOne(code.replace(/</g, '&lt;').replace(/>/g, '&gt;'), "", true));
-        $('textarea#' + targetId + '-code').slideToggle();
-        $('div#' + targetId + '-block').slideToggle();
-        $('.btn.edit[target-id="' + targetId + '"]').slideToggle();
-        $(this).slideToggle();
-    });
+        var outerDiv = $("<div style='position: relative; width: 100%;'></div>");
 
-    $('.btn.edit').click(function() {
-        var targetId = $(this).attr('target-id');
-        $('textarea#' + targetId + '-code').slideToggle();
-        $('div#' + targetId + '-block').slideToggle();
-        $('.btn.view[target-id="' + targetId + '"]').slideToggle();
-        $(this).slideToggle();
-    });
+        var editorDiv = $("<div style='position: relative; width: 100%; height: 300px; border: 1px #ccc solid;'><div id='" + currentId + "-editor' style='position:absolute;top:0;bottom:0;left:0;right:0'></div></div>");
 
-    $('.btn.reset').click(function() {
-        var targetId = $(this).attr('target-id');
-        var code = $.trim($('#' + targetId + '-script').html());
-        $('textarea[id="' + targetId + "-code" + '"]').val(code);
+        var runButton = $("<a class='btn run' href='javascript:void(0);'>Run &raquo;</a>");
+        var resetButton = $("<a class='btn reset' href='javascript:void(0);'>Reset</a>");
+
+        var buttonsContainerDiv = $("<div id='" + currentId + "-buttons' class='btn-toolbar'></div>");
+        buttonsContainerDiv.append(runButton);
+        buttonsContainerDiv.append(resetButton);
+
+        $(outerDiv).append("<h3>Source Code</h3>");
+        $(outerDiv).append(editorDiv);
+        $(outerDiv).append(buttonsContainerDiv);
+        $(outerDiv).append("<br/>");
+
+        // append in the html
+        $(this).after(outerDiv);
+
+        // bind in the editor
+        var el = $(editorDiv).find("#" + currentId + "-editor")[0];
+        var editor = ace.edit(el);
+        editor.setTheme("ace/theme/textmate");
+        editor.getSession().setMode("ace/mode/javascript");
+        editor.setValue(code);
+        editor.clearSelection();
+
+        // make it so that the height calibrates to the content
+        var heightUpdateFunction = function(editor, editorDiv) {
+
+            return function()
+            {
+                // http://stackoverflow.com/questions/11584061/
+                var newHeight =
+                    editor.getSession().getScreenLength()
+                        * editor.renderer.lineHeight
+                        + editor.renderer.scrollBar.getWidth();
+
+                $(editorDiv).height(newHeight.toString() + "px");
+
+                // This call is required for the editor to fix all of
+                // its inner structure for adapting to a change in size
+                editor.resize();
+            }
+        }(editor, editorDiv);
+        heightUpdateFunction();
+        editor.getSession().on('change', heightUpdateFunction);
+
+
+        // when they click "Run", we execute the code
+        $(runButton).click(function(id, editor) {
+            return function() {
+
+                $("#" + id).empty();
+
+                var code = editor.getValue();
+                eval(code);
+            };
+        }(currentId, editor));
+
+        // when they click the "Reset" button, we copy the script back and reset things
+        $(resetButton).click(function(id, editor) {
+
+            return function() {
+
+                var code = readCode(id);
+
+                // write into editor
+                editor.setValue(code);
+                editor.clearSelection();
+
+                // run the code
+                eval(code);
+
+            };
+
+        }(currentId, editor));
+
     });
 
     window.prettyPrint && prettyPrint();
@@ -214,6 +266,11 @@ $(function() {
                 "id":"datetime-field",
                 "title":"Datetime Field",
                 "link":"../../components/fields/datetime-field.html"
+            },
+            {
+                "id":"editor-field",
+                "title":"Editor Field",
+                "link":"../../components/fields/editor-field.html"
             },
             {
                 "id":"email-field",
