@@ -56,7 +56,7 @@
             <fileset dir="${tests.dir}"/>
         </copy>
         <copy todir="${prep.dir}/demos">
-            <fileset dir="demos"/>
+            <fileset dir="${demos.dir}"/>
         </copy>
         <copy todir="${prep.dir}/">
             <fileset dir="${project.dir}">
@@ -532,6 +532,9 @@
         <copy todir="${package.dir}/examples">
             <fileset dir="${prep.dir}/examples" includes="**/*"/>
         </copy>
+        <copy todir="${package.dir}/demos">
+            <fileset dir="${prep.dir}/demos" includes="**/*"/>
+        </copy>
         <copy todir="${package.dir}/tests">
             <fileset dir="${prep.dir}/tests">
                 <exclude name="js/**/*"/>
@@ -553,7 +556,7 @@
     </target>
 
     <!-- Packages up the Distribution (and components) -->
-    <target name="package" depends="prep-html, components">
+    <target name="package" depends="prep-html, components, install-demos-package-dependencies">
         <zip destfile="${prep.dir}/${appkey}-distribution.zip">
             <fileset dir="${package.dir}">
                 <exclude name="**/.DS_Store/*"/>
@@ -701,7 +704,7 @@
         </copy>
     </target>
 
-    <target name="full" depends="webserver-clean, package, install-demos-local-dependencies">
+    <target name="full" depends="webserver-clean, package">
         <copy todir="${local.docroot.basepath}/${appkey}">
             <fileset refid="alpaca-files"/>
         </copy>
@@ -713,6 +716,11 @@
         <copy todir="${local.docroot.basepath}/${appkey}">
             <fileset dir="${project.dir}/build/package">
                 <include name="downloads/**/*"/>
+            </fileset>
+        </copy>
+        <copy todir="${local.docroot.basepath}/${appkey}">
+            <fileset dir="${project.dir}/build/package">
+                <include name="demos/**/*"/>
             </fileset>
         </copy>
     </target>
@@ -788,6 +796,26 @@
         <!-- jquerymobile demos -->
         <ant dir="demos/jquerymobile/quickstart" />
         <ant dir="demos/jquerymobile/registration" />
+
+    </target>
+
+    <target name="install-demos-package-dependencies">
+
+        <!-- browser demos -->
+        <ant dir="build/package/demos/browser/quickstart" />
+        <ant dir="build/package/demos/browser/registration" />
+
+        <!-- amd demos -->
+        <ant dir="build/package/demos/amd/quickstart" />
+        <ant dir="build/package/demos/amd/registration" />
+
+        <!-- bootstrap demos -->
+        <ant dir="build/package/demos/bootstrap/quickstart" />
+        <ant dir="build/package/demos/bootstrap/registration" />
+
+        <!-- jquerymobile demos -->
+        <ant dir="build/package/demos/jquerymobile/quickstart" />
+        <ant dir="build/package/demos/jquerymobile/registration" />
 
     </target>
 

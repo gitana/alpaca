@@ -14,7 +14,7 @@
     <target name="install" description="Installs local copy of all dependencies" depends="setup">
 
         <copy todir="lib/alpaca">
-            <fileset dir="../../../build/package/components/alpaca">
+            <fileset dir="../../../components/alpaca">
                 <exclude name="**/.DS_Store/*"/>
                 <exclude name="**/.idea/*"/>
             </fileset>
