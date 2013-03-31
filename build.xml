@@ -445,6 +445,7 @@
                 <include name="**/*.js"/>
                 <exclude name="**/*-min.js"/>
                 <exclude name="**/*.min.js"/>
+                <exclude name="lib/**/*.js"/>
             </fileset>
             <arg line="-jar"/>
             <arg path="${yui-compressor}"/>
@@ -459,6 +460,7 @@
                 <include name="**/*.css"/>
                 <exclude name="**/*-min.css"/>
                 <exclude name="**/*.min.css"/>
+                <exclude name="lib/**/*.css"/>
             </fileset>
             <arg line="-jar"/>
             <arg path="${yui-compressor}"/>
