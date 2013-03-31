@@ -277,6 +277,7 @@
                 <include name="ejs/**/*"/>
                 <include name="jquerymobile/**/*"/>
                 <include name="requirejs/**/*"/>
+                <include name="ace/**/*"/>
             </fileset>
         </copy>
 
