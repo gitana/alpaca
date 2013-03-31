@@ -50,10 +50,10 @@ p {
 code {
     color: #222222;
     font-family: "Courier New",sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600 !important;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
     text-shadow: 1px 1px #EEEEEE;
 }
 

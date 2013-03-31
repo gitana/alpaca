@@ -83,6 +83,16 @@
                                 very powerful features and allows for the creation and modification of markup and code such as HTML, JavaScript,
                                 Java and other languages.
                             </p>
+
+                            <h3>Requirements</h3>
+                            <p>
+                                The Editor field requires the <a target="_blank" href="http://ace.ajax.org">Cloud 9 ACE Editor</a> to be loaded
+                                ahead of its use.
+                            </p>
+                            <p>
+                                Be sure to load <code>lib/ace/src-min-noconflict/ace.js</code> before rendering your forms.  You can
+                                download ACE from <a target="_blank" href="http://ace.ajax.org">the ACE project on GitHub</a>.
+                            </p>
                         </div>
                         <div class='grid_12 alpaca-example-case'>
 
@@ -97,7 +107,7 @@
                                     $("#field1").alpaca({
                                         'data': '{\r\t"firstName": "Pablo",\r\t"lastName": "Neruda",\r\t"age": 81\r}',
                                         'schema': {
-                                            "type": "text"
+                                            "type": "string"
                                         },
                                         'options': {
                                             "type": "editor"
@@ -119,7 +129,7 @@
                                     $("#field2").alpaca({
                                         'data': '{\r\t"firstName": "Pablo",\r\t"lastName": "Neruda",\r\t"age": 81\r}',
                                         'schema': {
-                                            'type': 'text'
+                                            'type': 'string'
                                         },
                                         'options': {
                                             'type': 'editor',
@@ -148,7 +158,7 @@
                                     $("#field3").alpaca({
                                         "data": "<html>\r\t<body>\r\t\t<p>A sample paragraph</p>\r\t</body>\r</html>",
                                         "schema": {
-                                            "type": "text"
+                                            "type": "string"
                                         },
                                         "options": {
                                             "type": "editor",
@@ -175,7 +185,7 @@
                                     $("#field4").alpaca({
                                         "data": ".myclass {\r\tfont-size:20px;\r}",
                                         "schema": {
-                                            "type": "text"
+                                            "type": "string"
                                         },
                                         "options": {
                                             "type": "editor",
@@ -190,7 +200,7 @@
 
                                             // insert some text into the editor (after the font-size, line 3)
                                             editor.gotoLine(3);
-                                            editor.insert("color: blue;\r");
+                                            editor.insert("\tcolor: blue;\r");
                                         }
                                     });
                                 });
@@ -211,13 +221,13 @@
                                             "type": "object",
                                             "properties": {
                                                 "js": {
-                                                    "type": "text"
+                                                    "type": "string"
                                                 },
                                                 "css": {
-                                                    "type": "text"
+                                                    "type": "string"
                                                 },
                                                 "html": {
-                                                    "type": "text",
+                                                    "type": "string",
                                                     "readonly": true
                                                 }
                                             }
