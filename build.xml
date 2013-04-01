@@ -617,6 +617,7 @@
             <param name="outputFile" value="${package.dir}/components/alpaca-core/${appkey}-core.js"/>
             <param name="name" value="alpaca-core" />
             <param name="variableName" value="Alpaca" />
+            <param name="argumentNames" value="$, tmpl" />
             <param name="dependencies" value="['jquery', 'jquery-tmpl']" />
         </antcall>
 
@@ -644,7 +645,8 @@
             <param name="outputFile" value="${package.dir}/components/alpaca-extras/${appkey}-extras.js"/>
             <param name="name" value="alpaca-extras" />
             <param name="variableName" value="Alpaca" />
-            <param name="dependencies" value="['alpaca-core', 'jquery-ui']" />
+            <param name="argumentNames" value="alpacaCore, $, ace" />
+            <param name="dependencies" value="['alpaca-core', 'jquery-ui', 'ace/ace']" />
         </antcall>
 
         <!-- Alpaca ("alpaca") -->
@@ -670,7 +672,8 @@
             <param name="outputFile" value="${package.dir}/components/alpaca/${appkey}.js"/>
             <param name="name" value="alpaca" />
             <param name="variableName" value="Alpaca" />
-            <param name="dependencies" value="['jquery', 'jquery-tmpl', 'jquery-ui']" />
+            <param name="argumentNames" value="$, tmpl, jQueryUI, ace" />
+            <param name="dependencies" value="['jquery', 'jquery-tmpl', 'jquery-ui', 'ace/ace']" />
         </antcall>
 
     </target>
@@ -739,6 +742,7 @@
                     <replacestring from="/** BUILD_INSERT_NAME **/" to="${name}"/>
                     <replacestring from="/** BUILD_INSERT_DEPENDENCIES **/" to="${dependencies}"/>
                     <replacestring from="/** BUILD_INSERT_VARIABLE_NAME **/" to="${variableName}"/>
+                    <replacestring from="/** BUILD_INSERT_ARGUMENT_NAMES **/" to="${argumentNames}"/>
                 </tokenfilter>
             </filterchain>
         </copy>

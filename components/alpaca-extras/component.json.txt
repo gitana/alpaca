@@ -12,6 +12,7 @@
     "main": ["alpaca-extras.js", "alpaca-extras.css"],
     "dependencies": {
         "alpaca-core": "*",
-        "jquery-ui": "*"
+        "jquery-ui": "*",
+        "ace": "*"
     }
 }

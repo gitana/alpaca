@@ -13,6 +13,7 @@
     "dependencies": {
         "jquery": "*",
         "jquery-tmpl": "*",
-        "jquery-ui": "*"
+        "jquery-ui": "*",
+        "ace": "*"
     }
 }
