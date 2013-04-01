@@ -127,7 +127,10 @@
         _validateDivisibleBy: function() {
             var floatValue = this.getValue();
             if (!Alpaca.isEmpty(this.schema.divisibleBy)) {
-                if (!(floatValue % this.schema.divisibleBy == 0)) {
+
+                // mod
+                if (floatValue % this.schema.divisibleBy !== 0)
+                {
                     return false;
                 }
             }

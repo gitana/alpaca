@@ -151,11 +151,11 @@
     {
         // find the data-role="page" and refresh it
         var el = fieldEl;
-        while (el != null && el.attr("data-role") !== "page")
+        while (el !== null && el.attr("data-role") !== "page")
         {
             el = el.parent();
         }
-        if (el != null) {
+        if (el !== null) {
             $(el).trigger('pagecreate');
         }
     };

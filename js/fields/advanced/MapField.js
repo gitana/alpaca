@@ -109,7 +109,7 @@
         /**
          * @see Alpaca.Fields.TextAreaField#postRender
          */
-    	postRender: function() {
+        postRender: function() {
             this.base();
 			if (this.fieldContainer) {
 				this.fieldContainer.addClass('alpaca-controlfield-map');

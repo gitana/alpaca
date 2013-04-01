@@ -138,7 +138,7 @@
                                     }, function(results, status) {
                                         if (status == google.maps.GeocoderStatus.OK) {
                                             var mapCanvasId = _this.getId() + "-map-canvas";
-                                            if ($('#' + mapCanvasId).length == 0) {
+                                            if ($('#' + mapCanvasId).length === 0) {
                                                 $("<div id='" + mapCanvasId + "' class='alpaca-controlfield-address-mapcanvas'></div>").appendTo(_this.fieldContainer);
                                             }
                                             var map = new google.maps.Map(document.getElementById(_this.getId() + "-map-canvas"), {

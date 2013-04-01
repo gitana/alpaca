@@ -47,7 +47,7 @@
 				this.fieldContainer.addClass('alpaca-controlfield-password');
 			}
         },
-		        
+
         /**
          * @see Alpaca.Fields.TextField#handleValidate
          */

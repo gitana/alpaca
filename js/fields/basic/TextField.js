@@ -137,7 +137,7 @@
          */
         _validatePattern: function() {
             if (this.schema.pattern) {
-	            var val = this.getValue();
+                var val = this.getValue();
                 if (Alpaca.isEmpty(val)) {
                     val = "";
                 }
@@ -301,7 +301,7 @@
                 }
             });
         },    
-				    
+
         /**
          * @see Alpaca.Field#getTitle
          */

@@ -204,7 +204,7 @@
                 "rus":"Russian Federation",
                 "rwa":"Rwanda",
                 "reu":"Reunion",
-                "blm":"Saint Barthlemy",
+                "blm":"Saint Barthelemy",
                 "shn":"Saint Helena",
                 "kna":"Saint Kitts and Nevis",
                 "lca":"Saint Lucia",

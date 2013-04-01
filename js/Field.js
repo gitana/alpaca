@@ -41,7 +41,7 @@
             if (!this.errorCallback) {
                 this.errorCallback = function(error) {
                     alert(error.message ? error.message : "Caught some error!");
-                }
+                };
             }
 
             // check if this field rendering is single-level or not
@@ -68,11 +68,11 @@
                 this.schema = {};
                 noSchema = true;
             }
-            if (!this.options.label && this.schema.title != null) {
+            if (!this.options.label && this.schema.title !== null) {
                 this.options.label = this.schema.title;
             }
 
-            if (!this.options.helper && this.schema.description != null) {
+            if (!this.options.helper && this.schema.description !== null) {
                 this.options.helper = this.schema.description;
             }
 
@@ -99,7 +99,7 @@
             this.isDisplayOnly = function()
             {
                 return (self.view.type == "view");
-            }
+            };
 
         },
 
@@ -199,7 +199,7 @@
                 }
             }
             // last try to see if we can populate the label from propertyId
-            if (this.options.label == null && this.propertyId) {
+            if (this.options.label === null && this.propertyId) {
                 this.options.label = this.propertyId;
             }
 
@@ -417,10 +417,10 @@
 
                 // for edit or create mode
                 // injects Ids
-                if (this.getEl().attr("id") == null) {
+                if (this.getEl().attr("id") === null) {
                     this.getEl().attr("id", this.getId() + "-field-outer");
                 }
-                if (this.getEl().attr("alpaca-field-id") == null) {
+                if (this.getEl().attr("alpaca-field-id") === null) {
                     this.getEl().attr("alpaca-field-id", this.getId());
                 }
                 // optional
@@ -997,7 +997,7 @@
             this.initializing = true;
 
 
-            if (this.callback != null) {
+            if (this.callback !== null) {
                 this.callback(this, this.renderedCallback);
             } else {
                 this.render(this.renderedCallback);
@@ -1088,7 +1088,7 @@
                         func.call(_this,e);
                     });
                 }
-            })
+            });
         },
 
         /**
@@ -1369,7 +1369,7 @@
                         }
                     }
                 }
-            }
+            };
         },
 
         /**
@@ -1528,7 +1528,8 @@
                             "default": true
                         }
                     }
-                }
+                };
+
             } else {
                 delete schemaOfOptions.properties.renderForm;
                 delete schemaOfOptions.properties.form;
@@ -1611,7 +1612,7 @@
                             }
                         }
                     }
-                }
+                };
             }
 
             return optionsForOptions;

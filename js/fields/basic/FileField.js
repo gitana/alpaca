@@ -38,12 +38,13 @@
          */
         setValue: function(value) {
             // be sure to call into base method
-        	// We won't be able to actually set the value for file input field so we use the mask input
-        	var tmp = this.field;
-        	this.field = $('.alpaca-filefield-control',this.fieldContainer);
+            // We won't be able to actually set the value for file input field so we use the mask input
+            var tmp = this.field;
+            this.field = $('.alpaca-filefield-control',this.fieldContainer);
             this.base(value);
+
             // switch it back to actual file input
-        	this.field = tmp;
+            this.field = tmp;
         },
         
         /**
@@ -54,7 +55,7 @@
             // apply additional css
 			if (this.fieldContainer) {
 				this.fieldContainer.addClass("alpaca-controlfield-file");
-			}            			
+            }
         },//__BUILDER_HELPERS
 		
 		/**

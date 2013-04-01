@@ -1,3 +1,4 @@
+/*jshint -W004 */ // duplicate variables
 /**
  * Alpaca forms engine for jQuery
  */
@@ -46,7 +47,7 @@
      */
     Alpaca = function() {
         var args = Alpaca.makeArray(arguments);
-        if (args.length == 0) {
+        if (args.length === 0) {
             // illegal
             alert("No arguments - no supported");
             return null;
@@ -84,7 +85,7 @@
                 }
             }
 
-            if (field != null) {
+            if (field !== null) {
                 return field;
             } else {
                 // otherwise, grab the data inside the element and use that for the control
@@ -187,7 +188,7 @@
                     // pick first element in form
                     if (control.children && control.children.length > 0) {
                         if (control.children.field && control.children.field.length > 0) {
-                            $(control.children[0].field[0]).focus()
+                            $(control.children[0].field[0]).focus();
                         }
                     }
                 }
@@ -365,7 +366,7 @@
          * @returns {Boolean} True if the variable is empty, false otherwise.
          */
         isEmpty: function(obj) {
-            return Alpaca.isUndefined(obj) || obj == null;
+            return Alpaca.isUndefined(obj) || obj === null;
         },
 
         /**
@@ -462,7 +463,7 @@
          * @param {String} msg The message to be logged.
          */
         log: function(msg) {
-            if (!(typeof console == "undefined")) {
+            if (typeof(console) !== "undefined") {
                 console.log(msg);
             }
         },
@@ -814,7 +815,7 @@
 
                 // get the html source
                 var template = templateDescriptor.template.value;
-                if ($('.alpaca' + this.fieldTemplatePostfix[name], Alpaca.safeDomParse(template)).length == 0) {
+                if ($('.alpaca' + this.fieldTemplatePostfix[name], Alpaca.safeDomParse(template)).length === 0) {
                     if (this.fieldTemplatePostfix[name]) {
                         template = Alpaca.safeDomParse(template).addClass("alpaca" + this.fieldTemplatePostfix[name]);
                     }
@@ -828,7 +829,7 @@
                 var label = view.tmpl(templateDescriptor, object.data);
                 if (label) {
                     if (this.fieldTemplatePostfix[name]) {
-                        if ($('.alpaca' + this.fieldTemplatePostfix[name], label).length == 0) {
+                        if ($('.alpaca' + this.fieldTemplatePostfix[name], label).length === 0) {
                             label.addClass("alpaca" + this.fieldTemplatePostfix[name]);
                         }
                         if (!label.attr("id")) {
@@ -982,7 +983,7 @@
                 el.css(styleAttributes);
             }
             if (classNames) {
-                for (className in classNames) {
+                for (var className in classNames) {
                     el.addClass(className);
                 }
             }
@@ -999,7 +1000,7 @@
         elementFromTemplate: function(template, substitutions) {
             var html = template;
             if (substitutions) {
-                for (x in substitutions) {
+                for (var x in substitutions) {
                     html = Alpaca.replaceAll(html, "${" + x + "}", substitutions[x]);
                 }
             }
@@ -1034,7 +1035,7 @@
                 throw {
                     name: 'TypeError',
                     message: "The function is undefined."
-                }
+                };
             }
 
             /**
@@ -1121,7 +1122,7 @@
                 }
                 if (!Alpaca.isEmpty(current[key])) {
                     current = current[key];
-                    if (keys.length == 0) {
+                    if (keys.length === 0) {
                         element = current;
                     }
                 } else {
@@ -1264,7 +1265,7 @@
                 return target;
             };
 
-            _merge(source, target)
+            _merge(source, target);
 
             return target;
         },
@@ -1291,11 +1292,11 @@
                 }
             } else if (Alpaca.isArray(obj)) {
                 clone = [];
-                for (var i = 0 ; i < obj.length ; i++) {
-                    if (Alpaca.isObject(obj[i]) || Alpaca.isArray(obj[i])) {
-                        clone.push(Alpaca.cloneObject(obj[i]));
+                for (var z = 0 ; z < obj.length ; z++) {
+                    if (Alpaca.isObject(obj[z]) || Alpaca.isArray(obj[z])) {
+                        clone.push(Alpaca.cloneObject(obj[z]));
                     } else {
-                        clone.push(obj[i]);
+                        clone.push(obj[z]);
                     }
                 }
             } else {
@@ -1376,13 +1377,13 @@
             if (Alpaca.isEmpty(val)) {
                 empty = true;
             } else {
-                if (Alpaca.isString(val) && val == "") {
+                if (Alpaca.isString(val) && val === "") {
                     empty = true;
                 }
                 if (Alpaca.isObject(val) && $.isEmptyObject(val)) {
                     empty = true;
                 }
-                if (Alpaca.isArray(val) && val.length == 0) {
+                if (Alpaca.isArray(val) && val.length === 0) {
                     empty = true;
                 }
                 if (Alpaca.isNumber(val) && isNaN(val)) {
@@ -1577,7 +1578,7 @@
                 renderedCallback = field.view.postRender;
             }
 
-            if (callback != null) {
+            if (callback !== null) {
                 callback(field, renderedCallback);
             } else {
                 field.render(renderedCallback);

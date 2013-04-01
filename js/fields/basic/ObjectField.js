@@ -1,3 +1,4 @@
+/*jshint -W004 */ // duplicate variables
 (function($) {
 
     var Alpaca = $.alpaca;
@@ -319,7 +320,7 @@
                             } else if (Alpaca.isArray(itemDependencies)) {
                                 $.each(itemDependencies, function(index, value) {
                                     _this.enableDependency(propertyId, value);
-                                })
+                                });
                             }
                         }
                     }
@@ -365,7 +366,7 @@
                 var itemDependencySettings = this.childrenByPropertyId[propertyId].options.dependencies;
                 if (itemDependencySettings) {
 
-                    if (itemDependencySettings[dependency] != null && Alpaca.isFunction(itemDependencySettings[dependency])) {
+                    if (itemDependencySettings[dependency] !== null && Alpaca.isFunction(itemDependencySettings[dependency])) {
                         shouldShow = itemDependencySettings[dependency].call(this,this.childrenByPropertyId[dependency].data);
                     } else {
 
@@ -379,7 +380,7 @@
 
                             } else {
 
-                                if (itemDependencySettings[dependency] != null && itemDependencySettings[dependency] != this.childrenByPropertyId[dependency].data) {
+                                if (itemDependencySettings[dependency] !== null && itemDependencySettings[dependency] != this.childrenByPropertyId[dependency].data) {
                                     shouldShow = false;
                                 }
 
@@ -536,7 +537,7 @@
                         };
                     }(i, stepBindings);
 
-                    if (i == 0) {
+                    if (i === 0) {
                         _this._createNextButton(i, true, vFunc);
                         _this._selectStep(i);
                     } else if (i == count - 1) {
@@ -639,7 +640,7 @@
                     }(i, stepBindings);
 
 
-                    if (i == 0) {
+                    if (i === 0) {
                         _this._createNextButton(i, false, vFunc);
                         _this._selectStep(i);
                     } else if (i == totalSteps - 1) {

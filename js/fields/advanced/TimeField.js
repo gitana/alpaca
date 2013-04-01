@@ -97,7 +97,7 @@
          */
         setValue: function(val) {
             // skip out if no time
-            if (val == "") {
+            if (val === "") {
                 this.base(val);
                 return;
             }

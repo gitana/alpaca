@@ -45,7 +45,7 @@
 				this.fieldContainer.addClass('alpaca-controlfield-ipv4');
 			}	
         },
-		        
+
         /**
          * @see Alpaca.Fields.TextField#handleValidate
          */

@@ -28,7 +28,7 @@
                 }
 
                 return html;
-            }
+            };
         },
 
         /**
@@ -52,11 +52,11 @@
             var type = "html";
             if (Alpaca.isString(template))
             {
-                if (template.indexOf("./") == 0 || template.indexOf("/") == 0 || template.indexOf("../") == 0)
+                if (template.indexOf("./") === 0 || template.indexOf("/") === 0 || template.indexOf("../") === 0)
                 {
                     type = "uri";
                 }
-                else if (template.indexOf("#") == 0 || template.indexOf(".") == 0 || template.indexOf("[") == 0)
+                else if (template.indexOf("#") === 0 || template.indexOf(".") === 0 || template.indexOf("[") === 0)
                 {
                     type = "selector";
                 }
@@ -76,7 +76,7 @@
                 var fileExtension = self.fileExtension();
 
                 var url = template;
-                if (url.indexOf("." + fileExtension) == -1) {
+                if (url.indexOf("." + fileExtension) === -1) {
                     url += "." + fileExtension;
                 }
 
@@ -122,7 +122,7 @@
             // trim the html
             html = Alpaca.trim(html);
 
-            if (html.toLowerCase().indexOf("<script") == 0)
+            if (html.toLowerCase().indexOf("<script") === 0)
             {
                 // already has script tag
             }

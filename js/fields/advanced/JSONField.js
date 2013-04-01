@@ -98,7 +98,7 @@
         /**
          * @see Alpaca.Fields.TextAreaField#postRender
          */
-    	postRender: function() {
+        postRender: function() {
             this.base();
             var _this = this;
 

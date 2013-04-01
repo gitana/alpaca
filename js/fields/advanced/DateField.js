@@ -109,7 +109,7 @@
          */
         setValue: function(val) {
             // skip out if no date
-            if (val == "") {
+            if (val === "") {
                 this.base(val);
                 return;
             }

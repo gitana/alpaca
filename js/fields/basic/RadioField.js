@@ -44,7 +44,7 @@
                 this.options.emptySelectFirst = false;
             }
         },
-		        
+
         /**
          * @see Alpaca.Field#getValue
          */
@@ -72,7 +72,7 @@
                 });
 
                 if (this.options.emptySelectFirst) {
-                    if ($("input:radio:checked",this.field).length == 0) {
+                    if ($("input:radio:checked",this.field).length === 0) {
                         $("input:radio:first",this.field).attr("checked","checked");
                     }
                 }
@@ -105,7 +105,7 @@
 
                     this.data = this.selectOptions[0].value;
 
-                    if ($("input:radio:checked",this.field).length == 0) {
+                    if ($("input:radio:checked",this.field).length === 0) {
                         $("input:radio:first",this.field).attr("checked","checked");
                     }
                 }

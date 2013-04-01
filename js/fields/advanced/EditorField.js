@@ -96,10 +96,7 @@
                     var heightUpdateFunction = function() {
 
                         // http://stackoverflow.com/questions/11584061/
-                        var newHeight =
-                            self.editor.getSession().getScreenLength()
-                                * self.editor.renderer.lineHeight
-                                + self.editor.renderer.scrollBar.getWidth();
+                        var newHeight = self.editor.getSession().getScreenLength() * self.editor.renderer.lineHeight + self.editor.renderer.scrollBar.getWidth();
 
                         $(self.fieldContainer).height(newHeight.toString() + "px");
 

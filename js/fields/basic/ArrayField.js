@@ -96,16 +96,16 @@
                 var childField = this.children[i];
                 if (data.length > i) {
                     childField.setValue(data[i]);
-		        } else {
-		            this.removeItem(childField.id); //remove child items if there are more children than in data
+                } else {
+                    this.removeItem(childField.id); //remove child items if there are more children than in data
                 }
             }
 
-	        // if the number of items in the data is greater than the number of existing child elements
-	        while(i < data.length) {
+            // if the number of items in the data is greater than the number of existing child elements
+            while(i < data.length) {
                 this.addItem(i, null, data[i]); //use the default value
-		        i++;
-	        }
+                i++;
+            }
         },
 
         /**
@@ -200,7 +200,7 @@
                 $.each(this.children, function(index, val) {
                     if (val.getId() == fromId) {
                         var toIndex;
-                        if (isUp == true) {
+                        if (isUp === true) {
                             toIndex = index - 1;
                             if (toIndex < 0) {
                                 toIndex = _this.children.length - 1;
@@ -272,7 +272,7 @@
                     $(this).addClass('alpaca-fieldset-array-item-toolbar-disabled');
                 });
             }
-            if (this.getSize() == 0) {
+            if (this.getSize() === 0) {
                 this.renderArrayToolbar(this.outerEl);
             } else {
                 if (this.arrayToolbar) {
@@ -297,76 +297,76 @@
                 var id = containerElem.attr('alpaca-id');
                 var fieldControl = this.childrenById[id];
                 var itemToolbarTemplateDescriptor = this.view.getTemplateDescriptor("arrayItemToolbar");
-	            if (itemToolbarTemplateDescriptor) {
+                if (itemToolbarTemplateDescriptor) {
 
-		            // Base buttons : add & remove
+                    // Base buttons : add & remove
                     var buttonsDef = [
                         {
                             feature: "add",
                             icon: _this.addIcon,
                             label: (_this.options.items && _this.options.items.addItemLabel) ? _this.options.items.addItemLabel : "Add Item",
-	                        clickCallback: function(id, arrayField) {
-		                        var newContainerElem = arrayField.addItem(containerElem.index() + 1, null, null, id);
-		                        arrayField.enrichElements(newContainerElem);
-		                        return false;
-	                        }
+                            clickCallback: function(id, arrayField) {
+                                var newContainerElem = arrayField.addItem(containerElem.index() + 1, null, null, id);
+                                arrayField.enrichElements(newContainerElem);
+                                return false;
+                            }
                         },
                         {
                             feature: "remove",
                             icon: _this.removeIcon,
                             label: (_this.options.items && _this.options.items.removeItemLabel) ? _this.options.items.removeItemLabel : "Remove Item",
-	                        clickCallback: function(id, arrayField) {
+                            clickCallback: function(id, arrayField) {
                                 arrayField.removeItem(id);
                             }
                         }
                     ];
 
-		            // Optional buttons : up & down
-		            if ((_this.options.items && _this.options.items.showMoveUpItemButton)) {
-			            buttonsDef.push({
-				            feature: "up",
+                    // Optional buttons : up & down
+                    if ((_this.options.items && _this.options.items.showMoveUpItemButton)) {
+                        buttonsDef.push({
+                            feature: "up",
                             icon: _this.upIcon,
-				            label: (_this.options.items && _this.options.items.moveUpItemLabel) ? _this.options.items.moveUpItemLabel : "Move Up",
-				            clickCallback: function(id, arrayField) {
-					            arrayField.moveItem(id, true);
+                            label: (_this.options.items && _this.options.items.moveUpItemLabel) ? _this.options.items.moveUpItemLabel : "Move Up",
+                            clickCallback: function(id, arrayField) {
+                                arrayField.moveItem(id, true);
                             }
-			            });
-		            }
+                        });
+                    }
 
-		            if ((_this.options.items && _this.options.items.showMoveDownItemButton)) {
-			            buttonsDef.push({
-				            feature: "down",
+                    if ((_this.options.items && _this.options.items.showMoveDownItemButton)) {
+                        buttonsDef.push({
+                            feature: "down",
                             icon: _this.downIcon,
-				            label: (_this.options.items && _this.options.items.moveDownItemLabel) ? _this.options.items.moveDownItemLabel : "Move Down",
-				            clickCallback: function(id, arrayField) {
-					            arrayField.moveItem(id, false);
+                            label: (_this.options.items && _this.options.items.moveDownItemLabel) ? _this.options.items.moveDownItemLabel : "Move Down",
+                            clickCallback: function(id, arrayField) {
+                                arrayField.moveItem(id, false);
                             }
-			            });
-		            }
+                        });
+                    }
 
-		            // Extra buttons : user-defined
-		            if (_this.options.items && _this.options.items.extraToolbarButtons) {
-			            buttonsDef = $.merge(buttonsDef,_this.options.items.extraToolbarButtons);
-		            }
+                    // Extra buttons : user-defined
+                    if (_this.options.items && _this.options.items.extraToolbarButtons) {
+                        buttonsDef = $.merge(buttonsDef,_this.options.items.extraToolbarButtons);
+                    }
 
                     var toolbarElem = _this.view.tmpl(itemToolbarTemplateDescriptor, {
                         "id": id,
                         "buttons": buttonsDef
                     });
-                    if (toolbarElem.attr("id") == null) {
+                    if (toolbarElem.attr("id") === null) {
                         toolbarElem.attr("id", id + "-item-toolbar");
                     }
 
                     // Process all buttons
-		            for (var i in buttonsDef) {
-			            (function() { // closure to prevent "def" leaking
-				            var def = buttonsDef[i];
-				            var el = toolbarElem.find('.alpaca-fieldset-array-item-toolbar-'+def.feature);
-				            el.click(function(e) {return def.clickCallback(id, _this, e)});
-				            if (_this.buttonBeautifier) {
-					            _this.buttonBeautifier.call(_this,el, def.icon);
-				            }
-			            })();
+                    for (var i in buttonsDef) {
+                        (function() { // closure to prevent "def" leaking
+                            var def = buttonsDef[i];
+                            var el = toolbarElem.find('.alpaca-fieldset-array-item-toolbar-'+def.feature);
+                            el.click(function(e) {return def.clickCallback(id, _this, e);});
+                            if (_this.buttonBeautifier) {
+                                _this.buttonBeautifier.call(_this,el, def.icon);
+                            }
+                        })();
                     }
 
                     if (this.options.toolbarSticky) {
@@ -379,6 +379,7 @@
                             $('.alpaca-fieldset-array-item-toolbar', this).hide();
                         });
                     }
+
                 }
             }
         },
@@ -396,9 +397,10 @@
                     "id": id,
                     "addItemLabel": (_this.options.items && _this.options.items.addItemLabel) ? _this.options.items.addItemLabel : "Add Item"
                 });
-                if (toolbarElem.attr("id") == null) {
+                if (toolbarElem.attr("id") === null) {
                     toolbarElem.attr("id", id + "-array-toolbar");
                 }
+
                 // add actions to toolbar buttons
                 if (this.options.toolbarStyle == "link") {
                     $('.alpaca-fieldset-array-toolbar-add', toolbarElem).click(function() {
@@ -471,7 +473,7 @@
                     itemSchema = _this.schema.items;
                 }
 
-                if (fieldOptions == null && _this.options && _this.options.fields && _this.options.fields["item"]) {
+                if (fieldOptions === null && _this.options && _this.options.fields && _this.options.fields["item"]) {
                     fieldOptions = _this.options.fields["item"];
                 }
 
@@ -676,7 +678,7 @@
             };
 
             if (this.children && this.children[0]) {
-                Alpaca.merge(properties.properties.items.properties, this.children[0].getSchemaOfSchema())
+                Alpaca.merge(properties.properties.items.properties, this.children[0].getSchemaOfSchema());
             }
 
             return Alpaca.merge(this.base(), properties);
@@ -724,7 +726,7 @@
                         "description": "Options for array items.",
                         "type": "object",
                         "properties": {
-	                        "extraToolbarButtons": {
+                            "extraToolbarButtons": {
                                 "title": "Extra Toolbar buttons",
                                 "description": "Buttons to be added next to add/remove/up/down, see examples",
                                 "type": "array",
@@ -772,7 +774,7 @@
             };
 
             if (this.children && this.children[0]) {
-                Alpaca.merge(properties.properties.items.properties, this.children[0].getSchemaOfSchema())
+                Alpaca.merge(properties.properties.items.properties, this.children[0].getSchemaOfSchema());
             }
 
             return Alpaca.merge(this.base(), properties);

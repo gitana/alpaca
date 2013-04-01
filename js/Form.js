@@ -209,7 +209,6 @@
 
             // populate the buttons as well
             this.buttons = {};
-            var _this = this;
             $.each($('.alpaca-form-button', this.container),function(k,v) {
 
                 // TODO: this is technically wrong since we only want to trap for left-mousedown...

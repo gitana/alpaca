@@ -48,7 +48,7 @@
             if (Alpaca.isValEmpty(textValue)) {
                 return "";
             } else {
-                return parseInt(textValue);
+                return parseInt(textValue, 10);
             }
         },
 

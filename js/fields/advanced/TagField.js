@@ -51,7 +51,7 @@
          */
         getValue: function() {
             var val = this.base();
-            if (val == "") {
+            if (val === "") {
                 return [];
             }
             return val.split(this.options.separator);
@@ -61,7 +61,7 @@
          * @see Alpaca.Fields.TextField#setValue
          */
         setValue: function(val) {
-            if (val == "") {
+            if (val === "") {
                 return;
             }
 
@@ -79,7 +79,7 @@
             var trimmed = [];
 
             $.each(vals, function(i, v) {
-                if (v.trim() != "") {
+                if (v.trim() !== "") {
                     trimmed.push(v.trim());
                 }
             });

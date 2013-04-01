@@ -1,3 +1,4 @@
+/*jshint -W014 */ // bad line breaking
 (function($) {
     
     var Alpaca = $.alpaca;

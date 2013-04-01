@@ -42,7 +42,7 @@
             var upperValue = "";
 
             for ( var i = 0; i < val.length; i++ ) {
-                if ( i == 0 ) {
+                if ( i === 0 ) {
                     upperValue += val.charAt(i).toUpperCase();
                 } else if (val.charAt(i-1) == ' ' ||  val.charAt(i-1) == '-' || val.charAt(i-1) == "'") {
                     upperValue += val.charAt(i).toUpperCase();

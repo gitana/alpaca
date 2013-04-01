@@ -584,7 +584,7 @@
             }
 
             return result;
-        }
+        };
     }();
 
 })(jQuery);
