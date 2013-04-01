@@ -266,16 +266,12 @@
 
                                             var changeFunction = function()
                                             {
-                                                var value = "<html>\r";
-                                                value += "\t<head>\r";
-                                                value += "\t\t<style>\r";
+                                                var value = "<style>\r";
                                                 value += cssEditor.getValue() + "\r";
-                                                value += "\t\t</style>\r";
-                                                value += "\t</head>\r";
-                                                value += "\t<body>\r";
-                                                value += "\t\t<pre class='field4-code'>" + jsEditor.getValue() + "</pre>\r";
-                                                value += "\t</body>\r";
-                                                value += "</html>";
+                                                value += "</style>\r";
+                                                value += "<pre class='field4-code'>\r";
+                                                value += jsEditor.getValue() + "\r";
+                                                value += "</pre>\r";
 
                                                 htmlEditor.setValue(value);
                                                 htmlEditor.clearSelection();
