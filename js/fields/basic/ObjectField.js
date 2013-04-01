@@ -337,7 +337,31 @@
              * false otherwise.
              */
             getDependencyStatus: function(propertyId, dependency) {
-                var shouldShow = this.childrenByPropertyId[dependency] && !Alpaca.isValEmpty(this.childrenByPropertyId[dependency].data);
+
+                // assume we shouldn't show
+                var shouldShow = false;
+
+                // check the field to see if the dependency field has a value
+                // if it does have a value, then we'll assume we should show
+                var child = this.childrenByPropertyId[dependency];
+                if (child)
+                {
+                    if (!Alpaca.isValEmpty(child.data))
+                    {
+                        // if the data is actually a boolean false, then we make a special assumption
+                        // that this is the same as having no value (only applies to boolean fields)
+                        if (child.data === false)
+                        {
+                        }
+                        else
+                        {
+                            // otherwise, we assume that is has a valid and so we must now challenge to
+                            // assert that the value is invalid
+                            shouldShow = true;
+                        }
+                    }
+                }
+
                 var itemDependencySettings = this.childrenByPropertyId[propertyId].options.dependencies;
                 if (itemDependencySettings) {
 
