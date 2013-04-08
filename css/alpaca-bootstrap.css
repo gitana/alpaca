@@ -69,3 +69,9 @@ DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu P
 {
     font-size: 1em;
 }
+
+.tt-suggestion.tt-is-under-cursor
+{
+    background-color: #ccc;
+    color: #333;
+}
