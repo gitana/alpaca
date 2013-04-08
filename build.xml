@@ -278,6 +278,7 @@
                 <include name="jquerymobile/**/*"/>
                 <include name="requirejs/**/*"/>
                 <include name="ace/**/*"/>
+                <include name="typeahead/**/*"/>
             </fileset>
         </copy>
 

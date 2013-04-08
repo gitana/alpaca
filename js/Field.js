@@ -32,6 +32,8 @@
 
             // parent
             this.parent = null;
+
+            // config
             this.data = data;
             this.options = options;
             this.schema = schema;
@@ -420,7 +422,7 @@
                 if (this.getEl().attr("id") === null) {
                     this.getEl().attr("id", this.getId() + "-field-outer");
                 }
-                if (this.getEl().attr("alpaca-field-id") === null) {
+                if (Alpaca.isEmpty(this.getEl().attr("alpaca-field-id"))) {
                     this.getEl().attr("alpaca-field-id", this.getId());
                 }
                 // optional
@@ -963,9 +965,14 @@
          * Shows the field.
          */
         show: function() {
-            if (this.options && this.options.hidden) {
+            if (this.options && this.options.hidden)
+            {
+                // if the hidden option is on, we're always hidden
                 return;
-            } else {
+            }
+            else
+            {
+                // show the field
                 this.getEl().css({
                     "display": ""
                 });
@@ -975,10 +982,19 @@
         /**
          * Hides the field.
          */
-        hide: function() {
+        hide: function()
+        {
             this.getEl().css({
                 "display": "none"
             });
+        },
+
+        isVisible: function() {
+            return !this.isHidden();
+        },
+
+        isHidden: function() {
+            return "none" == this.getEl().css("display");
         },
 
         /**
@@ -997,7 +1013,7 @@
             this.initializing = true;
 
 
-            if (this.callback !== null) {
+            if (!Alpaca.isEmpty(this.callback)) {
                 this.callback(this, this.renderedCallback);
             } else {
                 this.render(this.renderedCallback);

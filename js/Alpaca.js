@@ -1578,7 +1578,7 @@
                 renderedCallback = field.view.postRender;
             }
 
-            if (callback !== null) {
+            if (!Alpaca.isEmpty(callback)) {
                 callback(field, renderedCallback);
             } else {
                 field.render(renderedCallback);

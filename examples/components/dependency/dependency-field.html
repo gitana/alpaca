@@ -72,15 +72,20 @@
             <div class="container_12">
                 <div class="widget">
                     <div class="widget-body">
-            <div class='grid_12 alpaca-example-header' id='dependency-field' alpaca-types=''>
-                <h1>Dependency Fields</h1>
-            </div>
-            <div class='grid_12 alpaca-example-case'>
-                    <h3>Ice Cream Picker Field: </h3>
-					<h4>Field dependency through schema dependency properties.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
+
+                        <div class='grid_12 alpaca-example-header' id='dependency-field' alpaca-types=''>
+                            <h1>Dependency Fields</h1>
+                        </div>
+                        <div class='grid_12 alpaca-example-case'>
+
+                            <!-- example #1 -->
+                            <h2>Example #1</h2>
+                            <p>
+                                This example shows how to set up a single dependent field.  The <code>icecream</code>
+                                field only renders when the user specifies that they are a lover of ice cream.
+                            </p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
 $(function() {
     $("#field1").alpaca({
         "data": {},
@@ -99,18 +104,55 @@ $(function() {
                     "type": "String",
                     "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
                     "dependencies": "fan"
-                },
-                "topping": {
-                    "title": "Favorite Topping",
-                    "type": "String",
-                    "enum": ["Marshmelllow", "Chocolate Chip", "Caramel", "Cookie Dough"],
-                    "dependencies": ["icecream"]
                 }
             }
         }
     });
 });
-                    </script>
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Example #2</h2>
+                            <p>
+                                This example introduces a second dependency.  If the user specifies the flavour of ice
+                                cream they prefer, they are then additionally asked for the kind of topping they would prefer.
+                                This demonstrates chained-dependencies.  By unselecting the first check box, all downstream
+                                dependent fields are hidden and removed.
+                            </p>
+                            <div id="field2"></div>
+                            <script type="text/javascript" id="field2-script">
+                                $(function() {
+                                    $("#field2").alpaca({
+                                        "data": {},
+                                        "schema": {
+                                            "title": "Ice Cream Picker",
+                                            "description": "Select Your Favorite Ice Cream",
+                                            "type": "object",
+                                            "properties": {
+                                                "fan": {
+                                                    "title": "Alpaca Ice Cream Lover?",
+                                                    "type": "boolean",
+                                                    "description": "Say YES If You Are Truly An Alpaca Ice Cream Lover."
+                                                },
+                                                "icecream": {
+                                                    "title": "Favorite Ice Cream",
+                                                    "type": "String",
+                                                    "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
+                                                    "dependencies": "fan"
+                                                },
+                                                "topping": {
+                                                    "title": "Favorite Topping",
+                                                    "type": "String",
+                                                    "enum": ["Marshmelllow", "Chocolate Chip", "Caramel", "Cookie Dough"],
+                                                    "dependencies": ["icecream"]
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

@@ -72,6 +72,20 @@
                 if ( this.field && this.field.mask && this.options.maskString) {
                     this.field.mask(this.options.maskString);
                 }
+
+                // typeahead?
+                if ( this.field && this.field.typeahead && this.options.typeahead) {
+
+                    var tconfig = {};
+                    Alpaca.mergeObject(tconfig, this.options.typeahead);
+
+                    if (!tconfig.name) {
+                        tconfig.name = this.getId();
+                    }
+
+                    $(this.field).typeahead(tconfig);
+                }
+
                 if (this.fieldContainer) {
                     this.fieldContainer.addClass('alpaca-controlfield-text');
                 }
@@ -279,6 +293,10 @@
                         "title": "Field Placeholder",
                         "description": "Field placeholder.",
                         "type": "string"
+                    },
+                    "typeahead": {
+                        "title": "Provides auto-complete / typeahead configuration for the text field.",
+                        "description": "Provides configuration for the $.typeahead plugin if it is available.  For full configuration options, see: https://github.com/twitter/typeahead.js"
                     }
                 }
             });
@@ -297,6 +315,9 @@
                     "maskString": {
                         "helper": "a - an alpha character;9 - a numeric character;* - an alphanumeric character",
                         "type": "text"
+                    },
+                    "typeahead": {
+                        "type": "object"
                     }
                 }
             });

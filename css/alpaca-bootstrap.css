@@ -54,3 +54,18 @@
     left: 0;
     right:0
 }
+
+DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu
+{
+    background-color: white;
+    border: 1px #777 solid;
+    padding-left: 10px;
+    margin-left: 2px;
+    padding-right: 10px;
+    color: #ccc;
+}
+
+DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu P
+{
+    font-size: 1em;
+}

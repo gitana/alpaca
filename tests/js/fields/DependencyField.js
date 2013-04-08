@@ -49,14 +49,16 @@
                 equal(fieldContainerElem2.css('display'), 'none', 'Input field for topping property hidden.');
                 fieldElem0.change(function() {
                     fieldContainerElem1 = $('.alpaca-fieldset-items-container > div:eq(1) > span');
-                    notEqual(fieldContainerElem1.css('display'), 'none', 'Input field for icecream property shown after after checkbox for fan property is checked.');
+                    notEqual(fieldContainerElem1.css('display'), 'none', 'Input field for icecream property shown after checkbox for fan property is checked.');
                     fieldElem1.change(function() {
                         fieldContainerElem2 = $('.alpaca-fieldset-items-container > div:eq(2) > span');
-                        notEqual(fieldContainerElem2.css('display'), 'none', 'Input field for topping property shown after after select for icecream property is selected.');
+                        notEqual(fieldContainerElem2.css('display'), 'none', 'Input field for topping property shown after select for icecream property is selected.');
                     });
                     fieldElem1.val( 'Vanilla' ).attr('selected',true);
                     fieldElem1.change();
                 });
+                // click the "fan" checkbox, causes "change" event to handle
+                fieldElem0.attr("checked", true);
                 fieldElem0.change();
                 start();
             }
