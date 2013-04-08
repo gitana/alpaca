@@ -77,6 +77,9 @@
          * @see Alpaca.ControlField#postRender
          */
         postRender: function() {
+
+            var self = this;
+
             this.base();
 
             if (this.field)
@@ -90,13 +93,26 @@
                 if ( this.field && this.field.typeahead && this.options.typeahead) {
 
                     var tconfig = {};
-                    Alpaca.mergeObject(tconfig, this.options.typeahead);
+                    for (var k in this.options.typeahead) {
+                        tconfig[k] = this.options.typeahead[k];
+                    }
 
                     if (!tconfig.name) {
                         tconfig.name = this.getId();
                     }
 
                     $(this.field).typeahead(tconfig);
+
+                    // listen for "autocompleted" event and set the value of the field
+                    $(this.field).on("typeahead:autocompleted", function(event, datum) {
+                        self.setValue(datum.value);
+                    });
+
+                    // listen for "selected" event and set the value of the field
+                    $(this.field).on("typeahead:selected", function(event, datum) {
+                        self.setValue(datum.value);
+                    });
+
                 }
 
                 if (this.fieldContainer) {
