@@ -37,7 +37,20 @@
 
             this.controlFieldTemplateDescriptor = this.view.getTemplateDescriptor("controlFieldText");
         },
-        
+
+        /**
+         * @see Alpaca.Field#destroy
+         */
+        destroy: function() {
+
+            this.base();
+
+            // clean up typeahead
+            if ( this.field && this.field.typeahead && this.options.typeahead) {
+                $(this.field).typeahead('destroy');
+            }
+        },
+
         /**
          * @see Alpaca.ControlField#renderField
          */

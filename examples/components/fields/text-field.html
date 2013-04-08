@@ -261,6 +261,52 @@ $(function() {
                                     });
                                 });
                             </script>
+
+                            <!-- example 8 -->
+                            <h2>Example 8: </h2>
+                            <p>
+                                This example uses $.typeahead auto-completion with a remote data source.  Auto-completion
+                                is provided for names of cloud computing companies.  It also uses Hogan.js to assist
+                                with template driven rendering of the drop-down list.
+                            </p>
+                            <p>
+                                The remote values are retrieved from a PHP script that accepts the input text as a query
+                                parameter.  It uses this to perform a simple comparison.  In your own script, you'll likely
+                                query a database or connect to a web service to produce matches.
+                            </p>
+                            <script src="http://twitter.github.io/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
+                            <div id="field8"></div>
+                            <script type="text/javascript" id="field8-script">
+
+                                $(function() {
+
+                                    $("#field8").alpaca({
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "options": {
+                                            "type": "text",
+                                            "label": "Company Name",
+                                            "helper": "Select the name of a cloud computing company",
+                                            "typeahead": {
+                                                "name": "companies",
+                                                "remote": {
+                                                    "url": "../../endpoints/typeahead-sample.php?q=%QUERY",
+                                                    "filter": function(response){
+                                                        return response;
+                                                    },
+                                                    "cache": false
+                                                },
+                                                "header": "<h4>List of companies</h4>",
+                                                "footer": "<h4>Please select a company</h4>",
+                                                "engine": Hogan,
+                                                "template": "<p style='color: blue'>{{name}}</p>"
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>
