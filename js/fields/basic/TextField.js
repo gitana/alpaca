@@ -113,6 +113,20 @@
                         self.setValue(datum.value);
                     });
 
+                    // custom events
+                    if (tconfig.events)
+                    {
+                        if (tconfig.events.autocompleted) {
+                            $(this.field).on("typeahead:autocompleted", function(event, datum) {
+                                tconfig.events.autocompleted(event, datum);
+                            });
+                        }
+                        if (tconfig.events.selected) {
+                            $(this.field).on("typeahead:selected", function(event, datum) {
+                                tconfig.events.selected(event, datum);
+                            });
+                        }
+                    }
                 }
 
                 if (this.fieldContainer) {
