@@ -91,7 +91,7 @@
         <file name="views/BootstrapView.js"/>
         <file name="views/JQueryUIView.js"/>
 
-        <file name="CompiledView.js"/>
+        <file name="NormalizedView.js"/>
         <file name="RuntimeView.js"/>
 
         <file name="Field.js"/>
@@ -151,7 +151,7 @@
                 <file name="views/BootstrapView.js"/>
                 <file name="views/JQueryUIView.js"/>
 
-                <file name="CompiledView.js"/>
+                <file name="NomalizedView.js"/>
                 <file name="RuntimeView.js"/>
 
                 <file name="Field.js"/>
@@ -323,7 +323,7 @@
                 <file name="views/BootstrapView.js"/>
                 <file name="views/JQueryUIView.js"/>
 
-                <file name="CompiledView.js"/>
+                <file name="NormalizedView.js"/>
                 <file name="RuntimeView.js"/>
 
                 <file name="Field.js"/>

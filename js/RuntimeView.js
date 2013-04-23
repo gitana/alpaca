@@ -43,19 +43,19 @@
                 return;
             }
 
-            // the compiled view
-            var compiledView = Alpaca.getCompiledView(viewId);
-            if (!compiledView)
+            // the normalized view
+            var normalizedView = Alpaca.getNormalizedView(viewId);
+            if (!normalizedView)
             {
-                Alpaca.logError("Runtime view for view id: " + viewId + " could not find a compiled view");
-                throw new Error("Runtime view for view id: " + viewId + " could not find a compiled view");
+                Alpaca.logError("Runtime view for view id: " + viewId + " could not find a normalized view");
+                throw new Error("Runtime view for view id: " + viewId + " could not find a normalized view");
             }
 
             // copy compiled properties into this object
-            for (var k in compiledView)
+            for (var k in normalizedView)
             {
-                if (compiledView.hasOwnProperty(k)) {
-                    this[k] = compiledView[k];
+                if (normalizedView.hasOwnProperty(k)) {
+                    this[k] = normalizedView[k];
                 }
             }
         },

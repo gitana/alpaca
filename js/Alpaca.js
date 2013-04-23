@@ -632,14 +632,14 @@
         },
 
         /**
-         * Retrieves a compiled view by view id.
+         * Retrieves a normalized view by view id.
          *
          * @param viewId
          * @return {*}
          */
-        getCompiledView: function(viewId)
+        getNormalizedView: function(viewId)
         {
-            return this.compiledViews[viewId];
+            return this.normalizedViews[viewId];
         },
 
         /**
@@ -650,13 +650,13 @@
          *
          * @returns {String} the view id
          */
-        lookupCompiledView: function(ui, type)
+        lookupNormalizedView: function(ui, type)
         {
             var theViewId = null;
 
-            for (var viewId in this.compiledViews)
+            for (var viewId in this.normalizedViews)
             {
-                var view = this.compiledViews[viewId];
+                var view = this.normalizedViews[viewId];
 
                 if (view.ui == ui && view.type == type)
                 {
@@ -1202,12 +1202,17 @@
          */
         mergeObject : function(target, source) {
 
-            if (source && target)
-            {
-                return this.mergeObject2(source, target);
+            if (!target) {
+                target = {};
             }
 
-            return null;
+            if (!source) {
+                source = {};
+            }
+
+            this.mergeObject2(source, target);
+
+            return target;
         },
 
         mergeObject2: function(source, target)
@@ -1524,7 +1529,7 @@
                     Alpaca.logDebug("No view provided but found request for UI: " + ui + " and type: " + type);
 
                     // see if we can auto-select a view
-                    view = this.lookupCompiledView(ui, type);
+                    view = this.lookupNormalizedView(ui, type);
                     if (view) {
                         Alpaca.logDebug("Found view: " + view);
                     } else {
@@ -1552,7 +1557,7 @@
             // debugging: if the view isn't available, we want to report it right away
             if (Alpaca.isString(view))
             {
-                if (!this.compiledViews[view])
+                if (!this.normalizedViews[view])
                 {
                     Alpaca.logError("The desired view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.");
                     throw new Error("The desired view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.");
@@ -1680,40 +1685,23 @@
                 "successCount": 0
             };
 
-            var finalCallback = function()
+            var finalCallback = function(normalizedViews)
             {
                 //var t2 = new Date().getTime();
-                //console.log("Compilation Exited in: " + (t2-t1)+ " ms");
+                //console.log("Compilation Exited with " + report.errors.length + " errors in: " + (t2-t1)+ " ms");
 
-                cb(report);
-            };
+                if (report.errors.length == 0)
+                {
+                    // success!
 
-
-            var normalizeViews = function()
-            {
-                // compile all of the views
-                // the result of this compile step is a normalize view (called a CompiledView)
-                if (!Alpaca.compiledViews) {
-                    Alpaca.compiledViews = {};
-                }
-                self.compiledViews = Alpaca.compiledViews;
-                for (var viewId in self.views) {
-                    if (!self.compiledViews[viewId])
+                    // copy our views into the normalized set
+                    for (var k in normalizedViews)
                     {
-                        var compiledView = new Alpaca.CompiledView(viewId);
-                        if (compiledView.compile())
-                        {
-                            self.compiledViews[viewId] = compiledView;
-                        }
-                        else
-                        {
-                            Alpaca.logError("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
-                            throw new Error("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
-                        }
+                        self.normalizedViews[k] = normalizedViews[k];
                     }
                 }
 
-                finalCallback();
+                cb(report);
             };
 
 
@@ -1728,7 +1716,7 @@
             // and all templates that need to be compiled
             // compile each and store in a "compiledTemplates" object
 
-            var viewCompileCallback = function(err, view, compiledTemplateId, cacheKey, totalCalls)
+            var viewCompileCallback = function(normalizedViews, err, view, compiledTemplateId, cacheKey, totalCalls)
             {
                 var viewId = view.id;
 
@@ -1754,19 +1742,11 @@
                 {
                     //var t2 = new Date().getTime();
                     //console.log("Compilation took: " + (t2-t1) + " ms");
-                    if (report.errors.length > 0)
-                    {
-                        finalCallback();
-                    }
-                    else
-                    {
-                        // looks good, so now proceed to normalizing views
-                        normalizeViews();
-                    }
+                    finalCallback(normalizedViews);
                 }
             };
 
-            var compileViewTemplate = function(view, compiledTemplateId, template, totalCalls)
+            var compileViewTemplate = function(normalizedViews, view, compiledTemplateId, template, totalCalls)
             {
                 var viewId = view.id;
 
@@ -1788,99 +1768,159 @@
                 {
                     Alpaca.logError("Cannot find template engine for type: " + type);
                     var err = new Error("Cannot find template engine for type: " + type);
-                    viewCompileCallback(err, view, compiledTemplateId, cacheKey, totalCalls);
+                    viewCompileCallback(normalizedViews, err, view, compiledTemplateId, cacheKey, totalCalls);
                 }
 
+                // the desired new cache key
                 var cacheKey = viewId + "_" + compiledTemplateId;
-                if (!engine.isCached(cacheKey))
+                if (engine.isCached(cacheKey))
                 {
-                    // compile the template
-                    engine.compile(cacheKey, template, function(err, data) {
-                        viewCompileCallback(err, view, compiledTemplateId, cacheKey, totalCalls);
-                    });
+                    // already compiled, so skip
+                    viewCompileCallback(normalizedViews, null, view, compiledTemplateId, cacheKey, totalCalls);
                 }
                 else
                 {
-                    // already compiled, so skip
-                    viewCompileCallback(null, view, compiledTemplateId, cacheKey, totalCalls);
+                    // check if "template" is actually a reference to another template
+                    // if so, we can reuse the previously compiled fellow
+
+                    var previouslyCompiledTemplateCacheKey = view.compiledTemplates["view-" + template];
+                    if (previouslyCompiledTemplateCacheKey)
+                    {
+                        // this entry is pointing to a previously compiled template
+                        // fetch html and compile again
+                        template = Alpaca.TemplateCache[previouslyCompiledTemplateCacheKey];
+                    }
+
+                    // compile the template
+                    engine.compile(cacheKey, template, function(err, data) {
+                        viewCompileCallback(normalizedViews, err, view, compiledTemplateId, cacheKey, totalCalls);
+                    });
+
                 }
             };
 
-            // walk through every match and store in an array of functions we'll call
-            var functionArray = [];
-            for (var viewId in this.views)
+            var compileTemplates = function(normalizedViews)
             {
-                var view = this.views[viewId];
-                view.compiledTemplates = {};
-
-                // view templates
-                if (view.templates)
+                // walk through all normalized views that we're interested in and compile the templates within
+                var functionArray = [];
+                for (var viewId in normalizedViews)
                 {
-                    for (var templateId in view.templates)
-                    {
-                        var template = view.templates[templateId];
+                    var view = normalizedViews[viewId];
+                    view.compiledTemplates = {};
 
-                        functionArray.push(function(view, compiledTemplateId, template) {
+                    // view templates
+                    if (view.templates)
+                    {
+                        for (var templateId in view.templates)
+                        {
+                            var template = view.templates[templateId];
+
+                            functionArray.push(function(normalizedViews, view, compiledTemplateId, template) {
+                                return function(totalCalls) {
+                                    compileViewTemplate(normalizedViews, view, compiledTemplateId, template, totalCalls);
+                                };
+                            }(normalizedViews, view, "view-" + templateId, template));
+                        }
+                    }
+
+                    // field level templates
+                    if (view.fields)
+                    {
+                        for (var path in view.fields)
+                        {
+                            if (view.fields[path].templates)
+                            {
+                                for (var templateId in view.fields[path].templates)
+                                {
+                                    var template = view.fields[path].templates[templateId];
+
+                                    functionArray.push(function(normalizedViews, view, compiledTemplateId, template) {
+                                        return function(totalCalls) {
+                                            compileViewTemplate(normalizedViews, view, compiledTemplateId, template, totalCalls);
+                                        };
+                                    }(normalizedViews, view, "field-" + path + "-" + templateId, template));
+                                }
+                            }
+                        }
+                    }
+
+                    // layout template
+                    if (view.layout && view.layout.template)
+                    {
+                        var template = view.layout.template;
+
+                        functionArray.push(function(normalizedViews, view, compiledTemplateId, template) {
                             return function(totalCalls) {
-                                compileViewTemplate(view, compiledTemplateId, template, totalCalls);
+                                compileViewTemplate(normalizedViews, view, compiledTemplateId, template, totalCalls);
                             };
-                        }(view, "view-" + templateId, template));
+                        }(normalizedViews, view, "layoutTemplate", template));
+                    }
+
+                    // global template
+                    if (view.globalTemplate)
+                    {
+                        var template = view.globalTemplate;
+
+                        functionArray.push(function(normalizedViews, view, compiledTemplateId, template) {
+                            return function(totalCalls) {
+                                compileViewTemplate(normalizedViews, view, compiledTemplateId, template, totalCalls);
+                            };
+                        }(normalizedViews, view, "globalTemplate", template));
                     }
                 }
 
-                // field level templates
-                if (view.fields)
+                // now invoke all of the functions
+                // this tells each template to compile
+                var totalCalls = functionArray.length;
+                for (var i = 0; i < functionArray.length; i++)
                 {
-                    for (var path in view.fields)
-                    {
-                        if (view.fields[path].templates)
-                        {
-                            for (var templateId in view.fields[path].templates)
-                            {
-                                var template = view.fields[path].templates[templateId];
+                    functionArray[i](totalCalls);
+                }
+            };
 
-                                functionArray.push(function(view, compiledTemplateId, template) {
-                                    return function(totalCalls) {
-                                        compileViewTemplate(view, compiledTemplateId, template, totalCalls);
-                                    };
-                                }(view, "field-" + path + "-" + templateId, template));
-                            }
+            var normalizeViews = function()
+            {
+                // the views that we're going to normalized
+                var normalizedViews = {};
+                var normalizedViewCount = 0;
+
+                // some initial self-assurance to make sure we have the normalizedViews map set up
+                if (!Alpaca.normalizedViews) {
+                    Alpaca.normalizedViews = {};
+                }
+                self.normalizedViews = Alpaca.normalizedViews;
+
+                // walk through all of our views
+                for (var viewId in self.views)
+                {
+                    // if the view is already normalized on the Alpaca global, we do not bother
+                    if (!Alpaca.normalizedViews[viewId])
+                    {
+                        var normalizedView = new Alpaca.NormalizedView(viewId);
+                        if (normalizedView.normalize())
+                        {
+                            normalizedViews[viewId] = normalizedView;
+                            normalizedViewCount++;
+                        }
+                        else
+                        {
+                            Alpaca.logError("View normalization failed, cannot initialize Alpaca.  Please check the error logs.");
+                            throw new Error("View normalization failed, cannot initialize Alpaca.  Please check the error logs.");
                         }
                     }
                 }
 
-                // layout template
-                if (view.layout && view.layout.template)
+                if (normalizedViewCount > 0)
                 {
-                    var template = view.layout.template;
-
-                    functionArray.push(function(view, compiledTemplateId, template) {
-                        return function(totalCalls) {
-                            compileViewTemplate(view, compiledTemplateId, template, totalCalls);
-                        };
-                    }(view, "layoutTemplate", template));
+                    compileTemplates(normalizedViews);
                 }
-
-                // global template
-                if (view.globalTemplate)
+                else
                 {
-                    var template = view.globalTemplate;
-
-                    functionArray.push(function(view, compiledTemplateId, template) {
-                        return function(totalCalls) {
-                            compileViewTemplate(view, compiledTemplateId, template, totalCalls);
-                        };
-                    }(view, "globalTemplate", template));
+                    finalCallback(normalizedViews);
                 }
-            }
+            };
 
-            // now invoke all of the functions
-            // this tells each template to compile
-            var totalCalls = functionArray.length;
-            for (var i = 0; i < functionArray.length; i++)
-            {
-                functionArray[i](totalCalls);
-            }
+            normalizeViews();
         },
 
         /**
@@ -2028,7 +2068,7 @@
         tmpl: function(view, templateDescriptor, model)
         {
             if (Alpaca.isString(view)) {
-                view = this.compiledViews[view];
+                view = this.normalizedViews[view];
             }
 
             var engineType = templateDescriptor.engine.type;

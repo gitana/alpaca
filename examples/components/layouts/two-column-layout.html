@@ -40,6 +40,8 @@
         <script type="text/javascript" src="../../lib/tweet/jquery.tweet.js"></script>
         <link type="text/css" href="../../lib/tweet/jquery.tweet.css" rel="stylesheet"/>
 
+        <script type="text/javascript" src="../../lib/jquery.colorbox.js"></script>
+
         <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
         <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
@@ -85,12 +87,23 @@
                 <h1>Two-Column Layout</h1>
             </div>
             <div class='grid_12 alpaca-example-case'>
-                    <h3>Example 1: </h3>
-                    <h4>Field to template region bindings are defined by the templates properties of the view parameter. 
-                        This example loades <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a href="./customer-profile-data.json" target="_source">data</a>, <a href="./customer-profile-schema.json" target="_source">schema</a> and <a href="./customer-profile-options.json" target="_source">options</a> parameters through ajax calls.</h4>
-                    <div id="field1"  style="min-width:1200px;">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
+
+                <h2>Example 1: </h2>
+                <p>
+                    This example defines an inline custom view that extends <code>VIEW_WEB_EDIT_LIST</code>.  It tells the view to use
+                    a specific layout template (<code>two-column-layout-template.html</code>).  The <code>bindings</code> block then tells
+                    the view where to place field elements within the template.
+                </p>
+                <p>
+                    The layout template file (<a href="./two-column-layout-template.html" target="_source">two-column-layout-template.html</a>)
+                    has two <code>DIV</code> blocks with IDs <code>leftcolumn</code> and <code>rightcolumn</code>.  The properties are placed
+                    into each column as defined by the <code>bindings</code> block.
+                </p>
+                <p>
+                    This example loads <a href="./customer-profile-data.json" target="_source">data</a>, <a href="./customer-profile-schema.json" target="_source">schema</a> and <a href="./customer-profile-options.json" target="_source">options</a> parameters through ajax calls.
+                </p>
+                <div id="field1"  style="min-width:1000px; background-color: white; border: 1px black solid; padding: 10px; "></div>
+                <script type="text/javascript" id="field1-script">
 $(function() {
     $("#field1").alpaca({
         "data": "./customer-profile-data.json",
@@ -114,14 +127,16 @@ $(function() {
         }
     });
 });
-                    </script>
+                </script>
 
-                    <h3>Example 2: </h3>
-                    <h4>Field to template region bindings are defined by the templates properties of the view parameter.
-                        This example loades <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a href="./customer-profile-data.json" target="_source">data</a>, <a href="./customer-profile-schema.json" target="_source">schema</a> and <a href="./customer-profile-options.json" target="_source">options</a> parameters through ajax calls.</h4>
-                    <div id="field2"  style="min-width:1200px;">
-                    </div>
-                    <script type="text/javascript" id="field2-script">
+                <h2>Example 2:</h2>
+                <p>
+                    This example provides the same functionality as Example #1 and essentially works the same way except that it
+                    defines the view differently.  The field bindings are the same.  The difference is that this view extends one of
+                    the Alpaca default views to provide two-column layout.
+                </p>
+                <div id="field2"  style="min-width:1000px; background-color: white; border: 1px black solid; padding: 10px; "></div>
+                <script type="text/javascript" id="field2-script">
 $(function() {
     $("#field2").alpaca({
         "data": "./customer-profile-data.json",
@@ -144,36 +159,62 @@ $(function() {
         }
     });
 });
-                    </script>
-                    <h3>Example 3: </h3>
-                    <h4>Field to template region bindings are defined by the templates properties of the view parameter.
-                        This example loades <a href="./two-column-layout-template.html" target="_source">layout template</a>, <a href="./customer-profile-data.json" target="_source">data</a>, <a href="./customer-profile-schema.json" target="_source">schema</a> and <a href="./customer-profile-options.json" target="_source">options</a> parameters through ajax calls.</h4>
-                    <div id="field3" style="min-width:1200px;">
-                    </div>
-                    <script type="text/javascript" id="field3-script">
+                </script>
+
+                <h2>Example 3:</h2>
+                <p>
+                    This example provides a three-column layout for properties.  As in Example #1, the layout template is
+                    provided and the fields are bound to specific <code>DIV</code> elements within the layout file using the
+                    <code>bindings</code> properties.
+                </p>
+                <p>
+                    In this case, we provide the template inline (as a string).  We could provide this string as either the
+                    view's <code>layout.template</code> property or as a property of our choosing under <code>templates</code>.
+                </p>
+                <p>
+                    Here we take the latter path.  We define a general purpose view template called <code>threeColumnGridLayout</code>
+                    and then reference it from our view's <code>layout.template</code> property.  The Alpaca view compiler discovers this
+                    and reuses the template.
+                </p>
+                <div id="field3" style="min-width:1000px; background-color: white; border: 1px black solid; padding: 10px; "></div>
+                <script type="text/javascript" id="field3-script">
 $(function() {
+
     $("#field3").alpaca({
         "data": "./customer-profile-data.json",
         "schema": "./customer-profile-schema.json",
         "options": "./customer-profile-options.json",
         "view": {
-            "parent": "VIEW_WEB_EDIT_LAYOUT_TWO_COLUMN",
+            "parent": "VIEW_WEB_EDIT",
             "layout": {
+                "template": "threeColumnGridLayout",
                 "bindings": {
-                    "name": "leftcolumn",
-                    "age": "leftcolumn",
-                    "gender": "leftcolumn",
-                    "member": "leftcolumn",
-                    "photo": "leftcolumn",
-                    "phone": "leftcolumn",
-                    "icecream": "leftcolumn",
-                    "address": "rightcolumn"
+                    "name": "column-1",
+                    "age": "column-1",
+                    "gender": "column-2",
+                    "member": "column-2",
+                    "photo": "column-2",
+                    "phone": "column-2",
+                    "icecream": "column-3",
+                    "address": "column-3"
                 }
+            },
+            "templates": {
+                "threeColumnGridLayout": '<div class="filter-content">'
+                        + '{{if options.label}}<h2>${options.label}</h2><span></span>{{/if}}'
+                        + '{{if options.helper}}<p>${options.helper}</p>{{/if}}'
+                        + '<div id="column-1" class="grid_6"> </div>'
+                        + '<div id="column-2" class="grid_6"> </div>'
+                        + '<div id="column-3" class="grid_12"> </div>'
+                        + '<div class="clear"></div>'
+                        + '</div>'
             }
         }
     });
 });
-                    </script>
+                </script>
+
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

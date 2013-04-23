@@ -562,9 +562,9 @@ $(function() {
             var schemaDocumentation = $('<div class="alpaca-schema"></div>');
             $('.alpaca-example-case').prepend(schemaDocumentation);
             //schemaDocumentation.append('<h1>' + schemaOfSchema['title'] + '</h1>')
-            schemaDocumentation.append('<h4>' + schemaOfSchema['description'] + '</h4>');
-            schemaDocumentation.append('<div>[<a href="#schema">Schema</a>] [<a href="#options">Options</a>] [<a href="#examples">Examples</a>]</div>')
-            schemaDocumentation.append('<h2><a name="schema">Schema</a></h2>')
+            schemaDocumentation.append('<h2>' + schemaOfSchema['description'] + '</h2>');
+            schemaDocumentation.append('<div>[<a href="#schema">Schema</a>] [<a href="#options">Options</a>] [<a href="#examples">Examples</a>]</div>');
+            schemaDocumentation.append('<h3><a name="schema">Schema</a></h3>');
             var strSchemaFields = "<table class='table'><caption>List of Supported Schema Properties</caption>";
             strSchemaFields += getParameters(schemaOfSchema.properties, "Property");
             strSchemaFields += "</table>";
@@ -574,7 +574,7 @@ $(function() {
             //
             var optionsDocumentation = $('<div class="alpaca-options"></div>');
             schemaDocumentation.after(optionsDocumentation);
-            optionsDocumentation.append('<h2><a name="options">Options</a></h2>')
+            optionsDocumentation.append('<h3><a name="options">Options</a></h3>');
             var strOptionsFields = "<table class='table'><caption>List of Supported Options Fields</caption>";
             strOptionsFields += getParameters(schemaOfOptions.properties, "Field");
             strOptionsFields += "</table>";

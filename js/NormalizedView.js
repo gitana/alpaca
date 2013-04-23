@@ -2,18 +2,18 @@
 
     var Alpaca = $.alpaca;
 
-    Alpaca.CompiledView = Base.extend(
+    Alpaca.NormalizedView = Base.extend(
     /**
-     * @lends Alpaca.CompiledView.prototype
+     * @lends Alpaca.NormalizedView.prototype
      */
     {
         /**
-         * Once all of the Alpaca views are registered with the framework, each is compiled so that parent-chain
+         * Once all of the Alpaca views are registered with the framework, each is normalized so that parent-chain
          * references and overrides are normalized into a single, fast lookup object.
          *
          * @constructs
          *
-         * @class Compiled view.
+         * @class Normalized view.
          *
          * @param {String} the view id
          */
@@ -22,9 +22,9 @@
         },
 
         /**
-         * Compilation occurs once per view upon startup of Alpaca.
+         * Normalization occurs once per view upon startup of Alpaca.
          */
-        compile: function()
+        normalize: function()
         {
             // load the view object
             var viewObject  = Alpaca.views[this.id];
@@ -88,7 +88,6 @@
                 }
             };
 
-            /*
             var mergeMap = function(target, source, propertyId)
             {
                 var sourceMap = source[propertyId];
@@ -99,22 +98,6 @@
                         target[propertyId] = {};
                     }
 
-                    Alpaca.mergeObject(target[propertyId], JSON.parse(JSON.stringify(sourceMap)));
-                }
-            };
-            */
-
-            var mergeMap = function(target, source, propertyId)
-            {
-                var sourceMap = source[propertyId];
-                if (sourceMap)
-                {
-                    if (!target[propertyId])
-                    {
-                        target[propertyId] = {};
-                    }
-
-                    //Alpaca.merge(sourceMap, target[propertyId]);
                     Alpaca.mergeObject2(sourceMap, target[propertyId]);
                 }
             };

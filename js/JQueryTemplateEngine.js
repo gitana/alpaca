@@ -28,6 +28,11 @@
 
             Alpaca.TemplateCache[cacheKey] = html;
 
+            if (html && html.indexOf("twoColumnLayout") > -1)
+            {
+                debugger;
+            }
+
             callback();
         },
 

@@ -67,6 +67,9 @@
                 var el = $(this.fieldContainer).find(".control-field-editor-el")[0];
 
                 // ace must be included ahead of time
+                if (!ace && window.ace) {
+                    ace = window.ace;
+                }
                 this.editor = ace.edit(el);
 
                 // theme
