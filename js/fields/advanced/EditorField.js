@@ -88,6 +88,7 @@
 
                 this.editor.renderer.setHScrollBarAlwaysVisible(false);
                 //this.editor.renderer.setVScrollBarAlwaysVisible(false); // not implemented
+                this.editor.setShowPrintMargin(false);
 
                 // set data onto editor
                 this.editor.setValue(this.data);
