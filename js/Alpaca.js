@@ -187,8 +187,9 @@
                 {
                     // pick first element in form
                     if (control.children && control.children.length > 0) {
-                        if (control.children.field && control.children.field.length > 0) {
-                            $(control.children[0].field[0]).focus();
+                        if (control.children[0].field && control.children[0].field[0]) {
+                            //$(control.children[0].field[0]).focus();
+                            $(control.children[0]).focus();
                         }
                     }
                 }
@@ -196,8 +197,9 @@
                 {
                     // pick a named control
                     var child = control.getControlByPath(options.focus);
-                    if (child && child.field && child.field.length > 0) {
-                        $(child.field[0]).focus();
+                    if (child && child.field) {
+                        //$(child.field[0]).focus();
+                        $(child).focus();
                     }
                 }
             }
