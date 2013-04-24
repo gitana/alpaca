@@ -392,6 +392,10 @@
         /**
          * Produces a copy of the given JS value.
          *
+         * If the value is a simple array or a simple object, then a pure copy is produced.
+         *
+         * If it's a complex object or a function, then the reference is copied (i.e. not truly a copy).
+         *
          * @param thing
          * @return {*}
          */
@@ -401,10 +405,6 @@
             if (Alpaca.isArray(thing) || Alpaca.isObject(thing))
             {
                 copy = Alpaca.cloneObject(thing);
-            }
-            else
-            {
-                copy = thing;
             }
 
             return copy;
@@ -1304,11 +1304,13 @@
         cloneObject : function(obj) {
             var clone;
 
-            if (Alpaca.isObject(obj)) {
+            // we only make clones of plain objects
+            // for prototyped objects, we make referentials
+            if (Alpaca.isPlainObject(obj)) {
                 clone = {};
                 for (var i in obj) {
                     if (obj.hasOwnProperty(i)) {
-                        if (Alpaca.isObject(obj[i]) || Alpaca.isArray(obj[i])) {
+                        if (Alpaca.isPlainObject(obj[i]) || Alpaca.isArray(obj[i])) {
                             clone[i] = Alpaca.cloneObject(obj[i]);
                         } else {
                             clone[i] = obj[i];
@@ -1318,7 +1320,7 @@
             } else if (Alpaca.isArray(obj)) {
                 clone = [];
                 for (var z = 0 ; z < obj.length ; z++) {
-                    if (Alpaca.isObject(obj[z]) || Alpaca.isArray(obj[z])) {
+                    if (Alpaca.isPlainObject(obj[z]) || Alpaca.isArray(obj[z])) {
                         clone.push(Alpaca.cloneObject(obj[z]));
                     } else {
                         clone.push(obj[z]);
