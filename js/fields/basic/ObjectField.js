@@ -1,4 +1,5 @@
 /*jshint -W004 */ // duplicate variables
+/*jshint -W083 */ // inline functions are used safely
 (function($) {
 
     var Alpaca = $.alpaca;

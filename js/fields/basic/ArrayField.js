@@ -1,3 +1,4 @@
+/*jshint -W083 */ // inline functions are used safely
 (function($) {
 
     var Alpaca = $.alpaca;
@@ -359,14 +360,13 @@
 
                     // Process all buttons
                     for (var i in buttonsDef) {
-                        (function() { // closure to prevent "def" leaking
-                            var def = buttonsDef[i];
+                        (function(def) { // closure to prevent "def" leaking
                             var el = toolbarElem.find('.alpaca-fieldset-array-item-toolbar-'+def.feature);
                             el.click(function(e) {return def.clickCallback(id, _this, e);});
                             if (_this.buttonBeautifier) {
                                 _this.buttonBeautifier.call(_this,el, def.icon);
                             }
-                        })();
+                        })(buttonsDef[i]);
                     }
 
                     if (this.options.toolbarSticky) {

@@ -441,11 +441,39 @@
                     $(':checkbox', this.getEl()).attr('disabled', 'disabled');
                 }
 
-                // Support for custom CSS class for the field
-                var fieldClass = this.options["fieldClass"];
-                if (fieldClass) {
-                    this.getEl().addClass(fieldClass);
-                }
+                // allow single or multiple field classes to be specified via the "fieldClass"
+                // or "fieldClasses" options
+                var applyFieldClass = function(el, thing)
+                {
+                    if (thing) {
+
+                        var i = 0;
+                        var tokens = null;
+
+                        if (Alpaca.isArray(thing)) {
+                            for (i = 0; i < thing.length; i++) {
+                                el.addClass(thing[i]);
+                            }
+                        }
+                        else {
+                            if (thing.indexOf(",") > -1) {
+                                tokens = thing.split(",");
+                                for (i = 0; i < tokens.length; i++) {
+                                    el.addClass(tokens[i]);
+                                }
+                            } else if (thing.indexOf(" ") > -1) {
+                                tokens = thing.split(" ");
+                                for (i = 0; i < tokens.length; i++) {
+                                    el.addClass(tokens[i]);
+                                }
+                            }
+                            else {
+                                el.addClass(thing);
+                            }
+                        }
+                    }
+                };
+                applyFieldClass(this.getEl(), this.options["fieldClass"]);
 
                 // Support for custom styles provided by custom view
                 var customStyles = this.view.getStyles();
@@ -1455,8 +1483,8 @@
                         "type": "string"
                     },
                     "fieldClass": {
-                        "title": "Style Class",
-                        "description": "Additional field style class.",
+                        "title": "CSS class",
+                        "description": "Specifies one or more CSS classes that should be applied to the dom element for this field once it is rendered.  Supports a single value, comma-delimited values, space-delimited values or values passed in as an array.",
                         "type": "string"
                     },
                     "hideInitValidationError" : {

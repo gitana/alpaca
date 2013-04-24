@@ -1,4 +1,5 @@
 /*jshint -W004 */ // duplicate variables
+/*jshint -W083 */ // inline functions are used safely
 /**
  * Alpaca forms engine for jQuery
  */
@@ -176,7 +177,7 @@
             options = {};
         }
         if (Alpaca.isUndefined(options.focus)) {
-            options.focus = true; // first element in form
+            options.focus = false;
         }
         var _renderedCallback = function(control)
         {
@@ -1692,7 +1693,7 @@
                 //var t2 = new Date().getTime();
                 //console.log("Compilation Exited with " + report.errors.length + " errors in: " + (t2-t1)+ " ms");
 
-                if (report.errors.length == 0)
+                if (report.errors.length === 0)
                 {
                     // success!
 
