@@ -201,6 +201,28 @@ $(function() {
                                 });
                             </script>
 
+
+                            <h3>Example 6: </h3>
+                            <h4>WYSIWYG editor with simplified buttons.</h4>
+                            <div id="field6">
+                            </div>
+                            <script type="text/javascript" id="field6-script">
+                                $(function() {
+                                    $("#field6").alpaca({
+                                        "data": "Ice cream is a <b>frozen</b> dessert usually made from "
+                                                + "<i>dairy products</i>,<p/> such as milk and cream, "
+                                                + "and often combined with fruits or other ingredients and flavors.",
+                                        "options": {
+                                            "type": "wysiwyg",
+                                            "wysiwyg" : {
+                                                "controls": "simple"
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

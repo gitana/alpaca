@@ -106,7 +106,7 @@
         },
 
         /**
-         * Returns default field template id. It would be "filedSet" for container fields and
+         * Returns default field template id. It would be "fieldSet" for container fields and
          * "controlField" for none-container fields.
          *
          * @returns {String} Default field template id.
@@ -162,11 +162,12 @@
                 this.schema.required = false;
             }
 
-            // SETTINGS
+            // VALIDATION
             if (Alpaca.isUndefined(this.options.validate)) {
                 this.options.validate = true;
             }
 
+            // OPTIONS
             if (Alpaca.isUndefined(this.options.disabled)) {
                 this.options.disabled = false;
             }

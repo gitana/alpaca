@@ -30,6 +30,8 @@
          */
         setup: function() {
 
+            this.base();
+
             if (Alpaca.isEmpty(this.data)) {
                 return;
             }
@@ -50,7 +52,6 @@
                 "forceRevalidation" : true
             });
 
-            this.base();
         },
 
         /**
@@ -91,19 +92,24 @@
          * @returns {Boolean} true if keys are unique
          */
         _validateKey: function() {
-            var counter = 0;
-            $.each(this.getValue(),function() {
-                counter ++;
-            });
-            if (counter != this.children.length) {
-                return {
-                    "status" : false
-                };
-            } else {
-                return {
-                    "status" : true
-                };
+
+            var status = true;
+
+            var keys = {};
+            for (var i = 0; i < this.children.length; i++) {
+                var v = this.children[i].getValue();
+                var key = v["_key"];
+
+                if (keys[key]) {
+                    status = false;
+                }
+
+                keys[key] = key;
             }
+
+            return {
+                "status": status
+            };
         },
 
         /**

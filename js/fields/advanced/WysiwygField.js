@@ -23,6 +23,34 @@
          */
         constructor: function(container, data, options, schema, view, connector, errorCallback) {
             this.base(container, data, options, schema, view, connector, errorCallback);
+
+            this.controlsConfig = {};
+            this.controlsConfig.simple = {
+                "html": { "visible": true },
+                "createLink": { "visible": false },
+                "unLink": { "visible": false },
+                "h1": { "visible": false },
+                "h2": { "visible": false },
+                "h3": { "visible": false },
+                "indent": { "visible": false },
+                "insertHorizontalRule": { "visible": false },
+                "insertImage": { "visible": false },
+                "insertOrderedList": { "visible": false },
+                "insertTable": { "visible": false },
+                "insertUnorderedList": { "visible": false },
+                "justifyCenter": { "visible": false },
+                "justifyFull": { "visible": false },
+                "justifyLeft": { "visible": false },
+                "justifyRight": { "visible": false },
+                "outdent": { "visible": false },
+                "redo": { "visible": false },
+                "removeFormat": { "visible": false },
+                "subscript": { "visible": false },
+                "superscript": { "visible": false },
+                "undo": { "visible": false },
+                "code": { "visible": false },
+                "strikeThrough": { "visible": false }
+            };
         },
 
         /**
@@ -46,6 +74,18 @@
             if (this.field && $.wysiwyg)
             {
                 var wysiwygOptions = this.options.wysiwyg ? this.options.wysiwyg : {};
+
+                if (wysiwygOptions.controls)
+                {
+                    if (typeof(wysiwygOptions.controls) === "string")
+                    {
+                        wysiwygOptions.controls = this.controlsConfig[wysiwygOptions.controls];
+                        if (!wysiwygOptions.controls)
+                        {
+                            wysiwygOptions.controls = {};
+                        }
+                    }
+                }
 
                 if (this.options.onDemand)
                 {
