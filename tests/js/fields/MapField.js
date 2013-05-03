@@ -78,9 +78,10 @@
                     var arrayElem = $('#map-1 fieldset.alpaca-field-invalid');
                     ok(arrayElem.length, 'Array marked as invalid.');
                     var arrayId = arrayElem.attr('alpaca-field-id');
+
                     var arrayMessageElem = $('#map-1 #' + arrayId + '-field-message-0 > .alpaca-controlfield-message-text');
                     ok(arrayMessageElem.length, 'Array invalid message generated.');
-                    equal(arrayMessageElem.text(), renderedField.view.getMessage("keyNotUnique"), 'Array invalid text populated correctly.');
+                    equal(arrayMessageElem.text(), renderedField.view.getMessage("keyMissing"), 'Array invalid text populated correctly.');
 
                     // now fill in the new entry using john326, should then be valid
                     var objectFieldSetItem2 = $('#map-1 .alpaca-fieldset-items-container fieldset:eq(1)');

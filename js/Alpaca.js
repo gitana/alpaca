@@ -2177,6 +2177,35 @@
         }
     };
 
+    Alpaca.checked = function(el, value)
+    {
+        if (value)
+        {
+            // jQuery 1.6+
+            if ($(el).prop)
+            {
+                $(el).prop("checked", value)
+            }
+            else
+            {
+                if (value) {
+                    $(el).attr("checked", "checked");
+                } else {
+                    $(el).removeAttr("checked");
+                }
+            }
+        }
+
+        // now return the correct value
+
+        // jQuery 1.6+
+        if ($(el).prop) {
+            return $(el).prop("checked");
+        }
+
+        return $(el).attr("checked");
+    };
+
     $.alpaca = window.Alpaca = Alpaca;
 
     /**

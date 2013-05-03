@@ -78,22 +78,49 @@
 
             var valInfo = this.validation;
 
-			var status = this._validateKey();
-            valInfo["keyNotUnique"] = {
-                "message": status.status ? "" : this.view.getMessage("keyNotUnique"),
-                "status": status.status
+            var isValidMapKeysNotEmpty = this._validateMapKeysNotEmpty();
+            valInfo["keyMissing"] = {
+                "message": isValidMapKeysNotEmpty ? "" : this.view.getMessage("keyMissing"),
+                "status": isValidMapKeysNotEmpty
             };
 
-            return baseStatus && valInfo["keyNotUnique"]["status"] ;
+            var isValidMapKeysUnique = this._validateMapKeysUnique();
+            valInfo["keyNotUnique"] = {
+                "message": !isValidMapKeysUnique ? "" : this.view.getMessage("keyNotUnique"),
+                "status": isValidMapKeysUnique
+            };
+
+            return baseStatus && valInfo["keyMissing"]["status"] && valInfo["keyNotUnique"]["status"];
         },
 
         /**
          * Validates if key fields are unique.
          * @returns {Boolean} true if keys are unique
          */
-        _validateKey: function() {
+        _validateMapKeysNotEmpty: function() {
 
-            var status = true;
+            var isValid = true;
+
+            for (var i = 0; i < this.children.length; i++) {
+                var v = this.children[i].getValue();
+                var key = v["_key"];
+
+                if (!key) {
+                    isValid = false;
+                    break;
+                }
+            }
+
+            return isValid;
+        },
+
+        /**
+         * Validates if key fields are unique.
+         * @returns {Boolean} true if keys are unique
+         */
+        _validateMapKeysUnique: function() {
+
+            var isValid = true;
 
             var keys = {};
             for (var i = 0; i < this.children.length; i++) {
@@ -101,15 +128,13 @@
                 var key = v["_key"];
 
                 if (keys[key]) {
-                    status = false;
+                    isValid = false;
                 }
 
                 keys[key] = key;
             }
 
-            return {
-                "status": status
-            };
+            return isValid;
         },
 
         /**
@@ -148,6 +173,7 @@
 
     // Additional Registrations
     Alpaca.registerMessages({
-        "keyNotUnique": "Keys of map field are not unique."
+        "keyNotUnique": "Keys of map field are not unique.",
+        "keyMissing": "Map contains an empty key."
     });
 })(jQuery);

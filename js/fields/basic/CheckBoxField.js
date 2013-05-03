@@ -83,7 +83,8 @@
              * @see Alpaca.Field#getValue
              */
             getValue: function() {
-                return this.field.attr("checked") ? true : false;
+                //return this.field.attr("checked") ? true : false;
+                return Alpaca.checked(this.field);
             },
 
             /**
@@ -95,17 +96,8 @@
                     value = value === 'true';
                 }
 
-                if (Alpaca.isBoolean(value)) {
-                    if (value) {
-                        this.field.attr({
-                            "checked": true
-                        });
-                    } else {
-                        this.field.attr({
-                            "checked": false
-                        });
-                    }
-                }
+                Alpaca.checked(this.field, value);
+
                 // be sure to call into base method
                 this.base(value);
             },
