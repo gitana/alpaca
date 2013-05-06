@@ -561,8 +561,8 @@ $(function() {
             //
             var schemaDocumentation = $('<div class="alpaca-schema"></div>');
             $('.alpaca-example-case').prepend(schemaDocumentation);
-            //schemaDocumentation.append('<h1>' + schemaOfSchema['title'] + '</h1>')
-            schemaDocumentation.append('<h2>' + schemaOfSchema['description'] + '</h2>');
+            //schemaDocumentation.append('<h1 class="alpaca-schema-title">' + schemaOfSchema['title'] + '</h1>')
+            schemaDocumentation.append('<p class="alpaca-schema-description">' + schemaOfSchema['description'] + '</p>');
             schemaDocumentation.append('<div>[<a href="#schema">Schema</a>] [<a href="#options">Options</a>] [<a href="#examples">Examples</a>]</div>');
             schemaDocumentation.append('<h3><a name="schema">Schema</a></h3>');
             var strSchemaFields = "<table class='table'><caption>List of Supported Schema Properties</caption>";
@@ -579,7 +579,7 @@ $(function() {
             strOptionsFields += getParameters(schemaOfOptions.properties, "Field");
             strOptionsFields += "</table>";
             optionsDocumentation.append(strOptionsFields);
-            optionsDocumentation.after('<h2><a name="examples">Examples</a></h2>');
+            optionsDocumentation.after('<h3><a name="examples">Examples</a></h3>');
         }
     }
 });

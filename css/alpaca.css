@@ -589,24 +589,6 @@ div.alpaca-fieldset-legend {
 /**
  * Layout
  */
-/*
-.alpaca-layout-two-column-mask {
-    overflow: hidden;
-    width: 100%;
-	min-width: 1000px;
-	clear: both;
-}
-
-.alpaca-layout-two-column-left {
-    float: left;
-	padding: 5px;
-}
-
-.alpaca-layout-two-column-right {
-    overflow: hidden;
-	padding: 5px;
-}
-*/
 
 .alpaca-layout-two-column-mask {
     overflow: auto;

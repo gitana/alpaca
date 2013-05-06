@@ -81,19 +81,23 @@
         <file name="EJSTemplateEngine.js"/>
         <file name="HandlebarsTemplateEngine.js"/>
 
-        <file name="views/DefaultView.js"/>
-        <file name="views/ListView.js"/>
+        <!-- view implementations -->
+        <file name="views/base/BaseView.js"/>
+        <file name="views/default/DefaultViews.js"/>
+        <file name="views/default/DefaultListViews.js"/>
+        <file name="views/jqueryui/JQueryUIViews.js"/>
+        <file name="views/jquerymobile/JQueryMobileViews.js"/>
+        <file name="views/bootstrap/BootstrapViews.js"/>
         <file name="views/TableView.js"/>
         <file name="views/YAMLView.js"/>
         <file name="views/InlineView.js"/>
-        <file name="views/MobileView.js"/>
         <file name="views/LayoutView.js"/>
-        <file name="views/BootstrapView.js"/>
-        <file name="views/JQueryUIView.js"/>
 
+        <!-- view classes -->
         <file name="NormalizedView.js"/>
         <file name="RuntimeView.js"/>
 
+        <!-- field foundation classes -->
         <file name="Field.js"/>
         <file name="ControlField.js"/>
         <file name="ContainerField.js"/>
@@ -114,7 +118,12 @@
         <file name="fields/basic/AnyField.js"/>
         <!--End of Alpaca Core Fields-->
 
-        <file name="views/DefaultViewLanguagePacks.js"/>
+        <!-- i18n support -->
+        <file name="views/i18n/de_AT.js"/>
+        <file name="views/i18n/es_ES.js"/>
+        <file name="views/i18n/fr_FR.js"/>
+        <file name="views/i18n/zh_CN.js"/>
+
     </filelist>
 
     <target name="concat-js" description="Concat all javascript files" depends="prep">
@@ -141,19 +150,23 @@
                 <file name="EJSTemplateEngine.js"/>
                 <file name="HandlebarsTemplateEngine.js"/>
 
-                <file name="views/DefaultView.js"/>
-                <file name="views/ListView.js"/>
+                <!-- view implementations -->
+                <file name="views/default/BaseView.js"/>
+                <file name="views/default/DefaultViews.js"/>
+                <file name="views/default/DefaultListViews.js"/>
+                <file name="views/jqueryui/JQueryUIViews.js"/>
+                <file name="views/jquerymobile/JQueryMobileViews.js"/>
+                <file name="views/bootstrap/BootstrapViews.js"/>
                 <file name="views/TableView.js"/>
                 <file name="views/YAMLView.js"/>
-				<file name="views/InlineView.js"/>
-                <file name="views/MobileView.js"/>
+                <file name="views/InlineView.js"/>
                 <file name="views/LayoutView.js"/>
-                <file name="views/BootstrapView.js"/>
-                <file name="views/JQueryUIView.js"/>
 
+                <!-- view classes -->
                 <file name="NormalizedView.js"/>
                 <file name="RuntimeView.js"/>
 
+                <!-- field foundation classes -->
                 <file name="Field.js"/>
                 <file name="ControlField.js"/>
                 <file name="ContainerField.js"/>
@@ -174,7 +187,12 @@
                 <file name="fields/basic/AnyField.js"/>
                 <!--End of Alpaca Core Fields-->
 
-                <file name="views/DefaultViewLanguagePacks.js"/>
+                <!-- i18n support -->
+                <file name="views/i18n/de_AT.js"/>
+                <file name="views/i18n/es_ES.js"/>
+                <file name="views/i18n/fr_FR.js"/>
+                <file name="views/i18n/zh_CN.js"/>
+
             </filelist>
         </concat>
 
@@ -313,19 +331,23 @@
                 <file name="EJSTemplateEngine.js"/>
                 <file name="HandlebarsTemplateEngine.js"/>
 
-                <file name="views/DefaultView.js"/>
-                <file name="views/ListView.js"/>
+                <!-- view implementations -->
+                <file name="views/default/BaseView.js"/>
+                <file name="views/default/DefaultViews.js"/>
+                <file name="views/default/DefaultListViews.js"/>
+                <file name="views/jqueryui/JQueryUIViews.js"/>
+                <file name="views/jquerymobile/JQueryMobileViews.js"/>
+                <file name="views/bootstrap/BootstrapViews.js"/>
                 <file name="views/TableView.js"/>
                 <file name="views/YAMLView.js"/>
-				<file name="views/InlineView.js"/>
-                <file name="views/MobileView.js"/>
+                <file name="views/InlineView.js"/>
                 <file name="views/LayoutView.js"/>
-                <file name="views/BootstrapView.js"/>
-                <file name="views/JQueryUIView.js"/>
 
+                <!-- view classes -->
                 <file name="NormalizedView.js"/>
                 <file name="RuntimeView.js"/>
 
+                <!-- field foundation classes -->
                 <file name="Field.js"/>
                 <file name="ControlField.js"/>
                 <file name="ContainerField.js"/>
@@ -346,7 +368,12 @@
                 <file name="fields/basic/AnyField.js"/>
                 <!--End of Alpaca Core Fields-->
 
-                <file name="views/DefaultViewLanguagePacks.js"/>
+                <!-- i18n support -->
+                <file name="views/i18n/de_AT.js"/>
+                <file name="views/i18n/es_ES.js"/>
+                <file name="views/i18n/fr_FR.js"/>
+                <file name="views/i18n/zh_CN.js"/>
+
             </filelist>
         </concat>
 

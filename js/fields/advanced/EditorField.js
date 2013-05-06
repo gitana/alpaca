@@ -124,7 +124,6 @@
                 }
 
 
-
                 // if the editor's dom element gets destroyed, make sure we clean up the editor instance
                 // normally, we expect Alpaca fields to be destroyed by the destroy() method but they may also be
                 // cleaned-up via the DOM, thus we check here.
@@ -208,6 +207,8 @@
              *@see Alpaca.Fields.TextField#setValue
              */
             setValue: function(value) {
+
+                var self = this;
 
                 if (this.editor)
                 {
