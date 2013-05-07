@@ -2184,7 +2184,7 @@
             // jQuery 1.6+
             if ($(el).prop)
             {
-                $(el).prop("checked", value)
+                $(el).prop("checked", value);
             }
             else
             {
