@@ -465,7 +465,7 @@
                 <file name="license.txt"/>
             </filelist>
             <filelist dir="${prep.dir}/css">
-                <file name="alpaca.css"/>
+                <file name="alpaca-jqueryui.css"/>
             </filelist>
         </concat>
     </target>
@@ -801,12 +801,15 @@
 
     <target name="package-local-demos">
 
-        <!-- amd -->
+        <!-- standalone -->
         <antcall target="package-local-demo">
-            <param name="location" value="${package.dir}/demos/amd/quickstart"/>
+            <param name="location" value="${package.dir}/demos/standalone/quickstart"/>
         </antcall>
         <antcall target="package-local-demo">
-            <param name="location" value="${package.dir}/demos/amd/registration"/>
+            <param name="location" value="${package.dir}/demos/standalone/quickstart-listview"/>
+        </antcall>
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/standalone/registration"/>
         </antcall>
 
         <!-- bootstrap -->
@@ -830,15 +833,18 @@
             <param name="location" value="${package.dir}/demos/jqueryui/quickstart"/>
         </antcall>
         <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/jqueryui/quickstart-listview"/>
+        </antcall>
+        <antcall target="package-local-demo">
             <param name="location" value="${package.dir}/demos/jqueryui/registration"/>
         </antcall>
 
-        <!-- standalone -->
+        <!-- amd -->
         <antcall target="package-local-demo">
-            <param name="location" value="${package.dir}/demos/standalone/quickstart"/>
+            <param name="location" value="${package.dir}/demos/amd/quickstart"/>
         </antcall>
         <antcall target="package-local-demo">
-            <param name="location" value="${package.dir}/demos/standalone/registration"/>
+            <param name="location" value="${package.dir}/demos/amd/registration"/>
         </antcall>
 
     </target>

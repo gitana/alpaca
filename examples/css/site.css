@@ -546,3 +546,14 @@ p.alpaca-schema-description
     font-size: 1em;
     padding-top: 10px;
 }
+
+h2.home-header
+{
+    text-align: center !important;
+    margin-bottom: 40px !important;
+}
+
+h3.home-seg
+{
+    font-weight: 400 !important;
+}

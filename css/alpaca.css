@@ -43,7 +43,8 @@
     padding-bottom: 4px;
 }
 
-.alpaca-controlfield-label {
+.alpaca-controlfield-label
+{
     font-size: 1.0em;
     font-weight: bold;
     text-align: left;
@@ -604,6 +605,83 @@ div.alpaca-fieldset-legend {
 
 /* END styles for Wizard */
 
+/** BEGIN view-web-list **/
+
+fieldset.alpaca-view-web-list
+{
+    border-left: none;
+    border-bottom: none;
+    border-right: none;
+    padding-right: 3em;
+}
+
+fieldset.alpaca-view-web-list.fieldset-collapsed
+{
+    border: solid 1px;
+}
+
+.alpaca-view-web-list .alpaca-controlfield-label {
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 0.5em;
+}
+
+.alpaca-view-web-list .alpaca-controlfield-label {
+    width: 130px;
+}
+
+fieldset.alpaca-view-list legend {
+    /* to make chrome not wrapping text */
+    font-size: 1.01em
+}
+
+.alpaca-controlfield.alpaca-view-web-list
+{
+    display:inline-block;
+}
+
+SPAN.alpaca-view-web-list label.alpaca-controlfield-label
+{
+    font-size: 1.0em;
+    font-weight: bold !important;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.alpaca-view-web-list DIV.alpaca-controlfield-container
+{
+    display:inline-block;
+}
+
+.alpaca-controlfield-label-list-view {
+    width: 100px;
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 0.5em;
+}
+
+.alpaca-fieldset-message-list-view {
+    float: left;
+    margin-right: .3em;
+}
+
+.alpaca-controlfield-item-label-list-view {
+    width: 100px;
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 0.25em;
+}
+
+ol.alpaca-fieldset-itemscontainer-list-view-top {
+    padding-left :0;
+}
+
+li.alpaca-fieldset-itemcontainer-list-view-top {
+    list-style:none;
+}
+
+/** END view-web-list **/
+
 /* BEGIN styles for VIEW: TWO COLUMN */
 
 .alpaca-layout-two-column-mask {
@@ -627,65 +705,12 @@ div.alpaca-fieldset-legend {
     vertical-align: top;
 }
 
-fieldset.alpaca-view-web-edit-list {
-    border-left: none;
-    border-bottom: none;
-    border-right: none;
-    padding-right: 3em;
-}
-
-fieldset.alpaca-view-web-edit-list.fieldset-collapsed {
-    border: solid 1px;
-}
-
-span.alpaca-view-web-edit-list .alpaca-controlfield-label {
-    width: 100px;
-    display: inline-block;
-    vertical-align: top;
-    padding-top: 0.5em;
-}
-
-fieldset.alpaca-view-web-edit-list legend {
-    /* to make chrome not wrapping text */
-    font-size: 1.01em
-}
 
 fieldset.alpaca-fieldset-no-legend {
     border: none;
 }
 
 /* END styles for VIEW: TWO COLUMN */
-
-/* BEGIN styles for VIEW: LIST */
-
-alpaca-controlfield-label-list-view {
-    width: 100px;
-    display: inline-block;
-    vertical-align: top;
-    padding-top: 0.5em;
-}
-
-alpaca-fieldset-message-list-view {
-    float: left;
-    margin-right: .3em;
-}
-
-alpaca-controlfield-item-label-list-view {
-    width: 100px;
-    display: inline-block;
-    vertical-align: top;
-    padding-top: 0.25em;
-}
-
-ol.alpaca-fieldset-itemscontainer-list-view-top {
-    padding-left :0;
-}
-
-li.alpaca-fieldset-itemcontainer-list-view-top {
-    list-style:none;
-}
-
-/* END styles for VIEW: LIST */
 
 /* BEGIN styles for VIEW: VIEW_WEB_EDIT_YAML */
 

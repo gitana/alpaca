@@ -1,4 +1,4 @@
-# Alpaca - Easy Forms for jQuery and Twitter Bootstrap #
+# Alpaca - jQuery Forms Made Easy #
 
 Alpaca is the Easy Forms Engine for jQuery and Twitter Bootstrap.
 
