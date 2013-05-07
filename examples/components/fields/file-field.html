@@ -119,6 +119,67 @@
                                 });
                             </script>
 
+                            <h2>Example 3:</h2>
+                            <p>Nested file fields</p>
+                            <div id="field3"></div>
+                            <script type="text/javascript" id="field3-script">
+                                $(function() {
+                                    $("#field3").alpaca({
+                                        "schema": {
+                                            "title": "Update your Profile",
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "files": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "avatar": {
+                                                                "type": "string",
+                                                                "format": "uri"
+                                                            },
+                                                            "description": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "options": {
+                                            "fields": {
+                                                "name": {
+                                                    "type": "text",
+                                                    "label": "What is your name?"
+                                                },
+                                                "files": {
+                                                    "fields": {
+                                                        "item": {
+                                                            "fields": {
+                                                                "avatar": {
+                                                                    "type": "file",
+                                                                    "label": "Photo"
+                                                                },
+                                                                "description": {
+                                                                    "type": "textarea",
+                                                                    "label": "Please describe this photo"
+                                                                }
+                                                            }
+                                                        },
+                                                        "label": "Your Photos",
+                                                        "helper": "Select the photos your would like to upload"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    });
+
+                                });
+                            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

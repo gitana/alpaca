@@ -76,11 +76,13 @@
                 <h1>Conditional Fields</h1>
             </div>
             <div class='grid_12 alpaca-example-case'>
-                    <h3>Ice Cream Picker Field: </h3>
-					<h4>Conditional field through combination of schema dependency properties and options dependency properties.</h4>
-                    <div id="field1">
-                    </div>
-                    <script type="text/javascript" id="field1-script">
+
+
+                <!-- Example #1 -->
+                <h3>Ice Cream Picker Field: </h3>
+                <p>Conditional field through combination of schema dependency properties and options dependency properties.</p>
+                <div id="field1"></div>
+                <script type="text/javascript" id="field1-script">
 $(function() {
     $("#field1").alpaca({
         "data": {},
@@ -126,7 +128,109 @@ $(function() {
         "view": "VIEW_WEB_EDIT_LIST"
     });
 });
-                    </script>
+                </script>
+
+
+                <h3>Nested Conditionals: </h3>
+                <p>Demonstrates multi-level nested conditionals</p>
+                <div id="field2"></div>
+                <script type="text/javascript" id="field2-script">
+$(function() {
+    $("#field2").alpaca({
+
+        "schema": {
+            "title": "Conditional Field Test Case",
+            "type": "object",
+            "properties": {
+                "ConditionalField": {
+                    "type": "string",
+                    "enum": [
+                        "Don't Show Dependent Fields",
+                        "Show Dependent Field A",
+                        "Show Dependent Field B"
+                    ],
+                    "required": true,
+                    "default": "Don't Show Dependent Fields"
+                },
+                "DependentFieldA": {
+                    "type": "string",
+                    "title": "Dependent Field A",
+                    "dependencies": "ConditionalField"
+                },
+                "DependentFieldB": {
+                    "type": "string",
+                    "title": "Dependent Field B",
+                    "dependencies": "ConditionalField"
+                },
+                "ArrayOfFields": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "ConditionalFieldInArray": {
+                                "type": "string",
+                                "enum": [
+                                    "Don't Show Dependent Fields",
+                                    "Show Dependent Field in Array A",
+                                    "Show Dependent Field in Array B"
+                                ],
+                                "required": true,
+                                "default": "Don't Show Dependent Fields"
+                            },
+                            "DependentFieldInArrayA": {
+                                "type": "string",
+                                "title": "Dependent Field In Array A",
+                                "dependencies": "ConditionalFieldInArray"
+                            },
+                            "DependentFieldInArrayB": {
+                                "type": "string",
+                                "title": "Dependent Field In Array B",
+                                "dependencies": "ConditionalFieldInArray"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "options": {
+            "renderform": "true",
+            "fields": {
+                "DependentFieldA": {
+                    "dependencies": {
+                        "ConditionalField": "Show Dependent Field A"
+                    }
+                },
+                "DependentFieldB": {
+                    "dependencies": {
+                        "ConditionalField": "Show Dependent Field B"
+                    }
+                },
+                "ArrayOfFields": {
+                    "fields": {
+                        "item": {
+                            "fields": {
+                                "DependentFieldInArrayA": {
+                                    "dependencies": {
+                                        "ConditionalFieldInArray": "Show Dependent Field in Array A"
+                                    }
+                                },
+                                "DependentFieldInArrayB": {
+                                    "dependencies": {
+                                        "ConditionalFieldInArray": "Show Dependent Field in Array B"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+                </script>
+
+
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>
