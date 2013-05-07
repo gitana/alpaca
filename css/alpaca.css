@@ -1,17 +1,11 @@
-/**
- *  General
- */
 .alpaca-hover {
-    background-color: #FFFFCC;
 }
 
 .alpaca-clear {
     clear: both;
 }
 
-/**
- *  Abstract Field
- */
+/** Abstract Field **/
 .alpaca-field {
 }
 
@@ -34,7 +28,7 @@
  *  Control Field
  */
 .alpaca-controlfield {
-    display: inline-block;
+    display: block;
     padding: 2px;
     margin: 2px;
 }
@@ -43,9 +37,8 @@
     /*background: transparent;*/
 }
 
-
 .alpaca-controlfield-container {
-    display: inline-block;
+    display: block;
     padding-top: 4px;
     padding-bottom: 4px;
 }
@@ -121,41 +114,62 @@ input:focus, textarea:focus {
     cursor: default;
 }
 
-/**
- * Text Field
- */
+/* BEGIN styles for Text Field */
+
 .alpaca-controlfield-text {
 }
 
-/**
- * Date Field , Phone Field , Password Field and Email Field
- */
+DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu
+{
+    background-color: white;
+    border: 1px #777 solid;
+    padding-left: 10px;
+    margin-left: 2px;
+    padding-right: 10px;
+    color: #ccc;
+}
+
+DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu P
+{
+    font-size: 1em;
+}
+
+.tt-suggestion.tt-is-under-cursor
+{
+    background-color: #ccc;
+    color: #333;
+}
+
+/* END styles for Text Field */
+
+/* BEGIN styles for Date Field, Phone Field, Password Field and Email Field */
+
 .alpaca-controlfield-date {
 }
 
 .alpaca-controlfield-date input {
-    background: url("./images/alpaca-icons.png") no-repeat right -5px;
+/*    background: url("./images/alpaca-icons.png") no-repeat right -5px;*/
 }
 
 .alpaca-controlfield-phone {
 }
 
 .alpaca-controlfield-phone input {
-    background: url("./images/alpaca-icons.png") no-repeat right -85px;
+/*    background: url("./images/alpaca-icons.png") no-repeat right -85px;*/
 }
 
 .alpaca-controlfield-email {
 }
 
 .alpaca-controlfield-email input {
-    background: url("./images/alpaca-icons.png") no-repeat right -45px;
+/*    background: url("./images/alpaca-icons.png") no-repeat right -45px;*/
 }
 
 .alpaca-controlfield-time {
 }
 
 .alpaca-controlfield-time input {
-    background: url("./images/alpaca-icons.png") no-repeat right -125px;
+/*    background: url("./images/alpaca-icons.png") no-repeat right -125px;*/
 }
 
 .alpaca-controlfield-password {
@@ -170,25 +184,20 @@ input:focus, textarea:focus {
     line-height: 16px;
 }
 
-/**
-* Fix for jQuery datepicker initial state issue.
-*/
-#ui-datepicker-div {
-    display: none;
-}
+/* END styles for Date Field, Phone Field, Password Field and Email Field */
 
-/**
- * Address Map Field
- */
+/* BEGIN styles for Address Map Field */
+
 .alpaca-controlfield-address-mapcanvas {
     height: 300px;
     width: 300px;
     margin: 10px;
 }
 
-/**
- * Checkbox Field
- */
+/* END styles for Address Map Field */
+
+/* BEGIN styles for Checkbox Field */
+
 .alpaca-controlfield-checkbox {
     padding-top: 0.4em;
 }
@@ -202,9 +211,10 @@ input:focus, textarea:focus {
     *padding-top: 0;
 }
 
-/**
- * Radio Field
- */
+/* END styles for Checkbox Field */
+
+/* BEGIN styles for Radio Field */
+
 .alpaca-controlfield-radio {
     padding-top: 0.5em;
 }
@@ -217,66 +227,53 @@ input:focus, textarea:focus {
     margin-right: 0.3em;
 }
 
-/**
- * Select Field
- */
+/* END styles for Radio Field */
+
+/* BEGIN styles for Select Field */
+
 .alpaca-controlfield-select {
 }
 
-/**
- * Number Field
- */
+/* END styles for Select Field */
+
+/* BEGIN styles for Number Field */
+
 .alpaca-controlfield-number {
 }
 
-/**
- * Integer Field
- */
+/* END styles for Number Field */
+
+/* BEGIN styles for Integer Field */
+
 .alpaca-controlfield-integer {
 }
 
-/**
- * Textarea Field
- */
+/* END styles for Integer Field */
+
+/* BEGIN styles for Textarea Field */
+
 .alpaca-controlfield-textarea {
 }
 
-/**
- * WYSIWYG Field
- */
+/* END styles for Textarea Field */
+
+/* BEGIN styles for WYSIWYG Field */
+
 .alpaca-controlfield-wysiwyg {
 }
 
-/**
- * Button Field
- */
+/* END styles for WYSIWYG Field */
+
+/* BEGIN styles for Button Field */
+
 .alpaca-controlfield-button {
 }
 
-/**
- * File Field
- */
+/* END styles for Button Field */
+
+/* BEGIN styles for File Field */
+
 .alpaca-controlfield-file {
-}
-
-/**
- * Editor Field
- */
-.alpaca-controlfield-editor
-{
-    position: relative;
-    width: 100%;
-    height: 300px;
-    border: 1px #ccc solid;
-}
-
-.alpaca-controlfield-editor .control-field-editor-el
-{
-    position:absolute;
-    top:0;
-    bottom:0;
-    left: 0;
-    right:0
 }
 
 .alpaca-controlfield-file-custom-input {
@@ -316,18 +313,44 @@ input:focus, textarea:focus {
     font-style: normal;
     font-weight: bold;
     padding-left: 20px;
-    /*
-	left 4px no-repeat;
-	*/
 }
 
-/**
- * Container Field (Fieldset)
- */
+/* END styles for File Field */
+
+/* BEGIN styles for Editor Field */
+
+.alpaca-controlfield-editor
+{
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border: 1px #ccc solid;
+}
+
+.alpaca-controlfield-editor .control-field-editor-el
+{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right:0
+}
+
+/* END styles for Editor Field */
+
+/* BEGIN styles for JSON Field */
+
+.alpaca-controlfield .alpaca-controlfield-json textarea {
+    font-family: "Courier New";
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+/* END styles for JSON Field */
+
+/* BEGIN styles for Container Field (Fieldset) */
+
 .alpaca-fieldset {
-    /*
-		display: inherit;
-	*/
     padding: 4px;
     margin: 4px;
     overflow: auto;
@@ -335,9 +358,6 @@ input:focus, textarea:focus {
 }
 
 fieldset.alpaca-fieldset {
-    /*
-        display: inline-block;
-    */
     margin: 0.5em 1em 1em 0px;
 }
 
@@ -370,9 +390,10 @@ legend.alpaca-fieldset-legend {
     margin-right: 0.3em;
 }
 
-/**
- * Array
- */
+/* END styles for Container Field (Fieldset) */
+
+/* BEGIN styles for Array Field */
+
 .alpaca-fieldset-array-item-toolbar {
     padding: 1px;
     margin: 0px 2px 0px 2px;
@@ -399,25 +420,18 @@ legend.alpaca-fieldset-legend {
 .alpaca-fieldset-array-item-toolbar-down {
 }
 
-/* Fix for Chrome issue with Button text */
-.ui-button .ui-button-text {
-    white-space: nowrap;
-}
+/* END styles for Array Field */
 
-/**
- * Form
- */
+/* BEGIN styles for Form */
+
 .alpaca-form {
     margin-top: 15px;
     margin-left: 15px;
 }
 
-/**
- * Form Buttons
- */
 .alpaca-form-buttons-container {
     clear: both;
-    display: inline-block;
+    display: block;
     margin: 5px 0 5px 0;
 }
 
@@ -467,9 +481,10 @@ legend.alpaca-fieldset-legend {
     background: #FFFFCC;
 }
 
-/**
-* Display View
-*/
+/* END styles for Form */
+
+/* BEGIN styles for VIEW: DISPLAY */
+
 div.alpaca-fieldset {
     display: block;
     border: none;
@@ -495,12 +510,13 @@ div.alpaca-fieldset-legend {
     min-width: 100px;
     clear: both;
     font-weight: bold;
-    display: inline-block;
+    display: block;
 }
 
-/**
- * Wizard
- */
+/* END styles for VIEW: DISPLAY */
+
+/* BEGIN styles for Wizard */
+
 .alpaca-wizard-status-bar {
     list-style: none;
     overflow: hidden;
@@ -586,9 +602,9 @@ div.alpaca-fieldset-legend {
 .alpaca-wizard-button-next {
 }
 
-/**
- * Layout
- */
+/* END styles for Wizard */
+
+/* BEGIN styles for VIEW: TWO COLUMN */
 
 .alpaca-layout-two-column-mask {
     overflow: auto;
@@ -637,7 +653,11 @@ fieldset.alpaca-view-web-edit-list legend {
 fieldset.alpaca-fieldset-no-legend {
     border: none;
 }
-/* list view */
+
+/* END styles for VIEW: TWO COLUMN */
+
+/* BEGIN styles for VIEW: LIST */
+
 alpaca-controlfield-label-list-view {
     width: 100px;
     display: inline-block;
@@ -664,15 +684,10 @@ ol.alpaca-fieldset-itemscontainer-list-view-top {
 li.alpaca-fieldset-itemcontainer-list-view-top {
     list-style:none;
 }
-/* JSON field */
-.alpaca-controlfield .alpaca-controlfield-json textarea {
-    font-family: "Courier New";
-    font-size: 0.9em;
-    font-style: italic;
-}
 
+/* END styles for VIEW: LIST */
 
-/* BEGIN styles for the view VIEW_WEB_EDIT_YAML */
+/* BEGIN styles for VIEW: VIEW_WEB_EDIT_YAML */
 
 fieldset.alpaca-view-web-edit-yaml.alpaca-fieldset {
     border: solid 1px;
@@ -817,8 +832,6 @@ fieldset.alpaca-view-web-edit-yaml .ui-button-icon-only .ui-button-text, .ui-but
 	min-width: 0px;
 }
 
-/* END styles for the view VIEW_WEB_EDIT_INLINE */
-
 #module-settings input:focus, textarea:focus {
 	border-width: 1px;
 }
@@ -841,26 +854,4 @@ fieldset.alpaca-view-web-edit-yaml .ui-button-icon-only .ui-button-text, .ui-but
 
 */
 
-/* END styles for the view VIEW_WEB_EDIT_INLINE */
-
-
-DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu
-{
-    background-color: white;
-    border: 1px #777 solid;
-    padding-left: 10px;
-    margin-left: 2px;
-    padding-right: 10px;
-    color: #ccc;
-}
-
-DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu P
-{
-    font-size: 1em;
-}
-
-.tt-suggestion.tt-is-under-cursor
-{
-    background-color: #ccc;
-    color: #333;
-}
+/* END styles for VIEW: VIEW_WEB_EDIT_INLINE */

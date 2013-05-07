@@ -1,3 +1,7 @@
+/**
+ * Defines the base class implementation for views.  All views in Alpaca ultimately extend this form.
+ * This provides the ideal place for any global overrides of view templates, message bundles or other settings.
+ */
 (function($) {
 
     var Alpaca = $.alpaca;

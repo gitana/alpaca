@@ -61,16 +61,20 @@ define(["jquery", "alpaca"], function($) {
     var options = {
         "fields": {
             "name": {
-                "type": "text"
+                "type": "text",
+                "label": "Name"
             },
             "age": {
-                "type": "number"
+                "type": "number",
+                "label": "Age"
             },
             "phone": {
-                "type": "phone"
+                "type": "phone",
+                "label": "Phone"
             },
             "country": {
-                "type": "country"
+                "type": "country",
+                "label": "Country"
             }
         }
     };

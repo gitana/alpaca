@@ -25,9 +25,14 @@
                 <div class="span12">
                     <div class="navbar navbar-static-top">
                         <div class="navbar-inner">
-                            <a class="brand" href="#">Alpaca</a>
+                            <a class="brand" href="#">Alpaca Demos</a>
                             <ul class="nav">
-                                <li class="active"><a href="#">Demos</a></li>
+                                <li class="active"><a href="index.html">Welcome</a></li>
+                                <li><a href="demo-standalone.html">Standalone</a></li>
+                                <li><a href="demo-bootstrap.html">Bootstrap</a></li>
+                                <li><a href="demo-jqueryui.html">JQuery UI</a></li>
+                                <li><a href="demo-jquerymobile.html">JQuery Mobile</a></li>
+                                <li><a href="demo-amd.html">AMD</a></li>
                             </ul>
                         </div>
                     </div>
@@ -35,22 +40,12 @@
             </div>
 
             <div class="row-fluid sep1">
-                <div class="span4">
-                    <ul class="nav nav-tabs nav-stacked demo-nav">
-                        <li id="navWelcome" class="active"><a href="#browser">Welcome</a></li>
-                        <li id="navBrowser"><a href="#browser">Browser</a></li>
-                        <li id="navAMD"><a href="#amd">AMD</a></li>
-                        <li id="navBootstrap"><a href="#bootstrap">Bootstrap</a></li>
-                        <li id="navJQM"><a href="#jqm">jQuery Mobile</a></li>
-                    </ul>
-                </div>
-                <div class="span8">
 
-                    <a name="welcome"></a>
+                <div class="span12">
+
+                    <a name="intro"></a>
                     <div>
-
                         <h1>Alpaca Demonstrations</h1>
-
                         <p>
                             This page provides a number of pre-built demonstrations of fully-constructed forms using Alpaca
                             with a combination of effective technologies including jQuery, Twitter Bootstrap, jQuery Mobile
@@ -61,12 +56,14 @@
                             can get a quick start on building their own forms.  In many cases, existing forms can simply be
                             taken and modified.
                         </p>
+                    </div>
 
+                    <a name="developers"></a>
+                    <div>
                         <h2>Developers</h2>
-
                         <p>
                             These demonstrations are located under the <code>/demos</code> directory that is shipped as a distribution.
-                            You can also download the source from <a href="http://www.github.com/gitana/alpaca">GitHub</a>.
+                            You can also download the source from <a href="http://www.github.com/gitana/alpaca" target="_blank">GitHub</a>.
                         </p>
                         <p>
                             If you choose to download a distribution, everything is already set.  Just go to the <code>/demos</code>
@@ -87,110 +84,6 @@
                             a NodeJS server or even right to your desktop.
                         </p>
                     </div>
-
-                    <a name="browser"></a>
-                    <div>
-                        <h2>Browser Demonstrations</h2>
-                        <p>
-                            Alpaca runs right inside a browser running on the web or on a mobile device.  These projects
-                            introduce Alpaca to a web site by simply including the <code>alpaca.css</code> and <code>alpaca.js</code>
-                            files, respectively.
-                        </p>
-
-                        <ul>
-                            <li>
-                                <a href="browser/quickstart">Quick Start</a>
-                                <br/>
-                                An empty Alpaca project that you can use as a template for building your own forms ready-to-run in the browser.
-                                All of the Alpaca dependencies are loaded using SCRIPT tags.  Adjust the source code to fit your own schema,
-                                options and layout needs.
-                            </li>
-                            <li>
-                                <a href="browser/registration">Registration</a>
-                                <br/>
-                                A sample registration form that uses a custom layout and custom validation messages.  The results of the form
-                                are posted to a server-side PHP file for capture into a database.  The storage into the DB is left as an
-                                exercise for the end user.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <a name="amd"></a>
-                    <div>
-                        <h2>AMD Demonstrations</h2>
-                        <p>
-                            Alpaca also comes packaged as an AMD (Asynchronous Module Definition) file.  If you're building large
-                            web application projects, we strongly suggest considering AMD as it helps to make dependency
-                            management much easier.
-                        </p>
-                        <ul>
-                            <li>
-                                <a href="amd/quickstart">Quick Start</a>
-                                <br/>
-                                An empty Alpaca project that you can use as a template for building your own forms.
-                                All of the dependencies are loaded via require() and define() methods.
-                                Adjust the source code to fit your own schema, options and layout needs.
-                            </li>
-                            <li>
-                                <a href="amd/registration">Registration</a>
-                                <br/>
-                                A sample registration form that uses a custom layout and custom validation messages.  The results of the form
-                                are posted to a server-side PHP file for capture into a database.  The storage into the DB is left as an
-                                exercise for the end user.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <a name="bootstrap"></a>
-                    <div>
-                        <h2>Twitter Bootstrap Demonstrations</h2>
-                        <p>
-                            Alpaca natively renders into Twitter Bootstrap.  Bootstrap is a UI framework that provides
-                            responsive design for your web sites.  It also provides convenient formatting for a number of
-                            HTML elements.
-                        </p>
-                        <ul>
-                            <li>
-                                <a href="bootstrap/quickstart">Quick Start</a>
-                                <br/>
-                                An empty Alpaca project that you can use as a template for building your own forms.
-                                Adjust the source code to fit your own schema, options and layout needs.
-                            </li>
-                            <li>
-                                <a href="bootstrap/registration">Registration</a>
-                                <br/>
-                                A sample registration form that uses a custom layout and custom validation messages.  The results of the form
-                                are posted to a server-side PHP file for capture into a database.  The storage into the DB is left as an
-                                exercise for the end user.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <a name="jqm"></a>
-                    <div>
-                        <h2>jQuery Mobile Demonstrations</h2>
-                        <p>
-                            Alpaca supports rendering mobile application markup with jQuery Mobile.  JQuery Mobile is a flexible, CSS-oriented
-                            method of describing the page layout and functions for mobile applications that run on many different devices.
-                            Alpaca renders forms that fit perfectly into the framework.
-                        </p>
-                        <ul>
-                            <li>
-                                <a href="jquerymobile/quickstart">Quick Start</a>
-                                <br/>
-                                An empty Alpaca project that you can use as a template for building your own jQuery Mobile forms.
-                                Adjust the source code to fit your own schema, options and layout needs.
-                            </li>
-                            <li>
-                                <a href="jquerymobile/registration">Registration</a>
-                                <br/>
-                                A sample registration form that uses a custom layout and custom validation messages.  The results of the form
-                                are posted to a server-side PHP file for capture into a database.  The storage into the DB is left as an
-                                exercise for the end user.
-                            </li>
-                        </ul>
-                    </div>
-
                 </div>
             </div>
         </div>

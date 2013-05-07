@@ -39,10 +39,13 @@
             this.options.optionLabels = [];
 
             var countriesMap = this.view.getMessage("countries");
-            for (var countryKey in countriesMap)
+            if (countriesMap)
             {
-                this.schema["enum"].push(countryKey);
-                this.options.optionLabels.push(countriesMap[countryKey]);
+                for (var countryKey in countriesMap)
+                {
+                    this.schema["enum"].push(countryKey);
+                    this.options.optionLabels.push(countriesMap[countryKey]);
+                }
             }
 
             this.base();

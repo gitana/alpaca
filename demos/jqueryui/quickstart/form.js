@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
-//	Alpaca.logLevel = Alpaca.DEBUG;
-
+	// To turn on debugging, uncomment this line
+	// Alpaca.logLevel = Alpaca.DEBUG;
+	
     /**
      * Initial data
      *
@@ -97,12 +98,13 @@ $(document).ready(function() {
      * Render the form.
      *
      * We call alpaca() with the data, schema and options to tell Alpaca to render into the selected dom element(s).
+     *
      */
     $("#form").alpaca({
         "data": data,
         "schema": schema,
         "options": options,
         "postRender": postRenderCallback,
-        "ui": "bootstrap"
+		"ui": "jquery-ui"
     });
 });

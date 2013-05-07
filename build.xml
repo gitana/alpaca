@@ -69,6 +69,7 @@
                 <include name="license.txt"/>
             </fileset>
         </copy>
+
     </target>
 
     <!-- Core files for Alpaca -->
@@ -151,7 +152,7 @@
                 <file name="HandlebarsTemplateEngine.js"/>
 
                 <!-- view implementations -->
-                <file name="views/default/BaseView.js"/>
+                <file name="views/base/BaseView.js"/>
                 <file name="views/default/DefaultViews.js"/>
                 <file name="views/default/DefaultListViews.js"/>
                 <file name="views/jqueryui/JQueryUIViews.js"/>
@@ -298,6 +299,9 @@
                 <include name="ace/**/*"/>
                 <include name="typeahead/**/*"/>
             </fileset>
+            <fileset dir="${prep.dir}/lib/jquery-1.9.1">
+                <include name="jquery-1.9.1.min.js"/>
+            </fileset>
         </copy>
 
 
@@ -332,7 +336,7 @@
                 <file name="HandlebarsTemplateEngine.js"/>
 
                 <!-- view implementations -->
-                <file name="views/default/BaseView.js"/>
+                <file name="views/base/BaseView.js"/>
                 <file name="views/default/DefaultViews.js"/>
                 <file name="views/default/DefaultListViews.js"/>
                 <file name="views/jqueryui/JQueryUIViews.js"/>
@@ -587,7 +591,7 @@
     </target>
 
     <!-- Packages up the Distribution (and components) -->
-    <target name="package" depends="prep-html, components, install-demos-package-dependencies">
+    <target name="package" depends="prep-html, components">
         <zip destfile="${prep.dir}/${appkey}-distribution.zip">
             <fileset dir="${package.dir}">
                 <exclude name="**/.DS_Store/*"/>
@@ -615,6 +619,8 @@
                 <exclude name="**/.idea/*"/>
             </fileset>
         </zip>
+
+        <antcall target="package-local-demos" />
 
     </target>
 
@@ -649,7 +655,6 @@
             <param name="dependencies" value="['jquery', 'jquery-tmpl']" />
         </antcall>
 
-
         <!-- Alpaca Extras ("alpaca-extras") -->
 		<mkdir dir="${package.dir}/components/alpaca-extras"/>
         <copy todir="${package.dir}/components/alpaca-extras">
@@ -674,7 +679,7 @@
             <param name="name" value="alpaca-extras" />
             <param name="variableName" value="Alpaca" />
             <param name="argumentNames" value="alpacaCore, $, ace" />
-            <param name="dependencies" value="['alpaca-core', 'jquery-ui', 'ace/ace']" />
+            <param name="dependencies" value="['alpaca-core', 'jquery-ui']" />
         </antcall>
 
         <!-- Alpaca ("alpaca") -->
@@ -701,12 +706,12 @@
             <param name="name" value="alpaca" />
             <param name="variableName" value="Alpaca" />
             <param name="argumentNames" value="$, tmpl, jQueryUI, ace" />
-            <param name="dependencies" value="['jquery', 'jquery-tmpl', 'jquery-ui', 'ace/ace']" />
+            <param name="dependencies" value="['jquery', 'jquery-tmpl', 'jquery-ui']" />
         </antcall>
 
     </target>
 
-    <target name="clean" depends="clean-demos-local-dependencies">
+    <target name="clean">
         <delete dir="${build.dir}"/>
     </target>
 
@@ -794,63 +799,94 @@
 
     </target>
 
-    <target name="clean-demos-local-dependencies">
+    <target name="package-local-demos">
 
-        <!-- browser demos -->
-        <ant dir="demos/browser/quickstart" target="clean" />
-        <ant dir="demos/browser/registration" target="clean" />
+        <!-- amd -->
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/amd/quickstart"/>
+        </antcall>
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/amd/registration"/>
+        </antcall>
 
-        <!-- amd demos -->
-        <ant dir="demos/amd/quickstart" target="clean" />
-        <ant dir="demos/amd/registration" target="clean" />
+        <!-- bootstrap -->
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/bootstrap/quickstart"/>
+        </antcall>
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/bootstrap/registration"/>
+        </antcall>
 
-        <!-- bootstrap demos -->
-        <ant dir="demos/bootstrap/quickstart" target="clean" />
-        <ant dir="demos/bootstrap/registration" target="clean" />
+        <!-- jquerymobile -->
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/jquerymobile/quickstart"/>
+        </antcall>
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/jquerymobile/registration"/>
+        </antcall>
 
-        <!-- jquerymobile demos -->
-        <ant dir="demos/jquerymobile/quickstart" target="clean" />
-        <ant dir="demos/jquerymobile/registration" target="clean" />
+        <!-- jqueryui -->
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/jqueryui/quickstart"/>
+        </antcall>
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/jqueryui/registration"/>
+        </antcall>
+
+        <!-- standalone -->
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/standalone/quickstart"/>
+        </antcall>
+        <antcall target="package-local-demo">
+            <param name="location" value="${package.dir}/demos/standalone/registration"/>
+        </antcall>
 
     </target>
 
-    <target name="install-demos-local-dependencies" depends="clean-demos-local-dependencies">
+    <target name="package-local-demo">
 
-        <!-- browser demos -->
-        <ant dir="demos/browser/quickstart" />
-        <ant dir="demos/browser/registration" />
+        <!-- directories -->
+        <mkdir dir="${location}/lib"/>
+        <mkdir dir="${location}/lib/alpaca"/>
 
-        <!-- amd demos -->
-        <ant dir="demos/amd/quickstart" />
-        <ant dir="demos/amd/registration" />
+        <!-- copy in libraries -->
+        <copy todir="${location}/lib/alpaca">
+            <fileset dir="${package.dir}/components/alpaca">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </copy>
 
-        <!-- bootstrap demos -->
-        <ant dir="demos/bootstrap/quickstart" />
-        <ant dir="demos/bootstrap/registration" />
+        <!-- jQuery 1.9.1 -->
+        <copy tofile="${location}/lib/jquery-latest.min.js" file="${package.dir}/lib/jquery-1.9.1.min.js" />
+        <copy todir="${location}/lib" file="${package.dir}/lib/jquery.tmpl.js" />
 
-        <!-- jquerymobile demos -->
-        <ant dir="demos/jquerymobile/quickstart" />
-        <ant dir="demos/jquerymobile/registration" />
+        <!-- jQuery UI minimal runtime set -->
+        <copy todir="${location}/lib/jquery-ui-latest">
+            <fileset dir="${package.dir}/lib/jquery-ui-latest">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </copy>
 
-    </target>
+        <!-- Bootstrap -->
+        <copy todir="${location}/lib/bootstrap">
+            <fileset dir="${package.dir}/lib/bootstrap">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </copy>
 
-    <target name="install-demos-package-dependencies">
+        <!-- jQuery Mobile -->
+        <copy todir="${location}/lib/jquerymobile">
+            <fileset dir="${package.dir}/lib/jquerymobile">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </copy>
 
-        <!-- browser demos -->
-        <ant dir="build/package/demos/browser/quickstart" />
-        <ant dir="build/package/demos/browser/registration" />
-
-        <!-- amd demos -->
-        <ant dir="build/package/demos/amd/quickstart" />
-        <ant dir="build/package/demos/amd/registration" />
-
-        <!-- bootstrap demos -->
-        <ant dir="build/package/demos/bootstrap/quickstart" />
-        <ant dir="build/package/demos/bootstrap/registration" />
-
-        <!-- jquerymobile demos -->
-        <ant dir="build/package/demos/jquerymobile/quickstart" />
-        <ant dir="build/package/demos/jquerymobile/registration" />
+        <!-- RequireJS -->
+        <copy tofile="${location}/lib/require.js" file="${package.dir}/lib/requirejs/require.js"/>
 
     </target>
 
