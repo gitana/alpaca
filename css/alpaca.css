@@ -349,6 +349,12 @@ DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu P
 
 /* END styles for JSON Field */
 
+/* BEGIN styles for Hidden Field */
+.alpaca-controlfield-hidden {
+    display: none;
+}
+/* END styles for Hidden Field */
+
 /* BEGIN styles for Container Field (Fieldset) */
 
 .alpaca-fieldset {

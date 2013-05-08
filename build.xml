@@ -39,6 +39,7 @@
         <mkdir dir="${package.dir}/lib"/>
         <mkdir dir="${package.dir}/examples"/>
         <mkdir dir="${package.dir}/demos"/>
+        <mkdir dir="${package.dir}/downloads"/>
 
         <copy todir="${prep.dir}/js">
             <fileset dir="${js.dir}"/>
@@ -117,6 +118,7 @@
         <file name="fields/basic/ArrayField.js"/>
         <file name="fields/basic/ObjectField.js"/>
         <file name="fields/basic/AnyField.js"/>
+        <file name="fields/basic/HiddenField.js"/>
         <!--End of Alpaca Core Fields-->
 
         <!-- i18n support -->
@@ -186,6 +188,7 @@
                 <file name="fields/basic/ArrayField.js"/>
                 <file name="fields/basic/ObjectField.js"/>
                 <file name="fields/basic/AnyField.js"/>
+                <file name="fields/basic/HiddenField.js"/>
                 <!--End of Alpaca Core Fields-->
 
                 <!-- i18n support -->
@@ -370,6 +373,7 @@
                 <file name="fields/basic/ArrayField.js"/>
                 <file name="fields/basic/ObjectField.js"/>
                 <file name="fields/basic/AnyField.js"/>
+                <file name="fields/basic/HiddenField.js"/>
                 <!--End of Alpaca Core Fields-->
 
                 <!-- i18n support -->
@@ -564,6 +568,11 @@
                        replace='&lt;script type="text\/javascript" src="../js/${appkey}-tests.min.js"&gt;&lt;/script&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="tests/index.html"/>
         </replaceregexp>
+    </target>
+
+    <!-- Packages up the Distribution (and components) -->
+    <target name="package" depends="prep-html, components">
+
         <copy todir="${package.dir}/examples">
             <fileset dir="${prep.dir}/examples" includes="**/*"/>
         </copy>
@@ -588,39 +597,10 @@
         <copy todir="${package.dir}/css/images">
             <fileset dir="${prep.dir}/css/images" includes="**/*"/>
         </copy>
-    </target>
 
-    <!-- Packages up the Distribution (and components) -->
-    <target name="package" depends="prep-html, components">
-        <zip destfile="${prep.dir}/${appkey}-distribution.zip">
-            <fileset dir="${package.dir}">
-                <exclude name="**/.DS_Store/*"/>
-                <exclude name="**/.idea/*"/>
-            </fileset>
-        </zip>
-        <zip destfile="${prep.dir}/${appkey}-basic-distribution.zip">
-            <fileset dir="${package.dir}">
-                <include name="css/**/*"/>
-                <include name="js/**/*"/>
-                <include name="lib/**/*"/>
-                <exclude name="**/.DS_Store/*"/>
-                <exclude name="**/.idea/*"/>
-            </fileset>
-        </zip>
-        <copy todir="${package.dir}/downloads">
-            <fileset dir="${prep.dir}" includes="*.zip"/>
-        </copy>
-
-        <!-- component zips -->
-        <zip destfile="${package.dir}/downloads/components/alpaca-component.zip">
-            <fileset dir="${package.dir}/components/alpaca">
-                <include name="**/*"/>
-                <exclude name="**/.DS_Store/*"/>
-                <exclude name="**/.idea/*"/>
-            </fileset>
-        </zip>
-
+        <antcall target="package-component-distributions"/>
         <antcall target="package-local-demos" />
+        <antcall target="package-distributions" />
 
     </target>
 
@@ -727,6 +707,7 @@
         <include name="lib/**/*"/>
         <include name="tests/**/*"/>
         <include name="demos/**/*"/>
+        <include name="web/**/*"/>
         <include name="examples/**/*"/>
         <include name="*.html"/>
         <include name="favicon.ico"/>
@@ -894,6 +875,48 @@
         <!-- RequireJS -->
         <copy tofile="${location}/lib/require.js" file="${package.dir}/lib/requirejs/require.js"/>
 
+    </target>
+
+    <target name="package-component-distributions">
+
+        <!-- component zips -->
+        <zip destfile="${package.dir}/downloads/alpaca-component.zip">
+            <fileset dir="${package.dir}/components/alpaca">
+                <include name="**/*"/>
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </zip>
+
+    </target>
+
+    <target name="package-distributions">
+
+        <zip destfile="${package.dir}/downloads/${appkey}-distribution.zip">
+            <fileset dir="${package.dir}">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </zip>
+        <tar destfile="${package.dir}/downloads/${appkey}-distribution.tar">
+            <fileset dir="${package.dir}">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </tar>
+        <gzip destfile="${package.dir}/downloads/${appkey}-distribution.tar.gz" src="${package.dir}/downloads/${appkey}-distribution.tar"/>
+        <!--
+        <zip destfile="${package.dir}/downloads/${appkey}-basic-distribution.zip">
+            <fileset dir="${package.dir}">
+                <include name="css/**/*"/>
+                <include name="js/**/*"/>
+                <include name="lib/**/*"/>
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </zip>
+        -->
+        <delete file="${package.dir}/downloads/${appkey}-distribution.tar" />
     </target>
 
 </project>

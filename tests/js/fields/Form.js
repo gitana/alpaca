@@ -71,9 +71,9 @@
                 ok(formElem.length, 'Form generated.');
                 equal(formElem.attr('action'), '../../endpoints/save.php', 'Form field action attribute populated correctly.');
                 equal(formElem.attr('method'), 'post', 'Form field method attribute populated correctly.');
-                var submitButtonElem = $('#form-1 form input:submit');
+                var submitButtonElem = $('#form-1 form button:submit');
                 ok(submitButtonElem.length, 'Submit button generated.');
-                var resetButtonElem = $('#form-1 form input:reset');
+                var resetButtonElem = $('#form-1 form button:reset');
                 ok(resetButtonElem.length, 'Reset button generated.');
                 start();
             }

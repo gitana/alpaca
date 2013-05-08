@@ -48,12 +48,11 @@
                 <h1><img src="examples/img/alpaca.png"><span>jQuery Forms Made Easy</span></h1>
                 <div class="resource-bar">
                     <a href="index.html" class="current">Home</a>
-                    <a href="download.html">Download</a>
-                    <a href="examples/components/fields/text-field.html">Documentation</a>
+                    <a href="web/download.html">Downloads</a>
+                    <a href="examples/components/fields/any-field.html">Documentation</a>
                     <a href="examples/forms/customer-profile/edit-form.html">Forms</a>
-                    <a href="resources.html#mobile">Mobile</a>
-                    <a href="tutorials.html">Tutorials</a>
-                    <a href="consulting.html">Consulting</a>
+                    <a href="web/tutorials.html">Tutorials</a>
+                    <a href="web/consulting.html">Consulting</a>
                 </div>
             </div>
         </div>
@@ -69,11 +68,11 @@
     </div>
     <div class="widget-body">
 
-        <h2 class="home-header"s>
-            Alpaca is the Easy Forms Engine for jQuery.
+        <h2 class="home-header">
+            Alpaca is the Easy Forms Engine for jQuery
         </h2>
-        <p>
-            Forms generated with Alpaca work with Twitter Bootstrap, jQuery Mobile, jQuery UI and standalone.
+        <p align="center">
+            Web and Mobile Forms for Twitter Bootstrap, jQuery Mobile and jQuery UI
         </p>
         <div align="center" class="front-ui-images">
             <span class="bootstrap">
@@ -93,21 +92,21 @@
             </span>
         </div>
         <p>
-            Forms are generated on-the-fly from <a href="http://json-schema.org/" target="_blank">JSON schema</a>
-            and JSON configuration documents.  Express your object model, types, properties and validation logic and
+            Alpaca generates forms on-the-fly using <a href="http://json-schema.org/" target="_blank">JSON schema</a>
+            and JSON configuration to define object models, types, properties, validation logic and layout.
             Alpaca generates intuitive forms for your users while giving your business an assurance of data compliance.
         </p>
         <p>
             The Alpaca library is pre-packaged with controls, wizards, layouts, I18N support and pluggable template
-            engines.  We ship with support for jQuery Tmpl, EJS and Handlebars.  Documentation and API information
-            is provided so that you can extend Alpaca as you see fit.
+            engines (we ship with support for jQuery.tmpl(), EJS and Handlebars).  API Documentation is provided so
+            that you can extend Alpaca as you see fit.
         </p>
         <p>
             The philosophy behind Alpaca is that you should design your forms once and have them work on lots of
             different devices and UI engines without recoding.
         </p>
         <p>
-            Here is a sample registration form written once and rendered using four different approaches:
+            Here are some examples of Alpaca running with different UI front-ends:
         </p>
 
         <div align="center" class="front-ui-examples">
@@ -125,7 +124,7 @@
             </span>
         </div>
         <p>
-            Alpaca is an community-led <a href="https://github.com/gitana/alpaca" target="_blank">open-source project</a>
+            Alpaca is a community-led <a href="https://github.com/gitana/alpaca" target="_blank">open-source project</a>
             licensed under Apache 2.0.
         </p>
     </div>
@@ -235,8 +234,8 @@ $(function() {
             </p>
 
             <p>
-                The table below shows our tested stack.  If not shown, it means that Alpaca hasn't been tested on that platform and
-                browser combination.  For combinations not shown, please feel free to evaluate on your own.  There is a good chance
+                This table shows our tested stack.  If not shown, it means that Alpaca hasn't been tested on that platform and
+                browser combination.  That said, please feel free to evaluate on your own.  There is a good chance
                 Alpaca will run just fine.
             </p>
 
@@ -359,10 +358,10 @@ $(function() {
                 the source code, build it yourself and customize Alpaca for your own projects.
             </p>
 
-            <h3 class="home-seg">Download</h3>
+            <h3 class="home-seg">Downloads</h3>
             <p>
-                We offer <a href="download.html#releases">official releases</a> for Alpaca for use in production environments
-                as well as <a href="download.html#snapshots">development snapshot builds</a> for use in test.
+                We offer <a href="web/download.html#releases">official releases</a> for Alpaca for use in production environments
+                as well as <a href="web/download.html#snapshots">development snapshot builds</a> for use in test.
             </p>
 
             <h3 class="home-seg">Source Code</h3>
@@ -372,31 +371,58 @@ $(function() {
                 open source license.
             </p>
 
-            <h3 class="home-seg">Tutorials</h3>
+            <h3 class="home-seg">Tutorials, Form Demos and Mobile Examples</h3>
             <p>
-                At the top of this page, you'll find links to
-                <a href="tutorials.html">tutorials</a> and <a href="resources.html#documentation">documentation</a>.  We also
-                provide demonstrations and examples of
-                <a href="examples/forms/customer-profile/edit-form.html">complex forms</a> and
-                <a href="resources.html#mobile">mobile applications</a> using jQuery Mobile.
+                Check out our <a href="web/tutorials.html">tutorials</a> and <a href="web/resources.html#documentation">documentation</a> to
+                get a sense of what Alpaca can do for you.  Also take a look at some
+                <a href="examples/forms/customer-profile/edit-form.html">Complex Forms</a> and <a href="./demos">Framework Demonstrations</a>.
+                These cover implementing Alpaca with Twitter Bootstrap, jQuery UI and jQuery Mobile.
+            </p>
+            <p>
+                We've also provided a few additional mobile-specific examples for iPad and iPhone.
+            </p>
+            <ul>
+                <li><a href="./examples/mobile/mobile-examples.html" target="_blank">Browser</a></li>
+                <li><a id="ipad-link" href="http://ipadpeek.com/?url=http://www.alpacajs.org/examples/mobile/mobile-examples.html&amp;portrait" target="_mobile">iPad Simulator</a></li>
+                <li><a id="iphone-link" href="http://testiphone.com/?url=http://www.alpacajs.org/examples/mobile/mobile-examples.html" target="_blank">iPhone Simulator</a></li>
+            </ul>
             </p>
 
-            <h3 class="home-seg">Community Forums</h3>
-            <p>
-                If you have a question about Alpaca, please visit the <a href="http://www.cloudcms.org">Alpaca Forums</a>.  We're pulling together
-                Alpaca developers and users from within the community to help support one another with their Alpaca-related projects.
-            </p>
-
-            <h3 class="home-seg">API</h3>
+            <h3 class="home-seg">Developer APIs</h3>
             <p>
                 We provide an
-                <a href="examples/components/fields/text-field.html">API and Component Reference</a> that describes all of the nifty
+                <a href="./examples/components/fields/text-field.html">API and Component Reference</a> that describes all of the nifty
                 components and controls that are available out-of-the-box.  This will give you an idea of how to build your own
                 extensions.
                 <br/>
                 <br/>
-                All of our <a href="resources.html#unittests">Unit Tests</a> are online.
+                All of our <a href="./tests/index.html">Unit Tests</a> are online.
                 <br/>
+                We also provide <a href="http://test.cloudcms.com/alpaca/web/js-doc/allclasses.html">Alpaca API JSDoc</a>.
+            </p>
+
+            <h3 class="home-seg">Alpaca Integrations</h3>
+            <p>
+                With its performance and extensibility, Alpaca has been adopted by various users as their forms
+                service for creating and editing structured JSON.
+            </p>
+            <p>
+                Alpaca can also be easily integrated with other Content Management Systems.
+            </p>
+            <ul>
+                <li>
+                    <a href="http://blog.productivist.com/alfraca-alfresco-meets-alpaca/">
+                        Alfraca : Alfresco Meets Alpaca</a>
+                </li>
+                <li>
+                    <a href="https://github.com/cmpaul/alfraca">Alfraca Project</a>
+                </li>
+            </ul>
+
+            <h3 class="home-seg">Community Forums</h3>
+            <p>
+                If you have a question about Alpaca, please visit the <a href="http://www.cloudcms.org">Alpaca Forums</a>.
+                We'd love to get to know you and to hear your feedback!
             </p>
 
         </div>

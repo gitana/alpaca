@@ -29,7 +29,7 @@ $(function() {
 
             // do some code cleanup
             code = js_beautify(code, {
-                "indent_size": 3,
+                "indent_size": 4,
                 "preserve_newlines": false
             });
 
@@ -214,6 +214,11 @@ $(function() {
                 "link":"../../components/fields/file-field.html"
             },
             {
+                "id":"hidden-field",
+                "title":"Hidden Field",
+                "link":"../../components/fields/hidden-field.html"
+            },
+            {
                 "id":"number-field",
                 "title":"Number Field",
                 "link":"../../components/fields/number-field.html"
@@ -234,14 +239,14 @@ $(function() {
                 "link":"../../components/fields/select-field.html"
             },
             {
-                "id":"textarea-field",
-                "title":"Textarea Field",
-                "link":"../../components/fields/textarea-field.html"
-            },
-            {
                 "id":"text-field",
                 "title":"Text Field",
                 "link":"../../components/fields/text-field.html"
+            },
+            {
+                "id":"textarea-field",
+                "title":"Textarea Field",
+                "link":"../../components/fields/textarea-field.html"
             }
         ]
     }, {
@@ -430,12 +435,12 @@ $(function() {
                 "id":"layout-table",
                 "title":"Table",
                 "link":"../../components/layouts/table-layout/table-layout.html"
-            },
+            }/*,
             {
                 "id":"layout-yaml",
                 "title":"YAML",
                 "link":"../../components/layouts/yaml-layout/yaml-layout.html"
-            }
+            }*/
         ]
     }, {
         "title": "Preview",

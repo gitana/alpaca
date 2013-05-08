@@ -10,36 +10,38 @@
     <meta name="author" content="Gitana Software Inc."/>
     <meta http-equiv="X-UA-Compatible" content="IE=9">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
 
     <!-- jQuery -->
-    <script type="text/javascript" src="./lib/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="./lib/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="../lib/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="../lib/jquery.tmpl.js"></script>
+
+    <!-- jQuery UI Support -->
+    <script type="text/javascript" src="../examples/lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
+    <link type="text/css" href="../examples/lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
 
     <!-- Alpaca -->
-    <script type="text/javascript" src="./components/alpaca/alpaca.js"></script>
-    <link type="text/css" href="./components/alpaca/alpaca.css" rel="stylesheet"/>
-
-    <!-- jQuery UI Theme -->
-    <link type="text/css" href="./examples/lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../components/alpaca/alpaca.js"></script>
+    <link type="text/css" href="../components/alpaca/alpaca.css" rel="stylesheet"/>
+    <link type="text/css" href="../components/alpaca/alpaca-jqueryui.css" rel="stylesheet"/>
 
     <!-- Additional CSS -->
-    <link type="text/css" href="./examples/css/960.fluid.css" rel="stylesheet"/>
+    <link type="text/css" href="../examples/css/960.fluid.css" rel="stylesheet"/>
 
     <!-- Web Site -->
-    <script type="text/javascript" src="./examples/lib/google-code-prettify/prettify.min.js"></script>
-    <script type="text/javascript" src="./examples/js/themeswitchertool.js"></script>
-    <script type="text/javascript" src="./examples/js/example.js"></script>
-    <script type="text/javascript" src="./examples/js/footer.js"></script>
-    <link type="text/css" href="./examples/css/site.css" rel="stylesheet"/>
-    <link type="text/css" href="./examples/lib/google-code-prettify/prettify.css" rel="stylesheet"/>
-    <script type="text/javascript" src="./examples/lib/tweet/jquery.tweet.js"></script>
-    <link type="text/css" href="./examples/lib/tweet/jquery.tweet.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../examples/lib/google-code-prettify/prettify.min.js"></script>
+    <script type="text/javascript" src="../examples/js/themeswitchertool.js"></script>
+    <script type="text/javascript" src="../examples/js/example.js"></script>
+    <script type="text/javascript" src="../examples/js/footer.js"></script>
+    <link type="text/css" href="../examples/css/site.css" rel="stylesheet"/>
+    <link type="text/css" href="../examples/lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../examples/lib/tweet/jquery.tweet.js"></script>
+    <link type="text/css" href="../examples/lib/tweet/jquery.tweet.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
-    <script type="text/javascript" src="./examples/lib/jquery.blockui.js"></script>
+    <script type="text/javascript" src="../examples/lib/jquery.blockui.js"></script>
 
     <script type="text/javascript">
         $.fn.center = function () {
@@ -49,6 +51,12 @@
             return this;
         };
     </script>
+    <style type="text/css">
+        .alpaca-controlfield-label
+        {
+            width: 200px !important;
+        }
+    </style>
 
 </head>
 <body>
@@ -56,13 +64,12 @@
         <div class='container_12'>
             <div class='actual-body'>
                 <div class='grid_12'>
-                    <h1><img src="examples/img/alpaca.png"><span>jQuery Forms Made Easy</span></h1>
+                    <h1><img src="../examples/img/alpaca.png"><span>jQuery Forms Made Easy</span></h1>
                     <div class="resource-bar">
-                        <a href="index.html">Home</a>
-                        <a href="download.html">Download</a>
-                        <a href="examples/components/fields/text-field.html">Documentation</a>
-                        <a href="examples/forms/customer-profile/edit-form.html">Forms</a>
-                        <a href="resources.html#mobile">Mobile</a>
+                        <a href="../index.html">Home</a>
+                        <a href="download.html">Downloads</a>
+                        <a href="../examples/components/fields/any-field.html">Documentation</a>
+                        <a href="../examples/forms/customer-profile/edit-form.html">Forms</a>
                         <a href="tutorials.html">Tutorials</a>
                         <a href="consulting.html" class="current">Consulting</a>
                     </div>
@@ -79,11 +86,12 @@
                     </div>
                     <div class="widget-body">
                         <div align="center" width="100%">
-                            <img src="examples/img/logo/cloudcms_logo.png">
+                            <img src="../examples/img/logo/cloudcms_logo.png">
                         </div>
-                        <p>
-                            Alpaca is developed and sponsored by <a href="http://www.cloudcms.com">Cloud CMS</a>.
+                        <p align="center">
+                            Alpaca is sponsored by <a href="http://www.cloudcms.com">Cloud CMS</a>.
                         </p>
+                        <br/>
                         <p>
                             Cloud CMS provides a cloud service that plugs into Alpaca to provision services like:
                         </p>
@@ -96,7 +104,12 @@
                         </ul>
                         <p>
                             If you're looking for formal assistance, the Cloud CMS team would be happy to help you with
-                            your project.  We offer reasonable rates and high quality results.
+                            your project.
+                            <br/>
+                            We offer reasonable rates and high quality results.
+                            <br/>
+                            <br/>
+                            Just send us some information about your project and we'll be in touch!
                         </p>
                         <div width="100%" align="center">
 
@@ -125,7 +138,7 @@
             Alpaca.logLevel = Alpaca.DEBUG;
 
             $("#contactus").alpaca({
-                "view": "VIEW_WEB_CREATE_TABLE",
+                "view": "VIEW_JQUERYUI_CREATE_LIST",
                 "schema": {
                     "type": "object",
                     "properties": {
@@ -155,7 +168,7 @@
                         },
                         "redirectUri": {
                             "type": "string",
-                            "default": "http://www.alpacajs.org/consulting.html?received=true"
+                            "default": "http://www.alpacajs.org/web/consulting.html?received=true"
                         }
                     }
                 },
@@ -213,7 +226,7 @@
         var doBlock = function(message)
         {
             var config = {
-                message: "<div><p align='center'><img src='examples/css/images/alpaca.png' /></p><br/><p class='center'>" + message + "</p></div>",
+                message: "<div><p align='center'><img src='../examples/css/images/alpaca.png' /></p><br/><p class='center'>" + message + "</p></div>",
                 centerX: true,
                 centerY: true,
                 css:

@@ -50,8 +50,8 @@ p {
 code {
     color: #222222;
     font-family: "Courier New",sans-serif;
-    font-size: 15px;
-    font-weight: 600 !important;
+    font-size: 16px;
+    font-weight: 400 !important;
     margin-left: 3px;
     margin-right: 3px;
     text-shadow: 1px 1px #EEEEEE;
@@ -428,6 +428,8 @@ header > div
 .front-ui-images
 {
     height: 130px;
+    padding-top: 10px;
+    padding-bottom: 20px;
 }
 
 .front-ui-images img
@@ -544,7 +546,7 @@ p.alpaca-schema-description
 .alpaca-example-case div h3
 {
     font-size: 1em;
-    padding-top: 10px;
+    padding-top: 20px;
 }
 
 h2.home-header
