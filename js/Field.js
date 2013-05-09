@@ -1107,33 +1107,38 @@
          */
         initEvents: function() {
             var _this = this;
-            // trigger control level handlers for things that happen to input element
-            this.field.change(function(e) {
-                _this.onChange(e);
-            });
 
-            this.field.focus(function(e) {
-                _this.onFocus(e);
-            });
+            if (this.field)
+            {
+                // trigger control level handlers for things that happen to input element
+                this.field.change(function(e) {
+                    _this.onChange(e);
+                });
 
-            this.field.blur(function(e) {
-                _this.onBlur(e);
-            });
-            this.field.mouseover(function(e) {
-                _this.onMouseOver(e);
-            });
-            this.field.mouseout(function(e) {
-                _this.onMouseOut(e);
-            });
-            // register general event handlers through options
-            $.each(this.options, function(key, func) {
-                if (Alpaca.startsWith(key,'onField') && Alpaca.isFunction(func)) {
-                    var event = key.substring(7).toLowerCase();
-                    _this.field.on(event, function(e) {
-                        func.call(_this,e);
-                    });
-                }
-            });
+                this.field.focus(function(e) {
+                    _this.onFocus(e);
+                });
+
+                this.field.blur(function(e) {
+                    _this.onBlur(e);
+                });
+                this.field.mouseover(function(e) {
+                    _this.onMouseOver(e);
+                });
+                this.field.mouseout(function(e) {
+                    _this.onMouseOut(e);
+                });
+
+                // register general event handlers through options
+                $.each(this.options, function(key, func) {
+                    if (Alpaca.startsWith(key,'onField') && Alpaca.isFunction(func)) {
+                        var event = key.substring(7).toLowerCase();
+                        _this.field.on(event, function(e) {
+                            func.call(_this,e);
+                        });
+                    }
+                });
+            }
         },
 
         /**

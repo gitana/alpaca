@@ -141,19 +141,30 @@
          * @see Alpaca.Field#getValue
          */
         getValue: function() {
-            return this.field.val();
+            var value = null;
+            if (this.field) {
+                value = this.field.val();
+            } else {
+                value = this.base();
+            }
+
+            return value;
         },
         
         /**
          * @see Alpaca.Field#setValue
          */
         setValue: function(value) {
-            if (Alpaca.isEmpty(value)) {
-                this.field.val("");
-            } else {
-                this.field.val(value);
+
+            if (this.field)
+            {
+                if (Alpaca.isEmpty(value)) {
+                    this.field.val("");
+                } else {
+                    this.field.val(value);
+                }
             }
-            
+
             // be sure to call into base method
             this.base(value);
         },
@@ -251,21 +262,30 @@
          * @see Alpaca.Field#disable
          */
         disable: function() {
-            this.field.disabled = true;
+            if (this.field)
+            {
+                this.field.disabled = true;
+            }
         },
         
         /**
          * @see Alpaca.Field#enable
          */
         enable: function() {
-            this.field.disabled = false;
+            if (this.field)
+            {
+                this.field.disabled = false;
+            }
         },
         
         /**
          * @see Alpaca.Field#focus
          */
         focus: function() {
-            this.field.focus();
+            if (this.field)
+            {
+                this.field.focus();
+            }
         },//__BUILDER_HELPERS
         
         /**

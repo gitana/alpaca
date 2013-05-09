@@ -44,7 +44,12 @@
                 for (var countryKey in countriesMap)
                 {
                     this.schema["enum"].push(countryKey);
-                    this.options.optionLabels.push(countriesMap[countryKey]);
+
+                    var label = countriesMap[countryKey];
+                    if (this.options.capitalize) {
+                        label = label.toUpperCase();
+                    }
+                    this.options.optionLabels.push(label);
                 }
             }
 

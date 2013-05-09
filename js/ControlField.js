@@ -137,21 +137,24 @@
 
             var _this = this;
 
-            this.field.keypress(function(e) {
-                _this.onKeyPress(e);
-            });
+            if (this.field)
+            {
+                this.field.keypress(function(e) {
+                    _this.onKeyPress(e);
+                });
 
-            this.field.keyup(function(e) {
-                _this.onKeyUp(e);
-            });
+                this.field.keyup(function(e) {
+                    _this.onKeyUp(e);
+                });
 
-            this.field.keydown(function(e) {
-                _this.onKeyDown(e);
-            });
+                this.field.keydown(function(e) {
+                    _this.onKeyDown(e);
+                });
 
-            this.field.click(function(e) {
-                _this.onClick(e);
-            });
+                this.field.click(function(e) {
+                    _this.onClick(e);
+                });
+            }
 
         },
 
