@@ -399,12 +399,53 @@
          * @param thing
          * @return {*}
          */
-        copyOf: function(thing) {
+        copyOf: function(thing)
+        {
             var copy = thing;
 
-            if (Alpaca.isArray(thing) || Alpaca.isObject(thing))
+            if (Alpaca.isArray(thing))
             {
-                copy = Alpaca.cloneObject(thing);
+                copy = [];
+
+                for (var i = 0; i < thing.length; i++)
+                {
+                    copy.push(Alpaca.copyOf(thing[i]));
+                }
+            }
+            else if (Alpaca.isObject(thing))
+            {
+                if (thing instanceof Date)
+                {
+                    // date
+                    return new Date(thing.getTime());
+                }
+                else if (thing instanceof RegExp)
+                {
+                    // regular expression
+                    return new RegExp(thing);
+                }
+                else if (thing.nodeType && "cloneNode" in thing)
+                {
+                    // DOM node
+                    copy = thing.cloneNode(true);
+                }
+                else if ($.isPlainObject(thing))
+                {
+                    copy = {};
+
+                    for (var k in thing)
+                    {
+                        if (thing.hasOwnProperty(k))
+                        {
+                            copy[k] = Alpaca.copyOf(thing[k]);
+                        }
+                    }
+                }
+                else
+                {
+                    // otherwise, it's some other kind of object so we just do a referential copy
+                    // in other words, not a copy
+                }
             }
 
             return copy;
@@ -1293,44 +1334,6 @@
             _merge(source, target);
 
             return target;
-        },
-
-        /**
-         * Clones an object.
-         *
-         * @param {Object} obj Source object
-         * @returns {Object} Cloned object
-         */
-        cloneObject : function(obj) {
-            var clone;
-
-            // we only make clones of plain objects
-            // for prototyped objects, we make referentials
-            if (Alpaca.isPlainObject(obj)) {
-                clone = {};
-                for (var i in obj) {
-                    if (obj.hasOwnProperty(i)) {
-                        if (Alpaca.isPlainObject(obj[i]) || Alpaca.isArray(obj[i])) {
-                            clone[i] = Alpaca.cloneObject(obj[i]);
-                        } else {
-                            clone[i] = obj[i];
-                        }
-                    }
-                }
-            } else if (Alpaca.isArray(obj)) {
-                clone = [];
-                for (var z = 0 ; z < obj.length ; z++) {
-                    if (Alpaca.isPlainObject(obj[z]) || Alpaca.isArray(obj[z])) {
-                        clone.push(Alpaca.cloneObject(obj[z]));
-                    } else {
-                        clone.push(obj[z]);
-                    }
-                }
-            } else {
-                clone = obj;
-            }
-
-            return clone;
         },
 
         /**

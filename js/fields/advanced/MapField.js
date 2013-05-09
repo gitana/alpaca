@@ -40,7 +40,7 @@
                 if (Alpaca.isObject(this.data)) {
                     var newData = [];
                     $.each(this.data, function(key, value) {
-                        var newValue = Alpaca.cloneObject(value);
+                        var newValue = Alpaca.copyOf(value);
                         newValue["_key"] = key;
                         newData.push(newValue);
                     });

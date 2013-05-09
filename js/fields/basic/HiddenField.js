@@ -126,5 +126,5 @@
 
     Alpaca.registerTemplate("controlFieldHidden", '<input type="hidden" id="${id}" {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
     Alpaca.registerFieldClass("hidden", Alpaca.Fields.HiddenField);
-    Alpaca.registerDefaultSchemaFieldMapping("string", "hidden");
+
 })(jQuery);

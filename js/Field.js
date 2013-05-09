@@ -95,7 +95,7 @@
             this.validation = {};
 
             // backup data
-            this.backupData = Alpaca.cloneObject(this.data);
+            this.backupData = Alpaca.copyOf(this.data);
 
             // helper function to determine if we're in a display-only mode
             this.isDisplayOnly = function()
