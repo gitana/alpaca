@@ -571,7 +571,7 @@
     </target>
 
     <!-- Packages up the Distribution (and components) -->
-    <target name="package" depends="prep-html, components">
+    <target name="package" depends="prep-html">
 
         <copy todir="${package.dir}/examples">
             <fileset dir="${prep.dir}/examples" includes="**/*"/>
@@ -598,6 +598,7 @@
             <fileset dir="${prep.dir}/css/images" includes="**/*"/>
         </copy>
 
+        <antcall target="components"/>
         <antcall target="package-component-distributions"/>
         <antcall target="package-local-demos" />
         <antcall target="package-distributions" />
@@ -643,7 +644,7 @@
                 <include name="${appkey}-mobile.css" />
                 <include name="${appkey}-bootstrap.css" />
                 <include name="${appkey}-jqueryui.css" />
-				<include name="images/**" />
+                <include name="images/**" />
 			</fileset>
 		</copy>
         <copy file="${project.dir}/components/alpaca-extras/component.json.txt" tofile="${package.dir}/components/alpaca-extras/component.json" overwrite="true" filtering="true">
@@ -670,7 +671,7 @@
                 <include name="${appkey}-mobile.css" />
                 <include name="${appkey}-bootstrap.css" />
                 <include name="${appkey}-jqueryui.css" />
-				<include name="images/**" />
+                <include name="images/**" />
 			</fileset>
 		</copy>
         <copy file="${project.dir}/components/alpaca/component.json.txt" tofile="${package.dir}/components/alpaca/component.json" overwrite="true" filtering="true">

@@ -1,8 +1,10 @@
 /**
  * Fix for jQuery datepicker initial state issue.
  */
-#ui-datepicker-div {
+#ui-datepicker-div
+{
     display: none;
+    background-color:white;
 }
 
 /* Fix for Chrome issue with Button text */
