@@ -452,6 +452,17 @@
         },
 
         /**
+         * Retained for legacy purposes.  Alias for copyOf().
+         *
+         * @param object
+         * @returns {*}
+         */
+        cloneObject: function(object)
+        {
+            return Alpaca.copyOf(object);
+        },
+
+        /**
          * Splices a string.
          *
          * @param {String} source Source string to be spliced.
