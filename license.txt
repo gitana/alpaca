@@ -1,5 +1,5 @@
 /*!
-Alpaca Version 1.0.9
+Alpaca Version 1.1.0
 
 Copyright 2013 Gitana Software, Inc.
 
