@@ -470,6 +470,62 @@ $(function() {
                 });
             </script>
 
+            <!-- example #14 -->
+            <h2>Example 14: Non-required field with allowOptionalEmpty</h2>
+            <p>
+                The <code>allowOptionalEmpty</code> option allows you to identify optional fields that you wish to have
+                validate successfully successfully when they have empty values.
+            </p>
+            <p>
+                Shown here is an email field.  Email fields run a regex to validate the the email address provided
+                is structurally correct.  However, if the field is optional (meaning that the schema <code>required</code>
+                is false), then the user may elect not to fill in this field.
+            </p>
+            <p>
+                When running validation on the form, technically speaking, an empty value for the email field would
+                be considered invalid (since the data does not conform to the expected structure).  The <code>allowOptionalEmpty</code>
+                option tells Alpaca to bypass this validation logic and simply accept an empty value for the optional field.
+            </p>
+            <div id="field14">
+            </div>
+            <script type="text/javascript" id="field14-script">
+                $(function() {
+                    $("#field14").alpaca({
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "required": false
+                                }
+                            }
+                        },
+                        "options": {
+                            "renderForm": true,
+                            "form": {
+                                "buttons": {
+                                    "submit": {}
+                                }
+                            },
+                            "fields": {
+                                "name": {
+                                    "type": "text",
+                                    "label": "What is your name?"
+                                },
+                                "email": {
+                                    "type": "email",
+                                    "label": "Optionally provide your email",
+                                    "allowOptionalEmpty": true
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

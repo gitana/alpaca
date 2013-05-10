@@ -206,10 +206,12 @@
         _validatePattern: function() {
             if (this.schema.pattern) {
                 var val = this.getValue();
+                if (val === "" && this.options.allowOptionalEmpty && !this.schema.required) {
+                    return true;
+                }
                 if (Alpaca.isEmpty(val)) {
                     val = "";
                 }
-                //if (!Alpaca.isValEmpty(val) && !val.match(this.schema.pattern)) {
                 if (!val.match(this.schema.pattern)) {
                     return false;
                 }
@@ -226,14 +228,15 @@
         _validateMinLength: function() {
 			if (!Alpaca.isEmpty(this.schema.minLength)) {
 				var val = this.getValue();
+                if (val === "" && this.options.allowOptionalEmpty && !this.schema.required) {
+                    return true;
+                }
                 if (Alpaca.isEmpty(val)) {
                     val = "";
                 }
-				//if (!Alpaca.isEmpty(val)) {
-					if (val.length < this.schema.minLength) {
-						return false;
-					}
-				//}
+                if (val.length < this.schema.minLength) {
+                    return false;
+                }
 			}
 			return true;
 		},
@@ -246,14 +249,15 @@
         _validateMaxLength: function() {
 			if (!Alpaca.isEmpty(this.schema.maxLength)) {
 				var val = this.getValue();
+                if (val === "" && this.options.allowOptionalEmpty && !this.schema.required) {
+                    return true;
+                }
                 if (Alpaca.isEmpty(val)) {
                     val = "";
                 }
-                //if (!Alpaca.isEmpty(val)) {
-					if (val.length > this.schema.maxLength) {
-						return false;
-					}
-				//}
+                if (val.length > this.schema.maxLength) {
+                    return false;
+                }
 			}
             return true;
         },
@@ -360,6 +364,10 @@
                     "typeahead": {
                         "title": "Provides auto-complete / typeahead configuration for the text field.",
                         "description": "Provides configuration for the $.typeahead plugin if it is available.  For full configuration options, see: https://github.com/twitter/typeahead.js"
+                    },
+                    "allowOptionalEmpty": {
+                        "title": "Allows this non-required field to validate when the value is empty",
+                        "description": "If this property isn't required, then allow an empty string to pass validation"
                     }
                 }
             });
@@ -381,6 +389,9 @@
                     },
                     "typeahead": {
                         "type": "object"
+                    },
+                    "allowOptionalEmpty": {
+                        "type": "boolean"
                     }
                 }
             });

@@ -514,7 +514,7 @@
             // finished initializing
             this.initializing = false;
 
-            var defaultHideInitValidationError = (this.view.type == 'create') || this.isDynamicCreation;
+            var defaultHideInitValidationError = (this.view.type == 'create');
             this.hideInitValidationError = Alpaca.isValEmpty(this.options.hideInitValidationError) ? defaultHideInitValidationError : this.options.hideInitValidationError;
 
             // final call to update validation state
