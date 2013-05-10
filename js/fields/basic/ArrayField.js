@@ -307,7 +307,7 @@
                             icon: _this.addIcon,
                             label: (_this.options.items && _this.options.items.addItemLabel) ? _this.options.items.addItemLabel : "Add Item",
                             clickCallback: function(id, arrayField) {
-                                var newContainerElem = arrayField.addItem(containerElem.index() + 1, null, null, id);
+                                var newContainerElem = arrayField.addItem(containerElem.index() + 1, null, null, id, true);
                                 arrayField.enrichElements(newContainerElem);
                                 return false;
                             }
@@ -404,7 +404,7 @@
                 // add actions to toolbar buttons
                 if (this.options.toolbarStyle == "link") {
                     $('.alpaca-fieldset-array-toolbar-add', toolbarElem).click(function() {
-                        var newContainerElem = _this.addItem(0, null, "", id);
+                        var newContainerElem = _this.addItem(0, null, "", id, true);
                         _this.enrichElements(newContainerElem);
                     });
                 } else {
@@ -413,7 +413,7 @@
                         _this.buttonBeautifier.call(_this, toolbarElemAdd, _this.addIcon, true);
                     }
                     toolbarElemAdd.click(function() {
-                        _this.addItem(0, null, "", id);
+                        _this.addItem(0, null, "", id, true);
                         return false;
                     }).wrap('<small></small>');
 
@@ -450,9 +450,10 @@
          * @param {Object} fieldOptions Field options
          * @param {Any} value Field value
          * @param {String} insertAfterId Where the item will be inserted
+         * @param [Boolean] isDynamicSubItem whether this item is being dynamically created (after first render)
          */
-        addItem: function(index, fieldOptions, value, insertAfterId) {
-            return this._addItem(index, fieldOptions, value, insertAfterId);
+        addItem: function(index, fieldOptions, value, insertAfterId, isDynamicSubItem) {
+            return this._addItem(index, fieldOptions, value, insertAfterId, isDynamicSubItem);
         },
 
         /**
@@ -462,10 +463,11 @@
          * @param fieldOptions
          * @param value
          * @param insertAfterId
+         * @param isDynamicSubItem
          * @return {*}
          * @private
          */
-        _addItem: function(index, fieldOptions, value, insertAfterId) {
+        _addItem: function(index, fieldOptions, value, insertAfterId,isDynamicSubItem) {
             var _this = this;
             if (_this._validateEqualMaxItems()) {
                 var itemSchema;
@@ -485,6 +487,7 @@
                     "view" : this.view.id ? this.view.id : this.view,
                     "connector": this.connector,
                     "notTopLevel":true,
+                    "isDynamicCreation": (isDynamicSubItem || this.isDynamicCreation),
                     "render" : function(fieldControl) {
                         // render
                         fieldControl.parent = _this;
@@ -510,6 +513,9 @@
                         _this.renderToolbar(containerElem);
                         _this.renderValidationState();
                         _this.updatePathAndName();
+
+                        // trigger update on the parent array
+                        _this.triggerUpdate();
                     }
                 });
 
@@ -539,7 +545,7 @@
                     if (_this.options && _this.options.fields && _this.options.fields["item"]) {
                         fieldSetting = _this.options.fields["item"];
                     }
-                    _this.addItem(index, fieldSetting, value);
+                    _this.addItem(index, fieldSetting, value, false);
                 });
             }
             this.updateToolbarItemsStatus();

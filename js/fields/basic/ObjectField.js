@@ -204,8 +204,9 @@
              * @param {Object} fieldOptions Child field options.
              * @param {Any} value Child field value
              * @param {String} insertAfterId Location where the child item will be inserted.
+             * @param [Boolean] isDynamicSubItem whether this item is being dynamically created (after first render)
              */
-            addItem: function(propertyId, fieldOptions, value, insertAfterId) {
+            addItem: function(propertyId, fieldOptions, value, insertAfterId, isDynamicSubItem) {
                 var _this = this;
                 var itemSchema;
                 if (_this.schema && _this.schema.properties && _this.schema.properties[propertyId]) {
@@ -220,6 +221,7 @@
                     "view" : this.view.id ? this.view.id : this.view,
                     "connector": this.connector,
                     "notTopLevel":true,
+                    "isDynamicCreation": (isDynamicSubItem || this.isDynamicCreation),
                     "render" : function(fieldControl) {
                         // render
                         fieldControl.parent = _this;
@@ -249,6 +251,9 @@
                         if (insertAfterId) {
                             _this.renderValidationState();
                         }
+
+                        // trigger update on the parent array
+                        _this.triggerUpdate();
                     }
                 });
             },

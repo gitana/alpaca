@@ -136,7 +136,7 @@
 
         enableSubmitButton: function()
         {
-            $(".alpaca-form-button-submit").attr("disabled", false);
+            $(".alpaca-form-button-submit").attrProp("disabled", false);
 
             if ($.mobile) {
                 try { $(".alpaca-form-button-submit").button('refresh'); } catch (e) { }
@@ -145,7 +145,7 @@
 
         disableSubmitButton: function()
         {
-            $(".alpaca-form-button-submit").attr("disabled", true);
+            $(".alpaca-form-button-submit").attrProp("disabled", true);
 
             if ($.mobile) {
                 try { $(".alpaca-form-button-submit").button('refresh'); } catch (e) { }
@@ -155,6 +155,9 @@
         adjustSubmitButtonState: function()
         {
             this.disableSubmitButton();
+
+            var x = this.isFormValid();
+            console.log("isFormValid: " + x);
 
             if (this.isFormValid())
             {

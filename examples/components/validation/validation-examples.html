@@ -412,6 +412,64 @@ $(function() {
                 });
             </script>
 
+            <!-- example #13 -->
+            <h2>Example 13: </h2>
+            <p>Array field with required sub-properties.</p>
+            <div id="field13">
+            </div>
+            <script type="text/javascript" id="field13-script">
+                $(function() {
+                    $("#field13").alpaca({
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "field1": {
+                                        "type": "string",
+                                        "title": "Field #1",
+                                        "required": true
+                                    },
+                                    "subobject": {
+                                        "type": "object",
+                                        "required": true,
+                                        "properties": {
+                                            "field2": {
+                                                "type": "string",
+                                                "title": "Field #2",
+                                                "required": true
+                                            }
+                                        }
+                                    },
+                                    "subarray": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "field3": {
+                                                    "type": "string",
+                                                    "title": "Field #3",
+                                                    "required": true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "options": {
+                            "toolbarSticky": true,
+                            "renderForm": true,
+                            "form": {
+                                "buttons": {
+                                    "submit": {}
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+
                         </div>
                         <div class="clear height-fix"></div>
                     </div>

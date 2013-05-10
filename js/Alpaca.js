@@ -67,6 +67,7 @@
         var errorCallback = null;
         var connector = null;
         var notTopLevel = false;
+        var isDynamicCreation = false;
         var initialSettings = {};
 
         if (args.length == 1) {
@@ -114,6 +115,9 @@
                 }
                 if (!Alpaca.isEmpty(args[1].notTopLevel)) {
                     notTopLevel = args[1].notTopLevel;
+                }
+                if (!Alpaca.isEmpty(args[1].isDynamicCreation)) {
+                    isDynamicCreation = args[1].isDynamicCreation;
                 }
             } else {
                 // "data" is the second argument
@@ -217,7 +221,7 @@
             "schema": schema,
             "view": view
         }, function(loadedData, loadedOptions, loadedSchema, loadedView) {
-            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, initialSettings, callback, _renderedCallback, connector, errorCallback);
+            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, initialSettings, callback, _renderedCallback, connector, errorCallback, isDynamicCreation);
         }, function (loadError) {
             errorCallback(loadError);
             return null;
@@ -1449,10 +1453,11 @@
          * @param {Function} renderedCallback Post-render callback.
          * @param {Alpaca.connector} connector Field connector.
          * @param {Function} errorCallback Error callback.
+         * @param {Boolean} isDynamicCreation whether this alpaca field is being dynamically created (after first render)
          *
          * @returns {Alpaca.Field} New field instance.
          */
-        init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback) {
+        init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, isDynamicCreation) {
 
             var self = this;
 
@@ -1495,11 +1500,11 @@
                     throw new Error("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
                 }
 
-                self._init(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback);
+                self._init(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, isDynamicCreation);
             });
         },
 
-        _init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback)
+        _init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, isDynamicCreation)
         {
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1609,6 +1614,7 @@
 
 
             var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);
+            field.isDynamicCreation = isDynamicCreation;
             Alpaca.fieldInstances[field.getId()] = field;
 
             // allow callbacks defined through view
@@ -2193,19 +2199,24 @@
 
     Alpaca.checked = function(el, value)
     {
-        if (value)
+        return Alpaca.attrProp(el, "checked", value);
+    };
+
+    Alpaca.attrProp = function(el, name, value)
+    {
+        if (!(typeof(value) === "undefined"))
         {
             // jQuery 1.6+
             if ($(el).prop)
             {
-                $(el).prop("checked", value);
+                $(el).prop(name, value);
             }
             else
             {
                 if (value) {
-                    $(el).attr("checked", "checked");
+                    $(el).attr(name, value);
                 } else {
-                    $(el).removeAttr("checked");
+                    $(el).removeAttr(name);
                 }
             }
         }
@@ -2214,11 +2225,12 @@
 
         // jQuery 1.6+
         if ($(el).prop) {
-            return $(el).prop("checked");
+            return $(el).prop(name);
         }
 
-        return $(el).attr("checked");
+        return $(el).attr(name);
     };
+
 
     $.alpaca = window.Alpaca = Alpaca;
 
@@ -2259,6 +2271,10 @@
             $(to).replaceWith(copy_from);
             $(this).replaceWith(copy_to);
         });
+    };
+
+    $.fn.attrProp = function(name, value) {
+        return Alpaca.attrProp($(this), name, value);
     };
 
     /**
