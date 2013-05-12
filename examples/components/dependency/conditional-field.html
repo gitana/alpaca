@@ -18,6 +18,7 @@
         <!-- Alpaca -->
         <script type="text/javascript" src="../../../components/alpaca/alpaca.js"></script>
         <link type="text/css" href="../../../components/alpaca/alpaca.css" rel="stylesheet"/>
+        <link type="text/css" href="../../../components/alpaca/alpaca-jqueryui.css" rel="stylesheet"/>
 
         <!-- jQuery UI Support -->
         <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
@@ -79,7 +80,7 @@
 
 
                 <!-- Example #1 -->
-                <h3>Ice Cream Picker Field: </h3>
+                <h3>Example #1: Conditional Field</h3>
                 <p>Conditional field through combination of schema dependency properties and options dependency properties.</p>
                 <div id="field1"></div>
                 <script type="text/javascript" id="field1-script">
@@ -108,7 +109,7 @@ $(function() {
                 "choice": {
                     "title": "Select",
                     "type": "String",
-                    "description": "What do you want to choose?",
+                    "description": "What would you like to add to your ice cream?",
                     "enum": ["Flavour", "Topping"]
                 },
                 "flavour": {
@@ -125,18 +126,100 @@ $(function() {
                 }
             }
         },
-        "view": "VIEW_WEB_EDIT_LIST"
+        "view": "VIEW_JQUERYUI_EDIT_LIST"
     });
 });
                 </script>
 
 
-                <h3>Nested Conditionals: </h3>
-                <p>Demonstrates multi-level nested conditionals</p>
+                <!-- Example #2 -->
+                <h3>Example #2: Conditional Field (based on boolean)</h3>
+                <p>This is an example of a conditional field that bases its rendering on a boolean value.</p>
                 <div id="field2"></div>
                 <script type="text/javascript" id="field2-script">
+                    $(function() {
+                        $("#field2").alpaca({
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "age": {
+                                        "type": "number"
+                                    },
+                                    "ownmeals": {
+                                        "type": "boolean"
+                                    },
+                                    "mealplans": {
+                                        "type": "object",
+                                        "properties": {
+                                            "breakfast": {
+                                                "type": "boolean"
+                                            },
+                                            "lunch": {
+                                                "type": "boolean"
+                                            },
+                                            "dinner": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "dependencies": "ownmeals"
+                                    }
+                                }
+                            },
+                            "options": {
+                                "fields": {
+                                    "name": {
+                                        "type": "text",
+                                        "label": "Name"
+                                    },
+                                    "age": {
+                                        "type": "integer",
+                                        "label": "Age"
+                                    },
+                                    "ownmeals": {
+                                        "type": "checkbox",
+                                        "rightLabel": "I will pay for my own meals"
+                                    },
+                                    "mealplans": {
+                                        "label": "Select which pre-paid meals you would like",
+                                        "fields": {
+                                            "breakfast": {
+                                                "type": "checkbox",
+                                                "rightLabel": "Five Star Continental Breakfast"
+                                            },
+                                            "lunch": {
+                                                "type": "checkbox",
+                                                "rightLabel": "Lunch at Statler Hall"
+                                            },
+                                            "dinner": {
+                                                "type": "checkbox",
+                                                "rightLabel": "Concourse Dinner at Okenshields"
+                                            }
+                                        },
+                                        "dependencies": {
+                                            "ownmeals": false
+                                        }
+                                    }
+                                }
+                            },
+                            "view": "VIEW_JQUERYUI_EDIT_LIST"
+                        });
+                    });
+                </script>
+
+
+                <!-- Example #3 -->
+                <h3>Example #3 - Nested Conditionals: </h3>
+                <p>
+                    Demonstrates multi-level nested conditionals.  This example also uses the <code>vertical</code>
+                    option to have the radio selectors group vertically.
+                </p>
+                <div id="field3"></div>
+                <script type="text/javascript" id="field3-script">
 $(function() {
-    $("#field2").alpaca({
+    $("#field3").alpaca({
 
         "schema": {
             "title": "Conditional Field Test Case",
@@ -195,6 +278,9 @@ $(function() {
         "options": {
             "renderform": "true",
             "fields": {
+                "ConditionalField": {
+                    "vertical": true
+                },
                 "DependentFieldA": {
                     "dependencies": {
                         "ConditionalField": "Show Dependent Field A"
@@ -209,6 +295,9 @@ $(function() {
                     "fields": {
                         "item": {
                             "fields": {
+                                "ConditionalFieldInArray": {
+                                    "vertical": true
+                                },
                                 "DependentFieldInArrayA": {
                                     "dependencies": {
                                         "ConditionalFieldInArray": "Show Dependent Field in Array A"
@@ -224,7 +313,8 @@ $(function() {
                     }
                 }
             }
-        }
+        },
+        "view": "VIEW_JQUERYUI_EDIT_LIST"
     });
 });
                 </script>
