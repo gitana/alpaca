@@ -12,6 +12,7 @@
     <property name="lib.dir" value="${project.dir}/lib"/>
     <property name="css.dir" value="${project.dir}/css"/>
     <property name="examples.dir" value="${project.dir}/examples"/>
+    <property name="web.dir" value="${project.dir}/web"/>
     <property name="tests.dir" value="${project.dir}/tests"/>
     <property name="demos.dir" value="${project.dir}/demos"/>
 
@@ -33,11 +34,13 @@
         <mkdir dir="${prep.dir}/css"/>
         <mkdir dir="${prep.dir}/tests"/>
         <mkdir dir="${prep.dir}/examples"/>
+        <mkdir dir="${prep.dir}/web"/>
         <mkdir dir="${prep.dir}/demos"/>
         <mkdir dir="${package.dir}"/>
         <mkdir dir="${package.dir}/js"/>
         <mkdir dir="${package.dir}/lib"/>
         <mkdir dir="${package.dir}/examples"/>
+        <mkdir dir="${package.dir}/web"/>
         <mkdir dir="${package.dir}/demos"/>
         <mkdir dir="${package.dir}/downloads"/>
 
@@ -52,6 +55,9 @@
         </copy>
         <copy todir="${prep.dir}/examples">
             <fileset dir="${examples.dir}"/>
+        </copy>
+        <copy todir="${prep.dir}/web">
+            <fileset dir="${web.dir}"/>
         </copy>
         <copy todir="${prep.dir}/tests">
             <fileset dir="${tests.dir}"/>
@@ -573,6 +579,9 @@
     <!-- Packages up the Distribution (and components) -->
     <target name="package" depends="prep-html">
 
+        <copy todir="${package.dir}/web">
+            <fileset dir="${prep.dir}/web" includes="**/*"/>
+        </copy>
         <copy todir="${package.dir}/examples">
             <fileset dir="${prep.dir}/examples" includes="**/*"/>
         </copy>

@@ -110,6 +110,12 @@
                     }
                 }
 
+                // stack radio selectors vertically
+                if (this.options.vertical)
+                {
+                    $(".alpaca-controlfield-radio-item", this.field).css("display", "block");
+                }
+
                 this.injectField(this.field);
             }
             
@@ -158,6 +164,12 @@
                     "emptySelectFirst": {
                         "title": "Empty Select First",
                         "description": "If the data is empty, then automatically select the first item in the list.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "vertical": {
+                        "title": "Position the radio selector items vertically",
+                        "description": "When true, the radio selector items will be stacked vertically and not horizontally",
                         "type": "boolean",
                         "default": false
                     }

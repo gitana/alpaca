@@ -485,9 +485,6 @@
              */
             determineSingleDependencyValid: function(propertyId, dependentOnPropertyId)
             {
-                // assume it isn't valid
-                var valid = false;
-
                 // checks to see if the referenced "dependent-on" property has a value
                 // basic JSON-schema supports this (if it has ANY value, it is considered valid
                 // special consideration for boolean false
@@ -497,59 +494,81 @@
                     // no dependent-on field found, return false
                     return false;
                 }
-                if (!Alpaca.isValEmpty(child.data))
+
+                // assume it isn't valid
+                var valid = false;
+
+                // go one of two directions depending on whether we have conditional dependencies or not
+                var conditionalDependencies = this.childrenByPropertyId[propertyId].options.dependencies;
+                if (!conditionalDependencies || conditionalDependencies.length === 0)
                 {
-                    // if the data is actually a boolean false, then we make a special assumption
-                    // that this is the same as having no value (only applies to boolean fields)
-                    if (child.data === false)
+                    //
+                    // BASIC DEPENENDENCY CHECKING (CORE JSON SCHEMA)
+                    //
+
+                    // special case: if the field is a boolean field and we have no conditional dependency checking,
+                    // then we set valid = false if the field data is a boolean false
+                    if (child.getType() === "boolean" && !this.childrenByPropertyId[propertyId].options.dependencies && !child.data)
                     {
                         valid = false;
                     }
                     else
                     {
-                        // otherwise, we assume that it has a value and so we must now challenge to
-                        // assert that the value is invalid
-                        valid = true;
+                        valid = !Alpaca.isValEmpty(child.data);
                     }
                 }
+                else
+                {
+                    //
+                    // CONDITIONAL DEPENDENCY CHECKING (ALPACA EXTENSION VIA OPTIONS)
+                    //
 
-                // Alpaca extends JSON schema by allowing dependencies to trigger only for specific values on the
-                // dependent fields.  If options are specified to define this, we walk through and perform an
-                // AND operation across any fields
-                var itemDependencyOptions = this.childrenByPropertyId[propertyId].options.dependencies;
-                if (itemDependencyOptions) {
+                    // Alpaca extends JSON schema by allowing dependencies to trigger only for specific values on the
+                    // dependent fields.  If options are specified to define this, we walk through and perform an
+                    // AND operation across any fields
+
+                    // do some data sanity cleanup
+                    var dependentOnField = this.childrenByPropertyId[dependentOnPropertyId];
+                    var dependentOnData = dependentOnField.data;
+                    if (dependentOnField.getType() === "boolean" && !dependentOnData) {
+                        dependentOnData = false
+                    }
+
 
                     // if the option is a function, then evaluate the function to determine whether to show
                     // the function evaluates regardless of whether the schema-based fallback determined we should show
-                    if (!Alpaca.isEmpty(itemDependencyOptions[dependentOnPropertyId]) && Alpaca.isFunction(itemDependencyOptions[dependentOnPropertyId]))
+                    if (!Alpaca.isEmpty(conditionalDependencies[dependentOnPropertyId]) && Alpaca.isFunction(conditionalDependencies[dependentOnPropertyId]))
                     {
-                        valid = itemDependencyOptions[dependentOnPropertyId].call(this,this.childrenByPropertyId[dependentOnPropertyId].data);
+                        valid = conditionalDependencies[dependentOnPropertyId].call(this, dependentOnData);
                     }
                     else
                     {
-                        // if our schema-based approach determined we should show the property, then perform further granulated checks
-                        if (valid)
-                        {
-                            if (Alpaca.isArray(itemDependencyOptions[dependentOnPropertyId])) {
+                        // assume true
+                        valid = true;
 
-                                // check array value
-                                if (itemDependencyOptions[dependentOnPropertyId] && $.inArray(this.childrenByPropertyId[dependentOnPropertyId].data, itemDependencyOptions[dependentOnPropertyId]) == -1)
-                                {
-                                    valid = false;
-                                }
-                            }
-                            else
+                        // the option is an array or an object
+                        if (Alpaca.isArray(conditionalDependencies[dependentOnPropertyId])) {
+
+                            // check array value
+                            if (conditionalDependencies[dependentOnPropertyId] && $.inArray(dependentOnData, conditionalDependencies[dependentOnPropertyId]) == -1)
                             {
-
-                                // check option value
-                                if (!Alpaca.isEmpty(itemDependencyOptions[dependentOnPropertyId]) && itemDependencyOptions[dependentOnPropertyId] != this.childrenByPropertyId[dependentOnPropertyId].data)
-                                {
-                                    valid = false;
-                                }
+                                valid = false;
+                            }
+                        }
+                        else
+                        {
+                            // check object value
+                            if (!Alpaca.isEmpty(conditionalDependencies[dependentOnPropertyId]) && conditionalDependencies[dependentOnPropertyId] != dependentOnData)
+                            {
+                                valid = false;
                             }
                         }
                     }
                 }
+
+                //
+                // NESTED HIDDENS DEPENDENCY HIDES (ALPACA EXTENSION)
+                //
 
                 // final check: only set valid if the dependentOnPropertyId is showing
                 var dependencyProperty = this.childrenByPropertyId[dependentOnPropertyId];
