@@ -86,7 +86,7 @@
 
             var isValidMapKeysUnique = this._validateMapKeysUnique();
             valInfo["keyNotUnique"] = {
-                "message": !isValidMapKeysUnique ? "" : this.view.getMessage("keyNotUnique"),
+                "message": isValidMapKeysUnique ? "" : this.view.getMessage("keyNotUnique"),
                 "status": isValidMapKeysUnique
             };
 

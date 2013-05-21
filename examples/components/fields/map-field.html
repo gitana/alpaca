@@ -207,6 +207,46 @@
                             </script>
 
 
+                            <!-- example #3 -->
+                            <h2>Example 3: Map Validation </h2>
+                            <p>
+                                This example shows an object with an empty _key property.  As such, the form renders
+                                with a validation error.  By providing a non-empty key, the form validates.
+                            </p>
+
+                            <div id="field3"></div>
+                            <script type="text/javascript" id="field3-script">
+                                $("#field3").alpaca({
+                                    "data": {
+                                        "": {
+                                            "firstName": "Bruce",
+                                            "lastName": "Springsteen"
+                                        }
+                                    },
+                                    "schema": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "_key" : {
+                                                    "title" : "User Id"
+                                                },
+                                                "firstName" : {
+                                                    "title" : "First Name"
+                                                },
+                                                "lastName" : {
+                                                    "title" : "Last Name"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "options" : {
+                                        "type" : "map",
+                                        "toolbarSticky" : true
+                                    }
+                                });
+                            </script>
+
                             <!-- BEGIN DISCUSSIONS -->
                             <div class="alpaca-discussions"></div>
                             <!-- END DISCUSSIONS -->
