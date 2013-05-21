@@ -32,9 +32,14 @@
 
             this.base();
 
+            Alpaca.mergeObject(this.options, {
+                "forceRevalidation" : true
+            });
+
             if (Alpaca.isEmpty(this.data)) {
                 return;
             }
+
             if (!Alpaca.isArray(this.data)) {
 
                 if (Alpaca.isObject(this.data)) {
@@ -47,11 +52,6 @@
                     this.data = newData;
                 }
             }
-
-            Alpaca.mergeObject(this.options, {
-                "forceRevalidation" : true
-            });
-
         },
 
         /**

@@ -32,6 +32,23 @@
              */
             setup: function() {
                 this.base();
+
+                this.wizardPreIcon = "";
+                this.wizardNextIcon = "";
+                this.wizardDoneIcon= "";
+
+                if (this.view.style && Alpaca.styleInjections[this.view.style]) {
+                    if (Alpaca.styleInjections[this.view.style]["wizardPreIcon"]) {
+                        this.wizardPreIcon = Alpaca.styleInjections[this.view.style]["wizardPreIcon"];
+                    }
+                    if (Alpaca.styleInjections[this.view.style]["wizardNextIcon"]) {
+                        this.wizardNextIcon = Alpaca.styleInjections[this.view.style]["wizardNextIcon"];
+                    }
+                    if (Alpaca.styleInjections[this.view.style]["wizardDoneIcon"]) {
+                        this.wizardDoneIcon = Alpaca.styleInjections[this.view.style]["wizardDoneIcon"];
+                    }
+                }
+
                 if (Alpaca.isEmpty(this.data)) {
                     return;
                 }
@@ -48,20 +65,6 @@
                         } catch (e) {
                             return;
                         }
-                    }
-                }
-                this.wizardPreIcon = "";
-                this.wizardNextIcon = "";
-                this.wizardDoneIcon= "";
-                if (this.view.style && Alpaca.styleInjections[this.view.style]) {
-                    if (Alpaca.styleInjections[this.view.style]["wizardPreIcon"]) {
-                        this.wizardPreIcon = Alpaca.styleInjections[this.view.style]["wizardPreIcon"];
-                    }
-                    if (Alpaca.styleInjections[this.view.style]["wizardNextIcon"]) {
-                        this.wizardNextIcon = Alpaca.styleInjections[this.view.style]["wizardNextIcon"];
-                    }
-                    if (Alpaca.styleInjections[this.view.style]["wizardDoneIcon"]) {
-                        this.wizardDoneIcon = Alpaca.styleInjections[this.view.style]["wizardDoneIcon"];
                     }
                 }
             },
