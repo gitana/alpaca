@@ -75,3 +75,8 @@ DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu P
     background-color: #ccc;
     color: #333;
 }
+
+.alpaca-controlfield-message-hidden
+{
+    display:none;
+}
