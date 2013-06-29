@@ -94,6 +94,9 @@
             // validation status
             this.validation = {};
 
+            // events
+            this._events = {};
+
             // backup data
             this.backupData = Alpaca.copyOf(this.data);
 
@@ -102,7 +105,6 @@
             {
                 return (self.view.type == "view");
             };
-
         },
 
         /**
@@ -179,9 +181,73 @@
         },
 
         /**
+         * Registers an event listener.
+         *
+         * @param name
+         * @param fn
+         * @returns {*}
+         */
+        on: function(name, fn)
+        {
+            Alpaca.logDebug("Adding listener for event: " + name);
+            this._events[name] = fn;
+            return this;
+        },
+
+        /**
+         * Triggers an event
+         *
+         * @param name
+         * @param propagate (whether to propagate upwards)
+         *
+         * Remainder of arguments will be passed to the event handler.
+         *
+         * @returns {null}
+         */
+        trigger: function(name, propagate)
+        {
+            var originalArgs = Array.prototype.slice.call(arguments);
+
+            var args = Array.prototype.slice.call(arguments);
+            args.shift();
+            args.shift();
+            args.unshift(this);
+
+            Alpaca.logDebug("Firing event: " + name);
+            var handler = this._events[name];
+
+            var ret = null;
+            if (typeof(handler) == "function")
+            {
+                Alpaca.logDebug("Found event handler, calling: " + name);
+                try
+                {
+                    ret = handler.apply(this, args);
+                }
+                catch (e)
+                {
+                    Alpaca.logDebug("The event handler caught an exception: " + name);
+                }
+            }
+            else
+            {
+                Alpaca.logDebug("Could not find an event handler for: " + name);
+            }
+
+            if (propagate && this.parent)
+            {
+                this.parent.trigger.apply(this.parent, originalArgs);
+            }
+
+            return ret;
+        },
+
+
+        /**
          * Binds the data into the field.  Called at the very end of construction.
          */
-        bindData: function() {
+        bindData: function()
+        {
             if (!Alpaca.isEmpty(this.data)) {
                 this.setValue(this.data);
             }
@@ -516,15 +582,14 @@
 
             var defaultHideInitValidationError = (this.view.type == 'create');
             this.hideInitValidationError = Alpaca.isValEmpty(this.options.hideInitValidationError) ? defaultHideInitValidationError : this.options.hideInitValidationError;
-            if (typeof(this.hideInitValidationError) === "undefined")
-            {
-                this.hideInitValidationError = false;
-            }
 
             // final call to update validation state
             if (this.view.type != 'view') {
                 this.renderValidationState();
             }
+
+            // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
+            this.hideInitValidationError = false;
 
             // for create view, hide all readonly fields
             if (!this.view.displayReadonly) {
@@ -693,20 +758,26 @@
                         }
                     }
 
+                    // current validation status
+                    var beforeStatus = this.isValid();
+
                     // clear out previous validation UI markers
                     this.getStyleInjection("removeError",this.getEl());
                     this.getEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
 
-                    // current validation status
-                    var beforeStatus = this.isValid();
-
                     // now run the validation
                     if (this.validate()) {
+
+                        // TRIGGER: "validated"
+                        this.trigger("validated", true, this);
 
                         // mark valid
                         this.getEl().addClass("alpaca-field-valid");
 
                     } else {
+
+                        // TRIGGER: "invalidated"
+                        this.trigger("invalidated", true, this);
 
                         // we don't markup invalidation state for readonly fields
                         if (!this.options.readonly)
