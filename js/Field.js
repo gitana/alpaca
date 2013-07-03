@@ -195,18 +195,33 @@
         },
 
         /**
+         * Triggers an event and propagates the event up the parent chain.
+         *
+         * @param name
+         */
+        triggerWithPropagation: function(name)
+        {
+            var args = Array.prototype.slice.call(arguments);
+            this.trigger.apply(this, args);
+
+            if (this.parent)
+            {
+                this.parent.triggerWithPropagation.apply(this.parent, args);
+            }
+        },
+
+        /**
          * Triggers an event
          *
          * @param name
-         * @param propagate (whether to propagate upwards)
          *
          * Remainder of arguments will be passed to the event handler.
          *
          * @returns {null}
          */
-        trigger: function(name, propagate)
+        trigger: function(name)
         {
-            var originalArgs = Array.prototype.slice.call(arguments);
+            // NOTE: this == control
 
             var args = Array.prototype.slice.call(arguments);
             args.shift();
@@ -232,11 +247,6 @@
             else
             {
                 Alpaca.logDebug("Could not find an event handler for: " + name);
-            }
-
-            if (propagate && this.parent)
-            {
-                this.parent.trigger.apply(this.parent, originalArgs);
             }
 
             return ret;
@@ -769,7 +779,7 @@
                     if (this.validate()) {
 
                         // TRIGGER: "validated"
-                        this.trigger("validated", true, this);
+                        this.triggerWithPropagation("validated", this);
 
                         // mark valid
                         this.getEl().addClass("alpaca-field-valid");
@@ -777,7 +787,7 @@
                     } else {
 
                         // TRIGGER: "invalidated"
-                        this.trigger("invalidated", true, this);
+                        this.triggerWithPropagation("invalidated", this);
 
                         // we don't markup invalidation state for readonly fields
                         if (!this.options.readonly)
