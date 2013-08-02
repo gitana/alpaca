@@ -2231,6 +2231,64 @@
         return $(el).attr(name);
     };
 
+    Alpaca.loadRefSchemaOptions = function(topField, refId, callback)
+    {
+        if (refId.indexOf("#/definitions/") > -1)
+        {
+            var defId = refId.substring(14);
+
+            var defSchema = null;
+            if (topField.schema.definitions)
+            {
+                defSchema = topField.schema.definitions[defId];
+            }
+
+            var defOptions = null;
+            if (topField.options.definitions)
+            {
+                defOptions = topField.options.definitions[defId];
+            }
+
+            callback(defSchema, defOptions);
+        }
+        else
+        {
+            var field = Alpaca.findByRefId(topField, refId);
+            if (field)
+            {
+                callback(field.schema, field.options);
+            }
+            else
+            {
+                callback();
+            }
+        }
+    };
+
+    Alpaca.findByRefId = function(field, refId)
+    {
+        if (field.refId === refId)
+        {
+            return field;
+        }
+        else
+        {
+            if (field.children)
+            {
+                for (var i = 0; i < field.children.length; i++)
+                {
+                    var x = Alpaca.findByRefId(field.children[i], refId);
+                    if (x)
+                    {
+                        return x;
+                    }
+                }
+            }
+        }
+
+        return null;
+    };
+
 
     $.alpaca = window.Alpaca = Alpaca;
 

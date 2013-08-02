@@ -37,6 +37,16 @@
         "removeError" : function(targetDiv) {
             targetDiv.removeClass('error');
         },
+        "tooltipErrorMessage": function(targetDiv, message) {
+
+            // if bootstrap has the tooltip, we can pretty up the message
+            if ($.fn.tooltip)
+            {
+                targetDiv.tooltip({
+                    "html": message
+                }).click();
+            }
+        },
 
         // field
         "field" : function(targetDiv) {

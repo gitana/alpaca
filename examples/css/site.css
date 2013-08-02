@@ -9,7 +9,8 @@ html, body {
 }
 
 body {
-    background: url("images/bg.png") repeat scroll 0 0 transparent;
+    /*background: url("images/bg.png") repeat scroll 0 0 transparent;*/
+    background-color: #eee;
 }
 
 .actual-body {
@@ -410,7 +411,7 @@ header > div
 .widget-body H3
 {
     color: #444 !important;
-    text-shadow: 1px 1px #eee !important;
+    /*text-shadow: 1px 1px #eee !important;*/
     font-weight: 300 !important;
 }
 

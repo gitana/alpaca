@@ -205,6 +205,16 @@ $(function() {
                     "link":"../../forms/login/localized-login-form.html"
                 }
             ]
+        },
+        {
+            "title": "References",
+            "examples": [
+                {
+                    "id":"references",
+                    "title":"Using References",
+                    "link":"../../forms/references/references.html"
+                }
+            ]
         }
     ];
 

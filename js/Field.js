@@ -78,6 +78,12 @@
                 this.options.helper = this.schema.description;
             }
 
+            // ref id
+            if (this.schema && this.schema.id)
+            {
+                this.refId = this.schema.id;
+            }
+
 
             if (Alpaca.isEmpty(this.options.readonly) && !Alpaca.isEmpty(this.schema.readonly)) {
                 this.options.readonly = this.schema.readonly;
@@ -198,15 +204,15 @@
          * Triggers an event and propagates the event up the parent chain.
          *
          * @param name
+         * @param event
          */
-        triggerWithPropagation: function(name)
+        triggerWithPropagation: function(name, event)
         {
-            var args = Array.prototype.slice.call(arguments);
-            this.trigger.apply(this, args);
+            this.trigger.call(this, name, event);
 
             if (this.parent)
             {
-                this.parent.triggerWithPropagation.apply(this.parent, args);
+                this.parent.triggerWithPropagation.call(this.parent, name, event);
             }
         },
 
@@ -214,19 +220,15 @@
          * Triggers an event
          *
          * @param name
+         * @param event
          *
          * Remainder of arguments will be passed to the event handler.
          *
          * @returns {null}
          */
-        trigger: function(name)
+        trigger: function(name, event)
         {
             // NOTE: this == control
-
-            var args = Array.prototype.slice.call(arguments);
-            args.shift();
-            args.shift();
-            args.unshift(this);
 
             Alpaca.logDebug("Firing event: " + name);
             var handler = this._events[name];
@@ -237,7 +239,7 @@
                 Alpaca.logDebug("Found event handler, calling: " + name);
                 try
                 {
-                    ret = handler.apply(this, args);
+                    ret = handler.call(this, event);
                 }
                 catch (e)
                 {
@@ -474,9 +476,9 @@
          * @param key item key for style injection
          * @param targetDiv target DIV of style injection
          */
-        getStyleInjection: function(key,targetDiv) {
+        getStyleInjection: function(key,targetDiv, arg1, arg2) {
             if (this.view.style && Alpaca.styleInjections[this.view.style] && Alpaca.styleInjections[this.view.style][key]) {
-                Alpaca.styleInjections[this.view.style][key].call(this,targetDiv);
+                Alpaca.styleInjections[this.view.style][key].call(this,targetDiv, arg1, arg2);
             }
         },
 
@@ -740,6 +742,8 @@
                                 _this.messageElement.appendTo(_this.getEl());
                             }
                         }
+
+                        _this.getStyleInjection('tooltipErrorMessage', _this.getEl(), message);
                     }
                 });
             }
@@ -779,7 +783,7 @@
                     if (this.validate()) {
 
                         // TRIGGER: "validated"
-                        this.triggerWithPropagation("validated", this);
+                        this.triggerWithPropagation("validated");
 
                         // mark valid
                         this.getEl().addClass("alpaca-field-valid");
@@ -787,7 +791,7 @@
                     } else {
 
                         // TRIGGER: "invalidated"
-                        this.triggerWithPropagation("invalidated", this);
+                        this.triggerWithPropagation("invalidated");
 
                         // we don't markup invalidation state for readonly fields
                         if (!this.options.readonly)

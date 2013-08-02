@@ -251,7 +251,6 @@
                 this.base();
             },
 
-
             /**
              * Renders child item container.
              *

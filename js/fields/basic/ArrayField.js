@@ -90,6 +90,9 @@
          * @see Alpaca.ContainerField#setup
          */
         setValue: function(data) {
+
+            var _this = this;
+
             if (!data || !Alpaca.isArray(data)) {
                 return;
             }
@@ -104,11 +107,16 @@
                 }
             }
 
-            // if the number of items in the data is greater than the number of existing child elements
-            while(i < data.length) {
-                this.addItem(i, null, data[i]); //use the default value
-                i++;
-            }
+            _this.resolveItemSchemaOptions(function(schema, options) {
+
+                // if the number of items in the data is greater than the number of existing child elements
+                while(i < data.length) {
+                    _this.addItem(i, schema, options, data[i]);
+                    i++;
+                };
+
+            });
+
         },
 
         /**
@@ -309,8 +317,14 @@
                             icon: _this.addIcon,
                             label: (_this.options.items && _this.options.items.addItemLabel) ? _this.options.items.addItemLabel : "Add Item",
                             clickCallback: function(id, arrayField) {
-                                var newContainerElem = arrayField.addItem(containerElem.index() + 1, null, null, id, true);
-                                arrayField.enrichElements(newContainerElem);
+
+                                _this.resolveItemSchemaOptions(function(schema, options) {
+
+                                    var newContainerElem = arrayField.addItem(containerElem.index() + 1, schema, options, null, id, true);
+                                    arrayField.enrichElements(newContainerElem);
+
+                                });
+
                                 return false;
                             }
                         },
@@ -406,8 +420,13 @@
                 // add actions to toolbar buttons
                 if (this.options.toolbarStyle == "link") {
                     $('.alpaca-fieldset-array-toolbar-add', toolbarElem).click(function() {
-                        var newContainerElem = _this.addItem(0, null, "", id, true);
-                        _this.enrichElements(newContainerElem);
+
+                        _this.resolveItemSchemaOptions(function(schema, options) {
+
+                            var newContainerElem = _this.addItem(0, schema, options, "", id, true);
+                            _this.enrichElements(newContainerElem);
+
+                        });
                     });
                 } else {
                     var toolbarElemAdd = $('.alpaca-fieldset-array-toolbar-add', toolbarElem);
@@ -415,7 +434,11 @@
                         _this.buttonBeautifier.call(_this, toolbarElemAdd, _this.addIcon, true);
                     }
                     toolbarElemAdd.click(function() {
-                        _this.addItem(0, null, "", id, true);
+
+                        _this.resolveItemSchemaOptions(function(schema, options) {
+                            _this.addItem(0, schema, options, "", id, true);
+                        });
+
                         return false;
                     }).wrap('<small></small>');
 
@@ -449,42 +472,40 @@
          * Adds item.
          *
          * @param {String} index Index of the item
-         * @param {Object} fieldOptions Field options
-         * @param {Any} value Field value
+         * @param {Object} itemSchema field schema
+         * @param {Object} itemOptions field options
+         * @param {Any} itemData field data
          * @param {String} insertAfterId Where the item will be inserted
          * @param [Boolean] isDynamicSubItem whether this item is being dynamically created (after first render)
          */
-        addItem: function(index, fieldOptions, value, insertAfterId, isDynamicSubItem) {
-            return this._addItem(index, fieldOptions, value, insertAfterId, isDynamicSubItem);
+        addItem: function(index, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem) {
+            return this._addItem(index, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem);
         },
 
         /**
          * Workhorse method for addItem.
          *
          * @param index
-         * @param fieldOptions
-         * @param value
+         * @param itemSchema
+         * @param itemOptions
+         * @param itemData
          * @param insertAfterId
          * @param isDynamicSubItem
          * @return {*}
          * @private
          */
-        _addItem: function(index, fieldOptions, value, insertAfterId,isDynamicSubItem) {
+        _addItem: function(index, itemSchema, itemOptions, itemData, insertAfterId,isDynamicSubItem) {
             var _this = this;
             if (_this._validateEqualMaxItems()) {
-                var itemSchema;
-                if (_this.schema && _this.schema.items) {
-                    itemSchema = _this.schema.items;
-                }
 
-                if (fieldOptions === null && _this.options && _this.options.fields && _this.options.fields["item"]) {
-                    fieldOptions = _this.options.fields["item"];
+                if (itemOptions === null && _this.options && _this.options.fields && _this.options.fields["item"]) {
+                    itemOptions = _this.options.fields["item"];
                 }
 
                 var containerElem = _this.renderItemContainer(insertAfterId);
                 containerElem.alpaca({
-                    "data" : value,
-                    "options": fieldOptions,
+                    "data" : itemData,
+                    "options": itemOptions,
                     "schema" : itemSchema,
                     "view" : this.view.id ? this.view.id : this.view,
                     "connector": this.connector,
@@ -536,21 +557,67 @@
         },
 
         /**
+         * Determines the schema and options to utilize for items within this array.
+         *
+         * @param callback
+         */
+        resolveItemSchemaOptions: function(callback)
+        {
+            var _this = this;
+
+            var itemOptions;
+            if (_this.options && _this.options.fields && _this.options.fields["item"]) {
+                itemOptions = _this.options.fields["item"];
+            }
+            var itemSchema;
+            if (_this.schema && _this.schema.items) {
+                itemSchema = _this.schema.items;
+            }
+
+            // handle $ref
+            if (itemSchema && itemSchema["$ref"])
+            {
+                var refId = itemSchema["$ref"];
+
+                var topField = this;
+                while (topField.parent)
+                {
+                    topField = topField.parent;
+                }
+
+                Alpaca.loadRefSchemaOptions(topField, refId, function(itemSchema, itemOptions) {
+                    callback(itemSchema, itemOptions);
+                });
+            }
+            else
+            {
+                callback(itemSchema, itemOptions);
+            }
+        },
+
+        /**
          * @see Alpaca.ContainerField#renderItems
          */
         renderItems: function() {
             var _this = this;
 
-            if (this.data) {
-                $.each(this.data, function(index, value) {
-                    var fieldSetting;
-                    if (_this.options && _this.options.fields && _this.options.fields["item"]) {
-                        fieldSetting = _this.options.fields["item"];
-                    }
-                    _this.addItem(index, fieldSetting, value, false);
+            if (this.data)
+            {
+                // all items within the array have the same schema and options
+                // so we only need to load this once
+                _this.resolveItemSchemaOptions(function(schema, options) {
+
+                    $.each(_this.data, function(index, value) {
+                        _this.addItem(index, schema, options, value, false);
+                    });
+
+                    _this.updateToolbarItemsStatus();
                 });
             }
-            this.updateToolbarItemsStatus();
+            else
+            {
+                this.updateToolbarItemsStatus();
+            }
         },
 
         /**

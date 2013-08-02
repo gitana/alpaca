@@ -201,25 +201,62 @@
             },
 
             /**
+             * Determines the schema and options to utilize for sub-objects within this object.
+             *
+             * @param propertyId
+             * @param callback
+             */
+            resolvePropertySchemaOptions: function(propertyId, callback)
+            {
+                var _this = this;
+
+                var propertySchema = null;
+                if (_this.schema && _this.schema.properties && _this.schema.properties[propertyId]) {
+                    propertySchema = _this.schema.properties[propertyId];
+                }
+                var propertyOptions = {};
+                if (_this.options && _this.options.fields && _this.options.fields[propertyId]) {
+                    propertyOptions = _this.options.fields[propertyId];
+                }
+
+                // handle $ref
+                if (propertySchema && propertySchema["$ref"])
+                {
+                    var refId = propertySchema["$ref"];
+
+                    var topField = this;
+                    while (topField.parent)
+                    {
+                        topField = topField.parent;
+                    }
+
+                    Alpaca.loadRefSchemaOptions(topField, refId, function(propertySchema, propertyOptions) {
+                        callback(propertySchema, propertyOptions);
+                    });
+                }
+                else
+                {
+                    callback(propertySchema, propertyOptions);
+                }
+            },
+
+            /**
              * Adds a child item.
              *
              * @param {String} propertyId Child field property ID.
+             * @param {Object} itemSchema schema
              * @param {Object} fieldOptions Child field options.
              * @param {Any} value Child field value
              * @param {String} insertAfterId Location where the child item will be inserted.
              * @param [Boolean] isDynamicSubItem whether this item is being dynamically created (after first render)
              */
-            addItem: function(propertyId, fieldOptions, value, insertAfterId, isDynamicSubItem) {
+            addItem: function(propertyId, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem) {
                 var _this = this;
-                var itemSchema;
-                if (_this.schema && _this.schema.properties && _this.schema.properties[propertyId]) {
-                    itemSchema = _this.schema.properties[propertyId];
-                }
-                var containerElem = _this.renderItemContainer(insertAfterId, this, propertyId);
 
+                var containerElem = _this.renderItemContainer(insertAfterId, this, propertyId);
                 containerElem.alpaca({
-                    "data" : value,
-                    "options": fieldOptions,
+                    "data" : itemData,
+                    "options": itemOptions,
                     "schema" : itemSchema,
                     "view" : this.view.id ? this.view.id : this.view,
                     "connector": this.connector,
@@ -282,51 +319,74 @@
                 if (_this.schema && _this.schema.properties) {
                     properties = _this.schema.properties;
                 }
-                for (var propertyId in properties) {
-                    var fieldSetting = {};
-                    if (_this.options && _this.options.fields && _this.options.fields[propertyId]) {
-                        fieldSetting = _this.options.fields[propertyId];
+
+                var cf = function()
+                {
+                    // If the schema and the data line up perfectly, then there will be no properties in the data that are
+                    // not also in the schema, and thus, extraDataProperties will be empty.
+                    //
+                    // On the other hand, if there are some properties in data that were not in schema, then they will
+                    // remain in extraDataProperties and we can inform developers for debugging purposes
+                    //
+                    var extraDataKeys = [];
+                    for (var extraDataKey in extraDataProperties) {
+                        extraDataKeys.push(extraDataKey);
                     }
+                    if (extraDataKeys.length > 0) {
+                        Alpaca.logDebug("There were " + extraDataKeys.length + " extra data keys that were not part of the schema " + JSON.stringify(extraDataKeys));
+                    }
+
+                    // support for dependencies
+
+                    // walk through all properties and allow each to determine whether it should show based on its dependencies.
+                    // if properties do not have dependencies, they show by default.
+                    for (var propertyId in properties)
+                    {
+                        _this.showOrHidePropertyBasedOnDependencies(propertyId);
+                    }
+
+                    // bind event handlers to handle updates to field state
+                    for (var propertyId in properties)
+                    {
+                        _this.bindDependencyFieldUpdateEvent(propertyId);
+                    }
+
+                    _this.renderValidationState();
+                };
+
+                // each property in the object can have a different schema and options so we need to process
+                // asynchronously and wait for all to complete
+
+                var total = 0;
+                for (var propertyId in properties)
+                {
+                    total++;
+                }
+                var complete = 0;
+                for (var propertyId in properties)
+                {
                     var itemData = null;
-                    if (_this.data) {
+                    if (_this.data)
+                    {
                         itemData = _this.data[propertyId];
                     }
-                    _this.addItem(propertyId, fieldSetting, itemData);
 
-                    // remove from extraDataProperties helper
-                    delete extraDataProperties[propertyId];
+                    // only allow this if we have data, otherwise we end up with circular reference
+                    _this.resolvePropertySchemaOptions(propertyId, function(schema, options) {
+
+                        _this.addItem(propertyId, schema, options, itemData);
+
+                        // remove from extraDataProperties helper
+                        delete extraDataProperties[propertyId];
+
+                        complete++;
+                        if (complete === total)
+                        {
+                            // move ahead
+                            cf();
+                        }
+                    });
                 }
-
-                // If the schema and the data line up perfectly, then there will be no properties in the data that are
-                // not also in the schema, and thus, extraDataProperties will be empty.
-                //
-                // On the other hand, if there are some properties in data that were not in schema, then they will
-                // remain in extraDataProperties and we can inform developers for debugging purposes
-                //
-                var extraDataKeys = [];
-                for (var extraDataKey in extraDataProperties) {
-                    extraDataKeys.push(extraDataKey);
-                }
-                if (extraDataKeys.length > 0) {
-                    Alpaca.logDebug("There were " + extraDataKeys.length + " extra data keys that were not part of the schema " + JSON.stringify(extraDataKeys));
-                }
-
-                // support for dependencies
-
-                // walk through all properties and allow each to determine whether it should show based on its dependencies.
-                // if properties do not have dependencies, they show by default.
-                for (var propertyId in properties)
-                {
-                    this.showOrHidePropertyBasedOnDependencies(propertyId);
-                }
-
-                // bind event handlers to handle updates to field state
-                for (var propertyId in properties)
-                {
-                    this.bindDependencyFieldUpdateEvent(propertyId);
-                }
-
-                this.renderValidationState();
             },
 
 
