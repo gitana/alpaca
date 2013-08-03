@@ -45,17 +45,17 @@ p {
 	font-size: 16px;
 	color: #222;;
 	font-weight: 200 !important;
-    text-shadow: 1px 1px #eee;
+    /*text-shadow: 1px 1px #eee;*/
 }
 
 code {
-    color: #222222;
+    color: #990000;
     font-family: "Courier New",sans-serif;
     font-size: 16px;
     font-weight: 400 !important;
     margin-left: 3px;
     margin-right: 3px;
-    text-shadow: 1px 1px #EEEEEE;
+    /*text-shadow: 1px 1px #EEEEEE;*/
 }
 
 h2 a {
@@ -75,6 +75,7 @@ pre ol.linenums {
     text-align: center;
     margin: 10px 0;
     margin-top: 30px !important;
+    margin-bottom: 20px;
 }
 
 div.step:not(:first-child)
@@ -199,7 +200,7 @@ header {
 
 footer {
     background-color:#121212;
-    color: #aaa;
+    color: #555;
 	font-size: 16px;
 	padding-top: 10px;
     clear: both;
@@ -555,9 +556,16 @@ h2.home-header
     text-align: center !important;
     margin-top: 20px !important;
     margin-bottom: 20px !important;
+    font-size: 26px;
 }
 
 h3.home-seg
 {
     font-weight: 400 !important;
+}
+
+.alpaca-example-case DIV h3
+{
+    /*margin-top: 0px !important;*/
+    padding-top: 0px !important;
 }

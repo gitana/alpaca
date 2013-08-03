@@ -225,13 +225,28 @@
                     var refId = propertySchema["$ref"];
 
                     var topField = this;
+                    var fieldChain = [topField];
                     while (topField.parent)
                     {
                         topField = topField.parent;
+                        fieldChain.push(topField);
                     }
 
                     Alpaca.loadRefSchemaOptions(topField, refId, function(propertySchema, propertyOptions) {
-                        callback(propertySchema, propertyOptions);
+
+                        // walk the field chain to see if we have any circularity
+                        var refCount = 0;
+                        for (var i = 0; i < fieldChain.length; i++)
+                        {
+                            if (fieldChain[i].refId === refId)
+                            {
+                                refCount++;
+                            }
+                        }
+
+                        var circular = (refCount > 1);
+
+                        callback(propertySchema, propertyOptions, circular);
                     });
                 }
                 else
@@ -320,7 +335,7 @@
                     properties = _this.schema.properties;
                 }
 
-                var cf = function()
+                var cf = function(validPropertyIds)
                 {
                     // If the schema and the data line up perfectly, then there will be no properties in the data that are
                     // not also in the schema, and thus, extraDataProperties will be empty.
@@ -372,7 +387,14 @@
                     }
 
                     // only allow this if we have data, otherwise we end up with circular reference
-                    _this.resolvePropertySchemaOptions(propertyId, function(schema, options) {
+                    _this.resolvePropertySchemaOptions(propertyId, function(schema, options, circular) {
+
+                        // we only allow addition if the resolved schema isn't circularly referenced
+                        // or the schema is optional
+                        if (circular)
+                        {
+                            throw new Error("Circular reference detected for schema: " + schema);
+                        }
 
                         _this.addItem(propertyId, schema, options, itemData);
 
