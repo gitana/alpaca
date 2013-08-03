@@ -1591,6 +1591,11 @@
                         "description": "If true, the initial focus for the form will be set to the first child element (usually the first field in the form).  If a field name or path is provided, then the specified child field will receive focus.  For example, you might set focus to 'name' (selecting the 'name' field) or you might set it to 'client/name' which picks the 'name' field on the 'client' object.",
                         "type": "any",
                         "default": true
+                    },
+                    "optionLabels": {
+                        "title": "Labels for enumerated set",
+                        "description": "An array of string labels for items in the enum array",
+                        "type": "array"
                     }
                 }
             };
@@ -1716,6 +1721,12 @@
                     "hideInitValidationError": {
                         "rightLabel":"Hide initial validation errors ?",
                         "type": "checkbox"
+                    },
+                    "optionLabels": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     }
                 }
             };
