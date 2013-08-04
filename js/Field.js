@@ -1092,7 +1092,14 @@
                 this.getEl().css({
                     "display": ""
                 });
+
+                this.onShow();
             }
+        },
+
+        onShow: function()
+        {
+
         },
 
         /**
@@ -1103,6 +1110,13 @@
             this.getEl().css({
                 "display": "none"
             });
+
+            this.onHide();
+        },
+
+        onHide: function()
+        {
+
         },
 
         isVisible: function() {
@@ -1120,6 +1134,24 @@
             if (this.container.printArea) {
                 this.container.printArea();
             }
+        },
+
+        /**
+         * Triggered when the field is being revealed as the result of a dependency or conditional calculation
+         * that has determined that the field should be shown.
+         */
+        onDependentReveal: function()
+        {
+
+        },
+
+        /**
+         * Triggered when the field is being concealed as the result of a dependency or conditional calculation
+         * that has determined that the field should be hidden.
+         */
+        onDependentConceal: function()
+        {
+
         },
 
         /**

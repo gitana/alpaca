@@ -119,6 +119,12 @@
                 }
 
                 this.injectField(this.field);
+
+                // do this little trick so that if we have a default value, it gets set during first render
+                // this causes the state of the control
+                if (this.data) {
+                    this.setValue(this.data);
+                }
             }
 
             if (onSuccess) {

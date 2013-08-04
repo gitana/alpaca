@@ -342,6 +342,30 @@
             },
 
             /**
+             * Propagates signal down to all children.
+             * @override
+             */
+            onDependentReveal: function()
+            {
+                for (var i = 0; i < this.children.length; i++)
+                {
+                    this.children[i].onDependentReveal();
+                }
+            },
+
+            /**
+             * Propagates signal down to all children.
+             * @override
+             */
+            onDependentConceal: function()
+            {
+                for (var i = 0; i < this.children.length; i++)
+                {
+                    this.children[i].onDependentConceal();
+                }
+            },
+
+            /**
              * Renders all child items of this field.
              *
              * @param onSuccess onSuccess callback.

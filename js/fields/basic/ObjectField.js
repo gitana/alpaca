@@ -436,10 +436,14 @@
                 if (valid)
                 {
                     item.show();
+
+                    item.onDependentReveal();
                 }
                 else
                 {
                     item.hide();
+
+                    item.onDependentConceal();
                 }
             },
 

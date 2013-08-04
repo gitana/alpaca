@@ -169,6 +169,8 @@
          */
         onKeyPress: function(e) {
 
+            var self = this;
+
             // if the field is currently invalid, then we provide early feedback to the user as to when they enter
             // if the field was valid, we don't render invalidation feedback until they blur the field
 
@@ -176,7 +178,17 @@
             var wasValid = this.isValid();
             if (!wasValid)
             {
-                this.renderValidationState();
+                //
+                // we use a timeout because at this exact moment, the value of the control is still the old value
+                // jQuery raises the keypress event ahead of the input receiving the new data which would incorporate
+                // the key that was pressed
+                //
+                // this timeout provides the browser with enough time to plug the value into the input control
+                // which the validation logic uses to determine whether the control is now in a valid state
+                //
+                window.setTimeout(function() {
+                    self.renderValidationState();
+                }, 50);
             }
 
         },

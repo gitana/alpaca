@@ -123,7 +123,6 @@
                     this.editor.setReadOnly(true);
                 }
 
-
                 // if the editor's dom element gets destroyed, make sure we clean up the editor instance
                 // normally, we expect Alpaca fields to be destroyed by the destroy() method but they may also be
                 // cleaned-up via the DOM, thus we check here.
@@ -202,6 +201,14 @@
                 return true;
             },
 
+            /**
+             * Force editor to resize to ensure it gets drawn correctly.
+             * @override
+             */
+            onDependentReveal: function()
+            {
+                this.editor.resize();
+            },
 
             /**
              *@see Alpaca.Fields.TextField#setValue

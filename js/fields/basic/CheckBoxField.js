@@ -62,6 +62,12 @@
                     });
                     this.injectField(this.field);
                     this.field = $('input[id="' + this.getId() + '"]', this.field);
+
+                    // do this little trick so that if we have a default value, it gets set during first render
+                    // this causes the checked state of the control to update
+                    if (this.data) {
+                        this.setValue(true);
+                    }
                 }
 
                 if (onSuccess) {
@@ -93,7 +99,7 @@
             setValue: function(value) {
                 // convert string value to boolean
                 if (Alpaca.isString(value)) {
-                    value = value === 'true';
+                    value = (value === "true");
                 }
 
                 Alpaca.checked(this.field, value);
