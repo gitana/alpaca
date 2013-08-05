@@ -34,9 +34,9 @@ require(["alpaca"], function()
         if (!form)
         {
             $("#field1").alpaca({
-                "data": "./data.json",
-                "options": "./options.json",
-                "schema": "./schema.json",
+                "dataSource": "./data.json",
+                "optionsSource": "./options.json",
+                "schemaSource": "./schema.json",
                 "view": {
                     "parent": "VIEW_WEB_EDIT_LAYOUT_TWO_COLUMN",
                     "layout": {

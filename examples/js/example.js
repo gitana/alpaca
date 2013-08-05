@@ -207,12 +207,12 @@ $(function() {
             ]
         },
         {
-            "title": "References",
+            "title": "Bookmarks",
             "examples": [
                 {
-                    "id":"references",
-                    "title":"Using References",
-                    "link":"../../forms/references/references.html"
+                    "id":"bookmarks-simple",
+                    "title":"Simple Bookmarks",
+                    "link":"../../forms/bookmarks/simple-bookmarks.html"
                 }
             ]
         }
@@ -486,6 +486,15 @@ $(function() {
                 "id":"callback",
                 "title":"Callback",
                 "link":"../../components/callbacks/callback-examples.html"
+            }
+        ]
+    }, {
+        "title": "JSON Schema",
+        "examples": [
+            {
+                "id":"references",
+                "title":"Using References",
+                "link":"../../components/references/references.html"
             }
         ]
     }];

@@ -1,0 +1,26 @@
+{
+    "fields": {
+        "title": {
+            "label": "Title of the Bookmarks List"
+        },
+        "description": {
+            "label": "Description"
+        },
+        "bookmarks": {
+            "toolbarSticky": true,
+            "fields": {
+                "item": {
+                    "fields": {
+                        "title": {
+                            "label": "Bookmark Title"
+                        },
+                        "url": {
+                            "type": "url",
+                            "label": "Bookmark URL"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "title": "Alpaca Bookmarks",
+    "description": "This list contains bookmarks for web pages we think are worth checking out!",
+    "bookmarks": [{
+        "title": "AlpacaJS",
+        "url": "http://www.alpacajs.org"
+    }, {
+        "title": "Cloud CMS",
+        "url": "https://www.cloudcms.com"
+    }, {
+        "title": "Cloud CMS Community",
+        "url": "http://www.cloudcms.org"
+    }]
+}

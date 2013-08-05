@@ -9,35 +9,12 @@
     {
         /**
          * @constructs
-         * @class Default connector that loads JSONs:
-         * <p>
-         * 1.as provided objects.
-         * </p>
-         * <p>
-         * 2.through Ajax calls if URIs are provided.
-         * </p>
-         * <p>
-         * 3.through ID references (only for Views and Templates).
-         * </p>
-         * <p>
-         * Usage:
-         * </p>
-         * <code>
-         *     <pre>
-         * {
-         *   "data": [Object | URI],
-         *   "schema": [Object | URI],
-         *   "options": [Object | URI],
-         *   "view": [Object | URI | View ID]
-         *  }
-         *      </pre>
-         * </code>
+         * @class Connects Alpaca to remote data stores.
+
          * @param {String} id Connector ID.
-         * @param {Object} configs Connector Configurations.
          */
-        constructor: function(id, configs) {
+        constructor: function(id) {
             this.id = id;
-            this.configs = configs;
         },
 
         /**
@@ -53,16 +30,19 @@
         },
 
         /**
-         * Loads template JSON.
+         * Loads a template (HTML or Text).
          *
-         * @param {Object} dataSource Data source to be loaded.
+         * If the source is a URI, then it is loaded.
+         * If it is not a URI, then the source is simply handed back.
+         *
+         * @param {Object|String} source Source to be loaded.
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        loadTemplate : function (dataSource, onSuccess, onError) {
-            if (!Alpaca.isEmpty(dataSource)) {
-                if (Alpaca.isUri(dataSource)) {
-                    this.loadUri(dataSource, false, function(loadedData) {
+        loadTemplate : function (source, onSuccess, onError) {
+            if (!Alpaca.isEmpty(source)) {
+                if (Alpaca.isUri(source)) {
+                    this.loadUri(source, false, function(loadedData) {
                         if (onSuccess && Alpaca.isFunction(onSuccess)) {
                             onSuccess(loadedData);
                         }
@@ -72,7 +52,7 @@
                         }
                     });
                 } else {
-                    onSuccess(dataSource);
+                    onSuccess(source);
                 }
             } else {
                 onError({
@@ -83,113 +63,129 @@
         },
 
         /**
-         * Loads data JSON.
+         * Loads JSON data.
          *
-         * @param {Object} dataSource Data source to load
+         * @param {Object|String} source Source to be loaded.
          * @param {Function} onSuccess onSuccess callback
          * @param {Function} onError onError callback
          */
-        loadData : function (dataSource, successCallback, errorCallback) {
-            var data = dataSource.data;
-            var schema = dataSource.schema;
-            var isValidData = function () {
-                return !Alpaca.isEmpty(data) && Alpaca.isUri(data) && (!(schema && schema.format && schema.format == 'uri'));
+        loadData : function (source, successCallback, errorCallback) {
+            var isValidSource = function () {
+                return !Alpaca.isEmpty(source) && Alpaca.isUri(source);
             };
-            if (isValidData()) {
-                this.loadJson(data, function(loadedData) {
-                    dataSource.data = loadedData;
-                    successCallback(dataSource);
+            if (isValidSource())
+            {
+                this.loadJson(source, function(loadedData) {
+                    successCallback(loadedData);
                 }, errorCallback);
-            } else {
-                successCallback(dataSource);
+            }
+            else
+            {
+                successCallback(source);
             }
         },
 
         /**
-         * Loads schema JSON.
+         * Loads JSON schema.
          *
-         * @param {Object} dataSource Data source to be loaded.
+         * @param {Object|String} source Source to be loaded.
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        loadSchema : function (dataSource, successCallback, errorCallback) {
-            var schema = dataSource.schema;
+        loadSchema : function (source, successCallback, errorCallback) {
             var isValidSchema = function () {
-                return !Alpaca.isEmpty(schema) && Alpaca.isUri(schema);
+                return !Alpaca.isEmpty(source) && Alpaca.isUri(source);
             };
             if (isValidSchema()) {
-                this.loadJson(schema, function(loadedSchema) {
-                    dataSource.schema = loadedSchema;
-                    successCallback(dataSource);
+                this.loadJson(source, function(loadedSchema) {
+                    successCallback(loadedSchema);
                 }, errorCallback);
             } else {
-                successCallback(dataSource);
+                successCallback(source);
             }
         },
 
         /**
-         * Loads options JSON.
+         * Loads JSON options.
          *
-         * @param {Object} dataSource Data source to be loaded.
+         * @param {Object|String} source Source to be loaded.
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        loadOptions : function (dataSource, successCallback, errorCallback) {
-            var options = dataSource.options;
+        loadOptions : function (source, successCallback, errorCallback) {
             var isValidOptions = function () {
-                return !Alpaca.isEmpty(options) && Alpaca.isUri(options);
+                return !Alpaca.isEmpty(source) && Alpaca.isUri(source);
             };
             if (isValidOptions()) {
-                this.loadJson(options, function(loadedOptions) {
-                    dataSource.options = loadedOptions;
-                    successCallback(dataSource);
+                this.loadJson(source, function(loadedOptions) {
+                    successCallback(loadedOptions);
                 }, errorCallback);
             } else {
-                successCallback(dataSource);
+                successCallback(source);
             }
         },
 
         /**
-         * Loads view JSON.
+         * Loads JSON view.
          *
-         * @param dataSource Data source to be loaded
+         * @param {Object|String} source Source to be loaded.
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        loadView : function (dataSource, successCallback, errorCallback) {
-            var view = dataSource.view;
+        loadView : function (source, successCallback, errorCallback) {
             var isValidView = function () {
-                return !Alpaca.isEmpty(view) && Alpaca.isUri(view);
+                return !Alpaca.isEmpty(source) && Alpaca.isUri(source);
             };
             if (isValidView()) {
-                this.loadJson(view, function(loadedView) {
-                    dataSource.view = loadedView;
-                    successCallback(dataSource);
+                this.loadJson(source, function(loadedView) {
+                    successCallback(loadedView);
                 }, errorCallback);
             } else {
-                successCallback(dataSource);
+                successCallback(source);
             }
         },
 
         /**
          * Loads schema, form, view and data in a single call.
          *
-         * @param {Object} dataSource Data source to be loaded
+         * @param {Object} sources sources
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        loadAll : function (dataSource, onSuccess, onError) {
-            var loadCounter = 0;
-            var data = dataSource.data;
-            var options = dataSource.options;
-            var schema = dataSource.schema;
-            var view = dataSource.view;
+        loadAll: function (sources, onSuccess, onError) {
 
-            var successCallback = function (dataSource) {
-                loadCounter ++;
-                if (loadCounter == 4) {
+            var dataSource = sources.dataSource;
+            var schemaSource = sources.schemaSource;
+            var optionsSource = sources.optionsSource;
+            var viewSource = sources.viewSource;
+
+            // we allow "schema" to contain a URI as well (backwards-compatibility)
+            if (!schemaSource)
+            {
+                schemaSource = sources.schema;
+            }
+
+            // we allow "options" to contain a URI as well (backwards-compatibility)
+            if (!optionsSource)
+            {
+                optionsSource = sources.options;
+            }
+
+            // we allow "view" to contain a URI as well (backwards-compatibility)
+            if (!viewSource)
+            {
+                viewSource = sources.view;
+            }
+
+            var loaded = {};
+
+            var loadCounter = 0;
+            var invocationCount = 0;
+
+            var successCallback = function() {
+                if (loadCounter === invocationCount) {
                     if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                        onSuccess(dataSource.data, dataSource.options, dataSource.schema, dataSource.view);
+                        onSuccess(loaded.data, loaded.options, loaded.schema, loaded.view);
                     }
                 }
             };
@@ -200,22 +196,63 @@
                 }
             };
 
-            this.loadData(dataSource, successCallback, errorCallback);
-            this.loadSchema(dataSource, successCallback, errorCallback);
-            this.loadOptions(dataSource, successCallback, errorCallback);
-            this.loadView(dataSource, successCallback, errorCallback);
+            // count out the total # of invokes we're going to fire off
+            if (dataSource)
+            {
+                invocationCount++;
+            }
+            if (schemaSource)
+            {
+                invocationCount++;
+            }
+            if (optionsSource)
+            {
+                invocationCount++;
+            }
+            if (viewSource)
+            {
+                invocationCount++;
+            }
+            if (invocationCount === 0)
+            {
+                // nothing to invoke, so just hand back
+                successCallback();
+                return;
+            }
 
-        },
-
-        /**
-         * Saves or creates data through connector.
-         *
-         * @param {Object} dataSource Data to be created or saved.
-         * @param {Function} onSuccess onSuccess callback.
-         * @param {Function} onError onError callback.
-         */
-        saveData : function (data, onSuccess, onError) {
-
+            // fire off all of the invokes
+            if (dataSource)
+            {
+                this.loadData(dataSource, function(data) {
+                    loaded.data = data;
+                    loadCounter++;
+                    successCallback();
+                }, errorCallback);
+            }
+            if (schemaSource)
+            {
+                this.loadSchema(schemaSource, function(schema) {
+                    loaded.schema = schema;
+                    loadCounter++;
+                    successCallback();
+                }, errorCallback);
+            }
+            if (optionsSource)
+            {
+                this.loadOptions(optionsSource, function(options) {
+                    loaded.options = options;
+                    loadCounter++;
+                    successCallback();
+                }, errorCallback);
+            }
+            if (viewSource)
+            {
+                this.loadView(viewSource, function(view) {
+                    loaded.view = view;
+                    loadCounter++;
+                    successCallback();
+                }, errorCallback);
+            }
         },
 
         /**
@@ -231,6 +268,9 @@
 
         /**
          * Loads a general document through Ajax call.
+         *
+         * This uses jQuery to perform the Ajax call.  If you need to customize connectivity to your own remote server,
+         * this would be the appropriate place to do so.
          *
          * @param {String} uri Target source document location.
          * @param {Boolean} isJson Whether the document is a JSON or not.

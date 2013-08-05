@@ -59,8 +59,8 @@
 
         // other arguments we may want to figure out
         var data = null;
-        var options = null;
         var schema = null;
+        var options = null;
         var view = null;
         var callback = null;
         var renderedCallback = null;
@@ -69,6 +69,12 @@
         var notTopLevel = false;
         var isDynamicCreation = false;
         var initialSettings = {};
+
+        // if these options are provided, then data, schema, options and source are loaded via connector
+        var dataSource = null;
+        var schemaSource = null;
+        var optionsSource = null;
+        var viewSource = null;
 
         if (args.length == 1) {
             // hands back the field instance that is bound directly under the specified element
@@ -107,6 +113,14 @@
                 renderedCallback = args[1].postRender;
                 errorCallback = args[1].error;
                 connector = args[1].connector;
+
+                // sources
+                dataSource = args[1].dataSource;
+                schemaSource = args[1].schemaSource;
+                optionsSource = args[1].optionsSource;
+                viewSource = args[1].viewSource;
+
+                // other
                 if (args[1].ui) {
                     initialSettings["ui"] = args[1].ui;
                 }
@@ -140,7 +154,8 @@
         }
 
         if (Alpaca.isEmpty(connector)) {
-            connector = new Alpaca.Connector('default');
+            var connectorClass = Alpaca.getConnectorClass("default");
+            connector = new connectorClass("default");
         }
 
         // handle case for null data
@@ -173,7 +188,8 @@
         var loadAllConnector = connector;
 
         if (notTopLevel) {
-            loadAllConnector = new Alpaca.Connector('default');
+            var loadAllConnectorClass = Alpaca.getConnectorClass("default");
+            loadAllConnector = new loadAllConnectorClass("default");
         }
 
         // wrap rendered callback to allow for UI treatment (dom focus, etc)
@@ -216,12 +232,27 @@
         };
 
         loadAllConnector.loadAll({
-            "data":data,
-            "options": options,
+            "data": data,
             "schema": schema,
-            "view": view
+            "options": options,
+            "view": view,
+            "dataSource": dataSource,
+            "schemaSource": schemaSource,
+            "optionsSource": optionsSource,
+            "viewSource": viewSource
         }, function(loadedData, loadedOptions, loadedSchema, loadedView) {
+
+            // for cases where things could not be loaded via source loaders, fall back to what may have been passed
+            // in directly as values
+
+            loadedData = loadedData ? loadedData : data;
+            loadedSchema = loadedSchema ? loadedSchema: schema;
+            loadedOptions = loadedOptions ? loadedOptions : options;
+            loadedView = loadedView ? loadedView : view;
+
+            // init alpaca
             return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, initialSettings, callback, _renderedCallback, connector, errorCallback, isDynamicCreation);
+
         }, function (loadError) {
             errorCallback(loadError);
             return null;
@@ -2288,7 +2319,6 @@
 
         return null;
     };
-
 
     $.alpaca = window.Alpaca = Alpaca;
 

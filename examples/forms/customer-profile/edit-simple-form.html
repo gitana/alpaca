@@ -29,7 +29,7 @@
         <link type="text/css" href="../../css/960.fluid.css" rel="stylesheet"/>
 
         <!-- Required for the Editor field (sample code viewing) -->
-        <script src="../../../lib/ace/src-min-noconflict2/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../lib/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Web Site -->
         <script type="text/javascript" src="../../lib/google-code-prettify/prettify.min.js"></script>
@@ -85,9 +85,9 @@
                     <script type="text/javascript" id="field1-script">
 $(function() {
     $("#field1").alpaca({
-        "data": "./data.json",
-        "options": "./simple-options.json",
-        "schema": "./schema.json",
+        "dataSource": "./data.json",
+        "optionsSource": "./simple-options.json",
+        "schemaSource": "./schema.json",
         "view": {
             "parent": "VIEW_WEB_EDIT",
             "displayReadonly": false

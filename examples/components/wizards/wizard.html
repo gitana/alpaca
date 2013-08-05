@@ -29,7 +29,7 @@
         <link type="text/css" href="../../css/960.fluid.css" rel="stylesheet"/>
 
         <!-- Required for the Editor field (sample code viewing) -->
-        <script src="../../../lib/ace/src-min-noconflict2/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../lib/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Web Site -->
         <script type="text/javascript" src="../../lib/google-code-prettify/prettify.min.js"></script>
@@ -89,9 +89,9 @@
                     <script type="text/javascript"id="field1-script">
 $(function() {
     $("#field1").alpaca({
-        "data": "./customer-profile-data.json",
-        "schema": "./customer-profile-schema.json",
-        "options": "./customer-profile-options.json",
+        "dataSource": "./customer-profile-data.json",
+        "schemaSource": "./customer-profile-schema.json",
+        "optionsSource": "./customer-profile-options.json",
         "view": {
             "parent": "VIEW_JQUERYUI_EDIT_LIST",
             "layout": {
