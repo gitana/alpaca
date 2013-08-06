@@ -222,7 +222,7 @@
                 // handle $ref
                 if (propertySchema && propertySchema["$ref"])
                 {
-                    var refId = propertySchema["$ref"];
+                    var referenceId = propertySchema["$ref"];
 
                     var topField = this;
                     var fieldChain = [topField];
@@ -232,19 +232,30 @@
                         fieldChain.push(topField);
                     }
 
-                    Alpaca.loadRefSchemaOptions(topField, refId, function(propertySchema, propertyOptions) {
+                    Alpaca.loadRefSchemaOptions(topField, referenceId, function(propertySchema, propertyOptions) {
 
                         // walk the field chain to see if we have any circularity
                         var refCount = 0;
                         for (var i = 0; i < fieldChain.length; i++)
                         {
-                            if (fieldChain[i].refId === refId)
+                            if (fieldChain[i].schema && fieldChain[i].schema.id === referenceId)
                             {
                                 refCount++;
                             }
                         }
 
                         var circular = (refCount > 1);
+
+                        if (propertySchema)
+                        {
+                            propertySchema = Alpaca.copyOf(propertySchema);
+                            delete propertySchema.id;
+                        }
+
+                        if (propertyOptions)
+                        {
+                            propertyOptions = Alpaca.copyOf(propertyOptions);
+                        }
 
                         callback(propertySchema, propertyOptions, circular);
                     });
@@ -394,6 +405,11 @@
                         if (circular)
                         {
                             throw new Error("Circular reference detected for schema: " + schema);
+                        }
+
+                        if (!schema)
+                        {
+                            Alpaca.logError("Unable to resolve schema for property: " + propertyId);
                         }
 
                         _this.addItem(propertyId, schema, options, itemData);

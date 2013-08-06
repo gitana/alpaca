@@ -1648,6 +1648,12 @@
             field.isDynamicCreation = isDynamicCreation;
             Alpaca.fieldInstances[field.getId()] = field;
 
+            // mechanism for looking up field instances by id
+            field.allFieldInstances = function()
+            {
+                return Alpaca.fieldInstances;
+            };
+
             // allow callbacks defined through view
             if (Alpaca.isEmpty(callback)) {
                 callback = field.view.render;
@@ -2262,11 +2268,11 @@
         return $(el).attr(name);
     };
 
-    Alpaca.loadRefSchemaOptions = function(topField, refId, callback)
+    Alpaca.loadRefSchemaOptions = function(topField, referenceId, callback)
     {
-        if (refId.indexOf("#/definitions/") > -1)
+        if (referenceId.indexOf("#/definitions/") > -1)
         {
-            var defId = refId.substring(14);
+            var defId = referenceId.substring(14);
 
             var defSchema = null;
             if (topField.schema.definitions)
@@ -2284,31 +2290,57 @@
         }
         else
         {
-            var field = Alpaca.findByRefId(topField, refId);
-            if (field)
+            // THE PROBLEM IS THAT THE FLOW FIELD HASN'T YET BEEN ADDED TO CHILDREN!
+            // IT IS IN THE PROCESS OF RENDERING!
+            var resolution = Alpaca.resolveReference(topField.schema, topField.options, referenceId);
+            if (resolution)
             {
-                callback(field.schema, field.options);
+                callback(resolution.schema, resolution.options);
             }
             else
             {
+                // nothing
                 callback();
             }
         }
     };
 
-    Alpaca.findByRefId = function(field, refId)
+    /**
+     * Given a base field, walks the schema, options and data forward until it
+     * discovers the given reference.
+     *
+     * @param schema
+     * @param options
+     * @param referenceId
+     */
+    Alpaca.resolveReference = function(schema, options, referenceId)
     {
-        if (field.refId === refId)
+        if (schema.id == referenceId)
         {
-            return field;
+            var result = {};
+            if (schema) {
+                result.schema = schema;
+            }
+            if (options) {
+                result.options = options;
+            }
+
+            return result;
         }
         else
         {
-            if (field.children)
+            if (schema && schema.properties)
             {
-                for (var i = 0; i < field.children.length; i++)
+                for (var propertyId in schema.properties)
                 {
-                    var x = Alpaca.findByRefId(field.children[i], refId);
+                    var subSchema = schema.properties[propertyId];
+                    var subOptions = null;
+                    if (options && options.fields && options.fields[propertyId])
+                    {
+                        subOptions = options.fields[propertyId];
+                    }
+
+                    var x = Alpaca.resolveReference(subSchema, subOptions, referenceId);
                     if (x)
                     {
                         return x;

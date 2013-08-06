@@ -48,6 +48,7 @@
     font-size: 1.0em;
     font-weight: bold;
     text-align: left;
+    margin-left: 1px;
 }
 
 .alpaca-controlfield-helper {
@@ -365,7 +366,11 @@ DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu P
 }
 
 fieldset.alpaca-fieldset {
-    margin: 0.5em 1em 1em 0px;
+    /*margin: 0.5em 1em 1em 0px;*/
+    margin-top: 0.5em;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0.5em;
 }
 
 legend.alpaca-fieldset-legend {
@@ -388,7 +393,7 @@ legend.alpaca-fieldset-legend {
 
 .alpaca-fieldset-items-container {
     padding-top: 5px;
-    padding-bottom: 5px;
+    /**padding-bottom: 5px;**/
     clear: both;
 }
 
@@ -684,6 +689,22 @@ ol.alpaca-fieldset-itemscontainer-list-view-top {
 
 li.alpaca-fieldset-itemcontainer-list-view-top {
     list-style:none;
+}
+
+.alpaca-item-container-first
+{
+
+}
+
+.alpaca-item-container-last
+{
+
+}
+
+.alpaca-fieldset-items-container-empty
+{
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 /** END view-web-list **/

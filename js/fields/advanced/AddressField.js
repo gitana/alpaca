@@ -128,37 +128,42 @@
                     });
                 }
                 mapButton.click(
-                        function() {
-                            if (google && google.maps) {
-                                var geocoder = new google.maps.Geocoder();
-                                var address = _this.getAddress();
-                                if (geocoder) {
-                                    geocoder.geocode({
-                                        'address': address
-                                    }, function(results, status) {
-                                        if (status == google.maps.GeocoderStatus.OK) {
-                                            var mapCanvasId = _this.getId() + "-map-canvas";
-                                            if ($('#' + mapCanvasId).length === 0) {
-                                                $("<div id='" + mapCanvasId + "' class='alpaca-controlfield-address-mapcanvas'></div>").appendTo(_this.fieldContainer);
-                                            }
-                                            var map = new google.maps.Map(document.getElementById(_this.getId() + "-map-canvas"), {
-                                                "zoom": 10,
-                                                "center": results[0].geometry.location,
-                                                "mapTypeId": google.maps.MapTypeId.ROADMAP
-                                            });
-                                            var marker = new google.maps.Marker({
-                                                map: map,
-                                                position: results[0].geometry.location
-                                            });
-                                        } else {
-                                            _this.displayMessage("Geocoding failed: " + status);
+                    function() {
+                        if (google && google.maps) {
+                            var geocoder = new google.maps.Geocoder();
+                            var address = _this.getAddress();
+                            if (geocoder) {
+                                geocoder.geocode({
+                                    'address': address
+                                }, function(results, status) {
+                                    if (status == google.maps.GeocoderStatus.OK) {
+                                        var mapCanvasId = _this.getId() + "-map-canvas";
+                                        if ($('#' + mapCanvasId).length === 0) {
+                                            $("<div id='" + mapCanvasId + "' class='alpaca-controlfield-address-mapcanvas'></div>").appendTo(_this.fieldContainer);
                                         }
-                                    });
-                                }
-                            } else {
-                                _this.displayMessage("Google Map API is not installed.");
+                                        var map = new google.maps.Map(document.getElementById(_this.getId() + "-map-canvas"), {
+                                            "zoom": 10,
+                                            "center": results[0].geometry.location,
+                                            "mapTypeId": google.maps.MapTypeId.ROADMAP
+                                        });
+                                        var marker = new google.maps.Marker({
+                                            map: map,
+                                            position: results[0].geometry.location
+                                        });
+                                    } else {
+                                        _this.displayMessage("Geocoding failed: " + status);
+                                    }
+                                });
                             }
-                        }).wrap('<small/>');
+                        } else {
+                            _this.displayMessage("Google Map API is not installed.");
+                        }
+                    }).wrap('<small/>');
+
+                if (this.options.showMapOnLoad)
+                {
+                    mapButton.click();
+                }
             }
 
             if (onSuccess) {
@@ -185,6 +190,10 @@
                         "description": "Enable address validation if true",
                         "type": "boolean",
                         "default": true
+                    },
+                    "showMapOnLoad": {
+                        "title": "Whether to show the map when first loaded",
+                        "type": "boolean"
                     }
                 }
             });

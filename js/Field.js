@@ -78,20 +78,14 @@
                 this.options.helper = this.schema.description;
             }
 
-            // ref id
-            if (this.schema && this.schema.id)
-            {
-                this.refId = this.schema.id;
-            }
-
-
             if (Alpaca.isEmpty(this.options.readonly) && !Alpaca.isEmpty(this.schema.readonly)) {
                 this.options.readonly = this.schema.readonly;
             }
 
-            // data
+            // if data is empty, then we check whether we can fall back to a default value
             if (Alpaca.isValEmpty(this.data) && !Alpaca.isEmpty(this.schema["default"])) {
                 this.data = this.schema["default"];
+                this.showingDefaultData = true;
             }
 
             // default path
@@ -102,9 +96,6 @@
 
             // events
             this._events = {};
-
-            // backup data
-            this.backupData = Alpaca.copyOf(this.data);
 
             // helper function to determine if we're in a display-only mode
             this.isDisplayOnly = function()
@@ -266,12 +257,15 @@
         },
 
         /**
+         * This is the entry point method into the field.  It is called by Alpaca for each field being rendered.
+         *
          * Renders this field into the container and creates a DOM element which is bound into the container.
          *
          * @param {Object|String} view View to be used for rendering field (optional).
          * @param {Function} callback Post-Render callback (optional).
          */
-        render: function(view, callback) {
+        render: function(view, callback)
+        {
             if (view && (Alpaca.isString(view) || Alpaca.isObject(view))) {
                 this.view.setView(view);
             } else {
@@ -290,7 +284,8 @@
             }
 
             // set default name value if it is not provided through options.
-            if (!this.name) {
+            if (!this.name)
+            {
                 // has path?
                 if (this.parent && this.parent.name && this.path) {
                     var lastSegment = this.path.substring(this.path.lastIndexOf('/')+1);
@@ -308,6 +303,7 @@
                     }
                 }
             }
+
             this.setup();
             this._render(callback);
         },
@@ -573,12 +569,24 @@
                     this.disable();
                 }
 
-                // bind data
+                // we bind data if we're in "edit" mode
+                // typically, we don't bind data if we're in "create" or any other mode
                 if (this.view.type && this.view.type == 'edit') {
                     this.bindData();
                 }
+                else if (this.showingDefaultData)
+                {
+                    // if this control is showing default data, then we render the control anyway
+                    this.bindData();
+                }
 
-                // initialize events (after part of the dom)
+                // some logging to be useful
+                if (this.view.type == "create")
+                {
+                    Alpaca.logDebug("Skipping data binding for field: " + this.id + " since view mode is 'create'");
+                }
+
+                // initialize dom-level events
                 if (this.view.type && this.view.type != 'view') {
                     this.initEvents();
                 }
@@ -1160,14 +1168,11 @@
         reload: function() {
             this.initializing = true;
 
-
             if (!Alpaca.isEmpty(this.callback)) {
                 this.callback(this, this.renderedCallback);
             } else {
                 this.render(this.renderedCallback);
             }
-
-            //this.render();
         },
 
         /**

@@ -49,7 +49,7 @@
     <div class='container_12'>
         <div class='actual-body'>
             <div class='grid_12'>
-                <h1><img src="../../img/alpaca.png"><span>jQuery Forms Made Easy</span></h1>
+                <h1><img src="../../img/alpaca.png"><span>Easy Forms for jQuery</span></h1>
                 <div class="resource-bar">
                     <a href="../../../index.html">Home</a>
                     <a href="../../../web/download.html">Downloads</a>
@@ -123,9 +123,59 @@
                                 </script>
                             </div>
 
-                            <!-- Example #2: Composite Object (using referenced definition) -->
                             <div class='grid_12 alpaca-example-case'>
-                                <h2>Example #2: Internal Definitions</h2>
+                                <h2>Example #2: Deeply Nested Tree (loaded from data)</h2>
+                                <p>
+                                    This example shows a deeply nested tree loaded with data.  Note that unlike the previous
+                                    example, this example uses a non-'create' view which allows data to bind.
+                                </p>
+
+                                <div id="field2"></div>
+                                <script type="text/javascript" id="field2-script">
+                                    $(function() {
+                                        $("#field2").alpaca({
+                                            "data": [{
+                                                "title": "Node 1.1",
+                                                "children": [{
+                                                    "title": "Node 2.1",
+                                                    "children": [{
+                                                        "title": "Node 3.1",
+                                                        "children": [{
+                                                            "title": "Node 4.1"
+                                                        }]
+                                                    }, {
+                                                        "title": "Node 3.2"
+                                                    }]
+                                                }]
+                                            }],
+                                            "schema": {
+                                                "id": "#leaf",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "title": {
+                                                            "type": "string",
+                                                            "title": "Name",
+                                                            "required": true
+                                                        },
+                                                        "children": {
+                                                            "$ref": "#leaf"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "options": {
+                                                "toolbarSticky": true
+                                            }
+                                        });
+                                    });
+                                </script>
+                            </div>
+
+                            <!-- Example #3: Composite Object (using referenced definition) -->
+                            <div class='grid_12 alpaca-example-case'>
+                                <h2>Example #3: Internal Definitions</h2>
                                 <p>
                                     Here is an example of an object that derives one of its sub-object
                                     properties from a referenced definition.  The definition is stored in a special
@@ -133,10 +183,10 @@
                                     anticipates support for JSON Schema v4.
                                 </p>
 
-                                <div id="field2"></div>
-                                <script type="text/javascript" id="field2-script">
+                                <div id="field3"></div>
+                                <script type="text/javascript" id="field3-script">
                                     $(function() {
-                                        $("#field2").alpaca({
+                                        $("#field3").alpaca({
                                             "type": "create",
                                             "schema": {
                                                 "type": "object",

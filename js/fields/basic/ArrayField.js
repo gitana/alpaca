@@ -539,6 +539,17 @@
 
                         // trigger update on the parent array
                         _this.triggerUpdate();
+
+                        // if not empty, mark the "last" and "first" dom elements in the list
+                        if ($(containerElem).siblings().addBack().length > 0)
+                        {
+                            $(containerElem).parent().removeClass("alpaca-fieldset-items-container-empty");
+
+                            $(containerElem).siblings().addBack().removeClass("alpaca-item-container-first");
+                            $(containerElem).siblings().addBack().removeClass("alpaca-item-container-last");
+                            $(containerElem).siblings().addBack().first().addClass("alpaca-item-container-first");
+                            $(containerElem).siblings().addBack().last().addClass("alpaca-item-container-last");
+                        }
                     }
                 });
 
@@ -577,16 +588,42 @@
             // handle $ref
             if (itemSchema && itemSchema["$ref"])
             {
-                var refId = itemSchema["$ref"];
+                var referenceId = itemSchema["$ref"];
 
                 var topField = this;
+                var fieldChain = [topField];
                 while (topField.parent)
                 {
                     topField = topField.parent;
+                    fieldChain.push(topField);
                 }
 
-                Alpaca.loadRefSchemaOptions(topField, refId, function(itemSchema, itemOptions) {
-                    callback(itemSchema, itemOptions);
+                Alpaca.loadRefSchemaOptions(topField, referenceId, function(itemSchema, itemOptions) {
+
+                    // walk the field chain to see if we have any circularity
+                    var refCount = 0;
+                    for (var i = 0; i < fieldChain.length; i++)
+                    {
+                        if (fieldChain[i].schema && fieldChain[i].schema.id === referenceId)
+                        {
+                            refCount++;
+                        }
+                    }
+
+                    var circular = (refCount > 1);
+
+                    if (itemSchema)
+                    {
+                        itemSchema = Alpaca.copyOf(itemSchema);
+                        delete itemSchema.id;
+                    }
+
+                    if (itemOptions)
+                    {
+                        itemOptions = Alpaca.copyOf(itemOptions);
+                    }
+
+                    callback(itemSchema, itemOptions, circular);
                 });
             }
             else
@@ -600,6 +637,10 @@
          */
         renderItems: function() {
             var _this = this;
+
+            // mark field container as empty by default
+            // the "addItem" method below gets the opportunity to unset this
+            $(this.fieldContainer).addClass("alpaca-fieldset-items-container-empty");
 
             if (this.data)
             {

@@ -110,7 +110,6 @@
         <file name="ControlField.js"/>
         <file name="ContainerField.js"/>
         <file name="Connector.js"/>
-        <file name="Connector2.js"/>
         <file name="Form.js"/>
 
         <!--Alpaca Core Fields-->
@@ -181,7 +180,6 @@
                 <file name="ControlField.js"/>
                 <file name="ContainerField.js"/>
                 <file name="Connector.js"/>
-                <file name="Connector2.js"/>
                 <file name="Form.js"/>
 
                 <!--Alpaca Core Fields-->
@@ -367,7 +365,6 @@
                 <file name="ControlField.js"/>
                 <file name="ContainerField.js"/>
                 <file name="Connector.js"/>
-                <file name="Connector2.js"/>
                 <file name="Form.js"/>
 
                 <!--Alpaca Core Fields-->
