@@ -57,7 +57,14 @@
         /**
          * @see Alpaca.ContainerField#getValue
          */
-        getValue: function() {
+        getValue: function()
+        {
+            // if we don't have any children and we're not required, hand back undefined
+            if (this.children.length === 0 && !this.schema.required)
+            {
+                return;
+            }
+
             var o = {};
             for (var i = 0; i < this.children.length; i++) {
                 var v = this.children[i].getValue();

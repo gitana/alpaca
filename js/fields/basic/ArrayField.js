@@ -123,10 +123,23 @@
          * @see Alpaca.ContainerField#getValue
          */
         getValue: function() {
+
+            // if we're empty and we're also not required, then we hand back undefined
+            if (this.children.length === 0 && !this.schema.required)
+            {
+                return;
+            }
+
+            // otherwise, construct an array and had it back
             var o = [];
-            for (var i = 0; i < this.children.length; i++) {
+            for (var i = 0; i < this.children.length; i++)
+            {
                 var v = this.children[i].getValue();
-                o.push(v);
+
+                if (typeof(v) !== "undefined")
+                {
+                    o.push(v);
+                }
             }
             return o;
         },

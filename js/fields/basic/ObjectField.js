@@ -100,6 +100,14 @@
              * @see Alpaca.Field#getValue
              */
             getValue: function() {
+
+                // if we don't have any children and we're not required, hand back undefined
+                if (this.children.length === 0 && !this.schema.required)
+                {
+                    return;
+                }
+
+                // otherwise, hand back an object with our child properties in it
                 var o = {};
 
                 // walk through all of the properties object
@@ -114,11 +122,13 @@
                     var propertyId = this.children[i].propertyId;
                     var fieldValue = this.children[i].getValue();
 
-                    if (this.determineAllDependenciesValid(propertyId))
+                    if (typeof(fieldValue) !== "undefined")
                     {
-                        o[propertyId] = fieldValue;
+                        if (this.determineAllDependenciesValid(propertyId))
+                        {
+                            o[propertyId] = fieldValue;
+                        }
                     }
-
                 }
 
                 return o;
