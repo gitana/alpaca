@@ -6,8 +6,8 @@
     test("Form for creating new content.", function() {
         stop();
         $("#createform-1").alpaca({
-            "options": "../examples/forms/customer-profile/options.json",
-            "schema": "../examples/forms/customer-profile/schema.json",
+            "optionsSource": "../examples/forms/customer-profile/options.json",
+            "schemaSource": "../examples/forms/customer-profile/schema.json",
             "view": "VIEW_WEB_CREATE",
             "postRender": function (renderedField) {
                 expect(13);
@@ -38,8 +38,8 @@
     test("Simple form for creating new content.", function() {
         stop();
         $("#createform-2").alpaca({
-            "options": "../examples/forms/customer-profile/simple-options.json",
-            "schema": "../examples/forms/customer-profile/schema.json",
+            "optionsSource": "../examples/forms/customer-profile/simple-options.json",
+            "schemaSource": "../examples/forms/customer-profile/schema.json",
             "view": "VIEW_WEB_CREATE",
             "postRender": function (renderedField) {
                 expect(1);

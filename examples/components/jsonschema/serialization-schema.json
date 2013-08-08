@@ -1,0 +1,68 @@
+{
+    "type": "object",
+    "properties": {
+        "title": {
+            "type": "string",
+            "title": "Name of Movie Collection",
+            "required": true
+        },
+        "movies": {
+            "type": "array",
+            "title": "Movies",
+            "items": {
+                "$ref": "#/definitions/movie"
+            }
+        }
+    },
+    "definitions": {
+        "movie": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "title": "Movie Name"
+                },
+                "year": {
+                    "type": "string",
+                    "title": "Year"
+                },
+                "actors": {
+                    "type": "array",
+                    "title": "Movie Actors",
+                    "items": {
+                        "$ref": "#/definitions/actor"
+                    }
+                },
+                "reviews": {
+                    "type": "array",
+                    "title": "Movie Reviews",
+                    "items": {
+                        "$ref": "#/definitions/review"
+                    }
+                }
+            }
+        },
+        "actor": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "title": "Name"
+                }
+            }
+        },
+        "review": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string",
+                    "title": "Author"
+                },
+                "review": {
+                    "type": "string",
+                    "title": "Review"
+                }
+            }
+        }
+    }
+}

@@ -6,9 +6,9 @@
     test("Edit form with readonly fields.", function() {
         stop();
         $("#editform-1").alpaca({
-            "data": "../examples/forms/customer-profile/data.json",
-            "options": "../examples/forms/customer-profile/simple-options.json",
-            "schema": "../examples/forms/customer-profile/schema.json",
+            "dataSource": "../examples/forms/customer-profile/data.json",
+            "optionsSource": "../examples/forms/customer-profile/simple-options.json",
+            "schemaSource": "../examples/forms/customer-profile/schema.json",
             "view": {
                 "parent": "VIEW_WEB_EDIT",
                 "displayReadonly": true
@@ -29,9 +29,9 @@
     test("Simple form for editing content.", function() {
         stop();
         $("#editform-2").alpaca({
-            "data": "../examples/forms/customer-profile/data.json",
-            "options": "../examples/forms/customer-profile/simple-options.json",
-            "schema": "../examples/forms/customer-profile/schema.json",
+            "dataSource": "../examples/forms/customer-profile/data.json",
+            "optionsSource": "../examples/forms/customer-profile/simple-options.json",
+            "schemaSource": "../examples/forms/customer-profile/schema.json",
             "view": {
                 "parent": "VIEW_JQUERYUI_EDIT",
                 "displayReadonly": false

@@ -158,21 +158,6 @@
             connector = new connectorClass("default");
         }
 
-        // handle case for null data
-        // if schema exits, we will use the settings from the schema
-        // we assume a text field
-        if (Alpaca.isEmpty(data)) {
-            if (Alpaca.isEmpty(schema) && (Alpaca.isEmpty(options) || Alpaca.isEmpty(options.type))) {
-                if (Alpaca.isEmpty(options)) {
-                    data = "";
-                    options = "text";
-                } else if (options && Alpaca.isObject(options)) {
-                    data = "";
-                    options.type = "text";
-                }
-            }
-        }
-
         // container can either be a dom id or a dom element
         if (el) {
             if (Alpaca.isString(el)) {
@@ -249,6 +234,26 @@
             loadedSchema = loadedSchema ? loadedSchema: schema;
             loadedOptions = loadedOptions ? loadedOptions : options;
             loadedView = loadedView ? loadedView : view;
+
+            // some defaults for the case where data is null
+            // if schema + options are not provided, we assume a text field
+
+            if (Alpaca.isEmpty(loadedData))
+            {
+                if (Alpaca.isEmpty(loadedSchema) && (Alpaca.isEmpty(loadedOptions) || Alpaca.isEmpty(loadedOptions.type)))
+                {
+                    loadedData = "";
+
+                    if (Alpaca.isEmpty(loadedOptions))
+                    {
+                        loadedOptions = "text";
+                    }
+                    else if (options && Alpaca.isObject(options))
+                    {
+                        loadedOptions.type = "text";
+                    }
+                }
+            }
 
             // init alpaca
             return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, initialSettings, callback, _renderedCallback, connector, errorCallback, isDynamicCreation);
@@ -2211,10 +2216,10 @@
 
         if (Alpaca.logLevel <= level)
         {
+            var method = methodMap[level];
+
             if (typeof console !== 'undefined' && console[method])
             {
-                var method = methodMap[level];
-
                 if ("debug" == method) {
                     console.debug(obj);
                 }

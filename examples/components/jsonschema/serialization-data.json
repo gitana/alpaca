@@ -1,0 +1,58 @@
+{
+    "title": "The Griswold Family Movie Collection",
+    "movies": [{
+        "title": "Tron",
+        "year": "1982",
+        "actors": [{
+            "name": "Jeff Bridges"
+        }, {
+            "name": "Bruce Boxleitner"
+        }]
+    }, {
+        "title": "Breakin' 2: Electric Boogaloo",
+        "year": "1984",
+        "actors": [{
+            "name": "Lucinda Dickey"
+        }, {
+            "name": "Adolfo Quinones"
+        }, {
+            "name": "Michael Chambers"
+        }],
+        "reviews": [{
+            "author": "Ozone",
+            "review": "Nothing's changed here. Story's still the same. People are still break dancing! Gotta love the 80's."
+        }]
+    }, {
+        "title": "Groundhog Day",
+        "year": "1993",
+        "actors": [{
+            "name": "Bill Murray"
+        }, {
+            "name": "Andie MacDowell"
+        }],
+        "reviews": [{
+            "author": "Cassius Clay",
+            "review": "This is an intriguing comedy about repeating the past."
+        }, {
+            "author": "Iron Mike",
+            "review": "This is one of the best and most clever comedies I've ever seen!"
+        }]
+    }, {
+        "title": "The Big Lebowski",
+        "year": "1999",
+        "actors": [{
+            "name": "Jeff Bridges"
+        }, {
+            "name": "John Goodman"
+        }, {
+            "name": "Steve Buscemi"
+        }],
+        "reviews": [{
+            "author": "Donnie",
+            "review": "What movie was that again?"
+        }, {
+            "author": "Walter",
+            "review": "Shut up Donnie."
+        }]
+    }]
+}

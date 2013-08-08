@@ -494,8 +494,14 @@ $(function() {
             {
                 "id":"references",
                 "title":"Using References",
-                "link":"../../components/references/references.html"
+                "link":"../../components/jsonschema/references.html"
+            },
+            {
+                "id":"serialization",
+                "title":"Serialization",
+                "link":"../../components/jsonschema/serialization.html"
             }
+
         ]
     }];
 

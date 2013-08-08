@@ -6,9 +6,9 @@
     test("Configuration-based wizard without using a layout template.", function() {
         stop();
         $("#wizard-1").alpaca({
-            "data": "../examples/components/wizards/customer-profile-data.json",
-            "options": "../examples/components/wizards/customer-profile-options.json",
-            "schema": "../examples/components/wizards/customer-profile-schema.json",
+            "dataSource": "../examples/components/wizards/customer-profile-data.json",
+            "optionsSource": "../examples/components/wizards/customer-profile-options.json",
+            "schemaSource": "../examples/components/wizards/customer-profile-schema.json",
             "view": {
                 "parent": "VIEW_WEB_EDIT_LIST",
                 "wizard": {
@@ -105,9 +105,9 @@
     test("Template-based wizard.", function() {
         stop();
         $("#wizard-2").alpaca({
-            "data": "../examples/components/wizards/customer-profile-data.json",
-            "options": "../examples/components/wizards/customer-profile-options.json",
-            "schema": "../examples/components/wizards/customer-profile-schema.json",
+            "dataSource": "../examples/components/wizards/customer-profile-data.json",
+            "optionsSource": "../examples/components/wizards/customer-profile-options.json",
+            "schemaSource": "../examples/components/wizards/customer-profile-schema.json",
             "view": {
                 "parent": "VIEW_JQUERYUI_EDIT_LIST",
                 "layout": {
