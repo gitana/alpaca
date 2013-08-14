@@ -29,6 +29,9 @@
     <script type="text/javascript" src="demo-tester.js"></script>
     <link type="text/css" href="demo-tester.css" rel="stylesheet" />
 
+    <!-- jQuery UI (for drag/drop support) -->
+    <script type="text/javascript" src="lib/jquery-ui-1.10.3.custom.js"></script>
+
 </head>
 <body data-spy="scroll" data-target=".demo-nav">
 
@@ -60,50 +63,70 @@
         <div class="span12">
 
             <div class="row-fluid">
-                <div class="span6">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <div>
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#schema" data-toggle="tab">Schema</a></li>
-                                    <li><a href="#options" data-toggle="tab">Options</a></li>
-                                    <li><a href="#data" data-toggle="tab">Data</a></li>
-                                </ul>
-                            </div>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="schema">
+                <div class="span12">
+                    <div>
+                        <ul class="nav nav-tabs">
+                            <li><a href="#source" data-toggle="tab">Source</a></li>
+                            <li class="active"><a href="#form" data-toggle="tab" class="tab-item-form">Form</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="source">
+
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div>
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#schema" data-toggle="tab">Schema</a></li>
+                                            <li><a href="#options" data-toggle="tab">Options</a></li>
+                                            <li><a href="#data" data-toggle="tab">Data</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="schema">
+                                        </div>
+                                        <div class="tab-pane" id="options">
+                                        </div>
+                                        <div class="tab-pane" id="data">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="tab-pane" id="options">
-                                </div>
-                                <div class="tab-pane" id="data">
-                                </div>
-                                <br/>
-                                <div class="btn-group pull-right">
-                                    <button class="btn run">Run</button>
-                                </div>
-                                <div style="clear: both"></div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="span6">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <div>
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#form" data-toggle="tab">Form</a></li>
-                                </ul>
-                            </div>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="form">
-                                    <div id="formDiv"></div>
+                        <div class="tab-pane active" id="form">
+
+                            <div class="row-fluid">
+                                <div class="span8">
+                                    <div class="row-fluid">
+                                        <div class="span12">
+                                            <div id="formDiv"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span4">
+                                    <div class="row-fluid">
+                                        <div class="span12">
+                                            <div>
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active"><a href="#types" data-toggle="tab">Types</a></li>
+                                                    <li><a href="#basic" data-toggle="tab">Basic Fields</a></li>
+                                                    <li><a href="#advanced" data-toggle="tab">Advanced Fields</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="types"></div>
+                                                <div class="tab-pane" id="basic"></div>
+                                                <div class="tab-pane" id="advanced"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
     </div>
