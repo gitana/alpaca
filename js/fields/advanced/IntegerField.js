@@ -46,7 +46,7 @@
         getValue: function() {
             var textValue = this.field.val();
             if (Alpaca.isValEmpty(textValue)) {
-                return "";
+                return -1;
             } else {
                 return parseInt(textValue, 10);
             }

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Alpaca Demos</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- jquery -->
+    <script type="text/javascript" src="../lib/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="../lib/jquery.tmpl.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link type="text/css" href="../lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+    <script type="text/javascript" src="../lib/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Alpaca -->
+    <script type="text/javascript" src="../components/alpaca/alpaca.js"></script>
+    <link type="text/css" href="../components/alpaca/alpaca.css" rel="stylesheet" />
+
+    <!-- Alpaca support for Bootstrap -->
+    <link type="text/css" href="../components/alpaca/alpaca-bootstrap.css" rel="stylesheet" />
+
+    <!-- ACE editor -->
+    <script src="../lib/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- registration -->
+    <script type="text/javascript" src="demo-tester.js"></script>
+    <link type="text/css" href="demo-tester.css" rel="stylesheet" />
+
+</head>
+<body data-spy="scroll" data-target=".demo-nav">
+
+<div class="container">
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="navbar navbar-static-top">
+                <div class="navbar-inner">
+                    <a class="brand" href="#">Alpaca Demos</a>
+                    <ul class="nav">
+                        <li><a href="index.html">Welcome</a></li>
+                        <li><a href="demo-standalone.html">Standalone</a></li>
+                        <li><a href="demo-bootstrap.html">Bootstrap</a></li>
+                        <li><a href="demo-jqueryui.html">JQuery UI</a></li>
+                        <li><a href="demo-jquerymobile.html">JQuery Mobile</a></li>
+                        <li><a href="demo-amd.html">AMD</a></li>
+                        <li class="active"><a href="demo-tester.html">Form Tester</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid sep1">
+
+        <br/>
+
+        <div class="span12">
+
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div>
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#schema" data-toggle="tab">Schema</a></li>
+                                    <li><a href="#options" data-toggle="tab">Options</a></li>
+                                    <li><a href="#data" data-toggle="tab">Data</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="schema">
+                                </div>
+                                <div class="tab-pane" id="options">
+                                </div>
+                                <div class="tab-pane" id="data">
+                                </div>
+                                <br/>
+                                <div class="btn-group pull-right">
+                                    <button class="btn run">Run</button>
+                                </div>
+                                <div style="clear: both"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div>
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#form" data-toggle="tab">Form</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="form">
+                                    <div id="formDiv"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
