@@ -277,6 +277,33 @@
             },
 
             /**
+             * Removes child
+             *
+             * @param {String} id the alpaca field id of the field to be removed
+             */
+            removeItem: function(id)
+            {
+                this.children = $.grep(this.children, function(val, index) {
+                    return (val.getId() != id);
+                });
+
+                var childField = this.childrenById[id];
+
+                delete this.childrenById[id];
+                if (childField.propertyId)
+                {
+                    delete this.childrenByPropertyId[childField.propertyId];
+                }
+
+                childField.destroy();
+
+                this.renderValidationState();
+
+                // trigger update handler
+                this.triggerUpdate();
+            },
+
+            /**
              * Adds a child item.
              *
              * @param {String} propertyId Child field property ID.
@@ -327,6 +354,20 @@
                         if (insertAfterId) {
                             _this.renderValidationState();
                         }
+
+                        // if not empty, mark the "last" and "first" dom elements in the list
+                        if ($(containerElem).siblings().addBack().length > 0)
+                        {
+                            $(containerElem).parent().removeClass("alpaca-fieldset-items-container-empty");
+
+                            $(containerElem).siblings().addBack().removeClass("alpaca-item-container-first");
+                            $(containerElem).siblings().addBack().removeClass("alpaca-item-container-last");
+                            $(containerElem).siblings().addBack().first().addClass("alpaca-item-container-first");
+                            $(containerElem).siblings().addBack().last().addClass("alpaca-item-container-last");
+                        }
+
+                        // store key on dom element
+                        $(containerElem).attr("data-alpaca-item-container-item-key", propertyId);
 
                         // trigger update on the parent array
                         _this.triggerUpdate();

@@ -507,7 +507,7 @@
          * @return {*}
          * @private
          */
-        _addItem: function(index, itemSchema, itemOptions, itemData, insertAfterId,isDynamicSubItem) {
+        _addItem: function(index, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem) {
             var _this = this;
             if (_this._validateEqualMaxItems()) {
 
@@ -563,6 +563,10 @@
                             $(containerElem).siblings().addBack().first().addClass("alpaca-item-container-first");
                             $(containerElem).siblings().addBack().last().addClass("alpaca-item-container-last");
                         }
+
+                        // store key on dom element
+                        $(containerElem).attr("data-alpaca-item-container-item-key", index);
+
                     }
                 });
 
