@@ -146,3 +146,4 @@ Thanks for assistance and contributions:
 + [@Ognian](http://www.github.com/Ognian)
 + [@globocom](http://www.github.com/globocom)
 + [@urba](http://www.github.com/urba)
++ [@colegatron](http://www.github.com/colegatron)
