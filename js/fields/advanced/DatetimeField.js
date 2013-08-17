@@ -49,10 +49,20 @@
                     if (this.field.datetimepicker) {
                         this.field.hover(function() {
                             if (!$(this).hasClass('hasDatepicker')) {
-                                $(this).datetimepicker(_this.options.datetime ? _this.options.datetime : {
-                                    "changeYear": true,
-                                    "changeMonth": true
-                                });
+
+                                var timePickerOptions = _this.options.timepicker;
+                                if (!timePickerOptions)
+                                {
+                                    timePickerOptions = _this.options.timepicker;
+                                }
+                                if (!timePickerOptions)
+                                {
+                                    timePickerOptions = {
+                                        "changeYear": true,
+                                        "changeMonth": true
+                                    };
+                                }
+                                $(this).datetimepicker(timePickerOptions);
                             }
                         });
                         if (this.fieldContainer) {
@@ -107,7 +117,7 @@
             getSchemaOfOptions: function() {
                 return Alpaca.merge(this.base(), {
                     "properties": {
-                        "datetime": {
+                        "timepicker": {
                             "title": "Timepicker options",
                             "description": "Options that are supported by the <a href='http://trentrichardson.com/examples/timepicker/'>jQuery timepicker addon</a>.",
                             "type": "any"
@@ -123,7 +133,7 @@
             getOptionsForOptions: function() {
                 return Alpaca.merge(this.base(), {
                     "fields": {
-                        "datetime": {
+                        "timepicker": {
                             "type": "any"
                         }
                     }

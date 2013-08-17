@@ -18,6 +18,7 @@
     <!-- Alpaca -->
     <script type="text/javascript" src="../../../components/alpaca/alpaca.js"></script>
     <link type="text/css" href="../../../components/alpaca/alpaca.css" rel="stylesheet"/>
+    <link type="text/css" href="../../../components/alpaca/alpaca-jqueryui.css" rel="stylesheet"/>
 
     <!-- jQuery UI Support -->
     <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
@@ -53,9 +54,9 @@
                     <a href="../../../index.html">Home</a>
                     <a href="../../../web/download.html">Downloads</a>
                     <a href="javascript:void(0);" class="current">Documentation</a>
-                    <a href="../../forms/customer-profile/edit-form.html">Forms</a>
-                    <a href="../../../web/tutorials.html">Tutorials</a>
-                    <a href="../../../web/consulting.html">Consulting</a>
+                    <a href="../../forms/customer-profile/edit-form.html">Examples</a>
+                    <a href="../../../web/resources.html">Resources</a>
+                    <a href="../../../web/contactus.html">Contact Us</a>
                 </div>
             </div>
         </div>
@@ -167,13 +168,43 @@
                                         "view": "VIEW_WEB_DISPLAY"
                                     });
                                 </script>
-
-
-                                <!-- BEGIN DISCUSSIONS -->
-                                <div class="alpaca-discussions"></div>
-                                <!-- END DISCUSSIONS -->
-
                             </div>
+
+                            <!-- example #4 -->
+                            <div>
+                                <h2>Example #4: Customize the jQuery UI DatePicker Control</h2>
+                                <p>
+                                    The Date Field uses the jQuery UI DatePicker Control under the hood.  If you'd like to customize
+                                    the behavior of this control, you can pass in explicit configuration.  For details on the kinds
+                                    of things you can pass in, see the documentation for the
+                                    <a href="http://api.jqueryui.com/datepicker/" target="_blank">jQuery UI DatePicker Control</a>.
+                                </p>
+                                <p>
+                                    Here is an example that limits the calendar to just 2 weeks from today.
+                                </p>
+                                <div id="field4">
+                                </div>
+                                <script type="text/javascript" id="field4-script">
+                                    $("#field4").alpaca({
+                                        "schema": {
+                                            "format": "date"
+                                        },
+                                        "options": {
+                                            "label": "Please choose an appointment date:",
+                                            "helper": "The appointment date must be within the next two weeks",
+                                            "datepicker": {
+                                                "hideIfNoPrevNextType": true,
+                                                "minDate": 0,
+                                                "maxDate": "+2w"
+                                            }
+                                        }
+                                    });
+                                </script>
+                            </div>
+
+                            <!-- BEGIN DISCUSSIONS -->
+                            <div class="alpaca-discussions"></div>
+                            <!-- END DISCUSSIONS -->
 
                         </div>
                         <div class="clear height-fix"></div>

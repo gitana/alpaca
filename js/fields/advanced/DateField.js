@@ -48,11 +48,19 @@
 
             if (this.field && $.datepicker)
             {
-                this.field.datepicker({
-                    "dateFormat":  this.options.dateFormat,
-                    "changeMonth": true,
-                    "changeYear": true
-                });
+                var datePickerOptions = this.options.datepicker;
+                if (!datePickerOptions)
+                {
+                    datePickerOptions = {
+                        "changeMonth": true,
+                        "changeYear": true
+                    };
+                }
+                if (!datePickerOptions.dateFormat)
+                {
+                    datePickerOptions.dateFormat = this.options.dateFormat;
+                }
+                this.field.datepicker(datePickerOptions);
 
                 if (this.fieldContainer) {
                     this.fieldContainer.addClass('alpaca-controlfield-date');
@@ -170,6 +178,11 @@
                         "description": "Regular expression for validation date format",
                         "type": "string",
                         "default": Alpaca.regexps.date
+                    },
+                    "datepicker": {
+                        "title": "Date Picker options",
+                        "description": "Optional configuration to be passed to jQuery UI DatePicker control",
+                        "type": "any"
                     }
                 }
             });
@@ -187,6 +200,9 @@
                     },
                     "dateFormatRegex": {
                         "type": "text"
+                    },
+                    "datetime": {
+                        "type": "any"
                     }
                 }
             });

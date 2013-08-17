@@ -572,3 +572,17 @@ h3.home-seg
     /*margin-top: 0px !important;*/
     padding-top: 0px !important;
 }
+
+h2.page-header
+{
+    text-align: center !important;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+    font-size: 28px;
+    text-shadow: 1px 1px #eee;
+}
+
+.widget-notitle
+{
+    border-radius: 5px 5px 5px 5px;
+}

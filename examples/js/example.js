@@ -141,20 +141,34 @@ $(function() {
     // Example JSON
     var formExamples = [
         {
+            "title": "Getting Started",
+            "examples": [
+                {
+                    "id": "tutorials",
+                    "title": "Tutorials",
+                    "link": "../../../web/resources.html"
+                },
+                {
+                    "id": "demos",
+                    "title": "Alpaca Demos",
+                    "link": "../../../demos"
+                }
+            ]
+        },
+        {
             "title": "Simple Forms",
             "examples": [
                 {
-                    "id":"simple-simple1",
+                    "id":"simple1",
                     "title":"Registration #1 (Auto Validation)",
                     "link":"../../forms/simple/simple1.html"
                 },
                 {
-                    "id":"simple-simple2",
+                    "id":"simple2",
                     "title":"Registration #2 (Click Validation)",
                     "link":"../../forms/simple/simple2.html"
                 }
             ]
-
         },
         {
             "title": "Customer Profile",
@@ -462,7 +476,7 @@ $(function() {
             {
                 "id":"layout-table",
                 "title":"Table",
-                "link":"../../components/layouts/table-layout/table-layout.html"
+                "link":"../../components/layouts/table-layout.html"
             }/*,
             {
                 "id":"layout-yaml",

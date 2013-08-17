@@ -71,8 +71,8 @@
                 <include name="index.html"/>
                 <include name="resources.html"/>
                 <include name="download.html"/>
-                <include name="tutorials.html"/>
-                <include name="consulting.html"/>
+                <include name="resources.html"/>
+                <include name="contactus.html"/>
                 <include name="license.txt"/>
             </fileset>
         </copy>
@@ -297,7 +297,7 @@
             <fileset dir="${prep.dir}/lib">
                 <include name="jquery-latest.min.js"/>
                 <include name="jquery.tmpl.js"/>
-                <include name="jquery-ui-timepicker-addon.js"/>
+                <include name="jquery-ui-timepicker-addon/**/*"/>
                 <include name="jquery.wysiwyg/**/*"/>
                 <include name="jquery-ui-latest/**/*"/>
                 <include name="bootstrap/**/*"/>
@@ -551,16 +551,16 @@
             <fileset dir="${prep.dir}" includes="index.html"/>
             <fileset dir="${prep.dir}" includes="resources.html"/>
             <fileset dir="${prep.dir}" includes="download.html"/>
-            <fileset dir="${prep.dir}" includes="tutorials.html"/>
-            <fileset dir="${prep.dir}" includes="consulting.html"/>
+            <fileset dir="${prep.dir}" includes="resources.html"/>
+            <fileset dir="${prep.dir}" includes="contactus.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca CSS--&gt;(.*?)&lt;!--End of Alpaca CSS--&gt;"
                        replace='&lt;link type="text\/css" href="css/${appkey}.min.css" rel="stylesheet" /&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="index.html"/>
             <fileset dir="${prep.dir}" includes="resources.html"/>
             <fileset dir="${prep.dir}" includes="download.html"/>
-            <fileset dir="${prep.dir}" includes="tutorials.html"/>
-            <fileset dir="${prep.dir}" includes="consulting.html"/>
+            <fileset dir="${prep.dir}" includes="resources.html"/>
+            <fileset dir="${prep.dir}" includes="contactus.html"/>
         </replaceregexp>
         <replaceregexp match="&lt;!--Alpaca JavaScript--&gt;(.*?)&lt;!--End of Alpaca JavaScript--&gt;"
                        replace='&lt;script type="text\/javascript" src="../js/${appkey}.min.js"&gt;&lt;/script&gt;' flags="gs">
@@ -599,8 +599,8 @@
                 <include name="index.html"/>
                 <include name="resources.html"/>
                 <include name="download.html"/>
-                <include name="tutorials.html"/>
-                <include name="consulting.html"/>
+                <include name="resources.html"/>
+                <include name="contactus.html"/>
             </fileset>
         </copy>
         <copy todir="${package.dir}/css/images">

@@ -5,10 +5,17 @@
 {
     display: none;
     background-color:white;
+    z-index: 9999999 !important;
+    width: 22em !important;
 }
 
 /* Fix for Chrome issue with Button text */
 .ui-button .ui-button-text {
     white-space: nowrap;
+}
+
+.ui-datepicker
+{
+    z-index: 100;
 }
 

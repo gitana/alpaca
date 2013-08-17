@@ -18,12 +18,14 @@
         <!-- Alpaca -->
         <script type="text/javascript" src="../../../components/alpaca/alpaca.js"></script>
         <link type="text/css" href="../../../components/alpaca/alpaca.css" rel="stylesheet"/>
+        <link type="text/css" href="../../../components/alpaca/alpaca-jqueryui.css" rel="stylesheet"/>
 
         <!-- jQuery UI Support -->
         <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
         <link type="text/css" href="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
         <!-- DateTimePicker Field requires jQuery UI and this additional module -->
-        <script type="text/javascript" src="../../../lib/jquery-ui-timepicker-addon.js"></script>
+        <script type="text/javascript" src="../../../lib/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js"></script>
+        <link type="text/css" href="../../../lib/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.css" rel="stylesheet"/>
 
         <!-- Additional CSS -->
         <link type="text/css" href="../../css/960.fluid.css" rel="stylesheet"/>
@@ -55,9 +57,9 @@
                         <a href="../../../index.html">Home</a>
                         <a href="../../../web/download.html">Downloads</a>
                         <a href="javascript:void(0);" class="current">Documentation</a>
-                        <a href="../../forms/customer-profile/edit-form.html">Forms</a>
-                        <a href="../../../web/tutorials.html">Tutorials</a>
-                        <a href="../../../web/consulting.html">Consulting</a>
+                        <a href="../../forms/customer-profile/edit-form.html">Examples</a>
+                        <a href="../../../web/resources.html">Resources</a>
+                        <a href="../../../web/contactus.html">Contact Us</a>
                     </div>
                 </div>
 		    </div>
@@ -195,6 +197,40 @@
                                     "view": "VIEW_WEB_DISPLAY"
                                 });
                             </script>
+
+
+                            <!-- example #5 -->
+                            <div>
+                                <h2>Example #5: Customize the jQuery UI TimePicker</h2>
+                                <p>
+                                    The DateTime Field uses Trent Richardson's TimePicker extension to the jQuery UI DatePicker
+                                    Control to let users pick both dates and times.  If you'd like to customize
+                                    the behavior of this control, you can pass in explicit configuration.  For details on the kinds
+                                    of things you can pass in, see the documentation for the
+                                    <a href="http://trentrichardson.com/examples/timepicker/" target="_blank">TimePicker Extension</a>.
+                                </p>
+                                <p>
+                                    Here is an example that uses dropdowns instead of sliders for time selection.
+                                </p>
+                                <div id="field5">
+                                </div>
+                                <script type="text/javascript" id="field5-script">
+                                    $("#field5").alpaca({
+                                        "data" : "02/05/2013 05:00",
+                                        "schema": {
+                                            "format": "datetime"
+                                        },
+                                        "options": {
+                                            "label": "The current date and time",
+                                            "timepicker": {
+                                                "controlType": "select",
+                                                "timeFormat": "hh:mm:tt"
+                                            }
+                                        }
+                                    });
+                                </script>
+                            </div>
+
 
 
                             <!-- BEGIN DISCUSSIONS -->
