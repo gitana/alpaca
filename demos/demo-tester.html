@@ -29,8 +29,20 @@
     <script type="text/javascript" src="demo-tester.js"></script>
     <link type="text/css" href="demo-tester.css" rel="stylesheet" />
 
-    <!-- jQuery UI (for drag/drop support) -->
-    <script type="text/javascript" src="lib/jquery-ui-1.10.3.custom.js"></script>
+    <!-- here we include the full jQuery UI -->
+    <!--
+        we need it because a) we need drag/drop support for the tester, b) datetime control needs $.ui.datetime
+        and c) integer control needs $.ui.slider
+    -->
+    <script type="text/javascript" src="tester/jquery/jquery-ui-full.min.js"></script>
+    <link type="text/css" href="tester/jquery/jquery-ui-full.css" rel="stylesheet"/>
+    <!-- timepicker -->
+    <script type="text/javascript" src="../lib/jquery-ui-timepicker-addon.js"></script>
+    <!-- wysiwyg -->
+    <script type="text/javascript" src="../lib/jquery.wysiwyg/jquery.wysiwyg.js"></script>
+    <link type="text/css" href="../lib/jquery.wysiwyg/jquery.wysiwyg.css" rel="stylesheet"/>
+
+
 
 </head>
 <body data-spy="scroll" data-target=".demo-nav">
