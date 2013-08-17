@@ -49,7 +49,10 @@
                     if (this.field.datetimepicker) {
                         this.field.hover(function() {
                             if (!$(this).hasClass('hasDatepicker')) {
-                                $(this).datetimepicker(_this.options.datetime ? _this.options.datetime : {});
+                                $(this).datetimepicker(_this.options.datetime ? _this.options.datetime : {
+                                    "changeYear": true,
+                                    "changeMonth": true
+                                });
                             }
                         });
                         if (this.fieldContainer) {

@@ -49,7 +49,9 @@
             if (this.field && $.datepicker)
             {
                 this.field.datepicker({
-                    "dateFormat":  this.options.dateFormat
+                    "dateFormat":  this.options.dateFormat,
+                    "changeMonth": true,
+                    "changeYear": true
                 });
 
                 if (this.fieldContainer) {

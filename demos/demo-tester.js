@@ -32,17 +32,29 @@ var setup = function()
 
     var setupEditor = function(id, json)
     {
-        var text = JSON.stringify(json, null, "    ");
+        var text = "";
+        if (json)
+        {
+            text = JSON.stringify(json, null, "    ");
+        }
 
         var editor = ace.edit(id);
         editor.setTheme("ace/theme/textmate");
-        editor.getSession().setMode("ace/mode/json");
+        if (json)
+        {
+            editor.getSession().setMode("ace/mode/json");
+        }
+        else
+        {
+            editor.getSession().setMode("ace/mode/javascript");
+        }
         editor.renderer.setHScrollBarAlwaysVisible(false);
         editor.setShowPrintMargin(false);
         editor.setValue(text);
 
         setTimeout(function() {
             editor.clearSelection();
+            editor.gotoLine(0,0);
         }, 100);
 
         return editor;
@@ -51,6 +63,7 @@ var setup = function()
     var editor1 = setupEditor("schema", schema);
     var editor2 = setupEditor("options", options);
     var editor3 = setupEditor("data", data);
+    var editor4 = setupEditor("codeDiv");
 
     var mainViewField = null;
     var mainPreviewField = null;
@@ -258,7 +271,8 @@ var setup = function()
                             }
                             else if (draggable.hasClass("interaction"))
                             {
-                                console.log("INTERACTION");
+                                // TODO: dropping onto another interaction panel
+                                refresh();
                             }
 
                         },
@@ -571,6 +585,29 @@ var setup = function()
         });
     };
 
+    var refreshCode = function(callback)
+    {
+        var json = {
+            "schema": schema
+        };
+        if (options) {
+            json.options = options;
+        }
+        if (data) {
+            json.data = data;
+        }
+        var code = "$('#div').alpaca(" + JSON.stringify(json, null, "    ") + ");";
+
+        editor4.setValue(code);
+        editor4.clearSelection();
+        editor4.gotoLine(0,0);
+
+        if (callback)
+        {
+            callback();
+        }
+    };
+
     var refresh = function(callback)
     {
         var current = $("UL.nav.nav-tabs LI.active A.tab-item");
@@ -718,8 +755,11 @@ var setup = function()
 
         // we have to monkey around a bit with ACE Editor to get it to refresh
         editor1.setValue(editor1.getValue());
+        editor1.clearSelection();
         editor2.setValue(editor2.getValue());
+        editor2.clearSelection();
         editor3.setValue(editor3.getValue());
+        editor3.clearSelection();
 
         setTimeout(function() {
             refreshPreview();
@@ -735,20 +775,28 @@ var setup = function()
             refreshDesigner();
         }, 50);
     });
+    $(".tab-item-code").click(function() {
+        setTimeout(function() {
+            refreshCode();
+        }, 50);
+    });
 
     $(".tab-source-schema").click(function() {
         // we have to monkey around a bit with ACE Editor to get it to refresh
         editor1.setValue(editor1.getValue());
+        editor1.clearSelection();
     });
 
     $(".tab-source-options").click(function() {
         // we have to monkey around a bit with ACE Editor to get it to refresh
         editor2.setValue(editor2.getValue());
+        editor2.clearSelection();
     });
 
     $(".tab-source-data").click(function() {
         // we have to monkey around a bit with ACE Editor to get it to refresh
         editor3.setValue(editor3.getValue());
+        editor3.clearSelection();
     });
 
     var insertField = function(schema, options, data, dataType, fieldType, parentField, previousField, previousFieldKey, nextField, nextFieldKey)
