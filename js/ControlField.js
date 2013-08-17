@@ -140,22 +140,22 @@
             if (this.field)
             {
                 this.field.keypress(function(e) {
-                    _this.onKeyPress(e);
+                    _this.onKeyPress.call(_this, e);
                     _this.trigger("keypress", e);
                 });
 
                 this.field.keyup(function(e) {
-                    _this.onKeyUp(e);
+                    _this.onKeyUp.call(_this, e);
                     _this.trigger("keyup", e);
                 });
 
                 this.field.keydown(function(e) {
-                    _this.onKeyDown(e);
+                    _this.onKeyDown.call(_this, e);
                     _this.trigger("keydown", e);
                 });
 
                 this.field.click(function(e) {
-                    _this.onClick(e);
+                    _this.onClick.call(_this, e);
                     _this.trigger("click", e);
                 });
             }

@@ -1240,21 +1240,26 @@
             {
                 // trigger control level handlers for things that happen to input element
                 this.field.change(function(e) {
-                    _this.onChange(e);
+                    _this.onChange.call(_this, e);
+                    _this.trigger("change", e);
                 });
 
                 this.field.focus(function(e) {
-                    _this.onFocus(e);
+                    _this.onFocus.call(_this, e);
+                    _this.trigger("focus", e);
                 });
 
                 this.field.blur(function(e) {
-                    _this.onBlur(e);
+                    _this.onBlur.call(_this, e);
+                    _this.trigger("blur", e);
                 });
                 this.field.mouseover(function(e) {
-                    _this.onMouseOver(e);
+                    _this.onMouseOver.call(_this, e);
+                    _this.trigger("mouseover", e);
                 });
                 this.field.mouseout(function(e) {
-                    _this.onMouseOut(e);
+                    _this.onMouseOut.call(_this, e);
+                    _this.trigger("mouseout", e);
                 });
 
                 // register general event handlers through options
