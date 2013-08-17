@@ -522,6 +522,12 @@
                     "schema" : itemSchema,
                     "view" : this.view.id ? this.view.id : this.view,
                     "connector": this.connector,
+                    "error": function(err)
+                    {
+                        _this.destroy();
+
+                        _this.errorCallback.call(_this, err);
+                    },
                     "notTopLevel":true,
                     "isDynamicCreation": (isDynamicSubItem || this.isDynamicCreation),
                     "render" : function(fieldControl) {

@@ -47,7 +47,7 @@
             var normalizedView = Alpaca.getNormalizedView(viewId);
             if (!normalizedView)
             {
-                Alpaca.logError("Runtime view for view id: " + viewId + " could not find a normalized view");
+                // this should never be the case
                 throw new Error("Runtime view for view id: " + viewId + " could not find a normalized view");
             }
 

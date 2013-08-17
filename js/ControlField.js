@@ -227,8 +227,8 @@
             return Alpaca.merge(this.base(), {
                 "properties": {
                     "enum": {
-                        "title": "Enumeration",
-                        "description": "List of options for the property value.",
+                        "title": "Enumerated Values",
+                        "description": "List of specific values for this property",
                         "type": "array"
                     }
                 }
@@ -258,8 +258,8 @@
             return Alpaca.merge(this.base(), {
                 "properties": {
                     "name": {
-                        "title": "Field name",
-                        "description": "Field name.",
+                        "title": "Field Name",
+                        "description": "Field Name.",
                         "type": "string"
                     }
                 }

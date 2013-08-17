@@ -159,4 +159,37 @@
         "render": renderFunction
     });
 
+    Alpaca.registerView({
+        "id": "VIEW_BOOTSTRAP_DISPLAY_LIST",
+        "parent": "VIEW_WEB_DISPLAY_LIST",
+        "title": "Display List View for Bootstrap",
+        "description": "Display List View for Bootstrap",
+        "style": "bootstrap",
+        "ui": "bootstrap",
+        "templates": bootstrapTemplates,
+        "render": renderFunction
+    });
+
+    Alpaca.registerView({
+        "id": "VIEW_BOOTSTRAP_EDIT_LIST",
+        "parent": 'VIEW_WEB_EDIT_LIST',
+        "title": "Edit List View for Bootstrap",
+        "description": "Edit List View for Bootstrap",
+        "style": "bootstrap",
+        "ui": "bootstrap",
+        "templates": bootstrapTemplates,
+        "render": renderFunction
+    });
+
+    Alpaca.registerView({
+        "id": "VIEW_BOOTSTRAP_CREATE_LIST",
+        "parent": 'VIEW_WEB_CREATE_LIST',
+        "title": "Create List View for Bootstrap",
+        "description":"Create List View for Bootstrap",
+        "style": "bootstrap",
+        "ui": "bootstrap",
+        "templates": bootstrapTemplates,
+        "render": renderFunction
+    });
+
 })(jQuery);

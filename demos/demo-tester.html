@@ -66,20 +66,20 @@
                 <div class="span12">
                     <div>
                         <ul class="nav nav-tabs">
-                            <li><a href="#source" data-toggle="tab">Source</a></li>
-                            <li class="active"><a href="#form" data-toggle="tab" class="tab-item-form">Form</a></li>
+                            <li class="active"><a href="#source" data-toggle="tab" class="tab-item tab-item-source">Source</a></li>
+                            <li><a href="#designer" data-toggle="tab" class="tab-item tab-item-designer">Designer</a></li>
+                            <li><a href="#view" data-toggle="tab" class="tab-item tab-item-view">View</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
-                        <div class="tab-pane" id="source">
-
+                        <div class="tab-pane active" id="source">
                             <div class="row-fluid">
-                                <div class="span12">
+                                <div class="span6">
                                     <div>
                                         <ul class="nav nav-tabs">
-                                            <li class="active"><a href="#schema" data-toggle="tab">Schema</a></li>
-                                            <li><a href="#options" data-toggle="tab">Options</a></li>
-                                            <li><a href="#data" data-toggle="tab">Data</a></li>
+                                            <li class="active"><a href="#schema" data-toggle="tab" class="tab-source-schema">Schema</a></li>
+                                            <li><a href="#options" data-toggle="tab" class="tab-source-options">Options</a></li>
+                                            <li><a href="#data" data-toggle="tab" class="tab-source-data">Data</a></li>
                                         </ul>
                                     </div>
                                     <div class="tab-content">
@@ -91,26 +91,41 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane active" id="form">
-
-                            <div class="row-fluid">
-                                <div class="span8">
-                                    <div class="row-fluid">
-                                        <div class="span12">
-                                            <div id="formDiv"></div>
+                                <div class="span6">
+                                    <div>
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#preview" data-toggle="tab">Preview</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="preview">
+                                            <div class="row-fluid">
+                                                <div class="span12">
+                                                    <div id="previewDiv"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="span4">
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="designer">
+                            <div class="row-fluid">
+                                <div class="span7">
+                                    <div class="row-fluid">
+                                        <div class="span12">
+                                            <div id="designerDiv"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span5">
                                     <div class="row-fluid">
                                         <div class="span12">
                                             <div>
                                                 <ul class="nav nav-tabs">
                                                     <li class="active"><a href="#types" data-toggle="tab">Types</a></li>
-                                                    <li><a href="#basic" data-toggle="tab">Fields</a></li>
-                                                    <li><a href="#advanced" data-toggle="tab">Advanced Fields</a></li>
+                                                    <li><a href="#basic" data-toggle="tab">Basic</a></li>
+                                                    <li><a href="#advanced" data-toggle="tab">Advanced</a></li>
                                                 </ul>
                                             </div>
                                             <div class="tab-content">
@@ -122,7 +137,13 @@
                                     </div>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="tab-pane" id="view">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div id="viewDiv"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

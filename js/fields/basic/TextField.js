@@ -324,7 +324,11 @@
          */
         getOptionsForSchema: function() {
             return Alpaca.merge(this.base(), {
-                "fields": {                
+                "fields": {
+                    "default": {
+                        "helper": "Field default value",
+                        "type": "text"
+                    },
                     "minLength": {
                         "type": "integer"
                     },
@@ -362,12 +366,12 @@
                         "type": "string"
                     },
                     "typeahead": {
-                        "title": "Provides auto-complete / typeahead configuration for the text field.",
+                        "title": "Type Ahead",
                         "description": "Provides configuration for the $.typeahead plugin if it is available.  For full configuration options, see: https://github.com/twitter/typeahead.js"
                     },
                     "allowOptionalEmpty": {
-                        "title": "Allows this non-required field to validate when the value is empty",
-                        "description": "If this property isn't required, then allow an empty string to pass validation"
+                        "title": "Allow Optional Empty",
+                        "description": "Allows this non-required field to validate when the value is empty"
                     }
                 }
             });
@@ -391,7 +395,7 @@
                         "type": "object"
                     },
                     "allowOptionalEmpty": {
-                        "type": "boolean"
+                        "type": "checkbox"
                     }
                 }
             });

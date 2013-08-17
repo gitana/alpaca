@@ -50,8 +50,7 @@
         var args = Alpaca.makeArray(arguments);
         if (args.length === 0) {
             // illegal
-            alert("No arguments - no supported");
-            return null;
+            return Alpaca.throwDefaultError("You must supply at least one argument which is the element against which to apply the Alpaca generated form");
         }
 
         // element is the first argument
@@ -144,13 +143,7 @@
 
         // if no error callback is provided, we fall back to a browser alert
         if (Alpaca.isEmpty(errorCallback)) {
-            errorCallback = function(error) {
-                var message = error.message;
-                if (message && Alpaca.isObject(message)) {
-                    message = JSON.stringify(message);
-                }
-                alert("Alpaca error was caught with default error handler: " + message);
-            };
+            errorCallback = Alpaca.defaultErrorCallback;
         }
 
         if (Alpaca.isEmpty(connector)) {
@@ -711,8 +704,7 @@
 
             if (!id)
             {
-                Alpaca.logError("Cannot register view with missing view id: " + id);
-                throw new Error("Cannot register view with missing view id: " + id);
+                return Alpaca.throwDefaultError("Cannot register view with missing view id: " + id);
             }
 
             var existingView = this.views[id];
@@ -1533,16 +1525,15 @@
                         Alpaca.logError(JSON.stringify(err));
                     }
 
-                    throw new Error("View compilation failed, cannot initialize Alpaca.  Please check the error logs.");
+                    return Alpaca.throwErrorWithCallback("View compilation failed, cannot initialize Alpaca.  Please check the error logs.", errorCallback);
                 }
 
                 self._init(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, isDynamicCreation);
-            });
+            }, errorCallback);
         },
 
         _init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, isDynamicCreation)
         {
-
             ///////////////////////////////////////////////////////////////////////////////////////////////////
             //
             // VIEW RESOLUTION
@@ -1636,8 +1627,7 @@
             {
                 if (!this.normalizedViews[view])
                 {
-                    Alpaca.logError("The desired view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.");
-                    throw new Error("The desired view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.");
+                    return Alpaca.throwErrorWithCallback("The desired view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.", errorCallback);
                 }
             }
 
@@ -1650,32 +1640,36 @@
 
 
             var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);
-            field.isDynamicCreation = isDynamicCreation;
-            Alpaca.fieldInstances[field.getId()] = field;
-
-            // mechanism for looking up field instances by id
-            field.allFieldInstances = function()
+            if (field)
             {
-                return Alpaca.fieldInstances;
-            };
+                field.isDynamicCreation = isDynamicCreation;
+                Alpaca.fieldInstances[field.getId()] = field;
 
-            // allow callbacks defined through view
-            if (Alpaca.isEmpty(callback)) {
-                callback = field.view.render;
+                // mechanism for looking up field instances by id
+                field.allFieldInstances = function()
+                {
+                    return Alpaca.fieldInstances;
+                };
+
+                // allow callbacks defined through view
+                if (Alpaca.isEmpty(callback)) {
+                    callback = field.view.render;
+                }
+                if (Alpaca.isEmpty(renderedCallback)) {
+                    renderedCallback = field.view.postRender;
+                }
+
+                if (!Alpaca.isEmpty(callback)) {
+                    callback(field, renderedCallback);
+                } else {
+                    field.render(renderedCallback);
+                }
+
+                field.callback = callback;
+                field.renderedCallback = renderedCallback;
             }
-            if (Alpaca.isEmpty(renderedCallback)) {
-                renderedCallback = field.view.postRender;
-            }
 
-            if (!Alpaca.isEmpty(callback)) {
-                callback(field, renderedCallback);
-            } else {
-                field.render(renderedCallback);
-            }
-
-            field.callback = callback;
-            field.renderedCallback = renderedCallback;
-
+            // NOTE: this can be null if an error was thrown
             return field;
         },
 
@@ -1733,7 +1727,7 @@
                 return null;
             }
             // if we have data, bind it in
-            return new fieldClass(el, data, options, schema, view, connector);
+            return new fieldClass(el, data, options, schema, view, connector, errorCallback);
         },
 
         /**
@@ -1757,7 +1751,7 @@
          *
          * @param cb the callback that gets fired once compilation has ended
          */
-        compile: function(cb)
+        compile: function(cb, errorCallback)
         {
             var self = this;
 
@@ -1988,8 +1982,7 @@
                         }
                         else
                         {
-                            Alpaca.logError("View normalization failed, cannot initialize Alpaca.  Please check the error logs.");
-                            throw new Error("View normalization failed, cannot initialize Alpaca.  Please check the error logs.");
+                            return Alpaca.throwErrorWithCallback("View normalization failed, cannot initialize Alpaca.  Please check the error logs.", errorCallback);
                         }
                     }
                 }
@@ -2089,8 +2082,7 @@
             var engine = Alpaca.TemplateEngineRegistry.find(type);
             if (!engine)
             {
-                Alpaca.logError("Cannot find template engine for type: " + type);
-                throw new Error("Cannot find template engine for type: " + type);
+                return Alpaca.throwDefaultError("Cannot find template engine for type: " + type);
             }
 
             descriptor.engine = {};
@@ -2161,15 +2153,13 @@
             var engine = Alpaca.TemplateEngineRegistry.find(engineType);
             if (!engine)
             {
-                Alpaca.logError("Cannot find template engine for type: " + engineType);
-                throw new Error("Cannot find template engine for type: " + engineType);
+                return Alpaca.throwDefaultError("Cannot find template engine for type: " + engineType);
             }
 
             // execute the template
             var cacheKey = templateDescriptor.cache.key;
             var html = engine.execute(cacheKey, model, function(err) {
-                Alpaca.logWarn("The compiled template: " + compiledTemplateId + " for view: " + view.id + " failed to execute: " + JSON.stringify(err));
-                throw new Error("The compiled template: " + compiledTemplateId + " for view: " + view.id + " failed to execute: " + JSON.stringify(err));
+                return Alpaca.throwDefaultError("The compiled template: " + compiledTemplateId + " for view: " + view.id + " failed to execute: " + JSON.stringify(err));
             });
 
             return Alpaca.safeDomParse(html);
@@ -2309,6 +2299,75 @@
             }
         }
     };
+
+    Alpaca.DEFAULT_ERROR_CALLBACK = function(error)
+    {
+        if (error && error.message)
+        {
+            // log to debug
+            Alpaca.logError(error.message);
+
+            // error out
+            throw new Error("Alpaca caught an error with the default error handler: " + error.message);
+
+        }
+    };
+
+    /**
+     * Default error callback handler for Alpaca.
+     *
+     * This error handler will be used if an "error" argument isn't passed in to the constructor for an Alpaca field.
+     *
+     * @param error
+     */
+    Alpaca.defaultErrorCallback = Alpaca.DEFAULT_ERROR_CALLBACK;
+
+    /**
+     * Utility method that throws a general error and dispatches to the default error handler.
+     *
+     * @param message
+     */
+    Alpaca.throwDefaultError = function(message)
+    {
+        if (message && Alpaca.isObject(message))
+        {
+            message = JSON.stringify(message);
+        }
+
+        var err = {
+            "message": message
+        };
+
+        Alpaca.defaultErrorCallback(err);
+    };
+
+    /**
+     * Utility method that throws an error back to the given callback handler.
+     *
+     * @param message
+     * @param errorCallback
+     */
+    Alpaca.throwErrorWithCallback = function(message, errorCallback)
+    {
+        if (message && Alpaca.isObject(message))
+        {
+            message = JSON.stringify(message);
+        }
+
+        var err = {
+            "message": message
+        };
+
+        if (errorCallback)
+        {
+            errorCallback(err);
+        }
+        else
+        {
+            Alpaca.defaultErrorCallback(err);
+        }
+    };
+
 
     /**
      * Given a base field, walks the schema, options and data forward until it

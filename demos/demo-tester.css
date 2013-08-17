@@ -64,10 +64,22 @@
 
 .ui-hover-state
 {
-    background-color: yellow !important;
+    background-color: #ccc !important;
     opacity: 0.1 !important;
 }
 
+.dashed
+{
+    border: 1px #ccc dashed;
+
+}
+
+.alpaca-fieldset-items-container
+{
+    padding-top: 0px;
+}
+
+/*
 .button-remove
 {
     margin:8px;
@@ -76,3 +88,4 @@
     padding-left: 8px;
     padding-right: 8px;
 }
+*/

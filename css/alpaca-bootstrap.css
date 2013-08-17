@@ -85,3 +85,25 @@ DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu P
 {
     margin-left: 0px;
 }
+
+textarea
+{
+    border-radius: 6px;
+    border: 1px #ccc solid;
+    box-shadow: 0px 0px;
+    width: 280px;
+}
+
+select
+{
+    border-radius: 6px;
+    border: 1px #ccc solid;
+    box-shadow: 0px 0px;
+    width: 280px;
+}
+
+fieldset.alpaca-view-web-list.fieldset-collapsed
+{
+    border: solid 1px #ccc;
+    border-radius: 6px;
+}

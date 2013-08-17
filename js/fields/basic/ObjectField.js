@@ -323,6 +323,12 @@
                     "schema" : itemSchema,
                     "view" : this.view.id ? this.view.id : this.view,
                     "connector": this.connector,
+                    "error": function(err)
+                    {
+                        _this.destroy();
+
+                        _this.errorCallback.call(_this, err);
+                    },
                     "notTopLevel":true,
                     "isDynamicCreation": (isDynamicSubItem || this.isDynamicCreation),
                     "render" : function(fieldControl) {
@@ -455,7 +461,7 @@
                         // or the schema is optional
                         if (circular)
                         {
-                            throw new Error("Circular reference detected for schema: " + schema);
+                            return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + schema, _this.errorCallback);
                         }
 
                         if (!schema)
@@ -493,10 +499,12 @@
              */
             showOrHidePropertyBasedOnDependencies: function(propertyId)
             {
+                var self = this;
+
                 var item = this.childrenByPropertyId[propertyId];
                 if (!item)
                 {
-                    throw new Error("Missing property: " + propertyId);
+                    return Alpaca.throwErrorWithCallback("Missing property: " + propertyId, self.errorCallback);
                 }
 
                 var valid = this.determineAllDependenciesValid(propertyId);
@@ -526,7 +534,7 @@
                 var item = this.childrenByPropertyId[propertyId];
                 if (!item)
                 {
-                    throw new Error("Missing property: " + propertyId);
+                    return Alpaca.throwErrorWithCallback("Missing property: " + propertyId, self.errorCallback);
                 }
 
                 var itemDependencies = item.schema.dependencies;
@@ -563,7 +571,7 @@
                 var item = this.childrenByPropertyId[propertyId];
                 if (!item)
                 {
-                    throw new Error("Missing property: " + propertyId);
+                    return Alpaca.throwErrorWithCallback("Missing property: " + propertyId, self.errorCallback);
                 }
 
                 var itemDependencies = item.schema.dependencies;

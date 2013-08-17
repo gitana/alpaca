@@ -57,7 +57,10 @@
                         if (j == -1)
                         {
                             // make sure we don't wander off into an infinite loop
-                            throw new Error("Should have found closing whitespace or '>' for _tmplitem attribute");
+                            callback({
+                                "message": "Should have found closing whitespace or '>' for _tmplitem attribute"
+                            });
+                            return;
                         }
 
                         _html = _html.substring(0, i) + _html.substring(j);

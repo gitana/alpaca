@@ -38,13 +38,17 @@
             this.options = options;
             this.schema = schema;
             this.connector = connector;
-            this.errorCallback = errorCallback;
-
-            if (!this.errorCallback) {
-                this.errorCallback = function(error) {
-                    alert(error.message ? error.message : "Caught some error!");
-                };
-            }
+            this.errorCallback = function(err)
+            {
+                if (errorCallback)
+                {
+                    errorCallback(err);
+                }
+                else
+                {
+                    Alpaca.defaultErrorCallback.call(self, err);
+                }
+            };
 
             // check if this field rendering is single-level or not
             this.singleLevelRendering = false;
@@ -1449,7 +1453,7 @@
                         "type": "string"
                     },
                     "disallow": {
-                        "title": "Disallow",
+                        "title": "Disallowed Values",
                         "description": "List of disallowed values for the property.",
                         "type": "array"
                     },
@@ -1486,12 +1490,12 @@
                     },
                     "readonly": {
                         "helper": "Field will be read only if checked",
-                        "rightLabel":"Is this field read only ?",
+                        "rightLabel": "This field is read-only",
                         "type": "checkbox"
                     },
                     "required": {
                         "helper": "Field value must be set if checked",
-                        "rightLabel":"Is this field required ?",
+                        "rightLabel": "This field is required",
                         "type": "checkbox"
                     },
                     "default": {
@@ -1624,13 +1628,13 @@
                         "default": false
                     },
                     "focus": {
-                        "title": "Configures how to set the initial focus for the form",
+                        "title": "Focus",
                         "description": "If true, the initial focus for the form will be set to the first child element (usually the first field in the form).  If a field name or path is provided, then the specified child field will receive focus.  For example, you might set focus to 'name' (selecting the 'name' field) or you might set it to 'client/name' which picks the 'name' field on the 'client' object.",
-                        "type": "any",
+                        "type": "checkbox",
                         "default": true
                     },
                     "optionLabels": {
-                        "title": "Labels for enumerated set",
+                        "title": "Enumerated Value Labels",
                         "description": "An array of string labels for items in the enum array",
                         "type": "array"
                     }
@@ -1735,16 +1739,20 @@
                         "type": "text"
                     },
                     "validate": {
-                        "rightLabel":"Is validation enforced ?",
+                        "rightLabel": "Enforce validation",
                         "type": "checkbox"
                     },
                     "showMessages": {
-                        "rightLabel":"Show validation messages ?",
+                        "rightLabel":"Show validation messages",
                         "type": "checkbox"
                     },
                     "disabled": {
-                        "rightLabel":"Disable this field ?",
+                        "rightLabel":"Disable this field",
                         "type": "checkbox"
+                    },
+                    "hidden": {
+                        "type": "checkbox",
+                        "rightLabel": "Hide this field"
                     },
                     "label": {
                         "type": "text"
@@ -1756,8 +1764,12 @@
                         "type": "text"
                     },
                     "hideInitValidationError": {
-                        "rightLabel":"Hide initial validation errors ?",
+                        "rightLabel": "Hide initial validation errors",
                         "type": "checkbox"
+                    },
+                    "focus": {
+                        "type": "checkbox",
+                        "rightLabel": "Auto-focus first child field"
                     },
                     "optionLabels": {
                         "type": "array",

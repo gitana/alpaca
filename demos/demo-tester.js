@@ -40,7 +40,10 @@ var setup = function()
         editor.renderer.setHScrollBarAlwaysVisible(false);
         editor.setShowPrintMargin(false);
         editor.setValue(text);
-        editor.clearSelection();
+
+        setTimeout(function() {
+            editor.clearSelection();
+        }, 100);
 
         return editor;
     };
@@ -49,12 +52,12 @@ var setup = function()
     var editor2 = setupEditor("options", options);
     var editor3 = setupEditor("data", data);
 
-    var form = null;
+    var mainViewField = null;
+    var mainPreviewField = null;
+    var mainDesignerField = null;
 
-    var refresh = function(callback)
+    var doRefresh = function(el, buildInteractionLayers, disableErrorHandling, cb)
     {
-        var iCount = 0;
-
         try
         {
             schema = JSON.parse(editor1.getValue());
@@ -92,244 +95,529 @@ var setup = function()
             {
                 config.data = data;
             }
-            config.postRender = function(_form) {
-                form = _form;
+            config.postRender = function(form) {
 
-                // cover every control with an interaction layer
-                form.getEl().find(".alpaca-fieldset-item-container").each(function() {
+                if (buildInteractionLayers)
+                {
+                    var iCount = 0;
 
-                    var alpacaFieldId = $(this).attr("alpaca-id");
+                    // cover every control with an interaction layer
+                    form.getEl().find(".alpaca-fieldset-item-container").each(function() {
 
-                    iCount++;
-                    $(this).attr("icount", iCount);
+                        var alpacaFieldId = $(this).attr("alpaca-id");
 
-                    var width = $(this).outerWidth();
-                    var height = $(this).outerHeight();
+                        iCount++;
+                        $(this).attr("icount", iCount);
 
-                    // cover div
-                    var cover = $("<div></div>");
-                    $(cover).addClass("cover");
-                    $(cover).attr("alpaca-ref-id", alpacaFieldId);
-                    $(cover).css({
-                        "position": "relative",
-                        "margin-top": "-" + height + "px",
-                        "width": width,
-                        "height": height,
-                        "opacity": 0,
-                        "background-color": "white",
-                        "z-index": 900
-                    });
-                    $(cover).attr("icount-ref", iCount);
-                    $(this).append(cover);
+                        var width = $(this).outerWidth();
+                        var height = $(this).outerHeight();
 
-                    // interaction div
-                    var interaction = $("<div class='interaction'></div>");
-                    var buttonGroup = $("<div class='btn-group pull-right'></div>");
-                    var removeButton = $("<button class='btn btn-danger button-remove' alpaca-ref-id='" + alpacaFieldId + "'>x</button>");
-                    buttonGroup.append(removeButton);
-                    interaction.append(buttonGroup);
-                    interaction.append("<div style='clear:both'></div>");
-                    $(interaction).addClass("interaction");
-                    $(interaction).attr("alpaca-ref-id", alpacaFieldId);
-                    $(interaction).css({
-                        "position": "relative",
-                        "margin-top": "-" + height + "px",
-                        "width": width,
-                        "height": height,
-                        "opacity": 1,
-                        //"background-color": "white",
-                        "z-index": 901
-                    });
-                    $(interaction).attr("icount-ref", iCount);
-                    $(this).append(interaction);
-                    $(removeButton).off().click(function(e) {
+                        // cover div
+                        var cover = $("<div></div>");
+                        $(cover).addClass("cover");
+                        $(cover).attr("alpaca-ref-id", alpacaFieldId);
+                        $(cover).css({
+                            "position": "relative",
+                            "margin-top": "-" + height + "px",
+                            "width": width,
+                            "height": height,
+                            "opacity": 0,
+                            "background-color": "white",
+                            "z-index": 900
+                        });
+                        $(cover).attr("icount-ref", iCount);
+                        $(this).append(cover);
 
-                        e.preventDefault();
+                        // interaction div
+                        var interaction = $("<div class='interaction'></div>");
+                        var buttonGroup = $("<div class='btn-group pull-right'></div>");
+                        //var schemaButton = $("<button class='btn button-schema' alpaca-ref-id='" + alpacaFieldId + "'>Schema</button>");
+                        var schemaButton = $('<button class="btn btn-small button-schema" alpaca-ref-id="' + alpacaFieldId + '"><i class="icon-list"></i></button>');
+                        buttonGroup.append(schemaButton);
+                        //var optionsButton = $("<button class='btn button-options' alpaca-ref-id='" + alpacaFieldId + "'>Options</button>");
+                        var optionsButton = $('<button class="btn btn-small button-options" alpaca-ref-id="' + alpacaFieldId + '"><i class="icon-wrench"></i></button>');
+                        buttonGroup.append(optionsButton);
+                        //var removeButton = $("<button class='btn btn-danger button-remove' alpaca-ref-id='" + alpacaFieldId + "'>Delete</button>");
+                        var removeButton = $('<button class="btn btn-danger btn-small button-remove" alpaca-ref-id="' + alpacaFieldId + '"><i class="icon-white icon-remove"></i></button>');
+                        buttonGroup.append(removeButton);
+                        interaction.append(buttonGroup);
+                        interaction.append("<div style='clear:both'></div>");
+                        $(interaction).addClass("interaction");
+                        $(interaction).attr("alpaca-ref-id", alpacaFieldId);
+                        $(interaction).css({
+                            "position": "relative",
+                            "margin-top": "-" + height + "px",
+                            "width": width,
+                            "height": height,
+                            "opacity": 1,
+                            //"background-color": "white",
+                            "z-index": 901
+                        });
+                        $(interaction).attr("icount-ref", iCount);
+                        $(this).append(interaction);
+                        $(buttonGroup).css({
+                            "margin-top": ($(interaction).height() / 2) - ($(buttonGroup).height() / 2),
+                            "margin-right": "8px"
+                        });
+                        $(schemaButton).off().click(function(e) {
 
-                        var alpacaId = $(this).attr("alpaca-ref-id");
-                        removeField(alpacaId);
-                    });
+                            e.preventDefault();
+                            e.stopPropagation();
 
-                    var field = Alpaca.fieldInstances[alpacaFieldId];
-                    var fieldSchema = field.getSchemaOfSchema();
-                    var fieldSchemaOptions = field.getOptionsForSchema();
-                    var fieldOptions = field.getSchemaOfOptions();
-                    var fieldOptionsOptions = field.getOptionsForOptions();
+                            var alpacaId = $(this).attr("alpaca-ref-id");
 
-                    var x = $("<div><div class='fieldForm'></div></div>");
+                            editSchema(alpacaId);
+                        });
+                        $(optionsButton).off().click(function(e) {
 
-                    var fieldConfig = {
-                        schema: fieldSchema
-                    };
-                    if (fieldSchemaOptions)
-                    {
-                        fieldConfig.options = fieldSchemaOptions;
-                    }
-                    fieldConfig.postRender = function(control)
-                    {
-                        var modal = $(MODAL_TEMPLATE.trim());
-                        modal.find(".modal-title").append(field.getTitle());
-                        modal.find(".modal-body").append(control.getEl());
+                            e.preventDefault();
+                            e.stopPropagation();
 
-                        modal.find('.modal-footer').append("<button class='btn pull-right okay' data-dismiss='modal' aria-hidden='true'>Okay</button>");
-                        modal.find('.modal-footer').append("<button class='btn pull-left' data-dismiss='modal' aria-hidden='true'>Cancel</button>");
+                            var alpacaId = $(this).attr("alpaca-ref-id");
 
-                        $(interaction).off().click(function()
-                        {
-                            $(modal).modal({
-                                "keyboard": true
-                            });
+                            editOptions(alpacaId);
+                        });
+                        $(removeButton).off().click(function(e) {
+
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            var alpacaId = $(this).attr("alpaca-ref-id");
+                            removeField(alpacaId);
                         });
 
-                        $(modal).find(".okay").click(function() {
-
-                            field.schema = control.getValue();
-
-                            var top = findTop(control);
-                            regenerate(top);
-                        })
-                    };
-
-                    $(x).find(".fieldForm").alpaca(fieldConfig);
-
-                    // when hover, highlight
-                    $(interaction).hover(function(e) {
-                        var iCount = $(interaction).attr("icount-ref");
-                        $(".cover[icount-ref='" + iCount + "']").addClass("ui-hover-state");
-                    }, function(e) {
-                        var iCount = $(interaction).attr("icount-ref");
-                        $(".cover[icount-ref='" + iCount + "']").removeClass("ui-hover-state");
+                        // when hover, highlight
+                        $(interaction).hover(function(e) {
+                            var iCount = $(interaction).attr("icount-ref");
+                            $(".cover[icount-ref='" + iCount + "']").addClass("ui-hover-state");
+                        }, function(e) {
+                            var iCount = $(interaction).attr("icount-ref");
+                            $(".cover[icount-ref='" + iCount + "']").removeClass("ui-hover-state");
+                        });
                     });
 
-                });
+                    // add dashed
+                    form.getEl().find(".alpaca-fieldset-items-container").addClass("dashed");
+                    form.getEl().find(".alpaca-fieldset-item-container").addClass("dashed");
 
-                // for every container, add a "first" drop zone element
-                // this covers empty containers as well as 0th index insertions
-                form.getEl().find(".alpaca-fieldset-items-container").each(function() {
-                    $(this).prepend("<div class='dropzone'></div>");
-                });
+                    // for every container, add a "first" drop zone element
+                    // this covers empty containers as well as 0th index insertions
+                    form.getEl().find(".alpaca-fieldset-items-container").each(function() {
+                        $(this).prepend("<div class='dropzone'></div>");
+                    });
 
-                // after every element in a container, add something which allows inserts "after"
-                form.getEl().find(".alpaca-fieldset-item-container").each(function() {
-                    $(this).after("<div class='dropzone'></div>");
-                });
+                    // after every element in a container, add something which allows inserts "after"
+                    form.getEl().find(".alpaca-fieldset-item-container").each(function() {
+                        $(this).after("<div class='dropzone'></div>");
+                    });
 
-                $(".dropzone").droppable({
-                    "tolerance": "touch",
-                    "drop": function( event, ui ) {
+                    form.getEl().find(".dropzone").droppable({
+                        "tolerance": "touch",
+                        "drop": function( event, ui ) {
 
-                        var draggable = $(ui.draggable);
+                            var draggable = $(ui.draggable);
 
-                        if (draggable.hasClass("form-element"))
-                        {
-                            var dataType = draggable.attr("data-type");
-                            var fieldType = draggable.attr("data-field-type");
-
-                            // based on where the drop occurred, figure out the previous and next Alpaca fields surrounding
-                            // the drop target
-
-                            // previous
-                            var previousField = null;
-                            var previousFieldKey = null;
-                            var previousItemContainer = $(event.target).prev();
-                            if (previousItemContainer)
+                            if (draggable.hasClass("form-element"))
                             {
-                                var previousAlpacaId = $(previousItemContainer).attr("alpaca-id");
-                                previousField = Alpaca.fieldInstances[previousAlpacaId];
+                                var dataType = draggable.attr("data-type");
+                                var fieldType = draggable.attr("data-field-type");
 
-                                previousFieldKey = $(previousItemContainer).attr("data-alpaca-item-container-item-key");
+                                // based on where the drop occurred, figure out the previous and next Alpaca fields surrounding
+                                // the drop target
+
+                                // previous
+                                var previousField = null;
+                                var previousFieldKey = null;
+                                var previousItemContainer = $(event.target).prev();
+                                if (previousItemContainer)
+                                {
+                                    var previousAlpacaId = $(previousItemContainer).attr("alpaca-id");
+                                    previousField = Alpaca.fieldInstances[previousAlpacaId];
+
+                                    previousFieldKey = $(previousItemContainer).attr("data-alpaca-item-container-item-key");
+                                }
+
+                                // next
+                                var nextField = null;
+                                var nextFieldKey = null;
+                                var nextItemContainer = $(event.target).next();
+                                if (nextItemContainer)
+                                {
+                                    var nextAlpacaId = $(nextItemContainer).attr("alpaca-id");
+                                    nextField = Alpaca.fieldInstances[nextAlpacaId];
+
+                                    nextFieldKey = $(nextItemContainer).attr("data-alpaca-item-container-item-key");
+                                }
+
+                                // parent field
+                                var parentFieldAlpacaId = $(event.target).parent().parent().attr("alpaca-field-id");
+                                var parentField = Alpaca.fieldInstances[parentFieldAlpacaId];
+
+                                // now do the insertion
+                                insertField(schema, options, data, dataType, fieldType, parentField, previousField, previousFieldKey, nextField, nextFieldKey);
+                            }
+                            else if (draggable.hasClass("interaction"))
+                            {
+                                console.log("INTERACTION");
                             }
 
-                            // next
-                            var nextField = null;
-                            var nextFieldKey = null;
-                            var nextItemContainer = $(event.target).next();
-                            if (nextItemContainer)
-                            {
-                                var nextAlpacaId = $(nextItemContainer).attr("alpaca-id");
-                                nextField = Alpaca.fieldInstances[nextAlpacaId];
-
-                                nextFieldKey = $(nextItemContainer).attr("data-alpaca-item-container-item-key");
-                            }
-
-                            // parent field
-                            var parentFieldAlpacaId = $(event.target).parent().parent().attr("alpaca-field-id");
-                            var parentField = Alpaca.fieldInstances[parentFieldAlpacaId];
-
-                            // now do the insertion
-                            insertField(schema, options, data, dataType, fieldType, parentField, previousField, previousFieldKey, nextField, nextFieldKey);
+                        },
+                        "over": function (event, ui ) {
+                            $(event.target).addClass("dropzone-hover");
+                        },
+                        "out": function (event, ui) {
+                            $(event.target).removeClass("dropzone-hover");
                         }
-                        else if (draggable.hasClass("interaction"))
-                        {
-                            console.log("INTERACTION");
+                    });
+
+                    // init any in-place draggables
+                    form.getEl().find(".interaction").draggable({
+                        "appendTo": "body",
+                        "helper": function() {
+                            var iCount = $(this).attr("icount-ref");
+                            var clone = $(".alpaca-fieldset-item-container[icount='" + iCount + "']").clone();
+                            return clone;
+                        },
+                        "cursorAt": {
+                            "top": 100
+                        },
+                        "zIndex": 300,
+                        "refreshPositions": true,
+                        "start": function(event, ui) {
+                            $(".dropzone").addClass("dropzone-highlight");
+                        },
+                        "stop": function(event, ui) {
+                            $(".dropzone").removeClass("dropzone-highlight");
                         }
+                    });
+                }
 
-                    },
-                    "over": function (event, ui ) {
-                        $(event.target).addClass("dropzone-hover");
-                    },
-                    "out": function (event, ui) {
-                        $(event.target).removeClass("dropzone-hover");
-                    }
-                });
+                cb(null, form);
+            };
+            config.error = function(err)
+            {
+                Alpaca.defaultErrorCallback(err);
 
-                // init all of the draggable form elements
-                $(".form-element").draggable({
-                    "appendTo": "body",
-                    "helper": "clone",
-                    "zIndex": 300,
-                    "refreshPositions": true,
-                    "start": function(event, ui) {
-                        console.log("START");
-                        $(".dropzone").addClass("dropzone-highlight");
-                    },
-                    "stop": function(event, ui) {
-                        console.log("STOP");
-                        $(".dropzone").removeClass("dropzone-highlight");
-                    }
-                });
+                cb(err);
+            };
 
-                // init any draggable form in-place pieces
-                $(".interaction").draggable({
-                    "appendTo": "body",
-                    "helper": function() {
-                        var iCount = $(this).attr("icount-ref");
-                        var clone = $(".alpaca-fieldset-item-container[icount='" + iCount + "']").clone();
-                        return clone;
-                    },
-                    "cursorAt": {
-                        "top": 100
-                    },
-                    "zIndex": 300,
-                    "refreshPositions": true,
-                    "start": function(event, ui) {
-                        $(".dropzone").addClass("dropzone-highlight");
-                    },
-                    "stop": function(event, ui) {
-                        $(".dropzone").removeClass("dropzone-highlight");
-                    }
-                });
+            if (disableErrorHandling)
+            {
+                Alpaca.defaultErrorCallback = function(error) {
+                    console.log("Alpaca encountered an error while previewing form -> " + error.message);
+                };
+            }
+            else
+            {
+                Alpaca.defaultErrorCallback = Alpaca.DEFAULT_ERROR_CALLBACK;
+            }
+
+            $(el).alpaca(config);
+        }
+    };
+
+    var editSchema = function(alpacaFieldId, callback)
+    {
+        var field = Alpaca.fieldInstances[alpacaFieldId];
+
+        var fieldSchema = field.getSchemaOfSchema();
+        var fieldSchemaOptions = field.getOptionsForSchema();
+        var fieldData = field.schema;
+
+        delete fieldSchema.title;
+        delete fieldSchema.description;
+        if (fieldSchema.properties)
+        {
+            delete fieldSchema.properties.title;
+            delete fieldSchema.properties.description;
+            delete fieldSchema.properties.dependencies;
+        }
+        var fieldConfig = {
+            schema: fieldSchema
+        };
+        if (fieldSchemaOptions)
+        {
+            fieldConfig.options = fieldSchemaOptions;
+        }
+        if (fieldData)
+        {
+            fieldConfig.data = fieldData;
+        }
+        fieldConfig.view = {
+            "parent": "VIEW_BOOTSTRAP_EDIT_LIST",
+            "displayReadonly": false
+        };
+        fieldConfig.postRender = function(control)
+        {
+            var modal = $(MODAL_TEMPLATE.trim());
+            modal.find(".modal-title").append(field.getTitle());
+            modal.find(".modal-body").append(control.getEl());
+
+            modal.find('.modal-footer').append("<button class='btn pull-right okay' data-dismiss='modal' aria-hidden='true'>Okay</button>");
+            modal.find('.modal-footer').append("<button class='btn pull-left' data-dismiss='modal' aria-hidden='true'>Cancel</button>");
+
+            $(modal).modal({
+                "keyboard": true
+            });
+
+            $(modal).find(".okay").click(function() {
+
+                field.schema = control.getValue();
+
+                var top = findTop(field);
+                regenerate(top);
 
                 if (callback)
                 {
                     callback();
                 }
-            };
+            });
 
-            $(".dropzone").remove();
-            $(".interaction").remove();
-            $(".cover").remove();
+            // clean up the generated formatting
+            control.getEl().find(".alpaca-controlfield-helper").remove();
+            control.getEl().find(".alpaca-fieldset-helper").css({
+                "padding-top": "0px",
+                "padding-bottom": "0px"
+            });
+            control.getEl().find(".alpaca-fieldset-legend").css({
+                "margin-bottom": "0px"
+            });
+            control.getEl().find("input").css({
+                "margin-bottom": "0px"
+            });
+            control.getEl().find("label").css({
+                "margin-bottom": "0px"
+            });
+            control.getEl().find(".alpaca-controlfield-container").css({
+                "padding-top": "0px",
+                "padding-bottom": "0px"
+            });
+            modal.find(".modal-body").css({
+                "padding-top": "0px"
+            });
+        };
 
-            if (form)
-            {
-                form.destroy();
-            }
-
-            $("#formDiv").alpaca(config);
-        }
+        var x = $("<div><div class='fieldForm'></div></div>");
+        $(x).find(".fieldForm").alpaca(fieldConfig);
     };
 
-    refresh();
+    var editOptions = function(alpacaFieldId, callback)
+    {
+        var field = Alpaca.fieldInstances[alpacaFieldId];
+
+        var fieldOptionsSchema = field.getSchemaOfOptions();
+        var fieldOptionsOptions = field.getOptionsForOptions();
+        var fieldOptionsData = field.options;
+
+        delete fieldOptionsSchema.title;
+        delete fieldOptionsSchema.description;
+        if (fieldOptionsSchema.properties)
+        {
+            delete fieldOptionsSchema.properties.title;
+            delete fieldOptionsSchema.properties.description;
+            delete fieldOptionsSchema.properties.dependencies;
+            delete fieldOptionsSchema.properties.readonly;
+        }
+        if (fieldOptionsOptions.fields)
+        {
+            delete fieldOptionsOptions.fields.title;
+            delete fieldOptionsOptions.fields.description;
+            delete fieldOptionsOptions.fields.dependencies;
+            delete fieldOptionsOptions.fields.readonly;
+        }
+
+        var fieldConfig = {
+            schema: fieldOptionsSchema
+        };
+        if (fieldOptionsOptions)
+        {
+            fieldConfig.options = fieldOptionsOptions;
+        }
+        if (fieldOptionsData)
+        {
+            fieldConfig.data = fieldOptionsData;
+        }
+        fieldConfig.view = {
+            "parent": "VIEW_BOOTSTRAP_EDIT_LIST",
+            "displayReadonly": false
+        };
+        fieldConfig.postRender = function(control)
+        {
+            var modal = $(MODAL_TEMPLATE.trim());
+            modal.find(".modal-title").append(field.getTitle());
+            modal.find(".modal-body").append(control.getEl());
+
+            modal.find('.modal-footer').append("<button class='btn pull-right okay' data-dismiss='modal' aria-hidden='true'>Okay</button>");
+            modal.find('.modal-footer').append("<button class='btn pull-left' data-dismiss='modal' aria-hidden='true'>Cancel</button>");
+
+            $(modal).modal({
+                "keyboard": true
+            });
+
+            $(modal).find(".okay").click(function() {
+
+                field.options = control.getValue();
+
+                var top = findTop(field);
+                regenerate(top);
+
+                if (callback)
+                {
+                    callback();
+                }
+            });
+
+            // clean up the generated formatting
+            control.getEl().find(".alpaca-controlfield-helper").remove();
+            control.getEl().find(".alpaca-fieldset-helper").css({
+                "padding-top": "0px",
+                "padding-bottom": "0px"
+            });
+            control.getEl().find(".alpaca-fieldset-legend").css({
+                "margin-bottom": "0px"
+            });
+            control.getEl().find("input").css({
+                "margin-bottom": "0px"
+            });
+            control.getEl().find("label").css({
+                "margin-bottom": "0px"
+            });
+            control.getEl().find(".alpaca-controlfield-container").css({
+                "padding-top": "0px",
+                "padding-bottom": "0px"
+            });
+            modal.find(".modal-body").css({
+                "padding-top": "0px"
+            });
+        };
+
+        var x = $("<div><div class='fieldForm'></div></div>");
+        $(x).find(".fieldForm").alpaca(fieldConfig);
+    };
+
+    var refreshView = function(callback)
+    {
+        if (mainViewField)
+        {
+            mainViewField.getEl().replaceWith("<div id='viewDiv'></div>");
+            mainViewField.destroy();
+            mainViewField = null;
+        }
+
+        doRefresh($("#viewDiv"), false, false, function(err, form) {
+
+            if (!err)
+            {
+                mainViewField = form;
+            }
+
+            if (callback)
+            {
+                callback();
+            }
+
+        });
+    };
+
+    var refreshPreview = function(callback)
+    {
+        if (mainPreviewField)
+        {
+            mainPreviewField.getEl().replaceWith("<div id='previewDiv'></div>");
+            mainPreviewField.destroy();
+            mainPreviewField = null;
+        }
+
+        doRefresh($("#previewDiv"), false, false, function(err, form) {
+
+            if (!err)
+            {
+                mainPreviewField = form;
+            }
+
+            if (callback)
+            {
+                callback();
+            }
+
+        });
+    };
+
+    var refreshDesigner = function(callback)
+    {
+        $(".dropzone").remove();
+        $(".interaction").remove();
+        $(".cover").remove();
+
+        if (mainDesignerField)
+        {
+            mainDesignerField.getEl().replaceWith("<div id='designerDiv'></div>");
+            mainDesignerField.destroy();
+            mainDesignerField = null;
+        }
+
+        doRefresh($("#designerDiv"), true, false, function(err, form) {
+
+            if (!err)
+            {
+                mainDesignerField = form;
+            }
+
+            if (callback)
+            {
+                callback();
+            }
+
+        });
+    };
+
+    var refresh = function(callback)
+    {
+        var current = $("UL.nav.nav-tabs LI.active A.tab-item");
+        $(current).click();
+    };
+
+    var rtChange = false;
+    editor1.on("change", function() {
+        rtChange = true;
+    });
+    editor2.on("change", function() {
+        rtChange = true;
+    });
+    editor3.on("change", function() {
+        rtChange = true;
+    });
+
+    // background "thread" to detect changes and update the preview div
+    var rtProcessing = false;
+    var rtFunction = function() {
+
+        if (rtChange && !rtProcessing)
+        {
+            rtProcessing = true;
+            if (mainPreviewField)
+            {
+                mainPreviewField.getEl().replaceWith("<div id='previewDiv'></div>");
+                mainPreviewField.destroy();
+                mainPreviewField = null;
+            }
+            doRefresh($("#previewDiv"), false, true, function(err, form) {
+
+                if (!err)
+                {
+                    mainPreviewField = form;
+                }
+
+                rtChange = false;
+                rtProcessing = false;
+            });
+        }
+
+        setTimeout(rtFunction, 1000);
+
+    };
+    rtFunction();
+
 
     var isCoreField = function(type)
     {
@@ -410,13 +698,58 @@ var setup = function()
         {
             $("#advanced").append(div);
         }
+
+        // init all of the draggable form elements
+        $(".form-element").draggable({
+            "appendTo": "body",
+            "helper": "clone",
+            "zIndex": 300,
+            "refreshPositions": true,
+            "start": function(event, ui) {
+                $(".dropzone").addClass("dropzone-highlight");
+            },
+            "stop": function(event, ui) {
+                $(".dropzone").removeClass("dropzone-highlight");
+            }
+        });
     }
 
-    $(".tab-item-form").click(function() {
-        refresh();
+    $(".tab-item-source").click(function() {
+
+        // we have to monkey around a bit with ACE Editor to get it to refresh
+        editor1.setValue(editor1.getValue());
+        editor2.setValue(editor2.getValue());
+        editor3.setValue(editor3.getValue());
+
+        setTimeout(function() {
+            refreshPreview();
+        }, 50);
+    });
+    $(".tab-item-view").click(function() {
+        setTimeout(function() {
+            refreshView();
+        }, 50);
+    });
+    $(".tab-item-designer").click(function() {
+        setTimeout(function() {
+            refreshDesigner();
+        }, 50);
     });
 
-    $(".tab-item-form").click();
+    $(".tab-source-schema").click(function() {
+        // we have to monkey around a bit with ACE Editor to get it to refresh
+        editor1.setValue(editor1.getValue());
+    });
+
+    $(".tab-source-options").click(function() {
+        // we have to monkey around a bit with ACE Editor to get it to refresh
+        editor2.setValue(editor2.getValue());
+    });
+
+    $(".tab-source-data").click(function() {
+        // we have to monkey around a bit with ACE Editor to get it to refresh
+        editor3.setValue(editor3.getValue());
+    });
 
     var insertField = function(schema, options, data, dataType, fieldType, parentField, previousField, previousFieldKey, nextField, nextFieldKey)
     {
@@ -547,7 +880,9 @@ var setup = function()
         editor2.setValue(JSON.stringify(_options, null, "    "));
         editor3.setValue(JSON.stringify(_data, null, "    "));
 
-        refresh();
+        setTimeout(function() {
+            refresh();
+        }, 100);
     };
 
     var removeField = function(alpacaId)
@@ -560,6 +895,8 @@ var setup = function()
         var top = findTop(field);
         regenerate(top);
     };
+
+    $(".tab-item-source").click();
 };
 
 $(document).ready(function() {
