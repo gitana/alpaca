@@ -54,19 +54,18 @@
 
         // all control item containers get class: "form-group"
         // all input, textarea and select get class: "form-control"
-        // all input, textarea and select get size large
         // all labels get class: "control-label"
         "field" : function(targetDiv) {
 
             // the item container gets the "form-group"
             targetDiv.parent().addClass('form-group');
 
-            $(targetDiv).find("input").addClass("form-control").addClass("input-lg");
-            $(targetDiv).find("textarea").addClass("form-control").addClass("input-lg");
-            $(targetDiv).find("select").addClass("form-control").addClass("input-lg");
+            $(targetDiv).find("input").addClass("form-control");//.addClass("input-lg");
+            $(targetDiv).find("textarea").addClass("form-control");//.addClass("input-lg");
+            $(targetDiv).find("select").addClass("form-control");//.addClass("input-lg");
 
             // remove "input-lg" from selected controls
-            $(targetDiv).find("input[type=checkbox]").removeClass("input-lg");
+            //$(targetDiv).find("input[type=checkbox]").removeClass("input-lg");
 
             // remove "form-control" from selected controls
             $(targetDiv).find("input[type=checkbox]").removeClass("form-control");
@@ -103,7 +102,7 @@
             $(targetDiv).popover({
                 "html": true,
                 "trigger": "manual",
-                "content": "HEY MAN CHECK ME"
+                "content": "error message"
             });
             $(targetDiv).on("shown.bs.popover", function() {
                 debugger;
@@ -144,7 +143,10 @@
 
 
         "buttonBeautifier"  : function(button, iconClass, withText) {
-            $(button).addClass("btn").addClass("btn-default");
+            var buttonText = button.html();
+            button.attr("title", buttonText);
+            var addedButtonText = withText ? buttonText : "";
+            button.empty().append('<b class="alpaca-fieldset-legend-button ' + iconClass + '" style="font-size: 16px"></b><span style="padding-left: 6px">' + addedButtonText + '</span>');
         }
 
     };
@@ -170,11 +172,6 @@
         var self = this;
 
         field.render(function(field) {
-
-            //$('select,input,textarea', field.outerEl).addClass('input-xlarge');
-
-            // all buttons get "btn" and "btn-default"
-            //$('button:submit, button:reset, .alpaca-form-button').addClass('btn').addClass('btn-default')
 
             if (renderedCallback) {
                 renderedCallback.call(self, field);
