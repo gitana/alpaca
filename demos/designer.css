@@ -1,3 +1,13 @@
+body
+{
+    padding-top: 70px;
+}
+
+.row
+{
+    padding-top: 20px;
+}
+
 #schema
 {
     width: 99%;

@@ -328,6 +328,9 @@
 
             // check if it needs to be wrapped in a form
             if (this.options.renderForm) {
+                if (!this.options.form) {
+                    this.options.form = {};
+                }
                 this.options.form.viewType = /*this.viewType*/this.view.type;
                 var form = this.form;
                 if (!form) {
@@ -755,7 +758,7 @@
                             }
                         }
 
-                        _this.getStyleInjection('tooltipErrorMessage', _this.getEl(), message);
+                        _this.getStyleInjection('addErrorMessage', _this.getEl(), message);
                     }
                 });
             }

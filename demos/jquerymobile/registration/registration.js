@@ -369,6 +369,6 @@ $(document).ready(function() {
         "options": options,
         "postRender": postRenderCallback,
         "view": "VIEW_WEB_REGISTRATION",
-        "style":"bootstrap"
+        "style":"mobile"
     });
 });

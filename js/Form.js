@@ -157,8 +157,6 @@
             this.disableSubmitButton();
 
             var x = this.isFormValid();
-            console.log("isFormValid: " + x);
-
             if (this.isFormValid())
             {
                 this.enableSubmitButton();
@@ -204,9 +202,11 @@
                 this.formFieldsContainer = this.outerEl;
             }
 
-            // add all provided attributes
+            // the form field
             this.field = $('form', this.container);
-            if (this.field) {
+            if (this.field)
+            {
+                // add all provided attributes
                 this.field.attr(this.attributes);
             }
 

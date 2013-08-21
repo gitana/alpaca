@@ -2,32 +2,65 @@ var setup = function()
 {
     var MODAL_TEMPLATE = ' \
         <div class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: visible !important"> \
-            <div class="modal-header"> \
-                <h3 class="modal-title"></h3> \
+            <div class="modal-dialog"> \
+                <div class="modal-content"> \
+                    <div class="modal-header"> \
+                        <h3 class="modal-title"></h3> \
+                    </div> \
+                    <div class="modal-body"></div> \
+                    <div class="modal-footer"></div> \
+                </div> \
             </div> \
-            <div class="modal-body"></div> \
-            <div class="modal-footer"></div> \
         </div> \
     ';
 
     var schema = {
         "type": "object",
         "properties": {
-            "title": {
-                "type": "string"
+            "email": {
+                "type": "string",
+                "required": false
+            },
+            "password": {
+                "type": "string",
+                "required": false,
+                "pattern": {}
+            },
+            "file": {
+                "type": "string",
+                "required": false
+            },
+            "check": {
+                "type": "boolean",
+                "required": false,
+                "default": true
             }
         }
     };
     var options = {
         "fields": {
-            "title": {
+            "email": {
                 "type": "text",
-                "label": "Title"
+                "label": "Email Address"
+            },
+            "password": {
+                "type": "password",
+                "label": "Password"
+            },
+            "file": {
+                "type": "file",
+                "label": "File Upload"
+            },
+            "check": {
+                "type": "checkbox",
+                "rightLabel": "Sign me up for the News Letter!",
+                "label": "Newsletter"
             }
         }
     };
     var data = {
-        "title": "Hello World"
+        "email": "Joe Smith",
+        "password": "MyPassword"
     };
 
     var setupEditor = function(id, json)
@@ -145,13 +178,13 @@ var setup = function()
                         var interaction = $("<div class='interaction'></div>");
                         var buttonGroup = $("<div class='btn-group pull-right'></div>");
                         //var schemaButton = $("<button class='btn button-schema' alpaca-ref-id='" + alpacaFieldId + "'>Schema</button>");
-                        var schemaButton = $('<button class="btn btn-small button-schema" alpaca-ref-id="' + alpacaFieldId + '"><i class="icon-list"></i></button>');
+                        var schemaButton = $('<button class="btn btn-default btn-xs button-schema" alpaca-ref-id="' + alpacaFieldId + '"><i class="glyphicon glyphicon-list"></i></button>');
                         buttonGroup.append(schemaButton);
                         //var optionsButton = $("<button class='btn button-options' alpaca-ref-id='" + alpacaFieldId + "'>Options</button>");
-                        var optionsButton = $('<button class="btn btn-small button-options" alpaca-ref-id="' + alpacaFieldId + '"><i class="icon-wrench"></i></button>');
+                        var optionsButton = $('<button class="btn btn-default btn-xs button-options" alpaca-ref-id="' + alpacaFieldId + '"><i class="glyphicon glyphicon-wrench"></i></button>');
                         buttonGroup.append(optionsButton);
                         //var removeButton = $("<button class='btn btn-danger button-remove' alpaca-ref-id='" + alpacaFieldId + "'>Delete</button>");
-                        var removeButton = $('<button class="btn btn-danger btn-small button-remove" alpaca-ref-id="' + alpacaFieldId + '"><i class="icon-white icon-remove"></i></button>');
+                        var removeButton = $('<button class="btn btn-danger btn-xs button-remove" alpaca-ref-id="' + alpacaFieldId + '"><i class="glyphicon glyphicon-remove"></i></button>');
                         buttonGroup.append(removeButton);
                         interaction.append(buttonGroup);
                         interaction.append("<div style='clear:both'></div>");
@@ -387,6 +420,7 @@ var setup = function()
                 }
             });
 
+            /*
             // clean up the generated formatting
             control.getEl().find(".alpaca-controlfield-helper").remove();
             control.getEl().find(".alpaca-fieldset-helper").css({
@@ -409,6 +443,7 @@ var setup = function()
             modal.find(".modal-body").css({
                 "padding-top": "0px"
             });
+            */
         };
 
         var x = $("<div><div class='fieldForm'></div></div>");
@@ -945,6 +980,77 @@ var setup = function()
     };
 
     $(".tab-item-source").click();
+
+
+    // load button
+    $(".load-button").off().click(function() {
+
+        if (!localStorage)
+        {
+            alert("Your browser must support HTML5 local storage in order to use this feature");
+            return;
+        }
+
+        var configString = localStorage.getItem("alpacaDesignerConfig");
+        if (!configString)
+        {
+            return;
+        }
+
+        try
+        {
+            var config = JSON.parse(configString);
+            if (!config.schema) {
+                config.schema = {};
+            }
+            if (!config.options) {
+                config.options = {};
+            }
+            if (!config.data) {
+                config.data = {};
+            }
+
+            editor1.setValue(JSON.stringify(config.schema, null, "    "));
+            editor2.setValue(JSON.stringify(config.options, null, "    "));
+            editor3.setValue(JSON.stringify(config.data, null, "    "));
+
+            //alert("Your form was loaded from HTML5 local storage");
+        }
+        catch (e)
+        {
+            // bad value
+        }
+
+    });
+
+    // save button
+    $(".save-button").off().click(function() {
+
+        if (!localStorage)
+        {
+            alert("Your browser must support HTML5 local storage in order to use this feature");
+            return;
+        }
+
+        var config = {};
+        if (schema)
+        {
+            config.schema = schema;
+        }
+        if (options)
+        {
+            config.options = options;
+        }
+        if (data)
+        {
+            config.data = data;
+        }
+        var configString = JSON.stringify(config);
+
+        localStorage.setItem("alpacaDesignerConfig", configString);
+
+        //alert("Your form was saved in HTML5 local storage");
+    });
 };
 
 $(document).ready(function() {
