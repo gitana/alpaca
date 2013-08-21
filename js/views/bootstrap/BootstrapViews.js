@@ -1,7 +1,7 @@
 /**
  * Twitter Bootstrap Theme ("bootstrap")
  *
- * Defines the Alpaca theme for Twitter bootstrap.
+ * Defines the Alpaca theme for Twitter Bootstrap v3.
  *
  * The style injector:
  *
@@ -27,17 +27,9 @@
 
     Alpaca.styleInjections["bootstrap"] = {
 
+        /*
         // error messages
-        "error" : function(targetDiv) {
-            targetDiv.addClass('control-group error');
-        },
-        "errorMessage" : function(targetDiv) {
-            targetDiv.addClass('');
-        },
-        "removeError" : function(targetDiv) {
-            targetDiv.removeClass('error');
-        },
-        "tooltipErrorMessage": function(targetDiv, message) {
+        "addErrorMessage": function(targetDiv, message) {
 
             // if bootstrap has the tooltip, we can pretty up the message
             if ($.fn.tooltip)
@@ -48,22 +40,98 @@
             }
         },
 
-        // field
+        "buttonBeautifier"  : function(button, iconClass, withText) {
+            var buttonText = button.html();
+            button.attr("title", buttonText);
+            var addedButtonText = withText ? buttonText : "";
+            button.empty().append('<b class="alpaca-fieldset-legend-button ' + iconClass + '"></b><span>' + addedButtonText + '</span>');
+        },
+        */
+
+
+
+
+
+        // all control item containers get class: "form-group"
+        // all input, textarea and select get class: "form-control"
+        // all input, textarea and select get size large
+        // all labels get class: "control-label"
         "field" : function(targetDiv) {
-            targetDiv.addClass('control-group');
+
+            // the item container gets the "form-group"
+            targetDiv.parent().addClass('form-group');
+
+            $(targetDiv).find("input").addClass("form-control").addClass("input-lg");
+            $(targetDiv).find("textarea").addClass("form-control").addClass("input-lg");
+            $(targetDiv).find("select").addClass("form-control").addClass("input-lg");
+
+            // remove "input-lg" from selected controls
+            $(targetDiv).find("input[type=checkbox]").removeClass("input-lg");
+
+            // remove "form-control" from selected controls
+            $(targetDiv).find("input[type=checkbox]").removeClass("form-control");
+            $(targetDiv).find("input[type=file]").removeClass("form-control");
+
+            // all labels get class "control-label"
+            $(targetDiv).find("label").addClass("control-label");
         },
 
-        // required
-        "required" : function(targetDiv) {
-            $('<span class="icon-star"></span>&nbsp;').prependTo(targetDiv);
+        // icons
+        "commonIcon" : "",
+        "addIcon" : "glyphicon glyphicon-plus-sign",
+        "removeIcon" : "glyphicon glyphicon-minus-sign",
+        "upIcon" : "glyphicon glyphicon-chevron-up",
+        "downIcon" : "glyphicon glyphicon-chevron-down",
+        "containerExpandedIcon" : "glyphicon glyphicon-circle-arrow-down",
+        "containerCollapsedIcon" : "glyphicon glyphicon-circle-arrow-right",
+        "wizardPreIcon" : "glyphicon glyphicon-chevron-left",
+        "wizardNextIcon" : "glyphicon glyphicon-chevron-right",
+        "wizardDoneIcon" : "glyphicon glyphicon-ok",
+
+
+        // required fields get star icon
+        "required" : function(targetDiv)
+        {
+            $('<span class="glyphicon glyphicon-star"></span>&nbsp;').prependTo(targetDiv);
         },
 
-        // no additional markup on container
-        "container" : function(targetDiv) {
-            targetDiv.addClass('');
+        // error fields get the "has-error" class
+        "error" : function(targetDiv) {
+            targetDiv.addClass('has-error');
+
+            /*
+            $(targetDiv).popover({
+                "html": true,
+                "trigger": "manual",
+                "content": "HEY MAN CHECK ME"
+            });
+            $(targetDiv).on("shown.bs.popover", function() {
+                debugger;
+                $(this).css({
+                    "border": "1px red solid",
+                    "color": "red"
+                });
+            });
+            $(targetDiv).popover("show");
+            */
+        },
+        "removeError" : function(targetDiv) {
+            targetDiv.removeClass('has-error');
+
+            /*
+            $(targetDiv).popover("hide");
+            */
+
+            /*
+            $(targetDiv).on("hidden.bs.popover", function() {
+                $(targetDiv).popover("destroy");
+            });
+            */
         },
 
-        // wizard (still relies on jquery-ui)
+
+
+        // The Wizard still relies on jQuery UI
         "wizardStatusBar" : function(targetDiv) {
             targetDiv.addClass('ui-widget-header ui-corner-all');
         },
@@ -74,41 +142,27 @@
             targetDiv.removeClass('ui-state-highlight ui-corner-all');
         },
 
-        "commonIcon" : "",
-
-        "addIcon" : "icon-plus-sign",
-        "removeIcon" : "icon-minus-sign",
-
-        "upIcon" : "icon-chevron-up",
-        "downIcon" : "icon-chevron-down",
-
-        "wizardPreIcon" : "ui-icon-triangle-1-w",
-        "wizardNextIcon" : "ui-icon-triangle-1-e",
-        "wizardDoneIcon" : "ui-icon-triangle-1-e",
-
-        "containerExpandedIcon" : "icon-circle-arrow-down",
-        "containerCollapsedIcon" : "icon-circle-arrow-right",
 
         "buttonBeautifier"  : function(button, iconClass, withText) {
-            var buttonText = button.html();
-            button.attr("title", buttonText);
-            var addedButtonText = withText ? buttonText : "";
-            button.empty().append('<b class="alpaca-fieldset-legend-button ' + iconClass + '"></b><span>' + addedButtonText + '</span>');
+            $(button).addClass("btn").addClass("btn-default");
         }
+
     };
 
     var bootstrapTemplates = {
-        "controlFieldLabel": '{{if options.label}}<label class="control-label {{if options.labelClass}}${options.labelClass}{{/if}}" for="${id}">${options.label}</label>{{/if}}',
-        "controlFieldHelper": '{{if options.helper}}<div class="{{if options.helperClass}}${options.helperClass}{{/if}}"><i class="icon-info-sign"></i> <span class="alpaca-controlfield-helper-text">${options.helper}</span></div>{{/if}}',
-        "controlFieldMessage": '<div><span class="icon-exclamation-sign"></span><span class="alpaca-controlfield-message-text help-inline">${message}</span></div>',
+        "controlFieldLabel": '{{if options.label}}<label class="{{if options.labelClass}}${options.labelClass}{{/if}}" for="${id}">${options.label}</label>{{/if}}',
+        "controlFieldHelper": '{{if options.helper}}<div class="{{if options.helperClass}}${options.helperClass}{{/if}}"><i class="glyphicon glyphicon-info-sign"></i> <p class="help-block help-inline alpaca-controlfield-helper-text">${options.helper}</p></div>{{/if}}',
+        "controlFieldMessage": '<div><span class="glyphicon glyphicon-exclamation-sign"></span><span class="alpaca-controlfield-message-text help-inline help-block">${message}</span></div>',
 
-        "arrayToolbar": '<span class="alpaca-fieldset-array-toolbar"><button class="btn alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">${addItemLabel}</button></span>',
-        "arrayItemToolbar": '<div class="btn-toolbar alpaca-fieldset-array-item-toolbar"><div class="btn-group">{{each(k,v) buttons}}<button class="btn btn-small alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-${v.feature}">${v.label}</button>{{/each}}</div></div>',
+        "arrayToolbar": '<span class="alpaca-fieldset-array-toolbar"><button class="btn btn-default alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">${addItemLabel}</button></span>',
+        "arrayItemToolbar": '<div class="btn-toolbar alpaca-fieldset-array-item-toolbar"><div class="btn-group">{{each(k,v) buttons}}<button class="btn btn-default btn-small alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-${v.feature}">${v.label}</button>{{/each}}</div></div>',
 
-        "controlFieldCheckbox": '<span>{{if options.rightLabel}}<label for="${id}" class="checkbox">{{/if}}<input type="checkbox" id="${id}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>{{if options.rightLabel}}${options.rightLabel}</label>{{/if}}</span>',
+        "controlFieldCheckbox": '<span class="checkbox">{{if options.rightLabel}}<label for="${id}">{{/if}}<input type="checkbox" id="${id}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>{{if options.rightLabel}}${options.rightLabel}</label>{{/if}}</span>',
         "controlFieldRadio": '<div id="${id}" class="alpaca-controlfield-radio">{{if !required}}<label class="alpaca-controlfield-radio-label radio inline"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value=""/>None</label>{{/if}}{{each selectOptions}}<label class="alpaca-controlfield-radio-label radio inline"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value="${value}" {{if value == data}}checked="checked"{{/if}}/>${text}</label>{{/each}}</div>',
 
-        "fieldSetHelper": '{{if options.helper}}<p class="{{if options.helperClass}}${options.helperClass}{{/if}}">${options.helper}</p>{{/if}}'
+        "fieldSetHelper": '{{if options.helper}}<p class="{{if options.helperClass}}${options.helperClass}{{/if}}">${options.helper}</p>{{/if}}',
+
+        "form": '<form role="form">{{html Alpaca.fieldTemplate(this,"formFieldsContainer")}}{{html Alpaca.fieldTemplate(this,"formButtonsContainer")}}</form>'
     };
 
     var renderFunction = function(field, renderedCallback)
@@ -117,8 +171,10 @@
 
         field.render(function(field) {
 
-            $('select,input,textarea', field.outerEl).addClass('input-xlarge');
-            $('button:submit, button:reset, .alpaca-form-button').addClass('btn');
+            //$('select,input,textarea', field.outerEl).addClass('input-xlarge');
+
+            // all buttons get "btn" and "btn-default"
+            //$('button:submit, button:reset, .alpaca-form-button').addClass('btn').addClass('btn-default')
 
             if (renderedCallback) {
                 renderedCallback.call(self, field);
