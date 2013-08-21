@@ -31,7 +31,7 @@ We've collected videos, tutorials, API documentation and much more to help you g
 
 ## Compatibility
 
-Alpaca is compatible with jQuery 1.8.x and jQuery 1.9.0 using the jQuery Migrate Plugin.
+Alpaca is compatible with jQuery 1.8.x and jQuery 1.9.x.
 
 ## Discussion Board
 
@@ -42,7 +42,7 @@ projects.
 
 ## Contributions
 
-In the spirit of open source software development, Alpaca always encourages community code contribution.
+In the spirit of open source software development, Alpaca always encourages community code contributions.
 
 ## Building Alpaca
 
@@ -146,3 +146,4 @@ Thanks for assistance and contributions:
 + [@Ognian](http://www.github.com/Ognian)
 + [@globocom](http://www.github.com/globocom)
 + [@urba](http://www.github.com/urba)
++ [@colegatron](http://www.github.com/colegatron)
