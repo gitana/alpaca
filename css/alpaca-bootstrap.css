@@ -23,6 +23,14 @@
     color: #737373;
 }
 
+/**
+ * Labels for control fields should be inline
+ */
+.alpaca-controlfield-label DIV
+{
+    display: inline-block;
+}
+
 /*
 .alpaca-controlfield-helper-text
 {

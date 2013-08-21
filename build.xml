@@ -478,6 +478,14 @@
                 <file name="alpaca-jqueryui.css"/>
             </filelist>
         </concat>
+        <concat destfile="${package.dir}/css/${appkey}-custom-fields.css">
+            <filelist dir="${prep.dir}">
+                <file name="license.txt"/>
+            </filelist>
+            <filelist dir="${prep.dir}/css">
+                <file name="alpaca-custom-fields.css"/>
+            </filelist>
+        </concat>
     </target>
 
     <target name="compress" description="Compress the javascript and css" depends="concat-js,concat-css">
@@ -626,6 +634,7 @@
                 <include name="${appkey}-mobile.css" />
                 <include name="${appkey}-bootstrap.css" />
                 <include name="${appkey}-jqueryui.css" />
+                <include name="${appkey}-custom-fields.css" />
 				<include name="images/**" />
 			</fileset>
 		</copy>
@@ -653,6 +662,7 @@
                 <include name="${appkey}-mobile.css" />
                 <include name="${appkey}-bootstrap.css" />
                 <include name="${appkey}-jqueryui.css" />
+                <include name="${appkey}-custom-fields.css" />
                 <include name="images/**" />
 			</fileset>
 		</copy>
@@ -680,6 +690,7 @@
                 <include name="${appkey}-mobile.css" />
                 <include name="${appkey}-bootstrap.css" />
                 <include name="${appkey}-jqueryui.css" />
+                <include name="${appkey}-custom-fields.css" />
                 <include name="images/**" />
 			</fileset>
 		</copy>
