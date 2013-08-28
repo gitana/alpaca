@@ -1828,6 +1828,15 @@
             {
                 var viewId = view.id;
 
+                // support for jQuery selectors
+                if (template && ((template.indexOf("#") === 0) || (template.indexOf(".") === 0)))
+                {
+                    var x = $(template);
+
+                    type = $(x).attr("type");
+                    template = $(x).html();
+                }
+
                 var type = null;
                 if (Alpaca.isObject(template)) {
                     type = template.type;
