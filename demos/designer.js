@@ -1,5 +1,7 @@
 var setup = function()
 {
+    //Alpaca.logLevel = Alpaca.DEBUG;
+
     var MODAL_TEMPLATE = ' \
         <div class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: visible !important"> \
             <div class="modal-dialog"> \
