@@ -111,7 +111,7 @@
             "view": {
                 "parent": "VIEW_JQUERYUI_EDIT_LIST",
                 "layout": {
-                    "template": '../examples/components/wizards/wizard-template.html',
+                    "template": "../examples/components/wizards/wizard-template.html",
                     "bindings": {
                         "name": "alpaca-wizard-step-1",
                         "age": "alpaca-wizard-step-1",

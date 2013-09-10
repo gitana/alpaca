@@ -1,0 +1,573 @@
+{
+    "fields": {
+        "kind": {
+            "label": "Game Type",
+            "type": "select",
+            "optionLabels": [
+                "General",
+                "Places",
+                "Story"
+            ]
+        },
+        "test": {
+            "rightLabel": "Is this game in test mode?",
+            "type": "checkbox"
+        },
+        "schema": {
+            "label": "Game Schema",
+            "type": "number"
+        },
+        "title": {
+            "label": "Game Title",
+            "type": "text"
+        },
+        "description": {
+            "label": "Game Description",
+            "type": "wysiwyg",
+            "wysiwyg": {
+                "controls": "simple"
+            }
+        },
+        "budget": {
+            "label": "Budget",
+            "type": "text"
+        },
+        "distance": {
+            "label": "Distance",
+            "fields": {
+                "value": {
+                    "label": "Value",
+                    "type": "number"
+                },
+                "unit": {
+                    "label": "Unit",
+                    "type": "select",
+                    "optionLabels": [
+                        "Feet",
+                        "Miles",
+                        "Meter"
+                    ]
+                }
+            }
+        },
+        "startTime": {
+            "label": "Start Time",
+            "type": "datetime"
+        },
+        "endTime": {
+            "label": "End Time",
+            "type": "datetime"
+        },
+        "fee": {
+            "label": "Fee",
+            "type": "text"
+        },
+        "prizes": {
+            "label": "Prizes",
+            "type": "wysiwyg",
+            "wysiwyg": {
+                "controls": "simple"
+            }
+        },
+        "pts": {
+            "label": "Points",
+            "type": "integer"
+        },
+        "rules": {
+            "label": "Rules",
+            "type": "wysiwyg",
+            "wysiwyg": {
+                "controls": "simple"
+            }
+        },
+        "time2play": {
+            "label": "Time to Play",
+            "type": "text"
+        },
+        "states": {
+            "type": "map",
+            "label": "States",
+            "toolbarSticky": true,
+            "fields": {
+                "item": {
+                    "fields": {
+                        "_key": {
+                            "label": "State ID",
+                            "type": "text"
+                        },
+                        "type": {
+                            "label": "State Type",
+                            "type": "select",
+                            "optionLabels": [
+                                "Act",
+                                "Award",
+                                "LQA",
+                                "Menu",
+                                "Survey",
+                                "Victory"
+                            ]
+                        },
+                        "title": {
+                            "type": "text",
+                            "label": "Title"
+                        },
+                        "description": {
+                            "label": "Description",
+                            "type": "wysiwyg",
+                            "wysiwyg": {
+                                "controls": "simple"
+                            }
+                        },
+                        "maximumAllowedTraversals": {
+                            "type": "integer",
+                            "label": "How many times can this LQA be played?",
+                            "helper": "By default, an LQA can be played 1 time.  Set to -1 to allow unlimited traversals."
+                        },
+                        "maximumAllowedAnswerCount": {
+                            "type": "integer",
+                            "label": "How many times may this LQA be answered?",
+                            "helper": "By default, an LQA can be answered 1 time.  Set to -1 to allow unlimited answers."
+                        },
+                        "menu": {
+                            "label": "Menu",
+                            "fields": {
+                                "includeList": {
+                                    "type": "checkbox",
+                                    "rightLabel": "Include List"
+                                },
+                                "list": {
+                                    "label": "List Properties",
+                                    "fields": {
+                                        "items": {
+                                            "toolbarSticky": true,
+                                            "fields": {
+                                                "item": {
+                                                    "fields": {
+                                                        "title": {
+                                                            "label": "Item Title",
+                                                            "type": "text"
+                                                        },
+                                                        "state": {
+                                                            "label": "Triggers State Key",
+                                                            "type": "text"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "includeMap": {
+                                    "type": "checkbox",
+                                    "rightLabel": "Include Map"
+                                },
+                                "map": {
+                                    "label": "Map Properties",
+                                    "fields": {
+                                        "image": {
+                                            "label": "Image",
+                                            "fields": {
+                                                "src": {
+                                                    "label": "Image Source URL",
+                                                    "type": "text"
+                                                },
+                                                "width": {
+                                                    "label": "Image Width",
+                                                    "type": "text"
+                                                },
+                                                "height": {
+                                                    "label": "Image Height",
+                                                    "type": "text"
+                                                }
+                                            }
+                                        },
+                                        "areas": {
+                                            "label": "Areas",
+                                            "toolbarSticky": true,
+                                            "fields": {
+                                                "item": {
+                                                    "fields": {
+                                                        "shape": {
+                                                            "label": "Shape",
+                                                            "type": "select",
+                                                            "optionLabels": [
+                                                                "Rectangle",
+                                                                "Circle"
+                                                            ]
+                                                        },
+                                                        "coords": {
+                                                            "label": "Coordinates",
+                                                            "type": "text"
+                                                        },
+                                                        "state": {
+                                                            "label": "Triggers State Key",
+                                                            "type": "text"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "includeGoogle": {
+                                    "type": "checkbox",
+                                    "rightLabel": "Include Google"
+                                },
+                                "google": {
+                                    "label": "Google Properties",
+                                    "fields": {
+                                        "map": {
+                                            "label": "Map",
+                                            "fields": {
+                                                "position": {
+                                                    "label": "Position",
+                                                    "fields": {
+                                                        "lat": {
+                                                            "type": "number",
+                                                            "label": "Latitude"
+                                                        },
+                                                        "long": {
+                                                            "type": "number",
+                                                            "label": "Longitude"
+                                                        }
+                                                    }
+                                                },
+                                                "zoom": {
+                                                    "label": "Zoom",
+                                                    "type": "integer"
+                                                },
+                                                "type": {
+                                                    "label": "Google Map Type",
+                                                    "type": "select",
+                                                    "optionLabels": [
+                                                        "ROADMAP"
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        "markers": {
+                                            "label": "Markers",
+                                            "toolbarSticky": true,
+                                            "fields": {
+                                                "item": {
+                                                    "label": "Marker",
+                                                    "fields": {
+                                                        "position": {
+                                                            "label": "Position",
+                                                            "fields": {
+                                                                "lat": {
+                                                                    "type": "number",
+                                                                    "label": "Latitude"
+                                                                },
+                                                                "long": {
+                                                                    "type": "number",
+                                                                    "label": "Longitude"
+                                                                }
+                                                            }
+                                                        },
+                                                        "title": {
+                                                            "label": "Title",
+                                                            "type": "text"
+                                                        },
+                                                        "state": {
+                                                            "label": "Triggers State Key",
+                                                            "type": "text"
+                                                        },
+                                                        "info": {
+                                                            "label": "Info",
+                                                            "fields": {
+                                                                "content": {
+                                                                    "label": "Content",
+                                                                    "type": "wysiwyg",
+                                                                    "wysiwyg": {
+                                                                        "controls": "simple"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "url": {
+                                                            "label": "URL",
+                                                            "type": "text"
+                                                        },
+                                                        "iconUrl": {
+                                                            "label": "Icon URL",
+                                                            "type": "text"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "dependencies": {
+                                "type": "menu"
+                            }
+                        },
+                        "lqa": {
+                            "label": "LQA",
+                            "fields": {
+                                "leadup": {
+                                    "label": "Leadup",
+                                    "type": "wysiwyg",
+                                    "wysiwyg": {
+                                        "controls": "simple"
+                                    }
+                                },
+                                "question": {
+                                    "label": "Question",
+                                    "type": "wysiwyg",
+                                    "wysiwyg": {
+                                        "controls": "simple"
+                                    }
+                                },
+                                "answer": {
+                                    "label": "Answer",
+                                    "type": "text"
+                                },
+                                "pts": {
+                                    "label": "Points to add when correct",
+                                    "type": "integer"
+                                },
+                                "pts_wrong": {
+                                    "label": "Points to deduct when wrong",
+                                    "type": "integer"
+                                },
+                                "location": {
+                                    "label": "Location",
+                                    "fields": {
+                                        "lat": {
+                                            "label": "Latitude",
+                                            "type": "number"
+                                        },
+                                        "long": {
+                                            "label": "Longitude",
+                                            "type": "number"
+                                        },
+                                        "radius": {
+                                            "fields": {
+                                                "value": {
+                                                    "label": "Value",
+                                                    "type": "number"
+                                                },
+                                                "unit": {
+                                                    "label": "Unit",
+                                                    "type": "select",
+                                                    "optionLabels": [
+                                                        "Feet",
+                                                        "Miles",
+                                                        "Meter"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "collapsed": true
+                                },
+                                "cloos": {
+                                    "label": "Cloos",
+                                    "toolbarSticky": true,
+                                    "type": "map",
+                                    "fields": {
+                                        "item": {
+                                            "label": "Cloo",
+                                            "fields": {
+                                                "_key": {
+                                                    "label": "Key",
+                                                    "type": "text"
+                                                },
+                                                "type": {
+                                                    "label": "Type",
+                                                    "type": "select",
+                                                    "optionLabels": [
+                                                        "CLOO"
+                                                    ]
+                                                },
+                                                "clue": {
+                                                    "label": "Clue",
+                                                    "type": "wysiwyg",
+                                                    "wysiwyg": {
+                                                        "controls": "simple"
+                                                    }
+                                                },
+                                                "pts": {
+                                                    "label": "Points Deducted",
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "answerRequired": {
+                                    "type": "checkbox",
+                                    "rightLabel": "An answer is required",
+                                    "helper": "When true, an answer must be supplied to pass through the LQA."
+                                },
+                                "answerValidated": {
+                                    "type": "checkbox",
+                                    "rightLabel": "Check answer for validity",
+                                    "helper": "When true, the answer will be checked for validity.  Otherwise, the answer is never checked.  In either case, the answer is captured and stored."
+                                },
+                                "answerAllowWrong": {
+                                    "type": "checkbox",
+                                    "rightLabel": "Allow wrong answers",
+                                    "helper": "When true, wrong answers considered valid."
+                                }
+                            },
+                            "dependencies": {
+                                "type": "lqa"
+                            }
+                        },
+                        "survey": {
+                            "label": "Survey",
+                            "fields": {
+                                "leadup": {
+                                    "label": "Leadup",
+                                    "type": "text"
+                                },
+                                "form": {
+                                    "fields": {
+                                        "schema": {
+                                            "label": "Survey Schema",
+                                            "type": "editor",
+                                            "aceMode": "ace/mode/json"
+                                        },
+                                        "options": {
+                                            "label": "Survey Field Options",
+                                            "type": "editor",
+                                            "aceMode": "ace/mode/json"
+                                        }
+                                    }
+                                },
+                                "pts": {
+                                    "label": "Points",
+                                    "type": "integer"
+                                },
+                                "geolocation": {
+                                    "label": "Geolocation",
+                                    "fields": {
+                                        "lat": {
+                                            "label": "Latitude",
+                                            "type": "number"
+                                        },
+                                        "long": {
+                                            "label": "Longitude",
+                                            "type": "number"
+                                        },
+                                        "radius": {
+                                            "label": "Radius",
+                                            "fields": {
+                                                "value": {
+                                                    "label": "Value",
+                                                    "type": "number"
+                                                },
+                                                "unit": {
+                                                    "label": "Unit",
+                                                    "type": "select",
+                                                    "optionLabels": [
+                                                        "Feet",
+                                                        "Miles",
+                                                        "Meter"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "dependencies": {
+                                "type": "survey"
+                            }
+                        },
+                        "victory": {
+                            "label": "Victory",
+                            "fields": {
+                                "header": {
+                                    "label": "Header",
+                                    "type": "text"
+                                },
+                                "body": {
+                                    "label": "Body",
+                                    "type": "wysiwyg",
+                                    "wysiwyg": {
+                                        "controls": "simple"
+                                    }
+                                }
+                            },
+                            "dependencies": {
+                                "type": "victory"
+                            }
+                        },
+                        "award": {
+                            "label": "Award",
+                            "fields": {
+                                "header": {
+                                    "label": "Header",
+                                    "type": "text"
+                                },
+                                "body": {
+                                    "label": "Body",
+                                    "type": "wysiwyg",
+                                    "wysiwyg": {
+                                        "controls": "simple"
+                                    }
+                                }
+                            },
+                            "dependencies": {
+                                "type": "award"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "flow": {
+            "label": "Flow Definition",
+            "toolbarSticky": true,
+            "fields": {
+                "item": {
+                    "label": "Flow",
+                    "fields": {
+                        "type": {
+                            "label": "Flow Type",
+                            "type": "select",
+                            "optionLabels": [
+                                "Random",
+                                "Serial",
+                                "Transition",
+                                "Empty",
+                                "Select"
+                            ]
+                        },
+                        "states": {
+                            "label": "States",
+                            "toolbarSticky": true,
+                            "type": "map",
+                            "fields": {
+                                "item": {
+                                    "fields": {
+                                        "_key": {
+                                            "label": "State Key",
+                                            "type": "text"
+                                        },
+                                        "refid": {
+                                            "label": "Points to State ID",
+                                            "type": "text"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "numberOfDraws": {
+                            "label": "Number of Random Draws",
+                            "type": "number",
+                            "dependencies": {
+                                "type": "random"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

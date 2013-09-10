@@ -490,9 +490,10 @@
          * @param {Any} itemData field data
          * @param {String} insertAfterId Where the item will be inserted
          * @param [Boolean] isDynamicSubItem whether this item is being dynamically created (after first render)
+         * @param [Function] postRenderCallback called after the child is added
          */
-        addItem: function(index, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem) {
-            return this._addItem(index, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem);
+        addItem: function(index, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem, postRenderCallback) {
+            return this._addItem(index, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem, postRenderCallback);
         },
 
         /**
@@ -504,10 +505,11 @@
          * @param itemData
          * @param insertAfterId
          * @param isDynamicSubItem
+         * @param postRenderCallback
          * @return {*}
          * @private
          */
-        _addItem: function(index, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem) {
+        _addItem: function(index, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem, postRenderCallback) {
             var _this = this;
             if (_this._validateEqualMaxItems()) {
 
@@ -530,49 +532,62 @@
                     },
                     "notTopLevel":true,
                     "isDynamicCreation": (isDynamicSubItem || this.isDynamicCreation),
-                    "render" : function(fieldControl) {
+                    "render" : function(fieldControl, cb) {
                         // render
                         fieldControl.parent = _this;
                         // setup item path
                         fieldControl.path = _this.path + "[" + index + "]";
                         fieldControl.nameCalculated = true;
-                        fieldControl.render();
-                        containerElem.attr("id", fieldControl.getId() + "-item-container");
-                        containerElem.attr("alpaca-id", fieldControl.getId());
-                        containerElem.addClass("alpaca-item-container");
-                        // render item label if needed
-                        if (_this.options && _this.options.itemLabel) {
-                            var itemLabelTemplateDescriptor = _this.view.getTemplateDescriptor("itemLabel");
-                            var itemLabelElem = _this.view.tmpl(itemLabelTemplateDescriptor, {
-                                "options": _this.options,
-                                "index": index ? index + 1 : 1,
-                                "id": _this.id
-                            });
-                            itemLabelElem.prependTo(containerElem);
-                        }
-                        // remember the control
-                        _this.addChild(fieldControl, index);
-                        _this.renderToolbar(containerElem);
-                        _this.renderValidationState();
-                        _this.updatePathAndName();
+                        fieldControl.render(null, function() {
 
-                        // trigger update on the parent array
-                        _this.triggerUpdate();
+                            containerElem.attr("id", fieldControl.getId() + "-item-container");
+                            containerElem.attr("alpaca-id", fieldControl.getId());
+                            containerElem.addClass("alpaca-item-container");
+                            // render item label if needed
+                            if (_this.options && _this.options.itemLabel) {
+                                var itemLabelTemplateDescriptor = _this.view.getTemplateDescriptor("itemLabel");
+                                var itemLabelElem = _this.view.tmpl(itemLabelTemplateDescriptor, {
+                                    "options": _this.options,
+                                    "index": index ? index + 1 : 1,
+                                    "id": _this.id
+                                });
+                                itemLabelElem.prependTo(containerElem);
+                            }
+                            // remember the control
+                            _this.addChild(fieldControl, index);
+                            _this.renderToolbar(containerElem);
+                            _this.renderValidationState();
+                            _this.updatePathAndName();
 
-                        // if not empty, mark the "last" and "first" dom elements in the list
-                        if ($(containerElem).siblings().addBack().length > 0)
+                            // trigger update on the parent array
+                            _this.triggerUpdate();
+
+                            // if not empty, mark the "last" and "first" dom elements in the list
+                            if ($(containerElem).siblings().addBack().length > 0)
+                            {
+                                $(containerElem).parent().removeClass("alpaca-fieldset-items-container-empty");
+
+                                $(containerElem).siblings().addBack().removeClass("alpaca-item-container-first");
+                                $(containerElem).siblings().addBack().removeClass("alpaca-item-container-last");
+                                $(containerElem).siblings().addBack().first().addClass("alpaca-item-container-first");
+                                $(containerElem).siblings().addBack().last().addClass("alpaca-item-container-last");
+                            }
+
+                            // store key on dom element
+                            $(containerElem).attr("data-alpaca-item-container-item-key", index);
+
+                            if (cb)
+                            {
+                                cb();
+                            }
+                        });
+                    },
+                    "postRender": function(control)
+                    {
+                        if (postRenderCallback)
                         {
-                            $(containerElem).parent().removeClass("alpaca-fieldset-items-container-empty");
-
-                            $(containerElem).siblings().addBack().removeClass("alpaca-item-container-first");
-                            $(containerElem).siblings().addBack().removeClass("alpaca-item-container-last");
-                            $(containerElem).siblings().addBack().first().addClass("alpaca-item-container-first");
-                            $(containerElem).siblings().addBack().last().addClass("alpaca-item-container-last");
+                            postRenderCallback(control);
                         }
-
-                        // store key on dom element
-                        $(containerElem).attr("data-alpaca-item-container-item-key", index);
-
                     }
                 });
 

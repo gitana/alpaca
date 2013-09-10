@@ -563,17 +563,6 @@
         },
 
         /**
-         * Logs a message.
-         *
-         * @param {String} msg The message to be logged.
-         */
-        log: function(msg) {
-            if (typeof(console) !== "undefined") {
-                console.log(msg);
-            }
-        },
-
-        /**
          * @private
          * Static counter for generating a unique ID.
          */
@@ -1659,10 +1648,31 @@
                     renderedCallback = field.view.postRender;
                 }
 
+                if (Alpaca.collectTiming)
+                {
+                    var counters = Alpaca.Counters("render");
+                    var t1 = new Date().getTime();
+                }
+
+                var fin = function()
+                {
+                    if (Alpaca.collectTiming)
+                    {
+                        var t2 = new Date().getTime();
+                        counters.increment(field.getFieldType(), (t2-t1));
+                    }
+
+                    renderedCallback(field);
+                };
+
                 if (!Alpaca.isEmpty(callback)) {
-                    callback(field, renderedCallback);
+                    callback(field, function() {
+                        fin();
+                    });
                 } else {
-                    field.render(renderedCallback);
+                    field.render(function() {
+                        fin();
+                    });
                 }
 
                 field.callback = callback;
@@ -1755,7 +1765,7 @@
         {
             var self = this;
 
-            //var t1 = new Date().getTime();
+            // var t1 = new Date().getTime();
 
             var report = {
                 "errors": [],
@@ -1765,8 +1775,8 @@
 
             var finalCallback = function(normalizedViews)
             {
-                //var t2 = new Date().getTime();
-                //console.log("Compilation Exited with " + report.errors.length + " errors in: " + (t2-t1)+ " ms");
+                // var t2 = new Date().getTime();
+                // console.log("Compilation Exited with " + report.errors.length + " errors in: " + (t2-t1)+ " ms");
 
                 if (report.errors.length === 0)
                 {
@@ -1828,13 +1838,21 @@
             {
                 var viewId = view.id;
 
-                // support for jQuery selectors
-                if (template && ((template.indexOf("#") === 0) || (template.indexOf(".") === 0)))
+                var mightBeUrl = (template && template.indexOf("/") > -1);
+                if (mightBeUrl)
                 {
-                    var x = $(template);
 
-                    type = $(x).attr("type");
-                    template = $(x).html();
+                }
+                else
+                {
+                    // support for jQuery selectors
+                    if (template && ((template.indexOf("#") === 0) || (template.indexOf(".") === 0)))
+                    {
+                        var x = $(template);
+
+                        type = $(x).attr("type");
+                        template = $(x).html();
+                    }
                 }
 
                 var type = null;
@@ -2204,18 +2222,18 @@
         Alpaca.log(Alpaca.ERROR, obj);
     };
 
-    Alpaca.log = function(level, obj) {
+    Alpaca.LOG_METHOD_MAP = {
+        0: 'debug',
+        1: 'info',
+        2: 'warn',
+        3: 'error'
+    };
 
-        var methodMap = {
-            0: 'debug',
-            1: 'info',
-            2: 'warn',
-            3: 'error'
-        };
+    Alpaca.log = function(level, obj) {
 
         if (Alpaca.logLevel <= level)
         {
-            var method = methodMap[level];
+            var method = Alpaca.LOG_METHOD_MAP[level];
 
             if (typeof console !== 'undefined' && console[method])
             {
@@ -2483,5 +2501,71 @@
             }
         }
     };
+
+
+    Alpaca.CountersMap = {};
+    Alpaca.Counters = function(name)
+    {
+        if (Alpaca.Counters[name])
+        {
+            return Alpaca.Counters[name];
+        }
+
+        // create new counters
+
+        var types = {};
+        var all = {
+            count: 0,
+            total: 0,
+            avg: 0,
+            touches: 0
+        };
+
+        var counters = {
+
+            increment: function(type, amount)
+            {
+                if (!types[type]) {
+                    types[type] = {
+                        count: 0,
+                        total: 0,
+                        avg: 0,
+                        touches: 0
+                    };
+                }
+
+                types[type].count++;
+                types[type].total += amount;
+                types[type].avg = types[type].total / types[type].count;
+                types[type].touches++;
+
+                all.count++;
+                all.total += amount;
+                all.avg = all.total / all.count;
+                all.touches++;
+            },
+
+            read: function(type) {
+                return types[type];
+            },
+
+            each: function(f) {
+                for (var type in types)
+                {
+                    f(type, types[type]);
+                }
+            },
+
+            all: function() {
+                return all;
+            }
+        };
+
+        Alpaca.Counters[name] = counters;
+
+        return counters;
+    };
+
+    Alpaca.collectTiming = false;
 
 })(jQuery);

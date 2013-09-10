@@ -312,8 +312,9 @@
              * @param {Any} value Child field value
              * @param {String} insertAfterId Location where the child item will be inserted.
              * @param [Boolean] isDynamicSubItem whether this item is being dynamically created (after first render)
+             * @param [Function} postRenderCallback called once the item has been added
              */
-            addItem: function(propertyId, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem) {
+            addItem: function(propertyId, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem, postRenderCallback) {
                 var _this = this;
 
                 var containerElem = _this.renderItemContainer(insertAfterId, this, propertyId);
@@ -331,7 +332,7 @@
                     },
                     "notTopLevel":true,
                     "isDynamicCreation": (isDynamicSubItem || this.isDynamicCreation),
-                    "render" : function(fieldControl) {
+                    "render" : function(fieldControl, cb) {
                         // render
                         fieldControl.parent = _this;
                         // add the property Id
@@ -342,41 +343,55 @@
                         } else {
                             fieldControl.path = _this.path + propertyId;
                         }
-                        fieldControl.render();
-                        containerElem.attr("id", fieldControl.getId() + "-item-container");
-                        containerElem.attr("alpaca-id", fieldControl.getId());
-                        containerElem.addClass("alpaca-fieldset-item-container");
-                        // remember the control
-                        if (Alpaca.isEmpty(insertAfterId)) {
-                            _this.addChild(fieldControl);
-                        } else {
-                            var index = _this.getIndex(insertAfterId);
-                            if (index != -1) {
-                                _this.addChild(fieldControl, index + 1);
-                            } else {
+                        fieldControl.render(null, function() {
+
+                            containerElem.attr("id", fieldControl.getId() + "-item-container");
+                            containerElem.attr("alpaca-id", fieldControl.getId());
+                            containerElem.addClass("alpaca-fieldset-item-container");
+                            // remember the control
+                            if (Alpaca.isEmpty(insertAfterId)) {
                                 _this.addChild(fieldControl);
+                            } else {
+                                var index = _this.getIndex(insertAfterId);
+                                if (index != -1) {
+                                    _this.addChild(fieldControl, index + 1);
+                                } else {
+                                    _this.addChild(fieldControl);
+                                }
                             }
-                        }
-                        if (insertAfterId) {
-                            _this.renderValidationState();
-                        }
+                            if (insertAfterId) {
+                                _this.renderValidationState();
+                            }
 
-                        // if not empty, mark the "last" and "first" dom elements in the list
-                        if ($(containerElem).siblings().addBack().length > 0)
+                            // if not empty, mark the "last" and "first" dom elements in the list
+                            if ($(containerElem).siblings().addBack().length > 0)
+                            {
+                                $(containerElem).parent().removeClass("alpaca-fieldset-items-container-empty");
+
+                                $(containerElem).siblings().addBack().removeClass("alpaca-item-container-first");
+                                $(containerElem).siblings().addBack().removeClass("alpaca-item-container-last");
+                                $(containerElem).siblings().addBack().first().addClass("alpaca-item-container-first");
+                                $(containerElem).siblings().addBack().last().addClass("alpaca-item-container-last");
+                            }
+
+                            // store key on dom element
+                            $(containerElem).attr("data-alpaca-item-container-item-key", propertyId);
+
+                            // trigger update on the parent array
+                            _this.triggerUpdate();
+
+                            if (cb)
+                            {
+                                cb();
+                            }
+
+                        });
+                    },
+                    "postRender": function(control) {
+                        if (postRenderCallback)
                         {
-                            $(containerElem).parent().removeClass("alpaca-fieldset-items-container-empty");
-
-                            $(containerElem).siblings().addBack().removeClass("alpaca-item-container-first");
-                            $(containerElem).siblings().addBack().removeClass("alpaca-item-container-last");
-                            $(containerElem).siblings().addBack().first().addClass("alpaca-item-container-first");
-                            $(containerElem).siblings().addBack().last().addClass("alpaca-item-container-last");
+                            postRenderCallback(control);
                         }
-
-                        // store key on dom element
-                        $(containerElem).attr("data-alpaca-item-container-item-key", propertyId);
-
-                        // trigger update on the parent array
-                        _this.triggerUpdate();
                     }
                 });
             },
@@ -469,17 +484,19 @@
                             Alpaca.logError("Unable to resolve schema for property: " + propertyId);
                         }
 
-                        _this.addItem(propertyId, schema, options, itemData);
+                        _this.addItem(propertyId, schema, options, itemData, null, false, function(addedItemControl) {
 
-                        // remove from extraDataProperties helper
-                        delete extraDataProperties[propertyId];
+                            // remove from extraDataProperties helper
+                            delete extraDataProperties[propertyId];
 
-                        complete++;
-                        if (complete === total)
-                        {
-                            // move ahead
-                            cf();
-                        }
+                            complete++;
+                            if (complete === total)
+                            {
+                                // move ahead
+                                cf();
+                            }
+
+                        });
                     });
                 }
             },

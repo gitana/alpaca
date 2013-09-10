@@ -18,3 +18,27 @@
 }
 
 /* END styles for Editor Field */
+
+
+/* BEGIN styles of type ahead */
+.twitter-typeahead .tt-dropdown-menu
+{
+    background-color: white;
+    border: 1px #ccc solid;
+    padding: 10px;
+    padding-top: 0px;
+    color: #999;
+    width: 100%;
+}
+
+.twitter-typeahead .tt-dropdown-menu P
+{
+    font-size: 1em;
+}
+
+.tt-suggestion.tt-is-under-cursor
+{
+    background-color: #ccc;
+    color: #333;
+}
+/* END styles for type ahead */

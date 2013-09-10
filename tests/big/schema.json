@@ -1,0 +1,480 @@
+{
+    "title": "PlayCLOO Game",
+    "description": "",
+    "type": "object",
+    "stats": {
+        "a:has_form": 1,
+        "a:updated": 8
+    },
+    "properties": {
+        "kind": {
+            "type": "string",
+            "enum": [
+                "general",
+                "places",
+                "story"
+            ],
+            "required": true,
+            "default": "story"
+        },
+        "test": {
+            "type": "boolean"
+        },
+        "schema": {
+            "type": "number",
+            "default": 1.2,
+            "required": true,
+            "readonly": true
+        },
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "description": {
+            "type": "string"
+        },
+        "budget": {
+            "type": "string"
+        },
+        "distance": {
+            "type": "object",
+            "properties": {
+                "value": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string",
+                    "enum": [
+                        "ft",
+                        "mi",
+                        "m"
+                    ],
+                    "default": "ft",
+                    "required": true
+                }
+            }
+        },
+        "startTime": {
+            "type": "string"
+        },
+        "endTime": {
+            "type": "string"
+        },
+        "fee": {
+            "type": "string"
+        },
+        "prizes": {
+            "type": "string"
+        },
+        "pts": {
+            "type": "number"
+        },
+        "rules": {
+            "type": "string"
+        },
+        "time2play": {
+            "type": "string"
+        },
+        "states": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "_key": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "act",
+                            "award",
+                            "lqa",
+                            "menu",
+                            "survey",
+                            "victory"
+                        ],
+                        "default": "menu",
+                        "required": true
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "maximumAllowedTraversals": {
+                        "type": "number",
+                        "default": 1
+                    },
+                    "maximumAllowedAnswerCount": {
+                        "type": "number",
+                        "default": 1
+                    },
+                    "menu": {
+                        "type": "object",
+                        "properties": {
+                            "includeList": {
+                                "type": "boolean"
+                            },
+                            "list": {
+                                "type": "object",
+                                "properties": {
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "state": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "dependencies": "includeList"
+                            },
+                            "includeMap": {
+                                "type": "boolean"
+                            },
+                            "map": {
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "object",
+                                        "properties": {
+                                            "src": {
+                                                "type": "string"
+                                            },
+                                            "width": {
+                                                "type": "string"
+                                            },
+                                            "height": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "areas": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "shape": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "rect",
+                                                        "circle"
+                                                    ]
+                                                },
+                                                "coords": {
+                                                    "type": "string"
+                                                },
+                                                "state": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "dependencies": "includeMap"
+                            },
+                            "includeGoogle": {
+                                "type": "boolean"
+                            },
+                            "google": {
+                                "type": "object",
+                                "properties": {
+                                    "map": {
+                                        "type": "object",
+                                        "properties": {
+                                            "position": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "lat": {
+                                                        "type": "number"
+                                                    },
+                                                    "long": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            },
+                                            "zoom": {
+                                                "type": "number"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "ROADMAP"
+                                                ],
+                                                "default": "ROADMAP"
+                                            }
+                                        }
+                                    },
+                                    "markers": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "position": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "lat": {
+                                                            "type": "number"
+                                                        },
+                                                        "long": {
+                                                            "type": "number"
+                                                        }
+                                                    }
+                                                },
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "state": {
+                                                    "type": "string"
+                                                },
+                                                "info": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "content": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "iconUrl": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "dependencies": "includeGoogle"
+                            }
+                        },
+                        "dependencies": "type"
+                    },
+                    "lqa": {
+                        "type": "object",
+                        "properties": {
+                            "leadup": {
+                                "type": "string"
+                            },
+                            "question": {
+                                "type": "string"
+                            },
+                            "answer": {
+                                "type": "string"
+                            },
+                            "pts": {
+                                "type": "number"
+                            },
+                            "pts_wrong": {
+                                "type": "number"
+                            },
+                            "location": {
+                                "type": "object",
+                                "properties": {
+                                    "lat": {
+                                        "type": "number"
+                                    },
+                                    "long": {
+                                        "type": "number"
+                                    },
+                                    "radius": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "number"
+                                            },
+                                            "unit": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "ft",
+                                                    "mi",
+                                                    "m"
+                                                ],
+                                                "default": "ft",
+                                                "required": true
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "cloos": {
+                                "type": "array",
+                                "title": "CLOOs",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "_key": {
+                                            "type": "string",
+                                            "title": "CLOO ID"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "cloo"
+                                            ],
+                                            "default": "cloo",
+                                            "required": true
+                                        },
+                                        "clue": {
+                                            "type": "string"
+                                        },
+                                        "pts": {
+                                            "type": "number"
+                                        }
+                                    }
+                                }
+                            },
+                            "answerRequired": {
+                                "type": "boolean",
+                                "default": true
+                            },
+                            "answerValidated": {
+                                "type": "boolean",
+                                "default": true
+                            },
+                            "answerAllowWrong": {
+                                "type": "boolean",
+                                "default": false
+                            }
+                        },
+                        "dependencies": "type"
+                    },
+                    "survey": {
+                        "type": "object",
+                        "properties": {
+                            "leadup": {
+                                "type": "string"
+                            },
+                            "form": {
+                                "type": "object",
+                                "properties": {
+                                    "schema": {
+                                        "type": "string",
+                                        "default": "{\r\n}"
+                                    },
+                                    "options": {
+                                        "type": "string",
+                                        "default": "{\r\n}"
+                                    }
+                                }
+                            },
+                            "pts": {
+                                "type": "number"
+                            },
+                            "geolocation": {
+                                "type": "object",
+                                "properties": {
+                                    "lat": {
+                                        "type": "number"
+                                    },
+                                    "long": {
+                                        "type": "number"
+                                    },
+                                    "radius": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "number"
+                                            },
+                                            "unit": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "ft",
+                                                    "mi",
+                                                    "m"
+                                                ],
+                                                "default": "ft",
+                                                "required": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "dependencies": "type"
+                    },
+                    "victory": {
+                        "type": "object",
+                        "properties": {
+                            "header": {
+                                "type": "string"
+                            },
+                            "body": {
+                                "type": "string"
+                            }
+                        },
+                        "dependencies": "type"
+                    },
+                    "award": {
+                        "type": "object",
+                        "properties": {
+                            "header": {
+                                "type": "string"
+                            },
+                            "body": {
+                                "type": "string"
+                            }
+                        },
+                        "dependencies": "type"
+                    }
+                }
+            }
+        },
+        "flow": {
+            "id": "#flow",
+            "type": "array",
+            "items": {
+                "minItems": 0,
+                "maxItems": 1,
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "random",
+                            "serial",
+                            "transition",
+                            "empty",
+                            "select"
+                        ],
+                        "default": "serial",
+                        "required": true
+                    },
+                    "states": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "_key": {
+                                    "type": "string"
+                                },
+                                "refid": {
+                                    "type": "string"
+                                },
+                                "flow": {
+                                    "$ref": "#flow"
+                                }
+                            }
+                        }
+                    },
+                    "numberOfDraws": {
+                        "type": "number",
+                        "default": -1,
+                        "dependencies": {
+                            "type": "random"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "_doc": "2487708b2d84443a6e0f",
+    "_parent": "n:node"
+}

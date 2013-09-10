@@ -309,6 +309,7 @@
             }
 
             this.setup();
+
             this._render(callback);
         },
 
@@ -396,6 +397,11 @@
             }
 
             // render field template
+            if (Alpaca.collectTiming)
+            {
+                var t1 = new Date().getTime();
+            }
+
             var renderedDomElement = _this.view.tmpl(templateDescriptor, {
                 "id": this.getId(),
                 "options": this.options,
@@ -404,6 +410,14 @@
                 "view": this.view,
                 "path": this.path
             }, {});
+
+            if (Alpaca.collectTiming)
+            {
+                var t2 = new Date().getTime();
+
+                var counters = Alpaca.Counters("tmpl");
+                counters.increment(this.type, (t2-t1));
+            }
 
             // TODO: Alpaca currently assumes that everything under parentEl is the control itself
             // the workaround for TABLE view is unaccommodating toward this
@@ -969,6 +983,7 @@
             if (!this.initializing && this.options.validate) {
                 status = this.handleValidate();
             }
+
             return status;
         },
 

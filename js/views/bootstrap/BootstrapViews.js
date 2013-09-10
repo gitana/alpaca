@@ -145,8 +145,12 @@
         "buttonBeautifier"  : function(button, iconClass, withText) {
             var buttonText = button.html();
             button.attr("title", buttonText);
-            var addedButtonText = withText ? buttonText : "";
-            button.empty().append('<b class="alpaca-fieldset-legend-button ' + iconClass + '" style="font-size: 16px"></b><span style="padding-left: 6px">' + addedButtonText + '</span>');
+            button.empty().append('<b class="alpaca-fieldset-legend-button ' + iconClass + '"></b>');
+            var addedButtonText = withText ? buttonText : null;
+            if (addedButtonText)
+            {
+                button.append('<span class="alpaca-fieldset-legend-button-text">' + addedButtonText + '</span>');
+            }
         }
 
     };
@@ -157,7 +161,7 @@
         "controlFieldMessage": '<div><span class="glyphicon glyphicon-exclamation-sign"></span><span class="alpaca-controlfield-message-text help-inline help-block">${message}</span></div>',
 
         "arrayToolbar": '<span class="alpaca-fieldset-array-toolbar"><button class="btn btn-default alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">${addItemLabel}</button></span>',
-        "arrayItemToolbar": '<div class="btn-toolbar alpaca-fieldset-array-item-toolbar"><div class="btn-group">{{each(k,v) buttons}}<button class="btn btn-default btn-small alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-${v.feature}">${v.label}</button>{{/each}}</div></div>',
+        "arrayItemToolbar": '<div class="btn-toolbar alpaca-fieldset-array-item-toolbar"><div class="btn-group">{{each(k,v) buttons}}<button class="btn btn-default btn-xs alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-${v.feature}">${v.label}</button>{{/each}}</div></div>',
 
         "controlFieldCheckbox": '<span class="checkbox">{{if options.rightLabel}}<label for="${id}">{{/if}}<input type="checkbox" id="${id}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>{{if options.rightLabel}}${options.rightLabel}</label>{{/if}}</span>',
         "controlFieldRadio": '<div id="${id}" class="alpaca-controlfield-radio">{{if !required}}<label class="alpaca-controlfield-radio-label radio inline"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value=""/>None</label>{{/if}}{{each selectOptions}}<label class="alpaca-controlfield-radio-label radio inline"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value="${value}" {{if value == data}}checked="checked"{{/if}}/>${text}</label>{{/each}}</div>',

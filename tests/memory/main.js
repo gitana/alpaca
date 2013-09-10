@@ -10,7 +10,7 @@ require.config({
             "main": "../lib/jquery-ui-latest.custom.min"
         },
         {
-            "name": "jquery.tmpl",
+            "name": "jquery-tmpl",
             "main": "../lib/jquery.tmpl"
         },
         {
@@ -21,7 +21,7 @@ require.config({
     "shim": {
         "jquery": [],
         "jquery-ui": ["jquery"],
-        "jquery.tmpl": ["jquery"]
+        "jquery-tmpl": ["jquery"]
     }
 });
 

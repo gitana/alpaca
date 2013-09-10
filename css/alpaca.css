@@ -142,6 +142,11 @@ DIV.alpaca-controlfield-text .twitter-typeahead .tt-dropdown-menu P
     color: #333;
 }
 
+.alpaca-fieldset-legend-button-text
+{
+    padding-left: 6px;
+}
+
 /* END styles for Text Field */
 
 /* BEGIN styles for Date Field, Phone Field, Password Field and Email Field */

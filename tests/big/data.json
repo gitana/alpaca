@@ -1,0 +1,181 @@
+{
+    "kind": "test",
+    "test": true,
+    "schema": 1.2,
+    "title": "Test",
+    "description": "<p>&nbsp;</p>",
+    "budget": "$11.00",
+    "distance": {
+        "value": -1,
+        "unit": "ft"
+    },
+    "startTime": "",
+    "endTime": "",
+    "fee": "",
+    "prizes": "<p>&nbsp;</p>",
+    "pts": -1,
+    "rules": "<p>&nbsp;</p>",
+    "time2play": "",
+    "states": {
+        "CP1": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Festival Plaza",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP2": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Home State Bank",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP3": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Jax",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP4": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "John Breaux Park",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP5": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "King Soopers",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP6": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "The Little Clinic",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP7": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "The Library",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP8": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "The Rec. Center",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP9": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Lafayette Flea Market",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP10": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Quiznos/Menchies",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP11": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Lafayette Animal Companion",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP12": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Lafayette City Hall",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP13": {
+            "type": "act",
+            "category": "polly",
+            "title": "X1",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP14": {
+            "type": "act",
+            "category": "polly",
+            "title": "X2",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP15": {
+            "type": "act",
+            "category": "polly",
+            "title": "X3",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP16": {
+            "type": "act",
+            "category": "polly",
+            "title": "X4",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP17": {
+            "type": "act",
+            "category": "polly",
+            "title": "X5",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP18": {
+            "type": "act",
+            "category": "polly",
+            "title": "X6",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP19": {
+            "type": "act",
+            "category": "king",
+            "title": "X7",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP20": {
+            "type": "act",
+            "category": "polly",
+            "title": "X8",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        }
+    }
+}

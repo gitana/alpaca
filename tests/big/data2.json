@@ -1,0 +1,3420 @@
+{
+    "kind": "story",
+    "test": true,
+    "schema": 1.2,
+    "title": "Lafayette Quest",
+    "description": "<p>&nbsp;</p>",
+    "budget": "$23.50",
+    "distance": {
+        "value": -1,
+        "unit": "ft"
+    },
+    "startTime": "",
+    "endTime": "",
+    "fee": "",
+    "prizes": "<p>&nbsp;</p>",
+    "pts": -1,
+    "rules": "<p>&nbsp;</p>",
+    "time2play": "",
+    "states": {
+        "Menu1": {
+            "type": "menu",
+            "title": "Highest level",
+            "description": "<p>&nbsp;</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "menu": {
+                "includeList": true,
+                "list": {
+                    "items": [
+                        {
+                            "title": "Festival Plaza",
+                            "state": "CP1"
+                        },
+                        {
+                            "title": "Home State Bank",
+                            "state": "CP2"
+                        },
+                        {
+                            "title": "Jax",
+                            "state": "CP3"
+                        },
+                        {
+                            "title": "John Breaux Park",
+                            "state": "CP4"
+                        },
+                        {
+                            "title": "King Soopers",
+                            "state": "CP5"
+                        },
+                        {
+                            "title": "The Little Clinic",
+                            "state": "CP6"
+                        },
+                        {
+                            "title": "The Library",
+                            "state": "CP7"
+                        },
+                        {
+                            "title": "Rec. Center",
+                            "state": "CP8"
+                        },
+                        {
+                            "title": "Lafayette Flea Market",
+                            "state": "CP9"
+                        },
+                        {
+                            "title": "Quiznos/Menchies",
+                            "state": "CP10"
+                        },
+                        {
+                            "title": "Lafayette Animal Companion",
+                            "state": "CP11"
+                        },
+                        {
+                            "title": "Lafayette City Hall",
+                            "state": "CP12"
+                        },
+                        {
+                            "title": "X1",
+                            "state": "X1"
+                        },
+                        {
+                            "title": "X2",
+                            "state": "X2"
+                        },
+                        {
+                            "title": "X3",
+                            "state": "X3"
+                        },
+                        {
+                            "title": "X4",
+                            "state": "X4"
+                        },
+                        {
+                            "title": "X5",
+                            "state": "X5"
+                        },
+                        {
+                            "title": "X6",
+                            "state": "X6"
+                        },
+                        {
+                            "title": "X7",
+                            "state": "X7"
+                        },
+                        {
+                            "title": "X8",
+                            "state": "X8"
+                        },
+                        {
+                            "title": "X9",
+                            "state": "X9"
+                        },
+                        {
+                            "title": "X10",
+                            "state": "X10"
+                        },
+                        {
+                            "title": "X11",
+                            "state": "X11"
+                        },
+                        {
+                            "title": "X12",
+                            "state": "X12"
+                        },
+                        {
+                            "title": "X13",
+                            "state": "X13"
+                        },
+                        {
+                            "title": "X14",
+                            "state": "X14"
+                        },
+                        {
+                            "title": "X15",
+                            "state": "X15"
+                        },
+                        {
+                            "title": "X16",
+                            "state": "X16"
+                        },
+                        {
+                            "title": "X17",
+                            "state": "X17"
+                        },
+                        {
+                            "title": "X18",
+                            "state": "X18"
+                        },
+                        {
+                            "title": "X19",
+                            "state": "X19"
+                        },
+                        {
+                            "title": "X20",
+                            "state": "X20"
+                        },
+                        {
+                            "title": "X21",
+                            "state": "X21"
+                        },
+                        {
+                            "title": "X22",
+                            "state": "X22"
+                        },
+                        {
+                            "title": "X23",
+                            "state": "X23"
+                        },
+                        {
+                            "title": "X24",
+                            "state": "X24"
+                        },
+                        {
+                            "title": "X25",
+                            "state": "X25"
+                        },
+                        {
+                            "title": "X26",
+                            "state": "X26"
+                        },
+                        {
+                            "title": "X27",
+                            "state": "X27"
+                        },
+                        {
+                            "title": "X28",
+                            "state": "X28"
+                        },
+                        {
+                            "title": "X29",
+                            "state": "X29"
+                        },
+                        {
+                            "title": "X30",
+                            "state": "X30"
+                        },
+                        {
+                            "title": "X31",
+                            "state": "X31"
+                        },
+                        {
+                            "title": "X32",
+                            "state": "X32"
+                        },
+                        {
+                            "title": "X33",
+                            "state": "X33"
+                        },
+                        {
+                            "title": "X34",
+                            "state": "X34"
+                        },
+                        {
+                            "title": "X35",
+                            "state": "X35"
+                        },
+                        {
+                            "title": "X36",
+                            "state": "X36"
+                        },
+                        {
+                            "title": "X37",
+                            "state": "X37"
+                        },
+                        {
+                            "title": "X38",
+                            "state": "X38"
+                        },
+                        {
+                            "title": "X39",
+                            "state": "X39"
+                        },
+                        {
+                            "title": "X40",
+                            "state": "X40"
+                        },
+                        {
+                            "title": "X41",
+                            "state": "X41"
+                        },
+                        {
+                            "title": "X42",
+                            "state": "X42"
+                        },
+                        {
+                            "title": "X43",
+                            "state": "X43"
+                        },
+                        {
+                            "title": "X44",
+                            "state": "X44"
+                        },
+                        {
+                            "title": "X45",
+                            "state": "X45"
+                        },
+                        {
+                            "title": "X46",
+                            "state": "X46"
+                        },
+                        {
+                            "title": "X47",
+                            "state": "X47"
+                        },
+                        {
+                            "title": "X48",
+                            "state": "X48"
+                        },
+                        {
+                            "title": "X49",
+                            "state": "X49"
+                        },
+                        {
+                            "title": "X50",
+                            "state": "X50"
+                        },
+                        {
+                            "title": "X51",
+                            "state": "X51"
+                        },
+                        {
+                            "title": "X52",
+                            "state": "X52"
+                        },
+                        {
+                            "title": "X53",
+                            "state": "X53"
+                        },
+                        {
+                            "title": "X54",
+                            "state": "X54"
+                        },
+                        {
+                            "title": "X55",
+                            "state": "X55"
+                        }
+                    ]
+                },
+                "includeMap": false,
+                "includeGoogle": false
+            }
+        },
+        "CP1": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Festival Plaza",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP2": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Home State Bank",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP3": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Jax",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP4": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "John Breaux Park",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP5": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "King Soopers",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP6": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "The Little Clinic",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP7": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "The Library",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP8": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "The Rec. Center",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP9": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Lafayette Flea Market",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP10": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Quiznos/Menchies",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP11": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Lafayette Animal Companion",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP12": {
+            "type": "act",
+            "category": "sponsor",
+            "title": "Lafayette City Hall",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X1": {
+            "type": "act",
+            "category": "polly",
+            "title": "X1",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X2": {
+            "type": "act",
+            "category": "polly",
+            "title": "X2",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X3": {
+            "type": "act",
+            "category": "polly",
+            "title": "X3",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X4": {
+            "type": "act",
+            "category": "polly",
+            "title": "X4",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X5": {
+            "type": "act",
+            "category": "polly",
+            "title": "X5",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X6": {
+            "type": "act",
+            "category": "polly",
+            "title": "X6",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X7": {
+            "type": "act",
+            "category": "king",
+            "title": "X7",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X8": {
+            "type": "act",
+            "category": "polly",
+            "title": "X8",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X9": {
+            "type": "act",
+            "category": "king",
+            "title": "X9",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X10": {
+            "type": "act",
+            "category": "peg",
+            "title": "X10",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X11": {
+            "type": "act",
+            "category": "king",
+            "title": "X11",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X12": {
+            "type": "act",
+            "category": "peg",
+            "title": "X12",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X13": {
+            "type": "act",
+            "category": "king",
+            "title": "X13",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X14": {
+            "type": "act",
+            "category": "ti",
+            "title": "X14",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X15": {
+            "type": "act",
+            "category": "ti",
+            "title": "X15",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X16": {
+            "type": "act",
+            "category": "ti",
+            "title": "X16",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X17": {
+            "type": "act",
+            "category": "peg",
+            "title": "X17",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X18": {
+            "type": "act",
+            "category": "ti",
+            "title": "X18",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X19": {
+            "type": "act",
+            "category": "polly",
+            "title": "X19",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X20": {
+            "type": "act",
+            "category": "king",
+            "title": "X20",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X21": {
+            "type": "act",
+            "category": "ti",
+            "title": "X21",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X22": {
+            "type": "act",
+            "category": "ti",
+            "title": "X22",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X23": {
+            "type": "act",
+            "category": "ti",
+            "title": "X23",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X24": {
+            "type": "act",
+            "category": "peg",
+            "title": "X24",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X25": {
+            "type": "act",
+            "category": "ti",
+            "title": "X25",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X26": {
+            "type": "act",
+            "category": "peg",
+            "title": "X26",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X27": {
+            "type": "act",
+            "category": "king",
+            "title": "X27",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X28": {
+            "type": "act",
+            "category": "ti",
+            "title": "X28",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X29": {
+            "type": "act",
+            "category": "ti",
+            "title": "X29",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X30": {
+            "type": "act",
+            "category": "peg",
+            "title": "X30",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X31": {
+            "type": "act",
+            "category": "peg",
+            "title": "X31",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X32": {
+            "type": "act",
+            "category": "peg",
+            "title": "X32",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X33": {
+            "type": "act",
+            "category": "polly",
+            "title": "X33",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X34": {
+            "type": "act",
+            "category": "king",
+            "title": "X34",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X35": {
+            "type": "act",
+            "category": "peg",
+            "title": "X35",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X36": {
+            "type": "act",
+            "category": "polly",
+            "title": "X36",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X37": {
+            "type": "act",
+            "category": "ti",
+            "title": "X37",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X38": {
+            "type": "act",
+            "category": "peg",
+            "title": "X38",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X39": {
+            "type": "act",
+            "category": "polly",
+            "title": "X39",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X40": {
+            "type": "act",
+            "category": "peg",
+            "title": "X40",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X41": {
+            "type": "act",
+            "category": "ti",
+            "title": "X41",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X42": {
+            "type": "act",
+            "category": "ti",
+            "title": "X42",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X43": {
+            "type": "act",
+            "category": "king",
+            "title": "X43",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X44": {
+            "type": "act",
+            "category": "peg",
+            "title": "X44",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X45": {
+            "type": "act",
+            "category": "king",
+            "title": "X45",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X46": {
+            "type": "act",
+            "category": "ti",
+            "title": "X46",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X47": {
+            "type": "act",
+            "category": "peg",
+            "title": "X47",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X48": {
+            "type": "act",
+            "category": "ti",
+            "title": "X48",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X49": {
+            "type": "act",
+            "category": "king",
+            "title": "X49",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X50": {
+            "type": "act",
+            "category": "polly",
+            "title": "X50",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X51": {
+            "type": "act",
+            "category": "peg",
+            "title": "X51",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X52": {
+            "type": "act",
+            "category": "ti",
+            "title": "X52",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X53": {
+            "type": "act",
+            "category": "polly",
+            "title": "X53",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X54": {
+            "type": "act",
+            "category": "king",
+            "title": "X54",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "X55": {
+            "type": "act",
+            "category": "ti",
+            "title": "X55",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1
+        },
+        "CP1_A": {
+            "type": "lqa",
+            "title": "Festival Plaza",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.992222",
+                    "long": "-105.090556",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP2_A": {
+            "type": "lqa",
+            "title": "Home State Bank",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.0975",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP3_A": {
+            "type": "lqa",
+            "title": "Jax",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.989722",
+                    "long": "-105.097778",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP4_A": {
+            "type": "lqa",
+            "title": "John Breaux Park",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.991389",
+                    "long": "-105.098611",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP5_A": {
+            "type": "lqa",
+            "title": "King Soopers",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "40.001667",
+                    "long": "-105.102222",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP6_A": {
+            "type": "lqa",
+            "title": "The Little Clinic",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "40.001667",
+                    "long": "-105.102222",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP7_A": {
+            "type": "lqa",
+            "title": "The Library",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "40.000556",
+                    "long": "-105.099722",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP8_A": {
+            "type": "lqa",
+            "title": "The Rec. Center",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "40.001111",
+                    "long": "-105.090556",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP9_A": {
+            "type": "lqa",
+            "title": "Lafayette Flea Market",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.991111",
+                    "long": "-105.089722",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP10_A": {
+            "type": "lqa",
+            "title": "Quiznos/Menchies",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.095556",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP11_A": {
+            "type": "lqa",
+            "title": "Lafayette Animal Companion",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.988056",
+                    "long": "-105.095556",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "CP12_A": {
+            "type": "lqa",
+            "title": "Lafayette City Hall",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X1_A": {
+            "type": "lqa",
+            "title": "X1",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X2_A": {
+            "type": "lqa",
+            "title": "X2",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X3_A": {
+            "type": "lqa",
+            "title": "X3",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X4_A": {
+            "type": "lqa",
+            "title": "X4",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X5_A": {
+            "type": "lqa",
+            "title": "X5",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X6_A": {
+            "type": "lqa",
+            "title": "X6",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X7_A": {
+            "type": "lqa",
+            "title": "X7",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X8_A": {
+            "type": "lqa",
+            "title": "X8",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X9_A": {
+            "type": "lqa",
+            "title": "X9",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X10_A": {
+            "type": "lqa",
+            "title": "X10",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X11_A": {
+            "type": "lqa",
+            "title": "X11",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X12_A": {
+            "type": "lqa",
+            "title": "X12",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X13_A": {
+            "type": "lqa",
+            "title": "X13",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X14_A": {
+            "type": "lqa",
+            "title": "X14",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X15_A": {
+            "type": "lqa",
+            "title": "X15",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X16_A": {
+            "type": "lqa",
+            "title": "X16",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X17_A": {
+            "type": "lqa",
+            "title": "X17",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X18_A": {
+            "type": "lqa",
+            "title": "X18",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X19_A": {
+            "type": "lqa",
+            "title": "X19",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X20_A": {
+            "type": "lqa",
+            "title": "X20",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X21_A": {
+            "type": "lqa",
+            "title": "X21",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X22_A": {
+            "type": "lqa",
+            "title": "X22",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X23_A": {
+            "type": "lqa",
+            "title": "X23",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X24_A": {
+            "type": "lqa",
+            "title": "X24",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X25_A": {
+            "type": "lqa",
+            "title": "X25",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X26_A": {
+            "type": "lqa",
+            "title": "X26",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X27_A": {
+            "type": "lqa",
+            "title": "X27",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X28_A": {
+            "type": "lqa",
+            "title": "X28",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X29_A": {
+            "type": "lqa",
+            "title": "X29",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X30_A": {
+            "type": "lqa",
+            "title": "X30",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X31_A": {
+            "type": "lqa",
+            "title": "X31",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X32_A": {
+            "type": "lqa",
+            "title": "X32",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X33_A": {
+            "type": "lqa",
+            "title": "X33",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X34_A": {
+            "type": "lqa",
+            "title": "X34",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X35_A": {
+            "type": "lqa",
+            "title": "X35",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X36_A": {
+            "type": "lqa",
+            "title": "X36",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X37_A": {
+            "type": "lqa",
+            "title": "X37",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X38_A": {
+            "type": "lqa",
+            "title": "X38",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X39_A": {
+            "type": "lqa",
+            "title": "X39",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X40_A": {
+            "type": "lqa",
+            "title": "X40",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X41_A": {
+            "type": "lqa",
+            "title": "X41",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X42_A": {
+            "type": "lqa",
+            "title": "X42",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X43_A": {
+            "type": "lqa",
+            "title": "X43",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X44_A": {
+            "type": "lqa",
+            "title": "X44",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X45_A": {
+            "type": "lqa",
+            "title": "X45",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X46_A": {
+            "type": "lqa",
+            "title": "X46",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X47_A": {
+            "type": "lqa",
+            "title": "X47",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X48_A": {
+            "type": "lqa",
+            "title": "X48",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X49_A": {
+            "type": "lqa",
+            "title": "X49",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X50_A": {
+            "type": "lqa",
+            "title": "X50",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X51_A": {
+            "type": "lqa",
+            "title": "X51",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X52_A": {
+            "type": "lqa",
+            "title": "X52",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X53_A": {
+            "type": "lqa",
+            "title": "X53",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X54_A": {
+            "type": "lqa",
+            "title": "X54",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "X55_A": {
+            "type": "lqa",
+            "title": "X55",
+            "description": "<p>Debbie to provide description</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "lqa": {
+                "leadup": "<p>This is the lead up!</p>",
+                "question": "<p>What is the first letter of our City</p>",
+                "answer": "L",
+                "pts": 2,
+                "pts_wrong": 1,
+                "location": {
+                    "lat": "39.9875",
+                    "long": "-105.09",
+                    "radius": {
+                        "value": "300",
+                        "unit": "ft"
+                    }
+                },
+                "answerRequired": true,
+                "answerValidated": true,
+                "answerAllowWrong": false
+            }
+        },
+        "V1": {
+            "type": "victory",
+            "title": "Victory!",
+            "description": "<p>Your team completed the Lafayette Quest!</p>",
+            "maximumAllowedTraversals": 1,
+            "maximumAllowedAnswerCount": 1,
+            "victory": {
+                "header": "Victory!, your team completed the Lafayette Quest!",
+                "body": "<p>You have help raise awareness for Colorado's Childhood Obesity, THANK YOU!</p>"
+            }
+        }
+    },
+    "flow": [
+        {
+            "type": "serial",
+            "states": {
+                "Menu1": {
+                    "refid": "Menu1",
+                    "flow": [
+                        {
+                            "type": "select",
+                            "states": {
+                                "CP1": {
+                                    "refid": "CP1",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP1_A": {
+                                                    "refid": "CP1_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP2": {
+                                    "refid": "CP2",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP2_A": {
+                                                    "refid": "CP2_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP3": {
+                                    "refid": "CP3",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP3_A": {
+                                                    "refid": "CP3_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP4": {
+                                    "refid": "CP4",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP4_A": {
+                                                    "refid": "CP4_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP5": {
+                                    "refid": "CP5",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP5_A": {
+                                                    "refid": "CP5_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP6": {
+                                    "refid": "CP6",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP6_A": {
+                                                    "refid": "CP6_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP7": {
+                                    "refid": "CP7",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP7_A": {
+                                                    "refid": "CP7_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP8": {
+                                    "refid": "CP8",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP8_A": {
+                                                    "refid": "CP8_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP9": {
+                                    "refid": "CP9",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP9_A": {
+                                                    "refid": "CP9_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP10": {
+                                    "refid": "CP10",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP10_A": {
+                                                    "refid": "CP10_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP11": {
+                                    "refid": "CP11",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP11_A": {
+                                                    "refid": "CP11_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "CP12": {
+                                    "refid": "CP12",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "CP12_A": {
+                                                    "refid": "CP12_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X1": {
+                                    "refid": "X1",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X1_A": {
+                                                    "refid": "X1_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X2": {
+                                    "refid": "X2",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X2_A": {
+                                                    "refid": "X2_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X3": {
+                                    "refid": "X3",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X3_A": {
+                                                    "refid": "X3_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X4": {
+                                    "refid": "X4",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X4_A": {
+                                                    "refid": "X4_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X5": {
+                                    "refid": "X5",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X5_A": {
+                                                    "refid": "X5_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X6": {
+                                    "refid": "X6",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X6_A": {
+                                                    "refid": "X6_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X7": {
+                                    "refid": "X7",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X7_A": {
+                                                    "refid": "X7_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X8": {
+                                    "refid": "X8",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X8_A": {
+                                                    "refid": "X8_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X9": {
+                                    "refid": "X9",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X9_A": {
+                                                    "refid": "X9_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X10": {
+                                    "refid": "X10",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X10_A": {
+                                                    "refid": "X10_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X11": {
+                                    "refid": "X11",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X11_A": {
+                                                    "refid": "X11_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X12": {
+                                    "refid": "X12",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X12_A": {
+                                                    "refid": "X12_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X13": {
+                                    "refid": "X13",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X13_A": {
+                                                    "refid": "X13_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X14": {
+                                    "refid": "X14",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X14_A": {
+                                                    "refid": "X14_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X15": {
+                                    "refid": "X15",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X15_A": {
+                                                    "refid": "X15_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X16": {
+                                    "refid": "X16",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X16_A": {
+                                                    "refid": "X16_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X17": {
+                                    "refid": "X17",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X17_A": {
+                                                    "refid": "X17_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X18": {
+                                    "refid": "X18",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X18_A": {
+                                                    "refid": "X18_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X19": {
+                                    "refid": "X19",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X19_A": {
+                                                    "refid": "X19_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X20": {
+                                    "refid": "X20",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X20_A": {
+                                                    "refid": "X20_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X21": {
+                                    "refid": "X21",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X21_A": {
+                                                    "refid": "X21_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X22": {
+                                    "refid": "X22",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X22_A": {
+                                                    "refid": "X22_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X23": {
+                                    "refid": "X23",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X23_A": {
+                                                    "refid": "X23_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X24": {
+                                    "refid": "X24",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X24_A": {
+                                                    "refid": "X24_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X25": {
+                                    "refid": "X25",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X25_A": {
+                                                    "refid": "X25_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X26": {
+                                    "refid": "X26",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X26_A": {
+                                                    "refid": "X26_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X27": {
+                                    "refid": "X27",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X27_A": {
+                                                    "refid": "X27_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X28": {
+                                    "refid": "X28",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X28_A": {
+                                                    "refid": "X28_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X29": {
+                                    "refid": "X29",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X29_A": {
+                                                    "refid": "X29_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X30": {
+                                    "refid": "X30",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X30_A": {
+                                                    "refid": "X30_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X31": {
+                                    "refid": "X31",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X31_A": {
+                                                    "refid": "X31_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X32": {
+                                    "refid": "X32",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X32_A": {
+                                                    "refid": "X32_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X33": {
+                                    "refid": "X33",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X33_A": {
+                                                    "refid": "X33_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X34": {
+                                    "refid": "X34",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X34_A": {
+                                                    "refid": "X34_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X35": {
+                                    "refid": "X35",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X35_A": {
+                                                    "refid": "X35_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X36": {
+                                    "refid": "X36",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X36_A": {
+                                                    "refid": "X36_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X37": {
+                                    "refid": "X37",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X37_A": {
+                                                    "refid": "X37_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X38": {
+                                    "refid": "X38",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X38_A": {
+                                                    "refid": "X38_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X39": {
+                                    "refid": "X39",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X39_A": {
+                                                    "refid": "X39_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X40": {
+                                    "refid": "X40",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X40_A": {
+                                                    "refid": "X40_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X41": {
+                                    "refid": "X41",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X41_A": {
+                                                    "refid": "X41_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X42": {
+                                    "refid": "X42",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X42_A": {
+                                                    "refid": "X42_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X43": {
+                                    "refid": "X43",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X43_A": {
+                                                    "refid": "X43_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X44": {
+                                    "refid": "X44",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X44_A": {
+                                                    "refid": "X44_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X45": {
+                                    "refid": "X45",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X45_A": {
+                                                    "refid": "X45_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X46": {
+                                    "refid": "X46",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X46_A": {
+                                                    "refid": "X46_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X47": {
+                                    "refid": "X47",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X47_A": {
+                                                    "refid": "X47_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X48": {
+                                    "refid": "X48",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X48_A": {
+                                                    "refid": "X48_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X49": {
+                                    "refid": "X49",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X49_A": {
+                                                    "refid": "X49_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X50": {
+                                    "refid": "X50",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X50_A": {
+                                                    "refid": "X50_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X51": {
+                                    "refid": "X51",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X51_A": {
+                                                    "refid": "X51_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X52": {
+                                    "refid": "X52",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X52_A": {
+                                                    "refid": "X52_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X53": {
+                                    "refid": "X53",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X53_A": {
+                                                    "refid": "X53_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X54": {
+                                    "refid": "X54",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X54_A": {
+                                                    "refid": "X54_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "X55": {
+                                    "refid": "X55",
+                                    "flow": [
+                                        {
+                                            "type": "serial",
+                                            "states": {
+                                                "X55_A": {
+                                                    "refid": "X55_A"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                "V1": {
+                    "refid": "V1"
+                }
+            }
+        }
+    ],
+    "form": "master",
+    "_doc": "ccf8cbbc072a11731f6f"
+}

@@ -387,7 +387,7 @@
 
             // we allow form.destroy() which tells parent control to destroy
             // if skipParent == true, then we do not call up (invoked from container)
-            if (!skipParent)
+            if (!skipParent && this.parent)
             {
                 this.parent.destroy();
             }

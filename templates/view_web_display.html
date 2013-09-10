@@ -1,0 +1,46 @@
+<!-- "controlField" -->
+<script id="controlField" type="text/x-handlebars-template">
+
+    <div class="alpaca-data-container">
+        {{if options.label}}
+        <div class="alpaca-data-label">${options.label}</div>
+        {{/if}}
+        <div class="alpaca-data">&nbsp;${data}</div>
+    </div>
+
+</script>
+
+<!-- "fieldSetOuterEl" -->
+<script id="fieldSetOuterEl" type="text/x-handlebars-template">
+
+    <div class="ui-widget ui-widget-content">{{html this.html}}</div>
+
+</script>
+
+<!-- "fieldSetLegend" -->
+<script id="fieldSetLegend" type="text/x-handlebars-template">
+    {{if options.label}}<div class="{{if options.labelClass}}${options.labelClass}{{/if}}">${options.label}</div>{{/if}}
+</script>
+
+<!-- "fieldSetItemsContainer" -->
+<script id="fieldSetItemsContainer" type="text/x-handlebars-template">
+    {{if options.label}}<div class="{{if options.labelClass}}${options.labelClass}{{/if}}">${options.label}</div>{{/if}}
+</script>
+
+<!-- "fieldSet" -->
+<script id="fieldSet" type="text/x-handlebars-template">
+    {{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"fieldSetLegend")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetItemsContainer",true)}}{{/wrap}}{{/wrap}}
+</script>
+
+<!-- "controlFieldContainer" -->
+<script id="controlFieldContainer" type="text/x-handlebars-template">
+    <div>{{html this.html}}</div>
+</script>
+
+<!-- "arrayToolbar" -->
+<script id="arrayToolbar" type="text/x-handlebars-template">
+</script>
+
+<!-- "arrayItemToolbar" -->
+<script id="arrayItemToolbar" type="text/x-handlebars-template">
+</script>

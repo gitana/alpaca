@@ -31,6 +31,23 @@
     display: inline-block;
 }
 
+/**
+ * Some spacing after the array item toolbar
+ */
+.alpaca-fieldset-array-item-toolbar
+{
+    margin-bottom: 5px;
+}
+
+/**
+ * label spacing
+ */
+.alpaca-fieldset-legend-button-text
+{
+    padding-left: 6px;
+}
+
+
 /*
 .alpaca-controlfield-helper-text
 {
