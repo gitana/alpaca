@@ -686,11 +686,25 @@
                 // so we only need to load this once
                 _this.resolveItemSchemaOptions(function(schema, options) {
 
-                    $.each(_this.data, function(index, value) {
-                        _this.addItem(index, schema, options, value, false);
-                    });
+                    // workhorse function
+                    // adds an item and then recursively fires down from the callback until the end of the list is reached
+                    var handleItem = function(index)
+                    {
+                        if (index === _this.data.length)
+                        {
+                            _this.updateToolbarItemsStatus();
 
-                    _this.updateToolbarItemsStatus();
+                            return;
+                        }
+
+                        var value = _this.data[index];
+
+                        _this.addItem(index, schema, options, value, false, false, function() {
+                            handleItem(index+1);
+                        });
+
+                    };
+                    handleItem(0);
                 });
             }
             else

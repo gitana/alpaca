@@ -455,14 +455,33 @@
                 // each property in the object can have a different schema and options so we need to process
                 // asynchronously and wait for all to complete
 
+                // figure out the total count of properties that we need to iterate through
                 var total = 0;
                 for (var propertyId in properties)
                 {
                     total++;
                 }
-                var complete = 0;
+
+                // collect all the property ids since we'll churn through them by property key
+                var propertyIds = [];
                 for (var propertyId in properties)
                 {
+                    propertyIds.push(propertyId);
+                }
+
+                // workhorse function for a single property
+                var handleProperty = function(index)
+                {
+                    if (index === total)
+                    {
+                        // all done, fire completion function
+                        cf();
+
+                        return;
+                    }
+
+                    var propertyId = propertyIds[index];
+
                     var itemData = null;
                     if (_this.data)
                     {
@@ -489,16 +508,11 @@
                             // remove from extraDataProperties helper
                             delete extraDataProperties[propertyId];
 
-                            complete++;
-                            if (complete === total)
-                            {
-                                // move ahead
-                                cf();
-                            }
-
+                            handleProperty(index + 1);
                         });
                     });
-                }
+                };
+                handleProperty(0);
             },
 
 
