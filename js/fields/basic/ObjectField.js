@@ -399,7 +399,7 @@
             /**
              * @see Alpaca.ContainerField#renderItems
              */
-            renderItems: function() {
+            renderItems: function(onSuccess) {
 
                 var _this = this;
 
@@ -418,7 +418,7 @@
                     properties = _this.schema.properties;
                 }
 
-                var cf = function(validPropertyIds)
+                var cf = function()
                 {
                     // If the schema and the data line up perfectly, then there will be no properties in the data that are
                     // not also in the schema, and thus, extraDataProperties will be empty.
@@ -450,6 +450,11 @@
                     }
 
                     _this.renderValidationState();
+
+                    if (onSuccess)
+                    {
+                        onSuccess();
+                    }
                 };
 
                 // each property in the object can have a different schema and options so we need to process

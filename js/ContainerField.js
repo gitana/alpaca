@@ -321,23 +321,38 @@
                     this.fieldContainer = this.outerEl;
                 }
 
+                var asyncHandler = false;
+
                 if (!this.singleLevelRendering && !this.lazyLoading) {
-                    this.renderItems();
+                    asyncHandler = true;
+                    this.renderItems(function() {
+                        if (onSuccess) {
+                            onSuccess();
+                        }
+                    });
                 }
 
                 if (this.lazyLoading) {
                     if (this.labelDiv) {
+                        asyncHandler = true;
                         $(this.labelDiv).click(function() {
                             if (_this.lazyLoading) {
-                                _this.renderItems();
-                                _this.lazyLoading = false;
+                                _this.renderItems(function() {
+                                    _this.lazyLoading = false;
+                                    if (onSuccess) {
+                                        onSuccess();
+                                    }
+                                });
                             }
                         });
                     }
                 }
 
-                if (onSuccess) {
-                    onSuccess();
+                if (!asyncHandler)
+                {
+                    if (onSuccess) {
+                        onSuccess();
+                    }
                 }
             },
 

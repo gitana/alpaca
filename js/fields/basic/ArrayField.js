@@ -673,7 +673,7 @@
         /**
          * @see Alpaca.ContainerField#renderItems
          */
-        renderItems: function() {
+        renderItems: function(onSuccess) {
             var _this = this;
 
             // mark field container as empty by default
@@ -694,6 +694,11 @@
                         {
                             _this.updateToolbarItemsStatus();
 
+                            if (onSuccess)
+                            {
+                                onSuccess();
+                            }
+
                             return;
                         }
 
@@ -710,6 +715,11 @@
             else
             {
                 this.updateToolbarItemsStatus();
+
+                if (onSuccess)
+                {
+                    onSuccess();
+                }
             }
         },
 
