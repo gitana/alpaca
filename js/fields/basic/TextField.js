@@ -127,6 +127,16 @@
                             });
                         }
                     }
+
+                    // when the input value changes, change the query in typeahead
+                    // this is to keep the typeahead control sync'd with the actual dom value
+                    var fi = $(this.field);
+                    $(this.field).change(function() {
+
+                        var value = $(this).val();
+
+                        $(fi).typeahead('setQuery', value);
+                    });
                 }
 
                 if (this.fieldContainer) {

@@ -156,3 +156,10 @@ fieldset.alpaca-view-web-list.fieldset-collapsed
     border-radius: 6px;
 }
 */
+
+/** Type Ahead with Bootstrap **/
+.tt-hint
+{
+    padding-top: 9px;
+    padding-left: 12px;
+}
