@@ -41,9 +41,16 @@
         /**
          * @see Alpaca.Field#getValue
          */
-        getValue: function() {
+        getValue: function()
+        {
             if (this.field) {
-                return this.base(this.field.val());
+                var val = this.field.val();
+                if (!val)
+                {
+                    val = this.data;
+                }
+
+                return this.base(val);
             }
         },
 

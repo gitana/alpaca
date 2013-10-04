@@ -160,6 +160,6 @@ fieldset.alpaca-view-web-list.fieldset-collapsed
 /** Type Ahead with Bootstrap **/
 .tt-hint
 {
-    padding-top: 9px;
-    padding-left: 12px;
+    padding-top: 9px !important;
+    padding-left: 12px !important;
 }
