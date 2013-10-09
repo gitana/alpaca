@@ -441,7 +441,7 @@
         
     });
 
-    Alpaca.registerTemplate("controlFieldText", '<input type="text" id="${id}"  {{if options.placeholder}}placeholder="${options.placeholder}"{{/if}} {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
+    Alpaca.registerTemplate("controlFieldText", '<input type="text" id="${id}" {{if options.placeholder}}placeholder="${options.placeholder}"{{/if}} {{if options.size}}size="${options.size}"{{/if}} {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>');
     Alpaca.registerMessages({
         "invalidPattern": "This field should have pattern {0}",
         "stringTooShort": "This field should contain at least {0} numbers or characters",

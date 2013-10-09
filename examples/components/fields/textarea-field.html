@@ -136,6 +136,31 @@ $(function() {
                         });
                     </script>
 
+                    <!-- example 4 -->
+                    <h2>Example 4: Placeholder</h2>
+                    <p>
+                        This example uses the <code>placeholder</code> option to set up the placeholder text
+                        for a text area field.
+                    </p>
+                    <div id="field4"></div>
+                    <script type="text/javascript" id="field4-script">
+
+                        $(function() {
+
+                            $("#field4").alpaca({
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "options": {
+                                    "type": "textarea",
+                                    "label": "Tell us about yourself",
+                                    "placeholder": "Enter your bio here..."
+                                }
+                            });
+                        });
+                    </script>
+
+
 
                             <!-- BEGIN DISCUSSIONS -->
                             <div class="alpaca-discussions"></div>
