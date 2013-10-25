@@ -40,36 +40,42 @@
             /**
              * @see Alpaca.Fields.TextField#postRender
              */
-            postRender: function() {
-                var _this = this;
-                this.base();
+            postRender: function(callback) {
 
-                if (this.field)
-                {
-                    if (this.field.datetimepicker) {
-                        this.field.hover(function() {
-                            if (!$(this).hasClass('hasDatepicker')) {
+                var self = this;
 
-                                var timePickerOptions = _this.options.timepicker;
-                                if (!timePickerOptions)
-                                {
-                                    timePickerOptions = _this.options.timepicker;
+                this.base(function() {
+
+                    if (self.field)
+                    {
+                        if (self.field.datetimepicker) {
+                            self.field.hover(function() {
+                                if (!$(this).hasClass('hasDatepicker')) {
+
+                                    var timePickerOptions = self.options.timepicker;
+                                    if (!timePickerOptions)
+                                    {
+                                        timePickerOptions = self.options.timepicker;
+                                    }
+                                    if (!timePickerOptions)
+                                    {
+                                        timePickerOptions = {
+                                            "changeYear": true,
+                                            "changeMonth": true
+                                        };
+                                    }
+                                    $(this).datetimepicker(timePickerOptions);
                                 }
-                                if (!timePickerOptions)
-                                {
-                                    timePickerOptions = {
-                                        "changeYear": true,
-                                        "changeMonth": true
-                                    };
-                                }
-                                $(this).datetimepicker(timePickerOptions);
+                            });
+                            if (self.fieldContainer) {
+                                self.fieldContainer.addClass('alpaca-controlfield-datetime');
                             }
-                        });
-                        if (this.fieldContainer) {
-                            this.fieldContainer.addClass('alpaca-controlfield-datetime');
                         }
                     }
-                }
+
+                    callback();
+
+                });
             },
 
             /**

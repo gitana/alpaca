@@ -66,61 +66,67 @@
         /**
          * @see Alpaca.Fields.TextAreaField#postRender
          */
-        postRender: function() {
-            this.base();            
-			// see if we can render jWysiwyg
-            var _this = this;
+        postRender: function(callback) {
 
-            if (this.field && $.wysiwyg)
-            {
-                var wysiwygOptions = this.options.wysiwyg ? this.options.wysiwyg : {};
+            var self = this;
 
-                if (wysiwygOptions.controls)
+            this.base(function() {
+
+                // see if we can render jWysiwyg
+                if (self.field && $.wysiwyg)
                 {
-                    if (typeof(wysiwygOptions.controls) === "string")
+                    var wysiwygOptions = self.options.wysiwyg ? self.options.wysiwyg : {};
+
+                    if (wysiwygOptions.controls)
                     {
-                        wysiwygOptions.controls = this.controlsConfig[wysiwygOptions.controls];
-                        if (!wysiwygOptions.controls)
+                        if (typeof(wysiwygOptions.controls) === "string")
                         {
-                            wysiwygOptions.controls = {};
+                            wysiwygOptions.controls = self.controlsConfig[wysiwygOptions.controls];
+                            if (!wysiwygOptions.controls)
+                            {
+                                wysiwygOptions.controls = {};
+                            }
                         }
                     }
-                }
 
-                if (this.options.onDemand)
-                {
-                    this.outerEl.find("textarea").mouseover(function() {
+                    if (self.options.onDemand)
+                    {
+                        self.outerEl.find("textarea").mouseover(function() {
 
-                        if (!_this.plugin)
-                        {
-                            _this.plugin = $(this).wysiwyg(wysiwygOptions);
+                            if (!self.plugin)
+                            {
+                                self.plugin = $(this).wysiwyg(wysiwygOptions);
 
-                            _this.outerEl.find(".wysiwyg").mouseout(function() {
+                                self.outerEl.find(".wysiwyg").mouseout(function() {
 
-                                if (_this.plugin) {
-                                    _this.plugin.wysiwyg('destroy');
-                                }
+                                    if (self.plugin) {
+                                        self.plugin.wysiwyg('destroy');
+                                    }
 
-                                _this.plugin = null;
+                                    self.plugin = null;
 
-                            });
-                        }
+                                });
+                            }
+                        });
+                    }
+                    else
+                    {
+                        self.plugin = self.field.wysiwyg(wysiwygOptions);
+                    }
+
+                    self.outerEl.find(".wysiwyg").mouseout(function() {
+                        self.data = _this.getValue();
+                        self.renderValidationState();
                     });
                 }
-                else
-                {
-                    this.plugin = this.field.wysiwyg(wysiwygOptions);
+
+                if (self.fieldContainer) {
+                    self.fieldContainer.addClass('alpaca-controlfield-wysiwyg');
                 }
 
-                this.outerEl.find(".wysiwyg").mouseout(function() {
-                    _this.data = _this.getValue();
-                    _this.renderValidationState();
-                });
-            }
+                callback();
+            });
 
-			if (this.fieldContainer) {
-				this.fieldContainer.addClass('alpaca-controlfield-wysiwyg');
-			}
         },//__BUILDER_HELPERS
 		
         /**

@@ -37,110 +37,118 @@
             /**
              * @see Alpaca.Fields.TextField#postRender
              */
-            postRender: function() {
-                this.base();
+            postRender: function(callback) {
 
                 var self = this;
 
-                if (this.fieldContainer) {
-                    this.fieldContainer.addClass('alpaca-controlfield-editor');
+                this.base(function() {
 
-                    // set field container parent width = 100%
-                    $(this.fieldContainer).parent().css("width", "100%");
-
-                    // ACE HEIGHT
-                    var aceHeight = this.options.aceHeight;
-                    if (aceHeight)
+                    if (self.fieldContainer)
                     {
-                        $(this.fieldContainer).css("height", aceHeight);
-                    }
+                        self.fieldContainer.addClass('alpaca-controlfield-editor');
 
-                    // ACE WIDTH
-                    var aceWidth = this.options.aceWidth;
-                    if (!aceWidth) {
-                        aceWidth = "100%";
-                    }
-                    $(this.fieldContainer).css("width", aceWidth);
-                }
+                        // set field container parent width = 100%
+                        $(self.fieldContainer).parent().css("width", "100%");
 
-                // locate where we will insert the editor
-                var el = $(this.fieldContainer).find(".control-field-editor-el")[0];
-
-                // ace must be included ahead of time
-                if (!ace && window.ace) {
-                    ace = window.ace;
-                }
-
-                if (!ace)
-                {
-                    Alpaca.logError("Editor Field is missing the 'ace' Cloud 9 Editor");
-                }
-                else
-                {
-                    this.editor = ace.edit(el);
-
-                    // theme
-                    var aceTheme = this.options.aceTheme;
-                    if (!aceTheme) {
-                        aceTheme = "ace/theme/chrome";
-                    }
-                    this.editor.setTheme(aceTheme);
-
-                    // mode
-                    var aceMode = this.options.aceMode;
-                    if (!aceMode) {
-                        aceMode = "ace/mode/json";
-                    }
-                    this.editor.getSession().setMode(aceMode);
-
-                    this.editor.renderer.setHScrollBarAlwaysVisible(false);
-                    //this.editor.renderer.setVScrollBarAlwaysVisible(false); // not implemented
-                    this.editor.setShowPrintMargin(false);
-
-                    // set data onto editor
-                    this.editor.setValue(this.data);
-                    this.editor.clearSelection();
-
-                    // FIT-CONTENT the height of the editor to the contents contained within
-                    if (this.options.aceFitContentHeight)
-                    {
-                        var heightUpdateFunction = function() {
-
-                            // http://stackoverflow.com/questions/11584061/
-                            var newHeight = self.editor.getSession().getScreenLength() * self.editor.renderer.lineHeight + self.editor.renderer.scrollBar.getWidth();
-
-                            $(self.fieldContainer).height(newHeight.toString() + "px");
-
-                            // This call is required for the editor to fix all of
-                            // its inner structure for adapting to a change in size
-                            self.editor.resize();
-                        };
-
-                        // Set initial size to match initial content
-                        heightUpdateFunction();
-
-                        // Whenever a change happens inside the ACE editor, update
-                        // the size again
-                        self.editor.getSession().on('change', heightUpdateFunction);
-                    }
-
-                    // READONLY
-                    if (this.schema.readonly)
-                    {
-                        this.editor.setReadOnly(true);
-                    }
-
-                    // if the editor's dom element gets destroyed, make sure we clean up the editor instance
-                    // normally, we expect Alpaca fields to be destroyed by the destroy() method but they may also be
-                    // cleaned-up via the DOM, thus we check here.
-                    $(el).bind('destroyed', function() {
-
-                        if (self.editor) {
-                            self.editor.destroy();
-                            self.editor = null;
+                        // ACE HEIGHT
+                        var aceHeight = self.options.aceHeight;
+                        if (aceHeight)
+                        {
+                            $(self.fieldContainer).css("height", aceHeight);
                         }
-                    });
-                }
+
+                        // ACE WIDTH
+                        var aceWidth = self.options.aceWidth;
+                        if (!aceWidth) {
+                            aceWidth = "100%";
+                        }
+                        $(self.fieldContainer).css("width", aceWidth);
+                    }
+
+                    // locate where we will insert the editor
+                    var el = $(self.fieldContainer).find(".control-field-editor-el")[0];
+
+                    // ace must be included ahead of time
+                    if (!ace && window.ace) {
+                        ace = window.ace;
+                    }
+
+                    if (!ace)
+                    {
+                        Alpaca.logError("Editor Field is missing the 'ace' Cloud 9 Editor");
+                    }
+                    else
+                    {
+                        self.editor = ace.edit(el);
+
+                        // theme
+                        var aceTheme = self.options.aceTheme;
+                        if (!aceTheme) {
+                            aceTheme = "ace/theme/chrome";
+                        }
+                        self.editor.setTheme(aceTheme);
+
+                        // mode
+                        var aceMode = self.options.aceMode;
+                        if (!aceMode) {
+                            aceMode = "ace/mode/json";
+                        }
+                        self.editor.getSession().setMode(aceMode);
+
+                        self.editor.renderer.setHScrollBarAlwaysVisible(false);
+                        //this.editor.renderer.setVScrollBarAlwaysVisible(false); // not implemented
+                        self.editor.setShowPrintMargin(false);
+
+                        // set data onto editor
+                        self.editor.setValue(self.data);
+                        self.editor.clearSelection();
+
+                        // clear undo session
+                        self.editor.getSession().getUndoManager().reset();
+
+                        // FIT-CONTENT the height of the editor to the contents contained within
+                        if (self.options.aceFitContentHeight)
+                        {
+                            var heightUpdateFunction = function() {
+
+                                // http://stackoverflow.com/questions/11584061/
+                                var newHeight = self.editor.getSession().getScreenLength() * self.editor.renderer.lineHeight + self.editor.renderer.scrollBar.getWidth();
+
+                                $(self.fieldContainer).height(newHeight.toString() + "px");
+
+                                // This call is required for the editor to fix all of
+                                // its inner structure for adapting to a change in size
+                                self.editor.resize();
+                            };
+
+                            // Set initial size to match initial content
+                            heightUpdateFunction();
+
+                            // Whenever a change happens inside the ACE editor, update
+                            // the size again
+                            self.editor.getSession().on('change', heightUpdateFunction);
+                        }
+
+                        // READONLY
+                        if (self.schema.readonly)
+                        {
+                            self.editor.setReadOnly(true);
+                        }
+
+                        // if the editor's dom element gets destroyed, make sure we clean up the editor instance
+                        // normally, we expect Alpaca fields to be destroyed by the destroy() method but they may also be
+                        // cleaned-up via the DOM, thus we check here.
+                        $(el).bind('destroyed', function() {
+
+                            if (self.editor) {
+                                self.editor.destroy();
+                                self.editor = null;
+                            }
+                        });
+                    }
+
+                    callback();
+                });
 
             },
 

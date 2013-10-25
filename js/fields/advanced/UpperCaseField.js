@@ -28,12 +28,19 @@
         /**
          * @see Alpaca.Fields.TextField#postRender
          */
-        postRender: function() {
-            this.base();
+        postRender: function(callback) {
 
-            if (this.fieldContainer) {
-                this.fieldContainer.addClass('alpaca-controlfield-uppercase');
-            }
+            var self = this;
+
+            this.base(function() {
+
+                if (self.fieldContainer) {
+                    self.fieldContainer.addClass('alpaca-controlfield-uppercase');
+                }
+
+                callback();
+
+            });
         },
 
         /**

@@ -137,59 +137,65 @@
             /**
              * @see Alpaca.Field#postRender
              */
-            postRender: function() {
-                this.base();
-                // Generates wizard if requested
-                if (this.isTopLevel()) {
-                    if (this.view) {
-                        this.wizardConfigs = this.view.getWizard();
-                        if (this.wizardConfigs) {
+            postRender: function(callback) {
 
-                            // set up defaults for wizard
-                            if (Alpaca.isUndefined(this.wizardConfigs.validation)) {
-                                this.wizardConfigs.validation = true;
-                            }
-                            if (!this.wizardConfigs.buttons) {
-                                this.wizardConfigs.buttons = {};
-                            }
+                var self = this;
 
-                            // done
-                            if (!this.wizardConfigs.buttons.done) {
-                                this.wizardConfigs.buttons.done = {};
-                            }
-                            if (Alpaca.isUndefined(this.wizardConfigs.buttons.done.validateOnClick)) {
-                                this.wizardConfigs.buttons.done.validateOnClick = true;
-                            }
+                this.base(function() {
 
-                            // prev
-                            if (!this.wizardConfigs.buttons.prev) {
-                                this.wizardConfigs.buttons.prev = {};
-                            }
-                            if (Alpaca.isUndefined(this.wizardConfigs.buttons.prev.validateOnClick)) {
-                                this.wizardConfigs.buttons.prev.validateOnClick = true;
-                            }
+                    // Generates wizard if requested
+                    if (self.isTopLevel()) {
+                        if (self.view) {
+                            self.wizardConfigs = self.view.getWizard();
+                            if (self.wizardConfigs) {
 
-                            // next
-                            if (!this.wizardConfigs.buttons.next) {
-                                this.wizardConfigs.buttons.next = {};
-                            }
-                            if (Alpaca.isUndefined(this.wizardConfigs.buttons.next.validateOnClick)) {
-                                this.wizardConfigs.buttons.next.validateOnClick = true;
-                            }
+                                // set up defaults for wizard
+                                if (Alpaca.isUndefined(self.wizardConfigs.validation)) {
+                                    self.wizardConfigs.validation = true;
+                                }
+                                if (!self.wizardConfigs.buttons) {
+                                    self.wizardConfigs.buttons = {};
+                                }
 
-                        }
-                        var layoutTemplateDescriptor = this.view.getLayout().templateDescriptor;
-                        if (this.wizardConfigs && this.wizardConfigs.renderWizard) {
-                            if (layoutTemplateDescriptor) {
-                                //Wizard based on layout
-                                this.wizard();
-                            } else {
-                                //Wizard based on injections
-                                this.autoWizard();
+                                // done
+                                if (!self.wizardConfigs.buttons.done) {
+                                    self.wizardConfigs.buttons.done = {};
+                                }
+                                if (Alpaca.isUndefined(self.wizardConfigs.buttons.done.validateOnClick)) {
+                                    self.wizardConfigs.buttons.done.validateOnClick = true;
+                                }
+
+                                // prev
+                                if (!self.wizardConfigs.buttons.prev) {
+                                    self.wizardConfigs.buttons.prev = {};
+                                }
+                                if (Alpaca.isUndefined(self.wizardConfigs.buttons.prev.validateOnClick)) {
+                                    self.wizardConfigs.buttons.prev.validateOnClick = true;
+                                }
+
+                                // next
+                                if (!self.wizardConfigs.buttons.next) {
+                                    self.wizardConfigs.buttons.next = {};
+                                }
+                                if (Alpaca.isUndefined(self.wizardConfigs.buttons.next.validateOnClick)) {
+                                    self.wizardConfigs.buttons.next.validateOnClick = true;
+                                }
+                            }
+                            var layoutTemplateDescriptor = self.view.getLayout().templateDescriptor;
+                            if (self.wizardConfigs && self.wizardConfigs.renderWizard) {
+                                if (layoutTemplateDescriptor) {
+                                    //Wizard based on layout
+                                    self.wizard();
+                                } else {
+                                    //Wizard based on injections
+                                    self.autoWizard();
+                                }
                             }
                         }
                     }
-                }
+
+                    callback();
+                });
             },
 
             /**

@@ -44,11 +44,19 @@
         /**
          * @see Alpaca.Fields.TextField#postRender
          */
-        postRender: function() {
-            this.base();
-            if (this.fieldContainer) {
-                this.fieldContainer.addClass('alpaca-controlfield-phone');
-            }
+        postRender: function(callback) {
+
+            var self = this;
+
+            this.base(function() {
+
+                if (self.fieldContainer) {
+                    self.fieldContainer.addClass('alpaca-controlfield-phone');
+                }
+
+                callback();
+
+            });
         },
 
         /**

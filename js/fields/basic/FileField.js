@@ -97,12 +97,19 @@
         /**
          * @see Alpaca.Fields.TextField#postRender
          */
-        postRender: function() {
-            this.base();
-            // apply additional css
-			if (this.fieldContainer) {
-				this.fieldContainer.addClass("alpaca-controlfield-file");
-            }
+        postRender: function(callback) {
+
+            var self = this;
+
+            this.base(function() {
+
+                // apply additional css
+                if (self.fieldContainer) {
+                    self.fieldContainer.addClass("alpaca-controlfield-file");
+                }
+
+                callback();
+            });
 
             // listen for change events on the field
         },//__BUILDER_HELPERS

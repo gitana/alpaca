@@ -76,18 +76,28 @@
         /**
          * @see Alpaca.Field#postRender
          */
-        postRender: function() {
+        postRender: function(callback)
+        {
+            var self = this;
+
             var labelDiv = $('.alpaca-controlfield-label', this.outerEl);
             if (labelDiv.length) {
                 this.labelDiv = labelDiv;
             }
+
             var helperDiv = $('.alpaca-controlfield-helper', this.outerEl);
             if (helperDiv.length) {
                 this.helperDiv = helperDiv;
             }
-            this.base();
-            // add additional classes
-            this.outerEl.addClass('alpaca-controlfield');
+
+            this.base(function() {
+
+                // add additional classes
+                self.outerEl.addClass('alpaca-controlfield');
+
+                callback();
+
+            });
         },
 
         /**

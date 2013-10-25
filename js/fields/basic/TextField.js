@@ -76,77 +76,79 @@
         /**
          * @see Alpaca.ControlField#postRender
          */
-        postRender: function() {
+        postRender: function(callback) {
 
             var self = this;
 
-            this.base();
+            this.base(function() {
 
-            if (this.field)
-            {
-                // mask it
-                if ( this.field && this.field.mask && this.options.maskString) {
-                    this.field.mask(this.options.maskString);
-                }
-
-                // typeahead?
-                if ( this.field && this.field.typeahead && this.options.typeahead) {
-
-                    var tconfig = {};
-                    for (var k in this.options.typeahead) {
-                        tconfig[k] = this.options.typeahead[k];
+                if (self.field)
+                {
+                    // mask it
+                    if ( self.field && self.field.mask && self.options.maskString) {
+                        self.field.mask(self.options.maskString);
                     }
 
-                    if (!tconfig.name) {
-                        tconfig.name = this.getId();
-                    }
+                    // typeahead?
+                    if ( self.field && self.field.typeahead && self.options.typeahead) {
 
-                    $(this.field).typeahead(tconfig);
-
-                    // listen for "autocompleted" event and set the value of the field
-                    $(this.field).on("typeahead:autocompleted", function(event, datum) {
-                        self.setValue(datum.value);
-                    });
-
-                    // listen for "selected" event and set the value of the field
-                    $(this.field).on("typeahead:selected", function(event, datum) {
-                        self.setValue(datum.value);
-                    });
-
-                    // custom events
-                    if (tconfig.events)
-                    {
-                        if (tconfig.events.autocompleted) {
-                            $(this.field).on("typeahead:autocompleted", function(event, datum) {
-                                tconfig.events.autocompleted(event, datum);
-                            });
+                        var tconfig = {};
+                        for (var k in self.options.typeahead) {
+                            tconfig[k] = self.options.typeahead[k];
                         }
-                        if (tconfig.events.selected) {
-                            $(this.field).on("typeahead:selected", function(event, datum) {
-                                tconfig.events.selected(event, datum);
-                            });
+
+                        if (!tconfig.name) {
+                            tconfig.name = self.getId();
                         }
+
+                        $(self.field).typeahead(tconfig);
+
+                        // listen for "autocompleted" event and set the value of the field
+                        $(self.field).on("typeahead:autocompleted", function(event, datum) {
+                            self.setValue(datum.value);
+                        });
+
+                        // listen for "selected" event and set the value of the field
+                        $(self.field).on("typeahead:selected", function(event, datum) {
+                            self.setValue(datum.value);
+                        });
+
+                        // custom events
+                        if (tconfig.events)
+                        {
+                            if (tconfig.events.autocompleted) {
+                                $(self.field).on("typeahead:autocompleted", function(event, datum) {
+                                    tconfig.events.autocompleted(event, datum);
+                                });
+                            }
+                            if (tconfig.events.selected) {
+                                $(self.field).on("typeahead:selected", function(event, datum) {
+                                    tconfig.events.selected(event, datum);
+                                });
+                            }
+                        }
+
+                        // when the input value changes, change the query in typeahead
+                        // this is to keep the typeahead control sync'd with the actual dom value
+                        var fi = $(self.field);
+                        $(self.field).change(function() {
+
+                            var value = $(this).val();
+
+                            $(fi).typeahead('setQuery', value);
+                        });
                     }
 
-                    // when the input value changes, change the query in typeahead
-                    // this is to keep the typeahead control sync'd with the actual dom value
-                    var fi = $(this.field);
-                    $(this.field).change(function() {
-
-                        var value = $(this).val();
-
-                        $(fi).typeahead('setQuery', value);
-                    });
+                    if (self.fieldContainer) {
+                        self.fieldContainer.addClass('alpaca-controlfield-text');
+                    }
                 }
 
-                if (this.fieldContainer) {
-                    this.fieldContainer.addClass('alpaca-controlfield-text');
-                }
-            }
+                callback();
+            });
 
         },
 
-        
         /**
          * @see Alpaca.Field#getValue
          */

@@ -349,11 +349,14 @@
                         }
                         _this.form = form;
                         // allow any post-rendering facilities to kick in
-                        _this.postRender();
-                        // callback
-                        if (callback && Alpaca.isFunction(callback)) {
-                            callback(_this);
-                        }
+                        _this.postRender(function() {
+
+                            // callback
+                            if (callback && Alpaca.isFunction(callback)) {
+                                callback(_this);
+                            }
+
+                        });
                     });
                 });
             } else {
@@ -362,11 +365,14 @@
                     // bind our field dom element into the container
                     _this.getEl().appendTo(_this.container);
                     // allow any post-rendering facilities to kick in
-                    _this.postRender();
-                    // callback
-                    if (callback && Alpaca.isFunction(callback)) {
-                        callback(_this);
-                    }
+                    _this.postRender(function() {
+
+                        // callback
+                        if (callback && Alpaca.isFunction(callback)) {
+                            callback(_this);
+                        }
+
+                    });
                 });
             }
         },
@@ -503,7 +509,7 @@
          * This method will be called after the field rendition is complete. It is served as a way to make final
          * modifications to the dom elements that were produced.
          */
-        postRender: function() {
+        postRender: function(callback) {
 
             // try to avoid adding unnecessary injections for display view.
             if (this.view.type != 'view') {
@@ -638,8 +644,17 @@
             }
 
             // field level post render
-            if (this.options.postRender) {
-                this.options.postRender(this);
+            if (this.options.postRender)
+            {
+                this.options.postRender.call(this, function() {
+
+                    callback();
+
+                });
+            }
+            else
+            {
+                callback();
             }
 
         },

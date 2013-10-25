@@ -147,11 +147,19 @@
         /**
          * @see Alpaca.Fields.TextAreaField#postRender
          */
-        postRender: function() {
-            this.base();
-			if (this.fieldContainer) {
-				this.fieldContainer.addClass('alpaca-controlfield-map');
-			}
+        postRender: function(callback)
+        {
+            var self = this;
+
+            this.base(function() {
+
+                if (this.fieldContainer) {
+                    this.fieldContainer.addClass('alpaca-controlfield-map');
+                }
+
+                callback();
+            });
+
         },//__BUILDER_HELPERS
 
 		/**

@@ -55,14 +55,6 @@
         },
 
         /**
-         * @see Alpaca.ControlField#postRender
-         */
-        postRender: function() {
-            this.base();
-        },
-
-
-        /**
          * @see Alpaca.Field#getValue
          */
         getValue: function() {

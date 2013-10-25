@@ -78,11 +78,18 @@
             /**
              * @see Alpaca.ControlField#postRender
              */
-            postRender: function() {
-                this.base();
-                if (this.fieldContainer) {
-                    this.fieldContainer.addClass('alpaca-controlfield-checkbox');
-                }
+            postRender: function(callback) {
+
+                var self = this;
+
+                this.base(function() {
+
+                    if (self.fieldContainer) {
+                        self.fieldContainer.addClass('alpaca-controlfield-checkbox');
+                    }
+
+                    callback();
+                });
             },
 
             /**

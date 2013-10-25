@@ -39,11 +39,19 @@
         /**
          * @see Alpaca.Fields.TextField#postRender
          */
-        postRender: function() {
-            this.base();
-            if (this.fieldContainer) {
-                this.fieldContainer.addClass('alpaca-controlfield-email');
-            }
+        postRender: function(callback) {
+
+            var self = this;
+
+            this.base(function() {
+
+                if (this.fieldContainer) {
+                    this.fieldContainer.addClass('alpaca-controlfield-email');
+                }
+
+                callback();
+
+            });
         },
 
         /**

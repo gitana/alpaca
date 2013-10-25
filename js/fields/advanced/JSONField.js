@@ -98,37 +98,43 @@
         /**
          * @see Alpaca.Fields.TextAreaField#postRender
          */
-        postRender: function() {
-            this.base();
-            var _this = this;
+        postRender: function(callback) {
 
-            if (this.field)
-            {
-                // Some auto-formatting capabilities
-                this.field.bind('keypress', function(e) {
-                    //console.log(e.which);
-                    if (e.which == 34) {
-                        _this.field.insertAtCaret('"');
-                    }
-                    if (e.which == 123) {
-                        _this.field.insertAtCaret('}');
-                    }
-                    if (e.which == 91) {
-                        _this.field.insertAtCaret(']');
-                    }
-                });
-                this.field.bind('keypress', 'Ctrl+l', function() {
-                    _this.getEl().removeClass("alpaca-field-focused");
+            var self = this;
 
-                    // set class from state
-                    _this.renderValidationState();
-                });
-                this.field.attr('title','Type Ctrl+L to format and validate the JSON string.');
-            }
+            this.base(function() {
 
-            if (this.fieldContainer) {
-                this.fieldContainer.addClass('alpaca-controlfield-json');
-            }
+                if (self.field)
+                {
+                    // Some auto-formatting capabilities
+                    self.field.bind('keypress', function(e) {
+                        //console.log(e.which);
+                        if (e.which == 34) {
+                            self.field.insertAtCaret('"');
+                        }
+                        if (e.which == 123) {
+                            self.field.insertAtCaret('}');
+                        }
+                        if (e.which == 91) {
+                            self.field.insertAtCaret(']');
+                        }
+                    });
+                    self.field.bind('keypress', 'Ctrl+l', function() {
+                        self.getEl().removeClass("alpaca-field-focused");
+
+                        // set class from state
+                        self.renderValidationState();
+                    });
+                    self.field.attr('title','Type Ctrl+L to format and validate the JSON string.');
+                }
+
+                if (self.fieldContainer) {
+                    self.fieldContainer.addClass('alpaca-controlfield-json');
+                }
+
+                callback();
+
+            });
 
         },//__BUILDER_HELPERS
 

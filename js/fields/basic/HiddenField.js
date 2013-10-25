@@ -63,13 +63,19 @@
         /**
          * @see Alpaca.ControlField#postRender
          */
-        postRender: function() {
+        postRender: function(callback) {
 
-            this.base();
+            var self = this;
 
-            if (this.fieldContainer) {
-                this.fieldContainer.addClass('alpaca-controlfield-hidden');
-            }
+            this.base(function() {
+
+                if (self.fieldContainer) {
+                    self.fieldContainer.addClass('alpaca-controlfield-hidden');
+                }
+
+                callback();
+            });
+
         },
 
         

@@ -43,30 +43,36 @@
         /**
          * @see Alpaca.Fields.TextField#postRender
          */
-        postRender: function() {
-            this.base();
+        postRender: function(callback) {
 
-            if (this.field && $.datepicker)
-            {
-                var datePickerOptions = this.options.datepicker;
-                if (!datePickerOptions)
+            var self = this;
+
+            this.base(function() {
+
+                if (self.field && $.datepicker)
                 {
-                    datePickerOptions = {
-                        "changeMonth": true,
-                        "changeYear": true
-                    };
-                }
-                if (!datePickerOptions.dateFormat)
-                {
-                    datePickerOptions.dateFormat = this.options.dateFormat;
-                }
-                this.field.datepicker(datePickerOptions);
+                    var datePickerOptions = self.options.datepicker;
+                    if (!datePickerOptions)
+                    {
+                        datePickerOptions = {
+                            "changeMonth": true,
+                            "changeYear": true
+                        };
+                    }
+                    if (!datePickerOptions.dateFormat)
+                    {
+                        datePickerOptions.dateFormat = self.options.dateFormat;
+                    }
+                    self.field.datepicker(datePickerOptions);
 
-                if (this.fieldContainer) {
-                    this.fieldContainer.addClass('alpaca-controlfield-date');
+                    if (self.fieldContainer) {
+                        self.fieldContainer.addClass('alpaca-controlfield-date');
+                    }
                 }
-            }
 
+                callback();
+
+            });
         },
 
         /**

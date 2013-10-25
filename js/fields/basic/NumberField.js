@@ -40,12 +40,19 @@
         /**
          * @see Alpaca.Fields.TextField#postRender
          */
-        postRender: function() {
-            this.base();
-			if (this.fieldContainer) {
-				this.fieldContainer.addClass('alpaca-controlfield-number');
-			}
-        },		
+        postRender: function(callback) {
+
+            var self = this;
+
+            this.base(function() {
+
+                if (self.fieldContainer) {
+                    self.fieldContainer.addClass('alpaca-controlfield-number');
+                }
+
+                callback();
+            });
+        },
 				
         /**
          * @see Alpaca.Fields.TextField#handleValidate

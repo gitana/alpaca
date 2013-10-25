@@ -65,30 +65,38 @@
         /**
          * @see Alpaca.Fields.NumberField#postRender
          */
-        postRender: function() {
-            this.base();
-            var _this = this;
-            if (this.options.slider) {
-                if (!Alpaca.isEmpty(this.schema.maximum) && !Alpaca.isEmpty(this.schema.minimum)) {
+        postRender: function(callback)
+        {
+            var self = this;
 
-                    if (this.field)
-                    {
-                        this.field.after('<div id="slider"></div>');
-                        this.slider = $('#slider', this.field.parent()).slider({
-                            value: this.getValue(),
-                            min: this.schema.minimum,
-                            max: this.schema.maximum,
-                            slide: function(event, ui) {
-                                _this.setValue(ui.value);
-                                _this.renderValidationState();
-                            }
-                        });
+            this.base(function() {
+
+                if (self.options.slider) {
+                    if (!Alpaca.isEmpty(self.schema.maximum) && !Alpaca.isEmpty(self.schema.minimum)) {
+
+                        if (self.field)
+                        {
+                            self.field.after('<div id="slider"></div>');
+                            self.slider = $('#slider', self.field.parent()).slider({
+                                value: self.getValue(),
+                                min: self.schema.minimum,
+                                max: self.schema.maximum,
+                                slide: function(event, ui) {
+                                    self.setValue(ui.value);
+                                    self.renderValidationState();
+                                }
+                            });
+                        }
                     }
                 }
-            }
-            if (this.fieldContainer) {
-                this.fieldContainer.addClass('alpaca-controlfield-integer');
-            }
+
+                if (self.fieldContainer) {
+                    self.fieldContainer.addClass('alpaca-controlfield-integer');
+                }
+
+                callback();
+
+            });
         },
 
         /**
