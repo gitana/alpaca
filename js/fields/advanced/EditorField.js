@@ -184,13 +184,33 @@
 
                 var valInfo = this.validation;
 
-                var status =  this._validateWordCount();
+                var wordCountStatus =  this._validateWordCount();
                 valInfo["wordLimitExceeded"] = {
-                    "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("wordLimitExceeded"), [this.options.wordlimit]),
-                    "status": status
+                    "message": wordCountStatus ? "" : Alpaca.substituteTokens(this.view.getMessage("wordLimitExceeded"), [this.options.wordlimit]),
+                    "status": wordCountStatus
                 };
 
-                return baseStatus && valInfo["wordLimitExceeded"]["status"];
+                var editorAnnotationsStatus = this._validateEditorAnnotations();
+                valInfo["editorAnnotationsExist"] = {
+                    "message": editorAnnotationsStatus ? "" : this.view.getMessage("editorAnnotationsExist"),
+                    "status": editorAnnotationsStatus
+                };
+
+                return baseStatus && valInfo["wordLimitExceeded"]["status"] && valInfo["editorAnnotationsExist"]["status"];
+            },
+
+            _validateEditorAnnotations: function() {
+
+                if (this.editor)
+                {
+                    var annotations = this.editor.getSession().getAnnotations();
+                    if (annotations && annotations.length > 0)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             },
 
             /**
@@ -351,7 +371,8 @@
         });
 
     Alpaca.registerMessages({
-        "wordLimitExceeded": "The maximum word limit of {0} has been exceeded."
+        "wordLimitExceeded": "The maximum word limit of {0} has been exceeded.",
+        "editorAnnotationsExist": "The editor has errors in it that must be corrected"
     });
 
     Alpaca.registerTemplate("controlFieldEditor", '<div id="${id}" class="control-field-editor-el"></div>');

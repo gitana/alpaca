@@ -130,12 +130,17 @@
 
                         // when the input value changes, change the query in typeahead
                         // this is to keep the typeahead control sync'd with the actual dom value
+                        // only do this if the query doesn't already match
                         var fi = $(self.field);
                         $(self.field).change(function() {
 
                             var value = $(this).val();
+                            var currentQuery = $(fi).typeahead('getQuery');
+                            if (currentQuery != value)
+                            {
+                                $(fi).typeahead('setQuery', value);
+                            }
 
-                            $(fi).typeahead('setQuery', value);
                         });
                     }
 
