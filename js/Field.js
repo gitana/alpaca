@@ -761,7 +761,8 @@
             // remove the message element if it exists
             var _this = this;
             //if (beforeStatus == false) {
-                $("[id^='" + _this.getId() + "-field-message']", _this.getEl()).remove();
+                //$("[id^='" + _this.getId() + "-field-message']", _this.getEl()).remove();
+                _this.getEl().find(".alpaca-controlfield-message-element").remove();
             //}
             // add message and generate it
             if (messages && messages.length > 0) {
@@ -778,6 +779,7 @@
                             } else {
                                 _this.messageElement.addClass("alpaca-controlfield-message");
                             }
+                            _this.messageElement.addClass("alpaca-controlfield-message-element");
                             _this.messageElement.attr("id", _this.getId() + '-field-message-' + index);
                             // check to see if we have a message container rendered
                             if ($('.alpaca-controlfield-message-container', _this.getEl()).length) {
