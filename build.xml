@@ -79,62 +79,6 @@
 
     </target>
 
-    <!-- Core files for Alpaca -->
-    <filelist id="alpaca-files-core">
-        <file name="Alpaca.js"/>
-
-        <file name="TemplateEngineRegistry.js"/>
-        <file name="AbstractTemplateEngine.js"/>
-        <file name="JQueryTemplateEngine.js"/>
-        <file name="EJSTemplateEngine.js"/>
-        <file name="HandlebarsTemplateEngine.js"/>
-
-        <!-- view implementations -->
-        <file name="views/base/BaseView.js"/>
-        <file name="views/default/DefaultViews.js"/>
-        <file name="views/default/DefaultListViews.js"/>
-        <file name="views/jqueryui/JQueryUIViews.js"/>
-        <file name="views/jquerymobile/JQueryMobileViews.js"/>
-        <file name="views/bootstrap/BootstrapViews.js"/>
-        <file name="views/TableView.js"/>
-        <file name="views/YAMLView.js"/>
-        <file name="views/InlineView.js"/>
-        <file name="views/LayoutView.js"/>
-
-        <!-- view classes -->
-        <file name="NormalizedView.js"/>
-        <file name="RuntimeView.js"/>
-
-        <!-- field foundation classes -->
-        <file name="Field.js"/>
-        <file name="ControlField.js"/>
-        <file name="ContainerField.js"/>
-        <file name="Connector.js"/>
-        <file name="Form.js"/>
-
-        <!--Alpaca Core Fields-->
-        <file name="fields/basic/TextField.js"/>
-        <file name="fields/basic/TextAreaField.js"/>
-        <file name="fields/basic/CheckBoxField.js"/>
-        <file name="fields/basic/FileField.js"/>
-        <file name="fields/basic/ListField.js"/>
-        <file name="fields/basic/RadioField.js"/>
-        <file name="fields/basic/SelectField.js"/>
-        <file name="fields/basic/NumberField.js"/>
-        <file name="fields/basic/ArrayField.js"/>
-        <file name="fields/basic/ObjectField.js"/>
-        <file name="fields/basic/AnyField.js"/>
-        <file name="fields/basic/HiddenField.js"/>
-        <!--End of Alpaca Core Fields-->
-
-        <!-- i18n support -->
-        <file name="views/i18n/de_AT.js"/>
-        <file name="views/i18n/es_ES.js"/>
-        <file name="views/i18n/fr_FR.js"/>
-        <file name="views/i18n/zh_CN.js"/>
-
-    </filelist>
-
     <target name="concat-js" description="Concat all javascript files" depends="prep">
 
         <!-- Standalone: "alpaca-core" -->
@@ -155,6 +99,8 @@
 
                 <file name="TemplateEngineRegistry.js"/>
                 <file name="AbstractTemplateEngine.js"/>
+
+                <!-- template engines -->
                 <file name="JQueryTemplateEngine.js"/>
                 <file name="EJSTemplateEngine.js"/>
                 <file name="HandlebarsTemplateEngine.js"/>
@@ -340,6 +286,8 @@
 
                 <file name="TemplateEngineRegistry.js"/>
                 <file name="AbstractTemplateEngine.js"/>
+
+                <!-- template engines -->
                 <file name="JQueryTemplateEngine.js"/>
                 <file name="EJSTemplateEngine.js"/>
                 <file name="HandlebarsTemplateEngine.js"/>
