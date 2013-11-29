@@ -1,0 +1,34 @@
+[
+    "alpaca/Alpaca",
+    "alpaca/TemplateEngineRegistry",
+    "alpaca/AbstractTemplateEngine",
+    "alpaca/engines/JQueryTemplateEngine",
+
+    "alpaca/views/base/BaseView",
+
+    "alpaca/views/default/DefaultViews",
+    "alpaca/views/default/DefaultListViews",
+    "alpaca/views/jqueryui/JQueryUIViews",
+    "alpaca/views/jquerymobile/JQueryMobileViews",
+    "alpaca/views/bootstrap/BootstrapViews",
+
+    "alpaca/NormalizedView",
+    "alpaca/RuntimeView",
+    "alpaca/Field",
+    "alpaca/ControlField",
+    "alpaca/ContainerField",
+    "alpaca/Connector",
+    "alpaca/Form",
+    "alpaca/fields/text/TextField",
+    "alpaca/fields/textarea/TextAreaField",
+    "alpaca/fields/checkbox/CheckBoxField",
+    "alpaca/fields/file/FileField",
+    "alpaca/fields/list/ListField",
+    "alpaca/fields/radio/RadioField",
+    "alpaca/fields/select/SelectField",
+    "alpaca/fields/number/NumberField",
+    "alpaca/fields/array/ArrayField",
+    "alpaca/fields/object/ObjectField",
+    "alpaca/fields/any/AnyField",
+    "alpaca/fields/hidden/HiddenField"
+]

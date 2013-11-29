@@ -1,0 +1,36 @@
+[
+    "alpaca/engines/ejs",
+    "alpaca/engines/hbs",
+
+    "alpaca/views/jqueryui/DefaultListView",
+    "alpaca/views/jqueryui/DefaultView",
+    "alpaca/views/jqueryui/JQueryUIView",
+    "alpaca/views/jquerymobile/JQueryMobileView",
+
+
+    "alpaca/fields/address/address",
+    "alpaca/fields/country/country",
+    "alpaca/fields/date/date",
+    "alpaca/fields/datetime/datetime",
+    "alpaca/fields/editor/editor",
+    "alpaca/fields/email/email",
+    "alpaca/fields/integer/integer",
+    "alpaca/fields/ipv4/ipv4",
+    "alpaca/fields/json/json",
+    "alpaca/fields/lowercase/lowercase",
+    "alpaca/fields/map/map",
+    "alpaca/fields/password/password",
+    "alpaca/fields/personalname/personalname",
+    "alpaca/fields/phone/phone",
+    "alpaca/fields/state/state",
+    "alpaca/fields/tag/tag",
+    "alpaca/fields/uppercase/uppercase",
+    "alpaca/fields/url/url",
+    "alpaca/fields/wysiwyg/wysiwyg",
+    "alpaca/fields/zipcode/zipcode",
+
+    "alpaca/i18n/de_AT",
+    "alpaca/i18n/es_ES",
+    "alpaca/i18n/fr_FR",
+    "alpaca/i18n/zh_CN"
+]

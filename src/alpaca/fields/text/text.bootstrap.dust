@@ -1,0 +1,7 @@
+<input type="text" id="{id}"
+    {@if cond="{options.placeholder}"} placeholder="{options.placeholder}" {/if}
+    {@if cond="{options.size}"} size="{options.size}" {/if}
+    {@if cond="{options.readonly}"} readonly="readonly" {/if}
+    {@if cond="{name}"} name="{name}" {/if}
+    {#options.data} data-$idx="{.}" {/options.data}
+/>

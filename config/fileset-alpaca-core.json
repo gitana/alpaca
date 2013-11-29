@@ -1,0 +1,29 @@
+[
+    "alpaca/Alpaca",
+    "alpaca/TemplateEngineRegistry",
+    "alpaca/AbstractTemplateEngine",
+    "alpaca/engines/tmpl",
+
+    "alpaca/views/base/base",
+    "alpaca/views/bootstrap/bootstrap",
+
+    "alpaca/NormalizedView",
+    "alpaca/RuntimeView",
+    "alpaca/Field",
+    "alpaca/Connector",
+    "alpaca/Form",
+    "alpaca/ControlField",
+    "alpaca/ContainerField",
+    "alpaca/fields/text/text",
+    "alpaca/fields/textarea/textarea",
+    "alpaca/fields/checkbox/checkbox",
+    "alpaca/fields/file/file",
+    "alpaca/fields/list/list",
+    "alpaca/fields/radio/radio",
+    "alpaca/fields/select/select",
+    "alpaca/fields/number/number",
+    "alpaca/fields/array/array",
+    "alpaca/fields/object/object",
+    "alpaca/fields/any/any",
+    "alpaca/fields/hidden/hidden"
+]
