@@ -111,6 +111,11 @@
                         {
                             var heightUpdateFunction = function() {
 
+                                if (self.editor.renderer.lineHeight === 1)
+                                {
+                                    self.editor.renderer.lineHeight = 16;
+                                }
+
                                 // http://stackoverflow.com/questions/11584061/
                                 var newHeight = self.editor.getSession().getScreenLength() * self.editor.renderer.lineHeight + self.editor.renderer.scrollBar.getWidth();
 
