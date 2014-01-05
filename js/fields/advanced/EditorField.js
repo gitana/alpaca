@@ -111,8 +111,10 @@
                         {
                             var heightUpdateFunction = function() {
 
+                                var first = false;
                                 if (self.editor.renderer.lineHeight === 1)
                                 {
+                                    first = true;
                                     self.editor.renderer.lineHeight = 16;
                                 }
 
@@ -124,6 +126,13 @@
                                 // This call is required for the editor to fix all of
                                 // its inner structure for adapting to a change in size
                                 self.editor.resize();
+
+                                if (first)
+                                {
+                                    window.setTimeout(function() {
+                                        self.editor.clearSelection();
+                                    }, 5);
+                                }
                             };
 
                             // Set initial size to match initial content

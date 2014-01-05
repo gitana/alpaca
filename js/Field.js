@@ -225,13 +225,12 @@
         {
             // NOTE: this == control
 
-            Alpaca.logDebug("Firing event: " + name);
             var handler = this._events[name];
 
             var ret = null;
             if (typeof(handler) == "function")
             {
-                Alpaca.logDebug("Found event handler, calling: " + name);
+                Alpaca.logDebug("Firing event: " + name);
                 try
                 {
                     ret = handler.call(this, event);
@@ -240,10 +239,6 @@
                 {
                     Alpaca.logDebug("The event handler caught an exception: " + name);
                 }
-            }
-            else
-            {
-                Alpaca.logDebug("Could not find an event handler for: " + name);
             }
 
             return ret;
@@ -758,12 +753,12 @@
          * @param {Boolean} beforeStatus Previous validation status.
          */
         displayMessage: function(messages, beforeStatus) {
-            // remove the message element if it exists
+
             var _this = this;
-            //if (beforeStatus == false) {
-                //$("[id^='" + _this.getId() + "-field-message']", _this.getEl()).remove();
-                _this.getEl().find(".alpaca-controlfield-message-element").remove();
-            //}
+
+            // remove the message element if it exists
+            _this.getEl().children(".alpaca-controlfield-message-element").remove();
+
             // add message and generate it
             if (messages && messages.length > 0) {
                 $.each(messages, function(index, message) {
@@ -814,7 +809,10 @@
                     if (checkChildren && this.children)
                     {
                         for (var i = 0; i < this.children.length; i++) {
-                            _rvc.call(this.children[i], checkChildren, true);
+                            if (this.children[i].isValidationParticipant())
+                            {
+                                _rvc.call(this.children[i], checkChildren, true);
+                            }
                         }
                     }
 
@@ -854,7 +852,7 @@
                             // this field is invalid and is also read-only, so we're not supposed to inform the end-user
                             // within the UI (since there is nothing we can do about it)
                             // here, we log a message to debug to inform the developer
-                            Alpaca.logWarn("The field (id=" + this.getId() + ", title=" + this.getTitle() + ", label=" + this.options.label + ") is invalid and also read-only");
+                            Alpaca.logWarn("The field (id=" + this.getId() + ", title=" + this.getTitle() + ", path=" + this.path + ") is invalid and also read-only");
                         }
                     }
 
@@ -869,12 +867,14 @@
                             // we don't markup invalidation state for readonly fields
                             if (!this.options.readonly)
                             {
+                                // messages
                                 var messages = [];
                                 for (var messageId in this.validation) {
                                     if (!this.validation[messageId]["status"]) {
                                         messages.push(this.validation[messageId]["message"]);
                                     }
                                 }
+
                                 this.displayMessage(messages, beforeStatus);
                             }
                         }
@@ -986,19 +986,38 @@
          */
         validate: function(validateChildren) {
 
-            // if validateChildren, then walk recursively down into child elements
-            if (this.children && validateChildren) {
-                for (var i = 0; i < this.children.length; i++) {
-                    var child = this.children[i];
-                    child.validate(validateChildren);
-                }
-            }
-
             // skip out if we haven't yet bound any data into this control
             // the control can still be considered to be initializing
             var status = true;
             if (!this.initializing && this.options.validate) {
+
+                // if validateChildren, then walk recursively down into child elements
+                if (this.children && validateChildren) {
+                    for (var i = 0; i < this.children.length; i++) {
+                        var child = this.children[i];
+                        if (child.isValidationParticipant())
+                        {
+                            child.validate(validateChildren);
+                        }
+                    }
+                }
+
+                // evaluate ourselves
                 status = this.handleValidate();
+
+                // support for some debugging
+                if (!status && Alpaca.logLevel == Alpaca.DEBUG)
+                {
+                    // messages
+                    var messages = [];
+                    for (var messageId in this.validation) {
+                        if (!this.validation[messageId]["status"]) {
+                            messages.push(this.validation[messageId]["message"]);
+                        }
+                    }
+
+                    Alpaca.logDebug("Validation failure for field (id=" + this.getId() + ", path=" + this.path + "), messages: " + JSON.stringify(messages));
+                }
             }
 
             return status;
@@ -1166,6 +1185,15 @@
 
         },
 
+        isValidationParticipant: function()
+        {
+            return this.isShown();
+        },
+
+        isShown: function() {
+            return this.isVisible();
+        },
+
         isVisible: function() {
             return !this.isHidden();
         },
@@ -1247,8 +1275,11 @@
             {
                 for (var i = 0; i < this.children.length; i++) {
                     var child = this.children[i];
-                    if (!child.isValid(checkChildren)) {
-                        return false;
+                    if (child.isValidationParticipant())
+                    {
+                        if (!child.isValid(checkChildren)) {
+                            return false;
+                        }
                     }
                 }
             }
