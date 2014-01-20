@@ -99,7 +99,19 @@
                     valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueTooSmall"), [this.schema.minimum]);
                 }
             }
-            return baseStatus && valInfo["stringNotANumber"]["status"] && valInfo["stringDivisibleBy"]["status"] && valInfo["stringValueTooLarge"]["status"] && valInfo["stringValueTooSmall"]["status"];
+
+            status = this._validateMultipleOf();
+            valInfo["stringValueNotMultipleOf"] = {
+                "message": "",
+                "status": status
+            };
+            if (!status)
+            {
+                valInfo["stringValueNotMultipleOf"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueNotMultipleOf"), [this.schema.multipleOf]);
+            }
+
+            // hand back a true/false
+            return baseStatus && valInfo["stringNotANumber"]["status"] && valInfo["stringDivisibleBy"]["status"] && valInfo["stringValueTooLarge"]["status"] && valInfo["stringValueTooSmall"]["status"] && valInfo["stringValueNotMultipleOf"]["status"];
         },
         
         /**
@@ -172,7 +184,7 @@
          */
         _validateMinimum: function() {
             var floatValue = this.getValue();
-            
+
             if (!Alpaca.isEmpty(this.schema.minimum)) {
                 if (floatValue < this.schema.minimum) {
                     return false;
@@ -186,7 +198,26 @@
             }
             
             return true;
-        },//__BUILDER_HELPERS
+        },
+
+        /**
+         * Validates multipleOf constraint.
+         * @returns {Boolean} true if it passes the multipleOf constraint.
+         */
+        _validateMultipleOf: function() {
+            var floatValue = this.getValue();
+
+            if (!Alpaca.isEmpty(this.schema.multipleOf)) {
+                if (floatValue && this.schema.multipleOf !== 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        },
+
+        //__BUILDER_HELPERS
 
         /**
          * @private
@@ -195,6 +226,11 @@
         getSchemaOfSchema: function() {
             return Alpaca.merge(this.base(), {
 				"properties": {
+                    "multipleOf": {
+                        "title": "Multiple Of",
+                        "description": "Property value must be a multiple of the multipleOf schema property such that division by this value yields an interger (mod zero).",
+                        "type": "number"
+                    },
 					"minimum": {
 						"title": "Minimum",
 						"description": "Minimum value of the property.",
@@ -217,7 +253,7 @@
 						"type": "boolean",
 						"default": false
 					}
-				}				
+				}
             });
         },
 
@@ -228,6 +264,11 @@
         getOptionsForSchema: function() {
 			return Alpaca.merge(this.base(), {
 				"fields": {
+                    "multipleOf": {
+                        "title": "Multiple Of",
+                        "description": "The value must be a integral multiple of the property",
+                        "type": "number"
+                    },
 					"minimum": {
 						"title": "Minimum",
 						"description": "Minimum value of the property",
@@ -288,7 +329,8 @@
         "stringValueTooSmallExclusive": "Value of this field must be greater than {0}",
         "stringValueTooLargeExclusive": "Value of this field must be less than {0}",
         "stringDivisibleBy": "The value must be divisible by {0}",
-        "stringNotANumber": "This value is not a number."
+        "stringNotANumber": "This value is not a number.",
+        "stringValueNotMultipleOf": "This value is nu"
     });
     Alpaca.registerFieldClass("number", Alpaca.Fields.NumberField);
     Alpaca.registerDefaultSchemaFieldMapping("number", "number");

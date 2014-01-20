@@ -160,13 +160,12 @@
         {
             Alpaca.logDebug("Executing template for cache key: " + cacheKey);
 
-            var html = this.doExecute(cacheKey, model, callback);
+            var dom = this.doExecute(cacheKey, model, callback);
 
             // if wrapped in script tag, strip away
-            var strip_script = function(html)
+            var strip_script = function(dom)
             {
                 // if if starts with a script tag, then we strip that out
-                var dom = Alpaca.safeDomParse(html);
                 if ($(dom).length == 1)
                 {
                     if ($(dom)[0].nodeName.toLowerCase() == "script")
@@ -179,9 +178,9 @@
                 return html;
             };
 
-            html = strip_script(html);
+            dom = strip_script(dom);
 
-            return html;
+            return dom;
         },
 
         /**

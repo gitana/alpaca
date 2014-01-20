@@ -270,4 +270,31 @@
         }
     });
 
+    Alpaca.EmptyViewTemplates = {
+        'controlFieldOuterEl': '{{html this.html}}',
+        'controlFieldMessage': '${message}',
+        'controlFieldLabel': '{{if options.label}}${options.label}{{/if}}',
+        'controlFieldHelper': '{{if options.helper}}${options.helper}{{/if}}',
+        'controlFieldContainer': '{{html this.html}}',
+        'controlField': '{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"controlFieldLabel")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldContainer",true)}}{{html Alpaca.fieldTemplate(this,"controlFieldHelper")}}{{/wrap}}{{/wrap}}',
+        'fieldSetOuterEl': '{{html this.html}}',
+        'fieldSetMessage': '${message}',
+        'fieldSetLegend': '{{if options.label}}${options.label}{{/if}}',
+        'fieldSetHelper': '{{if options.helper}}${options.helper}{{/if}}',
+        'fieldSetItemsContainer': '{{html this.html}}',
+        'fieldSet': '{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"fieldSetLegend")}}{{wrap(null, {})Alpaca.fieldTemplate(this,"fieldSetItemsContainer",true)}}{{/wrap}}{{/wrap}}',
+        'fieldSetItemContainer': '',
+        'formFieldsContainer': '{{html this.html}}',
+        'formButtonsContainer': '{{if options.buttons}}{{each(k,v) options.buttons}}<button data-key="${k}" class="alpaca-form-button alpaca-form-button-${k}" {{each(k1,v1) v}}${k1}="${v1}"{{/each}}>${v.value}</button>{{/each}}{{/if}}',
+        'form': '<form>{{html Alpaca.fieldTemplate(this,"formFieldsContainer")}}{{html Alpaca.fieldTemplate(this,"formButtonsContainer")}}</form>',
+        'wizardStep': '',
+        'wizardNavBar': '',
+        'wizardPreButton': '<button>Back</button>',
+        'wizardNextButton': '<button>Next</button>',
+        'wizardDoneButton': '<button>Done</button>',
+        'wizardStatusBar': '<ol id="${id}">{{each(i,v) titles}}<li id="stepDesc${i}"><div><strong><span>${v.title}</span>${v.description}</strong></div></li>{{/each}}</ol>',
+        'arrayToolbar': '',
+        'arrayItemToolbar': ''
+    };
+
 })(jQuery);

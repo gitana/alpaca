@@ -169,5 +169,10 @@
         });
 
     Alpaca.registerFieldClass("datetime", Alpaca.Fields.DatetimeField);
+
+    // "datetime" is legacy (pre v4 schema)
     Alpaca.registerDefaultFormatFieldMapping("datetime", "datetime");
+
+    // official v4 uses date-time
+    Alpaca.registerDefaultFormatFieldMapping("date-time", "datetime");
 })(jQuery);

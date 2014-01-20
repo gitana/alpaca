@@ -25,6 +25,43 @@
 
     var Alpaca = $.alpaca;
 
+    var editTemplates = Alpaca.Create(Alpaca.EmptyViewTemplates, {
+        // Templates for control fields
+        "controlFieldOuterEl": '<div class="form-group">{{html this.html}}</div>',
+        "controlFieldMessage": '<span class="glyphicon glyphicon-exclamation-sign"></span><span class="help-block alpaca-controlfield-message-text">${message}</span>',
+        "controlFieldLabel": '{{if options.label}}<label class="{{if options.labelClass}}${options.labelClass}{{/if}} control-label" for="${id}">${options.label}</label>{{/if}}',
+        "controlFieldHelper": '{{if options.helper}}<i class="glyphicon glyphicon-info-sign"></i><p class="{{if options.helperClass}}${options.helperClass}{{/if}}">${options.helper}</p>{{/if}}',
+        "controlFieldContainer": '<div>{{html this.html}}</div>',
+        "controlField": '{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"controlFieldLabel")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"controlFieldContainer",true)}}{{html Alpaca.fieldTemplate(this,"controlFieldHelper")}}{{/wrap}}{{/wrap}}',
+        // Templates for container fields
+        "fieldSetOuterEl": '<fieldset>{{html this.html}}</fieldset>',
+        "fieldSetMessage": '<span class="glyphicon glyphicon-exclamation-sign"></span><span class="help-block alpaca-controlfield-message-text">${message}</span>',
+        "fieldSetLegend": '{{if options.label}}<legend class="{{if options.labelClass}}${options.labelClass}{{/if}}">${options.label}</legend>{{/if}}',
+        "fieldSetHelper": '{{if options.helper}}<i class="glyphicon glyphicon-info-sign"></i><p class="{{if options.helperClass}}${options.helperClass}{{/if}}">${options.helper}</p>{{/if}}',
+        "fieldSetItemsContainer": '<div>{{html this.html}}</div>',
+        "fieldSet": '{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetOuterEl",true)}}{{html Alpaca.fieldTemplate(this,"fieldSetLegend")}}{{html Alpaca.fieldTemplate(this,"fieldSetHelper")}}{{wrap(null, {}) Alpaca.fieldTemplate(this,"fieldSetItemsContainer",true)}}{{/wrap}}{{/wrap}}',
+        "fieldSetItemContainer": '<div></div>',
+        // Templates for form
+        "formFieldsContainer": '<div>{{html this.html}}</div>',
+        "formButtonsContainer": '<div>{{if options.buttons}}{{each(k,v) options.buttons}}<button data-key="${k}" class="alpaca-form-button alpaca-form-button-${k} btn btn-default" {{each(k1,v1) v}}${k1}="${v1}"{{/each}}>${v.value}</button>{{/each}}{{/if}}</div>',
+        "form": '<form role="form">{{html Alpaca.fieldTemplate(this,"formFieldsContainer")}}{{html Alpaca.fieldTemplate(this,"formButtonsContainer")}}</form>',
+        // Templates for wizard
+        "wizardStep" : '<div class="alpaca-clear"></div>',
+        "wizardNavBar" : '<div></div>',
+        "wizardPreButton" : '<button>Back</button>',
+        "wizardNextButton" : '<button>Next</button>',
+        "wizardDoneButton" : '<button>Done</button>',
+        "wizardStatusBar" : '<ol id="${id}">{{each(i,v) titles}}<li id="stepDesc${i}"><div><strong><span>${v.title}</span>${v.description}</strong></div></li>{{/each}}</ol>',
+
+        "controlFieldCheckbox": '<div class="checkbox">{{if options.rightLabel}}<label for="${id}">{{/if}}<input type="checkbox" id="${id}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>{{if options.rightLabel}}${options.rightLabel}</label>{{/if}}</div>',
+        "controlFieldRadio": '{{if !required}}<div class="radio"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value=""/>None</div>{{/if}}{{each selectOptions}}<div class="radio"><label class="alpaca-controlfield-radio-label"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value="${value}" {{if value == data}}checked="checked"{{/if}}/>${text}</label></div>{{/each}}'
+
+    });
+
+    var displayTemplates = Alpaca.Create(editTemplates, {
+        "fieldSetOuterEl": '<fieldset disabled>{{html this.html}}</fieldset>'
+    });
+
     Alpaca.styleInjections["bootstrap"] = {
 
         /*
@@ -48,31 +85,38 @@
         },
         */
 
-
-
-
-
-        // all control item containers get class: "form-group"
-        // all input, textarea and select get class: "form-control"
-        // all labels get class: "control-label"
         "field" : function(targetDiv) {
 
             // the item container gets the "form-group"
-            targetDiv.parent().addClass('form-group');
+            //targetDiv.parent().addClass('form-group');
 
-            $(targetDiv).find("input").addClass("form-control");//.addClass("input-lg");
-            $(targetDiv).find("textarea").addClass("form-control");//.addClass("input-lg");
-            $(targetDiv).find("select").addClass("form-control");//.addClass("input-lg");
-
-            // remove "input-lg" from selected controls
-            //$(targetDiv).find("input[type=checkbox]").removeClass("input-lg");
-
-            // remove "form-control" from selected controls
+            // all controls get the "form-control" class injected
+            $(targetDiv).find("input").addClass("form-control");
+            $(targetDiv).find("textarea").addClass("form-control");
+            $(targetDiv).find("select").addClass("form-control");
+            // except for the following
             $(targetDiv).find("input[type=checkbox]").removeClass("form-control");
             $(targetDiv).find("input[type=file]").removeClass("form-control");
+            $(targetDiv).find("input[type=radio]").removeClass("form-control");
 
-            // all labels get class "control-label"
-            $(targetDiv).find("label").addClass("control-label");
+            // any checkbox inputs get the "checkbox" class on their container
+
+            // any radio inputs get the "checkbox" class on their checkbox
+            $(targetDiv).find("input[type=checkbox]").parent().parent().addClass("checkbox");
+            // any radio inputs get the "radio" class on their radio
+            $(targetDiv).find("input[type=radio]").parent().parent().addClass("radio");
+
+            // if form has "form-inline" class, then radio and checkbox labels get inline classes
+            if ($(targetDiv).parents("form").hasClass("form-inline"))
+            {
+                // checkboxes
+                $(targetDiv).find("input[type=checkbox]").parent().addClass("checkbox-inline");
+
+                // radios
+                $(targetDiv).find("input[type=radio]").parent().addClass("radio-inline");
+            }
+
+            // TODO: form-horizontal?
         },
 
         // icons
@@ -128,8 +172,6 @@
             */
         },
 
-
-
         // The Wizard still relies on jQuery UI
         "wizardStatusBar" : function(targetDiv) {
             targetDiv.addClass('ui-widget-header ui-corner-all');
@@ -141,7 +183,6 @@
             targetDiv.removeClass('ui-state-highlight ui-corner-all');
         },
 
-
         "buttonBeautifier"  : function(button, iconClass, withText) {
             var buttonText = button.html();
             button.attr("title", buttonText);
@@ -152,23 +193,6 @@
                 button.append('<span class="alpaca-fieldset-legend-button-text">' + addedButtonText + '</span>');
             }
         }
-
-    };
-
-    var bootstrapTemplates = {
-        "controlFieldLabel": '{{if options.label}}<label class="{{if options.labelClass}}${options.labelClass}{{/if}}" for="${id}">${options.label}</label>{{/if}}',
-        "controlFieldHelper": '{{if options.helper}}<div class="{{if options.helperClass}}${options.helperClass}{{/if}}"><i class="glyphicon glyphicon-info-sign"></i> <p class="help-block help-inline alpaca-controlfield-helper-text">${options.helper}</p></div>{{/if}}',
-        "controlFieldMessage": '<div><span class="glyphicon glyphicon-exclamation-sign"></span><span class="alpaca-controlfield-message-text help-inline help-block">${message}</span></div>',
-
-        "arrayToolbar": '<span class="alpaca-fieldset-array-toolbar"><button class="btn btn-default alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add">${addItemLabel}</button></span>',
-        "arrayItemToolbar": '<div class="btn-toolbar alpaca-fieldset-array-item-toolbar"><div class="btn-group">{{each(k,v) buttons}}<button class="btn btn-default btn-xs alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-${v.feature}">${v.label}</button>{{/each}}</div></div>',
-
-        "controlFieldCheckbox": '<span class="checkbox">{{if options.rightLabel}}<label for="${id}">{{/if}}<input type="checkbox" id="${id}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>{{if options.rightLabel}}${options.rightLabel}</label>{{/if}}</span>',
-        "controlFieldRadio": '<div id="${id}" class="alpaca-controlfield-radio">{{if !required}}<label class="alpaca-controlfield-radio-label radio inline"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value=""/>None</label>{{/if}}{{each selectOptions}}<label class="alpaca-controlfield-radio-label radio inline"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value="${value}" {{if value == data}}checked="checked"{{/if}}/>${text}</label>{{/each}}</div>',
-
-        "fieldSetHelper": '{{if options.helper}}<p class="{{if options.helperClass}}${options.helperClass}{{/if}}">${options.helper}</p>{{/if}}',
-
-        "form": '<form role="form">{{html Alpaca.fieldTemplate(this,"formFieldsContainer")}}{{html Alpaca.fieldTemplate(this,"formButtonsContainer")}}</form>'
     };
 
     var renderFunction = function(field, renderedCallback)
@@ -190,8 +214,9 @@
         "description": "Display View for Bootstrap",
         "style": "bootstrap",
         "ui": "bootstrap",
-        "templates": bootstrapTemplates,
-        "render": renderFunction
+        "templates": displayTemplates,
+        "render": renderFunction,
+        "type": "view"
     });
 
     Alpaca.registerView({
@@ -201,8 +226,9 @@
         "description": "Edit View for Bootstrap",
         "style": "bootstrap",
         "ui": "bootstrap",
-        "templates": bootstrapTemplates,
-        "render": renderFunction
+        "templates": editTemplates,
+        "render": renderFunction,
+        "type": "edit"
     });
 
     Alpaca.registerView({
@@ -212,41 +238,9 @@
         "description":"Create View for Bootstrap",
         "style": "bootstrap",
         "ui": "bootstrap",
-        "templates": bootstrapTemplates,
-        "render": renderFunction
-    });
-
-    Alpaca.registerView({
-        "id": "VIEW_BOOTSTRAP_DISPLAY_LIST",
-        "parent": "VIEW_WEB_DISPLAY_LIST",
-        "title": "Display List View for Bootstrap",
-        "description": "Display List View for Bootstrap",
-        "style": "bootstrap",
-        "ui": "bootstrap",
-        "templates": bootstrapTemplates,
-        "render": renderFunction
-    });
-
-    Alpaca.registerView({
-        "id": "VIEW_BOOTSTRAP_EDIT_LIST",
-        "parent": 'VIEW_WEB_EDIT_LIST',
-        "title": "Edit List View for Bootstrap",
-        "description": "Edit List View for Bootstrap",
-        "style": "bootstrap",
-        "ui": "bootstrap",
-        "templates": bootstrapTemplates,
-        "render": renderFunction
-    });
-
-    Alpaca.registerView({
-        "id": "VIEW_BOOTSTRAP_CREATE_LIST",
-        "parent": 'VIEW_WEB_CREATE_LIST',
-        "title": "Create List View for Bootstrap",
-        "description":"Create List View for Bootstrap",
-        "style": "bootstrap",
-        "ui": "bootstrap",
-        "templates": bootstrapTemplates,
-        "render": renderFunction
+        "templates": editTemplates,
+        "render": renderFunction,
+        "type": "create"
     });
 
 })(jQuery);

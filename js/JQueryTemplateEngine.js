@@ -39,8 +39,10 @@
             var html = null;
             try
             {
-                var _html = $.tmpl(cacheKey, model);
-                _html = _html.outerHTML();
+                var dom = $.tmpl(cacheKey, model);
+
+                // convert to string
+                var _html = dom.outerHTML();
 
                 // strip out the _tmplitem attribute if it is sticking around anywhere
                 var i = -1;
@@ -69,7 +71,9 @@
                 while (i > -1);
 
                 // convert back to dom safely (IE bug resistant)
-                html = Alpaca.safeDomParse(_html);
+                dom = Alpaca.safeDomParse(_html);
+
+                html = dom;
             }
             catch (e)
             {

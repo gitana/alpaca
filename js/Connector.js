@@ -13,8 +13,16 @@
 
          * @param {String} id Connector ID.
          */
-        constructor: function(id) {
+        constructor: function(id)
+        {
             this.id = id;
+
+            // helper function to determine if a resource is a uri
+            this.isUri = function(resource)
+            {
+                return !Alpaca.isEmpty(resource) && Alpaca.isUri(resource);
+            };
+
         },
 
         /**
@@ -23,8 +31,10 @@
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        connect: function (onSuccess, onError) {
-            if (onSuccess && Alpaca.isFunction(onSuccess)) {
+        connect: function (onSuccess, onError)
+        {
+            if (onSuccess && Alpaca.isFunction(onSuccess))
+            {
                 onSuccess();
             }
         },
@@ -39,22 +49,34 @@
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        loadTemplate : function (source, onSuccess, onError) {
-            if (!Alpaca.isEmpty(source)) {
-                if (Alpaca.isUri(source)) {
+        loadTemplate : function (source, onSuccess, onError)
+        {
+            if (!Alpaca.isEmpty(source))
+            {
+                if (Alpaca.isUri(source))
+                {
                     this.loadUri(source, false, function(loadedData) {
-                        if (onSuccess && Alpaca.isFunction(onSuccess)) {
+
+                        if (onSuccess && Alpaca.isFunction(onSuccess))
+                        {
                             onSuccess(loadedData);
                         }
+
                     }, function (loadError) {
-                        if (onError && Alpaca.isFunction(onError)) {
+
+                        if (onError && Alpaca.isFunction(onError))
+                        {
                             onError(loadError);
                         }
                     });
-                } else {
+                }
+                else
+                {
                     onSuccess(source);
                 }
-            } else {
+            }
+            else
+            {
                 onError({
                     "message":"Empty data source.",
                     "reason": "TEMPLATE_LOADING_ERROR"
@@ -65,116 +87,117 @@
         /**
          * Loads JSON data.
          *
-         * @param {Object|String} source Source to be loaded.
+         * @param {Object|String} resource Resource to be loaded.
          * @param {Function} onSuccess onSuccess callback
          * @param {Function} onError onError callback
          */
-        loadData : function (source, successCallback, errorCallback) {
-            var isValidSource = function () {
-                return !Alpaca.isEmpty(source) && Alpaca.isUri(source);
-            };
-            if (isValidSource())
+        loadData: function (resource, successCallback, errorCallback)
+        {
+            if (this.isUri(resource))
             {
-                this.loadJson(source, function(loadedData) {
-                    successCallback(loadedData);
+                this.loadJson(resource, function(loadedResource) {
+                    successCallback(loadedResource);
                 }, errorCallback);
             }
             else
             {
-                successCallback(source);
+                successCallback(resource);
             }
         },
 
         /**
          * Loads JSON schema.
          *
-         * @param {Object|String} source Source to be loaded.
+         * @param {Object|String} resource Resource to be loaded.
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        loadSchema : function (source, successCallback, errorCallback) {
-            var isValidSchema = function () {
-                return !Alpaca.isEmpty(source) && Alpaca.isUri(source);
-            };
-            if (isValidSchema()) {
-                this.loadJson(source, function(loadedSchema) {
-                    successCallback(loadedSchema);
+        loadSchema: function (resource, successCallback, errorCallback)
+        {
+            if (this.isUri(resource))
+            {
+                this.loadJson(resource, function(loadedResource) {
+                    successCallback(loadedResource);
                 }, errorCallback);
-            } else {
-                successCallback(source);
+            }
+            else
+            {
+                successCallback(resource);
             }
         },
 
         /**
          * Loads JSON options.
          *
-         * @param {Object|String} source Source to be loaded.
+         * @param {Object|String} resource Resource to be loaded.
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        loadOptions : function (source, successCallback, errorCallback) {
-            var isValidOptions = function () {
-                return !Alpaca.isEmpty(source) && Alpaca.isUri(source);
-            };
-            if (isValidOptions()) {
-                this.loadJson(source, function(loadedOptions) {
-                    successCallback(loadedOptions);
+        loadOptions: function (resource, successCallback, errorCallback)
+        {
+            if (this.isUri(resource))
+            {
+                this.loadJson(resource, function(loadedResource) {
+                    successCallback(loadedResource);
                 }, errorCallback);
-            } else {
-                successCallback(source);
+            }
+            else
+            {
+                successCallback(resource);
             }
         },
 
         /**
          * Loads JSON view.
          *
-         * @param {Object|String} source Source to be loaded.
+         * @param {Object|String} resource Resource to be loaded.
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        loadView : function (source, successCallback, errorCallback) {
-            var isValidView = function () {
-                return !Alpaca.isEmpty(source) && Alpaca.isUri(source);
-            };
-            if (isValidView()) {
-                this.loadJson(source, function(loadedView) {
-                    successCallback(loadedView);
+        loadView: function (resource, successCallback, errorCallback)
+        {
+            if (this.isUri(resource))
+            {
+                this.loadJson(resource, function(loadedResource) {
+                    successCallback(loadedResource);
                 }, errorCallback);
-            } else {
-                successCallback(source);
+            }
+            else
+            {
+                successCallback(resource);
             }
         },
 
         /**
          * Loads schema, form, view and data in a single call.
          *
-         * @param {Object} sources sources
+         * @param {Object} resources resources
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
-        loadAll: function (sources, onSuccess, onError) {
-
-            var dataSource = sources.dataSource;
-            var schemaSource = sources.schemaSource;
-            var optionsSource = sources.optionsSource;
-            var viewSource = sources.viewSource;
+        loadAll: function (resources, onSuccess, onError)
+        {
+            var dataSource = resources.dataSource;
+            var schemaSource = resources.schemaSource;
+            var optionsSource = resources.optionsSource;
+            var viewSource = resources.viewSource;
 
             // we allow "schema" to contain a URI as well (backwards-compatibility)
             if (!schemaSource)
             {
-                schemaSource = sources.schema;
+                schemaSource = resources.schema;
             }
 
             // we allow "options" to contain a URI as well (backwards-compatibility)
             if (!optionsSource)
             {
-                optionsSource = sources.options;
+                optionsSource = resources.options;
             }
 
             // we allow "view" to contain a URI as well (backwards-compatibility)
             if (!viewSource)
             {
-                viewSource = sources.view;
+                viewSource = resources.view;
             }
 
             var loaded = {};
@@ -182,16 +205,21 @@
             var loadCounter = 0;
             var invocationCount = 0;
 
-            var successCallback = function() {
-                if (loadCounter === invocationCount) {
-                    if (onSuccess && Alpaca.isFunction(onSuccess)) {
+            var successCallback = function()
+            {
+                if (loadCounter === invocationCount)
+                {
+                    if (onSuccess && Alpaca.isFunction(onSuccess))
+                    {
                         onSuccess(loaded.data, loaded.options, loaded.schema, loaded.view);
                     }
                 }
             };
 
-            var errorCallback = function (loadError) {
-                if (onError && Alpaca.isFunction(onError)) {
+            var errorCallback = function (loadError)
+            {
+                if (onError && Alpaca.isFunction(onError))
+                {
                     onError(loadError);
                 }
             };
@@ -258,7 +286,7 @@
         /**
          * Loads a JSON through Ajax call.
          *
-         * @param {String} uri Target source JSON location.
+         * @param {String} uri location of the json document
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.
          */
@@ -272,7 +300,7 @@
          * This uses jQuery to perform the Ajax call.  If you need to customize connectivity to your own remote server,
          * this would be the appropriate place to do so.
          *
-         * @param {String} uri Target source document location.
+         * @param {String} uri uri to be loaded
          * @param {Boolean} isJson Whether the document is a JSON or not.
          * @param {Function} onSuccess onSuccess callback.
          * @param {Function} onError onError callback.

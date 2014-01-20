@@ -270,8 +270,18 @@
      */
     Alpaca.Connectors = { };
 
+    Alpaca.Extend = $.extend;
+
+    Alpaca.Create = function()
+    {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift({});
+
+        return $.extend.apply(this, args);
+    };
+
     // static methods and properties
-    $.extend(Alpaca,
+    Alpaca.Extend(Alpaca,
     /** @lends Alpaca */
     {
         /**
@@ -407,7 +417,10 @@
                 x = Alpaca.trim(x);
 
                 // convert to dom
-                x = $(x);
+                // we wrap with <div/> to be sure here
+                x = "<div>" + x + "</div>";
+
+                x = $(x).children();
             }
 
             return x;
@@ -2292,8 +2305,18 @@
 
     Alpaca.loadRefSchemaOptions = function(topField, referenceId, callback)
     {
-        if (referenceId.indexOf("#/definitions/") > -1)
+        if (!referenceId)
         {
+            callback();
+        }
+        else if (referenceId == "#")
+        {
+            // this is the uri of the current schema document
+            callback(topField.schema, topField.options);
+        }
+        else if (referenceId.indexOf("#/definitions/") > -1)
+        {
+            // a definition
             var defId = referenceId.substring(14);
 
             var defSchema = null;
@@ -2310,10 +2333,11 @@
 
             callback(defSchema, defOptions);
         }
-        else
+        else if (referenceId.indexOf("#") == 0)
         {
-            // THE PROBLEM IS THAT THE FLOW FIELD HASN'T YET BEEN ADDED TO CHILDREN!
-            // IT IS IN THE PROCESS OF RENDERING!
+            // this is the ID of a node in the current schema document
+
+            // walk the current document schema until we find the referenced node (using id property)
             var resolution = Alpaca.resolveReference(topField.schema, topField.options, referenceId);
             if (resolution)
             {
@@ -2324,6 +2348,14 @@
                 // nothing
                 callback();
             }
+        }
+        else
+        {
+            topField.connector.loadSchema(referenceId, function(schema) {
+                callback(schema, {});
+            }, function() {
+                callback();
+            });
         }
     };
 
