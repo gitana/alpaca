@@ -105,30 +105,29 @@
                                 if (_this.options.dsTransformer && Alpaca.isFunction(_this.options.dsTransformer)) {
                                     ds = _this.options.dsTransformer(ds);
                                 }
-                                if (ds) {
-                                    if (Alpaca.isArray(ds)) {
-                                        if (!Alpaca.isObject(value)) {
-                                            $.each(ds, function(index, value) {
-                                                _this.selectOptions.push({
-                                                    "value": value,
-                                                    "text": value
-                                                });
+                                if (ds)
+                                {
+                                    if (Alpaca.isObject(ds))
+                                    {
+                                        // for objects, we walk through one key at a time
+                                        // the insertion order is the order of the keys from the map
+                                        // to preserve order, consider using an array as below
+                                        $.each(ds, function(key, value) {
+                                            _this.selectOptions.push({
+                                                "value": key,
+                                                "text": value
                                             });
-                                        }
-                                        else {
-											// Allow object rows in array, allowing to preserve insertion 
-											// order instead of order by value.
-											_this.selectOptions.push({
-												"value": value.value,
-												"text": value.text
-											});
-                                        }
+                                        });
                                     }
-                                    if (Alpaca.isObject(ds)) {
+                                    else if (Alpaca.isArray(ds))
+                                    {
+                                        // for arrays, we walk through one index at a time
+                                        // the insertion order is dictated by the order of the indices into the array
+                                        // this preserves order
                                         $.each(ds, function(index, value) {
                                             _this.selectOptions.push({
-                                                "value": index,
-                                                "text": value
+                                                "value": value.value,
+                                                "text": value.text
                                             });
                                         });
                                     }

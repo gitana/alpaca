@@ -721,7 +721,7 @@
             {
                 // dependencyPropertyId is the identifier for the property that the field "propertyId" is dependent on
 
-                var dependentField = Alpaca.resolveFieldByPropertyId(self, dependencyPropertyId);
+                var dependentField = Alpaca.resolveField(self, dependencyPropertyId);
                 if (dependentField)
                 {
                     dependentField.getEl().bind("fieldupdate", function(propertyField, dependencyField, propertyId, dependencyPropertyId) {
@@ -775,7 +775,7 @@
             // helper function
             var triggerFieldUpdateForProperty = function(otherPropertyId)
             {
-                var dependentField = Alpaca.resolveFieldByPropertyId(self, otherPropertyId);
+                var dependentField = Alpaca.resolveField(self, otherPropertyId);
                 if (dependentField)
                 {
                     // trigger field update
@@ -814,7 +814,7 @@
             // checks to see if the referenced "dependent-on" property has a value
             // basic JSON-schema supports this (if it has ANY value, it is considered valid
             // special consideration for boolean false
-            var dependentOnField = Alpaca.resolveFieldByPropertyId(self, dependentOnPropertyId);
+            var dependentOnField = Alpaca.resolveField(self, dependentOnPropertyId);
             if (!dependentOnField)
             {
                 // no dependent-on field found, return false
