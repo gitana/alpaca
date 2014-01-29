@@ -636,6 +636,9 @@
                     fieldChain.push(topField);
                 }
 
+                var originalItemSchema = itemSchema;
+                var originalItemOptions = itemOptions;
+
                 Alpaca.loadRefSchemaOptions(topField, referenceId, function(itemSchema, itemOptions) {
 
                     // walk the field chain to see if we have any circularity
@@ -650,18 +653,26 @@
 
                     var circular = (refCount > 1);
 
+                    var resolvedItemSchema = {};
+                    if (originalItemSchema) {
+                        Alpaca.mergeObject(resolvedItemSchema, originalItemSchema);
+                    }
                     if (itemSchema)
                     {
-                        itemSchema = Alpaca.copyOf(itemSchema);
-                        delete itemSchema.id;
+                        Alpaca.mergeObject(resolvedItemSchema, itemSchema);
                     }
+                    delete resolvedItemSchema.id;
 
+                    var resolvedItemOptions = {};
+                    if (originalItemOptions) {
+                        Alpaca.mergeObject(resolvedItemOptions, originalItemOptions);
+                    }
                     if (itemOptions)
                     {
-                        itemOptions = Alpaca.copyOf(itemOptions);
+                        Alpaca.mergeObject(resolvedItemOptions, itemOptions);
                     }
 
-                    callback(itemSchema, itemOptions, circular);
+                    callback(resolvedItemSchema, resolvedItemOptions, circular);
                 });
             }
             else

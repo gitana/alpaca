@@ -106,6 +106,12 @@
             {
                 return (self.view.type == "view");
             };
+
+            // schema id cleanup
+            if (this.schema && this.schema.id && this.schema.id.indexOf("#") == 0)
+            {
+                this.schema.id = this.schema.id.substring(1);
+            }
         },
 
         /**

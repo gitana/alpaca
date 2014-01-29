@@ -170,6 +170,9 @@
                 if (this.options.multiple) {
                     var isValid = true;
                     var _this = this;
+                    if (!val) {
+                        val = [];
+                    }
                     $.each(val, function(i,v) {
                         if ($.inArray(v, _this.schema["enum"]) <= -1) {
                             isValid = false;

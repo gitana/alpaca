@@ -270,6 +270,7 @@
         }
     });
 
+    /*
     Alpaca.EmptyViewTemplates = {
         'controlFieldOuterEl': '{{html this.html}}',
         'controlFieldMessage': '${message}',
@@ -296,5 +297,7 @@
         'arrayToolbar': '',
         'arrayItemToolbar': ''
     };
+    */
+    Alpaca.EmptyViewTemplates = {};
 
 })(jQuery);

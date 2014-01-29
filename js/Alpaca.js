@@ -2314,21 +2314,62 @@
             // this is the uri of the current schema document
             callback(topField.schema, topField.options);
         }
-        else if (referenceId.indexOf("#/definitions/") > -1)
+        else if (referenceId.indexOf("#/") == 0)
         {
-            // a definition
-            var defId = referenceId.substring(14);
+            // this is a property path relative to the root of the current schema
+            var defId = referenceId.substring(2);
 
-            var defSchema = null;
-            if (topField.schema.definitions)
+            // split into tokens
+            var tokens = defId.split("/");
+
+            var defSchema = topField.schema;
+            for (var i = 0; i < tokens.length; i++)
             {
-                defSchema = topField.schema.definitions[defId];
+                var token = tokens[i];
+
+                // schema
+                if (defSchema[token])
+                {
+                    defSchema = defSchema[token];
+                }
+                else if (defSchema.properties && defSchema.properties[token])
+                {
+                    defSchema = defSchema.properties[token];
+                }
+                else if (defSchema.definitions && defSchema.definitions[token])
+                {
+                    defSchema = defSchema.definitions[token];
+                }
+                else
+                {
+                    defSchema = null;
+                    break;
+                }
             }
 
-            var defOptions = null;
-            if (topField.options.definitions)
+            var defOptions = topField.options;
+            for (var i = 0; i < tokens.length; i++)
             {
-                defOptions = topField.options.definitions[defId];
+                var token = tokens[i];
+
+                // options
+                if (defOptions[token])
+                {
+                    defOptions = defOptions[token];
+                }
+                else if (defOptions.fields && defOptions.fields[token])
+                {
+                    defOptions = defOptions.fields[token];
+                }
+                else if (defOptions.definitions && defOptions.definitions[token])
+                {
+                    defOptions = defOptions.definitions[token];
+                }
+                else
+                {
+                    defOptions = null;
+                    break;
+                }
             }
 
             callback(defSchema, defOptions);
@@ -2351,8 +2392,29 @@
         }
         else
         {
-            topField.connector.loadSchema(referenceId, function(schema) {
-                callback(schema, {});
+            // the reference is considered to be a URI with or without a "#" in it to point to a specific location in
+            // the target schema
+
+            var referenceParts = Alpaca.pathParts(referenceId);
+
+            topField.connector.loadReferenceSchema(referenceParts.path, function(schema) {
+                topField.connector.loadReferenceOptions(referenceParts.path, function(options) {
+
+                    if (referenceParts.id)
+                    {
+                        var resolution = Alpaca.resolveReference(schema, options, referenceParts.id);
+                        if (resolution)
+                        {
+                            schema = resolution.schema;
+                            options = resolution.options;
+                        }
+                    }
+
+                    callback(schema, options);
+
+                }, function() {
+                    callback(schema);
+                });
             }, function() {
                 callback();
             });
@@ -2599,5 +2661,164 @@
     };
 
     Alpaca.collectTiming = false;
+
+    Alpaca.pathParts = function(resource)
+    {
+        if (typeof(resource) != "string")
+        {
+            return resource;
+        }
+
+        // convert string to object
+        var resourcePath = resource;
+        var resourceId = null;
+        var i = resourcePath.indexOf("#");
+        if (i > -1)
+        {
+            resourceId = resourcePath.substring(i + 1);
+            resourcePath = resourcePath.substring(0, i);
+        }
+
+        if (Alpaca.endsWith(resourcePath, "/")) {
+            resourcePath = resourcePath.substring(0, resourcePath.length - 1);
+        }
+
+        var parts = {};
+        parts.path = resourcePath;
+
+        if (resourceId)
+        {
+            parts.id = resourceId;
+        }
+
+        return parts;
+    };
+
+    /**
+     * Resolves a field by its property id.
+     *
+     * @param containerField
+     * @param propertyId
+     * @returns {null}
+     */
+    Alpaca.resolveField = function(containerField, propertyIdOrReferenceId)
+    {
+        var resolvedField = null;
+
+        if (typeof(propertyIdOrReferenceId) == "string")
+        {
+            if (propertyIdOrReferenceId.indexOf("#/") == 0 && propertyId.length > 2)
+            {
+                // TODO: path based lookup?
+            }
+            else if (propertyIdOrReferenceId == "#" || propertyIdOrReferenceId == "#/")
+            {
+                resolvedField = containerField;
+            }
+            else if (propertyIdOrReferenceId.indexOf("#") == 0)
+            {
+                // reference id lookup
+
+                // find the top field
+                var topField = containerField;
+                while (topField.parent)
+                {
+                    topField = topField.parent;
+                }
+
+                var referenceId = propertyIdOrReferenceId.substring(1);
+
+                resolvedField = Alpaca.resolveFieldByReference(topField, referenceId);
+
+            }
+            else
+            {
+                // property lookup
+                resolvedField = containerField.childrenByPropertyId[propertyIdOrReferenceId];
+            }
+        }
+
+        return resolvedField;
+    };
+
+    /**
+     * Resolves a field based on its "reference id" relative to a top level field.  This walks down the field tree and
+     * looks for matching schema.id references to find the matching field.
+     *
+     * @param field
+     * @param referenceId
+     */
+    Alpaca.resolveFieldByReference = function(field, referenceId)
+    {
+        if (field.schema && field.schema.id == referenceId)
+        {
+            return field;
+        }
+        else
+        {
+            if (field.children && field.children.length > 0)
+            {
+                for (var i = 0; i < field.children.length; i++)
+                {
+                    var child = field.children[i];
+
+                    var resolved = Alpaca.resolveFieldByReference(child, referenceId);
+                    if (resolved)
+                    {
+                        return resolved;
+                    }
+                }
+            }
+        }
+
+        return null;
+    };
+
+    /**
+     * Determines whether any of the elements of the first argument are equal to the elements of the second argument.
+     *
+     * @param first either a scalar value or a container (object or array) of values
+     * @param second either a scalar value or a container (object or array) of values
+     * @returns whether at least one match is found
+     */
+    Alpaca.anyEquality = function(first, second)
+    {
+        // copy values from first into a values lookup map
+        var values = {};
+        if (typeof(first) == "object" || typeof(first) == "array")
+        {
+            for (var k in first)
+            {
+                values[first[k]] = true;
+            }
+        }
+        else
+        {
+            values[first] = true;
+        }
+
+        var result = false;
+
+        // check values from second against the lookup map
+        if (typeof(second) == "object" || typeof(second) == "array")
+        {
+            for (var k in second)
+            {
+                var v = second[k];
+
+                if (values[v])
+                {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            result = values[second];
+        }
+
+        return result;
+    };
 
 })(jQuery);

@@ -22,7 +22,6 @@
             {
                 return !Alpaca.isEmpty(resource) && Alpaca.isUri(resource);
             };
-
         },
 
         /**
@@ -93,16 +92,7 @@
          */
         loadData: function (resource, successCallback, errorCallback)
         {
-            if (this.isUri(resource))
-            {
-                this.loadJson(resource, function(loadedResource) {
-                    successCallback(loadedResource);
-                }, errorCallback);
-            }
-            else
-            {
-                successCallback(resource);
-            }
+            return this._handleLoadJsonResource(resource, successCallback, errorCallback);
         },
 
         /**
@@ -114,16 +104,7 @@
          */
         loadSchema: function (resource, successCallback, errorCallback)
         {
-            if (this.isUri(resource))
-            {
-                this.loadJson(resource, function(loadedResource) {
-                    successCallback(loadedResource);
-                }, errorCallback);
-            }
-            else
-            {
-                successCallback(resource);
-            }
+            return this._handleLoadJsonResource(resource, successCallback, errorCallback);
         },
 
         /**
@@ -135,16 +116,7 @@
          */
         loadOptions: function (resource, successCallback, errorCallback)
         {
-            if (this.isUri(resource))
-            {
-                this.loadJson(resource, function(loadedResource) {
-                    successCallback(loadedResource);
-                }, errorCallback);
-            }
-            else
-            {
-                successCallback(resource);
-            }
+            return this._handleLoadJsonResource(resource, successCallback, errorCallback);
         },
 
         /**
@@ -156,16 +128,7 @@
          */
         loadView: function (resource, successCallback, errorCallback)
         {
-            if (this.isUri(resource))
-            {
-                this.loadJson(resource, function(loadedResource) {
-                    successCallback(loadedResource);
-                }, errorCallback);
-            }
-            else
-            {
-                successCallback(resource);
-            }
+            return this._handleLoadJsonResource(resource, successCallback, errorCallback);
         },
 
         /**
@@ -336,6 +299,44 @@
             }
 
             $.ajax(ajaxConfigs);
+        },
+
+        /**
+         * Loads referenced JSON schema.
+         *
+         * @param {Object|String} resource Resource to be loaded.
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
+         */
+        loadReferenceSchema: function (resource, successCallback, errorCallback)
+        {
+            return this._handleLoadJsonResource(resource, successCallback, errorCallback);
+        },
+
+        /**
+         * Loads referenced JSON options.
+         *
+         * @param {Object|String} resource Resource to be loaded.
+         * @param {Function} onSuccess onSuccess callback.
+         * @param {Function} onError onError callback.
+         */
+        loadReferenceOptions: function (resource, successCallback, errorCallback)
+        {
+            return this._handleLoadJsonResource(resource, successCallback, errorCallback);
+        },
+
+        _handleLoadJsonResource: function (resource, successCallback, errorCallback)
+        {
+            if (this.isUri(resource))
+            {
+                this.loadJson(resource, function(loadedResource) {
+                    successCallback(loadedResource);
+                }, errorCallback);
+            }
+            else
+            {
+                successCallback(resource);
+            }
         }
 
     });

@@ -322,6 +322,9 @@
                     fieldChain.push(topField);
                 }
 
+                var originalPropertySchema = propertySchema;
+                var originalPropertyOptions = propertyOptions;
+
                 Alpaca.loadRefSchemaOptions(topField, referenceId, function(propertySchema, propertyOptions) {
 
                     // walk the field chain to see if we have any circularity
@@ -336,18 +339,30 @@
 
                     var circular = (refCount > 1);
 
+                    var resolvedPropertySchema = {};
+                    if (originalPropertySchema) {
+                        Alpaca.mergeObject(resolvedPropertySchema, originalPropertySchema);
+                    }
                     if (propertySchema)
                     {
-                        propertySchema = Alpaca.copyOf(propertySchema);
-                        delete propertySchema.id;
+                        Alpaca.mergeObject(resolvedPropertySchema, propertySchema);
                     }
+                    // keep original id
+                    if (originalPropertySchema && originalPropertySchema.id) {
+                        resolvedPropertySchema.id = originalPropertySchema.id;
+                    }
+                    //delete resolvedPropertySchema.id;
 
+                    var resolvedPropertyOptions = {};
+                    if (originalPropertyOptions) {
+                        Alpaca.mergeObject(resolvedPropertyOptions, originalPropertyOptions);
+                    }
                     if (propertyOptions)
                     {
-                        propertyOptions = Alpaca.copyOf(propertyOptions);
+                        Alpaca.mergeObject(resolvedPropertyOptions, propertyOptions);
                     }
 
-                    callback(propertySchema, propertyOptions, circular);
+                    callback(resolvedPropertySchema, resolvedPropertyOptions, circular);
                 });
             }
             else
@@ -529,6 +544,12 @@
                     _this.bindDependencyFieldUpdateEvent(propertyId);
                 }
 
+                // force refresh of dependency states
+                for (var propertyId in properties)
+                {
+                    _this.refreshDependentFieldStates(propertyId);
+                }
+
                 _this.renderValidationState();
 
                 if (onSuccess)
@@ -627,13 +648,11 @@
             if (valid)
             {
                 item.show();
-
                 item.onDependentReveal();
             }
             else
             {
                 item.hide();
-
                 item.onDependentConceal();
             }
         },
@@ -700,42 +719,27 @@
             // helper function
             var bindEvent = function(propertyId, dependencyPropertyId)
             {
-                var dependentField = self.childrenByPropertyId[dependencyPropertyId];
+                // dependencyPropertyId is the identifier for the property that the field "propertyId" is dependent on
+
+                var dependentField = Alpaca.resolveFieldByPropertyId(self, dependencyPropertyId);
                 if (dependentField)
                 {
-                    dependentField.getEl().bind("fieldupdate", function(event) {
+                    dependentField.getEl().bind("fieldupdate", function(propertyField, dependencyField, propertyId, dependencyPropertyId) {
 
-                        // the property "dependencyPropertyId" changed and affects target property ("propertyId")
-
-                        // update UI state for target property
-                        self.showOrHidePropertyBasedOnDependencies(propertyId);
-
-                        // look for any other sibling fields that depend on new state for target property
-                        for (var targetPropertyId in self.schema.properties)
+                        return function(event)
                         {
-                            var def = self.schema.properties[targetPropertyId];
-                            if (def.dependencies)
-                            {
-                                var targetField = self.childrenByPropertyId[targetPropertyId];
+                            // the property "dependencyPropertyId" changed and affects target property ("propertyId")
 
-                                if (Alpaca.isString(def.dependencies) && def.dependencies == propertyId)
-                                {
-                                    self.showOrHidePropertyBasedOnDependencies(targetPropertyId);
-                                    targetField.triggerUpdate();
-                                }
-                                else if (Alpaca.isArray(def.dependencies))
-                                {
-                                    $.each(def.dependencies, function(index, value) {
-                                        if (value == propertyId)
-                                        {
-                                            self.showOrHidePropertyBasedOnDependencies(targetPropertyId);
-                                            targetField.triggerUpdate();
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    });
+                            // update UI state for target property
+                            self.showOrHidePropertyBasedOnDependencies(propertyId);
+
+                            propertyField.trigger("fieldupdate");
+                        };
+
+                    }(item, dependentField, propertyId, dependencyPropertyId));
+
+                    // trigger field update
+                    dependentField.trigger("fieldupdate");
                 }
             };
 
@@ -747,6 +751,46 @@
             {
                 $.each(itemDependencies, function(index, value) {
                     bindEvent(propertyId, value);
+                });
+            }
+        },
+
+        refreshDependentFieldStates: function(propertyId)
+        {
+            var self = this;
+
+            var propertyField = this.childrenByPropertyId[propertyId];
+            if (!propertyField)
+            {
+                return Alpaca.throwErrorWithCallback("Missing property: " + propertyId, self.errorCallback);
+            }
+
+            var itemDependencies = propertyField.schema.dependencies;
+            if (!itemDependencies)
+            {
+                // no dependencies, so simple return
+                return true;
+            }
+
+            // helper function
+            var triggerFieldUpdateForProperty = function(otherPropertyId)
+            {
+                var dependentField = Alpaca.resolveFieldByPropertyId(self, otherPropertyId);
+                if (dependentField)
+                {
+                    // trigger field update
+                    dependentField.trigger("fieldupdate");
+                }
+            };
+
+            if (Alpaca.isString(itemDependencies))
+            {
+                triggerFieldUpdateForProperty(itemDependencies);
+            }
+            else if (Alpaca.isArray(itemDependencies))
+            {
+                $.each(itemDependencies, function(index, value) {
+                    triggerFieldUpdateForProperty(value);
                 });
             }
         },
@@ -765,15 +809,19 @@
          */
         determineSingleDependencyValid: function(propertyId, dependentOnPropertyId)
         {
+            var self = this;
+
             // checks to see if the referenced "dependent-on" property has a value
             // basic JSON-schema supports this (if it has ANY value, it is considered valid
             // special consideration for boolean false
-            var child = this.childrenByPropertyId[dependentOnPropertyId];
-            if (!child)
+            var dependentOnField = Alpaca.resolveFieldByPropertyId(self, dependentOnPropertyId);
+            if (!dependentOnField)
             {
                 // no dependent-on field found, return false
                 return false;
             }
+
+            var dependentOnData = dependentOnField.data;
 
             // assume it isn't valid
             var valid = false;
@@ -788,13 +836,13 @@
 
                 // special case: if the field is a boolean field and we have no conditional dependency checking,
                 // then we set valid = false if the field data is a boolean false
-                if (child.getType() === "boolean" && !this.childrenByPropertyId[propertyId].options.dependencies && !child.data)
+                if (dependentOnField.getType() === "boolean" && !this.childrenByPropertyId[propertyId].options.dependencies && !dependentOnData)
                 {
                     valid = false;
                 }
                 else
                 {
-                    valid = !Alpaca.isValEmpty(child.data);
+                    valid = !Alpaca.isValEmpty(dependentOnField.data);
                 }
             }
             else
@@ -808,29 +856,29 @@
                 // AND operation across any fields
 
                 // do some data sanity cleanup
-                var dependentOnField = this.childrenByPropertyId[dependentOnPropertyId];
-                var dependentOnData = dependentOnField.data;
                 if (dependentOnField.getType() === "boolean" && !dependentOnData) {
                     dependentOnData = false
                 }
 
+                var conditionalData = conditionalDependencies[dependentOnPropertyId];
 
                 // if the option is a function, then evaluate the function to determine whether to show
                 // the function evaluates regardless of whether the schema-based fallback determined we should show
-                if (!Alpaca.isEmpty(conditionalDependencies[dependentOnPropertyId]) && Alpaca.isFunction(conditionalDependencies[dependentOnPropertyId]))
+                if (!Alpaca.isEmpty(conditionalData) && Alpaca.isFunction(conditionalData))
                 {
-                    valid = conditionalDependencies[dependentOnPropertyId].call(this, dependentOnData);
+                    valid = conditionalData.call(this, dependentOnData);
                 }
                 else
                 {
                     // assume true
                     valid = true;
 
-                    // the option is an array or an object
-                    if (Alpaca.isArray(conditionalDependencies[dependentOnPropertyId])) {
+                    // the conditional data is an array of values
+                    if (Alpaca.isArray(conditionalData)) {
 
                         // check array value
-                        if (conditionalDependencies[dependentOnPropertyId] && $.inArray(dependentOnData, conditionalDependencies[dependentOnPropertyId]) == -1)
+                        //if (conditionalDependencies[dependentOnPropertyId] && $.inArray(dependentOnData, conditionalDependencies[dependentOnPropertyId]) == -1)
+                        if (Alpaca.anyEquality(dependentOnData, conditionalData))
                         {
                             valid = false;
                         }
@@ -838,7 +886,7 @@
                     else
                     {
                         // check object value
-                        if (!Alpaca.isEmpty(conditionalDependencies[dependentOnPropertyId]) && conditionalDependencies[dependentOnPropertyId] != dependentOnData)
+                        if (!Alpaca.isEmpty(conditionalData) && !Alpaca.anyEquality(conditionalData, dependentOnData))
                         {
                             valid = false;
                         }
@@ -851,8 +899,7 @@
             //
 
             // final check: only set valid if the dependentOnPropertyId is showing
-            var dependencyProperty = this.childrenByPropertyId[dependentOnPropertyId];
-            if (dependencyProperty && dependencyProperty.isHidden())
+            if (dependentOnField && dependentOnField.isHidden())
             {
                 valid = false;
             }
