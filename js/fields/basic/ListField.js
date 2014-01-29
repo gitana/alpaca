@@ -107,12 +107,22 @@
                                 }
                                 if (ds) {
                                     if (Alpaca.isArray(ds)) {
-                                        $.each(ds, function(index, value) {
-                                            _this.selectOptions.push({
-                                                "value": value,
-                                                "text": value
+                                        if (!Alpaca.isObject(value)) {
+                                            $.each(ds, function(index, value) {
+                                                _this.selectOptions.push({
+                                                    "value": value,
+                                                    "text": value
+                                                });
                                             });
-                                        });
+                                        }
+                                        else {
+											// Allow object rows in array, allowing to preserve insertion 
+											// order instead of order by value.
+											_this.selectOptions.push({
+												"value": value.value,
+												"text": value.text
+											});
+                                        }
                                     }
                                     if (Alpaca.isObject(ds)) {
                                         $.each(ds, function(index, value) {
