@@ -101,10 +101,10 @@
          */
         getValue: function() {
 
-            // if we don't have any children and we're not required, hand back undefined
+            // if we don't have any children and we're not required, hand back empty object
             if (this.children.length === 0 && !this.schema.required)
             {
-                return;
+                return {};
             }
 
             // otherwise, hand back an object with our child properties in it
@@ -126,7 +126,25 @@
                 {
                     if (this.determineAllDependenciesValid(propertyId))
                     {
-                        o[propertyId] = fieldValue;
+                        var assignedValue = null;
+
+                        if (typeof(fieldValue) === "boolean")
+                        {
+                            assignedValue = (fieldValue? true: false);
+                        }
+                        else if (Alpaca.isArray(fieldValue) || Alpaca.isObject(fieldValue))
+                        {
+                            assignedValue = fieldValue;
+                        }
+                        else if (fieldValue)
+                        {
+                            assignedValue = fieldValue;
+                        }
+
+                        if (assignedValue)
+                        {
+                            o[propertyId] = assignedValue;
+                        }
                     }
                 }
             }
