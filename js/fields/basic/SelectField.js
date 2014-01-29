@@ -114,7 +114,7 @@
                     "selectOptions": this.selectOptions,
                     "name": this.name,
                     "data": this.data,
-                    "removeDefaultNone":this.schema.removeDefaultNone   // MPN: When set to True removes the default "None" option added to selects
+                    "removeDefaultNone":this.options.removeDefaultNone
                 });
 
                 // if emptySelectFirst and nothing currently checked, then pick first item in the value list
@@ -276,6 +276,12 @@
                         "description": "If the data is empty, then automatically select the first item in the list.",
                         "type": "boolean",
                         "default": false
+                    },
+                    "removeDefaultNone": {
+                        "title": "Remove Default None",
+                        "description": "If true, the 'default' option from the list will not be shown.",
+                        "type": "boolean",
+                        "default": false
                     }
                 }
             });
@@ -289,12 +295,16 @@
             return Alpaca.merge(this.base(), {
                 "fields": {
                     "multiple": {
-                        "rightLabel": "Allow mulitple selection ?",
+                        "rightLabel": "Allow multiple selection ?",
                         "helper": "Allow multiple selection if checked",
                         "type": "checkbox"
                     },
                     "size": {
                         "type": "integer"
+                    },
+                    "removeDefaultNone": {
+                        "type": "checkbox",
+                        "rightLabel": "Remove Default None"
                     }
                 }
             });
