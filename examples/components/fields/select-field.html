@@ -135,7 +135,6 @@
                             </script>
 
                             <!-- example #4 -->
-
                             <h2>Example 4: </h2>
                             <p>Multiple select field with options loaded from external <a href="./data/icecream-list.html" target="_datasource">data source</a>.</p>
                             <div id="field4">
@@ -223,6 +222,109 @@
                                             "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
                                         },
                                         "view": "VIEW_WEB_DISPLAY"
+                                    });
+                                });
+                            </script>
+
+
+                            <!-- example #8 -->
+                            <h2>Example 8: </h2>
+                            <p>Multiple select field that works with a local data source file (array of string values).</p>
+                            <div id="field8">
+                            </div>
+                            <script type="text/javascript"id="field8-script">
+                                $(function() {
+                                    $("#field8").alpaca({
+                                        "options": {
+                                            "label": "Select your favorite flavor of ice cream",
+                                            "type": "select",
+                                            "multiple": true,
+                                            "size": 3,
+                                            "dataSource": "./data/icecream-list.html"
+                                        }
+                                    });
+                                });
+                            </script>
+
+
+                            <!-- example #9 -->
+                            <h2>Example 9: </h2>
+                            <p>Multiple select field that works with a local data source file (array of object values).</p>
+                            <div id="field9">
+                            </div>
+                            <script type="text/javascript"id="field9-script">
+                                $(function() {
+                                    $("#field9").alpaca({
+                                        "options": {
+                                            "label": "Select your favorite flavor of ice cream",
+                                            "type": "select",
+                                            "multiple": true,
+                                            "size": 3,
+                                            "dataSource": "./data/icecream-list-array.html"
+                                        }
+                                    });
+                                });
+                            </script>
+
+
+                            <!-- example #10 -->
+                            <h2>Example 10: </h2>
+                            <p>Multiple select field that works with an inline datasource function.</p>
+                            <div id="field10">
+                            </div>
+                            <script type="text/javascript"id="field10-script">
+                                $(function() {
+                                    $("#field10").alpaca({
+                                        "options": {
+                                            "dataSource": function(field, callback) {
+
+                                                callback([{
+                                                    "value": "vanilla",
+                                                    "text": "Vanilla"
+                                                }, {
+                                                    "value": "chocolate",
+                                                    "text": "Chocolate"
+                                                }, {
+                                                    "value": "coffee",
+                                                    "text": "Coffee"
+                                                }, {
+                                                    "value": "strawberry",
+                                                    "text": "Strawberry"
+                                                }, {
+                                                    "value": "mint",
+                                                    "text": "Mint"
+                                                }]);
+
+                                            },
+                                            "label": "Select your favorite flavor of ice cream",
+                                            "type": "select",
+                                            "multiple": true,
+                                            "size": 3
+                                        }
+                                    });
+                                });
+                            </script>
+
+
+                            <!-- example #11 -->
+                            <h2>Example 11: </h2>
+                            <p>Multiple select field that works with an inline datasource function.</p>
+                            <div id="field11">
+                            </div>
+                            <script type="text/javascript"id="field11-script">
+                                $(function() {
+                                    $("#field11").alpaca({
+                                        "options": {
+                                            "dataSource": function(field, callback) {
+
+                                                callback(["vanilla", "chocolate", "coffee", "strawberry", "mint"]);
+
+                                            },
+                                            "label": "Select your favorite flavor of ice cream",
+                                            "type": "select",
+                                            "multiple": true,
+                                            "size": 3
+                                        }
                                     });
                                 });
                             </script>
