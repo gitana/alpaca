@@ -490,6 +490,7 @@
 
     <target name="compress" description="Compress the javascript and css" depends="concat-js,concat-css">
         <echo>Compressing Javascript...</echo>
+        <echo>${yui-compressor}</echo>
         <apply executable="java" parallel="false" dest="${build.dir}/package">
             <fileset dir="${build.dir}/package">
                 <include name="**/*.js"/>
@@ -499,6 +500,12 @@
             </fileset>
             <arg line="-jar"/>
             <arg path="${yui-compressor}"/>
+            <!--
+            <arg line="-v"/>
+            -->
+            <arg line="--nomunge"/>
+            <arg line="--preserve-semi"/>
+            <arg line="--disable-optimizations"/>
             <arg line="-o"/>
             <targetfile/>
             <srcfile/>

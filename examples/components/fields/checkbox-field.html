@@ -15,14 +15,14 @@
         <script type="text/javascript" src="../../../lib/jquery-latest.min.js"></script>
         <script type="text/javascript" src="../../../lib/jquery.tmpl.js"></script>
 
+        <!-- jQuery UI Support -->
+        <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
+        <link type="text/css" href="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
+
         <!-- Alpaca -->
         <script type="text/javascript" src="../../../components/alpaca/alpaca.js"></script>
         <link type="text/css" href="../../../components/alpaca/alpaca.css" rel="stylesheet"/>
         <link type="text/css" href="../../../components/alpaca/alpaca-jqueryui.css" rel="stylesheet"/>
-
-        <!-- jQuery UI Support -->
-        <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
-        <link type="text/css" href="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
 
         <!-- Additional CSS -->
         <link type="text/css" href="../../css/960.fluid.css" rel="stylesheet"/>
@@ -121,6 +121,72 @@
                                     });
                                 });
                             </script>
+
+
+                            <!-- example #4 -->
+                            <h2>Example 4: </h2>
+                            <p>Checkbox Field used for multiple values provided as an array</p>
+                            <div id="field4"></div>
+                            <script type="text/javascript" id="field4-script">
+                                $(function() {
+                                    $("#field4").alpaca({
+                                        "data": ["sandwich", "cookie", "drink"],
+                                        "schema": {
+                                            "type": "array",
+                                            "enum": [
+                                                "sandwich",
+                                                "chips",
+                                                "cookie",
+                                                "drink"
+                                            ]
+                                        },
+                                        "options": {
+                                            "type": "checkbox",
+                                            "label": "What would you like with your order?",
+                                            "optionLabels": [
+                                                "A Sandwich",
+                                                "Potato Chips",
+                                                "A Cookie",
+                                                "Soft Drink"
+                                            ]
+                                        }
+                                    });
+                                });
+                            </script>
+
+
+                            <!-- example #5 -->
+                            <h2>Example 5: </h2>
+                            <p>Checkbox Field used for multiple values provided as a comma-delimited string</p>
+                            <div id="field5"></div>
+                            <script type="text/javascript" id="field5-script">
+                                $(function() {
+                                    $("#field5").alpaca({
+                                        "data": "sandwich, cookie, drink",
+                                        "schema": {
+                                            "type": "string",
+                                            "enum": [
+                                                "sandwich",
+                                                "chips",
+                                                "cookie",
+                                                "drink"
+                                            ]
+                                        },
+                                        "options": {
+                                            "type": "checkbox",
+                                            "label": "What would you like with your order?",
+                                            "optionLabels": [
+                                                "A Sandwich",
+                                                "Potato Chips",
+                                                "A Cookie",
+                                                "Soft Drink"
+                                            ]
+                                        }
+                                    });
+                                });
+                            </script>
+
+
 
 
                             <!-- BEGIN DISCUSSIONS -->

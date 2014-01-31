@@ -8,26 +8,32 @@
         $("#dependency-1").alpaca({
             "data": {},
             "schema": {
-                "title": "Ice Cream Picker",
-                "description": "Select Your Favorite Ice Cream",
+                "title": "Survey",
+                "description": "Please participate in our survey",
                 "type": "object",
                 "properties": {
                     "fan": {
-                        "title": "Alpaca Ice Cream Lover?",
-                        "type": "boolean",
-                        "description": "Say YES If You Are Truly An Alpaca Ice Cream Lover."
+                        "title": "Are you an Ice Cream fanatic?",
+                        "type": "boolean"
                     },
                     "icecream": {
-                        "title": "Favorite Ice Cream",
+                        "title": "What is your Favorite Ice Cream?",
                         "type": "String",
                         "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
                         "dependencies": "fan"
                     },
                     "topping": {
-                        "title": "Favorite Topping",
+                        "title": "What is your Favorite Topping?",
                         "type": "String",
                         "enum": ["Marshmelllow", "Chocolate Chip", "Caramel", "Cookie Dough"],
                         "dependencies": ["icecream"]
+                    }
+                }
+            },
+            "options": {
+                "fields": {
+                    "fan": {
+                        "rightLabel": "Why yes, I am..."
                     }
                 }
             },
@@ -54,11 +60,13 @@
                         fieldContainerElem2 = $('.alpaca-fieldset-items-container > div:eq(2) > span');
                         notEqual(fieldContainerElem2.css('display'), 'none', 'Input field for topping property shown after select for icecream property is selected.');
                     });
+
+                    // pick the "Vanilla" option in the icecream dropdown, causes dependencies to recalculate and "toppings" to display
                     fieldElem1.val( 'Vanilla' ).attr('selected',true);
                     fieldElem1.change();
                 });
-                // click the "fan" checkbox, causes "change" event to handle
-                fieldElem0.attr("checked", true);
+                // click the "fan" checkbox, causes dependencies to recalculate and new "icecream" to display
+                fieldElem0.prop("checked", true);
                 fieldElem0.change();
                 start();
             }
