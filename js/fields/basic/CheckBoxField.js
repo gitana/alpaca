@@ -368,8 +368,13 @@
                     "properties": {
                         "rightLabel": {
                             "title": "Option Label",
-                            "description": "Optional right-hand side label for checkbox field.",
+                            "description": "Optional right-hand side label for single checkbox field.",
                             "type": "string"
+                        },
+                        "multiple": {
+                            "title": "Multiple",
+                            "description": "Whether to render multiple checkboxes for multi-valued type (such as an array or a comma-delimited string)",
+                            "type": "boolean"
                         }
                     }
                 });
@@ -384,6 +389,9 @@
                     "fields": {
                         "rightLabel": {
                             "type": "text"
+                        },
+                        "multiple": {
+                            "type": "checkbox"
                         }
                     }
                 });
@@ -400,7 +408,7 @@
              * @see Alpaca.Field#getDescription
              */
             getDescription: function() {
-                return "Checkbox Field for boolean data.";
+                return "Checkbox Field for boolean (true/false), string ('true', 'false' or comma-delimited string of values) or data array.";
             },
 
             /**
