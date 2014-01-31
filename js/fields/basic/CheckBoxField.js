@@ -132,7 +132,7 @@
 
                     // do this little trick so that if we have a default value, it gets set during first render
                     // this causes the checked state of the control to update
-                    if (typeof(this.data) != "undefined")
+                    if (this.data && typeof(this.data) != "undefined")
                     {
                         this.setValue(this.data);
                     }
