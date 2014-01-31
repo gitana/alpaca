@@ -53,7 +53,9 @@
         "wizardDoneButton" : '<button>Done</button>',
         "wizardStatusBar" : '<ol id="${id}">{{each(i,v) titles}}<li id="stepDesc${i}"><div><strong><span>${v.title}</span>${v.description}</strong></div></li>{{/each}}</ol>',
 
-        "controlFieldCheckbox": '<div class="checkbox">{{if options.rightLabel}}<label for="${id}">{{/if}}<input type="checkbox" id="${id}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>{{if options.rightLabel}}${options.rightLabel}</label>{{/if}}</div>',
+        "controlFieldCheckbox": '<div class="checkbox" id="${id}">{{if options.rightLabel}}<label for="${id}_checkbox">{{/if}}<input id="${id}_checkbox" type="checkbox" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>{{if options.rightLabel}}${options.rightLabel}</label>{{/if}}</div>',
+        "controlFieldCheckboxMultiple": '<div id="${id}">{{each(i,o) checkboxOptions}}<div class="checkbox"><label for="${id}_checkbox_${i}"><input type="checkbox" id="${id}_checkbox_${i}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} data-checkbox-value="${o.value}" data-checkbox-index="${i}"/>${o.text}</label></div>{{/each}}</div>',
+
         "controlFieldRadio": '{{if !required}}<div class="radio"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" id="${id}_radio_nonevalue" value=""/><label for="${id}_radio_nonevalue">None</label></div>{{/if}}{{each selectOptions}}<div class="radio"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value="${value}" id="${id}_radio_${$index}" {{if value == data}}checked="checked"{{/if}}/><label for="${id}_radio_${$index}">${text}</label></div>{{/each}}'
 
     });
@@ -101,8 +103,9 @@
 
             // any checkbox inputs get the "checkbox" class on their container
 
-            // any radio inputs get the "checkbox" class on their checkbox
-            $(targetDiv).find("input[type=checkbox]").parent().parent().addClass("checkbox");
+            // any checkbox inputs get the "checkbox" class on their checkbox
+            // TODO: remove, this is now done by the template itself
+            //$(targetDiv).find("input[type=checkbox]").parent().parent().addClass("checkbox");
             // any radio inputs get the "radio" class on their radio
             $(targetDiv).find("input[type=radio]").parent().parent().addClass("radio");
 

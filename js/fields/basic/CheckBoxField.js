@@ -419,8 +419,8 @@
 
         });
 
-    Alpaca.registerTemplate("controlFieldCheckbox", '<span><input type="checkbox" id="${id}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>{{if options.rightLabel}}<label class="alpaca-controlfield-label" for="${id}">${options.rightLabel}</label>{{/if}}</span>');
-    Alpaca.registerTemplate("controlFieldCheckboxMultiple", '<span>{{each(i,o) checkboxOptions}}<span><input type="checkbox" id="${id}_checkbox_${i}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} data-checkbox-value="${o.value}" data-checkbox-index="${i}" /><label class="alpaca-controlfield-label" for="${id}_checkbox_${i}">${text}</label></span>{{/each}}</span>');
+    Alpaca.registerTemplate("controlFieldCheckbox", '<span id="${id}">{{if options.rightLabel}}<label class="alpaca-controlfield-label" for="${id}_checkbox">{{/if}}<input id="${id}_checkbox" type="checkbox" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>{{if options.rightLabel}}${options.rightLabel}</label>{{/if}}</span>');
+    Alpaca.registerTemplate("controlFieldCheckboxMultiple", '<span id="${id}">{{each(i,o) checkboxOptions}}<span><label class="alpaca-controlfield-label" for="${id}_checkbox_${i}"><input type="checkbox" id="${id}_checkbox_${i}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} data-checkbox-value="${o.value}" data-checkbox-index="${i}" />${text}</label></span>{{/each}}</span>');
 
     Alpaca.registerFieldClass("checkbox", Alpaca.Fields.CheckBoxField);
     Alpaca.registerDefaultSchemaFieldMapping("boolean", "checkbox");
