@@ -96,7 +96,8 @@
                     "selectOptions": this.selectOptions,
                     "required":this.schema.required,
 					"name": this.name,
-                    "data": this.data
+                    "data": this.data,
+                    "removeDefaultNone": this.options.removeDefaultNone
                 });
 
                 // if emptySelectFirst and nothing currently checked, then pick first item in the value list
@@ -183,7 +184,7 @@
 				}
 			});
         },
-        
+
 		/**
          * @see Alpaca.Field#getTitle
 		 */
@@ -207,7 +208,7 @@
         
     });
     
-    Alpaca.registerTemplate("controlFieldRadio", '<div id="${id}" class="alpaca-controlfield-radio">{{if !required}}<span class="alpaca-controlfield-radio-item"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" id="${id}_radio_nonevalue" value=""/><label class="alpaca-controlfield-radio-label" for="${id}_radio_nonevalue">None</label></span>{{/if}}{{each selectOptions}}<span class="alpaca-controlfield-radio-item"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value="${value}" id="${id}_radio_${$index}" {{if value == data}}checked="checked"{{/if}}/><label class="alpaca-controlfield-radio-label" for="${id}_radio_${$index}">${text}</label></span>{{/each}}</div>');
+    Alpaca.registerTemplate("controlFieldRadio", '<div id="${id}" class="alpaca-controlfield-radio">{{if !required && !removeDefaultNone}}<span class="alpaca-controlfield-radio-item"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" id="${id}_radio_nonevalue" value=""/><label class="alpaca-controlfield-radio-label" for="${id}_radio_nonevalue">None</label></span>{{/if}}{{each selectOptions}}<span class="alpaca-controlfield-radio-item"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value="${value}" id="${id}_radio_${$index}" {{if value == data}}checked="checked"{{/if}}/><label class="alpaca-controlfield-radio-label" for="${id}_radio_${$index}">${text}</label></span>{{/each}}</div>');
 
     Alpaca.registerFieldClass("radio", Alpaca.Fields.RadioField);
     

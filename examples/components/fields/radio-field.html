@@ -170,6 +170,43 @@
                             </script>
 
 
+                            <!-- example #5 -->
+                            <h2>Example 5: </h2>
+                            <p>
+                                A radio field that uses the <code>removeDefaultNone</code> option to remove the option for the end user to select <code>None</code>
+                                from the list of available options.  In addition, the <code>vertical</code> option is specified to inform
+                                the field to render vertically.
+                            </p>
+                            <p>
+                                Note that if the property that the field describes is required for data integrity to be maintained,
+                                consider setting the property schema's <code>required</code> setting to <code>true</code>.
+                                This produces the same effect and also allows your data to validate appropriately.
+                            </p>
+                            <div id="field5"></div>
+                            <script type="text/javascript"id="field5-script">
+                                $(function() {
+                                    $("#field5").alpaca({
+                                        "data": "Jimi Hendrix",
+                                        "schema": {
+                                            "enum": [
+                                                "Jimi Hendrix",
+                                                "Mark Knopfler",
+                                                "Joe Satriani",
+                                                "Eddie Van Halen",
+                                                "Orianthi"
+                                            ]
+                                        },
+                                        "options": {
+                                            "type": "radio",
+                                            "label": "Who is your favorite guitarist?",
+                                            "removeDefaultNone": true,
+                                            "vertical": true
+                                        }
+                                    });
+                                });
+                            </script>
+
+
                             <!-- BEGIN DISCUSSIONS -->
                             <div class="alpaca-discussions"></div>
                             <!-- END DISCUSSIONS -->

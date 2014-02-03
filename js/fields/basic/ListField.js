@@ -240,6 +240,12 @@
                         "title": "Option Datasource",
                         "description": "Datasource for generating list of options.  This can be a string or a function.  If a string, it is considered to be a URI to a service that produces a object containing key/value pairs or an array of elements of structure {'text': '', 'value': ''}.  This can also be a function that is called to produce the same list.",
                         "type": "string"
+                    },
+                    "removeDefaultNone": {
+                        "title": "Remove Default None",
+                        "description": "If true, the default 'None' option will not be shown.",
+                        "type": "boolean",
+                        "default": false
                     }
                 }
             });
@@ -258,6 +264,10 @@
                     },
                     "dataSource": {
                         "type": "text"
+                    },
+                    "removeDefaultNone": {
+                        "type": "checkbox",
+                        "rightLabel": "Remove Default None"
                     }
                 }
             });
