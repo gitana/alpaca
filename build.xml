@@ -252,6 +252,9 @@
                 <file name="license.txt"/>
             </filelist>
             <filelist dir="${prep.dir}/tests/js">
+
+                <file name="helpers/helpers.js"/>
+
                 <file name="fields/TextField.js"/>
                 <file name="fields/CheckBoxField.js"/>
                 <file name="fields/NumberField.js"/>

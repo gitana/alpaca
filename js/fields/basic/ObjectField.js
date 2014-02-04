@@ -52,6 +52,12 @@
             if (Alpaca.isEmpty(this.data)) {
                 return;
             }
+
+            if (this.data == "")
+            {
+                return;
+            }
+
             if (!Alpaca.isObject(this.data)) {
                 if (!Alpaca.isString(this.data)) {
                     return;
@@ -543,29 +549,6 @@
                     Alpaca.logDebug("There were " + extraDataKeys.length + " extra data keys that were not part of the schema " + JSON.stringify(extraDataKeys));
                 }
 
-                /*
-                // support for dependencies
-
-                // walk through all properties and allow each to determine whether it should show based on its dependencies.
-                // if properties do not have dependencies, they show by default.
-                for (var propertyId in properties)
-                {
-                    _this.showOrHidePropertyBasedOnDependencies(propertyId);
-                }
-
-                // bind event handlers to handle updates to field state
-                for (var propertyId in properties)
-                {
-                    _this.bindDependencyFieldUpdateEvent(propertyId);
-                }
-
-                // force refresh of dependency states
-                for (var propertyId in properties)
-                {
-                    _this.refreshDependentFieldStates(propertyId);
-                }
-                */
-
                 _this.renderValidationState();
 
                 if (onSuccess)
@@ -577,77 +560,69 @@
             // each property in the object can have a different schema and options so we need to process
             // asynchronously and wait for all to complete
 
-            // figure out the total count of properties that we need to iterate through
-            var total = 0;
+            // wrap into waterfall functions
+            var propertyFunctions = [];
             for (var propertyId in properties)
             {
-                total++;
-            }
-
-            // collect all the property ids since we'll churn through them by property key
-            var propertyIds = [];
-            for (var propertyId in properties)
-            {
-                propertyIds.push(propertyId);
-            }
-
-            // workhorse function for a single property
-            var handleProperty = function(index)
-            {
-                if (index === total)
-                {
-                    // all done, fire completion function
-                    cf();
-
-                    return;
-                }
-
-                var propertyId = propertyIds[index];
-
                 var itemData = null;
                 if (_this.data)
                 {
                     itemData = _this.data[propertyId];
                 }
 
-                // only allow this if we have data, otherwise we end up with circular reference
-                _this.resolvePropertySchemaOptions(propertyId, function(schema, options, circular) {
-
-                    // we only allow addition if the resolved schema isn't circularly referenced
-                    // or the schema is optional
-                    if (circular)
+                var pf = (function(propertyId, itemData, extraDataProperties)
+                {
+                    return function(callback)
                     {
-                        return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + schema, _this.errorCallback);
-                    }
+                        // only allow this if we have data, otherwise we end up with circular reference
+                        _this.resolvePropertySchemaOptions(propertyId, function(schema, options, circular) {
 
-                    if (!schema)
-                    {
-                        Alpaca.logError("Unable to resolve schema for property: " + propertyId);
-                    }
+                            // we only allow addition if the resolved schema isn't circularly referenced
+                            // or the schema is optional
+                            if (circular)
+                            {
+                                return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + schema, _this.errorCallback);
+                            }
 
-                    _this.addItem(propertyId, schema, options, itemData, null, false, function(addedItemControl) {
+                            if (!schema)
+                            {
+                                Alpaca.logError("Unable to resolve schema for property: " + propertyId);
+                            }
 
-                        // remove from extraDataProperties helper
-                        delete extraDataProperties[propertyId];
+                            _this.addItem(propertyId, schema, options, itemData, null, false, function(addedItemControl) {
 
+                                // remove from extraDataProperties helper
+                                delete extraDataProperties[propertyId];
 
-                        // HANDLE PROPERTY DEPENDENCIES (IF THE PROPERTY HAS THEM)
+                                // HANDLE PROPERTY DEPENDENCIES (IF THE PROPERTY HAS THEM)
 
-                        // if this property has dependencies, show or hide this added item right away
-                        _this.showOrHidePropertyBasedOnDependencies(propertyId);
+                                // if this property has dependencies, show or hide this added item right away
+                                _this.showOrHidePropertyBasedOnDependencies(propertyId);
 
-                        // if this property has dependencies, bind update handlers to dependent fields
-                        _this.bindDependencyFieldUpdateEvent(propertyId);
+                                // if this property has dependencies, bind update handlers to dependent fields
+                                _this.bindDependencyFieldUpdateEvent(propertyId);
 
-                        // if this property has dependencies, trigger those to ensure it is in the right state
-                        _this.refreshDependentFieldStates(propertyId);
+                                // if this property has dependencies, trigger those to ensure it is in the right state
+                                _this.refreshDependentFieldStates(propertyId);
 
+                                // by the time we get here, we may have constructed a very large child chain of
+                                // sub-dependencies and so we use nextTick() instead of a straight callback so as to
+                                // avoid blowing out the stack size
+                                Alpaca.nextTick(function() {
+                                    callback();
+                                });
+                            });
+                        });
+                    };
 
-                        handleProperty(index + 1);
-                    });
-                });
-            };
-            handleProperty(0);
+                })(propertyId, itemData, extraDataProperties);
+
+                propertyFunctions.push(pf);
+            }
+
+            Alpaca.series(propertyFunctions, function(err) {
+                cf();
+            });
         },
 
 

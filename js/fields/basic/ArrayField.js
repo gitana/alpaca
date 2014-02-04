@@ -110,10 +110,41 @@
             _this.resolveItemSchemaOptions(function(schema, options) {
 
                 // if the number of items in the data is greater than the number of existing child elements
-                while(i < data.length) {
-                    _this.addItem(i, schema, options, data[i]);
-                    i++;
-                };
+                // then we need to add the new fields
+
+                if (i < data.length)
+                {
+                    // waterfall functions
+                    var funcs = [];
+
+                    while (i < data.length)
+                    {
+                        var f = (function(i, data)
+                        {
+                            return function(callback)
+                            {
+                                _this.addItem(i, schema, options, data[i], null, false, function() {
+
+                                    // by the time we get here, we may have constructed a very large child chain of
+                                    // sub-dependencies and so we use nextTick() instead of a straight callback so as to
+                                    // avoid blowing out the stack size
+                                    Alpaca.nextTick(function() {
+                                        callback();
+                                    });
+
+                                });
+                            };
+                        })(i, data[i]);
+
+                        funcs.push(f);
+
+                        i++;
+                    };
+
+                    Alpaca.series(funcs, function() {
+                        // TODO: anything once finished?
+                    });
+                }
 
             });
 
@@ -317,6 +348,12 @@
         renderToolbar: function(containerElem) {
             var _this = this;
 
+            // we do not render the toolbar in "display" mode
+            if (this.view && this.view.type == "view")
+            {
+                return;
+            }
+
             if (!this.options.readonly) {
                 var id = containerElem.attr('alpaca-id');
                 var fieldControl = this.childrenById[id];
@@ -333,8 +370,9 @@
 
                                 _this.resolveItemSchemaOptions(function(schema, options) {
 
-                                    var newContainerElem = arrayField.addItem(containerElem.index() + 1, schema, options, null, id, true);
-                                    arrayField.enrichElements(newContainerElem);
+                                    arrayField.addItem(containerElem.index() + 1, schema, options, null, id, true, function(addedField) {
+                                        arrayField.enrichElements(addedField.getEl());
+                                    });
 
                                 });
 
@@ -419,6 +457,13 @@
          */
         renderArrayToolbar: function(containerElem) {
             var _this = this;
+
+            // we do not render the array toolbar in "display" mode
+            if (this.view && this.view.type == "view")
+            {
+                return;
+            }
+
             var id = containerElem.attr('alpaca-id');
             var itemToolbarTemplateDescriptor = this.view.getTemplateDescriptor("arrayToolbar");
             if (itemToolbarTemplateDescriptor) {
@@ -436,8 +481,10 @@
 
                         _this.resolveItemSchemaOptions(function(schema, options) {
 
-                            var newContainerElem = _this.addItem(0, schema, options, "", id, true);
-                            _this.enrichElements(newContainerElem);
+                            _this.addItem(0, schema, options, "", id, true, function(addedField) {
+                                _this.enrichElements(addedField.getEl());
+                            });
+
 
                         });
                     });
@@ -449,7 +496,10 @@
                     toolbarElemAdd.click(function() {
 
                         _this.resolveItemSchemaOptions(function(schema, options) {
-                            _this.addItem(0, schema, options, "", id, true);
+
+                            _this.addItem(0, schema, options, "", id, true, function(addedField) {
+                                _this.enrichElements(addedField.getEl());
+                            });
                         });
 
                         return false;
@@ -576,6 +626,8 @@
                             // store key on dom element
                             $(containerElem).attr("data-alpaca-item-container-item-key", index);
 
+                            _this.updateToolbarItemsStatus(_this.outerEl);
+
                             if (cb)
                             {
                                 cb();
@@ -591,7 +643,8 @@
                     }
                 });
 
-                this.updateToolbarItemsStatus(this.outerEl);
+                //this.updateToolbarItemsStatus(this.outerEl);
+
                 return containerElem;
             }
         },
@@ -684,48 +737,64 @@
         /**
          * @see Alpaca.ContainerField#renderItems
          */
-        renderItems: function(onSuccess) {
-            var _this = this;
+        renderItems: function(onSuccess)
+        {
+            var self = this;
 
             // mark field container as empty by default
             // the "addItem" method below gets the opportunity to unset this
-            $(this.fieldContainer).addClass("alpaca-fieldset-items-container-empty");
+            $(self.fieldContainer).addClass("alpaca-fieldset-items-container-empty");
 
-            if (this.data)
+            if (self.data)
             {
                 // all items within the array have the same schema and options
                 // so we only need to load this once
-                _this.resolveItemSchemaOptions(function(schema, options) {
+                self.resolveItemSchemaOptions(function(schema, options) {
 
-                    // workhorse function
-                    // adds an item and then recursively fires down from the callback until the end of the list is reached
-                    var handleItem = function(index)
+                    // waterfall functions
+                    var funcs = [];
+                    for (var index = 0; index < self.data.length; index++)
                     {
-                        if (index === _this.data.length)
+                        var value = self.data[index];
+
+                        var pf = (function(index, value)
                         {
-                            _this.updateToolbarItemsStatus();
-
-                            if (onSuccess)
+                            return function(callback)
                             {
-                                onSuccess();
-                            }
+                                self.addItem(index, schema, options, value, false, false, function() {
 
-                            return;
+                                    // by the time we get here, we may have constructed a very large child chain of
+                                    // sub-dependencies and so we use nextTick() instead of a straight callback so as to
+                                    // avoid blowing out the stack size
+                                    Alpaca.nextTick(function() {
+                                        callback();
+                                    });
+
+                                });
+                            };
+
+                        })(index, value);
+
+                        funcs.push(pf);
+                    }
+
+                    Alpaca.series(funcs, function(err) {
+
+                        console.log("DONE");
+
+                        self.updateToolbarItemsStatus();
+
+                        if (onSuccess)
+                        {
+                            onSuccess();
                         }
+                    });
 
-                        var value = _this.data[index];
-
-                        _this.addItem(index, schema, options, value, false, false, function() {
-                            handleItem(index+1);
-                        });
-
-                    };
-                    handleItem(0);
                 });
             }
             else
             {
-                this.updateToolbarItemsStatus();
+                self.updateToolbarItemsStatus();
 
                 if (onSuccess)
                 {

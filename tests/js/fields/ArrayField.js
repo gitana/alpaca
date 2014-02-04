@@ -248,7 +248,8 @@
                 expect(9);
                 var arrayToolBarAddButton = $('#array-5 .alpaca-fieldset-array-toolbar-add');
                 ok(arrayToolBarAddButton.length, 'Array toolbar with add button generated.');
-                arrayToolBarAddButton.click(function() {
+                simulateClick(arrayToolBarAddButton, function() {
+
                     var objectFieldSetItem = $('#array-5 .alpaca-fieldset-items-container fieldset');
                     var objectFieldSetItemId = objectFieldSetItem.attr('alpaca-field-id');
                     ok(objectFieldSetItem.length, 'New object field generated.');
@@ -265,14 +266,15 @@
                     ok(inputElem1LabelElem.length, 'Label for new object second text input field generated.');
                     equal(inputElem1LabelElem.text(), 'Topping', 'Label for second object first text input field populated with correct text.');
                     var arrayItemToolBarRemoveButton = $('#array-5 #' + objectFieldSetItemId + '-item-container .alpaca-fieldset-array-item-toolbar .alpaca-fieldset-array-item-toolbar-remove');
-                    arrayItemToolBarRemoveButton.click(function() {
+
+                    simulateClick(arrayItemToolBarRemoveButton, function() {
+
                         arrayToolBarAddButton = $('#array-5 .alpaca-fieldset-array-toolbar-add');
                         ok(arrayToolBarAddButton.length, 'Array toolbar re-generated once all items are removed.');
+
+                        start();
                     });
-                    arrayItemToolBarRemoveButton.click();
                 });
-                arrayToolBarAddButton.click();
-                start();
             }
         });
     });

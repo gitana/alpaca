@@ -114,61 +114,66 @@
          * @see Alpaca.Field#renderField
          */
         renderField: function(onSuccess) {
-            this.base();
-            var _this = this;
-            // apply additional css
-            $(this.fieldContainer).addClass("alpaca-addressfield");
 
-            if (this.options.addressValidation && !this.isDisplayOnly()) {
-                $('<div style="clear:both;"></div>').appendTo(this.fieldContainer);
-                var mapButton = $('<div class="alpaca-form-button">Google Map</div>').appendTo(this.fieldContainer);
-                if (mapButton.button) {
-                    mapButton.button({
-                        text: true
-                    });
-                }
-                mapButton.click(
-                    function() {
-                        if (google && google.maps) {
-                            var geocoder = new google.maps.Geocoder();
-                            var address = _this.getAddress();
-                            if (geocoder) {
-                                geocoder.geocode({
-                                    'address': address
-                                }, function(results, status) {
-                                    if (status == google.maps.GeocoderStatus.OK) {
-                                        var mapCanvasId = _this.getId() + "-map-canvas";
-                                        if ($('#' + mapCanvasId).length === 0) {
-                                            $("<div id='" + mapCanvasId + "' class='alpaca-controlfield-address-mapcanvas'></div>").appendTo(_this.fieldContainer);
+            var self = this;
+
+            this.base(function() {
+
+                // apply additional css
+                $(self.fieldContainer).addClass("alpaca-addressfield");
+
+                if (self.options.addressValidation && !self.isDisplayOnly()) {
+                    $('<div style="clear:both;"></div>').appendTo(self.fieldContainer);
+                    var mapButton = $('<div class="alpaca-form-button">Google Map</div>').appendTo(self.fieldContainer);
+                    if (mapButton.button) {
+                        mapButton.button({
+                            text: true
+                        });
+                    }
+                    mapButton.click(
+                        function() {
+                            if (google && google.maps) {
+                                var geocoder = new google.maps.Geocoder();
+                                var address = self.getAddress();
+                                if (geocoder) {
+                                    geocoder.geocode({
+                                        'address': address
+                                    }, function(results, status) {
+                                        if (status == google.maps.GeocoderStatus.OK) {
+                                            var mapCanvasId = self.getId() + "-map-canvas";
+                                            if ($('#' + mapCanvasId).length === 0) {
+                                                $("<div id='" + mapCanvasId + "' class='alpaca-controlfield-address-mapcanvas'></div>").appendTo(self.fieldContainer);
+                                            }
+                                            var map = new google.maps.Map(document.getElementById(self.getId() + "-map-canvas"), {
+                                                "zoom": 10,
+                                                "center": results[0].geometry.location,
+                                                "mapTypeId": google.maps.MapTypeId.ROADMAP
+                                            });
+                                            var marker = new google.maps.Marker({
+                                                map: map,
+                                                position: results[0].geometry.location
+                                            });
+                                        } else {
+                                            self.displayMessage("Geocoding failed: " + status);
                                         }
-                                        var map = new google.maps.Map(document.getElementById(_this.getId() + "-map-canvas"), {
-                                            "zoom": 10,
-                                            "center": results[0].geometry.location,
-                                            "mapTypeId": google.maps.MapTypeId.ROADMAP
-                                        });
-                                        var marker = new google.maps.Marker({
-                                            map: map,
-                                            position: results[0].geometry.location
-                                        });
-                                    } else {
-                                        _this.displayMessage("Geocoding failed: " + status);
-                                    }
-                                });
+                                    });
+                                }
+                            } else {
+                                self.displayMessage("Google Map API is not installed.");
                             }
-                        } else {
-                            _this.displayMessage("Google Map API is not installed.");
-                        }
-                    }).wrap('<small/>');
+                        }).wrap('<small/>');
 
-                if (this.options.showMapOnLoad)
-                {
-                    mapButton.click();
+                    if (self.options.showMapOnLoad)
+                    {
+                        mapButton.click();
+                    }
                 }
-            }
 
-            if (onSuccess) {
-                onSuccess();
-            }
+                if (onSuccess) {
+                    onSuccess();
+                }
+            });
+
         },//__BUILDER_HELPERS
 
         /**

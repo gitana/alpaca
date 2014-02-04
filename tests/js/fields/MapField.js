@@ -58,7 +58,8 @@
                 // the new element will be empty which will be invalid since we require a key
                 var arrayToolBarAddButton = $('#map-1 .alpaca-fieldset-array-item-toolbar-add');
                 ok(arrayToolBarAddButton.length, 'Array toolbar with add button generated.');
-                arrayToolBarAddButton.click(function() {
+                simulateClick(arrayToolBarAddButton, function() {
+
                     var objectFieldSetItem = $('#map-1 .alpaca-fieldset-items-container fieldset:eq(0)');
                     var objectFieldSetItemId = objectFieldSetItem.attr('alpaca-field-id');
                     ok(objectFieldSetItem.length, 'New object field generated.');
@@ -92,9 +93,9 @@
                     var updatedVal = renderedField.getValue();
                     ok(updatedVal['john316']!= null, 'Map value contains john316 key');
                     ok(updatedVal['john326']!= null, 'Map value contains john326 key');
+
+                    start();
                 });
-                arrayToolBarAddButton.click();
-                start();
             }
         });
     });
