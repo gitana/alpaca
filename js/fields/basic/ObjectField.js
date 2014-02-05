@@ -81,7 +81,7 @@
          * @see Alpaca.Field#setValue
          */
         setValue: function(data) {
-            if (!data || !Alpaca.isObject(data)) {
+            if (data == null || typeof(data) == "undefined" || !Alpaca.isObject(data)) {
                 return;
             }
 
