@@ -1653,6 +1653,10 @@
             var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);
             if (field)
             {
+                // hide field while rendering
+                $(el).addClass("alpaca-field-rendering");
+                $(el).addClass("alpaca-hidden");
+
                 field.isDynamicCreation = isDynamicCreation;
                 Alpaca.fieldInstances[field.getId()] = field;
 
@@ -1678,6 +1682,10 @@
 
                 var fin = function()
                 {
+                    // reveal field after rendering
+                    $(el).removeClass("alpaca-field-rendering");
+                    $(el).removeClass("alpaca-hidden");
+
                     if (Alpaca.collectTiming)
                     {
                         var t2 = new Date().getTime();

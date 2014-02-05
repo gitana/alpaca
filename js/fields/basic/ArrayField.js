@@ -107,13 +107,13 @@
                 }
             }
 
-            _this.resolveItemSchemaOptions(function(schema, options) {
+            // if the number of items in the data is greater than the number of existing child elements
+            // then we need to add the new fields
 
-                // if the number of items in the data is greater than the number of existing child elements
-                // then we need to add the new fields
+            if (i < data.length)
+            {
+                _this.resolveItemSchemaOptions(function(schema, options) {
 
-                if (i < data.length)
-                {
                     // waterfall functions
                     var funcs = [];
 
@@ -144,9 +144,8 @@
                     Alpaca.series(funcs, function() {
                         // TODO: anything once finished?
                     });
-                }
-
-            });
+                });
+            }
 
         },
 

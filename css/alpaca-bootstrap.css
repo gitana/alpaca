@@ -7,6 +7,12 @@
     display: inline-block !important;
 }
 
+.help-block alpaca-controlfield-message-text
+{
+    display: inline-block !important;
+    margin-left: 4px;
+}
+
 /*
  * When in an error state, adjust the glyphicons as well.
  */
@@ -165,4 +171,9 @@ fieldset.alpaca-view-web-list.fieldset-collapsed
 {
     padding-top: 9px !important;
     padding-left: 12px !important;
+}
+
+.alpaca-hidden
+{
+    display: none;
 }

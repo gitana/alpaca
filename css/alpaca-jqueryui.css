@@ -19,3 +19,8 @@
     z-index: 100;
 }
 
+.alpaca-hidden
+{
+    display: none;
+}
+

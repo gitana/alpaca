@@ -47,3 +47,8 @@ input, textarea, select
 {
     display:none;
 }
+
+.alpaca-hidden
+{
+    display: none;
+}

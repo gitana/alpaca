@@ -80,20 +80,63 @@
          *
          * @see Alpaca.Field#setValue
          */
-        setValue: function(data) {
-            if (data == null || typeof(data) == "undefined" || !Alpaca.isObject(data)) {
+        setValue: function(data)
+        {
+            if (!data)
+            {
+                data = {};
+            }
+
+            // if not an object by this point, we don't handle it
+            if (!Alpaca.isObject(data))
+            {
                 return;
             }
 
-            // set fields
-            for (var fieldId in this.childrenById) {
+            // sort existing fields by property id
+            var existingFieldsByPropertyId = {};
+            for (var fieldId in this.childrenById)
+            {
                 var propertyId = this.childrenById[fieldId].propertyId;
-                var _data = Alpaca.traverseObject(data, propertyId);
-                if (!Alpaca.isEmpty(_data)) {
-                    var childField = this.childrenById[fieldId];
-                    childField.setValue(_data);
+                existingFieldsByPropertyId[propertyId] = this.childrenById[fieldId];
+            }
+
+            // new data mapped by property id
+            var newDataByPropertyId = {};
+            for (var k in data)
+            {
+                if (data.hasOwnProperty(k))
+                {
+                    newDataByPropertyId[k] = data[k];
                 }
             }
+
+            // walk through new property ids
+            // if a field exists, set value onto it and remove from newDataByPropertyId and existingFieldsByPropertyId
+            // if a field doesn't exist, let it remain in list
+            for (var propertyId in newDataByPropertyId)
+            {
+                var field = existingFieldsByPropertyId[propertyId];
+                if (field)
+                {
+                    field.setValue(newDataByPropertyId[propertyId]);
+
+                    delete existingFieldsByPropertyId[propertyId];
+                    delete newDataByPropertyId[propertyId];
+                }
+            }
+
+            // anything left in existingFieldsByPropertyId describes data that is missing, null or empty
+            // we null out those values
+            for (var propertyId in existingFieldsByPropertyId)
+            {
+                var field = existingFieldsByPropertyId[propertyId];
+                field.setValue(null);
+            }
+
+            // anything left in newDataByPropertyId is new stuff that we need to add
+            // the object field doesn't support this since it runs against a schema
+            // so we drop this off
         },
 
         /**
@@ -427,7 +470,8 @@
         },
 
         /**
-         * Adds a child item.
+         * Adds a child item.  Returns the container element right away.  The postRenderCallback method is called
+         * upon completion.
          *
          * @param {String} propertyId Child field property ID.
          * @param {Object} itemSchema schema
@@ -517,6 +561,8 @@
                     }
                 }
             });
+
+            return containerElem;
         },
 
         /**

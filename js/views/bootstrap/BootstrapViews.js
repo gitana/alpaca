@@ -56,7 +56,12 @@
         "controlFieldCheckbox": '<div class="checkbox" id="${id}">{{if options.rightLabel}}<label for="${id}_checkbox">{{/if}}<input id="${id}_checkbox" type="checkbox" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} {{each(i,v) options.data}}data-${i}="${v}"{{/each}}/>{{if options.rightLabel}}${options.rightLabel}</label>{{/if}}</div>',
         "controlFieldCheckboxMultiple": '<div id="${id}">{{each(i,o) checkboxOptions}}<div class="checkbox"><label for="${id}_checkbox_${i}"><input type="checkbox" id="${id}_checkbox_${i}" {{if options.readonly}}readonly="readonly"{{/if}} {{if name}}name="${name}"{{/if}} data-checkbox-value="${o.value}" data-checkbox-index="${i}"/>${o.text}</label></div>{{/each}}</div>',
 
-        "controlFieldRadio": '{{if !required && !removeDefaultNone}}<div class="radio"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" id="${id}_radio_nonevalue" value=""/><label for="${id}_radio_nonevalue">None</label></div>{{/if}}{{each selectOptions}}<div class="radio"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value="${value}" id="${id}_radio_${$index}" {{if value == data}}checked="checked"{{/if}}/><label for="${id}_radio_${$index}">${text}</label></div>{{/each}}'
+        "controlFieldRadio": '{{if !required && !removeDefaultNone}}<div class="radio"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" id="${id}_radio_nonevalue" value=""/><label for="${id}_radio_nonevalue">None</label></div>{{/if}}{{each selectOptions}}<div class="radio"><input type="radio" {{if options.readonly}}readonly="readonly"{{/if}} name="${name}" value="${value}" id="${id}_radio_${$index}" {{if value == data}}checked="checked"{{/if}}/><label for="${id}_radio_${$index}">${text}</label></div>{{/each}}',
+
+        "itemLabel": '{{if options.itemLabel}}<div class="alpaca-controlfield-label"><div>${options.itemLabel}{{if index}} <span class="alpaca-item-label-counter">${index}</span>{{/if}}</div></div>{{/if}}',
+        "arrayToolbar": '<div class="alpaca-fieldset-array-toolbar btn-group"><button class="alpaca-fieldset-array-toolbar-icon alpaca-fieldset-array-toolbar-add btn btn-default">${addItemLabel}</button></span>',
+        "arrayItemToolbar": '<div class="alpaca-fieldset-array-item-toolbar btn-group btn-group-sm">{{each(k,v) buttons}}<button class="alpaca-fieldset-array-item-toolbar-icon alpaca-fieldset-array-item-toolbar-${v.feature} btn btn-default btn-sm">${v.label}</button>{{/each}}</div>'
+
 
     });
 

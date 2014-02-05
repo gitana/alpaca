@@ -5,6 +5,11 @@
     clear: both;
 }
 
+.alpaca-hidden
+{
+    display: none;
+}
+
 /** Abstract Field **/
 .alpaca-field {
 }
@@ -912,3 +917,4 @@ fieldset.alpaca-view-web-edit-yaml .ui-button-icon-only .ui-button-text, .ui-but
 */
 
 /* END styles for VIEW: VIEW_WEB_EDIT_INLINE */
+
