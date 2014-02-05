@@ -382,12 +382,20 @@
                         Alpaca.mergeObject(resolvedPropertyOptions, propertyOptions);
                     }
 
-                    callback(resolvedPropertySchema, resolvedPropertyOptions, circular);
+                    Alpaca.nextTick(function() {
+                        callback(resolvedPropertySchema, resolvedPropertyOptions, circular);
+                    });
+
+                    //callback(resolvedPropertySchema, resolvedPropertyOptions, circular);
                 });
             }
             else
             {
-                callback(propertySchema, propertyOptions);
+                Alpaca.nextTick(function() {
+                    callback(propertySchema, propertyOptions);
+                });
+
+                //callback(propertySchema, propertyOptions);
             }
         },
 

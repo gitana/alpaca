@@ -416,11 +416,20 @@
 
                 x = Alpaca.trim(x);
 
-                // convert to dom
-                // we wrap with <div/> to be sure here
-                x = "<div>" + x + "</div>";
+                var converted = null;
+                try
+                {
+                    converted = $(x);
+                }
+                catch (e)
+                {
+                    // make another attempt to account for safety in some browsers
+                    x = "<div>" + x + "</div>";
 
-                x = $(x).children();
+                    converted = $(x).children();
+                }
+
+                return converted;
             }
 
             return x;
@@ -2860,6 +2869,12 @@
     //
     // ASYNC
     //
+    // Here we provide a reduced version of the wonderful async library.  This is entirely inline and
+    // will have no bearing on any external dependencies on async.
+    //
+    // https://github.com/caolan/async
+    // Copyright (c) 2010 Caolan McMahon
+    //
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3806,6 +3821,7 @@
             next();
         };
 
+        /*
         // AMD / RequireJS
         if (typeof define !== 'undefined' && define.amd) {
             define([], function () {
@@ -3820,6 +3836,9 @@
         else {
             root.async = async;
         }
+        */
+
+        root.async = async;
 
     }());
 
