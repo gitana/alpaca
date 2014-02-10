@@ -1,0 +1,24 @@
+{
+  "class": "schema",
+  "title": "Delivery Record",
+  "_id": "delivery_record",
+  "type": "object",
+  "properties": {
+    "delivery_location": {
+      "type": "string",
+      "$ref": "lists/#delivery_type"
+    },
+    "delivery_mode": {
+      "type": "string",
+      "$ref": "lists/#delivery_mode"
+    },
+    "prenatal_problems": {
+      "type": "string",
+      "$ref": "lists/#prenatal_prob"
+    },
+    "childbirth_complications": {
+      "type": "string",
+      "$ref": "lists/#birth_comp"
+    }
+  }
+}

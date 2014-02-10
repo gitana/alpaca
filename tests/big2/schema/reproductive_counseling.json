@@ -1,0 +1,192 @@
+{
+    "class": "schema",
+    "title": "Reproductive Counceling/Treatment",
+    "_id": "reproductive_counseling",
+    "type": "object",
+    "properties": {
+        "last_menstrual_period": {
+            "type": "string"
+        },
+        "menstrual_history": {
+            "type": "string",
+            "$ref": "lists/#menses_regularity"
+        },
+        "number_pregnancy": {
+            "type": "string",
+            "$ref": "lists/#one_to_20_plus"
+        },
+        "number_full_term_delivery": {
+            "type": "string",
+            "$ref": "lists/#one_to_20_plus"
+        },
+        "number_pre_term_delivery": {
+            "type": "string",
+            "$ref": "lists/#one_to_20_plus"
+        },
+        "number_miscarriage_or_abortion": {
+            "type": "string",
+            "$ref": "lists/#one_to_20_plus"
+        },
+        "number_live_birth": {
+            "type": "string",
+            "$ref": "lists/#one_to_20_plus"
+        },
+        "pregnancy_complication": {
+            "type": "string",
+            "$ref": "lists/#pregnancy_complications"
+        },
+        "pregnancy_complication_other": {
+            "type": "string"
+        },
+        "marital_status": {
+            "type": "string",
+            "$ref": "lists/#marital_statuses"
+        },
+        "contraception_previous": {
+            "type": "string",
+            "$ref": "lists/#contraceptives"
+        },
+        "contraception_current": {
+            "type": "string",
+            "$ref": "lists/#contraceptives"
+        },
+        "contraception_source": {
+            "type": "string",
+            "$ref": "lists/#contraceptive_sources"
+        },
+        "fertility_desire": {
+            "type": "string",
+            "$ref": "lists/#fertility_desires"
+        },
+        "hiv_risk": {
+            "type": "string",
+            "$ref": "lists/#hiv_risks"
+        },
+        "hiv_status": {
+            "type": "string",
+            "$ref": "lists/#hiv_statuses"
+        },
+        "hiv_tested": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_partner_test": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_positive_test": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_partner_positive_test": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_counseling": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_partner_counseling": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_discordant": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+    "referred_ctc": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "post_test_counseling": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "implant_removed": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "contraception_after_miscarriage": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "delivery_in_42_days": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "contraception_in_42_days": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "contraception_dispensed": {
+            "type": "string",
+            "$ref": "lists/#contraceptives"
+        },
+        "quantity_pills_dispensed": {
+            "type": "string",
+            "$ref": "lists/#drug_quantities"
+        },
+        "quantity_condoms_dispensed": {
+            "type": "string",
+            "$ref": "lists/#condom_quantities"
+        },
+        "quantity_depo_provera": {
+            "type": "string",
+            "$ref": "lists/#depoprovera_quantities"
+        },
+        "condom_education": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "cervical_symptom": {
+            "type": "string",
+            "$ref": "lists/#cervical_symptoms"
+        },
+        "breast_symptom": {
+            "type": "string",
+            "$ref": "lists/#breast_symptoms"
+        }
+    }
+}

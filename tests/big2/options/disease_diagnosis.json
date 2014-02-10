@@ -1,0 +1,78 @@
+{
+  "fields": {
+    "complaint": {
+      "label": "Chief Complaint:",
+      "type": "checkbox"
+    },
+    "complaint_other": {
+      "label": "Other Complaint:",
+      "helper": "If Chief Complaint not listed above, please write in."
+    },
+    "symptom": {
+      "label": "Symptoms:",
+      "type": "checkbox"
+    },
+    "symptom_other": {
+      "label": "Other Symptoms:",
+      "type": "textarea"
+    },
+    "history": {
+      "label": "History:",
+      "type": "checkbox"
+    },
+    "history_other": {
+      "label": "Other Past History:",
+      "type": "textarea"
+    },
+    "note": {
+      "label": "Examination Notes:",
+      "type": "textarea"
+    },
+    "testing_method": {
+      "label": "Tested By Following Method:",
+      "type": "textarea"
+    },
+    "diagnosis": {
+      "label": "Disease Diagnosis:",
+      "type": "select"
+    },
+    "diagnosis_other": {
+      "label": "Other Disease Diagnosis:"
+    },
+    "treatment": {
+      "label": "Treatment:",
+      "type": "textarea"
+    },
+    "admission": {
+      "label": "Admission Required?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "disease_mortality": {
+      "label": "Did Disease Lead To Death?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "referral": {
+      "label": "Referral?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "referral_location": {
+      "label": "If Yes, Referral Location:",
+      "type": "select"
+    }
+  }
+}

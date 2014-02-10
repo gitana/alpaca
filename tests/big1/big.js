@@ -1,5 +1,3 @@
-var time1 = new Date().getTime();
-
 var showCounters = function(counters)
 {
     counters.each(function(type, counter) {
@@ -15,6 +13,7 @@ $(document).ready(function() {
 
     Alpaca.collectTiming = true;
 
+    var time1 = new Date().getTime();
     $("#field1").alpaca({
         "dataSource": "./data.json",
         "optionsSource": "./options.json",

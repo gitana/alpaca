@@ -1,0 +1,108 @@
+{
+    "class": "schema",
+    "title": "Postnatal Visit",
+    "_id": "postnatal",
+    "type": "object",
+    "properties": {
+        "days_post_partum": {
+            "type": "number"
+        },
+        "completed_4_visits": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "maternal_diagnoses": {
+            "type": "string",
+            "$ref": "lists/#postnatal_mother_diagnoses"
+        },
+        "delivered_outside": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "anemia_severe": {
+            "type": "string",
+            "$ref": "lists/#anemia_severities"
+        },
+        "family_planning_counseling": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "given_vitamina": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "family_planning_method_after_delivery": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "contraception_within_40_days": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "family_planning_method_after_miscarriage": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "postnatal_hiv_test": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "postnatal_hiv_positive": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "milk_type": {
+            "type": "string",
+            "$ref": "lists/#milk_types"
+        },
+        "bcg_opv": {
+            "type": "string",
+            "$ref": "lists/#immunizations_postnatal"
+        },
+        "less_than_2_5kg": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "kangaroo_care": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "child_diagnoses": {
+            "type": "string",
+            "$ref": "lists/#postnatal_child_diagnoses"
+        }
+    }
+}

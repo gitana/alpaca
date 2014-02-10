@@ -1,0 +1,42 @@
+{
+    "class": "schema",
+    "title": "Bodily Injury",
+    "_id": "bodily_injury",
+    "type": "object",
+    "properties": {
+        "injury_date": {
+            "type": "string"
+        },
+        "injury_type": {
+            "type": "string",
+            "$ref": "lists/#injuries"
+        },
+        "injury_other": {
+            "type": "string"
+        },
+        "testing_method": {
+            "type": "string"
+        },
+        "treatment": {
+            "type": "string",
+            "$ref": "lists/#injury_treatments"
+        },
+        "treatment_other": {
+            "type": "string"
+        },
+        "admission": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "injury_mortality": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        }
+    }
+}

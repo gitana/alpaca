@@ -1,0 +1,70 @@
+{
+  "fields": {
+    "child_given_npv_during_labor": {
+      "label": "Child Given NPV Syrup in Labor and Delivery Ward?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No",
+        "Unknown"
+      ],
+      "removeDefaultNone": true
+    },
+    "milk_source": {
+      "label": "Child Milk Source:",
+      "type": "select"
+    },
+    "hiv_diagnosis_dna_pcr": {
+      "label": "Was Child Diagnosed With HIV Using DNA-PCR(DBS)?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No",
+        "Unknown"
+      ],
+      "removeDefaultNone": true
+    },
+    "hiv_diagnosis_antibody": {
+      "label": "Was Child Diagnosed With HIV Antibody or PCR As A Second Test?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No",
+        "Unknown"
+      ],
+      "removeDefaultNone": true
+    },
+    "hiv_diagnosis_date": {
+      "label": "When Did Diagnosis Take Place?",
+      "type": "select"
+    },
+    "child_taking_ctx": {
+      "label": "Is Child Taking CTX?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No",
+        "Unknown"
+      ],
+      "removeDefaultNone": true
+    },
+    "child_start_ctx": {
+      "label": "Did Child Start On CTX Between 4 Weeks and 2 Months of Age?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No",
+        "Unknown"
+      ],
+      "removeDefaultNone": true
+    },
+    "other_treatment": {
+      "label": "If Any Treatment Given, Please Describe:",
+      "type": "textarea"
+    },
+    "note": {
+      "label": "Other Notes For This Visit:",
+      "type": "textarea"
+    }
+  }
+}

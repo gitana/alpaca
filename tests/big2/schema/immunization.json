@@ -1,0 +1,36 @@
+{
+    "class": "schema",
+    "title": "Immunization/Post-Immunization",
+    "_id": "immunization",
+    "type": "object",
+    "properties": {
+        "vaccine_dispensed": {
+            "type": "string",
+            "$ref": "lists/#immunizations"
+        },
+        "vaccine_effect": {
+            "type": "string",
+            "$ref": "lists/#immunization_effects"
+        },
+        "vaccine_other_reaction": {
+            "type": "string"
+        },
+        "anaphylaxis": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "side_effect_counseling": {
+            "type": "string"
+        },
+        "pregnant": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        }
+    }
+}

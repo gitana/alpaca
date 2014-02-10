@@ -1,0 +1,127 @@
+{
+  "fields": {
+    "days_post_partum": {
+      "label": "Days post-partum",
+      "type": "number"
+    },
+    "completed_4_visits": {
+      "label": "Completed all 4 visits?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "maternal_diagnoses": {
+      "label": "Maternal diagnoses, check all that apply",
+      "type": "checkbox"
+    },
+    "delivered_outside": {
+      "label": "Delivered outside the health center?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "anemia_severe": {
+      "label": "Severe Anemia (>8.5g/dl)",
+      "type": "select"
+    },
+    "family_planning_counseling": {
+      "label": "Counseling regarding family planning given?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "given_vitamina": {
+      "label": "Given Vitamin A?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "family_planning_method_after_delivery": {
+      "label": "Received a family planning method after delivery?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "contraception_within_40_days": {
+      "label": "Contraception within 40 days of delivery?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "family_planning_method_after_miscarriage": {
+      "label": "Received a family planning method after miscarriage?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "postnatal_hiv_test": {
+      "label": "Tested HIV postnatally?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "postnatal_hiv_positive": {
+      "label": "Tested positive for HIV postnatally?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "milk_type": {
+      "label": "How is the child fed?",
+      "type": "select"
+    },
+    "bcg_opv": {
+      "label": "Please check if given to the child",
+      "type": "checkbox"
+    },
+    "less_than_2_5kg": {
+      "label": "Child born less than 2.5kg?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "kangaroo_care": {
+      "label": "Kangaroo care given at home?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "child_diagnoses": {
+      "label": "Child diagnoses",
+      "type": "checkbox"
+    }
+  }
+}

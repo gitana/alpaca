@@ -1,0 +1,66 @@
+{
+  "fields": {
+    "duration": {
+      "label": "Duration of diarrhea (days)",
+      "type": "number"
+    },
+    "water_sodium_imbalance": {
+      "label": "Water shortage/sodium imbalance",
+      "type": "select"
+    },
+    "given_ors": {
+      "label": "ORS given",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "given_zinc": {
+      "label": "Zinc given?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "blood_in_stool": {
+      "label": "Blood in stool?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "admission": {
+      "label": "Admission required?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "referral": {
+      "label": "Referral required?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "diarrhea_mortality": {
+      "label": "Death due to diarrhea?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    }
+  }
+}

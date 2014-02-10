@@ -1,0 +1,135 @@
+{
+    "title": "Patient Intake",
+    "_id": "visit",
+    "type": "object",
+    "properties": {
+        "patient_id": {
+            "type": "string"
+        },
+        "_formdata": {
+            "type": "string"
+        },
+        "clinic": {
+            "type": "string"
+        },
+        "clinician": {
+            "type": "string"
+        },
+        "note": {
+            "type": "string"
+        },
+        "reasons": {
+            "id": "reasons",
+            "$ref": "#/schema/parent/visit/list"
+        },
+        "subforms": {
+            "$ref": "#/schema/parent/visit/subforms"
+        },
+        "current_created_years": {
+            "id": "current_created_years",
+            "type": "number"
+        }
+    },
+    "definitions": {
+        "schema": {
+            "parent": {
+                "visit": {
+                    "list": {
+                        "type": "array",
+                        "enum": [
+                            "disease_diagnosis",
+                            "bodily_injury",
+                            "immunization",
+                            "hiv_counseling_mother",
+                            "hiv_counseling_child",
+                            "reproductive_counseling",
+                            "anc_first_visit",
+                            "anc_followup",
+                            "postnatal",
+                            "tb_leprosy",
+                            "hiv_pregnancy_clinic",
+                            "well_child_visit",
+                            "delivery_record",
+                            "diarrhea"
+                        ]
+                    },
+                    "subforms": {
+                        "type": "object",
+                        "properties": {
+                            "disease_diagnosis": {
+                                "title": "Disease Diagnosis",
+                                "dependencies": "#reasons",
+                                "$ref": "disease_diagnosis"
+                            },
+                            "bodily_injury": {
+                                "title": "Bodily Injury",
+                                "dependencies": "#reasons",
+                                "$ref": "bodily_injury"
+                            },
+                            "immunization": {
+                                "title": "Immunization/Post-Immunization",
+                                "dependencies": "#reasons",
+                                "$ref": "immunization"
+                            },
+                            "hiv_counseling_mother": {
+                                "title": "HIV Counseling Mother",
+                                "dependencies": "#reasons",
+                                "$ref": "hiv_counseling_mother"
+                            },
+                            "hiv_counseling_child": {
+                                "title": "HIV Counseling Child",
+                                "dependencies": "#reasons",
+                                "$ref": "hiv_counseling_child"
+                            },
+                            "reproductive_counseling": {
+                                "title": "Reproductive Counceling/Treatment",
+                                "dependencies": "#reasons",
+                                "$ref": "reproductive_counseling"
+                            },
+                            "anc_first_visit": {
+                                "title": "First Antenatal Visit",
+                                "dependencies": "#reasons",
+                                "$ref": "anc_first_visit"
+                            },
+                            "anc_followup": {
+                                "title": "Follow-up Antenatal Visit",
+                                "dependencies": "#reasons",
+                                "$ref": "anc_followup"
+                            },
+                            "postnatal": {
+                                "title": "Postnatal Visit",
+                                "dependencies": "#reasons",
+                                "$ref": "postnatal"
+                            },
+                            "tb_leprosy": {
+                                "title": "TB and Leprosy",
+                                "dependencies": "#reasons",
+                                "$ref": "tb_leprosy"
+                            },
+                            "hiv_pregnancy_clinic": {
+                                "title": "HIV in Pregnancy",
+                                "dependencies": "#reasons",
+                                "$ref": "hiv_pregnancy_clinic"
+                            },
+                            "well_child_visit": {
+                                "title": "Well Child Visit",
+                                "dependencies": "#reasons",
+                                "$ref": "well_child_visit"
+                            },
+                            "delivery_record": {
+                                "title": "Delivery Record",
+                                "dependencies": "#reasons",
+                                "$ref": "delivery_record"
+                            },
+                            "diarrhea": {
+                                "title": "Diarrhea Treatment",
+                                "dependencies": "#reasons",
+                                "$ref": "diarrhea"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

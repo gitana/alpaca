@@ -1,0 +1,20 @@
+{
+  "fields": {
+    "delivery_location": {
+      "label": "Location of delivery",
+      "type": "select"
+    },
+    "delivery_mode": {
+      "label": "Mode of delivery",
+      "type": "select"
+    },
+    "prenatal_problems": {
+      "label": "Prenatal problems",
+      "type": "checkbox"
+    },
+    "childbirth_complications": {
+      "label": "Childbirth complications",
+      "type": "checkbox"
+    }
+  }
+}

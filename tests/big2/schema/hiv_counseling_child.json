@@ -1,0 +1,62 @@
+{
+    "class": "schema",
+    "title": "HIV Counseling Child",
+    "_id": "hiv_counseling_child",
+    "type": "object",
+    "properties": {
+        "child_given_npv_during_labor": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "milk_source": {
+            "type": "string",
+            "$ref": "lists/#milk_types"
+        },
+        "hiv_diagnosis_dna_pcr": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "hiv_diagnosis_antibody": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "hiv_diagnosis_date": {
+            "type": "string",
+            "$ref": "lists/#hiv_diagnosis_times"
+        },
+        "child_taking_ctx": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "child_start_ctx": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "other_treatment": {
+            "type": "string"
+        },
+        "note": {
+            "type": "string"
+        }
+    }
+}

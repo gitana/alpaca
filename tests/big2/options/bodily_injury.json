@@ -1,0 +1,52 @@
+{
+    "fields": {
+        "injury_date": {
+            "label": "Injury Date:",
+            "type": "date",
+            "dateFormat": "yy-mm-dd",
+            "datepicker": {
+                "hideIfNoPrevNextType": true,
+                "yearRange": "2010:+10",
+                "changeMonth": true,
+                "changeYear": true
+            }
+        },
+        "injury_type": {
+            "label": "Type of Injury:",
+            "type": "select"
+        },
+        "injury_other": {
+            "label": "Other Injury:"
+        },
+        "testing_method": {
+            "label": "Testing Method:",
+            "type": "textarea"
+        },
+        "treatment": {
+            "label": "Treatment:",
+            "type": "select"
+        },
+        "treatment_other": {
+            "label": "Other Treatment:",
+            "type": "textarea"
+        },
+        "admission": {
+            "label": "Admission Required?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "injury_mortality": {
+            "label": "Did Injury Lead to Death?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        }
+    }
+}

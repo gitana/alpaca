@@ -1,0 +1,109 @@
+{
+    "fields": {
+        "height": {
+            "label": "Height (cm)",
+            "type": "number"
+        },
+        "weight": {
+            "label": "Weight (kg)",
+            "type": "number"
+        },
+        "alben_tablets": {
+            "label": "Given albendazole?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "vitamin_a": {
+            "label": "Given Vitamin A?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+
+        "milk_source": {
+            "label": "Milk Source",
+            "type": "select"
+        },
+        "mother_hiv_status": {
+            "label": "Mother's HIV Status",
+            "type": "radio",
+            "removeDefaultNone": true
+
+        },
+        "mother_tetanus_delivery": {
+            "label": "Mother given Tetanus vaccine during delivery?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ],
+            "removeDefaultNone": true
+        },
+        "possible_hiv": {
+            "label": "Is HIV Possible?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_status": {
+            "label": "HIV Status",
+            "type": "select"
+        },
+        "hiv_pcr_test_2mo": {
+            "label": "Tested for HIV by PCR within two months from birth?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_pcr_test_18mo": {
+            "label": "Tested for HIV by PCR within 6 weeks after stopping breastfeeding or 18 months?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "ctx_status": {
+            "label": "Started on cotrimoxazole between 1 month to 2 months?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "referred_ctc": {
+            "label": "Referred CTC?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "bed_net_voucher": {
+            "label": "Given bed net voucher?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        }
+    }
+}

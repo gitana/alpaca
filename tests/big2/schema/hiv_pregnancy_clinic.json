@@ -1,0 +1,94 @@
+{
+    "class": "schema",
+    "title": "HIV in Pregnancy",
+    "_id": "hiv_pregnancy_clinic",
+    "type": "object",
+    "properties": {
+        "hiv_status_prior_firstvisit": {
+            "type": "string",
+            "$ref": "lists/#hiv_statuses"
+        },
+        "tested_hiv_firstvisit": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "counseled_hiv_prior_test": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "first_hiv_status": {
+            "type": "string",
+            "$ref": "lists/#hiv_statuses"
+        },
+        "second_hiv_test": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "partner_hiv": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "partner_positive": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "discordant_couple": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "combo_drugs": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "art_drugs": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "ctx_given": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "counsel_feeding": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "referred_ctc": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        }
+    }
+}

@@ -1,0 +1,90 @@
+{
+    "class": "schema",
+    "title": "Well Child Visit",
+    "_id": "well_child_visit",
+    "type": "object",
+    "properties": {
+        "height": {
+            "type": "number"
+        },
+        "weight": {
+            "type": "number"
+        },
+        "alben_tablets": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "vitamin_a": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "milk_source": {
+            "type": "string",
+            "$ref": "lists/#milk_types"
+        },
+        "mother_hiv_status": {
+            "type": "string",
+            "$ref": "lists/#hiv_statuses"
+        },
+        "mother_tetanus_delivery": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "possible_hiv": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_status": {
+            "type": "string",
+            "$ref": "lists/#hiv_statuses"
+        },
+        "hiv_pcr_test_2mo": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_pcr_test_18mo": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "ctx_status": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "referred_ctc": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "bed_net_voucher": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        }
+    }
+}

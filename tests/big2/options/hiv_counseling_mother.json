@@ -1,0 +1,135 @@
+{
+    "fields": {
+        "delivery_date": {
+            "label": "Date of Infant Delivery:",
+            "dateFormat": "yy-mm-dd",
+            "datepicker": {
+                "hideIfNoPrevNextType": true,
+                "yearRange": "2010:+10",
+                "changeMonth": true,
+                "changeYear": true
+            }
+        },
+        "first_visit": {
+            "label": "First Visit to Clinic?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_known_pre_clinic": {
+            "label": "HIV Status Known Before Clinic?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_tested_pre_clinic": {
+            "label": "Tested for HIV Before Clinic?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_test": {
+            "label": "HIV Test given?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_status": {
+            "label": "HIV Status",
+            "type": "radio"
+        },
+        "hiv_positive_first_test": {
+            "label": "Tested HIV Positive on first test?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_known_pre_birth": {
+            "label": "HIV Status Known Before Birth?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_test_during_labor": {
+            "label": "Tested for HIV During Labor?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_test_post_labor": {
+            "label": "Tested for HIV Post-Labor?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ],
+            "removeDefaultNone": true
+        },
+        "medication_during_labor": {
+            "label": "Medicine Taken During Labor:"
+        },
+        "referred_ctc": {
+            "label": "Mother Referred To CTC?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ],
+            "removeDefaultNone": true
+        },
+        "referral_date": {
+            "label": "Referral Date (Or is This a Different Date?):",
+            "dateFormat": "yy-mm-dd",
+            "datepicker": {
+                "hideIfNoPrevNextType": true,
+                "yearRange": "2010:+10",
+                "changeMonth": true,
+                "changeYear": true
+            }
+        },
+        "arv_therapy": {
+            "label": "Currently Taking Anti-Retrovial Therapy?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "other_treatment": {
+            "label": "If Any Treatment Given, Please Describe:",
+            "type": "textarea"
+        },
+        "note": {
+            "label": "Other Notes for This Visit:",
+            "type": "textarea"
+        }
+    }
+}

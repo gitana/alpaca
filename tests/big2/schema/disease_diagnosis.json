@@ -1,0 +1,70 @@
+{
+    "class": "schema",
+    "title": "Disease Diagnosis",
+    "_id": "disease_diagnosis",
+    "type": "object",
+    "properties": {
+        "complaint": {
+            "type": "string",
+            "$ref": "lists/#symptoms"
+        },
+        "complaint_other": {
+            "type": "string"
+        },
+        "symptom": {
+            "type": "string",
+            "$ref": "lists/#symptoms"
+        },
+        "symptom_other": {
+            "type": "string"
+        },
+        "history": {
+            "type": "string",
+            "$ref": "lists/#histories"
+        },
+        "history_other": {
+            "type": "string"
+        },
+        "note": {
+            "type": "string"
+        },
+        "testing_method": {
+            "type": "string"
+        },
+        "diagnosis": {
+            "type": "string",
+            "$ref": "lists/#diseases"
+        },
+        "diagnosis_other": {
+            "type": "string"
+        },
+        "treatment": {
+            "type": "string"
+        },
+        "admission": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "disease_mortality": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "referral": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "referral_location": {
+            "type": "string",
+            "$ref": "lists/#referral_locations"
+        }
+    }
+}

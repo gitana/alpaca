@@ -1,0 +1,224 @@
+{
+    "fields": {
+        "last_menstrual_period": {
+            "label": "Last Menstrual Period:",
+            "type": "date",
+            "dateFormat": "yy-mm-dd",
+            "datepicker": {
+                "hideIfNoPrevNextType": true,
+                "yearRange": "2010:+10",
+                "changeMonth": true,
+                "changeYear": true
+            }
+        },
+        "menstrual_history": {
+            "label": "Menstrual History:",
+            "type": "select"
+        },
+        "number_pregnancy": {
+            "label": "Total Number of Pregnancies",
+            "type": "select"
+        },
+        "number_full_term_delivery": {
+            "label": "Number of Full Term Deliveries",
+            "type": "select"
+        },
+        "number_pre_term_delivery": {
+            "label": "Number of Preterm Deliveries",
+            "type": "select"
+        },
+        "number_miscarriage_or_abortion": {
+            "label": "Number of Miscarriages or Abortions",
+            "type": "select"
+        },
+        "number_live_birth": {
+            "label": "Number of Live Births",
+            "type": "select"
+        },
+        "pregnancy_complication": {
+            "label": "Pregnancy Complications, Check All That Apply:",
+            "type": "checkbox"
+        },
+        "pregnancy_complication_other": {
+            "label": "If Other Pregnancy Complication, Describe:"
+        },
+        "marital_status": {
+            "label": "Marital Status:",
+            "type": "select"
+        },
+        "contraception_previous": {
+            "label": "Previous Contraception:",
+            "type": "select"
+        },
+        "contraception_current": {
+            "label": "Current Contraception:",
+            "type": "select"
+        },
+        "contraception_source": {
+            "label": "Source of Contraception",
+            "type": "select"
+        },
+        "fertility_desire": {
+            "label": "Fertility Desires:",
+            "type": "select"
+        },
+        "hiv_risk": {
+            "label": "HIV Risks:",
+            "type": "select"
+        },
+        "hiv_status": {
+            "label": "HIV Status",
+            "type": "select"
+        },
+        "hiv_tested": {
+            "label": "Tested for HIV?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_partner_test": {
+            "label": "Partner tested for HIV?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_positive_test": {
+            "label": "Tested positive for HIV?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_partner_positive_test": {
+            "label": "Partner tested positive for HIV?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_counseling": {
+            "label": "HIV counseling given?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_partner_counseling": {
+            "label": "HIV counseling given to partner?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "hiv_discordant": {
+            "label": "HIV discordant couple?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "referred_ctc": {
+            "label": "Referred to CTC?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "post_test_counseling": {
+            "label": "Post-test HIV counseling given?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "implant_removed": {
+            "label": "Implant removed?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "contraception_after_miscarriage": {
+            "label": "Contraception given after recent miscarriage?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "delivery_in_42_days": {
+            "label": "Delivery within 42 days?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "contraception_in_42_days": {
+            "label": "Contraception given within 42 days of delivery?",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "contraception_dispensed": {
+            "label": "Contraception Dispensed:",
+            "type": "select"
+        },
+        "quantity_pills_dispensed": {
+            "label": "Quantity of Pills Dispensed:",
+            "type": "select"
+        },
+        "quantity_condoms_dispensed": {
+            "label": "Quantity of Condoms Dispensed:",
+            "type": "select"
+        },
+        "quantity_depo_provera": {
+            "label": "Dose of Depo Provera:",
+            "type": "select"
+        },
+        "condom_education": {
+            "label": "Condom Use Education Preformed",
+            "type": "radio",
+            "enum": [
+                "Yes",
+                "No"
+            ],
+            "removeDefaultNone": true
+        },
+        "cervical_symptom": {
+            "label": "Cervical Symptoms:",
+            "type": "checkbox"
+        },
+        "breast_symptom": {
+            "label": "Breast Symptoms:",
+            "type": "checkbox"
+        }
+    }
+}

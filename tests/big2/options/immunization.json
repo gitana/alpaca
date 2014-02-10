@@ -1,0 +1,37 @@
+{
+  "fields": {
+    "vaccine_dispensed": {
+      "label": "Medication Dispensed:",
+      "type": "checkbox"
+    },
+    "vaccine_effect": {
+      "label": "Immediate Effect of Vaccination:",
+      "type": "select"
+    },
+    "vaccine_other_reaction": {
+      "label": "If Other Vaccine Reaction, Please Describe:"
+    },
+    "anaphylaxis": {
+      "label": "Anaphylaxis Present?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "side_effect_counseling": {
+      "label": "Describe Any Counseling Given Regarding Side-Effects:",
+      "type": "textarea"
+    },
+    "pregnant": {
+      "label": "Pregnant?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+    "class": "schema",
+    "title": "TB and Leprosy",
+    "_id": "tb_leprosy",
+    "type": "object",
+    "properties": {
+        "diagnosis": {
+            "type": "string",
+            "$ref": "lists/#leprosy_diagnoses"
+        },
+        "leprosy_classification": {
+            "type": "string",
+            "$ref": "lists/#leprosy_classifications"
+        },
+        "leprosy_status": {
+            "type": "string",
+            "$ref": "lists/#leprosy_statuses"
+        },
+        "leprosy_disability": {
+            "type": "string",
+            "$ref": "lists/#leprosy_disabilities"
+        },
+        "leprosy_result": {
+            "type": "string",
+            "$ref": "lists/#leprosy_results"
+        },
+        "coritosteroid_treatment": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "tb_classification": {
+            "type": "string",
+            "$ref": "lists/#tb_classifications"
+        },
+        "tb_regimen": {
+            "type": "string",
+            "$ref": "lists/#tb_regimens"
+        }
+    }
+}

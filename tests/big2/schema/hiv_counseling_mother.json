@@ -1,0 +1,103 @@
+{
+    "class": "schema",
+    "title": "HIV Counseling Mother",
+    "_id": "hiv_counseling_mother",
+    "type": "object",
+    "properties": {
+        "delivery_date": {
+            "type": "string"
+        },
+        "first_visit": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_known_pre_clinic": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "hiv_tested_pre_clinic": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "hiv_test": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_status": {
+            "type": "string",
+            "$ref": "lists/#hiv_statuses"
+        },
+        "hiv_positive_first_test": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "hiv_known_pre_birth": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "hiv_test_during_labor": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "hiv_test_post_labor": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "medication_during_labor": {
+            "type": "string"
+        },
+        "referred_ctc": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No",
+                "Unknown"
+            ]
+        },
+        "referral_date": {
+            "type": "string"
+        },
+        "arv_therapy": {
+            "type": "string",
+            "enum": [
+                "Yes",
+                "No"
+            ]
+        },
+        "other_treatment": {
+            "type": "string"
+        },
+        "note": {
+            "type": "string"
+        }
+    }
+}

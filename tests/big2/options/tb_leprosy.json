@@ -1,0 +1,41 @@
+{
+  "fields": {
+    "diagnosis": {
+      "label": "Diagnosis",
+      "type": "checkbox"
+    },
+    "leprosy_classification": {
+      "label": "Leprosy classification",
+      "type": "select"
+    },
+    "leprosy_status": {
+      "label": "Leprosy status",
+      "type": "select"
+    },
+    "leprosy_disability": {
+      "label": "Leprosy disability",
+      "type": "select"
+    },
+    "leprosy_result": {
+      "label": "Leprosy end result",
+      "type": "select"
+    },
+    "coritosteroid_treatment": {
+      "label": "Treated with corticosteroids?",
+      "type": "radio",
+      "enum": [
+        "Yes",
+        "No"
+      ],
+      "removeDefaultNone": true
+    },
+    "tb_classification": {
+      "label": "TB classification",
+      "type": "radio"
+    },
+    "tb_regimen": {
+      "label": "TB regimen",
+      "type": "select"
+    }
+  }
+}

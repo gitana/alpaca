@@ -527,6 +527,91 @@ $(function() {
                 });
             </script>
 
+            <!-- example #15 -->
+            <h2>Example 15: Validation events</h2>
+            <p>
+                Alpaca features an event system that triggers events like <code>validated</code> and <code>invalidated</code>
+                when a form's validity changes.  We can use these events to enable and disable external form buttons.
+            </p>
+            <p>
+                We can also tell Alpaca to re-run validation when the form buttons are clicked to ensure that the form
+                is in a good state before proceeding.
+            </p>
+            <p>
+                Here we use a custom view to specify the layout of the form and customize the validation message.
+                This isn't necessary but does make the example a bit more fun!
+            </p>
+            <div id="field15">
+            </div>
+            <script type="text/javascript" id="field15-script">
+
+                $(function() {
+                    $("#field15").alpaca({
+                        "view": {
+                            "parent": "VIEW_JQUERYUI_EDIT",
+                            "layout" : {
+                                "template": './layout15.html',
+                                "bindings": {
+                                    "name": "fields"
+                                }
+                            },
+                            "messages": {
+                                "notOptional": "Hey!  What is your name?"
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "required": true
+                                }
+                            }
+                        },
+                        "options": {
+                            "renderForm": true,
+                            "fields": {
+                                "name": {
+                                    "type": "text",
+                                    "label": "What is your favorite color?"
+                                }
+                            }
+                        },
+                        "postRender": function(control)
+                        {
+                            // helper - runs validation and redraws the UI
+                            var assertValidationState = function()
+                            {
+                                control.validate(true);
+                                control.renderValidationState(true);
+                            };
+                            // when the "validated" even is raised, enable the submit button
+                            control.on("validated", function(e) {
+                                $("#submit15").prop("disabled", false);
+                            });
+                            // when the "invalidated" even is raised, disable the submit button
+                            control.on("invalidated", function(e) {
+                                $("#submit15").prop("disabled", true);
+                            });
+                            // when "submit" is clicked, ensure validity before submitting
+                            $("#submit15").click(function(e) {
+
+                                e.preventDefault();
+
+                                assertValidationState();
+
+                                // now figure out what to do
+                                if (control.isValid()) {
+                                    alert(JSON.stringify(control.getValue(), null, "  "));;
+                                }
+                            });
+                            // assert validity on initial load
+                            assertValidationState();
+                        }
+                    });
+                });
+            </script>
+
 
             <!-- BEGIN DISCUSSIONS -->
             <div class="alpaca-discussions"></div>

@@ -1,0 +1,126 @@
+{
+    "fields": {
+        "patient_id": {
+            "type": "hidden"
+        },
+        "_formdata": {
+            "type": "hidden"
+        },
+        "clinic": {
+            "label": "Clinic:"
+        },
+        "clinician": {
+            "label": "Clinician:"
+        },
+        "note": {
+            "label": "Notes:",
+            "type": "textarea"
+        },
+        "current_created_years": {
+            "type": "hidden"
+        }
+    },
+    "definitions": {
+        "schema": {
+            "parent": {
+                "visit": {
+                    "list": {
+                        "label": "Reason for Visit:",
+                        "type": "checkbox",
+                        "multiple": true,
+                        "optionLabels": [
+                            "Disease Diagnosis",
+                            "Bodily Injury",
+                            "Immunization/Post-Immunization",
+                            "HIV Counseling Mother",
+                            "HIV Counseling Child",
+                            "Reproductive Counceling/Treatment",
+                            "First Antenatal Visit",
+                            "Follow-up Antenatal Visit",
+                            "Postnatal Visit",
+                            "TB and Leprosy",
+                            "HIV in Pregnancy",
+                            "Well Child Visit",
+                            "Delivery Record",
+                            "Diarrhea Treatment"
+                        ]
+                    },
+                    "subforms": {
+                        "fields": {
+                            "disease_diagnosis": {
+                                "dependencies": {
+                                    "#reasons": "disease_diagnosis"
+                                }
+                            },
+                            "bodily_injury": {
+                                "dependencies": {
+                                    "#reasons": "bodily_injury"
+                                }
+                            },
+                            "immunization": {
+                                "dependencies": {
+                                    "#reasons": "immunization"
+                                }
+                            },
+                            "hiv_counseling_mother": {
+                                "dependencies": {
+                                    "#reasons": "hiv_counseling_mother"
+                                }
+                            },
+                            "hiv_counseling_child": {
+                                "dependencies": {
+                                    "#reasons": "hiv_counseling_child"
+                                }
+                            },
+                            "reproductive_counseling": {
+                                "dependencies": {
+                                    "#reasons": "reproductive_counseling"
+                                }
+                            },
+                            "anc_first_visit": {
+                                "dependencies": {
+                                    "#reasons": "anc_first_visit"
+                                }
+                            },
+                            "anc_followup": {
+                                "dependencies": {
+                                    "#reasons": "anc_followup"
+                                }
+                            },
+                            "postnatal": {
+                                "dependencies": {
+                                    "#reasons": "postnatal"
+                                }
+                            },
+                            "tb_leprosy": {
+                                "dependencies": {
+                                    "#reasons": "tb_leprosy"
+                                }
+                            },
+                            "hiv_pregnancy_clinic": {
+                                "dependencies": {
+                                    "#reasons": "hiv_pregnancy_clinic"
+                                }
+                            },
+                            "well_child_visit": {
+                                "dependencies": {
+                                    "#reasons": "well_child_visit"
+                                }
+                            },
+                            "delivery_record": {
+                                "dependencies": {
+                                    "#reasons": "delivery_record"
+                                }
+                            },
+                            "diarrhea": {
+                                "dependencies": {
+                                    "#reasons": "diarrhea"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

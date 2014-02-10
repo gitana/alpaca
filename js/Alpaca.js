@@ -1649,6 +1649,11 @@
             //
             ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+            // TEST - swap code
+            // swap el -> placeholder
+            //var tempHolder = $("<div></div>");
+            //$(el).before(tempHolder);
+            //$(el).remove();
 
             var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);
             if (field)
@@ -1682,6 +1687,11 @@
 
                 var fin = function()
                 {
+                    // TEST - swap code
+                    // swap placeholder -> el
+                    //$(tempHolder).before(el);
+                    //$(tempHolder).remove();
+
                     // reveal field after rendering
                     $(el).removeClass("alpaca-field-rendering");
                     $(el).removeClass("alpaca-hidden");
