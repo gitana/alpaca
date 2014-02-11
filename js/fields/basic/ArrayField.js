@@ -779,8 +779,6 @@
 
                     Alpaca.series(funcs, function(err) {
 
-                        console.log("DONE");
-
                         self.updateToolbarItemsStatus();
 
                         if (onSuccess)
