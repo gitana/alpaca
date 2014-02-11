@@ -1,0 +1,803 @@
+{
+
+    "$schema": "http://json_schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "anc_symptoms": {
+            "id": "anc_symptoms",
+            "type": "string",
+            "enum": [
+                "abdominal_pain",
+                "vaginal_pain",
+                "vaginal_bleeding",
+                "loss_of_fetal_movement",
+                "vaginal_leakage_of_fluid",
+                "headache",
+                "blurred_vision",
+                "nausea_or_vomiting",
+                "diarrhea",
+                "constipation",
+                "fever",
+                "contractions",
+                "post_coital_bleeding"
+            ]
+        },
+        "anemia_severities": {
+            "id": "anemia_severities",
+            "type": "string",
+            "enum": [
+                "less_8_5",
+                "more_8_5"
+            ]
+        },
+        "birth_comp": {
+            "id": "birth_comp",
+            "type": "array",
+            "enum": [
+                "pph",
+                "eclampsia",
+                "pre_eclapmsia",
+                "obstructed_labor",
+                "retained_placenta",
+                "ruptured_uterus",
+                "sepsis_infection",
+                "tear_third_degree_tear",
+                "other",
+                "given_iv_antibiotics",
+                "given_iv_anticonvulsants",
+                "given_uterotonics",
+                "given_blood_transfusion",
+                "placenta_removed_by_hand",
+                "mva_needed"
+            ]
+        },
+        "cervical_symptoms": {
+            "id": "cervical_symptoms",
+            "type": "array",
+            "enum": [
+                "vaginal_discharge",
+                "post_coital_bleeding"
+            ]
+        },
+        "condom_quantities": {
+            "id": "condom_quantities",
+            "type": "string",
+            "enum": [
+                "not_applicable",
+                "1_to_10",
+                "11_to_20",
+                "21_to_30",
+                "31_to_40",
+                "41_to_50",
+                "50_more"
+            ]
+        },
+        "contraceptive_sources": {
+            "id": "contraceptive_sources",
+            "type": "string",
+            "enum": [
+                "clinic",
+                "community_based_distribution",
+                "outreach",
+                "both"
+            ]
+        },
+        "contraceptives": {
+            "id": "contraceptives",
+            "type": "string",
+            "enum": [
+                "pills",
+                "condoms",
+                "iud",
+                "remove_iud",
+                "other_implants",
+                "depo_provera",
+                "sterilization",
+                "natural_ways",
+                "other"
+            ]
+        },
+        "delivery_mode": {
+            "id": "delivery_mode",
+            "type": "string",
+            "enum": [
+                "vaginal",
+                "c_section",
+                "vacuum",
+                "breech",
+                "other"
+            ]
+        },
+        "delivery_type": {
+            "id": "delivery_type",
+            "type": "string",
+            "enum": [
+                "home_delivery",
+                "delivered_by_traditional_birth_attendant",
+                "delivered_in_clinic",
+                "delivered_on_the_way_to_clinic",
+                "delivered_by_skilled_provider"
+            ]
+        },
+        "depoprovera_quantities": {
+            "id": "depoprovera_quantities",
+            "type": "string",
+            "enum": [
+                "3_month_dose",
+                "6_month_dose"
+            ]
+        },
+        "diseases": {
+            "id": "diseases",
+            "type": "string",
+            "enum": [
+                "acute_flacid_paralysis",
+                "cholera",
+                "dysentery",
+                "measles",
+                "meningitis",
+                "neonatal_tetanus",
+                "plague",
+                "relapsing_fever",
+                "yellow_fever",
+                "influenza",
+                "typhoid",
+                "rabies_suspected_rabies_bites",
+                "trachoma",
+                "onchocerciasis",
+                "trypanosomiasis",
+                "viral_haemorrhagic_fevers",
+                "keratoconjuctivitis",
+                "diarrhea_acute",
+                "diarrhea_chronic",
+                "malaria",
+                "blood_slide_positive",
+                "mrdt_positive",
+                "clinical_no_test",
+                "in_pregnancy",
+                "schistosomiasis",
+                "sti_genital_discharge_syndrome",
+                "sti_genital_ulcer_diseases",
+                "sti_pelvic_inflammatory_diseases",
+                "sexually_transmitted_infections_other",
+                "tuberculosis",
+                "leprosy",
+                "intestinal_worms",
+                "anaemia_mild_moderate",
+                "anaemia_severe",
+                "sickle_cell_disease",
+                "hiv_positive",
+                "hiv_infection_symptomatic",
+                "ear_infection_acute",
+                "ear_infection_chronic",
+                "eye_infection",
+                "cataract",
+                "eye_diseases_other_non_infectious",
+                "skin_infection_non_fungal",
+                "skin_infection_fungal",
+                "skin_diseases_non_infectious",
+                "fungal_infection_non_skin",
+                "osteomyelitis",
+                "neonatal_sepsis",
+                "low_birth_weight_and_prematurity_complications",
+                "birth_asphyxia",
+                "acute_respiratory_infection",
+                "pneumonia_non_severe",
+                "cerebral_palsy",
+                "pneumonia_severe",
+                "upper_respiratory_infections",
+                "urinary_tract_infections",
+                "gynaecological_diseases_other",
+                "kwashiokor",
+                "marasmus",
+                "marasmic_kwashiokor",
+                "moderate_malnutrition",
+                "vitamin_a_deficiency",
+                "other_nutritional_disorders",
+                "caries",
+                "periodontal_diseases",
+                "dental_emergency_care",
+                "dental_conditions_other",
+                "fractures_dislocations",
+                "burn",
+                "poisoning",
+                "road_traffic_accidents",
+                "pregnancy_complications",
+                "abortion",
+                "snake_and_insect_bites",
+                "emergencies_other",
+                "surgical_conditions",
+                "epilepsy",
+                "psychoses",
+                "neurosis",
+                "mental_conditions_other",
+                "hypertension",
+                "rheumatic_fever",
+                "cardiovascular_diseases_other",
+                "bronchial_asthma",
+                "peptic_ulcers",
+                "git_diseases_other_non_infectious",
+                "diabetes_mellitus",
+                "rheumatoid_and_joint_diseases",
+                "thyroid_diseases",
+                "neoplasms",
+                "ill_defined_symptoms_no_diagnosis",
+                "diagnoses_other",
+                "waliopewa_rufaa"
+            ]
+        },
+        "drug_quantities": {
+            "id": "drug_quantities",
+            "type": "string",
+            "enum": [
+                "not_applicable",
+                "1_month_supply",
+                "2_month_supply",
+                "3_month_supply",
+                "4_month_supply",
+                "5_month_supply",
+                "6_month_supply",
+                "7_month_supply",
+                "8_month_supply",
+                "9_month_supply",
+                "10_month_supply",
+                "11_month_supply",
+                "12_month_supply",
+                "more_than_one_year_supply"
+            ]
+        },
+        "fertility_desires": {
+            "id": "fertility_desires",
+            "type": "string",
+            "enum": [
+                "desires_pregnancy_now",
+                "desires_contraception_now",
+                "desires_future_pregnancy"
+            ]
+        },
+        "fetal_heart_rates": {
+            "id": "fetal_heart_rates",
+            "type": "string",
+            "enum": [
+                "not_checked",
+                "checked__but_unable_to_hear",
+                "110s",
+                "120s",
+                "130s",
+                "140s",
+                "150s",
+                "160s",
+                "170s",
+                "180s"
+            ]
+        },
+        "fetal_movements": {
+            "id": "fetal_movements",
+            "type": "string",
+            "enum": [
+                "too_early_to_be_felt",
+                "felt_by_mother",
+                "felt_by_mother_noted_to_be_abnormal",
+                "not_felt_by_mother"
+            ]
+        },
+        "fetal_stations": {
+            "id": "fetal_stations",
+            "type": "string",
+            "enum": [
+                "not_examined",
+                "high_unengaged",
+                "-3",
+                "-2",
+                "-1",
+                "0",
+                "1",
+                "2",
+                "3"
+            ]
+        },
+        "genders": {
+            "id": "genders",
+            "type": "string",
+            "enum": [
+                "female",
+                "male",
+                "Unknown"
+            ]
+        },
+        "histories": {
+            "id": "histories",
+            "type": "array",
+            "enum": [
+                "other",
+                "hypertension",
+                "diabetes",
+                "malaria",
+                "yellow_fever",
+                "cholera",
+                "meningitis",
+                "sickle_cell",
+                "cancer",
+                "leprosy"
+            ]
+        },
+        "hiv_diagnosis_times": {
+            "id": "hiv_diagnosis_times",
+            "type": "string",
+            "enum": [
+                "Unknown",
+                "less_than_2_month_after_birth",
+                "between_2_18_months_after_birth",
+                "more_than_18_months_after_birth"
+            ]
+        },
+        "hiv_risks": {
+            "id": "hiv_risks",
+            "type": "string",
+            "enum": [
+                "patient_known_to_have_hiv",
+                "partner_or_previous_partner_known_to_have_hiv",
+                "history_of_sexual_assult",
+                "desires_hiv_testing"
+            ]
+        },
+        "hiv_statuses": {
+            "id": "hiv_statuses",
+            "type": "string",
+            "enum": [
+                "positive",
+                "negative",
+                "Unknown"
+            ]
+        },
+        "immunization_effects": {
+            "id": "immunization_effects",
+            "type": "string",
+            "enum": [
+                "shortness_of_breath",
+                "tongue_swelling",
+                "rash",
+                "fever",
+                "swelling_at_injection_site",
+                "nausea_or_vomiting",
+                "other"
+            ]
+        },
+        "immunizations": {
+            "id": "immunizations",
+            "type": "array",
+            "enum": [
+                "bcg",
+                "opv_0",
+                "opv_1",
+                "opv_2",
+                "opv_3",
+                "dtp_hb",
+                "dpt_1",
+                "dpt_2",
+                "dpt_3",
+                "measles",
+                "penta",
+                "tentanus_toxoid_1",
+                "tentanus_toxoid_2",
+                "tentanus_toxoid_3",
+                "tentanus_toxoid_4",
+                "tentanus_toxoid_5",
+                "vitamin_a",
+                "other"
+            ]
+        },
+        "immunizations_postnatal": {
+            "id": "immunizations_postnatal",
+            "type": "array",
+            "enum": [
+                "bcg",
+                "opv_0"
+            ]
+        },
+        "infant_weights": {
+            "id": "infant_weights",
+            "type": "string",
+            "enum": [
+                "no_previous_delivery",
+                "Unknown",
+                "less_1kg",
+                "1kg",
+                "1_5kg",
+                "2kg",
+                "2_5kg",
+                "3kg",
+                "3_5kg",
+                "4kg_more"
+            ]
+        },
+        "injuries": {
+            "id": "injuries",
+            "type": "string",
+            "enum": [
+                "animal_bite_suspected_rabies",
+                "animal_bite_no_rabies",
+                "fracture",
+                "concussion_head_injury",
+                "motor_vehicle_accident",
+                "motorcycle_accident",
+                "laceration",
+                "crush_injury",
+                "burn",
+                "other"
+            ]
+        },
+        "injury_treatments": {
+            "id": "injury_treatments",
+            "type": "string",
+            "enum": [
+                "wound_washout",
+                "suture_of_laceration",
+                "topical_treatment_of_burn",
+                "bone_setting_cast",
+                "surgery",
+                "blood_transfusion",
+                "antibiotics",
+                "antivenom",
+                "other"
+            ]
+        },
+        "leprosy_classifications": {
+            "id": "leprosy_classifications",
+            "type": "string",
+            "enum": [
+                "mb_a",
+                "mb_c",
+                "pb_a",
+                "pb_c"
+            ]
+        },
+        "leprosy_diagnoses": {
+            "id": "leprosy_diagnoses",
+            "type": "array",
+            "enum": [
+                "tb",
+                "leprosy"
+            ]
+        },
+        "leprosy_disabilities": {
+            "id": "leprosy_disabilities",
+            "type": "string",
+            "enum": [
+                "grade_0",
+                "grade_1",
+                "grade_2"
+            ]
+        },
+        "leprosy_results": {
+            "id": "leprosy_results",
+            "type": "string",
+            "enum": [
+                "treatment_completed",
+                "died",
+                "transferred_out",
+                "defaulter",
+                "not_applicable"
+            ]
+        },
+        "leprosy_statuses": {
+            "id": "leprosy_statuses",
+            "type": "string",
+            "enum": [
+                "return_after_default",
+                "relapse_after_mdt",
+                "relapse_after_dds_other"
+            ]
+        },
+        "marital_statuses": {
+            "id": "marital_statuses",
+            "type": "string",
+            "enum": [
+                "single",
+                "married",
+                "divorced",
+                "separated",
+                "widowed"
+            ]
+        },
+        "menses_regularity": {
+            "id": "menses_regularity",
+            "type": "string",
+            "enum": [
+                "irregular_menses",
+                "regular_menses_monthly"
+            ]
+        },
+        "milk_types": {
+            "id": "milk_types",
+            "type": "string",
+            "enum": [
+                "mother_milk_only",
+                "mother_milk_plus_formula",
+                "mother_milk_plus_other",
+                "formula_only",
+                "formula_plus_other",
+                "other_only"
+            ]
+        },
+        "postnatal_child_diagnoses": {
+            "id": "postnatal_child_diagnoses",
+            "type": "array",
+            "enum": [
+                "septicemia",
+                "umbilical_cord_infection",
+                "severe_anemia_hb_less_10",
+                "skin_infection",
+                "neonatal_death"
+            ]
+        },
+        "postnatal_mother_diagnoses": {
+            "id": "postnatal_mother_diagnoses",
+            "type": "array",
+            "enum": [
+                "severe_anemia_hb_less_8_5",
+                "mental_disorder",
+                "gaping_or_infected_perineum",
+                "fistula"
+            ]
+        },
+        "pregnancy_complications": {
+            "id": "pregnancy_complications",
+            "type": "array",
+            "enum": [
+                "fetal_death",
+                "neonatal_death",
+                "neonatal_injury",
+                "neonatal_tetanus",
+                "neonatal_sepsis",
+                "birth_asphyxia",
+                "shoulder_dystocia",
+                "obstructed_labor",
+                "tb",
+                "diabetes",
+                "hemorrhage",
+                "intra_uterine_infection",
+                "cesarean_section",
+                "seizure",
+                "forceps_vacuum",
+                "sepsis",
+                "other"
+            ]
+        },
+        "pregnancy_diseases": {
+            "id": "pregnancy_diseases",
+            "type": "array",
+            "enum": [
+                "tuberculosis",
+                "diabetes",
+                "heart_disease"
+            ]
+        },
+        "prenatal_prob": {
+            "id": "prenatal_prob",
+            "type": "array",
+            "enum": [
+                "aph",
+                "prom",
+                "high_bp",
+                "eeclampsia",
+                "pre_eclampsia",
+                "anemia",
+                "malaria",
+                "hiv",
+                "hiv_stage_iii_or_stage_iv",
+                "ectopic_pregnancy",
+                "abortion_complications",
+                "other"
+            ]
+        },
+        "referral_locations": {
+            "id": "referral_locations",
+            "type": "string",
+            "enum": [
+                "not_applicable",
+                "laboratory",
+                "pharmacy",
+                "antenatal_clinic",
+                "tb_leprosy_department",
+                "ctc",
+                "reproductive_counseling",
+                "immunization"
+            ]
+        },
+        "symptoms": {
+            "id": "symptoms",
+            "type": "array",
+            "enum": [
+                "other",
+                "body_aches",
+                "chills",
+                "diarrhea",
+                "fever",
+                "headache",
+                "shortness_of_breath",
+                "nausea_or_vomiting",
+                "rigors",
+                "night_sweats",
+                "rash",
+                "abdominal_pain",
+                "cough",
+                "difficultly_with_urination",
+                "weakness",
+                "weight_loss"
+            ]
+        },
+        "tb_classifications": {
+            "id": "tb_classifications",
+            "type": "array",
+            "enum": [
+                "afb_plus",
+                "afb_minus",
+                "extra_pulmonary"
+            ]
+        },
+        "tb_regimens": {
+            "id": "tb_regimens",
+            "type": "string",
+            "enum": [
+                "2rhze_4rh",
+                "2hrz_4rh",
+                "2srhze_1rhze_5rh3e3",
+                "2srhze_1rhze_5rhe",
+                "2rhze_6eh",
+                "health_facility_dot",
+                "home_based_dot"
+            ]
+        },
+        "water_sodium_severities": {
+            "id": "water_sodium_severities",
+            "type": "string",
+            "enum": [
+                "severe",
+                "mild",
+                "uncertain"
+            ]
+        },
+        "one_to_20_plus": {
+            "id": "one_to_20_plus",
+            "type": "string",
+            "enum": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20+"
+            ]
+        },
+        "one_to_42_plus": {
+            "id": "one_to_42_plus",
+            "type": "number",
+            "enum": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42
+            ]
+        },
+        "breast_symptoms": {
+            "id": "breast_symptoms",
+            "type": "array",
+            "enum": [
+                "Lump",
+                "Pain",
+                "Discharge",
+                "Ulcer"
+            ]
+        },
+        "fundal_heights": {
+            "id": "fundal_heights",
+            "type": "string",
+            "enum": [
+                "too early to measure",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "25",
+                "26",
+                "27",
+                "28",
+                "29",
+                "30",
+                "31",
+                "32",
+                "33",
+                "34",
+                "35",
+                "36",
+                "37",
+                "38",
+                "39",
+                "40",
+                "41",
+                "42"
+            ]
+        },
+        "cervical_dilations": {
+            "id": "cervical_dilations",
+            "type": "string",
+            "enum": [
+                "not examined",
+                "closed",
+                "finger tip",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10"
+            ]
+        }
+    }
+}

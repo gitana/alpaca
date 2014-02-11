@@ -197,7 +197,7 @@
                 // which the validation logic uses to determine whether the control is now in a valid state
                 //
                 window.setTimeout(function() {
-                    self.renderValidationState();
+                    self.refreshValidationState();
                 }, 50);
             }
 

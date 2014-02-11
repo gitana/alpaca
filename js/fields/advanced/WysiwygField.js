@@ -116,7 +116,7 @@
 
                     self.outerEl.find(".wysiwyg").mouseout(function() {
                         self.data = _this.getValue();
-                        self.renderValidationState();
+                        self.refreshValidationState();
                     });
                 }
 

@@ -123,7 +123,7 @@
                         self.getEl().removeClass("alpaca-field-focused");
 
                         // set class from state
-                        self.renderValidationState();
+                        self.refreshValidationState();
                     });
                     self.field.attr('title','Type Ctrl+L to format and validate the JSON string.');
                 }

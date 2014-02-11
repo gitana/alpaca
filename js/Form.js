@@ -124,7 +124,7 @@
             this.topControl.validate(true);
 
             var valid = this.topControl.isValid(true);
-            this.renderValidationState();
+            this.refreshValidationState(true);
 
             return valid;
         },
@@ -347,12 +347,12 @@
         /**
          * Displays validation information of all fields of this form.
          *
-         * @param {Boolean} checkChildren whether to render validation state for child fields
+         * @param {Boolean} children whether to render validation state for child fields
          *
          * @returns {Object} Form validation state.
          */
-        renderValidationState: function(checkChildren) {
-            this.topControl.renderValidationState(checkChildren);
+        refreshValidationState: function(children) {
+            this.topControl.refreshValidationState(children);
         },
 
         /**

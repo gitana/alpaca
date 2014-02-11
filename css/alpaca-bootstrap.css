@@ -177,3 +177,13 @@ fieldset.alpaca-view-web-list.fieldset-collapsed
 {
     display: none;
 }
+
+.help-block
+{
+    display: inline-block;
+}
+
+.alpaca-controlfield-message-hidden {
+    display: none;
+}
+

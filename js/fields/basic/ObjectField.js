@@ -463,7 +463,7 @@
 
             childField.destroy();
 
-            this.renderValidationState();
+            this.refreshValidationState();
 
             // trigger update handler
             this.triggerUpdate();
@@ -527,7 +527,7 @@
                             }
                         }
                         if (insertAfterId) {
-                            _this.renderValidationState();
+                            _this.refreshValidationState();
                         }
 
                         // if not empty, mark the "last" and "first" dom elements in the list
@@ -555,6 +555,7 @@
                     });
                 },
                 "postRender": function(control) {
+
                     if (postRenderCallback)
                     {
                         postRenderCallback(control);
@@ -603,7 +604,7 @@
                     Alpaca.logDebug("There were " + extraDataKeys.length + " extra data keys that were not part of the schema " + JSON.stringify(extraDataKeys));
                 }
 
-                _this.renderValidationState();
+                //_this.refreshValidationState();
 
                 if (onSuccess)
                 {
@@ -1061,7 +1062,7 @@
                             if (stepBindings) {
                                 $.each(stepBindings, function(propertyId, step) {
                                     valid = valid & _this.childrenByPropertyId[propertyId].validate();
-                                    _this.childrenByPropertyId[propertyId].renderValidationState();
+                                    _this.childrenByPropertyId[propertyId].refreshValidationState();
                                 });
                             }
 

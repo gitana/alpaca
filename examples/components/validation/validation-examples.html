@@ -579,12 +579,6 @@ $(function() {
                         },
                         "postRender": function(control)
                         {
-                            // helper - runs validation and redraws the UI
-                            var assertValidationState = function()
-                            {
-                                control.validate(true);
-                                control.renderValidationState(true);
-                            };
                             // when the "validated" even is raised, enable the submit button
                             control.on("validated", function(e) {
                                 $("#submit15").prop("disabled", false);
@@ -596,17 +590,22 @@ $(function() {
                             // when "submit" is clicked, ensure validity before submitting
                             $("#submit15").click(function(e) {
 
-                                e.preventDefault();
+                                // the ui state for the form should be fine
+                                // but here, we refresh it to show how it is done
+                                control.refreshValidationState(true);
 
-                                assertValidationState();
-
-                                // now figure out what to do
-                                if (control.isValid()) {
+                                // if the form is not valid, stop processing
+                                if (!control.isValid())
+                                {
+                                    e.preventDefault();
+                                }
+                                else
+                                {
+                                    // otherwise, show something
+                                    e.preventDefault();
                                     alert(JSON.stringify(control.getValue(), null, "  "));;
                                 }
                             });
-                            // assert validity on initial load
-                            assertValidationState();
                         }
                     });
                 });

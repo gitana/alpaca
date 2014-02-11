@@ -67,7 +67,7 @@
          */
         onChange: function(e) {
             this.base();
-            this.renderValidationState();
+            this.refreshValidationState();
         },
 
         /**

@@ -100,7 +100,7 @@
              * @param e Event.
              */
             onClick: function(e) {
-                this.renderValidationState();
+                this.refreshValidationState();
             },
 
             /**

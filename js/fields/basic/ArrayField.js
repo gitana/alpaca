@@ -293,7 +293,7 @@
                 });
                 delete this.childrenById[id];
                 $('#' + id + "-item-container", this.outerEl).remove();
-                this.renderValidationState();
+                this.refreshValidationState();
                 this.updateToolbarItemsStatus();
                 this.updatePathAndName();
 
@@ -605,7 +605,7 @@
                             // remember the control
                             _this.addChild(fieldControl, index);
                             _this.renderToolbar(containerElem);
-                            _this.renderValidationState();
+                            _this.refreshValidationState();
                             _this.updatePathAndName();
 
                             // trigger update on the parent array

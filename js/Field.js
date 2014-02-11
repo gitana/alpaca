@@ -112,6 +112,9 @@
             {
                 this.schema.id = this.schema.id.substring(1);
             }
+
+            // has this field been previously validated?
+            this._previouslyValidated = false;
         },
 
         /**
@@ -631,14 +634,6 @@
             var defaultHideInitValidationError = (this.view.type == 'create');
             this.hideInitValidationError = Alpaca.isValEmpty(this.options.hideInitValidationError) ? defaultHideInitValidationError : this.options.hideInitValidationError;
 
-            // final call to update validation state
-            if (this.view.type != 'view') {
-                this.renderValidationState();
-            }
-
-            // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
-            this.hideInitValidationError = false;
-
             // for create view, hide all readonly fields
             if (!this.view.displayReadonly) {
                 $('.alpaca-field-readonly', this.getEl()).hide();
@@ -797,128 +792,114 @@
         },
 
         /**
-         * Injects styles to the DOM of the rendered field reflects the validation state
-         * of the field. If necessary, displays validation messages as well.
+         * Forces the validation for a field to be refreshed or redrawn to the screen.
          *
-         * @param {Boolean} checkChildren whether to render the validation state for any child fields
+         * If told to check children, then all children of the container field will be refreshed as well.
+         *
+         * @param {Boolean} children whether to refresh children
          */
-        renderValidationState: function(checkChildren) {
-
-            var self = this;
-
-            // internal method for conducting either a depth first validation of child fields
-            // or a trickle up re-validation of dependent parents
-            // this method gets called with the context (this) == field
-            var _rvc = function(checkChildren, diving)
+        refreshValidationState: function(children)
+        {
+            if (children)
             {
-                if (self.options.validate) {
-
-                    // if we're instructed to check children, always go depth first right away
-                    if (checkChildren && self.children)
+                var f = function(field, contexts)
+                {
+                    // if the field has children, go depth first
+                    if (field.children && field.children.length > 0)
                     {
-                        for (var i = 0; i < self.children.length; i++) {
-                            if (self.children[i].isValidationParticipant())
+                        for (var i = 0; i < field.children.length; i++)
+                        {
+                            if (field.children[i].isValidationParticipant())
                             {
-                                _rvc.call(self.children[i], checkChildren, true);
+                                f(field.children[i], contexts);
                             }
                         }
                     }
 
-                    // current validation status
-                    var beforeStatus = self.isValid();
+                    if (typeof(contexts) == "object")
+                    {
+                        // compile the validation context for this field
+                        var context = Alpaca.compileValidationContext(field);
+                        contexts.push(context);
+                    }
 
-                    // clear out previous validation UI markers
-                    self.getStyleInjection("removeError",this.getEl());
-                    self.getEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
+                    return contexts;
+                };
 
-                    // now run the validation
-                    self.validate();
+                // run once to cause everything to flip to correct state
+                //f(this);
 
-                    // apply custom validation (if exists)
-                    self._validateCustomValidator(function() {
+                // run again to collect contexts (nothing flips)
+                var contexts = f(this, []);
 
-                        if (self.validate()) {
+                // merge
+                var mergedMap = {};
+                var mergedContext = [];
+                for (var i = 0; i < contexts.length; i++)
+                {
+                    var context = contexts[i];
 
-                            // TRIGGER: "validated"
-                            self.triggerWithPropagation("validated");
+                    // NOTE: context is already in order [child, parent, ...]
 
-                            // mark valid
-                            self.getEl().addClass("alpaca-field-valid");
+                    var mIndex = mergedContext.length;
 
-                        } else {
+                    // walk forward
+                    for (var j = 0; j < context.length; j++)
+                    {
+                        var entry = context[j];
 
-                            // TRIGGER: "invalidated"
-                            self.triggerWithPropagation("invalidated");
-
-                            // we don't markup invalidation state for readonly fields
-                            if (!self.options.readonly)
-                            {
-                                if (!self.hideInitValidationError) {
-                                    self.getStyleInjection("error", self.getEl());
-                                    self.getEl().addClass("alpaca-field-invalid");
-                                } else {
-                                    self.getEl().addClass("alpaca-field-invalid-hidden");
-                                }
-                            }
-                            else
-                            {
-                                // this field is invalid and is also read-only, so we're not supposed to inform the end-user
-                                // within the UI (since there is nothing we can do about it)
-                                // here, we log a message to debug to inform the developer
-                                Alpaca.logWarn("The field (id=" + self.getId() + ", title=" + self.getTitle() + ", path=" + self.path + ") is invalid and also read-only");
-                            }
-                        }
-
-                        // now check whether valid
-                        var afterStatus = self.isValid();
-
-                        // Allow for the message to change
-                        if (self.options.showMessages) {
-
-                            if (!self.initializing) {
-
-                                // we don't markup invalidation state for readonly fields
-                                if (!self.options.readonly)
-                                {
-                                    // messages
-                                    var messages = [];
-                                    for (var messageId in self.validation) {
-                                        if (!self.validation[messageId]["status"]) {
-                                            messages.push(self.validation[messageId]["message"]);
-                                        }
-                                    }
-
-                                    self.displayMessage(messages, beforeStatus);
-                                }
-                            }
-                        }
-
-                        // if the validations state changed and we're not "diving", then it means we're at the top field
-                        // of our depth-first dive.
-                        //
-                        // a change to the validation state means that any fields dependent on us should have their validation
-                        // checked, thus we allow for trickle-up validation here
-
-                        if (!diving)
+                        var existing = mergedMap[entry.id];
+                        if (!existing)
                         {
-                            var forceRevalidation = false;
-                            var parent = self.parent;
-                            while (parent) {
-                                // if parent has custom validator, it should re-validate.
-                                if (parent.options && (parent.options.forceRevalidation || parent.options.validator)) {
-                                    forceRevalidation = true;
-                                }
-                                parent = parent.parent;
+                            // just add to end
+                            var newEntry = {};
+                            newEntry.id = entry.id;
+                            newEntry.path = entry.path;
+                            newEntry.container = entry.container;
+                            newEntry.field = entry.field;
+                            newEntry.validated = entry.validated;
+                            newEntry.invalidated = entry.invalidated;
+                            newEntry.valid = entry.valid;
+                            mergedContext.splice(mIndex, 0, newEntry);
+
+                            // mark in map
+                            mergedMap[newEntry.id] = newEntry;
+                        }
+                        else
+                        {
+                            if (entry.validated && !existing.invalidated)
+                            {
+                                existing.validated = true;
+                                existing.invalidated = false;
+                                existing.valid = entry.valid;
                             }
-                            if ((beforeStatus != afterStatus && self.parent && self.parent.renderValidationState) || forceRevalidation) {
-                                self.parent.renderValidationState();
+
+                            if (entry.invalidated)
+                            {
+                                existing.invalidated = true;
+                                existing.validated = false;
+                                existing.valid = entry.valid;
                             }
                         }
-                    });
+                    }
                 }
-            };
 
-            _rvc.call(self, checkChildren, false);
+                // now reverse it so that context is normalized with child fields first
+                mergedContext.reverse();
+
+                // update validation state
+                Alpaca.updateValidationStateForContext(mergedContext);
+            }
+            else
+            {
+                // just ourselves
+
+                // compile the validation context for the field
+                var context = Alpaca.compileValidationContext(this);
+
+                // update the UI for these context items
+                Alpaca.updateValidationStateForContext(context);
+            }
         },
 
         showHiddenMessages: function() {
@@ -930,81 +911,25 @@
         },
 
         /**
-         * Updates validation based on provided validation information. This method is for user provided
-         * custom validator only.
-         *
-         * @param {String} valId Validator id.
-         * @param {Object} valInfo Object that contains validation information.
-         */
-        updateValidationState: function(valId, valInfo) {
-            if (this.options.validate) {
-
-                var beforeStatus = this.isValid();
-                // Push the message
-                this.validation[valId] = valInfo;
-
-                if (!this.hideInitValidationError) {
-
-                    // we don't markup invalidation state for readonly fields
-                    if (!this.options.readonly)
-                    {
-                        if (valInfo && !valInfo.status) {
-                            this.getEl().removeClass("alpaca-field-valid");
-                            this.getStyleInjection("error",this.getEl());
-                            this.getEl().addClass("alpaca-field-invalid");
-                        }
-                    }
-                }
-
-                // Push the message
-                this.validation[valId] = valInfo;
-
-                // Allow for the message to change
-                if (this.options.showMessages) {
-                    if (!this.initializing) {
-
-                        if (!this.hideInitValidationError) {
-
-                            // we don't markup invalidation state for readonly fields
-                            if (!this.options.readonly)
-                            {
-                                var messages = [];
-                                for (var messageId in this.validation) {
-                                    if (!this.validation[messageId]["status"]) {
-                                        messages.push(this.validation[messageId]["message"]);
-                                    }
-                                }
-                                this.displayMessage(messages, beforeStatus);
-                            }
-                        }
-                    }
-                }
-
-                // Revalidate parents if validation state changed
-                if (this.isValid() && this.parent && this.parent.renderValidationState) {
-                    this.parent.renderValidationState();
-                }
-
-            }
-        },
-
-        /**
          * Validates this field and returns whether it is in a valid state.
          *
          * @param [Boolean] validateChildren whether to child controls.
          *
          * @returns {Boolean} True if value of this field is valid, false otherwise.
          */
-        validate: function(validateChildren) {
-
+        validate: function(validateChildren)
+        {
             // skip out if we haven't yet bound any data into this control
             // the control can still be considered to be initializing
             var status = true;
-            if (!this.initializing && this.options.validate) {
 
+            if (!this.initializing && this.options.validate)
+            {
                 // if validateChildren, then walk recursively down into child elements
-                if (this.children && validateChildren) {
-                    for (var i = 0; i < this.children.length; i++) {
+                if (this.children && validateChildren)
+                {
+                    for (var i = 0; i < this.children.length; i++)
+                    {
                         var child = this.children[i];
                         if (child.isValidationParticipant())
                         {
@@ -1021,8 +946,10 @@
                 {
                     // messages
                     var messages = [];
-                    for (var messageId in this.validation) {
-                        if (!this.validation[messageId]["status"]) {
+                    for (var messageId in this.validation)
+                    {
+                        if (!this.validation[messageId]["status"])
+                        {
                             messages.push(this.validation[messageId]["message"]);
                         }
                     }
@@ -1030,6 +957,8 @@
                     Alpaca.logDebug("Validation failure for field (id=" + this.getId() + ", path=" + this.path + "), messages: " + JSON.stringify(messages));
                 }
             }
+
+            this._previouslyValidated = true;
 
             return status;
         },
@@ -1065,7 +994,10 @@
             if (this.options.validator && Alpaca.isFunction(this.options.validator))
             {
                 this.options.validator(this, function(valInfo) {
-                    _this.updateValidationState('customValidator', valInfo);
+
+                    // always store in "custom"
+                    _this.validation["custom"] = valInfo;
+
                     callback();
                 });
             }
@@ -1382,7 +1314,7 @@
             this.getEl().removeClass("alpaca-field-focused");
 
             // update the UI validation state
-            this.renderValidationState();
+            this.refreshValidationState();
         },
 
         /**

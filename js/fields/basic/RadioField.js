@@ -153,7 +153,7 @@
             Alpaca.later(25, this, function(){
                 var v = _this.getValue();
                 _this.setValue(v);
-                _this.renderValidationState();
+                _this.refreshValidationState();
             });
         },//__BUILDER_HELPERS
 		

@@ -1687,6 +1687,25 @@
 
                 var fin = function()
                 {
+                    // if this is the top-level alpaca field, then we call for validation state to be recalculated across
+                    // all child fields
+                    if (!field.parent)
+                    {
+                        // final call to update validation state
+                        field.refreshValidationState(true);
+
+                        // force hideInitValidationError to false for field and all children
+                        if (field.view.type != 'view')
+                        {
+                            Alpaca.fieldApplyChildren(field, function(field) {
+
+                                // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
+                                field.hideInitValidationError = false;
+
+                            });
+                        }
+                    }
+
                     // TEST - swap code
                     // swap placeholder -> el
                     //$(tempHolder).before(el);
@@ -2869,8 +2888,245 @@
         });
     };
 
+    /**
+     * Compiles the validation context for the chain of fields from the top-most down to the given field.
+     * Each validation context entry is a field in the chain which describes the following:
+     *
+     *    {
+     *       "field": the field instance,
+     *       "before": the before value (boolean)
+     *       "after": the after value (boolean)
+     *       "validated": (optional) if the field validated (switches state from invalid to valid)
+     *       "invalidated": (optional) if the field invalidated (switches state from valid to invalid)
+     *    }
+     *
+     * This hands back an array of entries with the child field first and continuing up the parent chain.
+     * The last entry in the array is the top most parent field.
+     *
+     * @param field
+     * @returns {Array}
+     */
+    Alpaca.compileValidationContext = function(field)
+    {
+        // walk up the parent tree until we find the top-most control
+        // this serves as our starting point for downward validation
+        var chain = [];
+        var parent = field;
+        do
+        {
+            if (!parent.isValidationParticipant())
+            {
+                parent = null;
+            }
 
+            if (parent)
+            {
+                chain.push(parent);
+            }
 
+            if (parent)
+            {
+                parent = parent.parent;
+            }
+        }
+        while (parent);
+
+        // reverse so top most parent is first
+        chain.reverse();
+
+        // compilation context
+        var context = [];
+
+        // internal method that sets validation for a single field
+        var f = function(chain, context)
+        {
+            if (!chain || chain.length == 0)
+            {
+                return;
+            }
+
+            var current = chain[0];
+
+            var entry = {};
+            entry.id = current.getId();
+            entry.field = current;
+            entry.path = current.path;
+
+            // BEFORE field validation status
+            var beforeStatus = current.isValid();
+            if (current.isContainer())
+            {
+                beforeStatus = current.isValid(true);
+            }
+
+            entry.before = beforeStatus;
+
+            // step down into chain
+            if (chain.length > 1)
+            {
+                // copy array
+                var childChain = chain.slice(0);
+                childChain.shift();
+                f(childChain, context);
+            }
+
+            var previouslyValidated = current._previouslyValidated;
+
+            // now run the validation for just this one field
+            current.validate();
+
+            // apply custom validation (if exists) for just this one field
+            current._validateCustomValidator(function() {
+
+                // AFTER field validation state
+                var afterStatus = current.isValid();
+                if (current.isContainer())
+                {
+                    afterStatus = current.isValid(true);
+                }
+
+                entry.after = afterStatus;
+
+                // if this field's validation status flipped, fire triggers
+                entry.validated = false;
+                entry.invalidated = false;
+                if (!beforeStatus && afterStatus)
+                {
+                    entry.validated = true;
+                }
+                else if (beforeStatus && !afterStatus)
+                {
+                    entry.invalidated = true;
+                }
+                // special case for fields that have not yet been validated
+                else if (!previouslyValidated && !afterStatus)
+                {
+                    entry.invalidated = true;
+                }
+
+                entry.container = current.isContainer();;
+                entry.valid = entry.after;
+
+                context.push(entry);
+            });
+        };
+
+        f(chain, context);
+
+        return context;
+    };
+
+    Alpaca.updateValidationStateForContext = function(context)
+    {
+        // walk through each and flip any DOM UI based on entry state
+        for (var i = 0; i < context.length; i++)
+        {
+            var entry = context[i];
+            var field = entry.field;
+
+            // clear out previous validation UI markers
+            field.getStyleInjection("removeError", field.getEl());
+            field.getEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
+
+            var showMessages = false;
+
+            // valid?
+            if (entry.valid)
+            {
+                field.getEl().addClass("alpaca-field-valid");
+            }
+            else
+            {
+                // we don't markup invalidation state for readonly fields
+                if (!field.options.readonly)
+                {
+                    if (!field.hideInitValidationError)
+                    {
+                        field.getStyleInjection("error", field.getEl());
+                        field.getEl().addClass("alpaca-field-invalid");
+
+                        showMessages = true;
+                    }
+                    else
+                    {
+                        field.getEl().addClass("alpaca-field-invalid-hidden");
+                    }
+                }
+                else
+                {
+                    // this field is invalid and is also read-only, so we're not supposed to inform the end-user
+                    // within the UI (since there is nothing we can do about it)
+                    // here, we log a message to debug to inform the developer
+                    Alpaca.logWarn("The field (id=" + field.getId() + ", title=" + field.getTitle() + ", path=" + field.path + ") is invalid and also read-only");
+                }
+            }
+
+            // TRIGGERS
+            if (entry.validated)
+            {
+                Alpaca.later(25, this, function() {
+                    field.trigger("validated");
+                });
+            }
+            else if (entry.invalidated)
+            {
+                Alpaca.later(25, this, function() {
+                    field.trigger("invalidated");
+                });
+            }
+
+            // Allow for the message to change
+            if (field.options.showMessages)
+            {
+                if (!field.initializing)
+                {
+                    // we don't markup invalidation state for readonly fields
+                    if (!field.options.readonly)
+                    {
+                        // messages
+                        var messages = [];
+                        for (var messageId in field.validation)
+                        {
+                            if (!field.validation[messageId]["status"])
+                            {
+                                messages.push(field.validation[messageId]["message"]);
+                            }
+                        }
+
+                        field.displayMessage(messages, field.valid);
+                    }
+                }
+            }
+
+            if (showMessages)
+            {
+                field.showHiddenMessages();
+            }
+        }
+    };
+
+    /**
+     * Runs the given function over the field and all of its children recursively.
+     *
+     * @param field
+     * @param fn
+     */
+    Alpaca.fieldApplyChildren = function(field, fn)
+    {
+        var f = function(field, fn)
+        {
+            // if the field has children, go depth first
+            if (field.children && field.children.length > 0)
+            {
+                for (var i = 0; i < field.children.length; i++)
+                {
+                    fn(field.children[i]);
+                }
+            }
+        };
+
+        f(field, fn);
+    };
 
 
 

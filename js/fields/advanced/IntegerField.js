@@ -83,7 +83,7 @@
                                 max: self.schema.maximum,
                                 slide: function(event, ui) {
                                     self.setValue(ui.value);
-                                    self.renderValidationState();
+                                    self.refreshValidationState();
                                 }
                             });
                         }
