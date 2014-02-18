@@ -314,7 +314,7 @@
          * @returns {Boolean} True if the variable is a string, false otherwise.
          */
         isString: function(obj) {
-            return (typeof obj == "string");
+            return (typeof obj === "string");
         },
 
         /**
@@ -368,7 +368,7 @@
          * @returns {Boolean} True if the variable is a undefined, false otherwise.
          */
         isUndefined: function(obj) {
-            return (typeof obj == "undefined");
+            return (typeof obj === "undefined");
         },
 
         /**
