@@ -32,7 +32,7 @@
         "member":{
             "title":"Member",
             "type":"boolean",
-            "description":"Are you a memeber?"
+            "description":"Are you a member?"
         },
         "icecream":{
             "title":"Favorite",
