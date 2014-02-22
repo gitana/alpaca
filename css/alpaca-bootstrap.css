@@ -187,3 +187,36 @@ fieldset.alpaca-view-web-list.fieldset-collapsed
     display: none;
 }
 
+
+.alpaca-fileupload-container
+{
+    border: 1px #ccc solid;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.alpaca-fileupload-container .row
+{
+    margin-bottom: 10px;
+}
+
+.alpaca-fileupload-well
+{
+    /*border: 1px #ccc solid;*/
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 100px;
+}
+
+.alpaca-fileupload-container table
+{
+    border: 1px #ccc solid;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.alpaca-fileupload-well p
+{
+    padding-top: 20px;
+    color: #888;
+}

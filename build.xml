@@ -235,6 +235,8 @@
                 <file name="fields/advanced/CountryField.js"/>
                 <file name="fields/advanced/ZipcodeField.js"/>
                 <file name="fields/advanced/URLField.js"/>
+
+                <file name="fields/advanced/UploadField.js"/>
             </filelist>
         </concat>
 
@@ -423,6 +425,8 @@
                 <file name="fields/advanced/CountryField.js"/>
                 <file name="fields/advanced/ZipcodeField.js"/>
                 <file name="fields/advanced/URLField.js"/>
+
+                <file name="fields/advanced/UploadField.js"/>
             </filelist>
         </concat>
 

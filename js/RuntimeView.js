@@ -215,7 +215,7 @@
          */
         tmpl: function(templateDescriptor, model)
         {
-            return Alpaca.tmpl(this, templateDescriptor, model);
+            return Alpaca.tmpl(templateDescriptor, model);
         }
 
     });

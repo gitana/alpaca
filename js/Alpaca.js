@@ -182,25 +182,26 @@
             // auto-set the focus?
             if (options && options.focus)
             {
-                if (options.focus === true)
-                {
-                    // pick first element in form
-                    if (control.children && control.children.length > 0) {
-                        if (control.children[0].field && control.children[0].field[0]) {
-                            //$(control.children[0].field[0]).focus();
-                            $(control.children[0]).focus();
+                window.setTimeout(function() {
+
+                    if (options.focus === true)
+                    {
+                        // pick first element in form
+                        if (control.children && control.children.length > 0) {
+                            if (control.children[0].field && control.children[0].field) {
+                                control.children[0].field.focus();
+                            }
                         }
                     }
-                }
-                else
-                {
-                    // pick a named control
-                    var child = control.getControlByPath(options.focus);
-                    if (child && child.field) {
-                        //$(child.field[0]).focus();
-                        $(child).focus();
+                    else
+                    {
+                        // pick a named control
+                        var child = control.getControlByPath(options.focus);
+                        if (child && child.field && child.field.length > 0) {
+                            child.field.focus();
+                        }
                     }
-                }
+                }, 250);
             }
 
             if (renderedCallback)
@@ -2221,16 +2222,29 @@
         },
 
         /**
-         * Executes a template.
+         * Executes a template and returns a DOM element.
          *
-         * @param view
          * @param templateDescriptor
          * @param model
          */
-        tmpl: function(view, templateDescriptor, model)
+        tmpl: function(templateDescriptor, model)
         {
-            if (Alpaca.isString(view)) {
-                view = this.normalizedViews[view];
+            var html = Alpaca.tmplHtml(templateDescriptor, model);
+
+            return Alpaca.safeDomParse(html);
+        },
+
+        /**
+         * Executes a template and returns HTML.
+         *
+         * @param templateDescriptor
+         * @param model
+         */
+        tmplHtml: function(templateDescriptor, model)
+        {
+            if (!model)
+            {
+                model = {};
             }
 
             var engineType = templateDescriptor.engine.type;
@@ -2245,10 +2259,10 @@
             // execute the template
             var cacheKey = templateDescriptor.cache.key;
             var html = engine.execute(cacheKey, model, function(err) {
-                return Alpaca.throwDefaultError("The compiled template: " + compiledTemplateId + " for view: " + view.id + " failed to execute: " + JSON.stringify(err));
+                return Alpaca.throwDefaultError("The compiled template: " + compiledTemplateId + " failed to execute: " + JSON.stringify(err));
             });
 
-            return Alpaca.safeDomParse(html);
+            return html;
         }
     });
 

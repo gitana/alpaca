@@ -41,6 +41,9 @@
          * @see Alpaca.Field#renderField
          */
         renderField: function(onSuccess) {
+            if (onSuccess) {
+                onSuccess();
+            }
         },
 
         /**

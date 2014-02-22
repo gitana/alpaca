@@ -418,8 +418,9 @@
                 "schema": this.schema,
                 "data": theData,
                 "view": this.view,
-                "path": this.path
-            }, {});
+                "path": this.path,
+                "name": this.name
+            });
 
             if (Alpaca.collectTiming)
             {
