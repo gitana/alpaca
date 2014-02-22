@@ -315,7 +315,7 @@
          * @returns {Boolean} True if the variable is a string, false otherwise.
          */
         isString: function(obj) {
-            return (typeof obj == "string");
+            return (typeof obj === "string");
         },
 
         /**
@@ -324,11 +324,7 @@
          * @returns {Boolean} True if the variable is an object, false otherwise.
          */
         isObject: function(obj) {
-            if (obj === true || obj === false || Alpaca.isUndefined(obj) || obj === null) {
-                return false;
-            }
-
-            return (typeof(obj) === "object") && (typeof(obj.length) === "undefined");
+            return Object.prototype.toString.call(obj) === '[Object object]';
         },
 
         /**
@@ -346,7 +342,7 @@
          * @returns {Boolean} True if the variable is a number, false otherwise.
          */
         isNumber: function(obj) {
-            return (typeof obj == "number");
+            return (typeof obj === "number");
         },
 
         /**
@@ -355,11 +351,7 @@
          * @returns {Boolean} True if the variable is an array, false otherwise.
          */
         isArray: function(obj) {
-            if (obj === true || obj === false || Alpaca.isUndefined(obj) || obj === null) {
-                return false;
-            }
-
-            return obj.push && obj.slice;
+            return obj instanceof Array;
         },
 
         /**
@@ -368,7 +360,7 @@
          * @returns {Boolean} True if the variable is a boolean, false otherwise.
          */
         isBoolean: function(obj) {
-            return (typeof obj == "boolean");
+            return (typeof obj === "boolean");
         },
 
         /**
@@ -377,7 +369,7 @@
          * @returns {Boolean} True if the variable is a undefined, false otherwise.
          */
         isUndefined: function(obj) {
-            return (typeof obj == "undefined");
+            return (typeof obj === "undefined");
         },
 
         /**
