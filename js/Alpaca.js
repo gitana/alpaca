@@ -324,7 +324,7 @@
          * @returns {Boolean} True if the variable is an object, false otherwise.
          */
         isObject: function(obj) {
-            return Object.prototype.toString.call(obj) === '[Object object]';
+            return Object.prototype.toString.call(obj) === '[object Object]';
         },
 
         /**
