@@ -85,23 +85,96 @@
                 if (self.field)
                 {
                     // mask it
-                    if ( self.field && self.field.mask && self.options.maskString) {
+                    if ( self.field && self.field.mask && self.options.maskString)
+                    {
                         self.field.mask(self.options.maskString);
                     }
 
                     // typeahead?
-                    if ( self.field && self.field.typeahead && self.options.typeahead) {
-
-                        var tconfig = {};
-                        for (var k in self.options.typeahead) {
-                            tconfig[k] = self.options.typeahead[k];
+                    if ( self.field && self.field.typeahead && self.options.typeahead)
+                    {
+                        var tConfig = self.options.typeahead.config;
+                        if (!tConfig) {
+                            tConfig = {};
                         }
 
-                        if (!tconfig.name) {
-                            tconfig.name = self.getId();
+                        var tDatasets = self.options.typeahead.datasets;
+                        if (!tDatasets) {
+                            tDatasets = {};
                         }
 
-                        $(self.field).typeahead(tconfig);
+                        if (!tDatasets.name) {
+                            tDatasets.name = self.getId();
+                        }
+
+                        // support for each datasets (local, prefetch, remote)
+                        if (tDatasets.type == "local")
+                        {
+                            var local = [];
+
+                            for (var i = 0; i < tDatasets.source.length; i++)
+                            {
+                                var localElement = tDatasets.source[i];
+                                if (typeof(localElement) == "string")
+                                {
+                                    localElement = {
+                                        "value": localElement
+                                    };
+                                }
+
+                                local.push(localElement);
+                            }
+
+                            var engine = new Bloodhound({
+                                datumTokenizer: function(d) {
+                                    return Bloodhound.tokenizers.whitespace(d.value);
+                                },
+                                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                                local: local
+                            });
+                            engine.initialize();
+                            tDatasets.source = engine.ttAdapter();
+                        }
+                        else if (tDatasets.type == "prefetch")
+                        {
+                            var engine = new Bloodhound({
+                                datumTokenizer: function(d) {
+                                    return Bloodhound.tokenizers.whitespace(d.value);
+                                },
+                                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                                prefetch: tDatasets.source
+                            });
+                            engine.initialize();
+                            tDatasets.source = engine.ttAdapter();
+                        }
+                        else if (tDatasets.type == "remote")
+                        {
+                            var engine = new Bloodhound({
+                                datumTokenizer: function(d) {
+                                    return Bloodhound.tokenizers.whitespace(d.value);
+                                },
+                                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                                remote: tDatasets.source
+                            });
+                            engine.initialize();
+                            tDatasets.source = engine.ttAdapter();
+                        }
+
+                        // compile templates
+                        if (tDatasets.templates)
+                        {
+                            for (var k in tDatasets.templates)
+                            {
+                                var template = tDatasets.templates[k];
+                                if (typeof(template) == "string")
+                                {
+                                    tDatasets.templates[k] = Handlebars.compile(template);
+                                }
+                            }
+                        }
+
+                        // process typeahead
+                        $(self.field).typeahead(tConfig, tDatasets);
 
                         // listen for "autocompleted" event and set the value of the field
                         $(self.field).on("typeahead:autocompleted", function(event, datum) {
@@ -114,16 +187,16 @@
                         });
 
                         // custom events
-                        if (tconfig.events)
+                        if (tConfig.events)
                         {
-                            if (tconfig.events.autocompleted) {
+                            if (tConfig.events.autocompleted) {
                                 $(self.field).on("typeahead:autocompleted", function(event, datum) {
-                                    tconfig.events.autocompleted(event, datum);
+                                    tConfig.events.autocompleted(event, datum);
                                 });
                             }
-                            if (tconfig.events.selected) {
+                            if (tConfig.events.selected) {
                                 $(self.field).on("typeahead:selected", function(event, datum) {
-                                    tconfig.events.selected(event, datum);
+                                    tConfig.events.selected(event, datum);
                                 });
                             }
                         }
@@ -135,10 +208,11 @@
                         $(self.field).change(function() {
 
                             var value = $(this).val();
-                            var currentQuery = $(fi).typeahead('getQuery');
-                            if (currentQuery != value)
+
+                            var newValue = $(fi).typeahead('val');
+                            if (newValue != value)
                             {
-                                $(fi).typeahead('setQuery', value);
+                                $(fi).typeahead('val', newValue);
                             }
 
                         });

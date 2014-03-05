@@ -31,7 +31,9 @@
     <script src="../../../lib/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
     <!-- typeahead.js -->
-    <script src="../../../lib/typeahead/typeahead.js" type="text/javascript"></script>
+    <script src="../../../lib/typeahead/bloodhound.js" type="text/javascript"></script>
+    <script src="../../../lib/typeahead/typeahead.bundle.js" type="text/javascript"></script>
+    <script src="../../../lib/handlebars/handlebars.js" type="text/javascript"></script>
 
     <!-- Web Site -->
     <script type="text/javascript" src="../../lib/google-code-prettify/prettify.min.js"></script>
@@ -237,14 +239,15 @@ $(function() {
 
                             <!-- example 7 -->
                             <h2>Example 7: </h2>
-                            <p>Simple configuration for $.typeahead auto-completion of the field value based on locally provided values.</p>
-
+                            <p>
+                                This example uses $.typeahead auto-completion with a function to provide lookup values.
+                                The <code>config</code> block defines the first argument into the typeahead plugin.
+                                The <code>datasets</code> block defines the second argument into the typeahead plugin.
+                            </p>
                             <div id="field7"></div>
                             <script type="text/javascript" id="field7-script">
 
                                 $(function() {
-
-                                    var colorNames = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
 
                                     $("#field7").alpaca({
                                         "schema": {
@@ -252,11 +255,46 @@ $(function() {
                                         },
                                         "options": {
                                             "type": "text",
-                                            "label": "CSS Color",
-                                            "helper": "Provide the name of a CSS color you would like to use",
+                                            "label": "Company Name",
+                                            "helper": "Select the name of a cloud computing company",
                                             "typeahead": {
-                                                "name": "color",
-                                                "local": colorNames
+                                                "config": {
+                                                    "autoselect": true,
+                                                    "highlight": true,
+                                                    "hint": true,
+                                                    "minLength": 1
+                                                },
+                                                "datasets": {
+                                                    "name": "companies",
+                                                    "source": function(query, cb)
+                                                    {
+                                                        var companies = [
+                                                            "Cloud CMS",
+                                                            "Amazon",
+                                                            "HubSpot"
+                                                        ];
+
+                                                        var results = [];
+                                                        for (var i = 0; i < companies.length; i++)
+                                                        {
+                                                            var add = true;
+
+                                                            if (query)
+                                                            {
+                                                                add = (companies[i].indexOf(query) === 0);
+                                                            }
+
+                                                            if (add)
+                                                            {
+                                                                results.push({
+                                                                    "value": companies[i]
+                                                                });
+                                                            }
+                                                        }
+
+                                                        cb(results);
+                                                    }
+                                                }
                                             }
                                         }
                                     });
@@ -265,6 +303,52 @@ $(function() {
 
                             <!-- example 8 -->
                             <h2>Example 8: </h2>
+                            <p>
+                                Simple configuration for $.typeahead auto-completion of the field value based on locally provided values.
+                                <br/>
+                                <br/>
+                                By convention, the <code>source</code> setting is a function that provides the dataset for a given query (see the typeahead documentation).
+                                To make things easier, we also accept an object with two fields - <code>type</code> and <code>source</code>.
+                                <br/>
+                                <br/>
+                                If <code>type</code> is <code>local</code>, then an array can be passed in via <code>source</code>.  The array should be either simple
+                                strings or an array of objects with the structure <code>{'value': ''}</code>.
+                                <br/>
+                                <br/>
+                                If <code>type</code> is <code>remote</code>, then the source is a remote URL.  This should hand back an array of objects with the structure <code>{'value': ''}</code>.
+                                <br/>
+                                <br/>
+                                If <code>type</code> is <code>prefetch</code>, the source is a prefetch URL.  This should hand back an array of objects with the structure <code>{'value': ''}</code>.
+                            </p>
+
+                            <div id="field8"></div>
+                            <script type="text/javascript" id="field8-script">
+
+                                $(function() {
+
+                                    var colorNames = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
+
+                                    $("#field8").alpaca({
+                                        "schema": {
+                                            "type": "string"
+                                        },
+                                        "options": {
+                                            "type": "text",
+                                            "label": "CSS Color",
+                                            "helper": "Provide the name of a CSS color you would like to use",
+                                            "typeahead": {
+                                                "datasets": {
+                                                    "type": "local",
+                                                    "source": colorNames
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example 9 -->
+                            <h2>Example 9: </h2>
                             <p>
                                 This example uses $.typeahead auto-completion with a remote data source.  Auto-completion
                                 is provided for names of cloud computing companies.  It also uses Hogan.js to assist
@@ -275,13 +359,12 @@ $(function() {
                                 parameter.  It uses this to perform a simple comparison.  In your own script, you'll likely
                                 query a database or connect to a web service to produce matches.
                             </p>
-                            <script src="http://twitter.github.io/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
-                            <div id="field8"></div>
-                            <script type="text/javascript" id="field8-script">
+                            <div id="field9"></div>
+                            <script type="text/javascript" id="field9-script">
 
                                 $(function() {
 
-                                    $("#field8").alpaca({
+                                    $("#field9").alpaca({
                                         "schema": {
                                             "type": "string"
                                         },
@@ -290,36 +373,37 @@ $(function() {
                                             "label": "Company Name",
                                             "helper": "Select the name of a cloud computing company",
                                             "typeahead": {
-                                                "name": "companies",
-                                                "remote": {
-                                                    "url": "../../endpoints/typeahead-sample.php?q=%QUERY",
-                                                    "filter": function(response){
-                                                        return response;
-                                                    },
-                                                    "cache": false
-                                                },
-                                                "header": "<h4>List of companies</h4>",
-                                                "footer": "<h4>Please select a company</h4>",
-                                                "engine": Hogan,
-                                                "template": "<p style='color: blue'>{{name}}</p>"
+                                                "datasets": {
+                                                    "name": "companies",
+                                                    "type": "remote",
+                                                    "source": "../../endpoints/typeahead-sample.php?q=%QUERY",
+                                                    "templates": {
+                                                        "empty": "Nothing found...",
+                                                        "header": "<h4>List of companies</h4><br/><br/>",
+                                                        "footer": "<br/><br/><h4>Powered by Alpaca</h4>",
+                                                        "suggestion": "<p style='color: blue'>{{value}}</p>"
+                                                    }
+                                                }
                                             }
                                         }
                                     });
                                 });
                             </script>
 
-                            <!-- example 9 -->
-                            <h2>Example 9: Placeholder</h2>
+
+
+                            <!-- example 10 -->
+                            <h2>Example 10: Placeholder</h2>
                             <p>
                                 This example uses the <code>placeholder</code> option to set up the placeholder text
                                 for a text field.
                             </p>
-                            <div id="field9"></div>
-                            <script type="text/javascript" id="field9-script">
+                            <div id="field10"></div>
+                            <script type="text/javascript" id="field10-script">
 
                                 $(function() {
 
-                                    $("#field9").alpaca({
+                                    $("#field10").alpaca({
                                         "schema": {
                                             "type": "string"
                                         },
