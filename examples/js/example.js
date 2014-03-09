@@ -370,6 +370,11 @@ $(function() {
                 "link":"../../components/fields/state-field.html"
             },
             {
+                "id":"table-field",
+                "title":"Table Field",
+                "link":"../../components/fields/table-field.html"
+            },
+            {
                 "id":"tag-field",
                 "title":"Tag Field",
                 "link":"../../components/fields/tag-field.html"

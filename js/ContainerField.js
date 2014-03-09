@@ -35,6 +35,8 @@
             setup: function() {
                 this.base();
 
+                this.itemContainerTemplateDescriptor = this.view.getTemplateDescriptor("fieldSetItemContainer");
+
                 var collapsible = true;
 
                 if (!Alpaca.isEmpty(this.view.collapsible)) {
@@ -261,16 +263,22 @@
             renderItemContainer: function(insertAfterId, parent, propertyId) {
                 var _this = this;
 
-                var itemContainerTemplateDescriptor = this.view.getTemplateDescriptor("fieldSetItemContainer");
-                if (itemContainerTemplateDescriptor) {
+                var itemContainerTemplateDescriptor = this.itemContainerTemplateDescriptor;
+                if (itemContainerTemplateDescriptor)
+                {
                     var containerElem = _this.view.tmpl(itemContainerTemplateDescriptor, {});
-                    if (containerElem.attr('data-replace') == 'true') {
+                    if (containerElem.attr('data-replace') == 'true')
+                    {
                         return this.fieldContainer;
-                    } else {
-                        if (insertAfterId) {
+                    }
+                    else
+                    {
+                        if (insertAfterId)
+                        {
                             $('#' + insertAfterId + '-item-container', this.outerEl).after(containerElem);
-                        } else {
-
+                        }
+                        else
+                        {
                             var appendToContainer = this.fieldContainer;
 
                             var bindings = this.view.getLayout().bindings;
@@ -283,8 +291,11 @@
                             containerElem.appendTo(appendToContainer);
                         }
                     }
+
                     return containerElem;
-                } else {
+                }
+                else
+                {
                     return this.fieldContainer;
                 }
             },

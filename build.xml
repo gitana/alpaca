@@ -237,6 +237,7 @@
                 <file name="fields/advanced/URLField.js"/>
 
                 <file name="fields/advanced/UploadField.js"/>
+                <file name="fields/advanced/TableField.js"/>
             </filelist>
         </concat>
 
@@ -427,6 +428,7 @@
                 <file name="fields/advanced/URLField.js"/>
 
                 <file name="fields/advanced/UploadField.js"/>
+                <file name="fields/advanced/TableField.js"/>
             </filelist>
         </concat>
 

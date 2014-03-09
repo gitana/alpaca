@@ -395,6 +395,8 @@
         /**
          * Provides a safe conversion of an HTML textual string into a DOM object.
          *
+         * Alpaca's templating routes through this as well as any {{wrap}} inline includes.
+         *
          * @param x
          * @return {*}
          */
@@ -409,6 +411,7 @@
 
                 x = Alpaca.trim(x);
 
+                // convert to dom
                 var converted = null;
                 try
                 {
@@ -912,22 +915,30 @@
             var html = "";
 
             if (!name)
+            {
                 name = "controlFieldLabel";
+            }
 
             // determine which compiled template to use for this template name
             var templateDescriptor = this.getTemplateDescriptor(view, name, field);
-            if (wrap) {
-
+            if (wrap)
+            {
                 // for wrapping, we get the html source and hand it back
                 // first we apply any attr and classes we need
 
                 // get the html source
                 var template = templateDescriptor.template.value;
-                if ($('.alpaca' + this.fieldTemplatePostfix[name], Alpaca.safeDomParse(template)).length === 0) {
-                    if (this.fieldTemplatePostfix[name]) {
+
+                // for wrapping elements, we allow for "alpaca-<postfix>" classes to be automatically mixed in
+                if ($('.alpaca' + this.fieldTemplatePostfix[name], Alpaca.safeDomParse(template)).length === 0)
+                {
+                    if (this.fieldTemplatePostfix[name])
+                    {
                         template = Alpaca.safeDomParse(template).addClass("alpaca" + this.fieldTemplatePostfix[name]);
                     }
                 }
+
+                // produce the html
                 html = Alpaca.safeDomParse(template).outerHTML(true);
             }
             else
@@ -935,17 +946,27 @@
                 // for non-wrapped, we execute the template straight away
 
                 var label = view.tmpl(templateDescriptor, object.data);
-                if (label) {
-                    if (this.fieldTemplatePostfix[name]) {
-                        if ($('.alpaca' + this.fieldTemplatePostfix[name], label).length === 0) {
+                if (label)
+                {
+                    // for wrapping elements, we allow for "alpaca-<postfix>" classes to be automatically mixed in
+                    if (this.fieldTemplatePostfix[name])
+                    {
+                        if ($('.alpaca' + this.fieldTemplatePostfix[name], label).length === 0)
+                        {
                             label.addClass("alpaca" + this.fieldTemplatePostfix[name]);
                         }
-                        if (!label.attr("id")) {
+
+                        if (!label.attr("id"))
+                        {
                             label.attr("id", object.data.id + this.fieldTemplatePostfix[name]);
                         }
                     }
+
+                    // produce the html
                     html = label.outerHTML(true);
-                } else {
+                }
+                else
+                {
                     html = "";
                 }
             }
@@ -4119,6 +4140,20 @@
         */
 
         root.async = async;
+
+
+        /**
+         * Replaces all instances of the string <find> with the replacement text <replace>.
+         *
+         * @param text
+         * @param find
+         * @param replace
+         * @returns {*}
+         */
+        Alpaca.replaceAll = function(text, find, replace)
+        {
+            return text.replace(new RegExp(find, 'g'), replace);
+        };
 
     }());
 
