@@ -147,3 +147,6 @@ Thanks for assistance and contributions:
 + [@globocom](http://www.github.com/globocom)
 + [@urba](http://www.github.com/urba)
 + [@colegatron](http://www.github.com/colegatron)
++ [@Kirosoft](http://www.github.com/Kirosoft)
++ [@1337](http://www.github.com/1337)
++ [@yaworsk](http://www.github.com/yaworsk)
