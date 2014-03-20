@@ -312,6 +312,7 @@
                 <include name="requirejs/**/*"/>
                 <include name="ace/**/*"/>
                 <include name="typeahead/**/*"/>
+                <include name="jquery-file-upload/**/*"/>
             </fileset>
             <fileset dir="${prep.dir}/lib/jquery-1.9.1">
                 <include name="jquery-1.9.1.min.js"/>
@@ -909,6 +910,14 @@
 
         <!-- RequireJS -->
         <copy tofile="${location}/lib/require.js" file="${package.dir}/lib/requirejs/require.js"/>
+
+        <!-- JQuery File Upload -->
+        <copy todir="${location}/lib/jquery-file-upload">
+            <fileset dir="${package.dir}/lib/jquery-file-upload">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </copy>
 
     </target>
 
