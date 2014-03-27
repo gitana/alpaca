@@ -266,10 +266,25 @@
 
             if (this.field)
             {
-                if (Alpaca.isEmpty(value)) {
+                if (Alpaca.isEmpty(value))
+                {
                     this.field.val("");
-                } else {
+
+                    // if using typeahead, set using typeahead control
+                    if ( this.field && this.field.typeahead && this.options.typeahead)
+                    {
+                        $(this.field).typeahead('val', '');
+                    }
+                }
+                else
+                {
                     this.field.val(value);
+
+                    // if using typeahead, set using typeahead control
+                    if ( this.field && this.field.typeahead && this.options.typeahead)
+                    {
+                        $(this.field).typeahead('val', value);
+                    }
                 }
             }
 
