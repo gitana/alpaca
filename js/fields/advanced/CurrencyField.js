@@ -22,6 +22,13 @@
          * @param {Function} errorCallback Error callback.
          */
         constructor: function(container, data, options, schema, view, connector, errorCallback) {
+            var pfOptionsSchema = this.getSchemaOfPriceFormatOptions().properties;
+            for (var i in pfOptionsSchema) {
+                var option = pfOptionsSchema[i];
+                if (!(i in options)) {
+                    options[i] = option.default || undefined;
+                }
+            }
             this.base(container, data, options, schema, view, connector, errorCallback);
         },
 
@@ -45,17 +52,21 @@
          * @see Alpaca.Fields.TextField#getValue
          */
         getValue: function() {
-            var valFn = this.options.unmask ? 'unmask' : 'val';
-            return this.field[valFn]();
+            if (this.options.unmask) {
+                var unmasked   = "" + parseFloat(this.field.unmask());
+                var len        = unmasked.length;
+                var centsLimit = this.options.centsLimit;
+                var value      = unmasked.substring(0, len - centsLimit)
+                               + '.'
+                               + unmasked.substring(len - centsLimit, len);
+                return parseFloat(value);
+            } else {
+                return this.field.val();
+            }
         },
 
-        /**
-         * @private
-         * @see Alpaca.Fields.TextField#getSchemaOfOptions
-         */
-        getSchemaOfOptions: function() {
-
-            return Alpaca.merge(this.base(), {
+        getSchemaOfPriceFormatOptions: function() {
+            return {
                 "properties": {
                     "allowNegative": {
                         "title": "Allow Negative",
@@ -126,7 +137,16 @@
                         "default": true
                     }
                 }
-            });
+            };
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.TextField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+
+            return Alpaca.merge(this.base(), this.getSchemaOfPriceFormatOptions());
 
         },
 

@@ -141,7 +141,7 @@
         <concat destfile="${package.dir}/js/${appkey}-core.js">
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
-            </filelist>	
+            </filelist>
             <filelist dir="${prep.dir}/lib">
                 <file name="base.js"/>
                 <file name="json2.js"/>
@@ -210,9 +210,10 @@
         <concat destfile="${package.dir}/js/${appkey}-extras.js">
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
-            </filelist>		
+            </filelist>
             <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
+                <file name="fields/advanced/CurrencyField.js"/>
                 <file name="fields/advanced/DateField.js"/>
                 <file name="fields/advanced/DatetimeField.js"/>
                 <file name="fields/advanced/EditorField.js"/>
@@ -303,6 +304,7 @@
                 <include name="jquery-latest.min.js"/>
                 <include name="jquery.tmpl.js"/>
                 <include name="jquery-ui-timepicker-addon/**/*"/>
+                <include name="jquery.price_format.2.0/jquery.price_format.2.0.min.js"/>
                 <include name="jquery.wysiwyg/**/*"/>
                 <include name="jquery-ui-latest/**/*"/>
                 <include name="bootstrap/**/*"/>
@@ -331,7 +333,7 @@
         <concat destfile="${prep.dir}/js/${appkey}-component-core.js">
             <filelist dir="${prep.dir}">
                 <file name="license.txt"/>
-            </filelist>		
+            </filelist>
             <filelist dir="${prep.dir}/lib">
                 <file name="base.js"/>
                 <file name="json2.js"/>
@@ -403,6 +405,7 @@
             </filelist>
             <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
+                <file name="fields/advanced/CurrencyField.js"/>
                 <file name="fields/advanced/DateField.js"/>
                 <file name="fields/advanced/DatetimeField.js"/>
                 <file name="fields/advanced/EditorField.js"/>
@@ -636,22 +639,22 @@
 
     </target>
 
-	<!-- Packages up the Web Components -->
+    <!-- Packages up the Web Components -->
     <target name="components">
-		<mkdir dir="${package.dir}/components"/>
-		
-		<!-- Alpaca Core ("alpaca-core") -->
-		<mkdir dir="${package.dir}/components/${appkey}-core"/>
-		<copy todir="${package.dir}/components/${appkey}-core">
+        <mkdir dir="${package.dir}/components"/>
+
+        <!-- Alpaca Core ("alpaca-core") -->
+        <mkdir dir="${package.dir}/components/${appkey}-core"/>
+        <copy todir="${package.dir}/components/${appkey}-core">
             <fileset dir="${package.dir}/css">
-				<include name="${appkey}-core.css" />
+                <include name="${appkey}-core.css" />
                 <include name="${appkey}-mobile.css" />
                 <include name="${appkey}-bootstrap.css" />
                 <include name="${appkey}-jqueryui.css" />
                 <include name="${appkey}-custom-fields.css" />
-				<include name="images/**" />
-			</fileset>
-		</copy>
+                <include name="images/**" />
+            </fileset>
+        </copy>
         <copy file="${project.dir}/components/alpaca-core/component.json.txt" tofile="${package.dir}/components/alpaca-core/component.json" overwrite="true" filtering="true">
             <filterchain>
                 <tokenfilter>
@@ -669,17 +672,17 @@
         </antcall>
 
         <!-- Alpaca Extras ("alpaca-extras") -->
-		<mkdir dir="${package.dir}/components/alpaca-extras"/>
+        <mkdir dir="${package.dir}/components/alpaca-extras"/>
         <copy todir="${package.dir}/components/alpaca-extras">
             <fileset dir="${package.dir}/css">
-				<include name="${appkey}-extras.css" />
+                <include name="${appkey}-extras.css" />
                 <include name="${appkey}-mobile.css" />
                 <include name="${appkey}-bootstrap.css" />
                 <include name="${appkey}-jqueryui.css" />
                 <include name="${appkey}-custom-fields.css" />
                 <include name="images/**" />
-			</fileset>
-		</copy>
+            </fileset>
+        </copy>
         <copy file="${project.dir}/components/alpaca-extras/component.json.txt" tofile="${package.dir}/components/alpaca-extras/component.json" overwrite="true" filtering="true">
             <filterchain>
                 <tokenfilter>
@@ -697,17 +700,17 @@
         </antcall>
 
         <!-- Alpaca ("alpaca") -->
-		<mkdir dir="${package.dir}/components/alpaca"/>
+        <mkdir dir="${package.dir}/components/alpaca"/>
         <copy todir="${package.dir}/components/alpaca">
-			<fileset dir="${package.dir}/css">
-				<include name="${appkey}.css" />
+            <fileset dir="${package.dir}/css">
+                <include name="${appkey}.css" />
                 <include name="${appkey}-mobile.css" />
                 <include name="${appkey}-bootstrap.css" />
                 <include name="${appkey}-jqueryui.css" />
                 <include name="${appkey}-custom-fields.css" />
                 <include name="images/**" />
-			</fileset>
-		</copy>
+            </fileset>
+        </copy>
         <copy file="${project.dir}/components/alpaca/component.json.txt" tofile="${package.dir}/components/alpaca/component.json" overwrite="true" filtering="true">
             <filterchain>
                 <tokenfilter>
@@ -753,9 +756,9 @@
             <fileset refid="alpaca-files"/>
         </copy>
         <copy todir="${local.docroot.basepath}/${appkey}">
-			<fileset dir="${project.dir}/build/package">
-		        <include name="components/**/*"/>
-			</fileset>
+            <fileset dir="${project.dir}/build/package">
+                <include name="components/**/*"/>
+            </fileset>
         </copy>
     </target>
 
@@ -764,9 +767,9 @@
             <fileset refid="alpaca-files"/>
         </copy>
         <copy todir="${local.docroot.basepath}/${appkey}">
-			<fileset dir="${project.dir}/build/package">
-		        <include name="components/**/*"/>
-			</fileset>
+            <fileset dir="${project.dir}/build/package">
+                <include name="components/**/*"/>
+            </fileset>
         </copy>
         <copy todir="${local.docroot.basepath}/${appkey}">
             <fileset dir="${project.dir}/build/package">
