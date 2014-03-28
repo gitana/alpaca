@@ -29,6 +29,9 @@
                     options[i] = option.default || undefined;
                 }
             }
+
+            data = "" + parseFloat(data).toFixed(options.centsLimit);
+
             this.base(container, data, options, schema, view, connector, errorCallback);
         },
 
