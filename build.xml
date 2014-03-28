@@ -213,7 +213,7 @@
             </filelist>
             <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
-                <file name="fields/advanced/CurrencyField.js"/>
+                <file name="fields/advanced/CurrencyField.js" />
                 <file name="fields/advanced/DateField.js"/>
                 <file name="fields/advanced/DatetimeField.js"/>
                 <file name="fields/advanced/EditorField.js"/>
@@ -304,7 +304,6 @@
                 <include name="jquery-latest.min.js"/>
                 <include name="jquery.tmpl.js"/>
                 <include name="jquery-ui-timepicker-addon/**/*"/>
-                <include name="jquery.price_format.2.0/jquery.price_format.2.0.min.js"/>
                 <include name="jquery.wysiwyg/**/*"/>
                 <include name="jquery-ui-latest/**/*"/>
                 <include name="bootstrap/**/*"/>
@@ -406,7 +405,7 @@
             </filelist>
             <filelist dir="${prep.dir}/js">
                 <file name="fields/advanced/AddressField.js"/>
-                <file name="fields/advanced/CurrencyField.js"/>
+                <file name="fields/advanced/CurrencyField.js" />
                 <file name="fields/advanced/DateField.js"/>
                 <file name="fields/advanced/DatetimeField.js"/>
                 <file name="fields/advanced/EditorField.js"/>
