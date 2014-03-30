@@ -22,6 +22,8 @@
          * @param {Function} errorCallback Error callback.
          */
         constructor: function(container, data, options, schema, view, connector, errorCallback) {
+            options = options || {};
+
             var pfOptionsSchema = this.getSchemaOfPriceFormatOptions().properties;
             for (var i in pfOptionsSchema) {
                 var option = pfOptionsSchema[i];
