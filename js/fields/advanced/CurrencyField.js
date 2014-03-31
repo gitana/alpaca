@@ -28,7 +28,7 @@
             for (var i in pfOptionsSchema) {
                 var option = pfOptionsSchema[i];
                 if (!(i in options)) {
-                    options[i] = option.default || undefined;
+                    options[i] = option["default"] || undefined;
                 }
             }
 
@@ -61,14 +61,12 @@
                 var unmasked   = "" + parseFloat(this.field.unmask());
                 var len        = unmasked.length;
                 var centsLimit = this.options.centsLimit;
-                var value      = unmasked.substring(0, len - centsLimit)
-                               + '.'
-                               + unmasked.substring(len - centsLimit, len);
+                var value      = unmasked.substring(0, len - centsLimit) + '.' + unmasked.substring(len - centsLimit, len);
                 return parseFloat(value);
             } else {
                 return this.field.val();
             }
-        },
+        },//__BUILDER_HELPERS
 
         getSchemaOfPriceFormatOptions: function() {
             return {
@@ -150,9 +148,7 @@
          * @see Alpaca.Fields.TextField#getSchemaOfOptions
          */
         getSchemaOfOptions: function() {
-
             return Alpaca.merge(this.base(), this.getSchemaOfPriceFormatOptions());
-
         },
 
         /**

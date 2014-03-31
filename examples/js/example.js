@@ -25,7 +25,8 @@ $(function() {
 
         var readCode = function(id)
         {
-            var code = $.trim($('#' + id + '-script').html());
+            var code = $('#' + id + '-script').text();
+            code = $.trim(code);
 
             // do some code cleanup
             code = js_beautify(code, {
