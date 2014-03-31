@@ -643,6 +643,9 @@
                 });
 
                 //this.updateToolbarItemsStatus(this.outerEl);
+                if (Alpaca.isFunction(this.options.items.postRender)) {
+                	this.options.items.postRender(containerElem);
+                }
 
                 return containerElem;
             }
