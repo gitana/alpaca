@@ -305,6 +305,11 @@ $(function() {
                 "link":"../../components/fields/country-field.html"
             },
             {
+                "id":"currency-field",
+                "title":"Currency Field",
+                "link":"../../components/fields/currency-field.html"
+            },
+            {
                 "id":"date-field",
                 "title":"Date Field",
                 "link":"../../components/fields/date-field.html"

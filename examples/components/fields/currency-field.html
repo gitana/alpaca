@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Alpaca - HTML5 Forms for jQuery - Currency Field</title>
+        <meta name="keywords"
+              content="jquery,bootstrap,forms,form,jquerymobile,jqueryui,mobile,json,json-schema,cloudcms,gitana,cms,content,uzquiano"/>
+        <meta name="description" content="Miscellaneous Field Examples for Alpaca Forms." />
+        <meta name="author" content="Gitana Software Inc." />
+        <meta http-equiv="X-UA-Compatible" content="IE=9">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+
+        <!-- jQuery -->
+        <script type="text/javascript" src="../../../lib/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="../../../lib/jquery.tmpl.js"></script>
+
+        <!-- jQuery price format -->
+        <script type="text/javascript" src="../../../lib/jquery.price_format.2.0/jquery.price_format.2.0.min.js"></script>
+
+        <!-- Alpaca -->
+        <script type="text/javascript" src="../../../components/alpaca/alpaca.js"></script>
+        <link type="text/css" href="../../../components/alpaca/alpaca.css" rel="stylesheet"/>
+        <link type="text/css" href="../../../components/alpaca/alpaca-jqueryui.css" rel="stylesheet"/>
+
+        <!-- jQuery UI Support -->
+        <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
+        <link type="text/css" href="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
+
+        <!-- Additional CSS -->
+        <link type="text/css" href="../../css/960.fluid.css" rel="stylesheet"/>
+
+        <!-- Required for the Editor field (sample code viewing) -->
+        <script src="../../../lib/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Web Site -->
+        <script type="text/javascript" src="../../lib/google-code-prettify/prettify.min.js"></script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js"></script>
+        <script type="text/javascript" src="../../js/example.js"></script>
+        <script type="text/javascript" src="../../js/footer.js"></script>
+        <link type="text/css" href="../../css/site.css" rel="stylesheet"/>
+        <link type="text/css" href="../../lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+        <script type="text/javascript" src="../../lib/tweet/jquery.tweet.js"></script>
+        <link type="text/css" href="../../lib/tweet/jquery.tweet.css" rel="stylesheet"/>
+
+        <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
+        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+    </head>
+    <body>
+    <header>
+      <div class='container_12'>
+        <div class='actual-body'>
+            <div class='grid_12'>
+                <h1><img src="../../img/alpaca.png"><span>Easy Forms for jQuery</span></h1>
+                    <div class="resource-bar">
+                        <a href="../../../index.html">Home</a>
+                        <a href="../../../web/download.html">Downloads</a>
+                        <a href="javascript:void(0);" class="current">Documentation</a>
+                        <a href="../../forms/customer-profile/edit-form.html">Examples</a>
+                        <a href="../../../web/resources.html">Resources</a>
+                        <a href="../../../web/contactus.html">Contact Us</a>
+                    </div>
+                </div>
+        </div>
+      </div>
+    </header>
+<div class='container_12'>
+    <div class="actual-body">
+        <div class="grid_3">
+            <div class="container_12 side-bar">
+            </div>
+        </div>
+
+        <div class="grid_9">
+            <div class="container_12">
+                <div class="widget">
+                    <div class="widget-body">
+
+                        <div class='grid_12 alpaca-example-header' id='currency-field' alpaca-types='currency'>
+                            <h1>Currency Field</h1>
+
+                            <p>
+                                The currency field uses the <a target="_blank" href="http://jquerypriceformat.com/">JQuery Price Format</a> plugin to
+                                render format the input as it's entered.
+                            </p>
+
+                            <h3>Requirements</h3>
+                            <p>
+                                The Editor field requires the <a target="_blank" href="http://jquerypriceformat.com/">JQuery Price Format</a> to be loaded
+                                ahead of its use.
+                            </p>
+                            <p>
+                                Be sure to load <code>lib/jquery.price_format.2.0/jquery.price_format.2.0.min.js</code> before rendering your forms.  You can
+                                download JQuery Price Format from <a target="_blank" href="http://jquerypriceformat.com/">jquerypriceformat.com</a>.
+                            </p>
+
+                        </div>
+
+
+                        <div class='grid_12 alpaca-example-case'>
+
+                            <!-- example #1 -->
+                            <h2>Currency Field #1: </h2>
+                            <p>Currency field with default settings.</p>
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+                                $("#field1").alpaca({
+                                    "options": {
+                                        "type": "currency"
+                                    }
+                                });
+                            </script>
+
+                            <!-- example #2 -->
+                            <h2>Currency Field #2: </h2>
+                            <p>Currency field with with euro formatting.</p>
+                            <div id="field2">
+                            </div>
+                            <script type="text/javascript" id="field2-script">
+                                $("#field2").alpaca({
+                                    "options": {
+                                        "type": "currency",
+                                        "centsSeparator": ",",
+                                        "prefix": "",
+                                        "suffix": "€",
+                                        "thousandsSeparator": "."
+                                    }
+                                });
+                            </script>
+
+                            <!-- BEGIN DISCUSSIONS -->
+                            <div class="alpaca-discussions"></div>
+                            <!-- END DISCUSSIONS -->
+
+                        </div>
+
+                        <div class="clear height-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container_12">
+        <div class="grid_12 copyright">
+            Copyright &copy; 2013 Gitana Software, Inc. | All Rights Reserved
+        </div>
+    </div>
+</footer>
+    </body>
+</html>
