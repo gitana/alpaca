@@ -3,15 +3,15 @@ require.config({
     "packages": [
         {
             "name": "jquery",
-            "main": "../lib/jquery-latest.min"
+            "main": "../../lib/jquery-2.1.0/jquery-2.1.0.min"
         },
         {
             "name": "jquery-ui",
-            "main": "../lib/jquery-ui-latest.custom.min"
+            "main": "../../lib/jquery-ui-latest/jquery-ui-latest.custom.min"
         },
         {
-            "name": "jquery-tmpl",
-            "main": "../lib/jquery.tmpl"
+            "name": "handlebars",
+            "main": "../../lib/handlebars/handlebars-v1.3.0"
         },
         {
             "name": "alpaca",
@@ -20,8 +20,7 @@ require.config({
     ],
     "shim": {
         "jquery": [],
-        "jquery-ui": ["jquery"],
-        "jquery-tmpl": ["jquery"]
+        "jquery-ui": ["jquery"]
     }
 });
 

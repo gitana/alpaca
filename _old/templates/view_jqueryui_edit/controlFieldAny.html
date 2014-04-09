@@ -1,0 +1,5 @@
+<script type="text/x-handlebars-template">
+
+    <input type="text" id="{{id}}" size="40" {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{this}}"{{/each}}/>
+
+</script>

@@ -1,0 +1,36 @@
+<script type="text/x-handlebars-template">
+
+    <div class="alpaca-fileupload-container {{#if cssClasses}}{{cssClasses}}{{/if}}">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group">
+                        <button class="btn btn-default fileinput-button">
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span class="fileupload-add-button">Choose files...</span>
+                            <input class="alpaca-fileupload-input" type="file" name="{{name}}_files">
+                            <input class="alpaca-fileupload-input-hidden" type="hidden" name="{{name}}_files_hidden">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row alpaca-fileupload-well">
+                <div class="col-md-12 fileupload-active-zone">
+                    <table class="table table-striped">
+                        <tbody class="files">
+                        </tbody>
+                    </table>
+                    <p align="center">Click the Choose button or Drag and Drop files here to start...</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="progress" class="progress">
+                        <div class="progress-bar progress-bar-success"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</script>

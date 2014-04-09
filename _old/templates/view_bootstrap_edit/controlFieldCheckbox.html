@@ -1,0 +1,17 @@
+<script type="text/x-handlebars-template">
+
+    <div class="checkbox">
+
+        {{#if options.rightLabel}}
+            <label for="{{id}}">
+        {{/if}}
+
+        <input type="checkbox" id="{{id}}" {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{this}}"{{/each}}/>
+
+        {{#if options.rightLabel}}
+            {{options.rightLabel}}
+            </label>
+        {{/if}}
+    </div>
+
+</script>

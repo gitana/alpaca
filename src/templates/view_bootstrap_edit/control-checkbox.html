@@ -1,0 +1,37 @@
+<script type="text/x-handlebars-template">
+
+    {{#if options.multiple}}
+
+        {{#each checkboxOptions}}
+
+            <div class="checkbox">
+
+                <label>
+
+                    <input type="checkbox" {{#if ../../options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each ../../options.data}}data-{{@key}}="{{value}}"{{/each}}/>
+                    {{text}}
+
+                </label>
+            </div>
+
+        {{/each}}
+
+    {{else}}
+
+        <div class="checkbox">
+
+            {{#if options.rightLabel}}
+            <label>
+            {{/if}}
+
+                <input type="checkbox" {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{value}}"{{/each}}/>
+
+            {{#if options.rightLabel}}
+                {{options.rightLabel}}
+            </label>
+            {{/if}}
+        </div>
+
+    {{/if}}
+
+</script>

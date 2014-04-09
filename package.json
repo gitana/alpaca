@@ -1,0 +1,22 @@
+{
+  "name": "alpaca",
+  "version": "1.5.0",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-rename": "*",
+    "gulp-uglify": "*",
+    "gulp-clean": "*",
+    "gulp-minify-css": "*",
+    "gulp-concat": "*",
+    "gulp-jshint": "*",
+    "gulp-handlebars": "*",
+    "gulp-declare": "*",
+    "event-stream": "*",
+    "gulp-notify": "*",
+    "node-static": "*",
+    "gulp-order": "*",
+    "run-sequence": "*",
+    "gulp-nodemon": "*",
+    "express": "*"
+  }
+}

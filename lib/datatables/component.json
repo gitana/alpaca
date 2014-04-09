@@ -1,0 +1,20 @@
+{
+  "name": "datatables",
+  "version": "1.9.4",
+  "main": [
+    "./media/js/jquery.dataTables.js",
+    "./media/css/jquery.dataTables.css"
+  ],
+  "dependencies": {
+    "jquery": "~1.8.0"
+  },
+  "gitHead": "36ba2549ad48f6d56d8e5eb71e5f3f272d6da98b",
+  "readme": "This DataTables plugin (v1.9.x) for jQuery was developed out of the desire to allow highly configurable access to HTML tables with advanced access features.\n\nFor detailed installation, usage and API instructions, please refer to the DataTables web-pages: http://www.datatables.net\n\nQuestions, feature requests and bug reports (etc) can all be asked on the DataTables forums: http://www.datatables.net/forums/\n\nThe DataTables source can be found in the media/js/ directory of this archive.\n\nDataTables is released with dual licensing, using the GPL v2 (license-gpl2.txt) and an BSD style license (license-bsd.txt). You may select which of the two licenses you wish to use DataTables under. Please see the corresponding license file for details of these licenses. You are free to use, modify and distribute this software, but all copyright information must remain.\n\nIf you discover any bugs in DataTables, have any suggestions for improvements or even if you just like using it, please free to get in touch with me: www.datatables.net/contact",
+  "readmeFilename": "Readme.txt",
+  "_id": "DataTables@1.9.4",
+  "description": "This DataTables plugin (v1.9.x) for jQuery was developed out of the desire to allow highly configurable access to HTML tables with advanced access features.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DataTables/DataTables"
+  }
+}

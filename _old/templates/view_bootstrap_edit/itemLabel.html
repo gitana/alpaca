@@ -1,0 +1,14 @@
+<script type="text/x-handlebars-template">
+
+    {{#if options.itemLabel}}
+    <div class="alpaca-controlfield-label">
+        <div>
+            {{options.itemLabel}}
+            {{#if index}}
+            <span class="alpaca-item-label-counter">{{index}}</span>
+            {{/if}}
+        </div>
+    </div>
+    {{/if}}
+
+</script>

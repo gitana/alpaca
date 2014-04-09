@@ -1,0 +1,30 @@
+<script type="text/x-handlebars-template">
+
+    <div>
+
+        <div class="alpaca-container-array-toolbar" {{#compare options.toolbarStyle "button"}} btn-group{{/compare}}>
+
+            {{#each arrayToolbarActions}}
+
+            {{#compare ../options.toolbarStyle "link"}}
+            <a href="#" class="alpaca-container-array-toolbar-action" data-array-toolbar-action="{{this.action}}">{{this.label}}</a>
+            {{/compare}}
+
+            {{#compare ../options.toolbarStyle "button"}}
+            <button class="alpaca-container-array-toolbar-action btn btn-default" data-array-toolbar-action="{{this.action}}">
+                {{#if this.iconClass}}
+                <i class="{{this.iconClass}}"></i>
+                {{/if}}
+                {{#if label}}{{label}}{{/if}}
+            </button>
+            {{/compare}}
+
+            {{/each}}
+
+        </div>
+
+        <div class="alpaca-container-grid-holder"></div>
+
+    </div>
+
+</script>

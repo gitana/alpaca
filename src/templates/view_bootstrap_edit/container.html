@@ -1,0 +1,20 @@
+<script type="text/x-handlebars-template">
+
+    <div>
+
+        {{#if options.label}}
+        <legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}}">{{options.label}}</legend>
+        {{/if}}
+
+        {{#container}}{{/container}}
+
+        {{#if options.helper}}
+        <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+            <i class="glyphicon glyphicon-info-sign"></i>
+            {{options.helper}}
+        </p>
+        {{/if}}
+
+    </div>
+
+</script>

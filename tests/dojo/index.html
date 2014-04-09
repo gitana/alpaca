@@ -20,18 +20,18 @@
     , packages: [
             {
                 'name': 'jquery',
-                'location':'./',
-                'main': 'jquery-latest.min'
+                'location':'../../lib/jquery-2.1.0',
+                'main': 'jquery-2.1.0.min'
             },
             {
                 'name': 'jquery-ui',
-                'location':'./',
+                'location':'../../lib/jquery-ui-latest',
                 'main': 'jquery-ui-latest.custom.min'
             },
             {
-                'name': 'jquery-tmpl',
-                'location':'./',
-                'main': 'jquery.tmpl'
+                'name': 'handlebars',
+                'location':'../../lib/jquery-2.1.0',
+                'main': 'jquery-2.1.0.min'
             },
             {
                 'name': 'alpaca',
@@ -65,7 +65,7 @@
     require([
         "jquery",
         "jquery-ui",
-        "jquery.tmpl",
+        "handlebars",
         "alpaca",
         "dojo/domReady!" ],
             function (jquery, jq_ui, jq_tmpl, alpacax) {

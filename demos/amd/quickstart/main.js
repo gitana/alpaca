@@ -6,8 +6,8 @@ require.config({
             "main": "../jquery-latest.min"
         },
         {
-            "name": "jquery-tmpl",
-            "main": "../jquery.tmpl"
+            "name": "handlebars",
+            "main": "../handlebars"
         },
         {
             "name": "jquery-ui",
@@ -24,7 +24,6 @@ require.config({
     ],
     "shim": {
         "jquery-ui": ["jquery"],
-        "jquery-tmpl": ["jquery"],
         "jquery": []
     }
 });

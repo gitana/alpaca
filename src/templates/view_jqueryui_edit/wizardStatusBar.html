@@ -1,0 +1,16 @@
+<script type="text/x-handlebars-template">
+
+    <ol id="{{id}}">
+        {{#each titles}}
+        <li id="stepDesc{{@index}}">
+            <div>
+                <strong>
+                    <span>{{this.title}}</span>
+                    {{this.description}}
+                </strong>
+            </div>
+        </li>
+        {{/each}}
+    </ol>
+
+</script>

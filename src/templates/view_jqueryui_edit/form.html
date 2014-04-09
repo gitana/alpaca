@@ -1,0 +1,16 @@
+<script type="text/x-handlebars-template">
+
+    <form>
+        <div class="alpaca-form-fields-container"></div>
+        <div class="alpaca-form-buttons-container">
+
+            {{#if options.buttons}}
+            {{#each options.buttons}}
+            <button data-key="{{@key}}" class="alpaca-form-button alpaca-form-button-{{@key}}" {{#each value}}{{@key}}="{{value}}"{{/each}}>{{value.value}}</button>
+            {{/each}}
+            {{/if}}
+
+        </div>
+    </form>
+
+</script>

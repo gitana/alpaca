@@ -1,0 +1,15 @@
+<script type="text/x-handlebars-template">
+
+    <fieldset data-role="controlgroup" class="alpaca-radio-fieldset" id="{{id}}-0">
+        <input type="checkbox" id="{{id}}-1" name="{{id}}-1" {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{fieldId}}="{{value}}"{{/each}}/>
+
+        {{#if options.rightLabel}}
+            <label for="{{id}}-1">{{options.rightLabel}}</label>
+        {{else}}
+            {{#if options.label}}
+                <label for="{{id}}-1">{{options.label}}?</label>
+            {{/if}}
+        {{/if}}
+    </fieldset>
+
+</script>

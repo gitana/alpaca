@@ -1,0 +1,117 @@
+.video-container {
+    position: relative;
+    /**padding-bottom: 56.25%;**/
+    padding-bottom: 30%;
+    padding-top: 30px; height: 0; overflow: hidden;
+}
+ 
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+DIV.steps
+{
+
+}
+
+DIV.steps .panel-title
+{
+    font-size: 16px;
+    color: #555;
+}
+
+DIV.steps .panel-title img
+{
+    padding-right: 10px;
+}
+
+DIV.steps .panel-body pre
+{
+    background-color: white;
+    border: 0px;
+    padding-left: 0px;
+    margin-left: 0px;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 10px;
+}
+
+/************************** **************************/
+
+div.step:not(:first-child)
+{
+    margin-top: 40px !important;
+}
+
+div.step > img {
+    float: left;
+    margin: 0px 20px 20px 0px;
+    padding-top: 0px;
+}
+
+div.step > p {
+    margin-left: 65px;
+}
+
+div.step > div.codewrap {
+    margin-left: 65px;
+}
+
+div.step > .tutorial-panel {
+    margin-left: 65px;
+}
+
+div.step > ol.bullets
+{
+    padding-left: 125px;
+    padding-right: 125px;
+}
+
+div.step ol.bullets li
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.step {
+    clear: both;
+}
+
+div.step {
+    margin: 10px 0;
+}
+
+/*
+div.step > p, div.step > pre, div.step > div {
+    margin-left: 60px;
+}
+*/
+
+div.stack .dataTables_wrapper
+{
+    padding-left: 125px;
+    padding-right: 125px;
+}
+
+table.stack
+{
+    border: 1px #ccc solid;
+}
+
+DIV.sponsor P
+{
+    font-family: Ubuntu, sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    text-transform: uppercase;
+    margin-left: 70px;
+    color: #aaa;
+    margin-top: -15px;
+}

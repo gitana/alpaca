@@ -19,6 +19,7 @@ $(document).ready(function() {
 
         var time1 = new Date().getTime();
         $("#field1").alpaca({
+            "view": "VIEW_BOOTSTRAP_CREATE",
             "optionsSource": "./options/visit.json",
             "schemaSource": "./schema/visit.json",
             "postRender": function(renderedField) {

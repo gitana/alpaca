@@ -1,0 +1,16 @@
+<script type="text/x-handlebars-template">
+
+    {{#if !required}}
+    <div class="radio">
+        <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value=""/>None</div>
+    {{/if}}
+
+    {{#each selectOptions}}
+    <div class="radio">
+        <label class="alpaca-controlfield-radio-label">
+            <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value="{{value}}" {{#if value == data}}checked="checked"{{/if}}/>{{text}}
+        </label>
+    </div>
+    {{/each}}
+
+</script>
