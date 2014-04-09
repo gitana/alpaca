@@ -17,7 +17,6 @@ is a string.  It then looks for a suitable candidate for representing a string a
 <div id="field1"> </div>
 {% raw %}
 <script type="text/javascript" id="field1-script">
-{
 $("#field1").alpaca({
     "data": "I Love Alpaca Ice Cream!"
 });
