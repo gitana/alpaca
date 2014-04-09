@@ -1,3 +1,4 @@
+var fs = require("fs");
 var gulp = require('gulp');
 
 var es = require('event-stream');
@@ -14,6 +15,8 @@ var declare = require("gulp-declare");
 var notify = require('gulp-notify');
 var runSequence = require('run-sequence');
 var nodemon = require('gulp-nodemon');
+
+var wrap = require('gulp-wrap-umd');
 
 var paths = {
     scripts: {
@@ -207,36 +210,46 @@ gulp.task('styles', function() {
 
 gulp.task('scripts', function(cb) {
 
+    // alpaca umd
+    var wrapper = "" + fs.readFileSync("./config/umd-wrapper.txt");
+    var alpacaWrapConfig = {
+        deps: ['jquery'],
+        params: ['$'],
+        namespace: "Alpaca",
+        exports: "Alpaca",
+        template: wrapper
+    };
+
     // core
     var first = gulp.src(paths.scripts.core).pipe(concat('scripts-core.js')).pipe(gulp.dest('build/tmp'));
     first.on("end", function() {
 
         es.concat(
 
-                /*
             // web
             gulp.src(paths.scripts.web)
                 .pipe(concat('alpaca.js'))
+                .pipe(wrap(alpacaWrapConfig))
                 .pipe(gulp.dest('build/alpaca/web')),
             gulp.src(paths.scripts.web)
                 .pipe(uglify())
                 .pipe(concat('alpaca.min.js'))
                 .pipe(gulp.dest('build/alpaca/web')),
-                      */
 
             // bootstrap
             gulp.src(paths.scripts.bootstrap)
                 .pipe(concat('alpaca.js'))
+                .pipe(wrap(alpacaWrapConfig))
                 .pipe(gulp.dest('build/alpaca/bootstrap')),
             gulp.src(paths.scripts.bootstrap)
                 .pipe(uglify())
                 .pipe(concat('alpaca.min.js'))
-                .pipe(gulp.dest('build/alpaca/bootstrap'))
+                .pipe(gulp.dest('build/alpaca/bootstrap')),
 
-                /*
             // jqueryui
             gulp.src(paths.scripts.jqueryui)
                 .pipe(concat('alpaca.js'))
+                .pipe(wrap(alpacaWrapConfig))
                 .pipe(gulp.dest('build/alpaca/jqueryui')),
             gulp.src(paths.scripts.jqueryui)
                 .pipe(uglify())
@@ -246,13 +259,13 @@ gulp.task('scripts', function(cb) {
             // jquerymobile
             gulp.src(paths.scripts.jquerymobile)
                 .pipe(concat('alpaca.js'))
+                .pipe(wrap(alpacaWrapConfig))
                 .pipe(gulp.dest('build/alpaca/jquerymobile')),
             gulp.src(paths.scripts.jquerymobile)
                 .pipe(uglify())
                 .pipe(concat('alpaca.min.js'))
                 .pipe(gulp.dest('build/alpaca/jquerymobile'))
 
-*/
         ).pipe(es.wait(function() {
 
             cb();
@@ -367,7 +380,7 @@ var refreshWeb = function()
     runSequence('jekyll', 'update-web-full');
 };
 
-gulp.task('web', function()
+gulp.task('refreshWeb', function()
 {
     refreshWeb();
 });
@@ -400,7 +413,7 @@ gulp.task('watch', function() {
 
 });
 
-gulp.task('website', ['watch'], function() {
+gulp.task('web', ['watch'], function() {
 
     nodemon({
         script: 'server/site-webserver.js'
@@ -417,8 +430,8 @@ gulp.task('testsite', ['watch'], function() {
 });
 
 // The default task (called when you run `gulp` from cli)
-gulp.task('default', ['templates', 'scripts', 'styles', 'web']);
+gulp.task('default', ['templates', 'scripts', 'styles', 'refreshWeb']);
 
 gulp.task('default', function(callback) {
-    return runSequence(['templates', 'scripts'], 'styles', 'web', callback);
+    return runSequence(['templates', 'scripts'], 'styles', 'refreshWeb', callback);
 });

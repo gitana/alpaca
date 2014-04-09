@@ -17,6 +17,7 @@
     "gulp-order": "*",
     "run-sequence": "*",
     "gulp-nodemon": "*",
-    "express": "*"
+    "express": "*",
+    "gulp-wrap-umd": "^0.2.0"
   }
 }
