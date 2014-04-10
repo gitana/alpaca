@@ -3,20 +3,16 @@
  *
  * Defines the Alpaca theme for jQuery Mobile.
  *
- * The style injector:
- *
- *    mobile
- *
  * The views are:
  *
- *    VIEW_MOBILE_DISPLAY
- *    VIEW_MOBILE_EDIT
- *    VIEW_MOBILE_CREATE
+ *    VIEW_JQUERYMOBILE_DISPLAY
+ *    VIEW_JQUERYMOBILE_EDIT
+ *    VIEW_JQUERYMOBILE_CREATE
  *
  * This theme can also be selected by specifying the following view:
  *
  *    {
- *       "ui": "mobile",
+ *       "ui": "jquerymobile",
  *       "type": null | "create" | "edit" | "display"
  *    }
  *
@@ -24,37 +20,41 @@
 
     var Alpaca = $.alpaca;
 
-    Alpaca.styleInjections["jquery-mobile"] = {
-        "array" : function(containerElem) {
-            if (containerElem) {
-                if (containerElem.find('[data-role="fieldcontain"]').fieldcontain) {
-                    containerElem.find('[data-role="fieldcontain"]').fieldcontain();
-                    containerElem.find('[data-role="fieldcontain"]').find("[type='radio'], [type='checkbox']").checkboxradio();
-                    containerElem.find('[data-role="fieldcontain"]').find("button, [data-role='button'], [type='button'], [type='submit'], [type='reset'], [type='image']").not(".ui-nojs").button();
-                    containerElem.find('[data-role="fieldcontain"]').find("input, textarea").not("[type='radio'], [type='checkbox'], button, [type='button'], [type='submit'], [type='reset'], [type='image']").textinput();
-                    containerElem.find('[data-role="fieldcontain"]').find("input, select").filter("[data-role='slider'], [data-type='range']").slider();
-                    containerElem.find('[data-role="fieldcontain"]').find("select:not([data-role='slider'])").selectmenu();
-                    containerElem.find('[data-role="button"]').buttonMarkup();
-                    containerElem.find('[data-role="controlgroup"]').controlgroup();
-                }
+    // custom styles
+    var styles = {};
 
-            }
+    // custom callbacks
+    var callbacks = {};
+    callbacks["container"] = function()
+    {
+        var containerElem = this.getContainerEl();
+
+        var el = containerElem.find("[data-role='fieldcontain']");
+        if (el.fieldcontain)
+        {
+            el.fieldcontain();
+            el.find("[type='radio'], [type='checkbox']").checkboxradio();
+            el.find("button, [data-role='button'], [type='button'], [type='submit'], [type='reset'], [type='image']").not(".ui-nojs").button();
+            el.find("input, textarea").not("[type='radio'], [type='checkbox'], button, [type='button'], [type='submit'], [type='reset'], [type='image']").textinput();
+            el.find("input, select").filter("[data-role='slider'], [data-type='range']").slider();
+            el.find("select:not([data-role='slider'])").selectmenu();
+            containerElem.find('[data-role="button"]').buttonMarkup();
+            containerElem.find('[data-role="controlgroup"]').controlgroup();
         }
     };
 
     Alpaca.registerView({
-        "id": "VIEW_MOBILE_DISPLAY",
+        "id": "VIEW_JQUERYMOBILE_DISPLAY",
         "parent": "VIEW_WEB_DISPLAY",
-        "title": "Mobile DISPLAY View",
-        "description": "Mobile display view using JQuery Mobile Library",
+        "title": "Display view using jQuery Mobile",
+        "description": "Display view using JQuery Mobile",
         "type": "view",
-        "platform":"mobile",
-        "style":"jquery-mobile",
-        "ui":"mobile",
-        "legendStyle": "link",
-        "toolbarStyle": "link",
-        "buttonType": "link",
-        "templates": AlpacaTemplates.handlebars["view_jquerymobile_display"],
+        "ui":"jquerymobile",
+        "callbacks": callbacks,
+        "styles": styles,
+        //"legendStyle": "link",
+        //"toolbarStyle": "link",
+        //"buttonType": "link",
         "messages": {
             required: "Required Field",
             invalid: "Invalid Field"
@@ -72,22 +72,23 @@
                 }
             });
 
-        }
+        },
+        "templates": AlpacaTemplates.handlebars["view_jquerymobile_display"],
     });
 
     Alpaca.registerView({
-        "id": "VIEW_MOBILE_EDIT",
+        "id": "VIEW_JQUERYMOBILE_EDIT",
         "parent": "VIEW_WEB_EDIT",
-        "title": "Mobile Edit View",
-        "description": "Mobile edit view using JQuery Mobile Library",
+        "title": "Edit View for jQuery Mobile",
+        "description": "Edit view using JQuery Mobile",
         "type": "edit",
-        "platform":"mobile",
-        "style":"jquery-mobile",
-        "ui":"mobile",
-        "legendStyle": "link",
-        "toolbarStyle": "link",
-        "buttonType": "link",
-        "toolbarSticky": true,
+        "ui": "jquerymobile",
+        "callbacks": callbacks,
+        "styles": styles,
+        //"legendStyle": "link",
+        //"toolbarStyle": "link",
+        //"buttonType": "link",
+        //"toolbarSticky": true,
         "templates": AlpacaTemplates.handlebars["view_jquerymobile_edit"],
         "messages": {
             required: "Required Field",
@@ -105,7 +106,6 @@
                     renderedCallback.call(self, field);
                 }
             });
-
         }
     });
 
@@ -127,8 +127,8 @@
         "parent": "VIEW_MOBILE_EDIT",
         "title": "Default Mobile Create View",
         "description": "Default mobile create view which doesn't bind initial data.",
-        "type": "create",
-        "displayReadonly": false
+        "displayReadonly": false,
+        "type": "create"
     });
 
 })(jQuery);

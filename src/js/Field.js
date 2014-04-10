@@ -450,8 +450,8 @@
             // render the field (outer element)
             self.renderField(parentEl, function() {
 
-                // inject field style
-                self.applyInjection('array', self.field);
+                // CALLBACK: "field"
+                self.fireCallback("field");
 
                 // render any field elements
                 self.renderFieldElements(function() {
@@ -483,12 +483,7 @@
                 theData = JSON.stringify(theData);
             }
 
-            // render field template
-            if (Alpaca.collectTiming)
-            {
-                var t1 = new Date().getTime();
-            }
-
+            // render the field
             var renderedDomElement = Alpaca.tmpl(templateDescriptor, {
                 "id": this.getId(),
                 "options": this.options,
@@ -498,14 +493,6 @@
                 "path": this.path,
                 "name": this.name
             });
-
-            if (Alpaca.collectTiming)
-            {
-                var t2 = new Date().getTime();
-
-                var counters = Alpaca.Counters("tmpl");
-                counters.increment(this.type, (t2-t1));
-            }
 
             renderedDomElement.appendTo(parentEl);
 
@@ -533,45 +520,49 @@
          */
         postRender: function(callback)
         {
+            var self = this;
+
+            // all fields get the "alpaca-field" class which marks the outer element
+            this.field.addClass("alpaca-field");
+
+            // all fields get marked by type as well
+            this.field.addClass("alpaca-field-" + this.getFieldType());
+
+            // all fields get field id data attribute
+            this.field.attr("data-alpaca-field-id", this.getId());
+
+
             // try to avoid adding unnecessary injections for display view.
             if (this.view.type != 'view') {
-
-                // add classes
-                this.applyInjection('field',this.field);
-
-                this.field.addClass("alpaca-field");
-
-                // for edit or create mode
-                // injects Ids
-                if (this.field.attr("id") === null)
-                {
-                    $(this.field).attr("id", this.getId() + "-field-outer");
-                }
-
-                if (Alpaca.isEmpty(this.field.attr("alpaca-field-id")))
-                {
-                    $(this.field).attr("alpaca-field-id", this.getId());
-                }
 
                 // optional
                 if (this.schema.required)
                 {
-                    $(this.field).addClass("alpaca-field-required");
+                    $(this.field).addClass("alpaca-required");
+
+                    // CALLBACK: "required"
+                    self.fireCallback("required");
                 }
                 else
                 {
-                    $(this.field).addClass("alpaca-field-optional");
+                    $(this.field).addClass("alpaca-optional");
+
+                    // CALLBACK: "optional"
+                    self.fireCallback("optional");
                 }
 
                 // readonly
                 if (this.options.readonly)
                 {
-                    $(this.field).addClass("alpaca-field-readonly");
+                    $(this.field).addClass("alpaca-readonly");
 
                     $(':input', this.field).attr('readonly', 'readonly');
                     $('select', this.field).attr('disabled', 'disabled');
                     $(':radio', this.field).attr('disabled', 'disabled');
                     $(':checkbox', this.field).attr('disabled', 'disabled');
+
+                    // CALLBACK: "readonly"
+                    self.fireCallback("readonly");
                 }
 
                 // allow single or multiple field classes to be specified via the "fieldClass"
@@ -608,6 +599,7 @@
                 };
                 applyFieldClass(this.field, this.options["fieldClass"]);
 
+                /*
                 // Support for custom styles provided by custom view
                 var customStyles = this.view.getStyles();
                 if (customStyles)
@@ -617,17 +609,15 @@
                         $(styleClass, this.domEl).css(customStyles[styleClass]);
                     }
                 }
-
-                // add required field style
-                if (this.labelDiv && this.schema.required)
-                {
-                    this.applyInjection('required',this.labelDiv);
-                }
+                */
 
                 // after render
                 if (this.options.disabled)
                 {
                     this.disable();
+
+                    // CALLBACK: "disable"
+                    self.fireCallback("disable");
                 }
 
                 // we bind data if we're in "edit" mode
@@ -689,17 +679,31 @@
         },
 
         /**
-         * Applies a style to a dom element.
+         * Applies a view style to a dom element.
          *
-         * @param key
+         * @param id
          * @param target
+         */
+        applyStyle: function(id, target)
+        {
+            this.view.applyStyle(id, target);
+        },
+
+        /**
+         * Fires a view callback for the current field.
+         *
+         * @param id
          * @param arg1
          * @param arg2
+         * @param arg3
+         * @param arg4
+         * @param arg5
          */
-        applyInjection: function(key, target, arg1, arg2)
+        fireCallback: function(id, arg1, arg2, arg3, arg4, arg5)
         {
-            this.view.applyInjection(key, target, arg1, arg2);
+            this.view.fireCallback(this, id, arg1, arg2, arg3, arg4, arg5);
         },
+
 
         /**
          * Retrieves the outer "field" rendered DOM element.
@@ -814,7 +818,7 @@
                             _this.messageElement = Alpaca.tmpl(messageTemplateDescriptor, {
                                 "message": message
                             });
-                            _this.applyInjection('errorMessage',_this.messageElement);
+                            _this.fireCallback("errorMessage", _this.messageElement);
                             if (_this.hideInitValidationError)
                             {
                                 _this.messageElement.addClass("alpaca-controlfield-message-hidden");
@@ -833,8 +837,6 @@
                                 _this.messageElement.appendTo(_this.field);
                             }
                         }
-
-                        _this.applyInjection('addErrorMessage', _this.field, message);
                     }
                 });
             }
@@ -954,7 +956,7 @@
             hiddenDiv.removeClass('alpaca-field-invalid-hidden');
             hiddenDiv.addClass('alpaca-field-invalid');
 
-            this.applyInjection('error',hiddenDiv);
+            this.fireCallback("showErrors", hiddenDiv);
 
             var hiddenMessage = $(this.field).find(".alpaca-controlfield-message-hidden");
             $(hiddenMessage).removeClass('alpaca-controlfield-message-hidden');

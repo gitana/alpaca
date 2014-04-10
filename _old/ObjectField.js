@@ -23,27 +23,9 @@
         {
             this.base();
 
-            this.wizardPreIcon = "";
-            this.wizardNextIcon = "";
-            this.wizardDoneIcon= "";
-
-            if (this.view.style && Alpaca.styleInjections[this.view.style])
-            {
-                if (Alpaca.styleInjections[this.view.style]["wizardPreIcon"])
-                {
-                    this.wizardPreIcon = Alpaca.styleInjections[this.view.style]["wizardPreIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["wizardNextIcon"])
-                {
-                    this.wizardNextIcon = Alpaca.styleInjections[this.view.style]["wizardNextIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["wizardDoneIcon"])
-                {
-                    this.wizardDoneIcon = Alpaca.styleInjections[this.view.style]["wizardDoneIcon"];
-                }
-            }
+            this.wizardPreIcon = this.view.getStyle("wizardPreIcon");
+            this.wizardNextIcon = this.view.getStyle("wizardNextIcon");
+            this.wizardDoneIcon= this.view.getStyle("wizardDoneIcon");
 
             if (Alpaca.isEmpty(this.data))
             {
@@ -1437,7 +1419,7 @@
                         "titles": stepTitles
                     });
                     wizardStatusBarElement.addClass("alpaca-wizard-status-bar");
-                    this.applyInjection("wizardStatusBar",wizardStatusBarElement);
+                    _this.fireCallback("renderWizardStatusBar", wizardStatusBarElement);
                     return wizardStatusBarElement;
                 }
             }
@@ -1639,12 +1621,14 @@
          */
         _selectStep: function(i)
         {
+            var self = this;
+
             var unCurrentStepElem = $("#" + this.getId() + "-wizard-status-bar" + " li");
             unCurrentStepElem.removeClass("current current-has-next");
-            this.applyInjection("wizardUnCurrentStep",unCurrentStepElem);
+            self.fireCallback("wizardUnCurrentStep",unCurrentStepElem);
             var currentStepElem = $("#stepDesc" + i);
             currentStepElem.addClass("current");
-            this.applyInjection("wizardCurrentStep",currentStepElem);
+            self.fireCallback("wizardCurrentStep",currentStepElem);
             if (i < this.totalSteps - 1)
             {
                 $("#stepDesc" + i).addClass("current-has-next");

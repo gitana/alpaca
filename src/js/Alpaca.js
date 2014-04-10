@@ -177,36 +177,46 @@
         if (Alpaca.isUndefined(options.focus)) {
             options.focus = false;
         }
-        var _renderedCallback = function(control)
+        var _renderedCallback = function(field)
         {
             // auto-set the focus?
             if (options && options.focus)
             {
                 window.setTimeout(function() {
 
-                    if (options.focus === true)
+                    if (options.focus)
                     {
-                        // pick first element in form
-                        if (control.children && control.children.length > 0) {
-                            if (control.children[0].field && control.children[0].field) {
-                                control.children[0].field.focus();
+                        if (field.isControlField)
+                        {
+                            // just focus on this one
+                            field.focus();
+                        }
+                        else if (field.isContainerField)
+                        {
+                            // if focus = true, then focus on the first child control
+                            if (options.focus === true)
+                            {
+                                // pick first element in form
+                                if (field.children && field.children.length > 0) {
+                                    field.children[0].focus();
+                                }
+                            }
+                            else if (typeof(options.focus) == "string")
+                            {
+                                // assume it is a path to the child
+                                var child = field.getControlByPath(options.focus);
+                                if (child && child.isControlField) {
+                                    child.focus();
+                                }
                             }
                         }
                     }
-                    else
-                    {
-                        // pick a named control
-                        var child = control.getControlByPath(options.focus);
-                        if (child && child.field && child.field.length > 0) {
-                            child.field.focus();
-                        }
-                    }
-                }, 250);
+                }, 500);
             }
 
             if (renderedCallback)
             {
-                renderedCallback(control);
+                renderedCallback(field);
             }
         };
 
@@ -1763,7 +1773,7 @@
                 {
                     // this is a function that was compiled at build time
                     var cacheKey = viewId + "_" + compiledTemplateId;
-                    Alpaca.TemplateCache[cacheKey] = template;
+                    Alpaca.TemplateFunctionCache[cacheKey] = template;
 
                     // skip out
                     viewCompileCallback(normalizedViews, null, view, compiledTemplateId, cacheKey, totalCalls);
@@ -1828,8 +1838,11 @@
                     if (previouslyCompiledTemplateCacheKey)
                     {
                         // this entry is pointing to a previously compiled template
-                        // fetch html and compile again
-                        template = Alpaca.TemplateCache[previouslyCompiledTemplateCacheKey];
+                        //template = Alpaca.TemplateFunctionCache[previouslyCompiledTemplateCacheKey];
+
+                        // skip out
+                        viewCompileCallback(normalizedViews, null, view, compiledTemplateId, cacheKey, totalCalls);
+                        return;
                     }
 
                     // compile the template
@@ -2541,74 +2554,6 @@
         }
     };
 
-    Alpaca.styleInjections = {};
-
-
-    Alpaca.CountersMap = {};
-    Alpaca.Counters = function(name)
-    {
-        if (Alpaca.Counters[name])
-        {
-            return Alpaca.Counters[name];
-        }
-
-        // create new counters
-
-        var types = {};
-        var all = {
-            count: 0,
-            total: 0,
-            avg: 0,
-            touches: 0
-        };
-
-        var counters = {
-
-            increment: function(type, amount)
-            {
-                if (!types[type]) {
-                    types[type] = {
-                        count: 0,
-                        total: 0,
-                        avg: 0,
-                        touches: 0
-                    };
-                }
-
-                types[type].count++;
-                types[type].total += amount;
-                types[type].avg = types[type].total / types[type].count;
-                types[type].touches++;
-
-                all.count++;
-                all.total += amount;
-                all.avg = all.total / all.count;
-                all.touches++;
-            },
-
-            read: function(type) {
-                return types[type];
-            },
-
-            each: function(f) {
-                for (var type in types)
-                {
-                    f(type, types[type]);
-                }
-            },
-
-            all: function() {
-                return all;
-            }
-        };
-
-        Alpaca.Counters[name] = counters;
-
-        return counters;
-    };
-
-    Alpaca.collectTiming = false;
-
     Alpaca.pathParts = function(resource)
     {
         if (typeof(resource) != "string")
@@ -2926,7 +2871,7 @@
             var field = entry.field;
 
             // clear out previous validation UI markers
-            field.applyInjection("removeError", field.getFieldEl());
+            field.fireCallback("removeError");
             field.getFieldEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
 
             var showMessages = false;
@@ -2943,7 +2888,7 @@
                 {
                     if (!field.hideInitValidationError)
                     {
-                        field.applyInjection("error", field.getFieldEl());
+                        field.fireCallback("error");
                         field.getFieldEl().addClass("alpaca-field-invalid");
 
                         showMessages = true;
@@ -4046,5 +3991,13 @@
         root.async = async;
 
     }());
+
+
+    Alpaca.MARKER_CLASS_CONTROL_FIELD = "alpaca-marker-control-field";
+    Alpaca.MARKER_CLASS_CONTAINER_FIELD = "alpaca-marker-container-field";
+    Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM = "alpaca-marker-control-field-item";
+    Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY = "data-alpaca-containerfield-item-key";
+    Alpaca.CLASS_CONTAINER = "alpaca-container";
+    Alpaca.CLASS_CONTROL = "alpaca-control";
 
 })(jQuery);

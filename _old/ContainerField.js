@@ -87,57 +87,15 @@
             this.children = [];
             this.childrenById = [];
             this.childrenByPropertyId = [];
+
             // style icons
-            this.expandedIcon = "";
-            this.collapsedIcon = "";
-            this.commonIcon = "";
-            this.addIcon = "";
-            this.removeIcon = "";
-            this.upIcon = "";
-            this.downIcon = "";
-
-            if (this.view.style && Alpaca.styleInjections[this.view.style])
-            {
-                if (Alpaca.styleInjections[this.view.style]["commonIcon"])
-                {
-                    this.commonIcon = Alpaca.styleInjections[this.view.style]["commonIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["containerExpandedIcon"])
-                {
-                    this.expandedIcon = Alpaca.styleInjections[this.view.style]["containerExpandedIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["containerCollapsedIcon"])
-                {
-                    this.collapsedIcon = Alpaca.styleInjections[this.view.style]["containerCollapsedIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["buttonBeautifier"])
-                {
-                    this.buttonBeautifier = Alpaca.styleInjections[this.view.style]["buttonBeautifier"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["addIcon"])
-                {
-                    this.addIcon = Alpaca.styleInjections[this.view.style]["addIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["removeIcon"])
-                {
-                    this.removeIcon = Alpaca.styleInjections[this.view.style]["removeIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["upIcon"])
-                {
-                    this.upIcon = Alpaca.styleInjections[this.view.style]["upIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["downIcon"])
-                {
-                    this.downIcon = Alpaca.styleInjections[this.view.style]["downIcon"];
-                }
-            }
+            this.expandedIcon = this.view.getStyle("expandedIcon");
+            this.collapsedIcon = this.view.getStyle("collapsedIcon");
+            this.commonIcon = this.view.getStyle("commonIcon");
+            this.addIcon = this.view.getStyle("addIcon");
+            this.removeIcon = this.view.getStyle("removeIcon");
+            this.upIcon = this.view.getStyle("upIcon");
+            this.downIcon = this.view.getStyle("downIcon");
         },
 
         /**
@@ -186,6 +144,9 @@
                             self.container.replaceWith(containerField);
                             self.container = containerField;
                         }
+
+                        // CALLBACK: "container"
+                        self.fireCallback("container");
 
                         self.afterRenderContainer(model, function() {
 
@@ -292,80 +253,11 @@
         {
             var self = this;
 
-            if (self.control)
-            {
-                self.control.addClass('alpaca-containerfield-' + self.getFieldType());
-            }
-
             this.base(function() {
 
                 callback();
 
             });
-
-
-            /*
-            this.applyInjection("container", this.outerEl);
-
-            var labelDiv = $('.alpaca-fieldset-legend', this.outerEl);
-
-            if (labelDiv.length)
-            {
-                this.labelDiv = labelDiv;
-            }
-            else
-            {
-                this.outerEl.addClass('alpaca-fieldset-no-legend');
-            }
-
-            var fieldSetDiv = $('.alpaca-fieldset', this.outerEl);
-
-            if (fieldSetDiv.length)
-            {
-                this.fieldSetDiv = fieldSetDiv;
-            }
-            else
-            {
-                this.fieldSetDiv = this.outerEl;
-            }
-            */
-
-            /*
-             var asyncHandler = false;
-
-             if (!this.singleLevelRendering && !this.lazyLoading)
-             {
-             asyncHandler = true;
-             this.renderItems(function() {
-             callback();
-             });
-             }
-
-             if (this.lazyLoading)
-             {
-             if (this.labelDiv)
-             {
-             asyncHandler = true;
-             $(this.labelDiv).click(function() {
-
-             if (self.lazyLoading)
-             {
-             self.renderItems(function() {
-
-             self.lazyLoading = false;
-             callback();
-
-             });
-             }
-             });
-             }
-             }
-
-             if (!asyncHandler)
-             {
-             callback();
-             }
-             */
         },
 
         /**
@@ -377,6 +269,7 @@
 
             _this.base();
 
+            /*
             // if collapsible
             if (this.labelDiv)
             {
@@ -434,6 +327,7 @@
                     }
                 }
             }
+            */
         },
 
         /**

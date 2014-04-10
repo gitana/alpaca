@@ -99,7 +99,7 @@
                     tEvents = {};
                 }
 
-                // support for each datasets (local, prefetch, remote)
+                // support for each datasets (local, remote, prefetch)
                 if (tDatasets.type == "local" || tDatasets.type == "remote" || tDatasets.type == "prefetch")
                 {
                     var bloodHoundConfig = {
@@ -113,20 +113,33 @@
                     {
                         var local = [];
 
-                        for (var i = 0; i < tDatasets.source.length; i++)
+                        if (typeof(tDatasets.source) == "function")
                         {
-                            var localElement = tDatasets.source[i];
-                            if (typeof(localElement) == "string")
+                            bloodHoundConfig.local = tDatasets.source;
+                        }
+                        else
+                        {
+                            // array
+                            for (var i = 0; i < tDatasets.source.length; i++)
                             {
-                                localElement = {
-                                    "value": localElement
-                                };
+                                var localElement = tDatasets.source[i];
+                                if (typeof(localElement) == "string")
+                                {
+                                    localElement = {
+                                        "value": localElement
+                                    };
+                                }
+
+                                local.push(localElement);
                             }
 
-                            local.push(localElement);
+                            bloodHoundConfig.local = local;
                         }
 
-                        bloodHoundConfig.local = local;
+                        if (tDatasets.local)
+                        {
+                            bloodHoundConfig.local = tDatasets.local;
+                        }
                     }
 
                     if (tDatasets.type == "prefetch")
@@ -400,7 +413,16 @@
         {
             if (this.control)
             {
-                this.control.focus();
+                // focuses the control and also positions the input at the end
+
+                var el = $(this.control).get(0);
+
+                var elemLen = el.value.length;
+
+                el.selectionStart = elemLen;
+                el.selectionEnd = elemLen;
+
+                el.focus();
             }
         },//__BUILDER_HELPERS
         

@@ -51,7 +51,7 @@ $( document ).ready(function() {
 
         var outerDiv = $("<div style='position: relative; width: 100%;'></div>");
 
-        var editorDiv = $("<div style='position: relative; width: 100%; height: 300px; border: 1px #ccc solid;'><div id='" + currentId + "-editor' style='position:absolute;top:0;bottom:0;left:0;right:0'></div></div>");
+        var editorDiv = $("<div style='position: relative; width: 100%; height: 300px;'><div id='" + currentId + "-editor' style='position:absolute;top:0;bottom:0;left:0;right:0'></div></div>");
 
         var runButton = $("<a class='btn btn-primary run pull-left' href='javascript:void(0);'>Run &raquo;</a>");
         var resetButton = $("<a class='btn btn-danger reset pull-right' href='javascript:void(0);'>Reset</a>");
@@ -118,6 +118,8 @@ $( document ).ready(function() {
                 // write into editor
                 editor.setValue(code);
                 editor.clearSelection();
+
+                $("#" + id).empty();
 
                 // run the code
                 eval(code);

@@ -27,6 +27,11 @@
             this.controlDescriptor = this.view.getTemplateDescriptor("control-" + self.getControlTemplateType());
         },
 
+        getControlEl: function()
+        {
+            return this.control;
+        },
+
         getControlTemplateType: function()
         {
             // we assume the field type and then check the view to see if there is a template for this view
@@ -86,22 +91,26 @@
 
             var self = this;
 
-            // find the "alpaca-controlfield" marker
-            // we'll replace this element with ourselves
-            this.control = $(this.field).find(".alpaca-controlfield");
+            // find our insertion point
+            // this is marked by the handlebars helper
+            this.control = $(this.field).find("." + Alpaca.MARKER_CLASS_CONTROL_FIELD);
+            this.control.removeClass(Alpaca.MARKER_CLASS_CONTROL_FIELD);
 
+            // render
             self.prepareControlModel(function(model) {
-
                 self.beforeRenderControl(model, function() {
-
                     self.renderControl(model, function(controlField) {
 
                         if (controlField)
                         {
-                            controlField.addClass("alpaca-controlfield");
                             self.control.replaceWith(controlField);
                             self.control = controlField;
+
+                            self.control.addClass(Alpaca.CLASS_CONTROL);
                         }
+
+                        // CALLBACK: "control"
+                        self.fireCallback("control");
 
                         self.afterRenderControl(model, function() {
 
@@ -109,7 +118,6 @@
                         });
 
                     });
-
                 });
             });
         },
@@ -185,11 +193,6 @@
         postRender: function(callback)
         {
             var self = this;
-
-            if (self.control)
-            {
-                self.control.addClass('alpaca-controlfield-' + self.getFieldType());
-            }
 
             /*
             // store reference to the label

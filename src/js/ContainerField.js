@@ -12,7 +12,7 @@
          */
         onConstruct: function()
         {
-            this.isControlField = false;
+            this.isContainerField = true;
         },
 
         /**
@@ -21,6 +21,11 @@
         isContainer: function()
         {
             return true;
+        },
+
+        getContainerEl: function()
+        {
+            return this.container;
         },
 
         /**
@@ -117,56 +122,13 @@
             this.childrenById = [];
             this.childrenByPropertyId = [];
             // style icons
-            this.expandedIcon = "";
-            this.collapsedIcon = "";
-            this.commonIcon = "";
-            this.addIcon = "";
-            this.removeIcon = "";
-            this.upIcon = "";
-            this.downIcon = "";
-
-            if (this.view.style && Alpaca.styleInjections[this.view.style])
-            {
-                if (Alpaca.styleInjections[this.view.style]["commonIcon"])
-                {
-                    this.commonIcon = Alpaca.styleInjections[this.view.style]["commonIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["containerExpandedIcon"])
-                {
-                    this.expandedIcon = Alpaca.styleInjections[this.view.style]["containerExpandedIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["containerCollapsedIcon"])
-                {
-                    this.collapsedIcon = Alpaca.styleInjections[this.view.style]["containerCollapsedIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["buttonBeautifier"])
-                {
-                    this.buttonBeautifier = Alpaca.styleInjections[this.view.style]["buttonBeautifier"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["addIcon"])
-                {
-                    this.addIcon = Alpaca.styleInjections[this.view.style]["addIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["removeIcon"])
-                {
-                    this.removeIcon = Alpaca.styleInjections[this.view.style]["removeIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["upIcon"])
-                {
-                    this.upIcon = Alpaca.styleInjections[this.view.style]["upIcon"];
-                }
-
-                if (Alpaca.styleInjections[this.view.style]["downIcon"])
-                {
-                    this.downIcon = Alpaca.styleInjections[this.view.style]["downIcon"];
-                }
-            }
+            this.expandedIcon = this.view.getStyle("expandedIcon");
+            this.collapsedIcon = this.view.getStyle("collapsedIcon");
+            this.commonIcon = this.view.getStyle("commonIcon");
+            this.addIcon = this.view.getStyle("addIcon");
+            this.removeIcon = this.view.getStyle("removeIcon");
+            this.upIcon = this.view.getStyle("upIcon");
+            this.downIcon = this.view.getStyle("downIcon");
         },
 
         /**
@@ -199,21 +161,22 @@
 
             var self = this;
 
-            // find the "alpaca-containerfield" marker
-            // we'll replace this element with ourselves
-            this.container = $(this.field).find(".alpaca-containerfield");
+            // find our insertion point
+            // this is marked by the handlebars helper
+            this.container = $(this.field).find("." + Alpaca.MARKER_CLASS_CONTAINER_FIELD);
+            this.container.removeClass(Alpaca.MARKER_CLASS_CONTAINER_FIELD);
 
+            // render
             self.prepareContainerModel(function(model) {
-
                 self.beforeRenderContainer(model, function() {
-
                     self.renderContainer(model, function(containerField) {
 
                         if (containerField)
                         {
-                            containerField.addClass("alpaca-containerfield");
                             self.container.replaceWith(containerField);
                             self.container = containerField;
+
+                            self.container.addClass(Alpaca.CLASS_CONTAINER);
                         }
 
                         self.afterRenderContainer(model, function() {
@@ -223,7 +186,6 @@
 
                     });
                 });
-
             });
         },
 
@@ -321,11 +283,6 @@
         {
             var self = this;
 
-            if (self.control)
-            {
-                self.control.addClass('alpaca-containerfield-' + self.getFieldType());
-            }
-
             this.base(function() {
 
                 callback();
@@ -340,7 +297,7 @@
         {
             var _this = this;
 
-            _this.base();
+            this.base();
 
             // if collapsible
             if (this.labelDiv)

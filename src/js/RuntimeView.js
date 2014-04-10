@@ -95,16 +95,6 @@
         },
 
         /**
-         * Gets style injection lists.
-         *
-         * @returns {Object} styles style injection list settings of the view.
-         */
-        getStyles : function () {
-
-            return this.styles;
-        },
-
-        /**
          * Hands back the compiled template id for a given template.
          *
          * @param templateId
@@ -185,41 +175,37 @@
             return configVal;
         },
 
-        /**
-         * Loads an injected style.
-         *
-         * @param id
-         */
-        getInjectedStyle: function(id)
+        fireCallback: function(field, id, arg1, arg2, arg3, arg4, arg5)
         {
-            var injectedStyle = null;
+            var self = this;
 
-            var injections = {};
-            if (this.style)
+            if (this.callbacks && this.callbacks[id])
             {
-                var _injections = Alpaca.styleInjections[this.style];
-                if (_injections) {
-                    Alpaca.mergeObject(_injections, injections);
-                }
+                this.callbacks[id].call(field, arg1, arg2, arg3, arg4, arg5);
             }
-
-            return injectedStyle[id];
         },
 
-        /**
-         * Applies injection onto the given dom element.
-         *
-         * @param key
-         * @param target
-         * @param arg1
-         * @param arg2
-         */
-        applyInjection: function(key, target, arg1, arg2)
+        applyStyle: function(id, fieldOrEl)
         {
-            if (this.style && Alpaca.styleInjections[this.style] && Alpaca.styleInjections[this.style][key])
-            {
-                Alpaca.styleInjections[this.style][key].call(this, target, arg1, arg2);
+            var el = fieldOrEl;
+            if (el && el.getFieldEl) {
+                el = el.getFieldEl();
             }
+
+            if (el)
+            {
+                if (this.styles && this.styles[id])
+                {
+                    $(el).addClass(this.styles[id]);
+                }
+            }
+        },
+
+        getStyle: function(id)
+        {
+            return this.styles[id] ? this.styles[id] : "";
         }
+
+
     });
 })(jQuery);

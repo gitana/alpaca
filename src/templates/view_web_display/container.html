@@ -1,12 +1,12 @@
 <script type="text/x-handlebars-template">
 
-    <div class="ui-widget ui-widget-content">
+    <div>
 
         {{#if options.label}}
-        <div class="{{#if options.labelClass}}{{options.labelClass}}{{/if}}">{{options.label}}</div>
+        <div {{#if options.labelClass}}class="{{options.labelClass}}"{{/if}}>{{options.label}}</div>
         {{/if}}
 
-        <div class="alpaca-fieldset-items-container"></div>
+        {{#container}}{{/container}}
 
     </div>
 

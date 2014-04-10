@@ -117,3 +117,8 @@
     padding-top: 20px;
     color: #888;
 }
+
+.ace_editor
+{
+    border: 1px solid rgb(204, 204, 204);
+}

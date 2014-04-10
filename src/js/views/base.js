@@ -6,8 +6,6 @@
 
     var Alpaca = $.alpaca;
 
-    Alpaca.styleInjections = {};
-
     Alpaca.registerView({
         "id": "VIEW_BASE",
         "title": "Abstract base view",

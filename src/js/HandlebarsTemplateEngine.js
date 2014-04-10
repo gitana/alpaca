@@ -40,15 +40,15 @@
     };
     helpers["control"] = function(options)
     {
-        return "<div class='alpaca-controlfield'></div>";
+        return "<div class='" + Alpaca.MARKER_CLASS_CONTROL_FIELD + "'></div>";
     };
     helpers["container"] = function(options)
     {
-        return "<div class='alpaca-containerfield'></div>";
+        return "<div class='" + Alpaca.MARKER_CLASS_CONTAINER_FIELD + "'></div>";
     };
     helpers["item"] = function(options)
     {
-        return "<div class='alpaca-containerfield-item' data-alpaca-containerfield-item-key='" + this.name + "'></div>";
+        return "<div class='" + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM + "' " + Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY + "='" + this.name + "'></div>";
     };
 
 
@@ -77,10 +77,10 @@
 
         doCompile: function(cacheKey, html, callback)
         {
-            var template = null;
+            var templateFunction = null;
             try
             {
-                template = Handlebars.compile(html);
+                templateFunction = Handlebars.compile(html);
             }
             catch (e)
             {
@@ -88,20 +88,20 @@
                 return;
             }
 
-            Alpaca.TemplateCache[cacheKey] = template;
+            Alpaca.TemplateFunctionCache[cacheKey] = templateFunction;
 
             callback();
         },
 
         doExecute: function(cacheKey, model, callback)
         {
-            var template = Alpaca.TemplateCache[cacheKey];
+            var templateFunction = Alpaca.TemplateFunctionCache[cacheKey];
 
             // render template
             var html = null;
             try
             {
-                html = Handlebars.template(template)(model);
+                html = Handlebars.template(templateFunction)(model);
             }
             catch (e)
             {
@@ -114,7 +114,7 @@
 
         isCached: function(cacheKey)
         {
-            return (Alpaca.TemplateCache[cacheKey] ? true : false);
+            return (Alpaca.TemplateFunctionCache[cacheKey] ? true : false);
         }
 
     });

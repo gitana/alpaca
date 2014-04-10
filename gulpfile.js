@@ -102,17 +102,23 @@ var paths = {
         ],
         jqueryui: [
             "build/tmp/scripts-core.js",
+            "build/tmp/templates-web.js",
             "build/tmp/templates-jqueryui.js",
+            "src/js/views/web.js",
             "src/js/views/jqueryui.js"
         ],
         jquerymobile: [
             "build/tmp/scripts-core.js",
+            "build/tmp/templates-web.js",
             "build/tmp/templates-jquerymobile.js",
+            "src/js/views/web.js",
             "src/js/views/jquerymobile.js"
         ],
         bootstrap: [
             "build/tmp/scripts-core.js",
+            "build/tmp/templates-web.js",
             "build/tmp/templates-bootstrap.js",
+            "src/js/views/web.js",
             "src/js/views/bootstrap.js"
         ]
     },
@@ -121,17 +127,23 @@ var paths = {
             "src/templates/view_web_display/**/*.html",
             "src/templates/view_web_edit/***/*.html"
         ],
-        bootstrap: [
-            "src/templates/view_bootstrap_display/**/*.html",
-            "src/templates/view_bootstrap_edit/**/*.html"
+        jqueryui: [
+            "src/templates/view_web_display/**/*.html",
+            "src/templates/view_web_edit/***/*.html",
+            "src/templates/view_jqueryui_display/**/*.html",
+            "src/templates/view_jqueryui_edit/**/*.html"
         ],
         jquerymobile: [
+            "src/templates/view_web_display/**/*.html",
+            "src/templates/view_web_edit/***/*.html",
             "src/templates/view_jquerymobile_display/**/*.html",
             "src/templates/view_jquerymobile_edit/**/*.html"
         ],
-        jqueryui: [
-            "src/templates/view_jqueryui_display/**/*.html",
-            "src/templates/view_jqueryui_edit/**/*.html"
+        bootstrap: [
+            "src/templates/view_web_display/**/*.html",
+            "src/templates/view_web_edit/***/*.html",
+            "src/templates/view_bootstrap_display/**/*.html",
+            "src/templates/view_bootstrap_edit/**/*.html"
         ],
         all: [
             "src/templates/**/*.html"
@@ -145,12 +157,15 @@ var paths = {
             "src/css/alpaca-web.css"
         ],
         bootstrap: [
+            "src/css/alpaca-web.css",
             "src/css/alpaca-bootstrap.css"
         ],
         jquerymobile: [
+            "src/css/alpaca-web.css",
             "src/css/alpaca-jquerymobile.css"
         ],
         jqueryui: [
+            "src/css/alpaca-web.css",
             "src/css/alpaca-jqueryui.css"
         ]
     }
@@ -167,7 +182,7 @@ gulp.task('styles', function() {
 
         // web
         gulp.src(paths.styles.web)
-            .pipe(concat('alpaca-web.css'))
+            .pipe(concat('alpaca.css'))
             .pipe(gulp.dest('build/alpaca/web'))
             .pipe(rename({suffix: ".min"}))
             .pipe(minifyCss())
@@ -175,9 +190,9 @@ gulp.task('styles', function() {
         gulp.src("src/css/images/**")
             .pipe(gulp.dest('./build/alpaca/web/images')),
 
-        // bootstrap
+        // bootstrap (includes web)
         gulp.src(paths.styles.bootstrap)
-            .pipe(concat('alpaca-bootstrap.css'))
+            .pipe(concat('alpaca.css'))
             .pipe(gulp.dest('build/alpaca/bootstrap'))
             .pipe(rename({suffix: ".min"}))
             .pipe(minifyCss())
@@ -187,7 +202,7 @@ gulp.task('styles', function() {
 
         // jqueryui
         gulp.src(paths.styles.jqueryui)
-            .pipe(concat('alpaca-jqueryui.css'))
+            .pipe(concat('alpaca.css'))
             .pipe(gulp.dest('build/alpaca/jqueryui'))
             .pipe(rename({suffix: ".min"}))
             .pipe(minifyCss())
@@ -197,7 +212,7 @@ gulp.task('styles', function() {
 
         // jquerymobile
         gulp.src(paths.styles.jquerymobile)
-            .pipe(concat('alpaca-jquerymobile.css'))
+            .pipe(concat('alpaca.css'))
             .pipe(gulp.dest('build/alpaca/jquerymobile'))
             .pipe(rename({suffix: ".min"}))
             .pipe(minifyCss())
@@ -364,10 +379,11 @@ gulp.task('update-web-full', function() {
         // copy web2 into web
         gulp.src("build/web2/**").pipe(gulp.dest("./build/web")),
 
-        // docs lib
+        // copy lib/ into web
         gulp.src("lib/**")
-            .pipe(gulp.dest('./build/web/assets/themes/dbyll/lib')),
+            .pipe(gulp.dest('./build/web/lib')),
 
+        // copy alpaca into web
         gulp.src("build/alpaca/**")
             .pipe(gulp.dest('./build/web/assets/themes/dbyll/lib/alpaca'))
 

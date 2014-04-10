@@ -1,0 +1,77 @@
+/** Added to outer field elements to hide them **/
+.alpaca-hidden
+{
+    display: none;
+}
+
+/** Added to every field outer element **/
+.alpaca-field
+{
+
+}
+
+/** Added to every container outer field element **/
+.alpaca-container
+{
+
+}
+
+/** Added to every control outer field element **/
+.alpaca-control
+{
+
+}
+
+/** Added to top-most control when rendering in display mode **/
+.alpaca-display
+{
+
+}
+
+/** Added to top-most control when rendering in create mode **/
+.alpaca-create
+{
+
+}
+
+/** Added to top-most control when rendering in edit mode **/
+.alpaca-edit
+{
+
+}
+
+/** Added to any field that is optional **/
+.alpaca-required
+{
+
+}
+
+/** Added to any field that is required **/
+.alpaca-optional
+{
+
+}
+
+/** Added to any field that is readonly **/
+.alpaca-readonly
+{
+
+}
+
+
+
+
+
+
+
+/** Added to indicate hover state **/
+.alpaca-hover
+{
+}
+
+/** General purpose HTML clear **/
+.alpaca-clear
+{
+    clear: both;
+}
+

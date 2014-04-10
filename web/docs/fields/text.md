@@ -171,8 +171,8 @@ $("#field7").alpaca({
                 "minLength": 1
             },
             "datasets": {
-                "name": "companies",
-                "source": function(query, cb)
+                "type": "local",
+                "source": function(query)
                 {
                     var companies = [
                         "Cloud CMS",
@@ -198,7 +198,7 @@ $("#field7").alpaca({
                         }
                     }
 
-                    cb(results);
+                    return results;
                 }
             }
         }
@@ -268,9 +268,8 @@ $("#field9").alpaca({
         "helper": "Select the name of a cloud computing company",
         "typeahead": {
             "datasets": {
-                "name": "companies",
                 "type": "remote",
-                "source": "../../endpoints/typeahead-sample.php?q=%QUERY",
+                "source": "/docs/endpoints/typeahead-sample.php?q=%QUERY",
                 "templates": {
                     "empty": "Nothing found...",
                     "header": "<h4>List of companies</h4><br/><br/>",

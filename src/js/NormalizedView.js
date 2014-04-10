@@ -126,12 +126,13 @@
                 setFunction(this, element, "postRender");
 
                 // maps (merge)
-                mergeMap(this, element, "styles");
                 mergeMap(this, element, "templates");
                 mergeMap(this, element, "messages");
                 mergeMap(this, element, "wizard");
                 mergeMap(this, element, "fields");
                 mergeMap(this, element, "layout");
+                mergeMap(this, element, "styles");
+                mergeMap(this, element, "callbacks");
 
                 // compiled templates
                 mergeMap(this, element, "compiledTemplates");

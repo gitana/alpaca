@@ -1,8 +1,8 @@
 (function($)
 {
     // template cache
-    if (typeof(Alpaca.TemplateCache) == "undefined") {
-        Alpaca.TemplateCache = {};
+    if (typeof(Alpaca.TemplateFunctionCache) == "undefined") {
+        Alpaca.TemplateFunctionCache = {};
     }
 
     Alpaca.AbstractTemplateEngine = Base.extend(
@@ -88,7 +88,7 @@
                     "success": function(html)
                     {
                         // cleanup html
-                        html = self.cleanMarkup(html);
+                        html = self.cleanup(html);
 
                         self._compile(cacheKey, html, callback);
                     },
