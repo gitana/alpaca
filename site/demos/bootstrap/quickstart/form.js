@@ -78,7 +78,8 @@ $(document).ready(function() {
                 "type": "country",
                 "label": "Country"
             }
-        }
+        },
+        "focus": true
     };
 
     /**

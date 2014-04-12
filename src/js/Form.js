@@ -19,7 +19,6 @@
          * @param {Function} errorCallback Error callback.
          */
         constructor: function(domEl, options, viewId, connector, errorCallback) {
-            var _this = this;
 
             // container
             this.domEl = domEl;
@@ -109,7 +108,7 @@
          */
         render: function(callback)
         {
-            var _this = this;
+            var self = this;
 
             // remove the previous form element if it exists
             if (this.form)
@@ -121,13 +120,13 @@
             this.processRender(this.domEl, function() {
 
                 // bind our field dom element into the container
-                _this.form.appendTo(_this.container);
+                self.form.appendTo(self.container);
 
                 // add default class
-                _this.form.addClass("alpaca-form");
+                self.form.addClass("alpaca-form");
 
                 // execute callback
-                callback(_this);
+                callback(self);
             });
         },
 
@@ -199,8 +198,7 @@
             this.formDescriptor = this.view.getTemplateDescriptor("form");
             if (!this.formDescriptor)
             {
-                thr
-                console.log("Could not find template descriptor: form");
+                return Alpaca.throwErrorWithCallback("Could not find template descriptor: form");
             }
 
             var renderedDomElement = Alpaca.tmpl(this.formDescriptor, {
@@ -212,6 +210,11 @@
 
             this.form = renderedDomElement;
 
+            // find our insertion point
+            // this is marked by the handlebars helper
+            this.formFieldsContainer = $(this.form).find("." + Alpaca.MARKER_CLASS_FORM_ITEMS_FIELD);
+            this.formFieldsContainer.removeClass(Alpaca.MARKER_CLASS_FORM_ITEMS_FIELD);
+
             if (Alpaca.isEmpty(this.form.attr("id")))
             {
                 this.form.attr("id", this.getId() + "-form-outer");
@@ -219,13 +222,6 @@
             if (Alpaca.isEmpty(this.form.attr("alpaca-field-id")))
             {
                 this.form.attr("alpaca-field-id", this.getId());
-            }
-
-            // get container for forms
-            if ($('.alpaca-form-fields-container', this.form)) {
-                this.formFieldsContainer = $('.alpaca-form-fields-container', this.form);
-            } else {
-                this.formFieldsContainer = this.form;
             }
 
             // the form field

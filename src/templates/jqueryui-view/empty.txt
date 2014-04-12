@@ -1,20 +1,21 @@
 <script type="text/x-handlebars-template">
 
-    <div>
+    <fieldset>
 
         {{#if options.label}}
         <legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}}">{{options.label}}</legend>
         {{/if}}
 
-        {{#container}}{{/container}}
-
         {{#if options.helper}}
-        <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-            <i class="glyphicon glyphicon-info-sign"></i>
-            {{options.helper}}
-        </p>
+        <div class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">{{options.helper}}</div>
         {{/if}}
 
-    </div>
+        <div class="alpaca-fieldset-items-container">
+
+            {{#container}}{{/container}}
+
+        </div>
+
+    </fieldset>
 
 </script>

@@ -118,7 +118,7 @@
                 el = el.parent();
             }
 
-            $(el).trigger('pagecreate');
+            $(el).trigger('create');
         }
     };
 

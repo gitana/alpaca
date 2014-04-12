@@ -26,6 +26,7 @@
     callbacks["field"] = function()
     {
         this.getFieldEl().addClass("ui-widget");
+        //this.getFieldEl().addClass("ui-widget-content");
     };
     callbacks["required"] = function()
     {
@@ -43,8 +44,17 @@
     {
         this.getFieldEl().addClass('ui-widget-content');
     };
-    /*
+    callbacks["hide"] = function()
+    {
+        this.getFieldEl().addClass("ui-helper-hidden ui-helper-hidden-accessible");
+    };
+    callbacks["show"] = function()
+    {
+        this.getFieldEl().removeClass("ui-helper-hidden");
+        this.getFieldEl().removeClass("ui-helper-hidden-accessible");
+    };
 
+    /*
     "errorMessage" : function(targetDiv) {
         targetDiv.addClass('ui-state-error-text');
     },

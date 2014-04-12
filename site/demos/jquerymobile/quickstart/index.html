@@ -7,12 +7,12 @@
         <!-- jQuery -->
         <script type="text/javascript" src="/lib/jquery-2.1.0/jquery-2.1.0.min.js"></script>
 
-        <!-- Handlebars -->
-        <script type="text/javascript" src="/lib/handlebars/handlebars-v1.3.0.js"></script>
-
         <!-- jQuery Mobile -->
         <script type="text/javascript" src="/lib/jquery.mobile-1.4.2/jquery.mobile-1.4.2.min.js"></script>
         <link type="text/css" href="/lib/jquery.mobile-1.4.2/jquery.mobile-1.4.2.min.css" rel="stylesheet" />
+
+        <!-- Handlebars -->
+        <script type="text/javascript" src="/lib/handlebars/handlebars-v1.3.0.js"></script>
 
         <!-- Alpaca -->
         <script type="text/javascript" src="/lib/alpaca/jquerymobile/alpaca.js"></script>
@@ -20,11 +20,26 @@
 
         <!-- Custom Files -->
         <script type="text/javascript" src="form.js"></script>
+        <link type="text/css" href="form.css" rel="stylesheet" />
 
     </head>
     <body>
 
-        <div id="form"></div>
+        <div data-role="page">
+
+            <div data-role="header">
+                <h1>Quick Start</h1>
+            </div>
+            <div role="main" class="ui-content">
+
+                <div id="form"></div>
+
+            </div>
+            <div data-role="footer">
+                <h4>Sample Footer</h4>
+            </div>
+
+        </div>
 
     </body>
 </html>

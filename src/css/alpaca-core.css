@@ -16,11 +16,70 @@
 
 }
 
+/** Added to the optional label (or legend) accompanying any container **/
+.alpaca-container-label
+{
+
+}
+
+/** Added to every container item field within a container **/
+.alpaca-container-item
+{
+
+}
+
+/** Added to the first container item field within a container **/
+.alpaca-container-item-first
+{
+
+}
+
+/** Added to the last container item field within a container **/
+.alpaca-container-item-last
+{
+
+}
+
+/** Added to the dom element holding the toolbar for an array **/
+.alpaca-array-toolbar
+{
+
+}
+
+/** Added to a button in the array toolbar that triggers an action **/
+.alpaca-array-toolbar-action
+{
+
+}
+
+/** Added to the dom element holding action buttons for items in an array **/
+.alpaca-array-item-actions
+{
+
+}
+
+/** Added to a button in the array items actions bar that triggers an action **/
+.alpaca-array-item-action
+{
+
+}
+
+
 /** Added to every control outer field element **/
 .alpaca-control
 {
 
 }
+
+/** Added to the optional label accompanying any control **/
+.alpaca-control-label
+{
+
+}
+
+/** ******************************************************** **/
+/**                        STATE LABELS                      **/
+/** ******************************************************** **/
 
 /** Added to top-most control when rendering in display mode **/
 .alpaca-display
@@ -58,7 +117,21 @@
 
 }
 
+/** Added to the container that holds Alpaca field helper text **/
+.alpaca-helper
+{
 
+}
+
+
+/** ******************************************************** **/
+/**                           ICONS                          **/
+/** ******************************************************** **/
+
+.alpaca-icon-helper
+{
+
+}
 
 
 

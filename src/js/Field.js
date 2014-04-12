@@ -1176,6 +1176,9 @@
                 });
 
                 this.onShow();
+
+                // CALLBACK: "show"
+                this.fireCallback("show");
             }
         },
 
@@ -1194,6 +1197,9 @@
             });
 
             this.onHide();
+
+            // CALLBACK: "hide"
+            this.fireCallback("hide");
         },
 
         onHide: function()
@@ -1223,9 +1229,9 @@
          */
         print: function()
         {
-            if (this.domEl.printArea)
+            if (this.getFieldEl().printArea)
             {
-                this.domEl.printArea();
+                this.getFieldEl().printArea();
             }
         },
 

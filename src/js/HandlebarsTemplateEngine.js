@@ -53,6 +53,10 @@
     {
         return "<div class='" + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM + "' " + Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY + "='" + this.name + "'></div>";
     };
+    helpers["formItems"] = function(options)
+    {
+        return "<div class='" + Alpaca.MARKER_CLASS_FORM_ITEMS_FIELD + "'></div>";
+    };
 
 
     //Handlebars.registerHelper("each", helpers["each"]);
@@ -60,6 +64,7 @@
     Handlebars.registerHelper("control", helpers["control"]);
     Handlebars.registerHelper("container", helpers["container"]);
     Handlebars.registerHelper("item", helpers["item"]);
+    Handlebars.registerHelper("formItems", helpers["formItems"]);
     Handlebars.registerHelper("times", helpers["times"]);
 
     var partials = {};

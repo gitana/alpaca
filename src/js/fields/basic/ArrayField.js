@@ -664,14 +664,14 @@
 
             // show array toolbar?
             // TODO: only if children size == 0
-            $(this.container).find(".alpaca-container-array-toolbar").show();
+            $(this.container).find(".alpaca-array-toolbar").show();
 
             // either hover show the item buttons or always show using sticky toolbar
             // this.options.toolbarSticky
-            $(this.container).find(".alpaca-container-array-item-actions").parent().hover(function() {
-                $(this).find(".alpaca-container-array-item-actions").show();
+            $(this.container).find(".alpaca-array-item-actions").parent().hover(function() {
+                $(this).find(".alpaca-array-item-actions").show();
             }, function() {
-                $(this).find(".alpaca-container-array-item-actions").hide();
+                $(this).find(".alpaca-array-item-actions").hide();
             });
 
             // array toolbar buttons

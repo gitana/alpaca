@@ -238,7 +238,7 @@ $(document).ready(function() {
             },
             "travel": {
                 "type": "radio",
-                "label": "",
+                "label": false,
                 "optionLabels": [
                     "I will use your travel agent.",
                     "I will make my own travel arrangements.",

@@ -159,18 +159,23 @@ var paths = {
             "src/css/**/*.css"
         ],
         web: [
+            "src/css/alpaca-core.css",
+            "src/css/alpaca-fields.css",
             "src/css/alpaca-web.css"
         ],
         bootstrap: [
-            "src/css/alpaca-web.css",
+            "src/css/alpaca-core.css",
+            "src/css/alpaca-fields.css",
             "src/css/alpaca-bootstrap.css"
         ],
         jquerymobile: [
-            "src/css/alpaca-web.css",
+            "src/css/alpaca-core.css",
+            "src/css/alpaca-fields.css",
             "src/css/alpaca-jquerymobile.css"
         ],
         jqueryui: [
-            "src/css/alpaca-web.css",
+            "src/css/alpaca-core.css",
+            "src/css/alpaca-fields.css",
             "src/css/alpaca-jqueryui.css"
         ]
     }

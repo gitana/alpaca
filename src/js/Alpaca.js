@@ -1530,6 +1530,8 @@
                 }
             }
 
+            // NOTE: at this point view is a string (the view id) or it is empty/null
+
             // if still no view, then default fallback to our detected view or the default
             if (!view)
             {
@@ -1585,6 +1587,12 @@
 
                     var fin = function()
                     {
+                        // if this is the top-level alpaca field, we apply some additional CSS classes
+                        if (!field.parent)
+                        {
+                            field.getFieldEl().addClass("alpaca-" + Alpaca.views[view].type);
+                        }
+
                         // if this is the top-level alpaca field, then we call for validation state to be recalculated across
                         // all child fields
                         if (!field.parent)
@@ -3977,7 +3985,8 @@
     Alpaca.MARKER_CLASS_CONTROL_FIELD = "alpaca-marker-control-field";
     Alpaca.MARKER_CLASS_CONTAINER_FIELD = "alpaca-marker-container-field";
     Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM = "alpaca-marker-control-field-item";
-    Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY = "data-alpaca-containerfield-item-key";
+    Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY = "data-alpaca-container-field-item-key";
+    Alpaca.MARKER_CLASS_FORM_ITEMS_FIELD = "alpaca-marker-form-items-field";
     Alpaca.CLASS_CONTAINER = "alpaca-container";
     Alpaca.CLASS_CONTROL = "alpaca-control";
 

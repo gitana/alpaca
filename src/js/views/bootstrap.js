@@ -81,6 +81,9 @@
             // radios
             $(fieldEl).find("input[type=radio]").parent().addClass("radio-inline");
         }
+
+        // all control labels get class "control-label"
+        $(fieldEl).find(".alpaca-control label").addClass("control-label");
     };
 
     /*

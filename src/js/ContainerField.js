@@ -396,21 +396,21 @@
                 var item = model.items[i];
 
                 // find the insertion point
-                var insertionPoint = $(self.container).find("[data-alpaca-containerfield-item-key='" + item.name + "']");
+                var insertionPoint = $(self.container).find("[" + Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY + "='" + item.name + "']");
                 $(insertionPoint).replaceWith(item.field);
-                $(item.field).addClass("alpaca-containerfield-item");
+                $(item.field).addClass("alpaca-container-item");
 
                 if (i == 0)
                 {
-                    $(item.field).addClass("alpaca-containerfield-item-first");
+                    $(item.field).addClass("alpaca-container-item-first");
                 }
 
                 if (i + 1 == model.items.length)
                 {
-                    $(item.field).addClass("alpaca-containerfield-item-last");
+                    $(item.field).addClass("alpaca-container-item-last");
                 }
 
-                $(item.field).attr("data-alpaca-containerfield-item-key", item.name);
+                $(item.field).attr("data-alpaca-container-item-key", item.name);
 
                 // register the child
                 self.registerChild(item, i);

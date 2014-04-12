@@ -278,7 +278,8 @@ $(document).ready(function() {
                     "value": "Submit the Form"
                 }
             }
-        }
+        },
+        "focus": true
     };
 
     /**
@@ -317,8 +318,8 @@ $(document).ready(function() {
      * If you'd like to define a custom layout (html) file for your form, you first define a new view.
      */
     Alpaca.registerView({
-        "id": "VIEW_WEB_REGISTRATION",
-        "parent": "VIEW_MOBILE_CREATE",
+        "id": "registration",
+        "parent": "jquerymobile-create",
         "title": "Registration Create View for Mobile",
         "layout" : {
             "template": './registration-layout.html',
@@ -368,7 +369,6 @@ $(document).ready(function() {
         "schema": schema,
         "options": options,
         "postRender": postRenderCallback,
-        "view": "VIEW_WEB_REGISTRATION",
-        "style":"mobile"
+        "view": "registration"
     });
 });

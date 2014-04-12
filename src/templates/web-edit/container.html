@@ -1,16 +1,16 @@
 <script type="text/x-handlebars-template">
 
-    <div class="alpaca-edit-container">
+    <div>
 
         {{#if options.label}}
-        <legend {{#if options.labelClass}}class="{{options.labelClass}}"{{/if}}>{{options.label}}</legend>
+        <legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-container-label">{{options.label}}</legend>
         {{/if}}
 
         {{#container}}{{/container}}
 
         {{#if options.helper}}
-        <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-            <i class="info-sign"></i>
+        <p class="alpaca-helper {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+            <i class="alpaca-icon-helper"></i>
             {{options.helper}}
         </p>
         {{/if}}
