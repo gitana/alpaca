@@ -1,0 +1,5 @@
+{
+  "node": true,
+  "quotmark": false,
+  "globals": { "describe": false, "it": false }
+}

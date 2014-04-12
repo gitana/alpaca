@@ -39,8 +39,7 @@
             // in which case, we'll just pick the default view
             if (!viewId)
             {
-                this.id = "VIEW_WEB_EDIT";
-                return;
+                viewId =  "web-edit";
             }
 
             // the normalized view

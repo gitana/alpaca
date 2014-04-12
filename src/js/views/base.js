@@ -7,9 +7,8 @@
     var Alpaca = $.alpaca;
 
     Alpaca.registerView({
-        "id": "VIEW_BASE",
+        "id": "base",
         "title": "Abstract base view",
-        "description": "Foundation view which provides an abstract view from which all other views extend.",
         "messages": {
             "countries": {
                 "afg":"Afghanistan",
@@ -267,7 +266,5 @@
             "timeUnits": { SECOND: "seconds", MINUTE: "minutes", HOUR: "hours", DAY: "days", MONTH: "months", YEAR: "years" }
         }
     });
-
-    Alpaca.EmptyViewTemplates = {};
 
 })(jQuery);

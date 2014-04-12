@@ -10,11 +10,12 @@ var jshint = require('gulp-jshint');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var clean = require('gulp-clean');
-var handlebars = require('gulp-handlebars');
 var declare = require("gulp-declare");
 var notify = require('gulp-notify');
 var runSequence = require('run-sequence');
 var nodemon = require('gulp-nodemon');
+
+var handlebars = require('./temp_node_modules/gulp-handlebars'); // until gulp-handlebars supports 1.3.0
 
 var wrap = require('gulp-wrap-umd');
 
@@ -79,8 +80,8 @@ var paths = {
             "src/js/fields/advanced/TableField.js",
             "src/js/fields/advanced/GridField.js",
 
-            // views
-            "src/js/base.js",
+            // base view
+            "src/js/views/base.js",
 
             // i18n
             "src/js/messages/i18n/de_AT.js",
@@ -96,54 +97,58 @@ var paths = {
             "src/js/views/bootstrap.js"
         ],
         web: [
-            "build/tmp/scripts-core.js",
             "build/tmp/templates-web.js",
+            "build/tmp/scripts-core.js",
             "src/js/views/web.js"
         ],
         jqueryui: [
-            "build/tmp/scripts-core.js",
-            "build/tmp/templates-web.js",
             "build/tmp/templates-jqueryui.js",
+            "build/tmp/scripts-core.js",
             "src/js/views/web.js",
             "src/js/views/jqueryui.js"
         ],
         jquerymobile: [
-            "build/tmp/scripts-core.js",
-            "build/tmp/templates-web.js",
             "build/tmp/templates-jquerymobile.js",
+            "build/tmp/scripts-core.js",
             "src/js/views/web.js",
             "src/js/views/jquerymobile.js"
         ],
         bootstrap: [
-            "build/tmp/scripts-core.js",
-            "build/tmp/templates-web.js",
             "build/tmp/templates-bootstrap.js",
+            "build/tmp/scripts-core.js",
             "src/js/views/web.js",
             "src/js/views/bootstrap.js"
         ]
     },
     templates: {
         web: [
-            "src/templates/view_web_display/**/*.html",
-            "src/templates/view_web_edit/***/*.html"
+            "src/templates/web-view/**/*.html",
+            "src/templates/web-edit/**/*.html",
+            "src/templates/web-create/**/*.html"
         ],
         jqueryui: [
-            "src/templates/view_web_display/**/*.html",
-            "src/templates/view_web_edit/***/*.html",
-            "src/templates/view_jqueryui_display/**/*.html",
-            "src/templates/view_jqueryui_edit/**/*.html"
+            "src/templates/web-view/**/*.html",
+            "src/templates/web-edit/**/*.html",
+            "src/templates/web-create/**/*.html",
+            "src/templates/jqueryui-view/**/*.html",
+            "src/templates/jqueryui-edit/**/*.html",
+            "src/templates/jqueryui-create/**/*.html"
         ],
         jquerymobile: [
-            "src/templates/view_web_display/**/*.html",
-            "src/templates/view_web_edit/***/*.html",
-            "src/templates/view_jquerymobile_display/**/*.html",
-            "src/templates/view_jquerymobile_edit/**/*.html"
+            "src/templates/web-view/**/*.html",
+            "src/templates/web-edit/**/*.html",
+            "src/templates/web-create/**/*.html",
+            "src/templates/jquerymobile-view/**/*.html",
+            "src/templates/jquerymobile-edit/**/*.html",
+            "src/templates/jquerymobile-create/**/*.html"
         ],
         bootstrap: [
-            "src/templates/view_web_display/**/*.html",
-            "src/templates/view_web_edit/***/*.html",
-            "src/templates/view_bootstrap_display/**/*.html",
-            "src/templates/view_bootstrap_edit/**/*.html"
+            "src/templates/web-view/**/*.html",
+            "src/templates/web-edit/**/*.html",
+            "src/templates/web-create/**/*.html",
+            "src/templates/bootstrap-view/**/*.html",
+            "src/templates/bootstrap-edit/**/*.html",
+            "src/templates/bootstrap-create/**/*.html"
         ],
         all: [
             "src/templates/**/*.html"
@@ -227,9 +232,30 @@ gulp.task('scripts', function(cb) {
 
     // alpaca umd
     var wrapper = "" + fs.readFileSync("./config/umd-wrapper.txt");
-    var alpacaWrapConfig = {
-        deps: ['jquery'],
-        params: ['$'],
+    var web_wrap = {
+        deps: ['jquery', 'handlebars'],
+        params: ['$', 'Handlebars'],
+        namespace: "Alpaca",
+        exports: "Alpaca",
+        template: wrapper
+    };
+    var bootstrap_wrap = {
+        deps: ['jquery', 'handlebars', 'bootstrap'],
+        params: ['$', 'Handlebars', 'bootstrap'],
+        namespace: "Alpaca",
+        exports: "Alpaca",
+        template: wrapper
+    };
+    var jqueryui_warp = {
+        deps: ['jquery', 'handlebars', 'jquery-ui'],
+        params: ['$', 'Handlebars', 'jqueryui'],
+        namespace: "Alpaca",
+        exports: "Alpaca",
+        template: wrapper
+    };
+    var jquerymobile_wrap = {
+        deps: ['jquery', 'handlebars', 'jquery-mobile'],
+        params: ['$', 'Handlebars', 'jqm'],
         namespace: "Alpaca",
         exports: "Alpaca",
         template: wrapper
@@ -244,7 +270,7 @@ gulp.task('scripts', function(cb) {
             // web
             gulp.src(paths.scripts.web)
                 .pipe(concat('alpaca.js'))
-                .pipe(wrap(alpacaWrapConfig))
+                .pipe(wrap(web_wrap))
                 .pipe(gulp.dest('build/alpaca/web')),
             gulp.src(paths.scripts.web)
                 .pipe(uglify())
@@ -254,7 +280,7 @@ gulp.task('scripts', function(cb) {
             // bootstrap
             gulp.src(paths.scripts.bootstrap)
                 .pipe(concat('alpaca.js'))
-                .pipe(wrap(alpacaWrapConfig))
+                .pipe(wrap(bootstrap_wrap))
                 .pipe(gulp.dest('build/alpaca/bootstrap')),
             gulp.src(paths.scripts.bootstrap)
                 .pipe(uglify())
@@ -264,7 +290,7 @@ gulp.task('scripts', function(cb) {
             // jqueryui
             gulp.src(paths.scripts.jqueryui)
                 .pipe(concat('alpaca.js'))
-                .pipe(wrap(alpacaWrapConfig))
+                .pipe(wrap(jqueryui_warp))
                 .pipe(gulp.dest('build/alpaca/jqueryui')),
             gulp.src(paths.scripts.jqueryui)
                 .pipe(uglify())
@@ -274,7 +300,7 @@ gulp.task('scripts', function(cb) {
             // jquerymobile
             gulp.src(paths.scripts.jquerymobile)
                 .pipe(concat('alpaca.js'))
-                .pipe(wrap(alpacaWrapConfig))
+                .pipe(wrap(jquerymobile_wrap))
                 .pipe(gulp.dest('build/alpaca/jquerymobile')),
             gulp.src(paths.scripts.jquerymobile)
                 .pipe(uglify())
@@ -300,11 +326,9 @@ gulp.task('templates', function()
             filepath = filepath.substring(0, i);
         }
 
-        // strip src/templates/ from the beginning
-        if (filepath.indexOf("src/templates/") == 0)
-        {
-            filepath = filepath.substring(14);
-        }
+        // find "src/templates/" and index up
+        var z = filepath.indexOf("src/templates/");
+        filepath = filepath.substring(z + 14);
 
         // replace any "/" with .
         filepath = filepath.replace(new RegExp("/", 'g'), ".");
@@ -318,7 +342,7 @@ gulp.task('templates', function()
         gulp.src(paths.templates["web"])
             .pipe(handlebars())
             .pipe(declare({
-                namespace: 'AlpacaTemplates.handlebars',
+                namespace: 'HandlebarsPrecompiled',
                 processName: processName
             }))
             .pipe(concat('templates-web.js'))
@@ -328,7 +352,7 @@ gulp.task('templates', function()
         gulp.src(paths.templates["bootstrap"])
             .pipe(handlebars())
             .pipe(declare({
-                namespace: 'AlpacaTemplates.handlebars',
+                namespace: 'HandlebarsPrecompiled',
                 processName: processName
             }))
             .pipe(concat('templates-bootstrap.js'))
@@ -338,7 +362,7 @@ gulp.task('templates', function()
         gulp.src(paths.templates["jqueryui"])
             .pipe(handlebars())
             .pipe(declare({
-                namespace: 'AlpacaTemplates.handlebars',
+                namespace: 'HandlebarsPrecompiled',
                 processName: processName
             }))
             .pipe(concat('templates-jqueryui.js'))
@@ -348,7 +372,7 @@ gulp.task('templates', function()
         gulp.src(paths.templates["jquerymobile"])
             .pipe(handlebars())
             .pipe(declare({
-                namespace: 'AlpacaTemplates.handlebars',
+                namespace: 'HandlebarsPrecompiled',
                 processName: processName
             }))
             .pipe(concat('templates-jquerymobile.js'))
@@ -360,7 +384,7 @@ gulp.task('templates', function()
 
 gulp.task('jekyll', function(cb)
 {
-    exec('jekyll build -s ./web -d ./build/web2 --trace', function(err, stdout, stderr) {
+    exec('jekyll build -s ./site -d ./build/site --trace', function(err, stdout, stderr) {
 
         if (err)
         {
@@ -372,12 +396,12 @@ gulp.task('jekyll', function(cb)
 
 });
 
-gulp.task('update-web-full', function() {
+gulp.task('update-web', function() {
 
     return es.concat(
 
-        // copy web2 into web
-        gulp.src("build/web2/**").pipe(gulp.dest("./build/web")),
+        // copy site into web
+        gulp.src("build/site/**").pipe(gulp.dest("./build/web")),
 
         // copy lib/ into web
         gulp.src("lib/**")
@@ -385,7 +409,7 @@ gulp.task('update-web-full', function() {
 
         // copy alpaca into web
         gulp.src("build/alpaca/**")
-            .pipe(gulp.dest('./build/web/assets/themes/dbyll/lib/alpaca'))
+            .pipe(gulp.dest('./build/web/lib/alpaca'))
 
     ).pipe(es.wait()).pipe(notify({message: "Built Alpaca Web Site"}));
 
@@ -393,7 +417,7 @@ gulp.task('update-web-full', function() {
 
 var refreshWeb = function()
 {
-    runSequence('jekyll', 'update-web-full');
+    runSequence('jekyll', 'update-web');
 };
 
 gulp.task('refreshWeb', function()
@@ -423,7 +447,7 @@ gulp.task('watch', function() {
     });
 
     // web
-    gulp.watch("web/**", function() {
+    gulp.watch("site/**", function() {
         refreshWeb();
     });
 
@@ -432,7 +456,7 @@ gulp.task('watch', function() {
 gulp.task('web', ['watch'], function() {
 
     nodemon({
-        script: 'server/site-webserver.js'
+        script: 'server/webserver.js'
     });
 
 });

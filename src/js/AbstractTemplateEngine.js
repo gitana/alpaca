@@ -1,10 +1,5 @@
 (function($)
 {
-    // template cache
-    if (typeof(Alpaca.TemplateFunctionCache) == "undefined") {
-        Alpaca.TemplateFunctionCache = {};
-    }
-
     Alpaca.AbstractTemplateEngine = Base.extend(
     {
         constructor: function(id)
@@ -35,6 +30,8 @@
         /**
          * Compiles the given template (or URI or dom selector)
          *
+         * The callback is fired once the compile completes and has signature callback(err).
+         *
          * @param cacheKey
          * @param template
          * @param callback
@@ -53,7 +50,8 @@
             var type = "html";
             if (Alpaca.isString(template))
             {
-                if (template.indexOf("./") === 0 || template.indexOf("/") === 0 || template.indexOf("../") === 0)
+                var lc = template.toLowerCase();
+                if (lc.indexOf("http://") === 0 || lc.indexOf("https://") === 0 || lc.indexOf("./") === 0 || lc.indexOf("/") === 0 || lc.indexOf("../") === 0)
                 {
                     type = "uri";
                 }
@@ -70,7 +68,9 @@
             // now extract html and compile
             if (type == "selector")
             {
-                self._compile(cacheKey, template, callback);
+                self._compile(cacheKey, template, function(err) {
+                    callback(err);
+                });
             }
             else if (type == "uri")
             {
@@ -90,7 +90,9 @@
                         // cleanup html
                         html = self.cleanup(html);
 
-                        self._compile(cacheKey, html, callback);
+                        self._compile(cacheKey, html, function(err) {
+                            callback(err);
+                        });
                     },
                     "failure": function(http)
                     {
@@ -106,7 +108,9 @@
                     html = $(html).outerHTML();
                 }
 
-                self._compile(cacheKey, html, callback);
+                self._compile(cacheKey, html, function(err) {
+                    callback(err);
+                });
             }
             else
             {
@@ -156,13 +160,13 @@
          *
          * @param cacheKey
          * @param model
-         * @param callback
+         * @param errorCallback
          */
-        execute: function(cacheKey, model, callback)
+        execute: function(cacheKey, model, errorCallback)
         {
             Alpaca.logDebug("Executing template for cache key: " + cacheKey);
 
-            var html = this.doExecute(cacheKey, model, callback);
+            var html = this.doExecute(cacheKey, model, errorCallback);
 
             // removes wrapping <script/> tag
             html = this.cleanup(html);
@@ -177,11 +181,11 @@
          *
          * @param cacheKey
          * @param model
-         * @param callback
+         * @param errorCallback
          */
-        doExecute: function(cacheKey, model, callback)
+        doExecute: function(cacheKey, model, errorCallback)
         {
-
+            return null;
         },
 
         /**
@@ -210,7 +214,17 @@
          */
         isCached: function(cacheKey)
         {
+            return false;
+        },
 
+        /**
+         * Acquires an array of cache keys matching the view.
+         *
+         * @param viewId
+         */
+        findCacheKeys: function(viewId)
+        {
+            return [];
         }
 
     });

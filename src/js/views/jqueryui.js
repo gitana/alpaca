@@ -5,15 +5,15 @@
  *
  * The views are:
  *
- *    VIEW_JQUERYUI_DISPLAY
- *    VIEW_JQUERYUI_EDIT
- *    VIEW_JQUERYUI_CREATE
+ *    jqueryui-view
+ *    jqueryui-edit
+ *    jqueryui-create
  *
  * This theme can be selected by specifying the following view:
  *
  *    {
  *       "ui": "jqueryui",
- *       "type": null | "create" | "edit" | "display"
+ *       "type": null | "view" | "create" | "edit"
  *    }
  *
  */
@@ -96,41 +96,35 @@
     styles["wizardDoneIcon"] = "ui-icon-triangle-1-e";
 
     Alpaca.registerView({
-        "id": "VIEW_JQUERYUI_DISPLAY",
-        "parent": "VIEW_BASE",
-        "title": "Web Display View for jQuery UI",
-        "description": "Web Display View for jQuery UI",
-        "displayReadonly":true,
+        "id": "jqueryui-view",
+        "parent": "web-view",
         "type": "view",
         "ui": "jqueryui",
+        "title": "Display View for jQuery UI",
+        "displayReadonly": true,
         "callbacks": callbacks,
         "styles": styles,
-        "templates": AlpacaTemplates.handlebars["view_jqueryui_display"]
+        "templates": {}
     });
 
     Alpaca.registerView({
-        "id":"VIEW_JQUERYUI_EDIT",
-        "parent": "VIEW_BASE",
-        "title": "Web Edit View for jQuery UI",
-        "description":"Web Edit View for jQuery UI",
-        "displayReadonly":true,
+        "id": "jqueryui-edit",
+        "parent": "web-edit",
         "type": "edit",
         "ui": "jqueryui",
+        "title": "Edit view for jQuery UI",
+        "displayReadonly": true,
         "callbacks": callbacks,
         "styles": styles,
-        "templates": AlpacaTemplates.handlebars["view_jqueryui_edit"]
+        "templates": {}
     });
 
     Alpaca.registerView({
-        "id": "VIEW_JQUERYUI_CREATE",
-        "parent": 'VIEW_JQUERYUI_EDIT',
-        "title": "JQuery UI Create View List Style",
-        "description": "JQuery UI create view based on list styles.",
-        "displayReadonly":false,
-        "type": "view",
-        "ui": "jqueryui",
-        "callbacks": callbacks,
-        "styles": styles
+        "id": "jqueryui-create",
+        "parent": "jqueryui-edit",
+        "type": "create",
+        "title": "Create view for jQuery UI",
+        "displayReadonly": false
     });
 
 })(jQuery);

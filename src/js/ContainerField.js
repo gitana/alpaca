@@ -39,7 +39,7 @@
             return "container";
         },
 
-        getContainerTemplateType: function()
+        resolveContainerTemplateType: function()
         {
             // we assume the field type and then check the view to see if there is a template for this view
             // if not, we walk the parent chain until we find a template type
@@ -82,7 +82,13 @@
 
             this.base();
 
-            this.containerDescriptor = this.view.getTemplateDescriptor("container-" + self.getContainerTemplateType());
+            var containerTemplateType = self.resolveContainerTemplateType();
+            if (!containerTemplateType)
+            {
+                return Alpaca.throwErrorWithCallback("Unable to find template descriptor for container: " + self.getFieldType());
+            }
+
+            this.containerDescriptor = this.view.getTemplateDescriptor("container-" + containerTemplateType);
 
             var collapsible = true;
 

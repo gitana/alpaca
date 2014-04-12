@@ -5,15 +5,15 @@
  *
  * The views are:
  *
- *    VIEW_WEB_DISPLAY
- *    VIEW_WEB_EDIT
- *    VIEW_WEB_CREATE
+ *    web-view
+ *    web-edit
+ *    web-create
  *
  * This theme can also be selected by specifying the following view:
  *
  *    {
  *       "ui": "web",
- *       "type": null | "create" | "edit" | "display"
+ *       "type": null | "view" | "edit" | "create"
  *    }
  *
  */
@@ -85,39 +85,36 @@
     */
 
     Alpaca.registerView({
-        "id": "VIEW_WEB_DISPLAY",
-        "parent": "VIEW_BASE",
-        "title": "Web Display View",
-        "description": "Web edit view which goes though field hierarchy.",
-        "displayReadonly": true,
-        "templates": AlpacaTemplates.handlebars["view_web_display"],
+        "id": "web-view",
+        "parent": "base",
         "type": "view",
         "ui": "web",
+        "title": "Default HTML5 display view",
+        "displayReadonly": true,
+        "templates": {},
         "callbacks": callbacks,
         "styles": styles
     });
 
     Alpaca.registerView({
-        "id":"VIEW_WEB_EDIT",
-        "parent": "VIEW_BASE",
-        "title":"Web Edit View",
-        "description":"Web edit view which goes though field hierarchy.",
-        "type":"edit",
+        "id": "web-edit",
+        "parent": "base",
+        "type": "edit",
         "ui": "web",
-        "displayReadonly":true,
-        "templates": AlpacaTemplates.handlebars["view_web_edit"],
+        "title": "Default HTML5 edit view",
+        "displayReadonly": true,
+        "templates": {},
         "callbacks": callbacks,
         "styles": styles
     });
 
     Alpaca.registerView({
-        "id": "VIEW_WEB_CREATE",
-        "parent": 'VIEW_WEB_EDIT',
-        "title": "Web Create View",
-        "description":"Web create view which doesn't bind initial data.",
-        "type":"edit",
-        "ui": "web",
-        "displayReadonly":false
+        "id": "web-create",
+        "parent": "web-edit",
+        "type": "create",
+        "title": "Default HTML5 create view",
+        "displayReadonly": false,
+        "templates": {}
     });
 
 })(jQuery);

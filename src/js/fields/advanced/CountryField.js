@@ -19,8 +19,6 @@
          */
         setup: function()
         {
-            this.base();
-
             // defaults
             if (Alpaca.isUndefined(this.options.capitalize))
             {
@@ -46,6 +44,8 @@
                     this.options.optionLabels.push(label);
                 }
             }
+
+            this.base();
         },
 
         //__BUILDER_HELPERS

@@ -107,13 +107,36 @@
             {
                 var element = chain[i];
 
-                // scalar properties
-                setScalar(this, element, "type");
+                // core properties
+                setScalar(this, element, "type"); // view, edit, create
+                setScalar(this, element, "ui"); // bootstrap, jqueryui, jquerymobile, web
+
+                // whether the view is readonly
                 setScalar(this, element, "displayReadonly");
-                setScalar(this, element, "platform");
-                setScalar(this, element, "device");
-                setScalar(this, element, "style");
-                setScalar(this, element, "ui");
+
+                // functions
+                setFunction(this, element, "render");
+                setFunction(this, element, "postRender");
+
+                // view templates
+                mergeMap(this, element, "templates");
+
+                // field templates
+                mergeMap(this, element, "fields");
+
+                // layout
+                mergeMap(this, element, "layout");
+
+                // styles
+                mergeMap(this, element, "styles");
+
+                // callbacks
+                mergeMap(this, element, "callbacks");
+
+                // messages
+                mergeMap(this, element, "messages");
+
+                // TODO: remove some of these
                 setScalar(this, element, "collapsible");
                 setScalar(this, element, "legendStyle");
                 setScalar(this, element, "toolbarStyle");
@@ -121,21 +144,8 @@
                 setScalar(this, element, "toolbarSticky");
                 setScalar(this, element, "globalTemplate");
 
-                // functions
-                setFunction(this, element, "render");
-                setFunction(this, element, "postRender");
-
-                // maps (merge)
-                mergeMap(this, element, "templates");
-                mergeMap(this, element, "messages");
+                // TODO: remove wizard
                 mergeMap(this, element, "wizard");
-                mergeMap(this, element, "fields");
-                mergeMap(this, element, "layout");
-                mergeMap(this, element, "styles");
-                mergeMap(this, element, "callbacks");
-
-                // compiled templates
-                mergeMap(this, element, "compiledTemplates");
             }
 
             Alpaca.logDebug("View compilation complete for view: " + this.id);

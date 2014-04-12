@@ -3,7 +3,7 @@
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({
-		"id": "VIEW_BASE",
+		"id": "base",
 		"messages": {
 			"zh_CN": {
 				required: "&#27492;&#22495;&#24517;&#39035;",

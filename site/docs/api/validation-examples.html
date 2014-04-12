@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Alpaca - HTML5 Forms for jQuery - Validation</title>
+    <meta name="keywords"
+          content="jquery,bootstrap,forms,form,jquerymobile,jqueryui,mobile,json,json-schema,cloudcms,gitana,cms,content,uzquiano"/>
+    <meta name="description" content="Validation Examples for Alpaca Forms."/>
+    <meta name="author" content="Gitana Software Inc."/>
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="../../lib/jquery-2.1.0/jquery-2.1.0.min.js"></script>
+
+    <!-- Handlebars -->
+    <script type="text/javascript" src="../../lib/handlebars/handlebars-v1.3.0.js"></script>
+
+    <!-- Alpaca -->
+    <script type="text/javascript" src="../../../components/alpaca/alpaca.js"></script>
+    <link type="text/css" href="../../../components/alpaca/alpaca.css" rel="stylesheet"/>
+    <link type="text/css" href="../../../components/alpaca/alpaca-jqueryui.css" rel="stylesheet"/>
+
+    <!-- jQuery UI Support -->
+    <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
+    <link type="text/css" href="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
+
+    <!-- Additional CSS -->
+    <link type="text/css" href="../../css/960.fluid.css" rel="stylesheet"/>
+
+    <!-- Required for the Editor field (sample code viewing) -->
+    <script src="../../lib/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Web Site -->
+    <script type="text/javascript" src="../../lib/google-code-prettify/prettify.min.js"></script>
+    <script type="text/javascript" src="../../js/themeswitchertool.js"></script>
+    <script type="text/javascript" src="../../js/example.js"></script>
+    <script type="text/javascript" src="../../js/footer.js"></script>
+    <link type="text/css" href="../../css/site.css" rel="stylesheet"/>
+    <link type="text/css" href="../../lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../../lib/tweet/jquery.tweet.js"></script>
+    <link type="text/css" href="../../lib/tweet/jquery.tweet.css" rel="stylesheet"/>
+
+    <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+</head>
+<body>
+	<header>
+		<div class='container_12'>
+	    <div class='actual-body'>
+	        <div class='grid_12'>
+	            <h1><img src="../../img/alpaca.png"><span>Easy Forms for jQuery</span></h1>
+                <div class="resource-bar">
+                    <a href="../../index.html">Home</a>
+                    <a href="../../../web/download.html">Downloads</a>
+                    <a href="javascript:void(0);" class="current">Documentation</a>
+                    <a href="../../forms/customer-profile/edit-form.html">Examples</a>
+                    <a href="../../../web/resources.html">Resources</a>
+                    <a href="../../../web/contactus.html">Contact Us</a>
+                </div>
+            </div>
+	    </div>
+		</div>
+	</header>
+<div class='container_12'>
+    <div class="actual-body">
+        <div class="grid_3">
+            <div class="container_12 side-bar">
+            </div>
+        </div>
+
+        <div class="grid_9">
+            <div class="container_12">
+                <div class="widget">
+                    <div class="widget-body">
+    <div class='grid_12 alpaca-example-header' id='validation' alpaca-types=''>
+        <h1>Validation Examples</h1>
+    </div>
+    <div class='grid_12 alpaca-example-case'>
+            <h3>Example 1: </h3>
+            <h4>Required field.</h4>
+
+            <div id="field1">
+            </div>
+            <script type="text/javascript" id="field1-script">
+$(function() {
+    $("#field1").alpaca({
+        "data": "",
+        "schema": {
+            "title": "Required field",
+            "type": "string",
+            "required": true
+        }
+    });
+});
+            </script>
+            <h3>Example 2: </h3>
+            <h4>Field with disallowed values.</h4>
+
+            <div id="field2">
+            </div>
+            <script type="text/javascript" id="field2-script">
+$(function() {
+    $("#field2").alpaca({
+        "data": "book",
+        "schema": {
+            "title": "Diallowed value",
+            "type": "string",
+            "disallow": ["book", "pencil"]
+        }
+    });
+});
+            </script>
+            <h3>Example 3: </h3>
+            <h4>Field with default value.</h4>
+
+            <div id="field3">
+            </div>
+            <script type="text/javascript" id="field3-script">
+$(function() {
+    $("#field3").alpaca({
+        "data": "",
+        "schema": {
+            "title": "Default value",
+            "type": "string",
+            "default": "book"
+        }
+    });
+});
+            </script>
+            <h3>Example 4: </h3>
+            <h4>Field with schema enum properties.</h4>
+
+            <div id="field4">
+            </div>
+            <script type="text/javascript" id="field4-script">
+$(function() {
+    $("#field4").alpaca({
+        "data": "laptop",
+        "schema": {
+            "title": "Enum field",
+            "type": "string",
+            "enum": ["book", "pen", "eraser"]
+        }
+    });
+});
+            </script>
+            <h3>Example 5: </h3>
+            <h4>JSON Schema validation (valid).</h4>
+
+            <div id="field5">
+            </div>
+            <script type="text/javascript" id="field5-script">
+$(function() {
+    var data = "book";
+    var schema = {
+        "title": "Enum field",
+        "type": "string",
+        "enum": ["book", "pen", "eraser"]
+    };
+    if (Validator.validate(data, schema).valid) {
+        $("#field5").alpaca({
+            "data": data,
+            "schema": schema
+        });
+    } else {
+        $("#field5").html('Failed the schema validation');
+    }
+});
+            </script>
+            <h3>Example 6: </h3>
+            <h4>JSON Schema validation (invalid).</h4>
+
+            <div id="field6">
+            </div>
+            <script type="text/javascript" id="field6-script">
+$(function() {
+    var data = "laptop";
+    var schema = {
+        "title": "Enum field",
+        "type": "string",
+        "enum": ["book", "pen", "eraser"]
+    };
+    if (Validator.validate(data, schema).valid) {
+        $("#field6").alpaca({
+            "data": data,
+            "schema": schema
+        });
+    } else {
+        $("#field6").append('<strong>Failed the schema validation</strong>');
+    }
+});
+            </script>
+            <h3>Example 7: </h3>
+            <h4>Custom validator.</h4>
+
+            <div id="field7">
+            </div>
+            <script type="text/javascript" id="field7-script">
+$(function() {
+    $("#field7").alpaca({
+        "data": "book",
+        "schema": {
+            "title": "Diallowed value",
+            "type": "string",
+            "disallow": ["book", "pencil"]
+        },
+        "options": {
+            "validator" : function(control, callback) {
+                var controlVal = control.getValue();
+                if (controlVal == "pen" || controlVal == "book") {
+                    callback({
+                        "message": "Invalid value (custom validator)",
+                        "status": false
+                    });
+                } else {
+                    callback({
+                        "message": "Valid value (custom validator)",
+                        "status": true
+                    });
+                }
+            }
+        }
+    });
+});
+            </script>
+            <h3>Example 8: </h3>
+            <h4>Custom validator.</h4>
+            <div id="field8">
+            </div>
+            <script type="text/javascript" id="field8-script">
+$(function() {
+    $("#field8").alpaca({
+        "data": {
+            "weight" : 100,
+            "age" : 10
+        },
+        "schema": {
+            "title": "Ride Requirement",
+            "type": "object",
+            "properties": {
+                "weight" : {
+                    "type" : "integer",
+                    "title" : "Weight",
+                    "decription" : "Enter your weight."
+                },
+                "age" : {
+                    "type" : "integer",
+                    "title" : "Age",
+                    "decription" : "Enter your age."
+                }
+            }
+        },
+        "options": {
+            "validator" : function(control, callback) {
+                var controlVal = control.getValue();
+                if (controlVal['weight'] <= 120 || controlVal['age'] <= 12) {
+                    callback({
+                        "message": "Weight must be over 120 and age must be over 12.",
+                        "status": false
+                    });
+                } else {
+                    callback({
+                        "message": "Valid value (custom validator)",
+                        "status": true
+                    });
+                }
+            }
+        }
+    });
+});
+            </script>
+
+            <h3>Example 9: </h3>
+            <h4>No validation of readonly fields.</h4>
+
+            <div>
+                Is this form valid?
+                <div id="x1"></div>
+                <div id="x2"></div>
+            </div>
+            <div id="field9"></div>
+            <script type="text/javascript" id="field9-script">
+                var data = {
+                    "name": "Eddie Van Halen",
+                    "job": "virtuoso"
+                };
+                var schema = {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "job": {
+                            "type": "string",
+                            "readonly": true,
+                            "enum": ["guitarist", "drummer", "singer"]
+                        }
+                    }
+                };
+                $(function() {
+                    $("#field9").alpaca({
+                        "data": data,
+                        "schema": schema,
+                        "postRender": function(control) {
+
+                            $("#x1").html(" -> validator says: " + Validator.validate(data, schema).valid);
+                            $("#x2").html(" -> Alpaca says: " + control.isValid(true));
+                        }
+                    });
+                });
+            </script>
+
+
+            <h3>Example 10: </h3>
+            <h4>DEBUG loggings of ignored fields outside schema</h4>
+
+            <div id="field10"></div>
+            <script type="text/javascript" id="field10-script">
+                Alpaca.logLevel = Alpaca.DEBUG;
+                $(function() {
+                    $("#field10").alpaca({
+                        "data": {
+                            "name": "Eddie Van Halen",
+                            "job": "guitarist",
+                            "rating": 10,
+                            "country": "Netherlands"
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "job": {
+                                    "type": "string",
+                                    "readonly": true,
+                                    "enum": ["guitarist", "drummer", "singer"]
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+
+
+            <h3>Example 11: </h3>
+            <h4>Invalid field with VIEW_WEB_CREATE (no init validation)</h4>
+
+            <div id="field11">
+            </div>
+            <script type="text/javascript" id="field11-script">
+                $(function() {
+                    $("#field11").alpaca({
+                        "data": "",
+                        "schema": {
+                            "title": "Required field",
+                            "type": "string",
+                            "required": true
+                        },
+                        "view": "VIEW_WEB_CREATE"
+                    });
+                });
+            </script>
+
+
+
+            <h3>Example 12: </h3>
+            <h4>Custom validator (with VIEW_WEB_CREATE).</h4>
+            <div id="field12">
+            </div>
+            <script type="text/javascript" id="field12-script">
+                $(function() {
+                    $("#field12").alpaca({
+                        "data": {
+                            "weight" : 100,
+                            "age" : 10
+                        },
+                        "schema": {
+                            "title": "Ride Requirement",
+                            "type": "object",
+                            "properties": {
+                                "weight" : {
+                                    "type" : "integer",
+                                    "title" : "Weight",
+                                    "decription" : "Enter your weight."
+                                },
+                                "age" : {
+                                    "type" : "integer",
+                                    "title" : "Age",
+                                    "decription" : "Enter your age."
+                                }
+                            }
+                        },
+                        "options": {
+                            "validator" : function(control, callback) {
+                                var controlVal = control.getValue();
+                                if (controlVal['weight'] <= 120 || controlVal['age'] <= 12) {
+                                    callback({
+                                        "message": "Weight must be over 120 and age must be over 12.",
+                                        "status": false
+                                    });
+                                } else {
+                                    callback({
+                                        "message": "Valid value (custom validator)",
+                                        "status": true
+                                    });
+                                }
+                            }
+                        },
+                        "view": "VIEW_WEB_CREATE"
+                    });
+                });
+            </script>
+
+            <!-- example #13 -->
+            <h2>Example 13: </h2>
+            <p>Array field with required sub-properties.</p>
+            <div id="field13">
+            </div>
+            <script type="text/javascript" id="field13-script">
+                $(function() {
+                    $("#field13").alpaca({
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "field1": {
+                                        "type": "string",
+                                        "title": "Field #1",
+                                        "required": true
+                                    },
+                                    "subobject": {
+                                        "type": "object",
+                                        "required": true,
+                                        "properties": {
+                                            "field2": {
+                                                "type": "string",
+                                                "title": "Field #2",
+                                                "required": true
+                                            }
+                                        }
+                                    },
+                                    "subarray": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "field3": {
+                                                    "type": "string",
+                                                    "title": "Field #3",
+                                                    "required": true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "options": {
+                            "toolbarSticky": true,
+                            "renderForm": true,
+                            "form": {
+                                "buttons": {
+                                    "submit": {}
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+
+            <!-- example #14 -->
+            <h2>Example 14: Non-required field with allowOptionalEmpty</h2>
+            <p>
+                The <code>allowOptionalEmpty</code> option allows you to identify optional fields that you wish to have
+                validate successfully successfully when they have empty values.
+            </p>
+            <p>
+                Shown here is an email field.  Email fields run a regex to validate the the email address provided
+                is structurally correct.  However, if the field is optional (meaning that the schema <code>required</code>
+                is false), then the user may elect not to fill in this field.
+            </p>
+            <p>
+                When running validation on the form, technically speaking, an empty value for the email field would
+                be considered invalid (since the data does not conform to the expected structure).  The <code>allowOptionalEmpty</code>
+                option tells Alpaca to bypass this validation logic and simply accept an empty value for the optional field.
+            </p>
+            <div id="field14">
+            </div>
+            <script type="text/javascript" id="field14-script">
+                $(function() {
+                    $("#field14").alpaca({
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "required": false
+                                }
+                            }
+                        },
+                        "options": {
+                            "renderForm": true,
+                            "form": {
+                                "buttons": {
+                                    "submit": {}
+                                }
+                            },
+                            "fields": {
+                                "name": {
+                                    "type": "text",
+                                    "label": "What is your name?"
+                                },
+                                "email": {
+                                    "type": "email",
+                                    "label": "Optionally provide your email",
+                                    "allowOptionalEmpty": true
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+
+            <!-- example #15 -->
+            <h2>Example 15: Validation events</h2>
+            <p>
+                Alpaca features an event system that triggers events like <code>validated</code> and <code>invalidated</code>
+                when a form's validity changes.  We can use these events to enable and disable external form buttons.
+            </p>
+            <p>
+                We can also tell Alpaca to re-run validation when the form buttons are clicked to ensure that the form
+                is in a good state before proceeding.
+            </p>
+            <p>
+                Here we use a custom view to specify the layout of the form and customize the validation message.
+                This isn't necessary but does make the example a bit more fun!
+            </p>
+            <div id="field15">
+            </div>
+            <script type="text/javascript" id="field15-script">
+
+                $(function() {
+                    $("#field15").alpaca({
+                        "view": {
+                            "parent": "VIEW_JQUERYUI_EDIT",
+                            "layout" : {
+                                "template": './layout15.html',
+                                "bindings": {
+                                    "name": "fields"
+                                }
+                            },
+                            "messages": {
+                                "notOptional": "Hey!  What is your name?"
+                            }
+                        },
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "required": true
+                                }
+                            }
+                        },
+                        "options": {
+                            "renderForm": true,
+                            "fields": {
+                                "name": {
+                                    "type": "text",
+                                    "label": "What is your favorite color?"
+                                }
+                            }
+                        },
+                        "postRender": function(control)
+                        {
+                            // when the "validated" even is raised, enable the submit button
+                            control.on("validated", function(e) {
+                                $("#submit15").prop("disabled", false);
+                            });
+                            // when the "invalidated" even is raised, disable the submit button
+                            control.on("invalidated", function(e) {
+                                $("#submit15").prop("disabled", true);
+                            });
+                            // when "submit" is clicked, ensure validity before submitting
+                            $("#submit15").click(function(e) {
+
+                                // the ui state for the form should be fine
+                                // but here, we refresh it to show how it is done
+                                control.refreshValidationState(true);
+
+                                // if the form is not valid, stop processing
+                                if (!control.isValid())
+                                {
+                                    e.preventDefault();
+                                }
+                                else
+                                {
+                                    // otherwise, show something
+                                    e.preventDefault();
+                                    alert(JSON.stringify(control.getValue(), null, "  "));;
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
+
+
+            <!-- BEGIN DISCUSSIONS -->
+            <div class="alpaca-discussions"></div>
+            <!-- END DISCUSSIONS -->
+
+
+                        </div>
+                        <div class="clear height-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container_12">
+        <div class="grid_12 copyright">
+            Copyright &copy; 2013 Gitana Software, Inc. | All Rights Reserved
+        </div>
+    </div>
+</footer>
+</body>
+</html>

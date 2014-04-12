@@ -3,7 +3,7 @@
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({
-		"id": "VIEW_BASE",
+		"id": "base",
 		"messages": {
 			"fr_FR": {
 				required: "Ce champ est requis",

@@ -9,7 +9,7 @@
     "gulp-minify-css": "*",
     "gulp-concat": "*",
     "gulp-jshint": "*",
-    "gulp-handlebars": "*",
+    //"gulp-handlebars": "*", not until this supports 1.3.0
     "gulp-declare": "*",
     "event-stream": "*",
     "gulp-notify": "*",
@@ -17,7 +17,7 @@
     "gulp-order": "*",
     "run-sequence": "*",
     "gulp-nodemon": "*",
-    "express": "*",
+    "express": "3.5.1",
     "gulp-wrap-umd": "^0.2.0"
   }
 }

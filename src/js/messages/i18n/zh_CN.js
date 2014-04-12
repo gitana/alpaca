@@ -3,7 +3,7 @@
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({
-		"id": "VIEW_BASE",
+		"id": "base",
 		"messages": {
             "de_AT": {
                 required: "Eingabe erforderlich",

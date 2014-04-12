@@ -5,15 +5,15 @@
  *
  * The views are:
  *
- *    VIEW_JQUERYMOBILE_DISPLAY
- *    VIEW_JQUERYMOBILE_EDIT
- *    VIEW_JQUERYMOBILE_CREATE
+ *    jquerymobile-view
+ *    jquerymobile-edit
+ *    jquerymobile-create
  *
  * This theme can also be selected by specifying the following view:
  *
  *    {
  *       "ui": "jquerymobile",
- *       "type": null | "create" | "edit" | "display"
+ *       "type": "view" | ""edit" | "create"
  *    }
  *
  */(function($) {
@@ -44,12 +44,11 @@
     };
 
     Alpaca.registerView({
-        "id": "VIEW_JQUERYMOBILE_DISPLAY",
-        "parent": "VIEW_WEB_DISPLAY",
-        "title": "Display view using jQuery Mobile",
-        "description": "Display view using JQuery Mobile",
+        "id": "jquerymobile-view",
+        "parent": "web-view",
         "type": "view",
         "ui":"jquerymobile",
+        "title": "Display view using jQuery Mobile",
         "callbacks": callbacks,
         "styles": styles,
         //"legendStyle": "link",
@@ -73,23 +72,22 @@
             });
 
         },
-        "templates": AlpacaTemplates.handlebars["view_jquerymobile_display"],
+        "templates": {}
     });
 
     Alpaca.registerView({
-        "id": "VIEW_JQUERYMOBILE_EDIT",
-        "parent": "VIEW_WEB_EDIT",
-        "title": "Edit View for jQuery Mobile",
-        "description": "Edit view using JQuery Mobile",
+        "id": "jquerymobile-edit",
+        "parent": "web-edit",
         "type": "edit",
         "ui": "jquerymobile",
+        "title": "Edit View for jQuery Mobile",
         "callbacks": callbacks,
         "styles": styles,
         //"legendStyle": "link",
         //"toolbarStyle": "link",
         //"buttonType": "link",
         //"toolbarSticky": true,
-        "templates": AlpacaTemplates.handlebars["view_jquerymobile_edit"],
+        "templates": {},
         "messages": {
             required: "Required Field",
             invalid: "Invalid Field"
@@ -113,22 +111,23 @@
     {
         // find the data-role="page" and refresh it
         var el = fieldEl;
-        while (!Util.isEmpty(el) && el.attr("data-role") !== "page")
+        if (el)
         {
-            el = el.parent();
-        }
-        if (!Util.isEmpty(el)) {
+            while (el.attr("data-role") !== "page")
+            {
+                el = el.parent();
+            }
+
             $(el).trigger('pagecreate');
         }
     };
 
     Alpaca.registerView({
-        "id": "VIEW_MOBILE_CREATE",
-        "parent": "VIEW_MOBILE_EDIT",
-        "title": "Default Mobile Create View",
-        "description": "Default mobile create view which doesn't bind initial data.",
-        "displayReadonly": false,
-        "type": "create"
+        "id": "jquerymobile-create",
+        "parent": "jquerymobile-edit",
+        "type": "create",
+        "title": "Create view for jQuery Mobile",
+        "displayReadonly": false
     });
 
 })(jQuery);

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Alpaca - HTML5 Forms for jQuery - Table Layout</title>
+    <meta name="keywords"
+          content="jquery,bootstrap,forms,form,jquerymobile,jqueryui,mobile,json,json-schema,cloudcms,gitana,cms,content,uzquiano"/>
+    <meta name="description" content="Customer Profile Form with Custom View Template."/>
+    <meta name="author" content="Gitana Software Inc."/>
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/x-icon" href="../../../../favicon.ico" />
+
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="../../lib/jquery-2.1.0/jquery-2.1.0.min.js"></script>
+
+    <!-- Handlebars -->
+    <script type="text/javascript" src="../../lib/handlebars/handlebars-v1.3.0.js"></script>
+
+    <!-- Alpaca -->
+    <script type="text/javascript" src="../../../components/alpaca/alpaca.js"></script>
+    <link type="text/css" href="../../../components/alpaca/alpaca.css" rel="stylesheet"/>
+
+    <!-- jQuery UI Support -->
+    <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
+    <link type="text/css" href="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
+
+    <!-- Additional CSS -->
+    <link type="text/css" href="../../css/960.fluid.css" rel="stylesheet"/>
+
+    <!-- Required for the Editor field (sample code viewing) -->
+    <script src="../../lib/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Web Site -->
+    <script type="text/javascript" src="../../lib/google-code-prettify/prettify.min.js"></script>
+    <script type="text/javascript" src="../../js/themeswitchertool.js"></script>
+    <script type="text/javascript" src="../../js/example.js"></script>
+    <script type="text/javascript" src="../../js/footer.js"></script>
+    <link type="text/css" href="../../css/site.css" rel="stylesheet"/>
+    <link type="text/css" href="../../lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../../lib/tweet/jquery.tweet.js"></script>
+    <link type="text/css" href="../../lib/tweet/jquery.tweet.css" rel="stylesheet"/>
+
+    <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+</head>
+<body>
+<header>
+    <div class='container_12'>
+        <div class='actual-body'>
+            <div class='grid_12'>
+                <h1><img src="../../img/alpaca.png"><span>Easy Forms for jQuery</span></h1>
+
+                <div class="resource-bar">
+                    <a href="../../index.html">Home</a>
+                    <a href="../../../web/download.html">Downloads</a>
+                    <a href="javascript:void(0);" class="current">Documentation</a>
+                    <a href="../../forms/customer-profile/edit-form.html">Examples</a>
+                    <a href="../../../web/resources.html">Resources</a>
+                    <a href="../../../web/contactus.html">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class='container_12'>
+    <div class="actual-body">
+        <div class="grid_3">
+            <div class="container_12 side-bar">
+            </div>
+        </div>
+
+        <div class="grid_9">
+            <div class="container_12">
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class='grid_12 alpaca-example-header' id='layout-table' alpaca-types=''>
+                            <h1>Multiple Views, including Table View</h1>
+                        </div>
+                        <div class='grid_12 alpaca-example-case'>
+                            <h3>Switch views using the selector.</h3>
+                            <h4></h4>
+
+                            <div id="selector1"></div>
+
+                            <div style="height: 200px">
+                                <div id="logo1"></div>
+                            </div>
+
+                            <div id="field1"></div>
+                            <script type="text/javascript" id="field1-script">
+$(function() {
+
+// selector
+$("#selector1").alpaca({
+    "schema": {
+        "type": "string",
+        "enum": [
+            "VIEW_WEB_EDIT",
+            "VIEW_WEB_EDIT_LIST",
+            "VIEW_WEB_EDIT_TABLE"
+        ],
+        "default": "VIEW_WEB_EDIT"
+    },
+    "options": {
+        "type": "select",
+        "onFieldChange" : function(e) {
+            f(this.getValue());
+        }
+    }
+});
+
+var f = function(viewId)
+{
+    $("#field1").empty();
+
+    $("#field1").alpaca({
+        "schema": {
+            "type":"object",
+            "properties": {
+                "name": {
+                    "type":"string"
+                },
+                "birthday": {
+                    "type": "string"
+                },
+                "team": {
+                    "type": "string",
+                    "enum": [
+                        "Anzhi-Makhachkla",
+                        "Arsenal",
+                        "Atletico-Madrid",
+                        "Barcelona",
+                        "Bayern-Munich",
+                        "Benfica",
+                        "Borussia-Dortmund",
+                        "Chelsea",
+                        "Eintracht-Frankfurt",
+                        "FC-Twente",
+                        "Juventus",
+                        "Malaga",
+                        "Manchester-City",
+                        "Manchester-United",
+                        "Marseille",
+                        "Napoli",
+                        "Paris-Saint-Germain",
+                        "Real-Madrid",
+                        "Shakhtar-Donetsk",
+                        "Tottenham-Hotspur"
+                    ]
+                }
+            }
+        },
+        "options":{
+            "fields": {
+                "name": {
+                    "size": 20,
+                    "label": "Name"
+                },
+                "birthday": {
+                    "type" : "date",
+                    "size": 20,
+                    "label": "Date of Birth"
+                },
+                "team": {
+                    "type" : "select",
+                    "size": 20,
+                    "label": "Team",
+                    "helper": "Select your preferred team",
+                    "onFieldChange" : function(e) {
+
+                        $("#logo1").empty();
+
+                        var value = this.getValue();
+                        if (value) {
+                            var img = $("<img src='club-logos/" + value + ".png'>");
+                            $(img).css({"height": "190px"});
+                            $("#logo1").append(img);
+                        }
+                    }
+
+                }
+            }
+        },
+        "view": viewId
+    });
+};
+
+f("VIEW_WEB_EDIT");
+
+});
+                            </script>
+
+
+                            <!-- BEGIN DISCUSSIONS -->
+                            <div class="alpaca-discussions"></div>
+                            <!-- END DISCUSSIONS -->
+
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear height-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container_12">
+        <div class="grid_12 copyright">
+            Copyright &copy; 2013 Gitana Software, Inc. | All Rights Reserved
+        </div>
+    </div>
+</footer>
+</body>
+</html>

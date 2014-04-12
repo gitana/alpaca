@@ -197,6 +197,11 @@
 
             // lookup the template we should use to render
             this.formDescriptor = this.view.getTemplateDescriptor("form");
+            if (!this.formDescriptor)
+            {
+                thr
+                console.log("Could not find template descriptor: form");
+            }
 
             var renderedDomElement = Alpaca.tmpl(this.formDescriptor, {
                 id: this.getId(),

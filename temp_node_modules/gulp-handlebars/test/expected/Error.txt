@@ -1,0 +1,4 @@
+Parse error on line 1:
+...syntax error: {{foo }}}
+-----------------------^
+Expecting 'CLOSE', got 'CLOSE_UNESCAPED'

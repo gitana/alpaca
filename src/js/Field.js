@@ -146,6 +146,8 @@
          */
         initTemplateDescriptor: function()
         {
+            var self = this;
+
             var viewTemplateDescriptor = this.view.getTemplateDescriptor(this.getTemplateDescriptorId());
             var globalTemplateDescriptor = this.view.getGlobalTemplateDescriptor();
             var layout = this.view.getLayout();
@@ -170,6 +172,13 @@
             if (!trip && viewTemplateDescriptor)
             {
                 this.setTemplateDescriptor(viewTemplateDescriptor);
+            }
+
+            // ensure we have a template descriptor
+            var t = this.getTemplateDescriptor();
+            if (!t)
+            {
+                return Alpaca.throwErrorWithCallback("Unable to find template descriptor for field: " + self.getFieldType());
             }
         },
 

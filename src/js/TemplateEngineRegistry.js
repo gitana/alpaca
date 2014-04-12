@@ -9,6 +9,8 @@
             register: function(id, engine)
             {
                 registry[id] = engine;
+
+                engine.init();
             },
 
             find: function(idOrType)

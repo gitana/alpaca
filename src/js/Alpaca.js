@@ -710,21 +710,51 @@
          */
         registerView: function(viewObject)
         {
-            var id = viewObject.id;
+            var viewId = viewObject.id;
 
-            if (!id)
+            if (!viewId)
             {
-                return Alpaca.throwDefaultError("Cannot register view with missing view id: " + id);
+                return Alpaca.throwDefaultError("Cannot register view with missing view id: " + viewId);
             }
 
-            var existingView = this.views[id];
+            var existingView = this.views[viewId];
             if (existingView)
             {
                 Alpaca.mergeObject(existingView, viewObject);
             }
             else
             {
-                this.views[id] = viewObject;
+                this.views[viewId] = viewObject;
+
+                if (!viewObject.templates)
+                {
+                    viewObject.templates = {};
+                }
+
+                // if we have any precompiled views, flag them
+                var engineIds = Alpaca.TemplateEngineRegistry.ids();
+                for (var i = 0; i < engineIds.length; i++)
+                {
+                    var engineId = engineIds[i];
+
+                    var engine = Alpaca.TemplateEngineRegistry.find(engineId);
+                    if (engine)
+                    {
+                        // ask the engine if it has any cache keys for view templates for this view
+                        var cacheKeys = engine.findCacheKeys(viewId);
+                        for (var z = 0; z < cacheKeys.length; z++)
+                        {
+                            var parts = Alpaca.splitCacheKey(cacheKeys[z]);
+
+                            // mark as precompiled
+                            viewObject.templates[parts.templateId] = {
+                                "type": engineId,
+                                "template": true,
+                                "cacheKey": cacheKeys[z]
+                            };
+                        }
+                    }
+                }
             }
 
         },
@@ -775,10 +805,10 @@
          */
         registerTemplate: function(templateId, template, viewId)
         {
-            // if no view specified, fall back to the base view which is "VIEW_BASE"
+            // if no view specified, fall back to the base view which is "base"
             if (!viewId)
             {
-                viewId = "VIEW_BASE";
+                viewId = "base";
             }
 
             if (!this.views[viewId])
@@ -817,10 +847,10 @@
          */
         registerMessage: function(messageId, message, viewId)
         {
-            // if no view specified, fall back to the base view which is "VIEW_BASE"
+            // if no view specified, fall back to the base view which is "base"
             if (!viewId)
             {
-                viewId = "VIEW_BASE";
+                viewId = "base";
             }
 
             if (!this.views[viewId])
@@ -1396,8 +1426,9 @@
                     view.id = this.generateViewId();
                 }
                 var parentId = view.parent;
-                if (!parentId) {
-                    view.parent = "VIEW_WEB_EDIT"; // assume
+                if (!parentId)
+                {
+                    view.parent = "web-edit";
                 }
                 this.registerView(view);
                 view = view.id;
@@ -1442,7 +1473,7 @@
 
             // detect jQuery Mobile
             if ($.mobile && !fallbackUI) {
-                fallbackUI = "mobile";
+                fallbackUI = "jquerymobile";
             }
 
             // detect twitter bootstrap
@@ -1502,115 +1533,111 @@
             // if still no view, then default fallback to our detected view or the default
             if (!view)
             {
-                Alpaca.logDebug("A view was not specified.");
+                return Alpaca.throwErrorWithCallback("A view was not specified and could not be automatically determined.", errorCallback);
             }
-
-            // debugging: if the view isn't available, we want to report it right away
-            if (Alpaca.isString(view))
+            else
             {
-                if (!this.normalizedViews[view])
+                // debugging: if the view isn't available, we want to report it right away
+                if (Alpaca.isString(view))
                 {
-                    return Alpaca.throwErrorWithCallback("The desired view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.", errorCallback);
-                }
-            }
-
-
-            ///////////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // FIELD INSTANTIATION
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-            // TEST - swap code
-            // swap el -> placeholder
-            //var tempHolder = $("<div></div>");
-            //$(el).before(tempHolder);
-            //$(el).remove();
-
-            var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);
-            if (field)
-            {
-                // hide field while rendering
-                $(el).addClass("alpaca-field-rendering");
-                $(el).addClass("alpaca-hidden");
-
-                field.isDynamicCreation = isDynamicCreation;
-                Alpaca.fieldInstances[field.getId()] = field;
-
-                // mechanism for looking up field instances by id
-                field.allFieldInstances = function()
-                {
-                    return Alpaca.fieldInstances;
-                };
-
-                // allow callbacks defined through view
-                if (Alpaca.isEmpty(callback)) {
-                    callback = field.view.render;
-                }
-                if (Alpaca.isEmpty(renderedCallback)) {
-                    renderedCallback = field.view.postRender;
-                }
-
-                if (Alpaca.collectTiming)
-                {
-                    var counters = Alpaca.Counters("render");
-                    var t1 = new Date().getTime();
-                }
-
-                var fin = function()
-                {
-                    // if this is the top-level alpaca field, then we call for validation state to be recalculated across
-                    // all child fields
-                    if (!field.parent)
+                    if (!this.normalizedViews[view])
                     {
-                        // final call to update validation state
-                        field.refreshValidationState(true);
+                        return Alpaca.throwErrorWithCallback("The desired view: " + view + " could not be loaded.  Please make sure it is loaded and not misspelled.", errorCallback);
+                    }
+                }
 
-                        // force hideInitValidationError to false for field and all children
-                        if (field.view.type != 'view')
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////////
+                //
+                // FIELD INSTANTIATION
+                //
+                ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+                // TEST - swap code
+                // swap el -> placeholder
+                //var tempHolder = $("<div></div>");
+                //$(el).before(tempHolder);
+                //$(el).remove();
+
+                var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);
+                if (field)
+                {
+                    // hide field while rendering
+                    $(el).addClass("alpaca-field-rendering");
+                    $(el).addClass("alpaca-hidden");
+
+                    field.isDynamicCreation = isDynamicCreation;
+                    Alpaca.fieldInstances[field.getId()] = field;
+
+                    // mechanism for looking up field instances by id
+                    field.allFieldInstances = function()
+                    {
+                        return Alpaca.fieldInstances;
+                    };
+
+                    // allow callbacks defined through view
+                    if (Alpaca.isEmpty(callback)) {
+                        callback = field.view.render;
+                    }
+                    if (Alpaca.isEmpty(renderedCallback)) {
+                        renderedCallback = field.view.postRender;
+                    }
+
+                    var fin = function()
+                    {
+                        // if this is the top-level alpaca field, then we call for validation state to be recalculated across
+                        // all child fields
+                        if (!field.parent)
                         {
-                            Alpaca.fieldApplyChildren(field, function(field) {
+                            // final call to update validation state
+                            field.refreshValidationState(true);
 
-                                // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
-                                field.hideInitValidationError = false;
+                            // force hideInitValidationError to false for field and all children
+                            if (field.view.type != 'view')
+                            {
+                                Alpaca.fieldApplyChildren(field, function(field) {
 
-                            });
+                                    // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
+                                    field.hideInitValidationError = false;
+
+                                });
+                            }
                         }
+
+                        // TEST - swap code
+                        // swap placeholder -> el
+                        //$(tempHolder).before(el);
+                        //$(tempHolder).remove();
+
+                        // reveal field after rendering
+                        $(el).removeClass("alpaca-field-rendering");
+                        $(el).removeClass("alpaca-hidden");
+
+                        if (Alpaca.collectTiming)
+                        {
+                            var t2 = new Date().getTime();
+                            counters.increment(field.getFieldType(), (t2-t1));
+                        }
+
+                        renderedCallback(field);
+                    };
+
+                    if (!Alpaca.isEmpty(callback)) {
+                        callback(field, function() {
+                            fin();
+                        });
+                    } else {
+                        field.render(function() {
+                            fin();
+                        });
                     }
 
-                    // TEST - swap code
-                    // swap placeholder -> el
-                    //$(tempHolder).before(el);
-                    //$(tempHolder).remove();
-
-                    // reveal field after rendering
-                    $(el).removeClass("alpaca-field-rendering");
-                    $(el).removeClass("alpaca-hidden");
-
-                    if (Alpaca.collectTiming)
-                    {
-                        var t2 = new Date().getTime();
-                        counters.increment(field.getFieldType(), (t2-t1));
-                    }
-
-                    renderedCallback(field);
-                };
-
-                if (!Alpaca.isEmpty(callback)) {
-                    callback(field, function() {
-                        fin();
-                    });
-                } else {
-                    field.render(function() {
-                        fin();
-                    });
+                    field.callback = callback;
+                    field.renderedCallback = renderedCallback;
                 }
-
-                field.callback = callback;
-                field.renderedCallback = renderedCallback;
             }
 
-            // NOTE: this can be null if an error was thrown
+            // NOTE: this can be null if an error was thrown or if a view wasn't found
             return field;
         },
 
@@ -1732,10 +1759,11 @@
             ////////////////////////////////////////////////////////////////////////////////////////////////
 
             // for all of the views (the original ones, not the compiled ones), walk through them and find any
-            // and all templates that need to be compiled
-            // compile each and store in a "compiledTemplates" object
+            // and all templates that need to be compiled, compile them, etc.
 
-            var viewCompileCallback = function(normalizedViews, err, view, compiledTemplateId, cacheKey, totalCalls)
+            // this callback is fired when a compilation either fails or succeeds
+            // if it fails, err is set, otherwise cacheKey has the
+            var viewCompileCallback = function(normalizedViews, err, view, cacheKey, totalCalls)
             {
                 var viewId = view.id;
 
@@ -1744,113 +1772,122 @@
                 {
                     report.errors.push({
                         "view": viewId,
-                        "template": compiledTemplateId,
+                        "cacheKey": cacheKey,
                         "err": err
                     });
                 }
                 else
                 {
                     report.successCount++;
-
-                    // mark onto the view that the template was compiled for this view
-                    // this maps [compiledTemplateId] -> [cacheKey]
-                    view.compiledTemplates[compiledTemplateId] = cacheKey;
                 }
 
                 if (report.count == totalCalls)
                 {
-                    //var t2 = new Date().getTime();
-                    //console.log("Compilation took: " + (t2-t1) + " ms");
                     finalCallback(normalizedViews);
                 }
             };
 
-            var compileViewTemplate = function(normalizedViews, view, compiledTemplateId, template, totalCalls)
+            var compileViewTemplate = function(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls)
             {
-                var viewId = view.id;
+                var cacheKey = Alpaca.makeCacheKey(view.id, scopeType, scopeId, templateId);
 
-                if (template && typeof(template) == "function")
+                // assume handlebars as the engine we'll use
+                var engineType = "text/x-handlebars-template";
+
+                /**
+                 * The template can be specified as an object to explicitly define the type of engine to use.
+                 */
+                if (template && Alpaca.isObject(template))
                 {
-                    // this is a function that was compiled at build time
-                    var cacheKey = viewId + "_" + compiledTemplateId;
-                    Alpaca.TemplateFunctionCache[cacheKey] = template;
+                    engineType = template.type;
 
-                    // skip out
-                    viewCompileCallback(normalizedViews, null, view, compiledTemplateId, cacheKey, totalCalls);
-                    return;
-
-                }
-
-                if (template && typeof(template) == "string")
-                {
-                    var mightBeUrl = (template.indexOf("/") > -1);
-                    if (mightBeUrl)
-                    {
-
+                    // if this is a precompiled template, swap cache keys
+                    if (template.cacheKey) {
+                        cacheKey = template.cacheKey;
                     }
-                    else
-                    {
-                        // support for jQuery selectors
-                        if (template && ((template.indexOf("#") === 0) || (template.indexOf(".") === 0)))
-                        {
-                            var x = $(template);
 
-                            type = $(x).attr("type");
-                            template = $(x).html();
-                        }
-                    }
-                }
-
-                var type = null;
-                if (Alpaca.isObject(template)) {
-                    type = template.type;
                     template = template.template;
                 }
 
-                // if type isn't resolved, assume handlebars
-                if (!type)
+                /**
+                 * If template is a string, then it is either some text that we can treat as a template or it is
+                 * a URL that we should dynamically load and treat the result as a template.  It may also be a
+                 * CSS selector used to locate something within the document that we should load text from.
+                 */
+                if (template && typeof(template) == "string")
                 {
-                    type = "text/x-handlebars-template";
+                    var x = template.toLowerCase();
+                    if (x.indexOf("http://") === 0 || x.indexOf("https://") === 0 || x.indexOf("/") === 0 || x.indexOf("./") === 0)
+                    {
+                        // we assume this is a URL and let the template engine deal with it
+                    }
+                    else if (template && ((template.indexOf("#") === 0) || (template.indexOf(".") === 0)))
+                    {
+                        // support for jQuery selectors
+                        var domEl = $(template);
+
+                        engineType = $(domEl).attr("type");
+                        template = $(domEl).html();
+                    }
                 }
 
-                // look up the template processor
-                var engine = Alpaca.TemplateEngineRegistry.find(type);
+                // if we don't have an engine type here, throw
+                if (!engineType)
+                {
+                    Alpaca.logError("Engine type was empty");
+
+                    var err = new Error("Engine type was empty");
+                    viewCompileCallback(normalizedViews, err, view, cacheKey, totalCalls);
+
+                    return;
+                }
+
+                // look up the engine
+                var engine = Alpaca.TemplateEngineRegistry.find(engineType);
                 if (!engine)
                 {
                     Alpaca.logError("Cannot find template engine for type: " + type);
+
                     var err = new Error("Cannot find template engine for type: " + type);
-                    viewCompileCallback(normalizedViews, err, view, compiledTemplateId, cacheKey, totalCalls);
+                    viewCompileCallback(normalizedViews, err, view, cacheKey, totalCalls);
+
+                    return;
                 }
 
-                // the desired new cache key
-                var cacheKey = viewId + "_" + compiledTemplateId;
+                // if template === true, then this indicates that the template is pre-compiled.
+                if (template === true)
+                {
+                    if (engine.isCached(cacheKey))
+                    {
+                        // all good
+                        viewCompileCallback(normalizedViews, null, view, cacheKey, totalCalls);
+                        return;
+                    }
+                    else
+                    {
+                        // uh oh, claims to be precompiled, but the templating engine doesn't know about it
+                        var errString = "View configuration for view: " + view.id + " claims to have precompiled template for cacheKey: " + cacheKey + " but it could not be found";
+                        Alpaca.logError(errString);
+
+                        viewCompileCallback(normalizedViews, new Error(errString), view, cacheKey, totalCalls);
+
+                        return;
+                    }
+                }
+
+                // check if engine already has this cached
+                // this might be from a previous compilation step
                 if (engine.isCached(cacheKey))
                 {
                     // already compiled, so skip
-                    viewCompileCallback(normalizedViews, null, view, compiledTemplateId, cacheKey, totalCalls);
+                    viewCompileCallback(normalizedViews, null, view, cacheKey, totalCalls);
+                    return;
                 }
-                else
-                {
-                    // check if "template" is actually a reference to another template
-                    // if so, we can reuse the previously compiled fellow
 
-                    var previouslyCompiledTemplateCacheKey = view.compiledTemplates["view-" + template];
-                    if (previouslyCompiledTemplateCacheKey)
-                    {
-                        // this entry is pointing to a previously compiled template
-                        //template = Alpaca.TemplateFunctionCache[previouslyCompiledTemplateCacheKey];
-
-                        // skip out
-                        viewCompileCallback(normalizedViews, null, view, compiledTemplateId, cacheKey, totalCalls);
-                        return;
-                    }
-
-                    // compile the template
-                    engine.compile(cacheKey, template, function(err, data) {
-                        viewCompileCallback(normalizedViews, err, view, compiledTemplateId, cacheKey, totalCalls);
-                    });
-
-                }
+                // compile the template
+                engine.compile(cacheKey, template, function(err) {
+                    viewCompileCallback(normalizedViews, err, view, cacheKey, totalCalls);
+                });
             };
 
             var compileTemplates = function(normalizedViews)
@@ -1860,7 +1897,6 @@
                 for (var viewId in normalizedViews)
                 {
                     var view = normalizedViews[viewId];
-                    view.compiledTemplates = {};
 
                     // view templates
                     if (view.templates)
@@ -1869,11 +1905,11 @@
                         {
                             var template = view.templates[templateId];
 
-                            functionArray.push(function(normalizedViews, view, compiledTemplateId, template) {
+                            functionArray.push(function(normalizedViews, view, scopeType, scopeId, templateId, template) {
                                 return function(totalCalls) {
-                                    compileViewTemplate(normalizedViews, view, compiledTemplateId, template, totalCalls);
+                                    compileViewTemplate(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls);
                                 };
-                            }(normalizedViews, view, "view-" + templateId, template));
+                            }(normalizedViews, view, "view", view.id, templateId, template));
                         }
                     }
 
@@ -1888,11 +1924,11 @@
                                 {
                                     var template = view.fields[path].templates[templateId];
 
-                                    functionArray.push(function(normalizedViews, view, compiledTemplateId, template) {
+                                    functionArray.push(function(normalizedViews, view, scopeType, scopeId, templateId, template) {
                                         return function(totalCalls) {
-                                            compileViewTemplate(normalizedViews, view, compiledTemplateId, template, totalCalls);
+                                            compileViewTemplate(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls);
                                         };
-                                    }(normalizedViews, view, "field-" + path + "-" + templateId, template));
+                                    }(normalizedViews, view, "field", path, templateId, template));
                                 }
                             }
                         }
@@ -1903,11 +1939,11 @@
                     {
                         var template = view.layout.template;
 
-                        functionArray.push(function(normalizedViews, view, compiledTemplateId, template) {
+                        functionArray.push(function(normalizedViews, view, scopeType, scopeId, templateId, template) {
                             return function(totalCalls) {
-                                compileViewTemplate(normalizedViews, view, compiledTemplateId, template, totalCalls);
+                                compileViewTemplate(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls);
                             };
-                        }(normalizedViews, view, "layoutTemplate", template));
+                        }(normalizedViews, view, "layout", "layoutTemplate", templateId, template));
                     }
 
                     // global template
@@ -1915,11 +1951,11 @@
                     {
                         var template = view.globalTemplate;
 
-                        functionArray.push(function(normalizedViews, view, compiledTemplateId, template) {
+                        functionArray.push(function(normalizedViews, view, scopeType, scopeId, templateId, template) {
                             return function(totalCalls) {
-                                compileViewTemplate(normalizedViews, view, compiledTemplateId, template, totalCalls);
+                                compileViewTemplate(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls);
                             };
-                        }(normalizedViews, view, "globalTemplate", template));
+                        }(normalizedViews, view, "global", "globalTemplate", templateId, template));
                     }
                 }
 
@@ -1989,7 +2025,7 @@
          */
         getTemplateDescriptor: function(view, templateId, field)
         {
-            var descriptor = {};
+            var descriptor = null;
 
             //////////////////////////////////////////////////////////////////////////////////////////////////
             //
@@ -1997,119 +2033,66 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////////
 
-            var _template;
-            var _templateType;
+            var _engineId = null;
+            var _cacheKey = null;
 
-            // first consider template level
+            // is this template defined at the view level?
             if (view.templates && view.templates[templateId])
             {
-                _template = view.templates[templateId];
-                _templateType = "view";
-            }
+                _cacheKey = Alpaca.makeCacheKey(view.id, "view", view.id, templateId);
 
-            // now allow for field overrides
-            if (field && field.path)
+                // is this a precompiled template?
+                var t = view.templates[templateId];
+                if (Alpaca.isObject(t) && t.cacheKey)
+                {
+                    _cacheKey = t.cacheKey;
+                }
+            }
+            // is this template defined at the field level?
+            else if (field && field.path)
             {
                 var path = field.path;
 
                 if (view && view.fields && view.fields[path] && view.fields[path].templates && view.fields[path].templates[templateId])
                 {
-                    _template = view.fields[path].templates[templateId];
-                    _templateType = "field";
+                    _cacheKey = Alpaca.makeCacheKey(view.id, "field", path, templateId);
                 }
             }
-
-            // finally there are some hardcoded values
-            if (templateId == "globalTemplate") {
-                _template = "globalTemplate";
-                _templateType = "global";
-            }
-
-            if (templateId == "layoutTemplate") {
-                _template = "layoutTemplate";
-                _templateType = "layout";
-            }
-
-            descriptor.template = {};
-            descriptor.template.id = templateId;
-            descriptor.template.type = _templateType;
-            descriptor.template.value = _template;
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // ENGINE PROPERTIES
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////////
-
-            var type = null;
-            var template = _template;
-            if (Alpaca.isObject(template)) {
-                type = template.type;
-                template = template.template;
-            }
-
-            // if type isn't resolved, assume handlebars
-            if (!type)
+            // is this template defined at the global level?
+            else if (templateId == "globalTemplate")
             {
-                type = "text/x-handlebars-template";
+                _cacheKey = Alpaca.makeCacheKey(view.id, "global", "globalTemplate", templateId);
+            }
+            // is this template defined at the layout level?
+            else if (templateId == "layoutTemplate")
+            {
+                _cacheKey = Alpaca.makeCacheKey(view.id, "layout", "layoutTemplate", templateId);
             }
 
-            var engine = Alpaca.TemplateEngineRegistry.find(type);
-            if (!engine)
+            if (_cacheKey)
             {
-                return Alpaca.throwDefaultError("Cannot find template engine for type: " + type);
-            }
-
-            descriptor.engine = {};
-            descriptor.engine.type = type;
-            descriptor.engine.id = engine.id;
-
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // NOW DETERMINE THE COMPILED TEMPLATE ID FOR THIS TEMPLATE
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////////
-
-            var compiledTemplateId = null;
-            if (_templateType == "view")
-            {
-                compiledTemplateId = "view-" + templateId;
-            }
-            else if (_templateType == "field")
-            {
-                compiledTemplateId = "field-" + field.path + "-" + templateId;
-            }
-            else if (_templateType == "layout")
-            {
-                compiledTemplateId = "layoutTemplate";
-            }
-            else if (_templateType == "global")
-            {
-                compiledTemplateId = "globalTemplate";
-            }
-
-            descriptor.compiledTemplateId = compiledTemplateId;
-
-
-            // look up the cacheKey for this compiled template id
-            // verify it is in cache
-            var cacheKey = null;
-            if (view.compiledTemplates)
-            {
-                cacheKey = view.compiledTemplates[compiledTemplateId];
-                if (!cacheKey || !engine.isCached(cacheKey))
+                // figure out which engine has this
+                var engineIds = Alpaca.TemplateEngineRegistry.ids();
+                for (var i = 0; i < engineIds.length; i++)
                 {
-                    // well, it isn't actually a compiled template
-                    // thus, we cannot in the end produce a descriptor for it
-                    return null;
+                    var engineId = engineIds[i];
+
+                    var engine = Alpaca.TemplateEngineRegistry.find(engineId);
+                    if (engine.isCached(_cacheKey))
+                    {
+                        _engineId = engineId;
+                        break;
+                    }
+                }
+
+                if (_engineId)
+                {
+                    descriptor = {
+                        "engine": _engineId,
+                        "cacheKey": _cacheKey
+                    };
                 }
             }
-
-            descriptor.cache = {};
-            descriptor.cache.key = cacheKey;
 
             return descriptor;
         },
@@ -2140,8 +2123,7 @@
                 model = {};
             }
 
-            var engineType = templateDescriptor.engine.type;
-            var compiledTemplateId = templateDescriptor.compiledTemplateId;
+            var engineType = templateDescriptor.engine;
 
             var engine = Alpaca.TemplateEngineRegistry.find(engineType);
             if (!engine)
@@ -2150,14 +2132,14 @@
             }
 
             // execute the template
-            var cacheKey = templateDescriptor.cache.key;
+            var cacheKey = templateDescriptor.cacheKey;
             var html = engine.execute(cacheKey, model, function(err) {
 
                 var str = JSON.stringify(err);
                 if (err.message) {
                     str = err.message;
                 }
-                return Alpaca.throwDefaultError("The compiled template: " + compiledTemplateId + " failed to execute: " + str);
+                return Alpaca.throwDefaultError("The compiled template: " + cacheKey + " failed to execute: " + str);
             });
 
             return html;
@@ -3992,12 +3974,42 @@
 
     }());
 
-
     Alpaca.MARKER_CLASS_CONTROL_FIELD = "alpaca-marker-control-field";
     Alpaca.MARKER_CLASS_CONTAINER_FIELD = "alpaca-marker-container-field";
     Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM = "alpaca-marker-control-field-item";
     Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY = "data-alpaca-containerfield-item-key";
     Alpaca.CLASS_CONTAINER = "alpaca-container";
     Alpaca.CLASS_CONTROL = "alpaca-control";
+
+    Alpaca.makeCacheKey = function(viewId, scopeType, scopeId, templateId)
+    {
+        return viewId + ":" + scopeType + ":" + scopeId + ":" + templateId;
+    };
+
+    /**
+     * Splits a cache key into its parts - viewId, scopeType, scopeId and templateId.
+     *
+     * @param cacheKey
+     * @returns {{}}
+     */
+    Alpaca.splitCacheKey = function(cacheKey)
+    {
+        var parts = {};
+
+        var x = cacheKey.indexOf(":");
+        var y = cacheKey.lastIndexOf(":");
+
+        parts.viewId = cacheKey.substring(0, x);
+        parts.templateId = cacheKey.substring(y + 1);
+
+        var scopeIdentifier = cacheKey.substring(x + 1, y);
+
+        var z = scopeIdentifier.indexOf(":");
+
+        parts.scopeType = scopeIdentifier.substring(0, z);
+        parts.scopeId = scopeIdentifier.substring(z+1);
+
+        return parts;
+    };
 
 })(jQuery);

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Alpaca - HTML5 Forms for jQuery - Layout > Two-Column</title>
+        <meta name="keywords"
+              content="jquery,bootstrap,forms,form,jquerymobile,jqueryui,mobile,json,json-schema,cloudcms,gitana,cms,content,uzquiano"/>
+        <meta name="description" content="Two-Column Layout for Alpaca Forms." />
+        <meta name="author" content="Gitana Software Inc." />
+        <meta http-equiv="X-UA-Compatible" content="IE=9">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+
+        <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+        <!-- jQuery -->
+        <script type="text/javascript" src="../../lib/jquery-2.1.0/jquery-2.1.0.min.js"></script>
+
+        <!-- Handlebars -->
+        <script type="text/javascript" src="../../lib/handlebars/handlebars-v1.3.0.js"></script>
+
+        <!-- Alpaca -->
+        <script type="text/javascript" src="../../../components/alpaca/alpaca.js"></script>
+        <link type="text/css" href="../../../components/alpaca/alpaca.css" rel="stylesheet"/>
+        <link type="text/css" href="../../../components/alpaca/alpaca-jqueryui.css" rel="stylesheet"/>
+
+
+        <!-- jQuery UI Support -->
+        <script type="text/javascript" src="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
+        <link type="text/css" href="../../../lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
+
+        <!-- Additional CSS -->
+        <link type="text/css" href="../../css/960.fluid.css" rel="stylesheet"/>
+
+        <!-- Required for the Editor field (sample code viewing) -->
+        <script src="../../lib/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Web Site -->
+        <script type="text/javascript" src="../../lib/google-code-prettify/prettify.min.js"></script>
+        <script type="text/javascript" src="../../js/themeswitchertool.js"></script>
+        <script type="text/javascript" src="../../js/example.js"></script>
+        <script type="text/javascript" src="../../js/footer.js"></script>
+        <link type="text/css" href="../../css/site.css" rel="stylesheet"/>
+        <link type="text/css" href="../../lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+        <script type="text/javascript" src="../../lib/tweet/jquery.tweet.js"></script>
+        <link type="text/css" href="../../lib/tweet/jquery.tweet.css" rel="stylesheet"/>
+
+        <script type="text/javascript" src="../../lib/jquery.colorbox.js"></script>
+
+        <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
+        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+
+        <!-- custom styles for this example-->
+        <style>
+            .alpaca-layout-two-column-mask.ui-widget-content {
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+		<header>
+			<div class='container_12'>
+		    <div class='actual-body'>
+		        <div class='grid_12'>
+		            <h1><img src="../../img/alpaca.png"><span>Easy Forms for jQuery</span></h1>
+                    <div class="resource-bar">
+                        <a href="../../index.html">Home</a>
+                        <a href="../../../web/download.html">Downloads</a>
+                        <a href="javascript:void(0);" class="current">Documentation</a>
+                        <a href="../../forms/customer-profile/edit-form.html">Examples</a>
+                        <a href="../../../web/resources.html">Resources</a>
+                        <a href="../../../web/contactus.html">Contact Us</a>
+                    </div>
+                </div>
+		    </div>
+			</div>
+		</header>
+<div class='container_12'>
+    <div class="actual-body">
+        <div class="grid_3">
+            <div class="container_12 side-bar">
+            </div>
+        </div>
+
+        <div class="grid_9">
+            <div class="container_12">
+                <div class="widget">
+                    <div class="widget-body">
+            <div class='grid_12 alpaca-example-header' id='layout-two-column' alpaca-types=''>
+                <h1>Two-Column Layout</h1>
+            </div>
+            <div class='grid_12 alpaca-example-case'>
+
+                <h2>Example 1: </h2>
+                <p>
+                    This example defines an inline custom view that extends <code>VIEW_WEB_EDIT_LIST</code>.  It tells the view to use
+                    a specific layout template (<code>two-column-layout-template.html</code>).  The <code>bindings</code> block then tells
+                    the view where to place field elements within the template.
+                </p>
+                <p>
+                    The layout template file (<a href="two-column-layout-template.html" target="_source">two-column-layout-template.html</a>)
+                    has two <code>DIV</code> blocks with IDs <code>leftcolumn</code> and <code>rightcolumn</code>.  The properties are placed
+                    into each column as defined by the <code>bindings</code> block.
+                </p>
+                <p>
+                    This example loads <a href="customer-profile-data.json" target="_source">data</a>, <a href="customer-profile-schema.json" target="_source">schema</a> and <a href="customer-profile-options.json" target="_source">options</a> parameters through ajax calls.
+                </p>
+                <div id="field1"  style="min-width:1000px; background-color: white; border: 1px black solid; padding: 10px; "></div>
+                <script type="text/javascript" id="field1-script">
+$(function() {
+    $("#field1").alpaca({
+        "dataSource": "./customer-profile-data.json",
+        "schemaSource": "./customer-profile-schema.json",
+        "optionsSource": "./customer-profile-options.json",
+        "view": {
+            "parent": "VIEW_WEB_EDIT_LIST",
+            "layout": {
+                "template": './two-column-layout-template.html',
+                "bindings": {
+                    "name": "leftcolumn",
+                    "age": "leftcolumn",
+                    "gender": "leftcolumn",
+                    "member": "leftcolumn",
+                    "photo": "leftcolumn",
+                    "phone": "leftcolumn",
+                    "icecream": "leftcolumn",
+                    "address": "rightcolumn"
+                }
+            }
+        }
+    });
+});
+                </script>
+
+                <h2>Example 2:</h2>
+                <p>
+                    This example provides the same functionality as Example #1 and essentially works the same way except that it
+                    defines the view differently.  The field bindings are the same.  The difference is that this view extends one of
+                    the Alpaca default views to provide two-column layout.
+                </p>
+                <div id="field2"  style="min-width:1000px; background-color: white; border: 1px black solid; padding: 10px; "></div>
+                <script type="text/javascript" id="field2-script">
+$(function() {
+    $("#field2").alpaca({
+        "dataSource": "./customer-profile-data.json",
+        "schemaSource": "./customer-profile-schema.json",
+        "optionsSource": "./customer-profile-options.json",
+        "view": {
+            "parent": "VIEW_WEB_EDIT_LIST_LAYOUT_TWO_COLUMN",
+            "layout": {
+                "bindings": {
+                    "name": "leftcolumn",
+                    "age": "leftcolumn",
+                    "gender": "leftcolumn",
+                    "member": "leftcolumn",
+                    "photo": "leftcolumn",
+                    "phone": "leftcolumn",
+                    "icecream": "leftcolumn",
+                    "address": "rightcolumn"
+                }
+            }
+        }
+    });
+});
+                </script>
+
+                <h2>Example 3:</h2>
+                <p>
+                    This example provides a three-column layout for properties.  As in Example #1, the layout template is
+                    provided and the fields are bound to specific <code>DIV</code> elements within the layout file using the
+                    <code>bindings</code> properties.
+                </p>
+                <p>
+                    In this case, we provide the template inline (as a string).  We could provide this string as either the
+                    view's <code>layout.template</code> property or as a property of our choosing under <code>templates</code>.
+                </p>
+                <p>
+                    Here we take the latter path.  We define a general purpose view template called <code>threeColumnGridLayout</code>
+                    and then reference it from our view's <code>layout.template</code> property.  The Alpaca view compiler discovers this
+                    and reuses the template.
+                </p>
+                <div id="field3" style="min-width:1000px; background-color: white; border: 1px black solid; padding: 10px; "></div>
+                <script type="text/javascript" id="field3-script">
+$(function() {
+
+    $("#field3").alpaca({
+        "dataSource": "./customer-profile-data.json",
+        "schemaSource": "./customer-profile-schema.json",
+        "optionsSource": "./customer-profile-options.json",
+        "view": {
+            "parent": "VIEW_WEB_EDIT",
+            "layout": {
+                "template": "threeColumnGridLayout",
+                "bindings": {
+                    "name": "column-1",
+                    "age": "column-1",
+                    "gender": "column-2",
+                    "member": "column-2",
+                    "photo": "column-2",
+                    "phone": "column-2",
+                    "icecream": "column-3",
+                    "address": "column-3"
+                }
+            },
+            "templates": {
+                "threeColumnGridLayout": '<div class="filter-content">'
+                        + '{{if options.label}}<h2>${options.label}</h2><span></span>{{/if}}'
+                        + '{{if options.helper}}<p>${options.helper}</p>{{/if}}'
+                        + '<div id="column-1" class="grid_6"> </div>'
+                        + '<div id="column-2" class="grid_6"> </div>'
+                        + '<div id="column-3" class="grid_12"> </div>'
+                        + '<div class="clear"></div>'
+                        + '</div>'
+            }
+        }
+    });
+});
+                </script>
+
+
+                <!-- BEGIN DISCUSSIONS -->
+                <div class="alpaca-discussions"></div>
+                <!-- END DISCUSSIONS -->
+
+
+                        </div>
+                        <div class="clear height-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container_12">
+        <div class="grid_12 copyright">
+            Copyright &copy; 2013 Gitana Software, Inc. | All Rights Reserved
+        </div>
+    </div>
+</footer>
+    </body>
+</html>

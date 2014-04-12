@@ -5,15 +5,15 @@
  *
  * The views are:
  *
- *    VIEW_BOOTSTRAP_DISPLAY
- *    VIEW_BOOTSTRAP_EDIT
- *    VIEW_BOOTSTRAP_CREATE
+ *    bootstrap-view
+ *    bootstrap-edit
+ *    bootstrap-create
  *
  * This theme can also be selected by specifying the following view:
  *
  *    {
  *       "ui": "bootstrap",
- *       "type": null | "create" | "edit" | "display"
+ *       "type": "view" | "edit" | "create"
  *    }
  *
  */
@@ -97,41 +97,35 @@
     */
 
     Alpaca.registerView({
-        "id": "VIEW_BOOTSTRAP_DISPLAY",
-        "parent": "VIEW_WEB_DISPLAY",
-        "title": "Display View for Bootstrap 3",
-        "description": "Display View for Bootstrap 3",
-        "displayReadonly": true,
+        "id": "bootstrap-view",
+        "parent": "web-view",
         "type": "view",
-        "ui":"bootstrap",
-        "callbacks": callbacks,
-        "styles": styles,
-        "templates": AlpacaTemplates.handlebars["view_bootstrap_display"]
-    });
-
-    Alpaca.registerView({
-        "id":"VIEW_BOOTSTRAP_EDIT",
-        "parent": "VIEW_WEB_EDIT",
-        "title": "Edit View for Bootstrap 3",
-        "description": "Edit View for Bootstrap 3",
-        "displayReadonly": true,
-        "type":"edit",
-        "ui":"bootstrap",
-        "callbacks": callbacks,
-        "styles": styles,
-        "templates": AlpacaTemplates.handlebars["view_bootstrap_edit"]
-    });
-
-    Alpaca.registerView({
-        "id": "VIEW_BOOTSTRAP_CREATE",
-        "parent": 'VIEW_BOOTSTRAP_EDIT',
-        "title": "Create View for Bootstrap 3",
-        "description":"Create View for Bootstrap 3",
-        "displayReadonly": false,
-        "type": "create",
         "ui": "bootstrap",
+        "title": "Display View for Bootstrap 3",
+        "displayReadonly": true,
         "callbacks": callbacks,
-        "styles": styles
+        "styles": styles,
+        "templates": {}
+    });
+
+    Alpaca.registerView({
+        "id": "bootstrap-edit",
+        "parent": "web-edit",
+        "type": "edit",
+        "ui": "bootstrap",
+        "title": "Edit View for Bootstrap 3",
+        "displayReadonly": true,
+        "callbacks": callbacks,
+        "styles": styles,
+        "templates": {}
+    });
+
+    Alpaca.registerView({
+        "id": "bootstrap-create",
+        "parent": "bootstrap-edit",
+        "title": "Create View for Bootstrap 3",
+        "type": "create",
+        "displayReadonly": false
     });
 
 })(jQuery);

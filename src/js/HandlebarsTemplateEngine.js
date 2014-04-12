@@ -1,12 +1,15 @@
-(function($)
+(function($, Handlebars, HandlebarsPrecompiled)
 {
+    // runtime cache of precompiled templates keyed by cacheKey
+    var COMPILED_TEMPLATES = {};
+
     var helpers = {};
     helpers["compare"] = function(lvalue, rvalue, options)
     {
         if (arguments.length < 3)
             throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
 
-        operator = options.hash.operator || "==";
+        var operator = options.hash.operator || "==";
 
         var operators = {
             '==':       function(l,r) { return l == r; },
@@ -75,12 +78,42 @@
             ];
         },
 
+        init: function()
+        {
+            // auto discover any precompiled templates and store them by cache key here
+            if (HandlebarsPrecompiled)
+            {
+                for (var viewId in HandlebarsPrecompiled)
+                {
+                    var viewTemplates = HandlebarsPrecompiled[viewId];
+                    for (var templateId in viewTemplates)
+                    {
+                        var template = viewTemplates[templateId];
+                        if (typeof(template) == "function")
+                        {
+                            // cache key
+                            var cacheKey = Alpaca.makeCacheKey(viewId, "view", viewId, templateId);
+
+                            // cache
+                            COMPILED_TEMPLATES[cacheKey] = template;
+                        }
+                    }
+                }
+            }
+        },
+
         doCompile: function(cacheKey, html, callback)
         {
-            var templateFunction = null;
+            var self = this;
+
+            var template = null;
             try
             {
-                templateFunction = Handlebars.compile(html);
+                var functionString = Handlebars.precompile(html);
+                template = eval("(" + functionString + ")");
+
+                // CACHE: write
+                COMPILED_TEMPLATES[cacheKey] = template;
             }
             catch (e)
             {
@@ -88,14 +121,20 @@
                 return;
             }
 
-            Alpaca.TemplateFunctionCache[cacheKey] = templateFunction;
-
             callback();
         },
 
-        doExecute: function(cacheKey, model, callback)
+        doExecute: function(cacheKey, model, errorCallback)
         {
-            var templateFunction = Alpaca.TemplateFunctionCache[cacheKey];
+            var self = this;
+
+            // CACHE: read
+            var templateFunction = COMPILED_TEMPLATES[cacheKey];
+            if (!templateFunction)
+            {
+                errorCallback(new Error("Could not find handlebars cached template for key: " + cacheKey));
+                return;
+            }
 
             // render template
             var html = null;
@@ -105,7 +144,7 @@
             }
             catch (e)
             {
-                callback(e);
+                errorCallback(e);
                 return null;
             }
 
@@ -114,7 +153,22 @@
 
         isCached: function(cacheKey)
         {
-            return (Alpaca.TemplateFunctionCache[cacheKey] ? true : false);
+            return (COMPILED_TEMPLATES[cacheKey] ? true  : false);
+        },
+
+        findCacheKeys: function(viewId)
+        {
+            var cacheKeys = [];
+
+            for (var cacheKey in COMPILED_TEMPLATES)
+            {
+                if (cacheKey.indexOf(viewId + ":") === 0)
+                {
+                    cacheKeys.push(cacheKey);
+                }
+            }
+
+            return cacheKeys;
         }
 
     });
@@ -122,4 +176,4 @@
     // auto register
     Alpaca.TemplateEngineRegistry.register("handlebars", new Alpaca.HandlebarsTemplateEngine("handlebars"));
 
-})(jQuery);
+})(jQuery, window.Handlebars, window.HandlebarsPrecompiled);
