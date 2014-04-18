@@ -36,7 +36,7 @@ $("#field2").alpaca({
     "schema": {
         "format": "lowercase"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

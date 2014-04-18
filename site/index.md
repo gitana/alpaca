@@ -113,22 +113,102 @@ $("#form1").alpaca({
 
 ## Who uses Alpaca?
 
-Alpaca is an open source project that is in use by lots of customers including the following:
+Alpaca is an open source project that is in use by lots of companies and individuals in the community.  Here are
+a few organizations that we're glad to have Alpaca contribute to:
 
 <br/>
 
-<div class="row">
-    <div class="col-md-3">
-        <img src="{{ BASE_PATH }}/images/customers/pearson.png" style="max-width:150px" />
+<div class="community">
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.pearsoned.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/pearson-150.png" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.fox.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/fox-entertainment-150.png" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.trinet.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/trinet-150.jpg" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.cloudcms.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/cloudcms-150.png" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-        <img src="{{ BASE_PATH }}/images/customers/fox-entertainment.png" style="max-width:150px" />
+    <div class="row">
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.sony.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/sony-150.jpg" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://hbsp.harvard.edu/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/harvard-business-publishing-150.jpg" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.biogenidec.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/biogen-idec-150.png" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.exari.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/exari-150.png" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-        <img src="{{ BASE_PATH }}/images/customers/cloudcms.png" style="max-width:150px" />
-    </div>
-    <div class="col-md-3">
-        <img src="{{ BASE_PATH }}/images/customers/evolved-media.png" style="max-width:150px" />
+    <div class="row">
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.virginmobileusa.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/virgin-mobile-150.jpg" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.sprint.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/sprint-150.png" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.evolvedmediasolutions.co.uk/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/evolved-media-solutions-150.png" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="icon-holder">
+                <a href="http://www.fxnetworks.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/fx-networks-150.png" style="max-width:125px" />
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -145,6 +225,8 @@ we are expanding this matrix to include more combinations and testing.
 This table shows our tested stack.  If not shown, it means that Alpaca hasn't been tested on that platform and
 browser combination.  That said, please feel free to evaluate on your own.  There is a good chance
 Alpaca will run just fine.
+
+<br/>
 
 <div align="center" class="stack">
     <table class="stack">
@@ -252,8 +334,7 @@ Alpaca will run just fine.
 
 It's easy to get started.  You can grab the code and drop it into your new or existing projects.  You can also download
 the source code, build it yourself and customize Alpaca for your own projects.  Check out our
-<a href="documentation.html">documentation</a>, <a href="download.html">downloads</a> and
-<a href="release-notes.html">release notes</a>.
+<a href="documentation.html">documentation</a> and <a href="download.html">downloads</a>.
 
 
 ## Open Source Project
@@ -266,6 +347,12 @@ grab a copy of the source code and contribute to the growing Alpaca Community.
 
 If you have a question about Alpaca, please visit the <a href="http://www.cloudcms.org">Alpaca Forums</a>.
 We'd love to get to know you and to hear your feedback!
+
+
+## Enterprise Support
+
+If you're using Alpaca within an enterprise application and would like formal support, please <a href="contact.html">contact us</a>
+ with information about your project.  We will have someone contact you right away.
 
 
 <script>

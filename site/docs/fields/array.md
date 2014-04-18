@@ -349,7 +349,7 @@ Array field rendered in display-only mode.
 <script type="text/javascript" id="field11-script">
 $("#field11").alpaca({
     "data": ["test1", "test2", "test3"],
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

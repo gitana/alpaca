@@ -44,9 +44,9 @@
     };
 
     Alpaca.registerView({
-        "id": "jquerymobile-view",
-        "parent": "web-view",
-        "type": "view",
+        "id": "jquerymobile-display",
+        "parent": "web-display",
+        "type": "display",
         "ui":"jquerymobile",
         "title": "Display view using jQuery Mobile",
         "callbacks": callbacks,
@@ -73,6 +73,12 @@
 
         },
         "templates": {}
+    });
+
+    Alpaca.registerView({
+        "id": "jquerymobile-display-horizontal",
+        "parent": "jquerymobile-display",
+        "horizontal": true
     });
 
     Alpaca.registerView({
@@ -107,6 +113,12 @@
         }
     });
 
+    Alpaca.registerView({
+        "id": "jquerymobile-edit-horizontal",
+        "parent": "jquerymobile-edit",
+        "horizontal": true
+    });
+
     var refreshPageForField = function(fieldEl)
     {
         // find the data-role="page" and refresh it
@@ -129,5 +141,7 @@
         "title": "Create view for jQuery Mobile",
         "displayReadonly": false
     });
+
+
 
 })(jQuery);

@@ -87,6 +87,7 @@ var paths = {
             "src/js/messages/i18n/de_AT.js",
             "src/js/messages/i18n/es_ES.js",
             "src/js/messages/i18n/fr_FR.js",
+            "src/js/messages/i18n/pl_PL.js",
             "src/js/messages/i18n/pt_BR.js",
             "src/js/messages/i18n/zh_CN.js"
         ],
@@ -122,31 +123,31 @@ var paths = {
     },
     templates: {
         web: [
-            "src/templates/web-view/**/*.html",
+            "src/templates/web-display/**/*.html",
             "src/templates/web-edit/**/*.html",
             "src/templates/web-create/**/*.html"
         ],
         jqueryui: [
-            "src/templates/web-view/**/*.html",
+            "src/templates/web-display/**/*.html",
             "src/templates/web-edit/**/*.html",
             "src/templates/web-create/**/*.html",
-            "src/templates/jqueryui-view/**/*.html",
+            "src/templates/jqueryui-display/**/*.html",
             "src/templates/jqueryui-edit/**/*.html",
             "src/templates/jqueryui-create/**/*.html"
         ],
         jquerymobile: [
-            "src/templates/web-view/**/*.html",
+            "src/templates/web-display/**/*.html",
             "src/templates/web-edit/**/*.html",
             "src/templates/web-create/**/*.html",
-            "src/templates/jquerymobile-view/**/*.html",
+            "src/templates/jquerymobile-display/**/*.html",
             "src/templates/jquerymobile-edit/**/*.html",
             "src/templates/jquerymobile-create/**/*.html"
         ],
         bootstrap: [
-            "src/templates/web-view/**/*.html",
+            "src/templates/web-display/**/*.html",
             "src/templates/web-edit/**/*.html",
             "src/templates/web-create/**/*.html",
-            "src/templates/bootstrap-view/**/*.html",
+            "src/templates/bootstrap-display/**/*.html",
             "src/templates/bootstrap-edit/**/*.html",
             "src/templates/bootstrap-create/**/*.html"
         ],

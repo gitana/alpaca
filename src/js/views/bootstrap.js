@@ -38,8 +38,12 @@
     var callbacks = {};
     callbacks["required"] = function()
     {
-        // required fields get a little star
-        $('<span class="glyphicon glyphicon-star"></span>&nbsp;').prependTo(this.getFieldEl());
+        var fieldEl = this.getFieldEl();
+
+        // required fields get a little star in their label
+        var label = $(fieldEl).find("label.alpaca-control-label");
+        $('<span class="alpaca-icon-required glyphicon glyphicon-star"></span>').prependTo(label);
+
     };
     callbacks["invalid"] = function()
     {
@@ -57,6 +61,9 @@
 
         // fieldEl
         var fieldEl = this.getFieldEl();
+
+        // controlEl
+        var controlEl = this.getControlEl();
 
         // all controls get the "form-control" class injected
         $(fieldEl).find("input").addClass("form-control");
@@ -83,8 +90,37 @@
         }
 
         // all control labels get class "control-label"
-        $(fieldEl).find(".alpaca-control label").addClass("control-label");
+        $(fieldEl).find("label.alpaca-control-label").addClass("control-label");
+
+        // if in horizontal mode, add a wrapper div (col-sm-10) and label gets (col-sm-2)
+        if (this.view.horizontal)
+        {
+            $(fieldEl).find("label.alpaca-control-label").addClass("col-sm-2");
+
+            var wrapper = $("<div></div>");
+            wrapper.addClass("col-sm-10");
+
+            $(controlEl).after(wrapper);
+            wrapper.append(controlEl);
+        }
     };
+    callbacks["container"] = function()
+    {
+        var containerEl = this.getContainerEl();
+
+        if (this.view.horizontal)
+        {
+            $(containerEl).addClass("form-horizontal");
+        }
+    };
+    callbacks["form"] = function()
+    {
+        var formEl = this.getFormEl();
+
+        // use pull-right for form buttons
+        $(formEl).find(".alpaca-form-buttons-container").addClass("pull-right");
+    };
+
 
     /*
     // The Wizard still relies on jQuery UI
@@ -100,15 +136,21 @@
     */
 
     Alpaca.registerView({
-        "id": "bootstrap-view",
-        "parent": "web-view",
-        "type": "view",
+        "id": "bootstrap-display",
+        "parent": "web-display",
+        "type": "display",
         "ui": "bootstrap",
         "title": "Display View for Bootstrap 3",
         "displayReadonly": true,
         "callbacks": callbacks,
         "styles": styles,
         "templates": {}
+    });
+
+    Alpaca.registerView({
+        "id": "bootstrap-display-horizontal",
+        "parent": "bootstrap-display",
+        "horizontal": true
     });
 
     Alpaca.registerView({
@@ -124,11 +166,23 @@
     });
 
     Alpaca.registerView({
+        "id": "bootstrap-edit-horizontal",
+        "parent": "bootstrap-edit",
+        "horizontal": true
+    });
+
+    Alpaca.registerView({
         "id": "bootstrap-create",
         "parent": "bootstrap-edit",
         "title": "Create View for Bootstrap 3",
         "type": "create",
         "displayReadonly": false
+    });
+
+    Alpaca.registerView({
+        "id": "bootstrap-create-horizontal",
+        "parent": "bootstrap-create",
+        "horizontal": true
     });
 
 })(jQuery);

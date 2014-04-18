@@ -50,7 +50,7 @@ Time field in display-only mode.
         "options": {
             "type": "time"
         },
-        "view": "VIEW_BOOTSTRAP_DISPLAY"
+        "view": "bootstrap-display"
     });
 </script>
 {% endraw %}

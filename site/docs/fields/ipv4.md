@@ -39,7 +39,7 @@ $("#field2").alpaca({
     "options": {
         "label": "IP Address"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

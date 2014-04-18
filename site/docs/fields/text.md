@@ -69,7 +69,7 @@ $("#field3").alpaca({
         "size": 30
     },
     "view": {
-        "parent": "VIEW_BOOTSTRAP_EDIT",
+        "parent": "bootstrap-edit",
         "styles": {
             ".alpaca-controlfield-label": {
                 "float": "left",
@@ -141,7 +141,7 @@ $("#field6").alpaca({
     "options": {
         "label": "Name"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

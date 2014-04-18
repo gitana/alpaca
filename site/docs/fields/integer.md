@@ -76,7 +76,7 @@ $("#field3").alpaca({
         "exclusiveMaximum": true,
         "divisibleBy": 2
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

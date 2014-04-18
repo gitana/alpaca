@@ -392,11 +392,16 @@
 
                 form.render(function(form) {
 
-                    // load the appropriate template and render it
-                    self._processRender(form.formFieldsContainer, function() {
+                    var tempFieldHolder = $("<div></div>");
 
-                        // bind our field dom element into the container
-                        $(self.field).appendTo(form.formFieldsContainer);
+                    // load the appropriate template and render it
+                    self._processRender(tempFieldHolder, function() {
+
+                        // insert the field before our form fields container
+                        form.formFieldsContainer.before(self.field);
+
+                        // remove the formFieldscOntainer marker
+                        form.formFieldsContainer.remove();
 
                         // bind the top field to the form
                         form.topControl = self;
@@ -712,7 +717,6 @@
         {
             this.view.fireCallback(this, id, arg1, arg2, arg3, arg4, arg5);
         },
-
 
         /**
          * Retrieves the outer "field" rendered DOM element.

@@ -37,7 +37,7 @@ $("#field2").alpaca({
         "type": "personalname",
         "label": "Name"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

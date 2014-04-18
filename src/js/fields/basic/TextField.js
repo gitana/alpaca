@@ -417,10 +417,14 @@
 
                 var el = $(this.control).get(0);
 
-                var elemLen = el.value.length;
-
-                el.selectionStart = elemLen;
-                el.selectionEnd = elemLen;
+                try {
+                    var elemLen = el.value ? el.value.length : 0;
+                    el.selectionStart = elemLen;
+                    el.selectionEnd = elemLen;
+                }
+                catch (e) {
+                    // field type doesn't support selection start and end
+                }
 
                 el.focus();
             }

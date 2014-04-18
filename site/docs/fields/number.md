@@ -73,7 +73,7 @@ Number field with rendered in display-only mode.
 <script type="text/javascript" id="field4-script">
 $("#field4").alpaca({
     "data": 15.01,
-    "view": "VIEW_BOOTSTRAP_DISPLAY",
+    "view": "bootstrap-display",
     "options": {
         "label": "The survey says"
     }

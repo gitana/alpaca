@@ -170,15 +170,18 @@
             loadAllConnector = new loadAllConnectorClass("default");
         }
 
-        // wrap rendered callback to allow for UI treatment (dom focus, etc)
         if (!options) {
             options = {};
         }
-        if (Alpaca.isUndefined(options.focus)) {
-            options.focus = false;
-        }
+
+        // wrap rendered callback to allow for UI treatment (dom focus, etc)
         var _renderedCallback = function(field)
         {
+            // if top level and focus has not been specified, then auto-set
+            if (Alpaca.isUndefined(options.focus) && !field.parent) {
+                options.focus = true;
+            }
+
             // auto-set the focus?
             if (options && options.focus)
             {
@@ -677,30 +680,12 @@
         views: {},
 
         /**
-         * @private
-         *
-         * View ID Prefix.
-         */
-        viewIdPrefix: "VIEW_",
-
-        /**
-         * Validates a view id.
-         *
-         * @param {String} id View id being validated.
-         *
-         * @returns {Boolean} True if the view id is valid, false otherwise.
-         */
-        isValidViewId : function (id) {
-            return Alpaca.startsWith(id, this.viewIdPrefix);
-        },
-
-        /**
          * Generates a valid view id.
          *
          * @returns {String} A valid unique view id.
          */
         generateViewId : function () {
-            return this.viewIdPrefix + this.generateId();
+            return "view-" + this.generateId();
         },
 
         /**
@@ -1445,8 +1430,14 @@
                         var templateId = report.errors[i].templateId;
                         var err = report.errors[i].err;
 
-                        Alpaca.logError("The template: " + templateId + " for view: " + viewId + " failed to compile");
-                        Alpaca.logError(JSON.stringify(err));
+                        var text = "The template: " + templateId + " for view: " + viewId + " failed to compile";
+                        if (err && err.message) {
+                            text += ", message: " + err.message;
+                        }
+                        if (err) {
+                            text += ", err: " + JSON.stringify(err);
+                        }
+                        Alpaca.logError(text);
                     }
 
                     return Alpaca.throwErrorWithCallback("View compilation failed, cannot initialize Alpaca.  Please check the error logs.", errorCallback);
@@ -1458,6 +1449,8 @@
 
         _init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, isDynamicCreation)
         {
+            var self = this;
+
             ///////////////////////////////////////////////////////////////////////////////////////////////////
             //
             // VIEW RESOLUTION
@@ -1590,7 +1583,13 @@
                         // if this is the top-level alpaca field, we apply some additional CSS classes
                         if (!field.parent)
                         {
-                            field.getFieldEl().addClass("alpaca-" + Alpaca.views[view].type);
+                            field.getFieldEl().addClass("alpaca-" + self.getNormalizedView(view).type);
+                        }
+
+                        // if this is the top-level alpaca field, we mark as top
+                        if (!field.parent)
+                        {
+                            field.getFieldEl().addClass("alpaca-top");
                         }
 
                         // if this is the top-level alpaca field, then we call for validation state to be recalculated across
@@ -1837,6 +1836,15 @@
                         engineType = $(domEl).attr("type");
                         template = $(domEl).html();
                     }
+                    else if (template)
+                    {
+                        // check if it is an existing template referenced by template name
+                        var existingTemplate = view.templates[template];
+                        if (existingTemplate)
+                        {
+                            template = existingTemplate;
+                        }
+                    }
                 }
 
                 // if we don't have an engine type here, throw
@@ -1951,7 +1959,7 @@
                             return function(totalCalls) {
                                 compileViewTemplate(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls);
                             };
-                        }(normalizedViews, view, "layout", "layoutTemplate", templateId, template));
+                        }(normalizedViews, view, "layout", "layout", "layoutTemplate", template));
                     }
 
                     // global template
@@ -1963,7 +1971,7 @@
                             return function(totalCalls) {
                                 compileViewTemplate(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls);
                             };
-                        }(normalizedViews, view, "global", "globalTemplate", templateId, template));
+                        }(normalizedViews, view, "global", "global", "globalTemplate", template));
                     }
                 }
 
@@ -2067,14 +2075,14 @@
                 }
             }
             // is this template defined at the global level?
-            else if (templateId == "globalTemplate")
+            else if (templateId == "globalTemplate" || templateId == "global")
             {
-                _cacheKey = Alpaca.makeCacheKey(view.id, "global", "globalTemplate", templateId);
+                _cacheKey = Alpaca.makeCacheKey(view.id, "global", "global", "globalTemplate");
             }
             // is this template defined at the layout level?
-            else if (templateId == "layoutTemplate")
+            else if (templateId == "layoutTemplate" || templateId == "layout")
             {
-                _cacheKey = Alpaca.makeCacheKey(view.id, "layout", "layoutTemplate", templateId);
+                _cacheKey = Alpaca.makeCacheKey(view.id, "layout", "layout", "layoutTemplate");
             }
 
             if (_cacheKey)

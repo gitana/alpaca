@@ -115,3 +115,53 @@ DIV.sponsor P
     color: #aaa;
     margin-top: -15px;
 }
+
+.community .row
+{
+    height: 100px;
+}
+
+.community .icon-holder
+{
+    height: 100px;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.view-layer
+{
+    padding-left:10px;
+    padding-top:10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    border: 1px #aaa dashed;
+}
+
+.view-layer .level1
+{
+    background-color: #fcfcfc;
+}
+.view-layer .level2
+{
+    background-color: #f9f9f9;
+}
+.view-layer .level3
+{
+    background-color: #f6f6f6;
+}
+.view-layer .level4
+{
+    background-color: #f3f3f3;
+}
+.view-layer .level5
+{
+    background-color: #f0f0f0;
+}
+.view-layer .level6
+{
+    background-color: #ededed;
+}
+.view-layer .level7
+{
+    background-color: #eaeaea;
+}

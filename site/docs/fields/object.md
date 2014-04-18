@@ -155,7 +155,7 @@ $("#field4").alpaca({
             zip: "18210"
         }
     },
-    "view": "VIEW_BOOTSTRAP_EDIT",
+    "view": "bootstrap-edit",
     "schema": {
         "title": "Customer Profile",
         "description": "Alpaca Ice Cream Customer Profile",
@@ -265,7 +265,7 @@ $("#field6").alpaca({
             zip: "18210"
         }
     },
-    "view": "VIEW_BOOTSTRAP_EDIT",
+    "view": "bootstrap-edit",
     "schema": {
         "title": "Customer Profile",
         "description": "Alpaca Ice Cream Customer Profile",
@@ -362,7 +362,7 @@ $("#field7").alpaca({
             }
         }
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

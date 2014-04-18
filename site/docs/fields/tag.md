@@ -36,7 +36,7 @@ Tag field in a display-only view.
         "options": {
             "type": "tag"
         },
-        "view": "VIEW_BOOTSTRAP_DISPLAY"
+        "view": "bootstrap-display"
     });
 </script>
 {% endraw %}

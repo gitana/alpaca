@@ -26,11 +26,14 @@
     callbacks["field"] = function()
     {
         this.getFieldEl().addClass("ui-widget");
-        //this.getFieldEl().addClass("ui-widget-content");
     };
     callbacks["required"] = function()
     {
-        $('<span class="ui-icon ui-icon-star"></span>').prependTo(this.getFieldEl());
+        var fieldEl = this.getFieldEl();
+
+        // required fields get a little star in their label
+        var label = $(fieldEl).find("label.alpaca-control-label");
+        $('<span class="alpaca-icon-required ui-icon ui-icon-star"></span>').prependTo(label);
     };
     callbacks["invalid"] = function()
     {
@@ -40,9 +43,38 @@
     {
         this.getFieldEl().removeClass("ui-state-error");
     };
+    callbacks["control"] = function()
+    {
+        var fieldEl = this.getFieldEl();
+        var controlEl = this.getControlEl();
+
+        // if in horizontal mode, add a wrapper div (span_10) and label gets (span_2)
+        if (this.view.horizontal)
+        {
+            $(fieldEl).find("label.alpaca-control-label").addClass("col span_2");
+
+            var wrapper = $("<div></div>");
+            wrapper.addClass("col span_10");
+
+            $(controlEl).after(wrapper);
+            wrapper.append(controlEl);
+        }
+    };
     callbacks["container"] = function()
     {
-        this.getFieldEl().addClass('ui-widget-content');
+        //this.getFieldEl().addClass('ui-widget-content');
+    };
+    callbacks["form"] = function()
+    {
+        var formEl = this.getFormEl();
+
+        if (this.view.horizontal)
+        {
+            $(formEl).addClass("form-horizontal");
+        }
+
+        // use pull-right for form buttons
+        $(formEl).find(".alpaca-form-buttons-container").addClass("alpaca-float-right");
     };
     callbacks["hide"] = function()
     {
@@ -106,15 +138,21 @@
     styles["wizardDoneIcon"] = "ui-icon-triangle-1-e";
 
     Alpaca.registerView({
-        "id": "jqueryui-view",
-        "parent": "web-view",
-        "type": "view",
+        "id": "jqueryui-display",
+        "parent": "web-display",
+        "type": "display",
         "ui": "jqueryui",
         "title": "Display View for jQuery UI",
         "displayReadonly": true,
         "callbacks": callbacks,
         "styles": styles,
         "templates": {}
+    });
+
+    Alpaca.registerView({
+        "id": "jqueryui-display-horizontal",
+        "parent": "jqueryui-display",
+        "horizontal": true
     });
 
     Alpaca.registerView({
@@ -130,11 +168,23 @@
     });
 
     Alpaca.registerView({
+        "id": "jqueryui-edit-horizontal",
+        "parent": "jqueryui-edit",
+        "horizontal": true
+    });
+
+    Alpaca.registerView({
         "id": "jqueryui-create",
         "parent": "jqueryui-edit",
         "type": "create",
         "title": "Create view for jQuery UI",
         "displayReadonly": false
+    });
+
+    Alpaca.registerView({
+        "id": "jqueryui-create-horizontal",
+        "parent": "jqueryui-create",
+        "horizontal": true
     });
 
 })(jQuery);

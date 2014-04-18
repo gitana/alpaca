@@ -185,6 +185,19 @@
                             self.container.addClass(Alpaca.CLASS_CONTAINER);
                         }
 
+                        // mark the form field with "alpaca-horizontal" or "alpaca-vertical"
+                        if (self.view.horizontal)
+                        {
+                            self.container.addClass("alpaca-horizontal");
+                        }
+                        else
+                        {
+                            self.container.addClass("alpaca-vertical");
+                        }
+
+                        // CALLBACK: "container"
+                        self.fireCallback("container");
+
                         self.afterRenderContainer(model, function() {
 
                             callback();
@@ -395,22 +408,46 @@
 
                 var item = model.items[i];
 
+                var layoutBindings = null;
+                if (self.view.getLayout()) {
+                    layoutBindings = self.view.getLayout().bindings;
+                }
+
                 // find the insertion point
                 var insertionPoint = $(self.container).find("[" + Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY + "='" + item.name + "']");
-                $(insertionPoint).replaceWith(item.field);
-                $(item.field).addClass("alpaca-container-item");
-
-                if (i == 0)
+                if (!layoutBindings)
                 {
-                    $(item.field).addClass("alpaca-container-item-first");
-                }
+                    $(insertionPoint).replaceWith(item.field);
+                    $(item.field).addClass("alpaca-container-item");
 
-                if (i + 1 == model.items.length)
+                    if (i == 0)
+                    {
+                        $(item.field).addClass("alpaca-container-item-first");
+                    }
+
+                    if (i + 1 == model.items.length)
+                    {
+                        $(item.field).addClass("alpaca-container-item-last");
+                    }
+
+                    $(item.field).attr("data-alpaca-container-item-key", item.name);
+                }
+                else
                 {
-                    $(item.field).addClass("alpaca-container-item-last");
-                }
+                    // use a layout
+                    var bindingId = layoutBindings[item.name];
+                    if (bindingId)
+                    {
+                        var holder = $('#' + bindingId, self.field);
+                        if (holder.length > 0)
+                        {
+                            $(item.field).appendTo(holder);
+                        }
+                    }
 
-                $(item.field).attr("data-alpaca-container-item-key", item.name);
+                    // remove insertion point
+                    $(insertionPoint).remove();
+                }
 
                 // register the child
                 self.registerChild(item, i);

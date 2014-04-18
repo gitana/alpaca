@@ -957,7 +957,7 @@
 
                 delete this.childrenById[id];
 
-                $('#' + id + "-item-container", this.outerEl).remove();
+                $('#' + id + "-item-container", this.getContainerEl()).remove();
                 this.refreshValidationState();
                 this.updateToolbarItemsStatus();
                 this.updatePathAndName();

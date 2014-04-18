@@ -52,10 +52,10 @@
            </button>
            <ul class="dropdown-menu" role="menu">
              <li><a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Home</a></li>
-             <li><a href="{{ BASE_PATH}}/examples.html">Examples</a></li>
-             <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
+               <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
+             <li><a href="{{ BASE_PATH}}/examples.html">Examples and Demos</a></li>
              <li><a href="{{ BASE_PATH}}/documentation.html">Documentation</a></li>
-             <li><a href="{{ BASE_PATH}}/download.html">Download / GitHub</a></li>
+             <li><a href="{{ BASE_PATH}}/download.html">Download</a></li>
              <li><a href="{{ BASE_PATH}}/contact.html">Contact Us</a></li>
              <li class="divider"></li>
              <li><a href="#">Top of Page</a></li>
@@ -73,8 +73,8 @@
 
 		</div>
 
-	{% include JB/analytics %}
-	<script type="text/javascript" src="{{ ASSET_PATH }}/js/app.js"></script>
+        {% include JB/analytics %}
+        <script type="text/javascript" src="{{ ASSET_PATH }}/js/app.js"></script>
 
 	</body>
 

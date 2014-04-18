@@ -39,7 +39,7 @@ $("#field2").alpaca({
     "options": {
         "label": "Phone Number"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

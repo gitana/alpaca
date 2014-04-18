@@ -136,6 +136,9 @@
                 // messages
                 mergeMap(this, element, "messages");
 
+                // horizontal
+                setScalar(this, element, "horizontal");
+
                 // TODO: remove some of these
                 setScalar(this, element, "collapsible");
                 setScalar(this, element, "legendStyle");

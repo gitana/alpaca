@@ -347,7 +347,7 @@ $(function() {
 
 
             <h3>Example 11: </h3>
-            <h4>Invalid field with VIEW_WEB_CREATE (no init validation)</h4>
+            <h4>Invalid field with view '''bootstrap-create''' (no init validation)</h4>
 
             <div id="field11">
             </div>
@@ -360,7 +360,7 @@ $(function() {
                             "type": "string",
                             "required": true
                         },
-                        "view": "VIEW_WEB_CREATE"
+                        "view": "bootstrap-create"
                     });
                 });
             </script>
@@ -368,7 +368,7 @@ $(function() {
 
 
             <h3>Example 12: </h3>
-            <h4>Custom validator (with VIEW_WEB_CREATE).</h4>
+            <h4>Custom validator (with view '''bootstrap-create''').</h4>
             <div id="field12">
             </div>
             <script type="text/javascript" id="field12-script">
@@ -410,7 +410,7 @@ $(function() {
                                 }
                             }
                         },
-                        "view": "VIEW_WEB_CREATE"
+                        "view": "bootstrap-create"
                     });
                 });
             </script>
@@ -550,7 +550,7 @@ $(function() {
                 $(function() {
                     $("#field15").alpaca({
                         "view": {
-                            "parent": "VIEW_JQUERYUI_EDIT",
+                            "parent": "bootstrap-edit",
                             "layout" : {
                                 "template": './layout15.html',
                                 "bindings": {

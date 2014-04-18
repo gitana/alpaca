@@ -51,7 +51,7 @@ $("#field3").alpaca({
         "type": "country",
         "label": "Country"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

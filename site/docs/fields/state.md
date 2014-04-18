@@ -73,7 +73,7 @@ $("#field4").alpaca({
         "format": "code",
         "label": "State"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

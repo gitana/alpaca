@@ -128,7 +128,7 @@ $("#field2").alpaca({
             }
         }
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

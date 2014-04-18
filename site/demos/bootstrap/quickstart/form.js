@@ -79,7 +79,19 @@ $(document).ready(function() {
                 "label": "Country"
             }
         },
-        "focus": true
+        "renderForm": true,
+        "form": {
+            "attributes": {
+                "method": "POST",
+                "action": "save.php",
+                "enctype": "multipart/form-data"
+            },
+            "buttons": {
+                "submit": {
+                    "value": "Submit the Form"
+                }
+            }
+        }
     };
 
     /**
@@ -104,6 +116,7 @@ $(document).ready(function() {
         "schema": schema,
         "options": options,
         "postRender": postRenderCallback,
-        "ui": "bootstrap"
+        "view": "bootstrap-edit"//,
+        //"view": "bootstrap-edit-horizontal"
     });
 });

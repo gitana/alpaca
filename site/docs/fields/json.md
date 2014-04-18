@@ -51,7 +51,7 @@ $("#field2").alpaca({
         "cols": 80,
         "label": "JSON"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

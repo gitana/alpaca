@@ -93,7 +93,7 @@ $("#field4").alpaca({
     "schema": {
         "enum": ["Vanilla", "Chocolate", "Coffee"]
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

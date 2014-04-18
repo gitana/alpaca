@@ -51,7 +51,7 @@ $("#field2").alpaca({
 
 
 ## Example 3
-Here we use the <code>VIEW_BOOTSTRAP_DISPLAY</code> view to tell Alpaca to render a set of
+Here we use the <code>bootstrap-display</code> view to tell Alpaca to render a set of
 fields in a display-only mode.  Nothing is editable, including the date.
 <div id="field3"> </div>
 {% raw %}
@@ -75,7 +75,7 @@ $("#field3").alpaca({
             }
         }
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

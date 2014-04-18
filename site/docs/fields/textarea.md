@@ -58,7 +58,7 @@ $("#field3").alpaca({
         "rows": 6,
         "cols": 80
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

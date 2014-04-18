@@ -63,7 +63,7 @@ end user to modify an address and view it on a map.
             "title": "Home Address",
             "type": "any"
         },
-        "view": "VIEW_BOOTSTRAP_DISPLAY"
+        "view": "bootstrap-display"
     });
 </script>
 {% endraw %}

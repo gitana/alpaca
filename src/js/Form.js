@@ -125,6 +125,9 @@
                 // add default class
                 self.form.addClass("alpaca-form");
 
+                // CALLBACK: "form"
+                self.fireCallback("form");
+
                 // execute callback
                 callback(self);
             });
@@ -234,28 +237,6 @@
                 $(this).click(function() {
                     $(this).attr("button-pushed", true);
                 });
-
-                /*
-
-                // TODO: this is technically wrong since we only want to trap for left-mousedown...
-                $(v).mousedown(function() {
-                    var _this = $(this);
-                    _this.attr("button-pushed","true");
-                    setTimeout(function() {
-
-                        if (_this.attr("button-pushed") && _this.attr("button-pushed") == "true" ) {
-                            _this.click();
-                        }
-
-                    }, 150);
-                });
-
-                $(v).click(function() {
-                    $(this).removeAttr("button-pushed");
-                });
-
-                _this.buttons[$(v).attr('data-key')] = $(v);
-                */
             });
 
             callback();
@@ -463,7 +444,32 @@
         isEmpty: function()
         {
             return this.topControl.isEmpty();
+        },
+
+        /**
+         * Fires a view callback for the current form.
+         *
+         * @param id
+         * @param arg1
+         * @param arg2
+         * @param arg3
+         * @param arg4
+         * @param arg5
+         */
+        fireCallback: function(id, arg1, arg2, arg3, arg4, arg5)
+        {
+            this.view.fireCallback(this, id, arg1, arg2, arg3, arg4, arg5);
+        },
+
+        /**
+         * Retrieves the form element.
+         *
+         * @returns {Object} The rendered DOM element.
+         */
+        getFormEl: function() {
+            return this.form;
         }
+
     });
 
 })(jQuery);

@@ -71,7 +71,7 @@ $("#field4").alpaca({
         "format": "five",
         "label": "Zip Code"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

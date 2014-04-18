@@ -85,11 +85,9 @@
          */
         getLayout: function ()
         {
-            var templateDescriptor = this.getTemplateDescriptor("layoutTemplate");
-
             return {
-                "templateDescriptor" : templateDescriptor,
-                "bindings" : this.getViewParam(["layout","bindings"], true)
+                "templateDescriptor": this.getTemplateDescriptor("layoutTemplate"),
+                "bindings": this.getViewParam(["layout","bindings"], true)
             };
         },
 

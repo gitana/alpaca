@@ -61,7 +61,7 @@ $("#field3").alpaca({
     "schema": {
         "format": "uri"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

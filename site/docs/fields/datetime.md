@@ -114,7 +114,7 @@ $("#field4").alpaca({
     "options": {
         "label": "The current date and time"
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}

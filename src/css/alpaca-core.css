@@ -123,12 +123,35 @@
 
 }
 
+/** Added to form containers that are rendering in horizontal mode **/
+.alpaca-horizontal
+{
+
+}
+
+/** Added to form containers that are rendering in vertical mode **/
+.alpaca-vertical
+{
+
+}
+
+/** Added to the top most container element **/
+.alpaca-top
+{
+
+}
+
 
 /** ******************************************************** **/
 /**                           ICONS                          **/
 /** ******************************************************** **/
 
 .alpaca-icon-helper
+{
+
+}
+
+.alpaca-icon-required
 {
 
 }
@@ -146,5 +169,10 @@
 .alpaca-clear
 {
     clear: both;
+}
+
+.alpaca-float-right
+{
+    float: right;
 }
 

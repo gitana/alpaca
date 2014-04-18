@@ -41,6 +41,10 @@
     callbacks["container"] = function()
     {
     };
+    // fires after a form renders
+    callbacks["form"] = function()
+    {
+    };
     // fires when a field is marked as required
     callbacks["required"] = function()
     {
@@ -85,15 +89,22 @@
     */
 
     Alpaca.registerView({
-        "id": "web-view",
+        "id": "web-display",
         "parent": "base",
-        "type": "view",
+        "type": "display",
         "ui": "web",
         "title": "Default HTML5 display view",
         "displayReadonly": true,
         "templates": {},
         "callbacks": callbacks,
-        "styles": styles
+        "styles": styles,
+        "horizontal": false
+    });
+
+    Alpaca.registerView({
+        "id": "web-display-horizontal",
+        "parent": "web-display",
+        "horizontal": true
     });
 
     Alpaca.registerView({
@@ -105,7 +116,14 @@
         "displayReadonly": true,
         "templates": {},
         "callbacks": callbacks,
-        "styles": styles
+        "styles": styles,
+        "horizontal": false
+    });
+
+    Alpaca.registerView({
+        "id": "web-edit-horizontal",
+        "parent": "web-edit",
+        "horizontal": true
     });
 
     Alpaca.registerView({
@@ -114,7 +132,14 @@
         "type": "create",
         "title": "Default HTML5 create view",
         "displayReadonly": false,
-        "templates": {}
+        "templates": {},
+        "horizontal": false
+    });
+
+    Alpaca.registerView({
+        "id": "web-create-horizontal",
+        "parent": "web-create",
+        "horizontal": true
     });
 
 })(jQuery);

@@ -98,13 +98,13 @@ $(document).ready(function() {
      * Render the form.
      *
      * We call alpaca() with the data, schema and options to tell Alpaca to render into the selected dom element(s).
-     *
      */
     $("#form").alpaca({
         "data": data,
         "schema": schema,
         "options": options,
         "postRender": postRenderCallback,
-		"ui": "jqueryui"
+        "view": "jqueryui-edit"
+        //"view": "jqueryui-edit-horizontal"
     });
 });

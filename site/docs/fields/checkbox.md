@@ -46,7 +46,7 @@ Simple checkbox field rendered in display-only mode.
 <script type="text/javascript" id="field3-script">
 $("#field3").alpaca({
     "data": false,
-    "view": "VIEW_BOOTSTRAP_DISPLAY",
+    "view": "bootstrap-display",
     "options": {
         "label": "Registered?"
     }

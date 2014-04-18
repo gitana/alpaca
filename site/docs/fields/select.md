@@ -152,7 +152,7 @@ $("#field7").alpaca({
     "schema": {
         "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
     },
-    "view": "VIEW_BOOTSTRAP_DISPLAY"
+    "view": "bootstrap-display"
 });
 </script>
 {% endraw %}
