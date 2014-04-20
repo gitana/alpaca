@@ -54,6 +54,73 @@
         });
     });
 
+    test("Currency field with rounding up", function() {
+        stop();
+        $("#currency-fixture").alpaca({
+            "data": "4.05",
+            "schema": {
+                "title": "Cost",
+                "type": "number"
+            },
+            "options": {
+                "type": "currency",
+                "round": "up"
+            },
+            "postRender": function (renderedField) {
+                expect(2);
+                var inputElem = $('#currency-fixture input');
+                ok(inputElem.length, 'Currency input field generated.');
+                strictEqual(renderedField.getValue(), 5, 'getValue() rounds up correctly.');
+                start();
+            }
+        });
+    });
+
+    test("Currency field with rounding down", function() {
+        stop();
+        $("#currency-fixture").alpaca({
+            "data": "4.05",
+            "schema": {
+                "title": "Cost",
+                "type": "number"
+            },
+            "options": {
+                "type": "currency",
+                "round": "down"
+            },
+            "postRender": function (renderedField) {
+                expect(2);
+                var inputElem = $('#currency-fixture input');
+                ok(inputElem.length, 'Currency input field generated.');
+                strictEqual(renderedField.getValue(), 4, 'getValue() rounds down correctly.');
+                start();
+            }
+        });
+    });
+
+    test("Currency field with rounding to the nearest", function() {
+        stop();
+        $("#currency-fixture").alpaca({
+            "data": "4.05",
+            "schema": {
+                "title": "Cost",
+                "type": "number"
+            },
+            "options": {
+                "type": "currency",
+                "unmask": false,
+                "round": "nearest"
+            },
+            "postRender": function (renderedField) {
+                expect(2);
+                var inputElem = $('#currency-fixture input');
+                ok(inputElem.length, 'Currency input field generated.');
+                strictEqual(renderedField.getValue(), "$4.00", 'getValue() rounds to the nearest correctly.');
+                start();
+            }
+        });
+    });
+
     test("Currency field disallow negative", function() {
         stop();
         $("#currency-fixture").alpaca({
