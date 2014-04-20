@@ -39,7 +39,7 @@
             for (var i in pfOptionsSchema) {
                 var option = pfOptionsSchema[i];
                 if (!(i in options)) {
-                    options[i] = option.default || undefined;
+                    options[i] = option["default"] || undefined;
                 }
             }
 
@@ -102,7 +102,7 @@
             } else {
                 return val;
             }
-        },
+        },//__BUILDER_HELPERS
 
         getSchemaOfPriceFormatOptions: function() {
             return {
@@ -191,9 +191,7 @@
          * @see Alpaca.Fields.TextField#getSchemaOfOptions
          */
         getSchemaOfOptions: function() {
-
             return Alpaca.merge(this.base(), this.getSchemaOfPriceFormatOptions());
-
         },
 
         /**
