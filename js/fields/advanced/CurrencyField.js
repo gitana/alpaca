@@ -58,13 +58,18 @@
          */
         getValue: function() {
             if (this.options.unmask) {
-                var unmasked   = "" + parseFloat(this.field.unmask());
-                var len        = unmasked.length;
-                var centsLimit = this.options.centsLimit;
-                var value      = unmasked.substring(0, len - centsLimit)
-                               + '.'
-                               + unmasked.substring(len - centsLimit, len);
-                return parseFloat(value);
+                var field  = this.field;
+                var val    = $(field).is('input') ? field.val() : field.hmtl();
+                var result = '';
+                for (var i in val) {
+                    var cur = val[i];
+                    if (!isNaN(cur)) {
+                        result += cur;
+                    } else if (cur === this.options.centsSeparator) {
+                        result += '.';
+                    }
+                }
+                return parseFloat(result);
             } else {
                 return this.field.val();
             }
