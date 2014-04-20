@@ -159,7 +159,7 @@
                     },
                     "round": {
                         "title": "Round",
-                        "description": "Determines if the field is rounded.",
+                        "description": "Determines if the field is rounded. (Rounding is done when getValue is called and is not reflected in the UI)",
                         "type": "string",
                         "enum": [ "up", "down", "nearest", "none" ],
                         "default": "none"
