@@ -173,7 +173,7 @@
                             assignedValue = fieldValue;
                         }
 
-                        if (assignedValue)
+                        if (assignedValue !== null)
                         {
                             o[propertyId] = assignedValue;
                         }
@@ -277,10 +277,11 @@
             var items = [];
 
             // we keep a map of all of the properties in our original data object
-            // as we render elements out of the schema, we remove from the dataProperties map
+            // as we render elements out of the schema, we remove from the extraDataProperties map
             // whatever is leftover are the data properties that were NOT rendered because they were not part
             // of the schema
-            // we use this for debugging
+            //
+            // this is primarily maintained for debugging purposes, so as to inform the developer of mismatches
             var extraDataProperties = {};
             for (var dataKey in _this.data) {
                 extraDataProperties[dataKey] = dataKey;
@@ -339,10 +340,10 @@
 
                             if (!schema)
                             {
-                                Alpaca.logError("Unable to resolve schema for property: " + propertyId);
+                                Alpaca.logDebug("Unable to resolve schema for property: " + propertyId);
                             }
 
-                            _this.createItem(propertyId, schema, options, itemData, null, false, function(addedItemControl) {
+                            _this.createItem(propertyId, schema, options, itemData, null, function(addedItemControl) {
 
                                 items.push(addedItemControl);
 
@@ -379,10 +380,9 @@
          * @param {Object} fieldOptions Child field options.
          * @param {Any} value Child field value
          * @param {String} insertAfterId Location where the child item will be inserted.
-         * @param [Boolean] isDynamicSubItem whether this item is being dynamically created (after first render)
          * @param [Function} postRenderCallback called once the item has been added
          */
-        createItem: function(propertyId, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem, postRenderCallback)
+        createItem: function(propertyId, itemSchema, itemOptions, itemData, insertAfterId, postRenderCallback)
         {
             var _this = this;
 
@@ -400,7 +400,6 @@
                     _this.errorCallback.call(_this, err);
                 },
                 "notTopLevel":true,
-                "isDynamicCreation": (isDynamicSubItem || this.isDynamicCreation),
                 "render" : function(fieldControl, cb) {
                     // render
                     fieldControl.parent = _this;
@@ -424,8 +423,6 @@
                     }
                 }
             });
-
-            return containerElem;
         },
 
         /**
@@ -907,56 +904,6 @@
             return valid;
         },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /**
          * Gets child index.
          *
@@ -974,34 +921,15 @@
                 }
             }
             return -1;
-        },
+        }
 
-        /**
-         * Removes child
-         *
-         * @param {String} id the alpaca field id of the field to be removed
-         */
-        removeItem: function(id)
-        {
-            this.children = $.grep(this.children, function(val, index) {
-                return (val.getId() != id);
-            });
 
-            var childField = this.childrenById[id];
 
-            delete this.childrenById[id];
-            if (childField.propertyId)
-            {
-                delete this.childrenByPropertyId[childField.propertyId];
-            }
-
-            childField.destroy();
-
-            this.refreshValidationState();
-
-            // trigger update handler
-            this.triggerUpdate();
-        },
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DYNAMIC METHODS
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         /**
          * Adds a child item.  Returns the container element right away.
@@ -1012,10 +940,11 @@
          * @param {Object} fieldOptions Child field options.
          * @param {Any} value Child field value
          * @param {String} insertAfterId Location where the child item will be inserted.
-         * @param [Boolean] isDynamicSubItem whether this item is being dynamically created (after first render)
          * @param [Function} postRenderCallback called once the item has been added
          */
-        addItem: function(propertyId, itemSchema, itemOptions, itemData, insertAfterId, isDynamicSubItem, postRenderCallback)
+            /*
+        //addItem: function(propertyId, itemSchema, itemOptions, itemData, insertAfterId, postRenderCallback)
+        addItem: function(index, schema, options, data, callback)
         {
             var _this = this;
 
@@ -1033,7 +962,6 @@
                     _this.errorCallback.call(_this, err);
                 },
                 "notTopLevel":true,
-                "isDynamicCreation": (isDynamicSubItem || this.isDynamicCreation),
                 "render" : function(fieldControl, cb) {
                     // render
                     fieldControl.parent = _this;
@@ -1099,8 +1027,36 @@
             });
 
             return containerElem;
-        }
+        },*/
 
+        /*
+        removeItem: function(id, callback)
+        {
+            this.children = $.grep(this.children, function(val, index) {
+                return (val.getId() != id);
+            });
+
+            var childField = this.childrenById[id];
+
+            delete this.childrenById[id];
+            if (childField.propertyId)
+            {
+                delete this.childrenByPropertyId[childField.propertyId];
+            }
+
+            childField.destroy();
+
+            this.refreshValidationState();
+
+            // trigger update handler
+            this.triggerUpdate();
+
+            if (callback)
+            {
+                callback();
+            }
+        }
+        */
 
         //__BUILDER_HELPERS
         ,

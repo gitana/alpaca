@@ -66,7 +66,6 @@
         var errorCallback = null;
         var connector = null;
         var notTopLevel = false;
-        var isDynamicCreation = false;
         var initialSettings = {};
 
         // if these options are provided, then data, schema, options and source are loaded via connector
@@ -129,9 +128,6 @@
                 if (!Alpaca.isEmpty(args[1].notTopLevel)) {
                     notTopLevel = args[1].notTopLevel;
                 }
-                if (!Alpaca.isEmpty(args[1].isDynamicCreation)) {
-                    isDynamicCreation = args[1].isDynamicCreation;
-                }
             } else {
                 // "data" is the second argument
                 data = args[1];
@@ -189,26 +185,32 @@
 
                     if (options.focus)
                     {
-                        if (field.isControlField)
+                        if (field.isControlField && field.isAutoFocusable())
                         {
                             // just focus on this one
                             field.focus();
                         }
                         else if (field.isContainerField)
                         {
-                            // if focus = true, then focus on the first child control
+                            // if focus = true, then focus on the first child control if it is auto-focusable
                             if (options.focus === true)
                             {
                                 // pick first element in form
                                 if (field.children && field.children.length > 0) {
-                                    field.children[0].focus();
+                                    if (field.children[0].isControlField)
+                                    {
+                                        if (field.children[0].isAutoFocusable())
+                                        {
+                                            field.children[0].focus();
+                                        }
+                                    }
                                 }
                             }
                             else if (typeof(options.focus) == "string")
                             {
                                 // assume it is a path to the child
                                 var child = field.getControlByPath(options.focus);
-                                if (child && child.isControlField) {
+                                if (child && child.isControlField && child.isAutoFocusable()) {
                                     child.focus();
                                 }
                             }
@@ -263,7 +265,7 @@
             }
 
             // init alpaca
-            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, initialSettings, callback, _renderedCallback, connector, errorCallback, isDynamicCreation);
+            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, initialSettings, callback, _renderedCallback, connector, errorCallback);
 
         }, function (loadError) {
             errorCallback(loadError);
@@ -869,7 +871,12 @@
         /**
          * Default date format.
          */
-        defaultDateFormat: "mm/dd/yy",
+        defaultDateFormat: "MM/DD/YYYY",
+
+        /**
+         * Default time format.
+         */
+        defaultTimeFormat: "HH:SS",
 
         /**
          * Regular expressions for fields.
@@ -1389,11 +1396,10 @@
          * @param {Function} renderedCallback Post-render callback.
          * @param {Alpaca.connector} connector Field connector.
          * @param {Function} errorCallback Error callback.
-         * @param {Boolean} isDynamicCreation whether this alpaca field is being dynamically created (after first render)
          *
          * @returns {Alpaca.Field} New field instance.
          */
-        init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, isDynamicCreation) {
+        init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback) {
 
             var self = this;
 
@@ -1443,11 +1449,11 @@
                     return Alpaca.throwErrorWithCallback("View compilation failed, cannot initialize Alpaca.  Please check the error logs.", errorCallback);
                 }
 
-                self._init(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, isDynamicCreation);
+                self._init(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback);
             }, errorCallback);
         },
 
-        _init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, isDynamicCreation)
+        _init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback)
         {
             var self = this;
 
@@ -1561,7 +1567,6 @@
                     $(el).addClass("alpaca-field-rendering");
                     $(el).addClass("alpaca-hidden");
 
-                    field.isDynamicCreation = isDynamicCreation;
                     Alpaca.fieldInstances[field.getId()] = field;
 
                     // mechanism for looking up field instances by id
@@ -1597,7 +1602,11 @@
                         if (!field.parent)
                         {
                             // final call to update validation state
-                            field.refreshValidationState(true);
+                            // only do this if we're not supposed to suspend initial validation errors
+                            if (!field.hideInitValidationError)
+                            {
+                                field.refreshValidationState(true);
+                            }
 
                             // force hideInitValidationError to false for field and all children
                             if (field.view.type != 'view')
@@ -1619,12 +1628,6 @@
                         // reveal field after rendering
                         $(el).removeClass("alpaca-field-rendering");
                         $(el).removeClass("alpaca-hidden");
-
-                        if (Alpaca.collectTiming)
-                        {
-                            var t2 = new Date().getTime();
-                            counters.increment(field.getFieldType(), (t2-t1));
-                        }
 
                         renderedCallback(field);
                     };
@@ -2860,8 +2863,14 @@
         return context;
     };
 
-    Alpaca.updateValidationStateForContext = function(context)
+    Alpaca.updateValidationStateForContext = function(view, context)
     {
+        // not in display mode
+        if (view.type == "display")
+        {
+            return;
+        }
+
         // walk through each and flip any DOM UI based on entry state
         for (var i = 0; i < context.length; i++)
         {
@@ -2869,31 +2878,31 @@
             var field = entry.field;
 
             // clear out previous validation UI markers
-            field.fireCallback("removeError");
-            field.getFieldEl().removeClass("alpaca-field-invalid alpaca-field-invalid-hidden alpaca-field-valid");
-
-            var showMessages = false;
+            field.getFieldEl().removeClass("alpaca-invalid alpaca-invalid-hidden alpaca-valid");
+            field.fireCallback("clearValidity");
 
             // valid?
             if (entry.valid)
             {
                 field.getFieldEl().addClass("alpaca-field-valid");
+                field.fireCallback("valid");
             }
             else
             {
                 // we don't markup invalidation state for readonly fields
                 if (!field.options.readonly)
                 {
-                    if (!field.hideInitValidationError)
-                    {
-                        field.fireCallback("error");
-                        field.getFieldEl().addClass("alpaca-field-invalid");
-
-                        showMessages = true;
+                    var hidden = false;
+                    if (field.hideInitValidationError) {
+                        hidden = true;
                     }
-                    else
+
+                    field.fireCallback("invalid", hidden);
+
+                    field.getFieldEl().addClass("alpaca-invalid");
+                    if (hidden)
                     {
-                        field.getFieldEl().addClass("alpaca-field-invalid-hidden");
+                        field.getFieldEl().addClass("alpaca-invalid-hidden");
                     }
                 }
                 else
@@ -2940,11 +2949,6 @@
                         field.displayMessage(messages, field.valid);
                     }
                 }
-            }
-
-            if (showMessages)
-            {
-                field.showHiddenMessages();
             }
         }
     };
@@ -3997,6 +4001,8 @@
     Alpaca.MARKER_CLASS_FORM_ITEMS_FIELD = "alpaca-marker-form-items-field";
     Alpaca.CLASS_CONTAINER = "alpaca-container";
     Alpaca.CLASS_CONTROL = "alpaca-control";
+    Alpaca.MARKER_CLASS_INSERT = "alpaca-marker-insert";
+    Alpaca.MARKER_DATA_INSERT_KEY = "data-alpaca-marker-insert-key";
 
     Alpaca.makeCacheKey = function(viewId, scopeType, scopeId, templateId)
     {
@@ -4027,6 +4033,110 @@
         parts.scopeId = scopeIdentifier.substring(z+1);
 
         return parts;
+    };
+
+    /**
+     * Creates an empty data object for a given JSON schema.
+     *
+     * @param schema
+     * @returns {string}
+     */
+    Alpaca.createEmptyDataInstance = function(schema)
+    {
+        return "";
+    };
+
+    /**
+     * Swaps two divs visually and then fires a callback.
+     *
+     * @param source
+     * @param target
+     * @param duration
+     * @param callback
+     */
+    Alpaca.animatedSwap = function(source, target, duration, callback)
+    {
+        if (typeof(duration) == "function") {
+            callback = duration;
+            duration = 500;
+        }
+
+        var _swap = function(a, b, duration, callback)
+        {
+            var from = $(a),
+                dest = $(b),
+                from_pos = from.offset(),
+                dest_pos = dest.offset(),
+                from_clone = from.clone(),
+                dest_clone = dest.clone(),
+                total_route_vertical   = dest_pos.top + dest.height() - from_pos.top,
+                route_from_vertical    = 0,
+                route_dest_vertical    = 0,
+                total_route_horizontal = dest_pos.left + dest.width() - from_pos.left,
+                route_from_horizontal  = 0,
+                route_dest_horizontal  = 0
+
+            from.css("opacity", 0);
+            dest.css("opacity", 0);
+
+            from_clone.insertAfter(from).css({position: "absolute", width: from.outerWidth(), height: from.outerHeight()}).offset(from_pos).css("z-index", "999")
+            dest_clone.insertAfter(dest).css({position: "absolute", width: dest.outerWidth(), height: dest.outerHeight()}).offset(dest_pos).css("z-index", "999")
+
+            if(from_pos.top != dest_pos.top)
+                route_from_vertical = total_route_vertical - from.height()
+            route_dest_vertical = total_route_vertical - dest.height()
+            if(from_pos.left != dest_pos.left)
+                route_from_horizontal = total_route_horizontal - from.width()
+            route_dest_horizontal = total_route_horizontal - dest.width()
+
+            from_clone.animate({
+                top: "+=" + route_from_vertical + "px",
+                left: "+=" + route_from_horizontal + "px"
+            }, duration, function(){
+                dest.css("opacity", 1);
+                $(this).remove();
+            });
+
+            dest_clone.animate({
+                top: "-=" + route_dest_vertical + "px",
+                left: "-=" + route_dest_horizontal + "px"
+            }, duration, function(){
+                from.css("opacity", 1);
+                $(this).remove();
+            });
+
+            window.setTimeout(function() {
+                callback();
+            }, duration + 1);
+        };
+
+        _swap(source, target, duration, callback);
+    };
+
+    Alpaca.findClosest = function(el, filter)
+    {
+        var $found = $();
+
+        // current place
+        var $currentSet = $(el);
+        while ($currentSet.length)
+        {
+            if (filter)
+            {
+                $found = $currentSet.filter(filter);
+            }
+
+            if ($found.length)
+            {
+                break;
+            }
+
+            // walk down into children
+            $currentSet = $currentSet.children();
+        }
+
+        // return matches
+        return $found;
     };
 
 })(jQuery);

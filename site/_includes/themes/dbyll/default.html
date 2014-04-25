@@ -38,21 +38,25 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-            <li class="active"><a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Home</a></li>
-            <li><a href="{{ BASE_PATH}}{{ site.JB.categories_path }}">Categories</a></li>
-            <li><a href="{{ BASE_PATH}}{{ site.JB.tags_path }}">Tags</a></li>
+                <li><a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Home</a></li>
+                <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
+                <li><a href="{{ BASE_PATH}}/examples.html">Examples and Demos</a></li>
+                <li><a href="{{ BASE_PATH}}/documentation.html">Documentation</a></li>
+                <li><a href="{{ BASE_PATH}}/download.html">Download</a></li>
+                <li><a href="{{ BASE_PATH}}/contact.html">Contact Us</a></li>
             </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
 
         <!-- nav-menu-dropdown -->
-        <div class="btn-group hidden-xs" id="nav-menu">
+        <!--
+        <div class="btn-group visible-xs" id="nav-menu">
            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
              <i class="fa fa-bars"></i>
            </button>
            <ul class="dropdown-menu" role="menu">
              <li><a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Home</a></li>
-               <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
+             <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
              <li><a href="{{ BASE_PATH}}/examples.html">Examples and Demos</a></li>
              <li><a href="{{ BASE_PATH}}/documentation.html">Documentation</a></li>
              <li><a href="{{ BASE_PATH}}/download.html">Download</a></li>
@@ -61,6 +65,7 @@
              <li><a href="#">Top of Page</a></li>
            </ul>
         </div>
+        -->
 
 		<div class="col-sm-3 sidebar hidden-xs">
 			{% include themes/dbyll/sidebar.html %}

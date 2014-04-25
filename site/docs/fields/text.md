@@ -40,7 +40,7 @@ $("#field2").alpaca({
     },
     "options": {
         "label": "Ice Cream",
-        "helper": "Your favorite ice cream?",
+        "helper": "Please tell us the kind of ice cream you love most!",
         "size": 30,
         "placeholder": "Enter an ice cream flavor"
     }

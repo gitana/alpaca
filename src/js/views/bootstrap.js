@@ -47,8 +47,11 @@
     };
     callbacks["invalid"] = function()
     {
-        // invalid fields add the class 'has-error'
-        $(this.getFieldEl()).addClass('has-error');
+        // if this is a control field, add class "has-error"
+        if (this.isControlField)
+        {
+            $(this.getFieldEl()).addClass('has-error');
+        }
     };
     callbacks["valid"] = function()
     {
@@ -92,13 +95,13 @@
         // all control labels get class "control-label"
         $(fieldEl).find("label.alpaca-control-label").addClass("control-label");
 
-        // if in horizontal mode, add a wrapper div (col-sm-10) and label gets (col-sm-2)
+        // if in horizontal mode, add a wrapper div (col-sm-9) and label gets (col-sm-3)
         if (this.view.horizontal)
         {
-            $(fieldEl).find("label.alpaca-control-label").addClass("col-sm-2");
+            $(fieldEl).find("label.alpaca-control-label").addClass("col-sm-3");
 
             var wrapper = $("<div></div>");
-            wrapper.addClass("col-sm-10");
+            wrapper.addClass("col-sm-9");
 
             $(controlEl).after(wrapper);
             wrapper.append(controlEl);
@@ -120,6 +123,15 @@
         // use pull-right for form buttons
         $(formEl).find(".alpaca-form-buttons-container").addClass("pull-right");
     };
+    callbacks["enableButton"] = function(button)
+    {
+        $(button).removeAttr("disabled");
+    };
+    callbacks["disableButton"] = function(button)
+    {
+        $(button).attr("disabled", "disabled");
+    };
+
 
 
     /*

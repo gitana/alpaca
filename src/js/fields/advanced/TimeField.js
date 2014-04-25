@@ -2,6 +2,9 @@
 
     var Alpaca = $.alpaca;
 
+    // time-related regular expressions
+    Alpaca.REGEX_TIME = /^((0?[1-9]|1[012])(:[0-5]\d){0,2}(\ [AP]M))$|^([01]\d|2[0-3])(:[0-5]\d){0,2}$/;
+
     Alpaca.Fields.TimeField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.TimeField.prototype
@@ -19,19 +22,33 @@
          */
         setup: function()
         {
+            var self = this;
+
             this.base();
 
-            if (!this.options.timeFormat) {
-                this.options.timeFormat = "hh:mm:ss";
+            if (!self.options.picker)
+            {
+                self.options.picker = {};
             }
+        },
 
-            if (!this.options.timeFormatRegex) {
-                this.options.timeFormatRegex = /^(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])$/;
-            }
+        /**
+         * @see Alpaca.Fields.TextField#afterRenderControl
+         */
+        afterRenderControl: function(model, callback) {
 
-            if (Alpaca.isEmpty(this.options.maskString)) {
-                this.options.maskString = "99:99:99";
-            }
+            var self = this;
+
+            this.base(model, function() {
+
+                if ($.fn.timepicker)
+                {
+                    self.getControlEl().timepicker(self.options.picker);
+                }
+
+                callback();
+
+            });
         },
 
         /**
@@ -44,8 +61,13 @@
             this.refreshValidationState();
         },
 
+        isAutoFocusable: function()
+        {
+            return false;
+        },
+
         /**
-         * @see Alpaca.Fields.TextField#handleValitime
+         * @see Alpaca.Fields.TextField#handleValidate
          */
         handleValidate: function()
         {
@@ -53,9 +75,9 @@
 
             var valInfo = this.validation;
 
-            var status = this._validateTimeFormat();
+            var status = this._validateTime();
             valInfo["invalidTime"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("invalidTime"), [this.options.timeFormat]),
+                "message": status ? "" : this.view.getMessage("invalidTime"),
                 "status": status
             };
 
@@ -63,20 +85,19 @@
         },
 
         /**
-         * Valitimes time format.
+         * Validates that the given value is a valid time.
+         *
          * @returns {Boolean} True if it is a valid time, false otherwise.
          */
-        _validateTimeFormat: function()
+        _validateTime: function()
         {
-            var value = this.control.val();
-
-            if (!this.schema.required && (Alpaca.isValEmpty(value) || value == "__:__:__"))
+            var value = this.getControlEl().val();
+            if (value || this.schema.required)
             {
-                return true;
+                return Alpaca.REGEX_TIME.test(value);
             }
 
-            //valitime the time without the help of timepicker.parseTime
-            return value.match(this.options.timeFormatRegex);
+            return true;
         },
 
         /**
@@ -84,15 +105,14 @@
          */
         setValue: function(val)
         {
-            // skip out if no time
-            if (val === "")
-            {
-                this.base(val);
-
-                return;
-            }
+            var self = this;
 
             this.base(val);
+
+            if ($.fn.timepicker)
+            {
+                self.getControlEl().timepicker("setTime", val);
+            }
         }
 
         //__BUILDER_HELPERS
@@ -138,20 +158,10 @@
         getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(), {
                 "properties": {
-                    "timeFormat": {
-                        "title": "Time Format",
-                        "description": "Time format",
-                        "type": "string",
-                        "default": "hh:mm:ss"
-                    },
-                    "timeFormatRegex": {
-                        "title": "Format Regular Expression",
-                        "description": "Regular expression for validation time format",
-                        "type": "string",
-                        "default": /^(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])$/
-                    },
-                    "maskString": {
-                        "default" : "99:99:99"
+                    "picker": {
+                        "title": "DatetimePicker options",
+                        "description": "Options that are supported by the <a href='https://github.com/m3wolf/bootstrap3-timepicker'>Bootstrap Time Picker</a>.",
+                        "type": "any"
                     }
                 }
             });
@@ -164,11 +174,8 @@
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
                 "fields": {
-                    "timeFormat": {
-                        "type": "text"
-                    },
-                    "timeFormatRegex": {
-                        "type": "text"
+                    "picker": {
+                        "type": "any"
                     }
                 }
             });
@@ -185,14 +192,14 @@
          * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
-            return "Field for time.";
+            return "Time Field";
         }
 
         //__END_OF_BUILDER_HELPERS
     });
 
     Alpaca.registerMessages({
-        "invalidTime": "Invalid time for format {0}"
+        "invalidTime": "Invalid time"
     });
     Alpaca.registerFieldClass("time", Alpaca.Fields.TimeField);
     Alpaca.registerDefaultFormatFieldMapping("time", "time");

@@ -9,7 +9,6 @@
     "gulp-minify-css": "*",
     "gulp-concat": "*",
     "gulp-jshint": "*",
-    //"gulp-handlebars": "*", not until this supports 1.3.0
     "gulp-declare": "*",
     "event-stream": "*",
     "gulp-notify": "*",

@@ -34,7 +34,7 @@
          */
         getValue: function()
         {
-            if (this.control)
+            if (this.control && this.control.length > 0)
             {
                 var val = this.control.val();
                 if (!val)

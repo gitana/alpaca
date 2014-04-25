@@ -126,12 +126,12 @@
             this.base(model, function() {
 
                 // apply additional css
-                $(self.field).addClass("alpaca-addressfield");
+                $(self.getControlEl()).addClass("alpaca-addressfield");
 
                 if (self.options.addressValidation && !self.isDisplayOnly())
                 {
-                    $('<div style="clear:both;"></div>').appendTo(self.field);
-                    var mapButton = $('<div class="alpaca-form-button">Google Map</div>').appendTo(self.field);
+                    $('<div style="clear:both;"></div>').appendTo(self.getControlEl());
+                    var mapButton = $('<div class="alpaca-form-button">Google Map</div>').appendTo(self.getControlEl());
                     if (mapButton.button)
                     {
                         mapButton.button({
@@ -155,7 +155,7 @@
                                         var mapCanvasId = self.getId() + "-map-canvas";
                                         if ($('#' + mapCanvasId).length === 0)
                                         {
-                                            $("<div id='" + mapCanvasId + "' class='alpaca-controlfield-address-mapcanvas'></div>").appendTo(self.fieldContainer);
+                                            $("<div id='" + mapCanvasId + "' class='alpaca-controlfield-address-mapcanvas'></div>").appendTo(self.getFieldEl());
                                         }
 
                                         var map = new google.maps.Map(document.getElementById(self.getId() + "-map-canvas"), {

@@ -19,7 +19,7 @@
          */
         getValue: function()
         {
-            var textValue = this.field.val();
+            var textValue = this.getControlEl().val();
 
             if (Alpaca.isValEmpty(textValue))
             {
@@ -100,7 +100,7 @@
          */
         _validateNumber: function()
         {
-            var textValue = this.field.val();
+            var textValue = this.getControlEl().val();
 
             if (Alpaca.isValEmpty(textValue)) {
                 return true;

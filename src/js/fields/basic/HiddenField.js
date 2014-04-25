@@ -28,7 +28,7 @@
          */
         getValue: function()
         {
-            return this.field.val();
+            return this.getControlEl().val();
         },
         
         /**
@@ -37,9 +37,9 @@
         setValue: function(value)
         {
             if (Alpaca.isEmpty(value)) {
-                this.field.val("");
+                this.getControlEl().val("");
             } else {
-                this.field.val(value);
+                this.getControlEl().val(value);
             }
             
             // be sure to call into base method

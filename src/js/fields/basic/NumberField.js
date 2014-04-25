@@ -96,7 +96,7 @@
          * @returns {Boolean} true if it is a float number
          */
         _validateNumber: function() {
-            var textValue = this.field.val();
+            var textValue = this.getControlEl().val();
             // allow null
             if (Alpaca.isValEmpty(textValue)) {
                 return true;

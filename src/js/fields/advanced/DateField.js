@@ -1,5 +1,8 @@
 (function($) {
 
+    // NOTE: this requires bootstrap-datetimepicker.js
+    // NOTE: this requires moment.js
+
     var Alpaca = $.alpaca;
 
     Alpaca.Fields.DateField = Alpaca.Fields.TextField.extend(
@@ -19,17 +22,18 @@
          */
         setup: function()
         {
+            var self = this;
+
             this.base();
 
-            if (!this.options.dateFormat)
+            if (!self.options.picker)
             {
-                this.options.dateFormat = Alpaca.defaultDateFormat;
+                self.options.picker = {};
             }
 
-            if (!this.options.dateFormatRegex)
-            {
-                this.options.dateFormatRegex = Alpaca.regexps.date;
-            }
+            self.options.picker.pickDate = true;
+            self.options.picker.pickTime = false;
+            self.options.picker.useCurrent = false;
         },
 
         /**
@@ -41,26 +45,38 @@
 
             this.base(model, function() {
 
-                if (self.control && $.datepicker)
+                if ($.fn.datetimepicker)
                 {
-                    var datePickerOptions = self.options.datepicker;
-                    if (!datePickerOptions)
+                    self.getControlEl().datetimepicker(self.options.picker);
+
+                    self.picker = self.getControlEl().data("DateTimePicker");
+                    if (self.picker && self.options.dateFormat)
                     {
-                        datePickerOptions = {
-                            "changeMonth": true,
-                            "changeYear": true
-                        };
+                        self.picker.format =  self.options.dateFormat;
                     }
-                    if (!datePickerOptions.dateFormat)
+                    if (self.picker)
                     {
-                        datePickerOptions.dateFormat = self.options.dateFormat;
+                        self.options.dateFormat = self.picker.format;
                     }
-                    self.control.datepicker(datePickerOptions);
                 }
 
                 callback();
 
             });
+        },
+
+        /**
+         * Returns field value as a date.
+         *
+         * @returns {Date} Field value.
+         */
+        getDate: function()
+        {
+            try {
+                return this.getControlEl().datetimepicker('getDate');
+            } catch (e) {
+                return this.getValue();
+            }
         },
 
         /**
@@ -71,6 +87,11 @@
             this.base();
 
             this.refreshValidationState();
+        },
+
+        isAutoFocusable: function()
+        {
+            return false;
         },
 
         /**
@@ -93,22 +114,26 @@
 
         /**
          * Validates date format.
+         *
          * @returns {Boolean} True if it is a valid date, false otherwise.
          */
         _validateDateFormat: function()
         {
-            var value = this.control.val();
+            var self = this;
 
-            if ($.datepicker) {
-                try {
-                    $.datepicker.parseDate(this.options.dateFormat, value);
-                    return true;
-                } catch(e) {
-                    return false;
+            if (self.options.dateFormat)
+            {
+                var value = this.getControlEl().val();
+                if (value || self.schema.required)
+                {
+                    return moment(value, self.options.dateFormat, true).isValid();
                 }
-            } else {
-                //validate the date without the help of datepicker.parseDate
-                return value.match(this.options.dateFormatRegex);
+
+                return true;
+            }
+            else
+            {
+                return true;
             }
         },
 
@@ -117,13 +142,19 @@
          */
         setValue: function(val)
         {
-            // skip out if no date
-            if (val === "") {
-                this.base(val);
-                return;
-            }
-
             this.base(val);
+
+            if (this.picker)
+            {
+                this.picker.setValue(val);
+            }
+        } ,
+
+        destroy: function()
+        {
+            this.base();
+
+            this.picker = null;
         }
 
         //__BUILDER_HELPERS
@@ -172,18 +203,11 @@
                     "dateFormat": {
                         "title": "Date Format",
                         "description": "Date format",
-                        "type": "string",
-                        "default": Alpaca.defaultDateFormat
+                        "type": "string"
                     },
-                    "dateFormatRegex": {
-                        "title": "Format Regular Expression",
-                        "description": "Regular expression for validation date format",
-                        "type": "string",
-                        "default": Alpaca.regexps.date
-                    },
-                    "datepicker": {
-                        "title": "Date Picker options",
-                        "description": "Optional configuration to be passed to jQuery UI DatePicker control",
+                    "picker": {
+                        "title": "DatetimePicker options",
+                        "description": "Options that are supported by the <a href='http://eonasdan.github.io/bootstrap-datetimepicker/'>Bootstrap DateTime Picker</a>.",
                         "type": "any"
                     }
                 }
@@ -200,10 +224,7 @@
                     "dateFormat": {
                         "type": "text"
                     },
-                    "dateFormatRegex": {
-                        "type": "text"
-                    },
-                    "datetime": {
+                    "picker": {
                         "type": "any"
                     }
                 }
@@ -221,7 +242,7 @@
          * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
-            return "Date Field.";
+            return "Date Field";
         }
 
         //__END_OF_BUILDER_HELPERS

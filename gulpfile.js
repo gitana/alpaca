@@ -24,7 +24,7 @@ var paths = {
         core: [
             "lib/base.js",
             //"lib/json2.js",
-            "lib/validator.js",
+            //"lib/validator.js",
             "lib/equiv_and_hoozit.js",
             "lib/jquery.maskedinput-1.3.1.js",
 
@@ -238,6 +238,7 @@ gulp.task('scripts', function(cb) {
 
     // alpaca umd
     var wrapper = "" + fs.readFileSync("./config/umd-wrapper.txt");
+    /*
     var web_wrap = {
         deps: ['jquery', 'handlebars'],
         params: ['$', 'Handlebars'],
@@ -266,6 +267,77 @@ gulp.task('scripts', function(cb) {
         exports: "Alpaca",
         template: wrapper
     };
+    */
+
+    var web_wrap = {
+        deps: [{
+            "name": "jquery",
+            "globalName": "jQuery",
+            "paramName": "$"
+        }, {
+            "name": "handlebars",
+            "globalName": "Handlebars",
+            "paramName": "Handlebars"
+        }],
+        namespace: "Alpaca",
+        exports: "Alpaca",
+        template: wrapper
+    };
+    var bootstrap_wrap = {
+        deps: [{
+            "name": "jquery",
+            "globalName": "jQuery",
+            "paramName": "$"
+        }, {
+            "name": "handlebars",
+            "globalName": "Handlebars",
+            "paramName": "Handlebars"
+        }, {
+            "name": "bootstrap",
+            "globalName": "Bootstrap",
+            "paramName": "Bootstrap"
+        }],
+        namespace: "Alpaca",
+        exports: "Alpaca",
+        template: wrapper
+    };
+    var jqueryui_warp = {
+        deps: [{
+            "name": "jquery",
+            "globalName": "jQuery",
+            "paramName": "$"
+        }, {
+            "name": "handlebars",
+            "globalName": "Handlebars",
+            "paramName": "Handlebars"
+        }, {
+            "name": "jquery-ui",
+            "globalName": "jQueryUI",
+            "paramName": "jQueryUI"
+        }],
+        namespace: "Alpaca",
+        exports: "Alpaca",
+        template: wrapper
+    };
+    var jquerymobile_wrap = {
+        deps: [{
+            "name": "jquery",
+            "globalName": "jQuery",
+            "paramName": "$"
+        }, {
+            "name": "handlebars",
+            "globalName": "Handlebars",
+            "paramName": "Handlebars"
+        }, {
+            "name": "jquery-mobile",
+            "globalName": "jQM",
+            "paramName": "jQM"
+        }],
+        namespace: "Alpaca",
+        exports: "Alpaca",
+        template: wrapper
+    };
+
 
     // core
     var first = gulp.src(paths.scripts.core).pipe(concat('scripts-core.js')).pipe(gulp.dest('build/tmp'));

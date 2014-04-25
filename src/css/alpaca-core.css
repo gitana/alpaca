@@ -40,6 +40,12 @@
 
 }
 
+/** Added to a container to indicate it is empty **/
+.alpaca-container-empty
+{
+
+}
+
 /** Added to the dom element holding the toolbar for an array **/
 .alpaca-array-toolbar
 {
@@ -52,18 +58,17 @@
 
 }
 
-/** Added to the dom element holding action buttons for items in an array **/
-.alpaca-array-item-actions
+/** Added to the dom element holding the actionbar for each array item **/
+.alpaca-array-actionbar
 {
 
 }
 
-/** Added to a button in the array items actions bar that triggers an action **/
-.alpaca-array-item-action
+/** Added to a button in an array item actionbar that triggers an action **/
+.alpaca-array-actionbar-action
 {
 
 }
-
 
 /** Added to every control outer field element **/
 .alpaca-control
@@ -140,6 +145,43 @@
 {
 
 }
+
+/** Added to fields that are valid **/
+.alpaca-valid
+{
+
+}
+
+/** Added to fields that have run through validation and are invalid **/
+.alpaca-invalid
+{
+
+}
+
+/** Added to fields that have run through validation and are invalid but are currently hiding invalidation errors **/
+.alpaca-invalid-hidden
+{
+
+}
+
+/* Added to additional DOM elements to mark validation messages */
+.alpaca-message
+{
+
+}
+
+/** Added to messages that are for invalidation states that are current hidden (hideInitValidationError) **/
+.alpaca-message-hidden
+{
+
+}
+
+/** Added to buttons that are marked disabled */
+.alpaca-button-disabled
+{
+
+}
+
 
 
 /** ******************************************************** **/

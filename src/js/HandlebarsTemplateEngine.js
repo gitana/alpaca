@@ -57,6 +57,43 @@
     {
         return "<div class='" + Alpaca.MARKER_CLASS_FORM_ITEMS_FIELD + "'></div>";
     };
+    helpers["insert"] = function(key)
+    {
+        return "<div class='" + Alpaca.MARKER_CLASS_INSERT + "' " + Alpaca.MARKER_DATA_INSERT_KEY + "='" + key + "'></div>";
+    };
+    helpers["str"] = function(data)
+    {
+        if (data === false)
+        {
+            return "false";
+        }
+        else if (data === 0)
+        {
+            return "0";
+        }
+        else if (typeof(data) == "undefined")
+        {
+            return "";
+        }
+        else if (typeof(data) == "null")
+        {
+            return "";
+        }
+        else if (Alpaca.isObject(data))
+        {
+            return JSON.stringify(data, null, "  ");
+        }
+        else if (Alpaca.isArray(data))
+        {
+            return JSON.stringify(data, null, "  ");
+        }
+
+        return data;
+    };
+    Handlebars.registerHelper('setIndex', function(value){
+        this.index = Number(value);
+    });
+
 
 
     //Handlebars.registerHelper("each", helpers["each"]);
@@ -66,6 +103,7 @@
     Handlebars.registerHelper("item", helpers["item"]);
     Handlebars.registerHelper("formItems", helpers["formItems"]);
     Handlebars.registerHelper("times", helpers["times"]);
+    Handlebars.registerHelper("str", helpers["str"]);
 
     var partials = {};
 

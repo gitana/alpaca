@@ -65,13 +65,93 @@
     callbacks["enabled"] = function()
     {
     };
-    // fires when a field switches to an invalid state
-    callbacks["invalid"] = function()
+    // called when validity state for a field is being cleared
+    callbacks["clearValidity"] = function()
     {
     };
-    // fires when a field switches to a valid state
+    // fires when a field is marked as invalid
+    callbacks["invalid"] = function(hidden)
+    {
+    };
+    // fires when a field is marked a valid
     callbacks["valid"] = function()
     {
+    };
+    // fired to add a message to an invalid field
+    callbacks["addMessage"] = function(index, message, hidden)
+    {
+    };
+    // fired to remove all messages for a field
+    callbacks["removeMessages"] = function()
+    {
+    };
+    // fired when a button is being enabled
+    callbacks["enableButton"] = function(button)
+    {
+    };
+    // fired when a button is being disabled
+    callbacks["disableButton"] = function(button)
+    {
+    };
+    // fired to add or remove the array toolbar for a field
+    callbacks["arrayToolbar"] = function(remove)
+    {
+        var self = this;
+
+        var fieldId = this.getId();
+
+        if (remove)
+        {
+            $(this.getFieldEl()).find(".alpaca-array-toolbar[data-alpaca-array-toolbar-field-id='" + fieldId + "']").remove();
+        }
+        else
+        {
+            // render toolbar
+            var templateDescriptor = this.view.getTemplateDescriptor("container-array-toolbar");
+            var toolbar = Alpaca.tmpl(templateDescriptor, {
+                "actions": self.toolbar.actions,
+                "fieldId": self.getId(),
+                "toolbarStyle": self.options.toolbarStyle
+            });
+
+            $(this.getContainerEl()).before(toolbar);
+        }
+    };
+    // fired to add or remove the array actionbars for a field
+    callbacks["arrayActionbars"] = function(remove)
+    {
+        var self = this;
+
+        var fieldId = this.getId();
+
+        if (remove)
+        {
+            $(this.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-field-id='" + fieldId + "']").remove();
+        }
+        else
+        {
+            var templateDescriptor = this.view.getTemplateDescriptor("container-array-actionbar");
+
+            // for each item, render the item toolbar
+            var items = Alpaca.findClosest($(this.getFieldEl()), ".alpaca-container-item");
+            $(items).each(function(itemIndex) {
+
+                var actionbar = Alpaca.tmpl(templateDescriptor, {
+                    "actions": self.actionbar.actions,
+                    "fieldId": self.getId(),
+                    "itemIndex": itemIndex,
+                    "actionbarStyle": self.options.actionbarStyle
+                });
+
+                // insert above
+                if (self.options.actionbarStyle == "top")
+                {
+                    $(this).children().first().before(actionbar);
+                }
+            });
+
+
+        }
     };
 
     var styles = {};

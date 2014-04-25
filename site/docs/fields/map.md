@@ -35,19 +35,20 @@ $("#field1").alpaca({
             "type": "object",
             "properties": {
                 "_key" : {
-                    "title" : "User Id"
+                    "title" : "User Id",
+                    "type": "string"
                 },
                 "firstName" : {
                     "title" : "First Name",
-                    "description" : "Enter user's first name."
+                    "type": "string"
                 },
                 "lastName" : {
                     "title" : "Last Name",
-                    "description" : "Enter user's last name."
+                    "type": "string"
                 },
                 "gender" : {
                     "title" : "Gender",
-                    "description" : "Select user's gender",
+                    "type": "string",
                     "enum" : ["Male","Female"]
                 }
             }
@@ -61,7 +62,7 @@ $("#field1").alpaca({
                 "fields" : {
                     "_key" : {
                         "size" : 60,
-                        "helper" : "Provide a unique user id."
+                        "helper" : "This value serves as a unique key into the associative array."
                     }
                 }
             }

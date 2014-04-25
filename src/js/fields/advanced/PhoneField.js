@@ -50,8 +50,8 @@
 
             this.base(function() {
 
-                if (self.fieldContainer) {
-                    self.fieldContainer.addClass('alpaca-controlfield-phone');
+                if (self.getFieldEl()) {
+                    self.getFieldEl().addClass('alpaca-controlfield-phone');
                 }
 
                 callback();

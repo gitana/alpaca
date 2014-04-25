@@ -125,8 +125,8 @@
             }
             // holders of references to children
             this.children = [];
-            this.childrenById = [];
-            this.childrenByPropertyId = [];
+            this.childrenById = {};
+            this.childrenByPropertyId = {};
             // style icons
             this.expandedIcon = this.view.getStyle("expandedIcon");
             this.collapsedIcon = this.view.getStyle("collapsedIcon");
@@ -393,25 +393,25 @@
         {
             var self = this;
 
-            var f = function(i)
+            var layoutBindings = null;
+            if (self.view.getLayout()) {
+                layoutBindings = self.view.getLayout().bindings;
+            }
+
+            if (model.items.length > 0)
             {
-                if (i == model.items.length)
-                {
-                    // all done
+                $(self.container).addClass("alpaca-container-has-items");
+                $(self.container).attr("data-alpaca-container-item-count", model.items.length);
+            }
+            else
+            {
+                $(self.container).removeClass("alpaca-container-has-items");
+                $(self.container).removeAttr("data-alpaca-container-item-count");
+            }
 
-                    // trigger update on the parent
-                    self.triggerUpdate();
-
-                    callback();
-                    return;
-                }
-
+            for (var i = 0; i < model.items.length; i++)
+            {
                 var item = model.items[i];
-
-                var layoutBindings = null;
-                if (self.view.getLayout()) {
-                    layoutBindings = self.view.getLayout().bindings;
-                }
 
                 // find the insertion point
                 var insertionPoint = $(self.container).find("[" + Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY + "='" + item.name + "']");
@@ -420,17 +420,18 @@
                     $(insertionPoint).replaceWith(item.field);
                     $(item.field).addClass("alpaca-container-item");
 
-                    if (i == 0)
+                    if (i === 0)
                     {
                         $(item.field).addClass("alpaca-container-item-first");
                     }
 
-                    if (i + 1 == model.items.length)
+                    if (i + 1 === model.items.length)
                     {
                         $(item.field).addClass("alpaca-container-item-last");
                     }
 
-                    $(item.field).attr("data-alpaca-container-item-key", item.name);
+                    $(item.field).attr("data-alpaca-container-item-index", i);
+                    $(item.field).attr("data-alpaca-container-item-name", item.name);
                 }
                 else
                 {
@@ -451,11 +452,10 @@
 
                 // register the child
                 self.registerChild(item, i);
+            }
 
-                f(i+1);
-            };
-
-            f(0);
+            self.triggerUpdate();
+            callback();
         },
 
         afterApplyCreatedItems: function(model, callback)
@@ -487,6 +487,88 @@
             }
 
             child.parent = this;
+        },
+
+        /**
+         * Helper method to remove child field.
+         *
+         * @param index
+         */
+        unregisterChild: function(index)
+        {
+            var child = this.children[index];
+            if (!child)
+            {
+                return;
+            }
+
+            if (!Alpaca.isEmpty(index))
+            {
+                this.children.splice(index, 1);
+            }
+
+            delete this.childrenById[child.getId()];
+            if (child.propertyId)
+            {
+                delete this.childrenByPropertyId[child.propertyId];
+            }
+
+            child.parent = null;
+        },
+
+        /**
+         * This method gets invoked after items are dynamically added, removed or moved around in the child chain.
+         * It adjusts classes on child DOM elements to make sure they're correct.
+         */
+        updateChildDOMElements: function()
+        {
+            var self = this;
+
+            var layoutBindings = null;
+            if (self.view.getLayout()) {
+                layoutBindings = self.view.getLayout().bindings;
+            }
+
+            if (!layoutBindings)
+            {
+                if (self.children.length > 0)
+                {
+                    $(self.getContainerEl()).addClass("alpaca-container-has-items");
+                    $(self.getContainerEl()).attr("data-alpaca-container-item-count", self.children.length);
+                }
+                else
+                {
+                    $(self.getContainerEl()).removeClass("alpaca-container-has-items");
+                    $(self.getContainerEl()).removeAttr("data-alpaca-container-item-count");
+                }
+
+                for (var i = 0; i < self.children.length; i++)
+                {
+                    var child = self.children[i];
+
+                    var field = child.getFieldEl();
+
+                    //$(field).removeClass("alpaca-container-item");
+                    $(field).removeClass("alpaca-container-item-first");
+                    $(field).removeClass("alpaca-container-item-last");
+                    $(field).removeClass("alpaca-container-item-index");
+                    $(field).removeClass("alpaca-container-item-key");
+
+                    $(field).addClass("alpaca-container-item");
+
+                    if (i === 0)
+                    {
+                        $(field).addClass("alpaca-container-item-first");
+                    }
+                    if (i + 1 === self.children.length)
+                    {
+                        $(field).addClass("alpaca-container-item-last");
+                    }
+
+                    $(field).attr("data-alpaca-container-item-index", i);
+                    $(field).attr("data-alpaca-container-item-name", field.name);
+                }
+            }
         },
 
         /**

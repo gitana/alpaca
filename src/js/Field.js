@@ -693,6 +693,21 @@
         },
 
         /**
+         * Redraws the field using the currently bound DOM element and view.
+         *
+         * @param callback
+         */
+        refresh: function(callback)
+        {
+            var self = this;
+
+            self._render(function() {
+                callback();
+            });
+        },
+
+
+        /**
          * Applies a view style to a dom element.
          *
          * @param id
@@ -806,17 +821,26 @@
         },
 
         /**
-         * Renders a validation state message below the field.
+         * Sets the validation state messages to show for a given field.
          *
-         * @param {String} messages Validation state messages.
+         * @param {String|Array} messages either a string message or an array of string messages
          * @param {Boolean} beforeStatus Previous validation status.
          */
         displayMessage: function(messages, beforeStatus) {
 
-            var _this = this;
+            var self = this;
 
-            // remove the message element if it exists
-            $(_this.field).children(".alpaca-controlfield-message-element").remove();
+            // if string, convert to array
+            if (messages && typeof(messages) == "string")
+            {
+                messages = [messages];
+            }
+
+            // remove any alpaca messages for this field
+            $(this.getFieldEl()).children(".alpaca-message").remove();
+
+            // CALLBACK: "removeMessages"
+            self.fireCallback("removeMessages");
 
             // add message and generate it
             if (messages && messages.length > 0)
@@ -825,31 +849,29 @@
 
                     if (message.length > 0)
                     {
-                        var messageTemplateDescriptor = _this.view.getTemplateDescriptor("validationMessage");
+                        var hidden = false;
+                        if (self.hideInitValidationError)
+                        {
+                            hidden = true;
+                        }
+
+                        // add message to the field
+                        var messageTemplateDescriptor = self.view.getTemplateDescriptor("message");
                         if (messageTemplateDescriptor)
                         {
-                            _this.messageElement = Alpaca.tmpl(messageTemplateDescriptor, {
+                            var messageElement = Alpaca.tmpl(messageTemplateDescriptor, {
                                 "message": message
                             });
-                            _this.fireCallback("errorMessage", _this.messageElement);
-                            if (_this.hideInitValidationError)
+                            messageElement.addClass("alpaca-message");
+                            if (hidden)
                             {
-                                _this.messageElement.addClass("alpaca-controlfield-message-hidden");
+                                messageElement.addClass("alpaca-message-hidden");
                             }
-                            else
-                            {
-                                _this.messageElement.addClass("alpaca-controlfield-message");
-                            }
-                            _this.messageElement.addClass("alpaca-controlfield-message-element");
-                            _this.messageElement.attr("id", _this.getId() + '-field-message-' + index);
-
-                            // check to see if we have a message container rendered
-                            if ($('.alpaca-controlfield-message-container', _this.field).length) {
-                                _this.messageElement.appendTo($('.alpaca-controlfield-message-container', _this.field));
-                            } else {
-                                _this.messageElement.appendTo(_this.field);
-                            }
+                            $(self.getFieldEl()).append(messageElement);
                         }
+
+                        // CALLBACK: "addMessage"
+                        self.fireCallback("addMessage", index, message, hidden);
                     }
                 });
             }
@@ -864,6 +886,8 @@
          */
         refreshValidationState: function(children)
         {
+            var self = this;
+
             if (children)
             {
                 var f = function(field, contexts)
@@ -949,7 +973,7 @@
                 mergedContext.reverse();
 
                 // update validation state
-                Alpaca.updateValidationStateForContext(mergedContext);
+                Alpaca.updateValidationStateForContext(self.view, mergedContext);
             }
             else
             {
@@ -959,21 +983,8 @@
                 var context = Alpaca.compileValidationContext(this);
 
                 // update the UI for these context items
-                Alpaca.updateValidationStateForContext(context);
+                Alpaca.updateValidationStateForContext(self.view, context);
             }
-        },
-
-        showHiddenMessages: function()
-        {
-            var hiddenDiv = $(this.field).find(".alpaca-field-invalid-hidden");
-            hiddenDiv.removeClass('alpaca-field-invalid-hidden');
-            hiddenDiv.addClass('alpaca-field-invalid');
-
-            this.fireCallback("showErrors", hiddenDiv);
-
-            var hiddenMessage = $(this.field).find(".alpaca-controlfield-message-hidden");
-            $(hiddenMessage).removeClass('alpaca-controlfield-message-hidden');
-            $(hiddenMessage).addClass('alpaca-controlfield-message');
         },
 
         /**
@@ -1401,7 +1412,7 @@
         },
 
         /**
-         * Callback for when the mouse moves over a field.
+         * Callbeack for when the mouse moves over a field.
          *
          * @param e
          */

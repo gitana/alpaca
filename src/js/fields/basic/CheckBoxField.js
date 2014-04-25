@@ -95,8 +95,10 @@
 
         prepareControlModel: function(callback)
         {
+            var self = this;
+
             this.base(function(model) {
-                model.checkboxOptions = this.checkboxOptions;
+                model.checkboxOptions = self.checkboxOptions;
 
                 callback(model);
             });
@@ -123,9 +125,34 @@
                 //
                 // this allows the dependency system to recalculate and such
                 //
-                $(self.field).find("input:checkbox").change(function(evt) {
-                    $(self.field).trigger("change");
+                $(self.getFieldEl()).find("input:checkbox").change(function(evt) {
+                    self.triggerWithPropagation("change");
                 });
+
+                // for multiple mode, mark values
+                if (self.options.multiple)
+                {
+                    // none checked
+                    $(self.getFieldEl()).find("input:checkbox").prop("checked", false);
+
+                    if (self.data)
+                    {
+                        var dataArray = self.data;
+                        if (typeof(self.data) == "string")
+                        {
+                            dataArray = self.data.split(",");
+                            for (var a = 0; a < dataArray.length; a++)
+                            {
+                                dataArray[a] = $.trim(dataArray[a]);
+                            }
+                        }
+
+                        for (var k in dataArray)
+                        {
+                            $(self.getFieldEl()).find("input:checkbox[data-checkbox-value='" + dataArray[k] + "']").prop("checked", true);
+                        }
+                    }
+                }
 
                 callback();
             });
@@ -143,7 +170,7 @@
             if (!self.options.multiple)
             {
                 // single scalar value
-                var input = $(self.field).find("input");
+                var input = $(self.getFieldEl()).find("input");
                 if (input.length > 0)
                 {
                     value = Alpaca.checked($(input[0]));
@@ -155,7 +182,7 @@
                 var values = [];
                 for (var i = 0; i < self.checkboxOptions.length; i++)
                 {
-                    var input = $(self.field).find("input[data-checkbox-index='" + i + "']");
+                    var input = $(self.getFieldEl()).find("input[data-checkbox-index='" + i + "']");
                     if (Alpaca.checked(input))
                     {
                         var v = $(input).attr("data-checkbox-value");
@@ -195,7 +222,7 @@
                     value = (value === "true");
                 }
 
-                var input = $(self.field).find("input");
+                var input = $(self.getFieldEl()).find("input");
                 if (input.length > 0)
                 {
                     Alpaca.checked($(input[0]), value);
@@ -219,7 +246,7 @@
                 // walk through values and assign into appropriate inputs
                 for (var i = 0; i < values.length; i++)
                 {
-                    var input = $(self.field).find("input[data-checkbox-value='" + values[i] + "']");
+                    var input = $(self.getFieldEl()).find("input[data-checkbox-value='" + values[i] + "']");
                     if (input.length > 0)
                     {
                         Alpaca.checked($(input[0]), value);

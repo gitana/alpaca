@@ -1,0 +1,14 @@
+<script type="text/x-handlebars-template">
+
+    <div class="alpaca-array-actionbar btn-group" data-alpaca-array-actionbar-field-id="{{fieldId}}" data-alpaca-array-actionbar-item-index="{{itemIndex}}">
+        {{#each actions}}
+        <button class="alpaca-array-actionbar-action btn btn-default btn-sm" data-alpaca-array-actionbar-action="{{action}}">
+            {{#if this.iconClass}}
+            <i class="{{this.iconClass}}"></i>
+            {{/if}}
+            {{#if label}}{{label}}{{/if}}
+        </button>
+        {{/each}}
+    </div>
+
+</script>

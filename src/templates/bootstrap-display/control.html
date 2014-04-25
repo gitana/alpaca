@@ -6,7 +6,9 @@
         <label class="alpaca-display-control-label {{#if options.labelClass}}{{options.labelClass}}{{/if}} control-label" for="{{id}}">{{options.label}}</label>
         {{/if}}
 
-        <div class="alpaca-display-control-data">&nbsp;{{data}}</div>
+        <div class="alpaca-display-control-data">
+            {{#str data}}{{/str}}
+        </div>
 
     </div>
 

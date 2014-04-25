@@ -65,8 +65,16 @@
                         this.data = js_beautify(this.data);
                     }
                 }
-
             }
+
+            if (self.options.aceMode == "ace/mode/json")
+            {
+                if (!this.data || this.data == "{}")
+                {
+                    this.data = "{\n\t\n}";
+                }
+            }
+
         },
 
         /**

@@ -2,3 +2,81 @@
 {
     margin-top: 20px;
 }
+
+legend.alpaca-container-label
+{
+    margin-top: 0px;
+}
+
+.alpaca-array-toolbar
+{
+    margin-bottom: 10px;
+}
+
+.alpaca-array-actionbar, .alpaca-array-actionbar.btn-group
+{
+    width: 100%;
+}
+
+.alpaca-field-object
+{
+    border: 1px #eee solid;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.alpaca-field-object > .alpaca-container.alpaca-container-has-items
+{
+    border: 1px #eee solid;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.alpaca-field-array
+{
+    border: 1px #eee solid;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.alpaca-field-array > .alpaca-container.alpaca-container-has-items
+{
+    border: 1px #eee solid;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.alpaca-form-buttons-container
+{
+    margin-top: 10px;
+}
+
+.alpaca-field-hidden
+{
+    display:none;
+}
+
+.alpaca-field-object.alpaca-top
+{
+    border: 0px;
+}
+
+.alpaca-field-array.alpaca-top
+{
+    border: 0px;
+}
+
+.alpaca-container-item:not(:first-child)
+{
+    margin-top: 10px;
+}
+
+.alpaca-container .alpaca-container-item:last-child
+{
+    margin-bottom: 0px;
+}
+
+.alpaca-field-object.alpaca-top .alpaca-container
+{
+    border: 0px;
+}

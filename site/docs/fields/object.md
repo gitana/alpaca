@@ -12,14 +12,15 @@ The ```object``` field.
 
 
 ## Example 1
-Simple object field for object data type.
+A simple object field.  If you give Alpaca an object as it's data, it automatically figures out what to do and
+sets up both sub-fields for you.
 <div id="field1"> </div>
 {% raw %}
 <script type="text/javascript" id="field1-script">
 $("#field1").alpaca({
     "data": {
-        name: "Taylor Swift",
-        age: 18
+        name: "John Matrix",
+        age: 40
     }
 });
 </script>
@@ -27,23 +28,22 @@ $("#field1").alpaca({
 
 
 ## Example 2
-Object field with schema parameter.
+Here we provide a schema to go along with our data.  The schema simply provides a bit more information about the two
+sub-fields, such as their type and labels.
 <div id="field2"> </div>
 {% raw %}
 <script type="text/javascript" id="field2-script">
 $("#field2").alpaca({
     "data": {
-        name: "Taylor Swift",
-        age: 18
+        name: "John Matrix",
+        age: 40
     },
     "schema": {
         "title": "Customer Profile",
-        "description": "Customer Contact Information",
         "type": "object",
         "properties": {
             "name": {
                 "title": "Full Name",
-                "description": "Enter Your Full Name",
                 "type": "string"
             },
             "age": {
@@ -58,14 +58,14 @@ $("#field2").alpaca({
 
 
 ## Example 3
-Object field with schema and options parameters.
+Here is a more complex example that provides the data, schema and options for all of the sub-fields of the object.
 <div id="field3"> </div>
 {% raw %}
 <script type="text/javascript" id="field3-script">
 $("#field3").alpaca({
     "data": {
-        name: "James Bond",
-        age: 45,
+        name: "John Matrix",
+        age: 40,
         icecream: ["Chocolate", "Vanilla", "Strawberry"],
         address: {
             street: ["100 Main Street", "Suite 200"],
@@ -76,7 +76,6 @@ $("#field3").alpaca({
     },
     "schema": {
         "title": "Customer Profile",
-        "description": "Alpaca Ice Cream Customer Profile",
         "type": "object",
         "properties": {
             "name": {
@@ -145,8 +144,8 @@ Object field with schema, options and view parameter.
 <script type="text/javascript" id="field4-script">
 $("#field4").alpaca({
     "data": {
-        name: "James Bond",
-        age: 45,
+        name: "John Matrix",
+        age: 40,
         icecream: ["Chocolate", "Vanilla", "Strawberry"],
         address: {
             street: ["100 Main Street", "Suite 200"],
@@ -232,7 +231,7 @@ $("#field5").alpaca({
         "title": "Customer Profile",
         "description": "Customer Contact Information",
         "type": "object",
-        "default": '{"name":"Taylor Swift","age":18}',
+        "default": '{"name":"John Matrix","age":40}',
         "properties": {
             "name": {
                 "title": "Full Name",
@@ -257,7 +256,7 @@ Object field with lazy loading option. The lazy loading option is useful for imp
 <script type="text/javascript" id="field6-script">
 $("#field6").alpaca({
     "data": {
-        name: "James Bond",
+        name: "John Matrix",
         address: {
             street: ["100 Main Street", "Suite 200"],
             city: "Burlington",

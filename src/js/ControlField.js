@@ -81,6 +81,11 @@
 
         },
 
+        isAutoFocusable: function()
+        {
+            return true;
+        },
+
         /**
          * For control fields, we use the "control" template as the primary.
          *
@@ -283,12 +288,12 @@
 
             var _this = this;
 
-            if (this.control)
+            if (this.control && this.control.length > 0)
             {
                 // trigger control level handlers for things that happen to input element
                 this.control.change(function(e) {
                     _this.onChange.call(_this, e);
-                    _this.trigger("change", e);
+                    _this.triggerWithPropagation("change", e);
                 });
 
                 this.control.focus(function(e) {

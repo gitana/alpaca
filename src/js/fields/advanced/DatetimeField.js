@@ -2,7 +2,7 @@
 
     var Alpaca = $.alpaca;
 
-    Alpaca.Fields.DatetimeField = Alpaca.Fields.TextField.extend(
+    Alpaca.Fields.DatetimeField = Alpaca.Fields.DateField.extend(
         /**
          * @lends Alpaca.Fields.DatetimeField.prototype
          */
@@ -15,50 +15,27 @@
             },
 
             /**
-             * @see Alpaca.Fields.TextField#afterRenderControl
+             * @see Alpaca.Fields.TextField#setup
              */
-            afterRenderControl: function(model, callback) {
-
+            setup: function()
+            {
                 var self = this;
 
-                this.base(model, function() {
+                this.base();
 
-                    if (self.field)
-                    {
-                        if (self.field.datetimepicker) {
-                            self.field.hover(function() {
-                                if (!$(this).hasClass('hasDatepicker')) {
-
-                                    var timePickerOptions = self.options.timepicker;
-                                    if (!timePickerOptions)
-                                    {
-                                        timePickerOptions = self.options.timepicker;
-                                    }
-                                    if (!timePickerOptions)
-                                    {
-                                        timePickerOptions = {
-                                            "changeYear": true,
-                                            "changeMonth": true
-                                        };
-                                    }
-                                    $(this).datetimepicker(timePickerOptions);
-                                }
-                            });
-                            if (self.fieldContainer) {
-                                self.fieldContainer.addClass('alpaca-controlfield-datetime');
-                            }
-                        }
-                    }
-
-                    callback();
-
-                });
+                self.options.picker.pickDate = true;
+                self.options.picker.pickTime = true;
+                if (typeof(self.options.picker.sideBySide) == "undefined")
+                {
+                    self.options.picker.sideBySide = true;
+                }
             },
 
             /**
              *@see Alpaca.Fields.TextField#setValue
              */
-            setValue: function(value) {
+            setValue: function(value)
+            {
                 if (value) {
                     if (Alpaca.isNumber()) {
                         value = new Date(value);
@@ -74,24 +51,16 @@
             },
 
             /**
-             * @see Alpaca.Fields.TextField#getValue
-             */
-            getValue: function() {
-                return this.base();
-            },
-
-            /**
              * Returns field value in datetime.
              *
              * @returns {Date} Field value.
              */
             getDatetime: function() {
-                try {
-                    return this.field.datetimepicker('getDate');
-                } catch (e) {
-                    return this.getValue();
-                }
-            },//__BUILDER_HELPERS
+                return this.getDate();
+            }
+
+            //__BUILDER_HELPERS
+            ,
 
             /**
              * @private
@@ -100,9 +69,9 @@
             getSchemaOfOptions: function() {
                 return Alpaca.merge(this.base(), {
                     "properties": {
-                        "timepicker": {
-                            "title": "Timepicker options",
-                            "description": "Options that are supported by the <a href='http://trentrichardson.com/examples/timepicker/'>jQuery timepicker addon</a>.",
+                        "picker": {
+                            "title": "DatetimePicker options",
+                            "description": "Options that are supported by the <a href='http://eonasdan.github.io/bootstrap-datetimepicker/'>Bootstrap DateTime Picker</a>.",
                             "type": "any"
                         }
                     }
@@ -116,7 +85,7 @@
             getOptionsForOptions: function() {
                 return Alpaca.merge(this.base(), {
                     "fields": {
-                        "timepicker": {
+                        "picker": {
                             "type": "any"
                         }
                     }

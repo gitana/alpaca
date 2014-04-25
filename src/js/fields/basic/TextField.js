@@ -242,7 +242,7 @@
         {
             var value = null;
 
-            if (this.control)
+            if (this.control && this.control.length > 0)
             {
                 value = this.control.val();
             }
@@ -259,7 +259,7 @@
          */
         setValue: function(value)
         {
-            if (this.control)
+            if (this.control && this.control.length > 0)
             {
                 if (Alpaca.isEmpty(value))
                 {
@@ -389,7 +389,7 @@
          */
         disable: function()
         {
-            if (this.control)
+            if (this.control && this.control.length > 0)
             {
                 this.control.disabled = true;
             }
@@ -400,7 +400,7 @@
          */
         enable: function()
         {
-            if (this.control)
+            if (this.control && this.control.length > 0)
             {
                 this.control.disabled = false;
             }
@@ -411,7 +411,7 @@
          */
         focus: function()
         {
-            if (this.control)
+            if (this.control && this.control.length > 0)
             {
                 // focuses the control and also positions the input at the end
 

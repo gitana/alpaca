@@ -10,6 +10,13 @@ tags: field
 
 The ```datetime``` field.
 
+The DateTime Field builds on the standard Date Field and leverages the Bootstrap DateTime plugin under the hood.
+You can learn more about this plugin on its GitHub page:
+<a href="https://github.com/Eonasdan/bootstrap-datetimepicker">https://github.com/Eonasdan/bootstrap-datetimepicker</a>.
+
+For more information on date and time formatting strings, see the Moment.js documentation:
+<a href="http://momentjs.com/docs/">http://momentjs.com/docs/</a>.
+
 
 ## Example 1
 Single datetime field.
@@ -91,7 +98,7 @@ $("#field3").alpaca({
         }
     },
     "postRender": function(form) {
-        var button = $("<div><button>Get Datetime</button></div>");
+        var button = $("<div><button class='btn btn-default'>Get Datetime</button></div>");
         button.click(function() {
             alert(form.getDatetime());
         }).appendTo($("#field3"));
@@ -121,28 +128,26 @@ $("#field4").alpaca({
 
 
 ## Example 5
-The DateTime Field uses Trent Richardson's TimePicker extension to the jQuery UI DatePicker
-Control to let users pick both dates and times.  If you'd like to customize
-the behavior of this control, you can pass in explicit configuration.  For details on the kinds
-of things you can pass in, see the documentation for the
-<a href="http://trentrichardson.com/examples/timepicker/" target="_blank">TimePicker Extension</a>.
+If you'd like to customize the behavior of this control, you can pass in explicit configuration using the ```picker```
+option.
 
-Here is an example that uses dropdowns instead of sliders for time selection.
+Here is an example that uses a 24 hour clock format and an alternative layout.  Note that a 24 hour clock is specified
+with HH.
 
 <div id="field5"> </div>
 {% raw %}
 <script type="text/javascript" id="field5-script">
 $("#field5").alpaca({
-    "data" : "02/05/2013 05:00",
+    "data" : "02/05/2014 05:00",
     "schema": {
         "format": "datetime"
     },
     "options": {
         "label": "The current date and time",
-        "timepicker": {
-            "controlType": "select",
-            "timeFormat": "hh:mm:tt"
-        }
+        "picker": {
+            "sideBySide": false,
+        },
+        "dateFormat": "YYYY-MM-DD HH:mm:ss"
     }
 });
 </script>

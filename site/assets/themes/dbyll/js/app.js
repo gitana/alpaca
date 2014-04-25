@@ -72,6 +72,7 @@ $( document ).ready(function() {
         var editor = ace.edit(el);
         editor.setTheme("ace/theme/textmate");
         editor.getSession().setMode("ace/mode/javascript");
+        editor.setShowPrintMargin(false);
         editor.setValue(code);
         editor.clearSelection();
 
