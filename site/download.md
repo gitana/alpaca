@@ -6,15 +6,16 @@ title: Downloads and Source Code
 {% include JB/setup %}
 
 
-## Version 1.5.0
-This is the latest official release of Alpaca.  You can view the source code and inspect the release branch on
+## Version 1.5.0-DEV
+This is a development branch of Alpaca.  Once completed, it will become the 1.5.0 release, but for the moment, it
+is a development branch. You can view the source code and inspect the release branch on
 the <a href="http://www.github.com/gitana/alpaca" target="_blank">GitHub</a>.
 
 ### Direct download
 You can download the source and built assets (located under ```/dist```) using this link:
 <ul>
     <li>
-        <a href="https://github.com/gitana/alpaca/archive/1.5.0.zip">https://github.com/gitana/alpaca/archive/1.5.0.zip</a>
+        <a href="https://github.com/gitana/alpaca/archive/1.5.0-DEV.zip">https://github.com/gitana/alpaca/archive/1.5.0-DEV.zip</a>
     </li>
 </ul>
 
@@ -43,19 +44,46 @@ Alpaca to be best served by the community.
 
 <ul>
     <li>
-        <a href="http://www.alpacajs.org/releases/1.1.1/index.html">Alpaca Version 1.1.1</a>
+        <a href="http://www.alpacajs.org/releases/1.1.3/index.html">Alpaca 1.1.3</a>
     </li>
     <li>
-        <a href="http://www.alpacajs.org/releases/1.1.0/index.html">Alpaca Version 1.1.0</a>
+        <a href="http://www.alpacajs.org/releases/1.1.2/index.html">Alpaca 1.1.2</a>
     </li>
     <li>
-        <a href="http://www.alpacajs.org/releases/1.0.9/index.html">Alpaca Version 1.0.9</a>
+        <a href="http://www.alpacajs.org/releases/1.1.1/index.html">Alpaca 1.1.1</a>
     </li>
     <li>
-        <a href="http://www.alpacajs.org/releases/1.0.8/index.html">Alpaca Version 1.0.8</a>
+        <a href="http://www.alpacajs.org/releases/1.1.0/index.html">Alpaca 1.1.0</a>
     </li>
     <li>
-        <a href="http://www.alpacajs.org/releases/1.0.7/index.html">Alpaca Version 1.0.7</a>
+        <a href="http://www.alpacajs.org/releases/1.0.9/index.html">Alpaca 1.0.9</a>
+    </li>
+    <li>
+        <a href="http://www.alpacajs.org/releases/1.0.8/index.html">Alpaca 1.0.8</a>
+    </li>
+    <li>
+        <a href="http://www.alpacajs.org/releases/1.0.7/index.html">Alpaca 1.0.7</a>
+    </li>
+    <li>
+        <a href="http://www.alpacajs.org/releases/1.0.6/index.html">Alpaca 1.0.6</a>
+    </li>
+    <li>
+        <a href="http://www.alpacajs.org/releases/1.0.5/index.html">Alpaca 1.0.5</a>
+    </li>
+    <li>
+        <a href="http://www.alpacajs.org/releases/1.0.4/index.html">Alpaca 1.0.4</a>
+    </li>
+    <li>
+        <a href="http://www.alpacajs.org/releases/1.0.3/index.html">Alpaca 1.0.3</a>
+    </li>
+    <li>
+        <a href="http://www.alpacajs.org/releases/1.0.2/index.html">Alpaca 1.0.2</a>
+    </li>
+    <li>
+        <a href="http://www.alpacajs.org/releases/1.0.1/index.html">Alpaca 1.0.1</a>
+    </li>
+    <li>
+        <a href="http://www.alpacajs.org/releases/1.0.0/index.html">Alpaca 1.0.0</a>
     </li>
 </ul>
 
