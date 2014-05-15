@@ -642,6 +642,10 @@
 
                             _this.updateToolbarItemsStatus(_this.outerEl);
 
+                            if (Alpaca.isFunction(_this.options.items.postRender)) {
+                                _this.options.items.postRender(containerElem);
+                            }
+
                             if (cb)
                             {
                                 cb();
