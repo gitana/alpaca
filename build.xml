@@ -132,6 +132,7 @@
         <file name="views/i18n/es_ES.js"/>
         <file name="views/i18n/fr_FR.js"/>
         <file name="views/i18n/zh_CN.js"/>
+        <file name="views/i18n/pl_PL.js"/>
 
     </filelist>
 
@@ -202,6 +203,7 @@
                 <file name="views/i18n/es_ES.js"/>
                 <file name="views/i18n/fr_FR.js"/>
                 <file name="views/i18n/zh_CN.js"/>
+                <file name="views/i18n/pl_PL.js"/>
 
             </filelist>
         </concat>
@@ -394,6 +396,7 @@
                 <file name="views/i18n/es_ES.js"/>
                 <file name="views/i18n/fr_FR.js"/>
                 <file name="views/i18n/zh_CN.js"/>
+                <file name="views/i18n/pl_PL.js"/>
 
             </filelist>
         </concat>
