@@ -29,23 +29,24 @@
         /**
          * @see Alpaca.ContainerField#setup
          */
-        setup: function() {
+        setup: function()
+        {
             this.base();
 
             this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle) ? "button" : this.view.toolbarStyle;
-            if ( !Alpaca.isEmpty(this.parent.options.form.attributes.rubyrails) )
- 	    {
-	       if ( this.parent.options.form.attributes.rubyrails == "true" ) {
-	  	  this.options.rubyrails = true;
-	       } else { 
-		  this.options.rubyrails = false;
-	       }
- 	    } else { 
-	       this.options.rubyrails = false;
-	    }
-	    
 
-            if (!this.options.items) {
+            // determine whether we are using "ruby on rails" compatibility mode
+            this.options.rubyrails = false;
+            if (this.parent && this.parent.options && this.parent.options.form && this.parent.options.form.attributes)
+            {
+                if (!Alpaca.isEmpty(this.parent.options.form.attributes.rubyrails))
+                {
+	  	            this.options.rubyrails = true;
+	            }
+            }
+
+            if (!this.options.items)
+            {
                 this.options.items = {};
             }
 
@@ -76,13 +77,18 @@
                 });
             }
 
-            if (Alpaca.isEmpty(this.data)) {
+            if (Alpaca.isEmpty(this.data))
+            {
                 return;
             }
-            if (!Alpaca.isArray(this.data)) {
-                if (!Alpaca.isString(this.data)) {
+            if (!Alpaca.isArray(this.data))
+            {
+                if (!Alpaca.isString(this.data))
+                {
                     return;
-                } else {
+                }
+                else
+                {
                     try {
                         this.data = Alpaca.parseJSON(this.data);
                         if (!Alpaca.isArray(this.data)) {
@@ -104,16 +110,21 @@
 
             var _this = this;
 
-            if (!data || !Alpaca.isArray(data)) {
+            if (!data || !Alpaca.isArray(data))
+            {
                 return;
             }
 
             // set fields
-            for (var i = 0; i < this.children.length; i++) {
+            for (var i = 0; i < this.children.length; i++)
+            {
                 var childField = this.children[i];
-                if (data.length > i) {
+                if (data.length > i)
+                {
                     childField.setValue(data[i]);
-                } else {
+                }
+                else
+                {
                     this.removeItem(childField.id); //remove child items if there are more children than in data
                 }
             }
@@ -157,7 +168,6 @@
                     });
                 });
             }
-
         },
 
         /**
@@ -219,9 +229,11 @@
         /**
          * Update field path and name when an array item is removed, inserted or switched.
          */
-        updatePathAndName: function() {
+        updatePathAndName: function()
+        {
             var _this = this;
-            if (this.children) {
+            if (this.children)
+            {
                 $.each(this.children,function(i,v) {
                     var idx = v.path.lastIndexOf('/');
                     var lastSegment = v.path.substring(idx+1);
@@ -234,22 +246,34 @@
 
                     }
                     // re-calculate name
-                    if (v.nameCalculated) {
+                    if (v.nameCalculated)
+                    {
                         v.preName = v.name;
-                        if (v.parent && v.parent.name && v.path) {
+
+                        if (v.parent && v.parent.name && v.path)
+                        {
                             v.name = v.parent.name + "_" + i;
-                        } else {
-                            if (v.path) {
+                        }
+                        else
+                        {
+                            if (v.path)
+                            {
                                 v.name = v.path.replace(/\//g, "").replace(/\[/g, "_").replace(/\]/g, "");
                             }
                         }
-			if (this.parent.options.rubyrails )  {
-                          $(v.field).attr('name', v.parent.name);
-			} else {
-                          $(v.field).attr('name', v.name);
- 			}
+
+			            if (this.parent.options.rubyrails )
+                        {
+                            $(v.field).attr('name', v.parent.name);
+			            }
+                        else
+                        {
+                            $(v.field).attr('name', v.name);
+ 			            }
                     }
-                    if (!v.prePath) {
+
+                    if (!v.prePath)
+                    {
                         v.prePath = v.path;
                     }
                     _this.updateChildrenPathAndName(v);
