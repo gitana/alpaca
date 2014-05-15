@@ -43,21 +43,33 @@
                 }
             }
 
-            data = "" + parseFloat(data).toFixed(options.centsLimit);
+            if (typeof(data) != "undefined")
+            {
+                data = "" + parseFloat(data).toFixed(options.centsLimit);
+            }
 
             this.base(container, data, options, schema, view, connector, errorCallback);
         },
 
         /**
+         * @see Alpaca.Fields.TextField#getFieldType
+         */
+        getFieldType: function() {
+            return "currency";
+        },
+
+        /**
          * @see Alpaca.Fields.TextField#postRender
          */
-        postRender: function(callback) {
+        afterRenderControl: function(model, callback) {
 
             var self = this;
 
-            this.base(function() {
+            var field = this.getControlEl();
 
-                $(self.field).priceFormat(self.options);
+            this.base(model, function() {
+
+                $(field).priceFormat(self.options);
 
                 callback();
 
@@ -68,8 +80,10 @@
          * @see Alpaca.Fields.TextField#getValue
          */
         getValue: function() {
-            var field = this.field;
-            var val   = $(field).is('input') ? field.val() : field.hmtl();
+
+            var field = this.getControlEl();
+
+            var val = $(field).is('input') ? field.val() : field.hmtl();
             if (this.options.unmask || this.options.round !== "none") {
                 var unmasked = (function() {
                     var result = '';
@@ -102,8 +116,10 @@
             } else {
                 return val;
             }
-        },//__BUILDER_HELPERS
+        }
 
+        //__BUILDER_HELPERS
+        ,
         getSchemaOfPriceFormatOptions: function() {
             return {
                 "properties": {
@@ -253,14 +269,9 @@
          */
         getDescription: function() {
             return "Provides an automatically formatted and configurable input for entering currency amounts.";
-        },
+        }
 
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "currency";
-        }//__END_OF_BUILDER_HELPERS
+        //__END_OF_BUILDER_HELPERS
     });
 
     Alpaca.registerFieldClass("currency", Alpaca.Fields.CurrencyField);
