@@ -1,5 +1,16 @@
 (function($) {
 
+    var round = (function() {
+        var strategies = {
+            up:      Math.ceil,
+            down:    function(input) { return ~~input; },
+            nearest: Math.round
+        };
+        return function(strategy) {
+            return strategies[strategy];
+        };
+    })();
+
     var Alpaca = $.alpaca;
 
     Alpaca.Fields.CurrencyField = Alpaca.Fields.TextField.extend(
@@ -57,14 +68,39 @@
          * @see Alpaca.Fields.TextField#getValue
          */
         getValue: function() {
-            if (this.options.unmask) {
-                var unmasked   = "" + parseFloat(this.field.unmask());
-                var len        = unmasked.length;
-                var centsLimit = this.options.centsLimit;
-                var value      = unmasked.substring(0, len - centsLimit) + '.' + unmasked.substring(len - centsLimit, len);
-                return parseFloat(value);
+            var field = this.field;
+            var val   = $(field).is('input') ? field.val() : field.hmtl();
+            if (this.options.unmask || this.options.round !== "none") {
+                var unmasked = (function() {
+                    var result = '';
+                    for (var i in val) {
+                        var cur = val[i];
+                        if (!isNaN(cur)) {
+                            result += cur;
+                        } else if (cur === this.options.centsSeparator) {
+                            result += '.';
+                        }
+                    }
+                    return parseFloat(result);
+                }).bind(this)();
+                if (this.options.round !== "none") {
+                    unmasked = round(this.options.round)(unmasked);
+                    if (!this.options.unmask) {
+                        var result = [];
+                        var unmaskedString = "" + unmasked;
+                        for (var i = 0, u = 0; i < val.length; i++) {
+                            if (!isNaN(val[i])) {
+                                result.push(unmaskedString[u++] || 0)
+                            } else {
+                                result.push(val[i]);
+                            }
+                        }
+                        return result.join('');
+                    }
+                }
+                return unmasked;
             } else {
-                return this.field.val();
+                return val;
             }
         },//__BUILDER_HELPERS
 
@@ -120,6 +156,13 @@
                         "description": "The prefix if any for the field.",
                         "type": "text",
                         "default": "$"
+                    },
+                    "round": {
+                        "title": "Round",
+                        "description": "Determines if the field is rounded. (Rounding is done when getValue is called and is not reflected in the UI)",
+                        "type": "string",
+                        "enum": [ "up", "down", "nearest", "none" ],
+                        "default": "none"
                     },
                     "suffix": {
                         "title": "Suffix",
@@ -181,6 +224,9 @@
                     },
                     "prefix": {
                         "type": "text"
+                    },
+                    "round": {
+                        "type": "select"
                     },
                     "suffix": {
                         "type": "text"
