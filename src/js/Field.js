@@ -973,7 +973,10 @@
                 mergedContext.reverse();
 
                 // update validation state
-                Alpaca.updateValidationStateForContext(self.view, mergedContext);
+                if (!self.hideInitValidationError)
+                {
+                    Alpaca.updateValidationStateForContext(self.view, mergedContext);
+                }
             }
             else
             {
@@ -983,7 +986,10 @@
                 var context = Alpaca.compileValidationContext(this);
 
                 // update the UI for these context items
-                Alpaca.updateValidationStateForContext(self.view, context);
+                if (!self.hideInitValidationError)
+                {
+                    Alpaca.updateValidationStateForContext(self.view, context);
+                }
             }
         },
 

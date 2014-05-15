@@ -79,6 +79,7 @@ var paths = {
             "src/js/fields/advanced/UploadField.js",
             "src/js/fields/advanced/TableField.js",
             "src/js/fields/advanced/GridField.js",
+            "src/js/fields/advanced/CurrencyField.js",
 
             // base view
             "src/js/views/base.js",

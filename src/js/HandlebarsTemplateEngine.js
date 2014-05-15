@@ -94,6 +94,66 @@
         this.index = Number(value);
     });
 
+    Handlebars.registerHelper("uploadErrorMessage", function(error) {
+
+        var message = error;
+
+        if (error === 1)
+        {
+            message = "File exceeds upload_max_filesize";
+        }
+        else if (error === 2)
+        {
+            message = "File exceeds MAX_FILE_SIZE";
+        }
+        else if (error === 3)
+        {
+            message = "File was only partially uploaded";
+        }
+        else if (error === 4)
+        {
+            message = "No File was uploaded";
+        }
+        else if (error === 5)
+        {
+            message = "Missing a temporary folder";
+        }
+        else if (error === 6)
+        {
+            message = "Failed to write file to disk";
+        }
+        else if (error === 7)
+        {
+            message = "File upload stopped by extension";
+        }
+        else if (error === "maxFileSize")
+        {
+            message = "File is too big";
+        }
+        else if (error === "minFileSize")
+        {
+            message = "File is too small";
+        }
+        else if (error === "acceptFileTypes")
+        {
+            message = "Filetype not allowed";
+        }
+        else if (error == "maxNumberOfFiles")
+        {
+            message = "Max number of files exceeded";
+        }
+        else if (error == "uploadedBytes")
+        {
+            message = "Uploaded bytes exceed file size";
+        }
+        else if (error == "emptyResult")
+        {
+            message = "Empty file upload result";
+        }
+
+        return message;
+    });
+
 
 
     //Handlebars.registerHelper("each", helpers["each"]);

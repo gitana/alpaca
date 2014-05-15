@@ -1,15 +1,21 @@
 <script type="text/x-handlebars-template">
 
-    {{#each o.files}}
     <tr class="template-download fade">
-        {{#if file.error}}
+    {{#if file.error}}
         <td></td>
-        <td class="name"><span>{{file.name}}</span></td>
-        <td class="size"><span>{{file.size}}</span></td>
-        <td class="error" colspan="2"><span class="label label-important">Error</span> {{file.error}}</td>
-        {{else}}
+        <td class="name">
+            <span>{{file.name}}</span>
+        </td>
+        <td class="size">
+            <span>{{file.size}}</span>
+        </td>
+        <td class="error" colspan="2">
+            <span class="label label-important">Error</span>
+            {{file.error}}
+        </td>
+    {{else}}
         <td class="preview">
-            {{#if file.thumbnailUrl}}
+            {{#if thumbnailUrl}}
             <a href="{{file.url}}" title="{{file.name}}" data-gallery="gallery" download="{{file.name}}">
                 <img src="{{file.thumbnailUrl}}">
             </a>
@@ -20,7 +26,7 @@
         </td>
         <td class="size"><span>{{file.size}}</span></td>
         <td colspan="2"></td>
-        {{/if}}
+    {{/if}}
         <td>
             <button class="delete btn btn-danger" data-type="{{file.deleteType}}" data-url="{{file.deleteUrl}}" {{#if file.deleteWithCredentials}}data-xhr-fields="{\"withCredentials\":true}" {{/if}}>
                 <i class="glyphicon glyphicon-trash glyphicon-white"></i>
@@ -28,6 +34,5 @@
             </button>
         </td>
     </tr>
-    {{/each}}
 
 </script>

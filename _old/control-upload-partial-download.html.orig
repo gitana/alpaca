@@ -1,0 +1,33 @@
+<script type="text/x-handlebars-template">
+
+    {{#each o.files}}
+    <tr class="template-download fade">
+        {{#if error}}
+        <td></td>
+        <td class="name"><span>{{name}}</span></td>
+        <td class="size"><span>{{size}}</span></td>
+        <td class="error" colspan="2"><span class="label label-important">Error</span> {{error}}</td>
+        {{else}}
+        <td class="preview">
+            {{#if thumbnailUrl}}
+            <a href="{{url}}" title="{{name}}" data-gallery="gallery" download="{{name}}">
+                <img src="{{thumbnailUrl}}">
+            </a>
+            {{/if}}
+        </td>
+        <td class="name">
+            <a href="{{url}}" title="{{name}}" data-gallery="{{thumbnailUrl}}gallery" download="{{name}}">{{name}}</a>
+        </td>
+        <td class="size"><span>{{size}}</span></td>
+        <td colspan="2"></td>
+        {{/if}}
+        <td>
+            <button class="delete btn btn-danger" data-type="{{deleteType}}" data-url="{{deleteUrl}}" {{#if deleteWithCredentials}}data-xhr-fields="{\"withCredentials\":true}" {{/if}}>
+                <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                <span>Delete</span>
+            </button>
+        </td>
+    </tr>
+    {{/each}}
+
+</script>

@@ -27,6 +27,16 @@
             this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle) ? "button" : this.view.toolbarStyle;
             this.options.actionbarStyle = Alpaca.isEmpty(this.view.actionbarStyle) ? "top" : this.view.actionbarStyle;
 
+            // determine whether we are using "ruby on rails" compatibility mode
+            this.options.rubyrails = false;
+            if (this.parent && this.parent.options && this.parent.options.form && this.parent.options.form.attributes)
+            {
+                if (!Alpaca.isEmpty(this.parent.options.form.attributes.rubyrails))
+                {
+                    this.options.rubyrails = true;
+                }
+            }
+
             if (!this.options.items)
             {
                 this.options.items = {};
@@ -437,6 +447,12 @@
                     },
                     "postRender": function(control)
                     {
+                        // PR: https://github.com/gitana/alpaca/pull/124
+                        if (Alpaca.isFunction(self.options.items.postRender))
+                        {
+                            self.options.items.postRender(containerElem);
+                        }
+
                         if (postRenderCallback)
                         {
                             postRenderCallback(control);
@@ -764,7 +780,15 @@
                             }
                         }
 
-                        //$(v.field).attr('name', v.name);
+                        if (this.parent.options.rubyrails )
+                        {
+                            $(v.field).attr('name', v.parent.name);
+                        }
+                        else
+                        {
+                            $(v.field).attr('name', v.name);
+                        }
+
                     }
 
                     if (!v.prePath)

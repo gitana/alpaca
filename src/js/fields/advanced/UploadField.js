@@ -8,6 +8,80 @@
      */
     {
         /**
+         * @constructs
+         * @augments Alpaca.Fields.TextField
+         *
+         * @class File control with nice custom styles.
+         *
+         * @param {Object} container Field container.
+         * @param {Any} data Field data.
+         * @param {Object} options Field options.
+         * @param {Object} schema Field schema.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         */
+        constructor: function(container, data, options, schema, view, connector)
+        {
+            this.base(container, data, options, schema, view, connector);
+
+            // wraps an existing template descriptor into a method that looks like fn(model)
+            // this is compatible with the requirements of fileinput
+            // config looks like
+            //    {
+            //       "files": [],
+            //       "formatFileSize": fn,
+            //       "options": {}
+            //    }
+            //
+
+            var self = this;
+
+            this.wrapTemplate = function(templateId)
+            {
+                return function(config) {
+
+                    var files = config.files;
+                    var formatFileSize = config.formatFileSize;
+                    var options = config.options;
+
+                    var rows = [];
+                    for (var i = 0; i < files.length; i++)
+                    {
+                        var model = {};
+                        model.options = self.options;
+                        model.file = Alpaca.cloneObject(files[i]);
+                        model.size = formatFileSize(model.size);
+
+                        var row = Alpaca.tmpl(self.view.getTemplateDescriptor(templateId), model);
+
+                        rows.push(row[0]);
+                    }
+
+                    rows = $(rows);
+                    $(rows).each(function() {
+
+                        if (options.fileupload && options.fileupload.autoUpload)
+                        {
+                            // disable start button
+                            $(this).find("button.start").css("display", "none");
+                        }
+
+                        self.handleWrapRow(this, options);
+                    });
+
+                    return $(rows);
+                };
+            };
+        },
+
+        /**
+         * @see Alpaca.ControlField#getFieldType
+         */
+        getFieldType: function() {
+            return "upload";
+        },
+
+        /**
          * @see Alpaca.Fields.TextField#setup
          */
         setup: function()
@@ -40,29 +114,25 @@
             });
         },
 
+        /**
+         * Gets the upload template.
+         */
+        getUploadTemplate: function() {
+            return this.wrapTemplate("control-upload-partial-upload");
+        },
+
+        /**
+         * Gets the download template.
+         */
+        getDownloadTemplate: function() {
+            return this.wrapTemplate("control-upload-partial-download");
+        },
+
         handlePostRender: function(callback)
         {
             var self = this;
 
             var el = this.control;
-
-            var uploadTemplateFunction = function(data)
-            {
-                var uploadDescriptor = self.view.getTemplateDescriptor("control-upload-partial-upload");
-
-                return Alpaca.tmpl(uploadDescriptor, {
-                    o: data
-                });
-            };
-
-            var downloadTemplateFunction = function(data)
-            {
-                var downloadDescriptor = self.view.getTemplateDescriptor("control-upload-partial-download");
-
-                return Alpaca.tmpl(downloadDescriptor, {
-                    o: data
-                });
-            };
 
             // file upload config
             var fileUploadConfig = {};
@@ -70,9 +140,9 @@
             // defaults
             fileUploadConfig["dataType"] = "json";
             fileUploadConfig["uploadTemplateId"] = null;
-            fileUploadConfig["uploadTemplate"] = uploadTemplateFunction;
+            fileUploadConfig["uploadTemplate"] = this.getUploadTemplate();
             fileUploadConfig["downloadTemplateId"] = null;
-            fileUploadConfig["downloadTemplate"] = downloadTemplateFunction;
+            fileUploadConfig["downloadTemplate"] = this.getDownloadTemplate();
             fileUploadConfig["filesContainer"] = $(el).find(".files");
             fileUploadConfig["dropZone"] = $(el).find(".fileupload-active-zone");
             fileUploadConfig["url"] = "/";
@@ -250,6 +320,11 @@
                     callback();
                 }
             });
+        },
+
+        handleWrapRow: function(row, options)
+        {
+
         },
 
         applyTokenSubstitutions: function(text, index, file)
@@ -553,14 +628,9 @@
          */
         getType: function() {
             return "array";
-        },
+        }
 
-        /**
-         * @see Alpaca.ControlField#getFieldType
-         */
-        getFieldType: function() {
-            return "upload";
-        }//__END_OF_BUILDER_HELPERS
+        //__END_OF_BUILDER_HELPERS
     });
 
     Alpaca.registerFieldClass("upload", Alpaca.Fields.UploadField);

@@ -80,3 +80,13 @@ legend.alpaca-container-label
 {
     border: 0px;
 }
+
+.alpaca-field-select .btn-group
+{
+    display:block;
+}
+
+.alpaca-field-select .btn-group button.multiselect
+{
+    float: none;
+}

@@ -4,7 +4,7 @@
 
     {{#if options.multiple}}
 
-        {{#if required}}
+        {{#if hideNone}}
         {{else}}
         <option value="">None</option>
         {{/if}}
@@ -15,7 +15,7 @@
 
     {{else}}
 
-        {{#if required}}
+        {{#if hideNone}}
         {{else}}
         <option value="">None</option>
         {{/if}}

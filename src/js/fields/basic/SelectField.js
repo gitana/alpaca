@@ -118,7 +118,12 @@
             this.base(function(model) {
 
                 model.selectOptions = self.selectOptions;
-                model.removeDefaultNone = self.options.removeDefaultNone;
+
+                model.hideNone = self.schema.required;
+                if (self.options.removeDefaultNone)
+                {
+                    model.hideNone = true;
+                }
 
                 callback(model);
             });
@@ -142,6 +147,25 @@
                 if (self.data)
                 {
                     self.setValue(self.data);
+                }
+
+                // if we are in multiple mode and the bootstrap multiselect plugin is available, bind it in
+                if (self.options.multiple && $.fn.multiselect)
+                {
+                    var settings = null;
+                    if (self.options.multiselect) {
+                        settings = self.options.multiselect;
+                    }
+                    else
+                    {
+                        settings = {};
+                    }
+                    if (!settings.nonSelectedText)
+                    {
+                        settings.nonSelectedText = "None";
+                    }
+
+                    $(self.getControlEl()).multiselect(settings);
                 }
 
                 callback();
@@ -174,6 +198,11 @@
                     if (!val)
                     {
                         val = [];
+                    }
+
+                    if (!Alpaca.isArray(val) && !Alpaca.isObject(val))
+                    {
+                        val = [val];
                     }
 
                     $.each(val, function(i,v) {
@@ -296,6 +325,11 @@
                         "description": "If the data is empty, then automatically select the first item in the list.",
                         "type": "boolean",
                         "default": false
+                    },
+                    "multiselect": {
+                        "title": "Multiselect Plugin Settings",
+                        "description": "Multiselect plugin properties - http://davidstutz.github.io/bootstrap-multiselect",
+                        "type": "any"
                     }
                 }
             });
@@ -315,6 +349,12 @@
                     },
                     "size": {
                         "type": "integer"
+                    },
+                    "emptySelectFirst": {
+                        "type": "checkbox",
+                        "rightLabel": "Empty Select First"
+                    },
+                    "multiselect": {
                     }
                 }
             });
@@ -324,14 +364,14 @@
          * @see Alpaca.Field#getTitle
          */
         getTitle: function() {
-            return "Dropdown Select";
+            return "Select Field";
         },
 
         /**
          * @see Alpaca.Field#getDescription
          */
         getDescription: function() {
-            return "Dropdown select field.";
+            return "Select Field";
         }//__END_OF_BUILDER_HELPERS
 
     });

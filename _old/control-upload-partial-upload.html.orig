@@ -1,31 +1,33 @@
 <script type="text/x-handlebars-template">
 
+    {{#each o.files}}
     <tr class="template-upload fade">
 
-    {{#if options.showUploadPreview}}
+        {{#if o.options.showUploadPreview}}
         <td class="preview">
             <span class="fade"></span>
         </td>
-    {{else}}
-        <td></td>
-    {{/if}}
+        {{else}}
+        <td>
+        </td>
+        {{/if}}
 
-        <td class="name"><span>{{file.name}}</span></td>
-        <td class="size"><span>{{file.size}}</span></td>
+        <td class="name"><span>{{name}}</span></td>
+        <td class="size"><span>{{size}}</span></td>
 
-    {{#if file.error}}
-        <td class="error" colspan="2"><span class="label label-important">Error</span> {{file.error}}</td>
-    {{else}}
-    {{#if file.valid}}
-        {{#compare @index 0}}
+        {{#if error}}
+        <td class="error" colspan="2"><span class="label label-important">Error</span> {{error}}</td>
+        {{else}}
+        {{#if o.files.valid}}
+            {{#compare @index 0}}
         <td>
             <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                 <div class="progress-bar" style="width:0%;"></div>
             </div>
         </td>
-        {{/compare}}
+            {{/compare}}
         <td class="start">
-            {{#if options.autoUpload}}
+            {{#if o.options.autoUpload}}
             {{else}}
             <button class="btn btn-primary"> \
                 <i class="glyphicon glyphicon-upload glyphicon-white"></i>
@@ -44,8 +46,9 @@
             {{/compare}}
         </td>
         {{/if}}
-    {{/if}}
+        {{/if}}
         <td></td>
     </tr>
+    {{/each}}
 
 </script>
