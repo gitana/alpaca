@@ -1698,6 +1698,12 @@
                                     "enum":["post","get"],
                                     "type": "string"
                                 },
+				"rubyrails": {
+				    "title": "Ruby On Rails",
+				    "description": "Ruby on Rails Name Standard",
+				    "enum": ["true", "false"],
+				    "type": "string"
+				},
                                 "name": {
                                     "title": "Name",
                                     "description": "Form name",

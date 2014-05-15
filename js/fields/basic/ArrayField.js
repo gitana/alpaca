@@ -33,6 +33,17 @@
             this.base();
 
             this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle) ? "button" : this.view.toolbarStyle;
+            if ( !Alpaca.isEmpty(this.parent.options.form.attributes.rubyrails) )
+ 	    {
+	       if ( this.parent.options.form.attributes.rubyrails == "true" ) {
+	  	  this.options.rubyrails = true;
+	       } else { 
+		  this.options.rubyrails = false;
+	       }
+ 	    } else { 
+	       this.options.rubyrails = false;
+	    }
+	    
 
             if (!this.options.items) {
                 this.options.items = {};
@@ -232,7 +243,11 @@
                                 v.name = v.path.replace(/\//g, "").replace(/\[/g, "_").replace(/\]/g, "");
                             }
                         }
-                        $(v.field).attr('name', v.name);
+			if (this.parent.options.rubyrails )  {
+                          $(v.field).attr('name', v.parent.name);
+			} else {
+                          $(v.field).attr('name', v.name);
+ 			}
                     }
                     if (!v.prePath) {
                         v.prePath = v.path;
