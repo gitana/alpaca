@@ -144,7 +144,7 @@
             this.topControl.validate(true);
 
             var valid = this.topControl.isValid(true);
-            this.refreshValidationState(true);
+            //this.refreshValidationState(true);
 
             return valid;
         },

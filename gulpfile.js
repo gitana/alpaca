@@ -4,6 +4,8 @@ var gulp = require('gulp');
 var es = require('event-stream');
 var exec = require('child_process').exec;
 
+var pkg = require('./package.json');
+
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
@@ -494,9 +496,14 @@ gulp.task('update-web', function() {
 
 });
 
+gulp.task('stamp-version', function() {
+
+    fs.writeFileSync("./build/version.properties", "version=" + pkg.version);
+});
+
 var refreshWeb = function()
 {
-    runSequence('jekyll', 'update-web');
+    runSequence('jekyll', 'update-web', 'stamp-version');
 };
 
 gulp.task('refreshWeb', function()

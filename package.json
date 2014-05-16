@@ -2,21 +2,21 @@
   "name": "alpaca",
   "version": "1.5.0",
   "devDependencies": {
+    "event-stream": "*",
+    "express": "3.5.1",
     "gulp": "*",
+    "gulp-clean": "*",
+    "gulp-concat": "*",
+    "gulp-declare": "*",
+    "gulp-jshint": "*",
+    "gulp-minify-css": "*",
+    "gulp-nodemon": "*",
+    "gulp-notify": "*",
+    "gulp-order": "*",
     "gulp-rename": "*",
     "gulp-uglify": "*",
-    "gulp-clean": "*",
-    "gulp-minify-css": "*",
-    "gulp-concat": "*",
-    "gulp-jshint": "*",
-    "gulp-declare": "*",
-    "event-stream": "*",
-    "gulp-notify": "*",
+    "gulp-wrap-umd": "^0.2.0",
     "node-static": "*",
-    "gulp-order": "*",
-    "run-sequence": "*",
-    "gulp-nodemon": "*",
-    "express": "3.5.1",
-    "gulp-wrap-umd": "^0.2.0"
+    "run-sequence": "*"
   }
 }

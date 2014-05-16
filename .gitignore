@@ -3,3 +3,5 @@
 *.iws
 .idea/
 build/
+custom-deployment.properties
+custom-version.properties
