@@ -1443,18 +1443,18 @@
                         "type": "string"
                     },
                     "description": {
-                        "title": "Description",
-                        "description": "Detailed description of the property.",
-                        "type": "string"
-                    },
-                    "readonly": {
-                        "title": "Readonly",
-                        "description": "Property will be readonly if true.",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "required": {
-                        "title": "Required",
+                "title": "Description",
+                    "description": "Detailed description of the property.",
+                    "type": "string"
+            },
+            "readonly": {
+                "title": "Readonly",
+                    "description": "Property will be readonly if true.",
+                    "type": "boolean",
+                    "default": false
+            },
+            "required": {
+                "title": "Required",
                         "description": "Property value must be set if true.",
                         "type": "boolean",
                         "default": false

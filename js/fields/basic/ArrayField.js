@@ -33,16 +33,23 @@
             this.base();
 
             this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle) ? "button" : this.view.toolbarStyle;
-            if ( !Alpaca.isEmpty(this.parent.options.form.attributes.rubyrails) )
- 	    {
-	       if ( this.parent.options.form.attributes.rubyrails == "true" ) {
-	  	  this.options.rubyrails = true;
-	       } else { 
-		  this.options.rubyrails = false;
-	       }
- 	    } else { 
-	       this.options.rubyrails = false;
-	    }
+            try {
+                if (!Alpaca.isEmpty(this.parent.options.form.attributes.rubyrails)) {
+                    if (this.parent.options.form.attributes.rubyrails == "true") {
+                        this.options.rubyrails = true;
+                    } else {
+                        t
+                        his.options.rubyrails = false;
+                    }
+                } else {
+                    this.options.rubyrails = false;
+                }
+            }
+            catch (err)
+            {
+                this.options.rubyrails = false;
+            }
+
 	    
 
             if (!this.options.items) {

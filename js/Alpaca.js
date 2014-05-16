@@ -69,7 +69,7 @@
         var isDynamicCreation = false;
         var initialSettings = {};
 
-        // if these options are provided, then data, schema, options and source are loaded via connector
+        // if these options are proveded, then data, schema, options and source are loaded via connector
         var dataSource = null;
         var schemaSource = null;
         var optionsSource = null;
