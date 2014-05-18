@@ -1,0 +1,10 @@
+{
+  "framework": "qunit",
+  "src_files": [
+
+  ],
+  "launch_in_dev": [
+    "Chrome",
+    "Firefox"
+  ]
+}
