@@ -9,97 +9,90 @@
     <meta name="author" content="Gitana Software Inc."/>
     <meta http-equiv="X-UA-Compatible" content="IE=9">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-    <script type="text/javascript" src="qunit/qunit.js">
-    </script>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 
-    <!-- jQuery 1.9.1 -->
-    <script type="text/javascript" src="../lib/jquery-2.1.0/jquery-2.1.0.min.js"></script>
+    <!-- jQuery 2.1.0 -->
+    <script type="text/javascript" src="/lib/jquery-1.11.1/jquery-1.11.1.min.js"></script>
 
     <!-- Handlebars -->
-    <script type="text/javascript" src="../lib/handlebars/handlebars-v1.3.0.js"></script>
+    <script type="text/javascript" src="/lib/handlebars/handlebars-v1.3.0.js"></script>
 
     <!--Custom jQuery UI Library-->
-    <script type="text/javascript" src="../lib/jquery-ui-latest/jquery-ui-latest.custom.min.js"></script>
-    <script type="text/javascript" src="../lib/jquery.wysiwyg/jquery.wysiwyg.js"></script>
+    <script type="text/javascript" src="/lib/jquery-ui/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/lib/jquery.wysiwyg/jquery.wysiwyg.js"></script>
     <!--End of Custom jQuery UI Library-->
+
+    <script type="text/javascript" src="qunit/qunit.js"></script>
+
     <!--Alpaca JavaScript-->
-    <script type="text/javascript" src="../lib/base.js"></script>
-    <script type="text/javascript" src="../lib/json2.js"></script>
-    <script type="text/javascript" src="../lib/validator.js"></script>
+    <script type="text/javascript" src="/lib/base.js"></script>
+    <script type="text/javascript" src="/lib/json2.js"></script>
+    <script type="text/javascript" src="/lib/validator.js"></script>
 
-    <script type="text/javascript" src="../lib/equiv_and_hoozit.js"></script>
-    <script type="text/javascript" src="../lib/jquery.maskedinput-1.3.1.js"></script>
+    <script type="text/javascript" src="/lib/equiv_and_hoozit.js"></script>
+    <script type="text/javascript" src="/lib/jquery.maskedinput-1.3.1.js"></script>
 
-    <script type="text/javascript" src="../js/Alpaca.js"></script>
-    <script type="text/javascript" src="../js/TemplateEngineRegistry.js"></script>
-    <script type="text/javascript" src="../js/AbstractTemplateEngine.js"></script>
+    <script type="text/javascript" src="/src/js/Alpaca.js"></script>
+    <script type="text/javascript" src="/src/js/TemplateEngineRegistry.js"></script>
+    <script type="text/javascript" src="/src/js/AbstractTemplateEngine.js"></script>
 
-    <script type="text/javascript" src="../js/JQueryTemplateEngine.js"></script>
-    <script type="text/javascript" src="../js/EJSTemplateEngine.js"></script>
-    <script type="text/javascript" src="../js/HandlebarsTemplateEngine.js"></script>
+    <script type="text/javascript" src="/src/js/HandlebarsTemplateEngine.js"></script>
 
     <!-- view classes -->
-    <script type="text/javascript" src="../js/NormalizedView.js"></script>
-    <script type="text/javascript" src="../js/RuntimeView.js"></script>
+    <script type="text/javascript" src="/src/js/NormalizedView.js"></script>
+    <script type="text/javascript" src="/src/js/RuntimeView.js"></script>
 
     <!-- view implementations -->
-    <script type="text/javascript" src="../js/views/base/BaseView.js"></script>
-    <script type="text/javascript" src="../js/views/default/DefaultViews.js"></script>
-    <script type="text/javascript" src="../js/views/default/DefaultListViews.js"></script>
-    <script type="text/javascript" src="../js/views/jqueryui/JQueryUIViews.js"></script>
-    <script type="text/javascript" src="../js/views/jquerymobile/JQueryMobileViews.js"></script>
-    <script type="text/javascript" src="../js/views/bootstrap/BootstrapViews.js"></script>
-    <script type="text/javascript" src="../js/views/LayoutView.js"></script>
-    <script type="text/javascript" src="../js/views/InlineView.js"></script>
-    <script type="text/javascript" src="../js/views/TableView.js"></script>
-    <script type="text/javascript" src="../js/views/YAMLView.js"></script>
+    <script type="text/javascript" src="/src/js/views/base.js"></script>
+    <script type="text/javascript" src="/src/js/views/bootstrap.js"></script>
+    <script type="text/javascript" src="/src/js/views/jquerymobile.js"></script>
+    <script type="text/javascript" src="/src/js/views/jqueryui.js"></script>
+    <script type="text/javascript" src="/src/js/views/web.js"></script>
 
     <!-- field foundation classes -->
-    <script type="text/javascript" src="../js/Field.js"></script>
-    <script type="text/javascript" src="../js/ControlField.js"></script>
-    <script type="text/javascript" src="../js/ContainerField.js"></script>
-    <script type="text/javascript" src="../js/Connector.js"></script>
-    <script type="text/javascript" src="../js/Form.js"></script>
+    <script type="text/javascript" src="/src/js/Field.js"></script>
+    <script type="text/javascript" src="/src/js/ControlField.js"></script>
+    <script type="text/javascript" src="/src/js/ContainerField.js"></script>
+    <script type="text/javascript" src="/src/js/Connector.js"></script>
+    <script type="text/javascript" src="/src/js/Form.js"></script>
 
     <!--Alpaca Base Fields-->
-    <script type="text/javascript" src="../js/fields/basic/TextField.js"></script>
-    <script type="text/javascript" src="../js/fields/basic/TextAreaField.js"></script>
-    <script type="text/javascript" src="../js/fields/basic/CheckBoxField.js"></script>
-    <script type="text/javascript" src="../js/fields/basic/FileField.js"></script>
-    <script type="text/javascript" src="../js/fields/basic/ListField.js"></script>
-    <script type="text/javascript" src="../js/fields/basic/RadioField.js"></script>
-    <script type="text/javascript" src="../js/fields/basic/SelectField.js"></script>
-    <script type="text/javascript" src="../js/fields/basic/NumberField.js"></script>
-    <script type="text/javascript" src="../js/fields/basic/ArrayField.js"></script>
-    <script type="text/javascript" src="../js/fields/basic/ObjectField.js"></script>
-    <script type="text/javascript" src="../js/fields/basic/AnyField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/TextField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/TextAreaField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/CheckBoxField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/FileField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/ListField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/RadioField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/SelectField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/NumberField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/ArrayField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/ObjectField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/basic/AnyField.js"></script>
     <!--End of Alpaca Base Fields-->
-    
+
     <!--Alpaca Other Fields-->
-    <script type="text/javascript" src="../js/fields/advanced/AddressField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/DateField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/EmailField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/IntegerField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/IPv4Field.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/JSONField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/IntegerField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/LowerCaseField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/MapField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/PasswordField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/PersonalNameField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/PhoneField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/TagField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/TimeField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/UpperCaseField.js"></script>
-    <script type="text/javascript" src="../js/fields/advanced/WysiwygField.js"></script>
-    <!--End of Alpaca Other Fields-->    
+    <script type="text/javascript" src="/src/js/fields/advanced/AddressField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/DateField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/EmailField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/IntegerField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/IPv4Field.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/JSONField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/IntegerField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/LowerCaseField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/MapField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/PasswordField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/PersonalNameField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/PhoneField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/TagField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/TimeField.js"></script>
+    <script type="text/javascript" src="/src/js/fields/advanced/UpperCaseField.js"></script>
+    <!--End of Alpaca Other Fields-->
 
     <!-- i18n support -->
-    <script type="text/javascript" src="../js/views/i18n/de_AT.js"></script>
-    <script type="text/javascript" src="../js/views/i18n/es_ES.js"></script>
-    <script type="text/javascript" src="../js/views/i18n/fr_FR.js"></script>
-    <script type="text/javascript" src="../js/views/i18n/zh_CN.js"></script>
+    <script type="text/javascript" src="/src/js/messages/i18n/de_AT.js"></script>
+    <script type="text/javascript" src="/src/js/messages/i18n/es_ES.js"></script>
+    <script type="text/javascript" src="/src/js/messages/i18n/fr_FR.js"></script>
+    <script type="text/javascript" src="/src/js/messages/i18n/zh_CN.js"></script>
 
     <!--End of Alpaca JavaScript-->
 
@@ -138,9 +131,9 @@
     <!--End of Alpaca Test JavaScript-->
 
     <!--Alpaca CSS-->
-    <link type="text/css" href="../examples/css/960.fluid.css" rel="stylesheet"/>
-    <link type="text/css" href="../css/alpaca.css" rel="stylesheet"/>
-    <link type="text/css" href="../lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/>
+<!--     <link type="text/css" href="/examples/css/960.fluid.css" rel="stylesheet"/>
+    <link type="text/css" href="/css/alpaca.css" rel="stylesheet"/>
+    <link type="text/css" href="/lib/jquery-ui-latest/jquery-ui-latest.custom.css" rel="stylesheet"/> -->
     <!--End of Alpaca CSS-->
     <link type="text/css" href="qunit/qunit.css" rel="stylesheet"/>
 </head>
