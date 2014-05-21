@@ -33,7 +33,6 @@
                 "type": "any"
             },
             "postRender": function (renderedField) {
-                debugger
                 expect(7);
                 deepEqual(renderedField.getValue(), data, 'Address field getValue() method returns correct value.');
                 equal(renderedField.getAddress(), '100 Main Street Suite 200 Burlington MA 18210', 'Address field getAddress() method returns correct value.');
