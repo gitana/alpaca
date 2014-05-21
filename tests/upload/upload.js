@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     $("#field1").alpaca({
-        "view": "VIEW_BOOTSTRAP_CREATE",
+        "view": "bootstrap-create",
         "schema": {
             "type": "object",
             "properties": {

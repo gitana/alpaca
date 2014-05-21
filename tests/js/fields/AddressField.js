@@ -1,6 +1,13 @@
 (function($) {
 
-    module("fields: address");
+    module("fields: address", {
+        "setup": function() {
+            $("#qunit-fixture").append('<div id="address-fixture"></div>');
+        },
+        "teardown": function() {
+            $("#address-fixture").remove();
+        }
+    });
 
     // Test case 1 : Address field with options.
     test("Address field with options.", function() {
@@ -14,7 +21,8 @@
             "state":"MA",
             "zip":"18210"
         };
-        $("#address-1").alpaca({
+        $("#address-fixture").alpaca({
+            "view": "bootstrap-edit",
             "data": data,
             "options": {
                 "type": "address",
