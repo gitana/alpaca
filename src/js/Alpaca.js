@@ -1509,7 +1509,7 @@
             }
 
             // detect twitter bootstrap
-            var bootstrapDetected = (typeof $().modal == 'function');
+            var bootstrapDetected = (typeof $.fn.modal == 'function');
             if (bootstrapDetected && !fallbackUI) {
                 fallbackUI = "bootstrap";
             }
