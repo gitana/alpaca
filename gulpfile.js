@@ -302,7 +302,8 @@ gulp.task('scripts', function(cb) {
         }],
         namespace: "Alpaca",
         exports: "Alpaca",
-        template: wrapper
+        template: wrapper,
+        defaultView: 'bootstrap'
     };
     var jqueryui_warp = {
         deps: [{
@@ -320,7 +321,8 @@ gulp.task('scripts', function(cb) {
         }],
         namespace: "Alpaca",
         exports: "Alpaca",
-        template: wrapper
+        template: wrapper,
+        defaultView: 'jqueryui'
     };
     var jquerymobile_wrap = {
         deps: [{
@@ -338,12 +340,16 @@ gulp.task('scripts', function(cb) {
         }],
         namespace: "Alpaca",
         exports: "Alpaca",
-        template: wrapper
+        template: wrapper,
+        defaultView: 'jquerymobile'
     };
 
 
     // core
-    var first = gulp.src(paths.scripts.core).pipe(concat('scripts-core.js')).pipe(gulp.dest('build/tmp'));
+    var first = gulp.src(paths.scripts.core)
+                    .pipe(concat('scripts-core.js'))
+                    .pipe(gulp.dest('build/tmp'));
+
     first.on("end", function() {
 
         es.concat(

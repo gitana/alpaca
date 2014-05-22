@@ -1500,7 +1500,7 @@
             // make some intelligent guesses about what view id we might default to in case they want to use
             // auto-view selection.  We detect jquery-ui, bootstrap and jquerymobile.  If nothing can be detected,
             // we fall back to straight web views.
-            var fallbackUI = null;
+            var fallbackUI   = Alpaca.defaultView || null;
             var fallbackType = null;
 
             // detect jQuery Mobile
