@@ -2355,7 +2355,7 @@
         return $(el).attr(name);
     };
 
-    Alpaca.loadRefSchemaOptions = function(topField, referenceId, callback)
+    Alpaca.loadRefSchemaOptions = function(topField, referenceId, refOptionsId, callback)
     {
         if (!referenceId)
         {
@@ -2448,9 +2448,14 @@
             // the target schema
 
             var referenceParts = Alpaca.pathParts(referenceId);
+            if (refOptionsId == "" ) {
+                var referenceOptionsParts = referenceParts;
+            } else {
+                var referenceOptionsParts = Alpaca.pathParts(refOptionsId);
+            }
 
             topField.connector.loadReferenceSchema(referenceParts.path, function(schema) {
-                topField.connector.loadReferenceOptions(referenceParts.path, function(options) {
+                topField.connector.loadReferenceOptions(referenceOptionsParts.path, function(options) {
 
                     if (referenceParts.id)
                     {
