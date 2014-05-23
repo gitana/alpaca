@@ -701,6 +701,12 @@
             if (itemSchema && itemSchema["$ref"])
             {
                 var referenceId = itemSchema["$ref"];
+                if ( itemOptions && itemOptions["$ref"])
+                {
+                    var refOptionsId = itemOptions["$ref"];
+                } else {
+                    var refOptionsId = "";
+                }
 
                 var topField = this;
                 var fieldChain = [topField];
@@ -713,7 +719,7 @@
                 var originalItemSchema = itemSchema;
                 var originalItemOptions = itemOptions;
 
-                Alpaca.loadRefSchemaOptions(topField, referenceId, function(itemSchema, itemOptions) {
+                Alpaca.loadRefSchemaOptions(topField, referenceId, refOptionsId, function(itemSchema, itemOptions) {
 
                     // walk the field chain to see if we have any circularity
                     var refCount = 0;

@@ -376,6 +376,12 @@
             if (propertySchema && propertySchema["$ref"])
             {
                 var referenceId = propertySchema["$ref"];
+                if ( propertyOptions && propertyOptions["$ref"])
+                {
+                    var refOptionsId = propertyOptions["$ref"];
+                } else {
+                    var refOptionsId = "";
+                }
 
                 var topField = this;
                 var fieldChain = [topField];
@@ -388,7 +394,7 @@
                 var originalPropertySchema = propertySchema;
                 var originalPropertyOptions = propertyOptions;
 
-                Alpaca.loadRefSchemaOptions(topField, referenceId, function(propertySchema, propertyOptions) {
+                Alpaca.loadRefSchemaOptions(topField, referenceId, refOptionsId, function(propertySchema, propertyOptions) {
 
                     // walk the field chain to see if we have any circularity
                     var refCount = 0;
