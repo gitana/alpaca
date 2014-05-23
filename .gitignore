@@ -8,3 +8,6 @@ custom-version.properties
 
 /node_modules
 /lib/respond
+
+/site/_site
+/site/lib
