@@ -1,7 +1,9 @@
 {
   "name": "alpaca",
+  "postinstall": "./node_modules/.bin/bower install",
   "version": "1.5.0",
   "devDependencies": {
+    "bower":        "",
     "event-stream": "*",
     "express": "3.5.1",
     "gulp": "*",
