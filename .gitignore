@@ -7,7 +7,7 @@ custom-deployment.properties
 custom-version.properties
 
 /node_modules
-/lib/respond
+/lib
 
 /site/_site
 /site/lib

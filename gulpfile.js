@@ -518,7 +518,7 @@ gulp.task('refreshWeb', function()
 });
 
 // Rerun the task when a file changes
-gulp.task('watch', function() {
+gulp.task('watch', ['scripts', 'templates', 'styles'], function() {
 
     // scripts
     gulp.watch(paths.scripts.core, function() {
