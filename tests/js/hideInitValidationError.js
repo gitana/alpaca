@@ -32,7 +32,7 @@
                 }
             },
             postRender: function(fields) {
-                ok(!fields.isValid(true), 'Initial validation should have ran.');
+                equal(fields.isValid(true), false, 'Initial validation should have discovered the form is invalid.');
                 start();
             }
         });
