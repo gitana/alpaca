@@ -93,8 +93,6 @@
                     });
                     addBtn.click();
 
-
-
                 }, function() {
                     firstField.mouseenter();
                 });
@@ -130,9 +128,8 @@
             "postRender": function (renderedField) {
                 // el.find('')
 
-
                 expect(22);
-                var inputElem0 = $('#array-2 input:text:eq(0)');
+                var inputElem0 = el.find('input:text:eq(0)');
                 ok(inputElem0.length, 'First text input field generated.');
                 equal(inputElem0.val(), 'M', 'First input field value populated correctly.');
                 var id = inputElem0.attr('id');
