@@ -24,11 +24,11 @@ var wrap = require('gulp-wrap-umd');
 var paths = {
     scripts: {
         core: [
-            "lib/base.js",
-            //"lib/json2.js",
-            //"lib/validator.js",
-            "lib/equiv_and_hoozit.js",
-            "lib/jquery.maskedinput-1.3.1.js",
+            "lib/base/Base.js",
+            //"lib/json3/lib/json3.js",
+            //"lib/validate/index.js",
+            "lib/equiv_and_hoozit/index.js",
+            "lib/jquery-maskedinput/dist/jquery.maskedinput.min.js",
 
             "src/js/Alpaca.js",
             "src/js/TemplateEngineRegistry.js",

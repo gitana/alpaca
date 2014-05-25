@@ -2,7 +2,7 @@
   "name": "alpaca",
   "dependencies": {
     "ace"                              : "",
-    "base"                             : "",
+    "base"                             : "https://github.com/KenPowers/Base.js-Module.git#5e145bf4be463ab6497b3ed77ce45ec6683c35f2",
     "js-beautify"                      : "",
     "bootstrap"                        : ">=3",
     "bootstrap-multiselect"            : "",
@@ -11,6 +11,7 @@
     "datatables"                       : "",
     "datatables-bootstrap3"            : "",
     "eonasdan-bootstrap-datetimepicker": "",
+    "equiv_and_hoozit"                 : "https://raw.githubusercontent.com/atesgoral/jsunity/master/equiv_and_hoozit.js",
     "google-code-prettify"             : "",
     "handlebars"                       : "",
     "handsontable"                     : "",
@@ -28,7 +29,7 @@
     "typeahead.js"                     : "",
 
     "tooltipsy": "https://github.com/briancray/tooltipsy.git#511901dd0c1815b6092b89b20832449f35b7faae",
-    "validate" : "https://github.com/kriszyp/json-schema/blob/f56cecb21b176755ad91f58c1ccfa55e5fb93186/lib/validate.js"
+    "validate" : "https://raw.githubusercontent.com/kriszyp/json-schema/f56cecb21b176755ad91f58c1ccfa55e5fb93186/lib/validate.js"
   },
   "resolutions": {
     "bootstrap" : ">=3",
