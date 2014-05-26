@@ -93,8 +93,6 @@
                     });
                     addBtn.click();
 
-
-
                 }, function() {
                     firstField.mouseenter();
                 });
@@ -128,30 +126,30 @@
                 }
             },
             "postRender": function (renderedField) {
-                // el.find('')
-
-
                 expect(22);
-                var inputElem0 = $('#array-2 input:text:eq(0)');
+                var inputElem0 = el.find('input:text:eq(0)');
                 ok(inputElem0.length, 'First text input field generated.');
                 equal(inputElem0.val(), 'M', 'First input field value populated correctly.');
+
                 var id = inputElem0.attr('id');
-                var arrayHelperItem = $('#array-2 .alpaca-fieldset-helper');
+                var arrayHelperItem = el.find('.alpaca-helper');
                 ok(arrayHelperItem.length, 'Array helper generated.');
-                equal(arrayHelperItem.text(), 'Favorite Ice Cream', 'Array helper text populated correctly.');
-                var item0LabelElem = $('#array-2 #' + id + '-item-container > .alpaca-controlfield-label > div');
+                equal(arrayHelperItem.text().replace(/^\s+|\s+$/g, ''), 'Favorite Ice Cream', 'Array helper text populated correctly.');
+
+                var item0LabelElem = el.find('label');
                 ok(item0LabelElem.length, 'Item label generated.');
                 equal(item0LabelElem.text(), 'Favorite 1', 'Item label text populated correctly.');
-                var inputElem0LabelElem = $('#array-2 #' + id + '-controlfield-label > div');
+
+                var inputElem0LabelElem = el.find('#' + id + '-controlfield-label > div');
                 ok(inputElem0LabelElem.length, 'Array item label generated.');
                 equal(inputElem0LabelElem.text(), 'Ice Cream', 'Array item label text populated correctly.');
-                var inputElem0MessageElem = $('#array-2 #' + id + '-field-message-0 > .alpaca-controlfield-message-text');
+                var inputElem0MessageElem = el.find('#' + id + '-field-message-0 > .alpaca-controlfield-message-text');
                 ok(inputElem0MessageElem.length, 'Array item invalid message generated.');
                 equal(inputElem0MessageElem.text(), Alpaca.substituteTokens(renderedField.view.getMessage("stringTooShort"), [3]), 'Array item invalid text populated correctly.');
-                var arrayElem = $('#array-2 fieldset.alpaca-field-invalid');
+                var arrayElem = el.find('fieldset.alpaca-field-invalid');
                 ok(arrayElem.length, 'Array marked as invalid.');
                 var arrayId = arrayElem.attr('alpaca-field-id');
-                var arrayMessageElem = $('#array-2 #' + arrayId + '-field-message-0 > .alpaca-controlfield-message-text');
+                var arrayMessageElem = el.find('#' + arrayId + '-field-message-0 > .alpaca-controlfield-message-text');
                 ok(arrayMessageElem.length, 'Array invalid message generated.');
                 equal(arrayMessageElem.text(), Alpaca.substituteTokens(renderedField.view.getMessage("notEnoughItems"), [2]), 'Array invalid text populated correctly.');
 
@@ -168,12 +166,12 @@
                     var addButton = $('button.alpaca-fieldset-array-item-toolbar-add', itemArrayBar);
                     ok(addButton.length, 'Add button generated.');
                     addButton.click(function() {
-                        var newInputElem = $('#array-2 input:text:eq(1)');
+                        var newInputElem = el.find('input:text:eq(1)');
                         ok(newInputElem.length, 'New text input field generated.');
                         //equal(newInputElem.val(), 'M', 'New input field value populated correctly.');
                         // new elements populate with empty value
                         equal(newInputElem.val(), '', 'New input field value populated correctly.');
-                        var arrayMessageElem = $('#array-2 #' + arrayId + '-field-message-0');
+                        var arrayMessageElem = el.find('#' + arrayId + '-field-message-0');
                         ok(arrayMessageElem.length == 0, 'Array invalid message removed.');
                         itemArrayBar = $("#array-2 #" + id + "-item-container > .alpaca-fieldset-array-item-toolbar");
                         addButton = $('button.alpaca-fieldset-array-item-toolbar-add', itemArrayBar);
