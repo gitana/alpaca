@@ -561,6 +561,16 @@ gulp.task('testsite', ['watch'], function() {
 
 });
 
+gulp.task('lint', function() {
+  gulp.src(paths.scripts.core)
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'));
+});
+
+gulp.task('watch:lint', ['lint'], function() {
+  gulp.watch(paths.scripts.core, ['lint']);
+});
+
 // The default task (called when you run `gulp` from cli)
 gulp.task('default', ['templates', 'scripts', 'styles', 'refreshWeb']);
 
