@@ -150,8 +150,8 @@
             self.actionbar = {};
             if (self.options.actionbar)
             {
-                for (var k in self.options.actionbar) {
-                    self.actionbar[k] = self.options.actionbar[k];
+                for (var k2 in self.options.actionbar) {
+                    self.actionbar[k2] = self.options.actionbar[k2];
                 }
             }
             if (!self.actionbar.actions)
@@ -281,7 +281,7 @@
                         funcs.push(f);
 
                         i++;
-                    };
+                    }
 
                     Alpaca.series(funcs, function() {
                         // nothing
@@ -668,7 +668,7 @@
             var action = null;
 
             $.each(actionsArray, function(i, v) {
-                if (v.action == actionKey)
+                if (v.action == actionKey) // jshint ignore:line
                 {
                     action = v;
                 }
@@ -752,7 +752,7 @@
 
                     var idx = v.path.lastIndexOf('/');
                     var lastSegment = v.path.substring(idx+1);
-                    if (lastSegment.indexOf("[") != -1 && lastSegment.indexOf("]") != -1)
+                    if (lastSegment.indexOf("[") < 0 && lastSegment.indexOf("]") < 0)
                     {
                         lastSegment = lastSegment.substring(lastSegment.indexOf("[") + 1, lastSegment.indexOf("]"));
                     }
@@ -809,7 +809,7 @@
             var self = this;
 
             // if we're in display mode, we do not do this
-            if (this.view.type == "display")
+            if (this.view.type === "display")
             {
                 return;
             }
@@ -866,7 +866,7 @@
             if (!this.options.toolbarSticky)
             {
                 // find each item
-                var items = Alpaca.findClosest($(this.getFieldEl()), ".alpaca-container-item");
+                var items = this.getFieldEl().find(".alpaca-container-item");
                 $(items).each(function(itemIndex) {
 
                     // find the actionbar for this item
@@ -894,7 +894,7 @@
             $(actionbars).each(function() {
 
                 var targetIndex = $(this).attr("data-alpaca-array-actionbar-item-index");
-                if (typeof(targetIndex) == "string")
+                if (typeof(targetIndex) === "string")
                 {
                     targetIndex = parseInt(targetIndex, 10);
                 }
@@ -996,7 +996,7 @@
                     else
                     {
                         // insert at a specific index
-                        var existingElement = Alpaca.findClosest($(self.getFieldEl()), "[data-alpaca-container-item-index='" + (index-1) + "']");
+                        var existingElement = self.getFieldEl().find("[data-alpaca-container-item-index='" + (index-1) + "']");
                         if (existingElement && existingElement.length > 0)
                         {
                             // insert after
@@ -1043,7 +1043,7 @@
                 self.unregisterChild(childIndex);
 
                 // remove from DOM
-                Alpaca.findClosest($(self.getContainerEl()), "[data-alpaca-container-item-index='" + childIndex + "']").remove();
+                self.getContainerEl().find("[data-alpaca-container-item-index='" + childIndex + "']").remove();
 
                 // remove the data element
                 self.data.splice(childIndex, 1);
@@ -1078,7 +1078,7 @@
         {
             var self = this;
 
-            if (typeof(sourceIndex) == "string") {
+            if (typeof(sourceIndex) === "string") {
                 sourceIndex = parseInt(sourceIndex, 10);
             }
 
@@ -1112,8 +1112,8 @@
             }
 
             // the source and target DOM elements
-            var sourceContainer = Alpaca.findClosest($(self.getFieldEl()), "[data-alpaca-container-item-index='" + sourceIndex + "']");
-            var targetContainer = Alpaca.findClosest($(self.getFieldEl()), "[data-alpaca-container-item-index='" + targetIndex + "']");
+            var sourceContainer = self.getFieldEl().find("[data-alpaca-container-item-index='" + sourceIndex + "']");
+            var targetContainer = self.getFieldEl().find("[data-alpaca-container-item-index='" + targetIndex + "']");
 
             // create two temp elements as markers for switch
             var tempSourceMarker = $("<div class='tempMarker1'></div>");
@@ -1127,11 +1127,11 @@
                 var tempChildren = [];
                 for (var i = 0; i < self.children.length; i++)
                 {
-                    if (i == sourceIndex)
+                    if (i === sourceIndex)
                     {
                         tempChildren[i] = self.children[targetIndex];
                     }
-                    else if (i == targetIndex)
+                    else if (i === targetIndex)
                     {
                         tempChildren[i] = self.children[sourceIndex];
                     }
@@ -1167,11 +1167,10 @@
             // swap divs visually
             Alpaca.animatedSwap(sourceContainer, targetContainer, 500, function() {
                 onComplete();
-            })
-        }
+            });
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private

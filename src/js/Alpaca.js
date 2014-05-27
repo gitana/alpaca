@@ -4146,30 +4146,4 @@
         _swap(source, target, duration, callback);
     };
 
-    Alpaca.findClosest = function(el, filter)
-    {
-        var $found = $();
-
-        // current place
-        var $currentSet = $(el);
-        while ($currentSet.length)
-        {
-            if (filter)
-            {
-                $found = $currentSet.filter(filter);
-            }
-
-            if ($found.length)
-            {
-                break;
-            }
-
-            // walk down into children
-            $currentSet = $currentSet.children();
-        }
-
-        // return matches
-        return $found;
-    };
-
 })(jQuery);

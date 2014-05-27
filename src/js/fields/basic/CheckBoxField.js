@@ -27,13 +27,13 @@
                 this.options.rightLabel = "";
             }
 
-            if (typeof(_this.options.multiple) == "undefined")
+            if (typeof(_this.options.multiple) === "undefined")
             {
-                if (_this.schema.type == "array")
+                if (_this.schema.type === "array")
                 {
                     _this.options.multiple = true;
                 }
-                else if (typeof(_this.schema["enum"]) != "undefined")
+                else if (typeof(_this.schema["enum"]) !== "undefined")
                 {
                     _this.options.multiple = true;
                 }
@@ -115,7 +115,7 @@
 
                 // do this little trick so that if we have a default value, it gets set during first render
                 // this causes the checked state of the control to update
-                if (self.data && typeof(self.data) != "undefined")
+                if (self.data && typeof(self.data) !== "undefined")
                 {
                     self.setValue(self.data);
                 }
@@ -138,7 +138,7 @@
                     if (self.data)
                     {
                         var dataArray = self.data;
-                        if (typeof(self.data) == "string")
+                        if (typeof(self.data) === "string")
                         {
                             dataArray = self.data.split(",");
                             for (var a = 0; a < dataArray.length; a++)
@@ -182,10 +182,10 @@
                 var values = [];
                 for (var i = 0; i < self.checkboxOptions.length; i++)
                 {
-                    var input = $(self.getFieldEl()).find("input[data-checkbox-index='" + i + "']");
-                    if (Alpaca.checked(input))
+                    var inputField = $(self.getFieldEl()).find("input[data-checkbox-index='" + i + "']");
+                    if (Alpaca.checked(inputField))
                     {
-                        var v = $(input).attr("data-checkbox-value");
+                        var v = $(inputField).attr("data-checkbox-value");
                         values.push(v);
                     }
                 }
@@ -194,11 +194,11 @@
 
                 // if type == "array", we just hand back the array
                 // if type == "string", we build a comma-delimited list
-                if (self.schema.type == "array")
+                if (self.schema.type === "array")
                 {
                     value = values;
                 }
-                else if (self.schema.type == "string")
+                else if (self.schema.type === "string")
                 {
                     value = values.join(",");
                 }
@@ -232,7 +232,7 @@
             var applyMultiValue = function(values)
             {
                 // allow for comma-delimited strings
-                if (typeof(values) == "string")
+                if (typeof(values) === "string")
                 {
                     values = values.split(",");
                 }
@@ -244,9 +244,9 @@
                 }
 
                 // walk through values and assign into appropriate inputs
-                for (var i = 0; i < values.length; i++)
+                for (var j = 0; j < values.length; j++)
                 {
-                    var input = $(self.getFieldEl()).find("input[data-checkbox-value='" + values[i] + "']");
+                    var input = $(self.getFieldEl()).find("input[data-checkbox-value='" + values[j] + "']");
                     if (input.length > 0)
                     {
                         Alpaca.checked($(input[0]), value);
@@ -261,12 +261,12 @@
                 // single value mode
 
                 // boolean
-                if (typeof(value) == "boolean")
+                if (typeof(value) === "boolean")
                 {
                     applyScalarValue(value);
                     applied = true;
                 }
-                else if (typeof(value) == "string")
+                else if (typeof(value) === "string")
                 {
                     applyScalarValue(value);
                     applied = true;
@@ -276,7 +276,7 @@
             {
                 // multiple value mode
 
-                if (typeof(value) == "string")
+                if (typeof(value) === "string")
                 {
                     applyMultiValue(value);
                     applied = true;
@@ -318,7 +318,7 @@
             }
 
             // if val is a string, convert to array
-            if (typeof(val) == "string")
+            if (typeof(val) === "string")
             {
                 val = val.split(",");
             }
@@ -346,10 +346,9 @@
                 $(this).disabled = false;
             });
 
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private

@@ -18,7 +18,7 @@
         {
             this.base();
 
-            if (typeof(this.options.grid) == "undefined")
+            if (typeof(this.options.grid) === "undefined")
             {
                 this.options.grid = {};
             }
@@ -52,9 +52,9 @@
                 for (var i = 0; i < self.data.length; i++)
                 {
                     var row = [];
-                    for (var key in self.data[i])
+                    for (var key2 in self.data[i])
                     {
-                        row.push(self.data[i][key]);
+                        row.push(self.data[i][key2]);
                     }
                     gridData.push(row);
                 }
@@ -79,10 +79,9 @@
 
                 callback();
             });
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @see Alpaca.ControlField#getTitle

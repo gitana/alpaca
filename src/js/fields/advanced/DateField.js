@@ -155,10 +155,9 @@
             this.base();
 
             this.picker = null;
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private

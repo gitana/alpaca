@@ -90,12 +90,12 @@
 
             this.base();
 
-            if (typeof(self.options.multiple) == "undefined")
+            if (typeof(self.options.multiple) === "undefined")
             {
                 self.options.multiple = false;
             }
 
-            if (typeof(self.options.showUploadPreview) == "undefined")
+            if (typeof(self.options.showUploadPreview) === "undefined")
             {
                 self.options.showUploadPreview = true;
             }
@@ -278,7 +278,7 @@
 
                 var f = function(i)
                 {
-                    if (i == data.files.length)
+                    if (i == data.files.length) // jshint ignore:line
                     {
                         // done
                         self.setValue(array);
@@ -377,7 +377,7 @@
             var array = self.getValue();
             for (var i = 0; i < array.length; i++)
             {
-                if (array[i].id == id)
+                if (array[i].id == id) // jshint ignore:line
                 {
                     array.splice(i, 1);
                     break;
@@ -521,7 +521,7 @@
 
             var f = function(i)
             {
-                if (i == descriptors.length)
+                if (i == descriptors.length) // jshint ignore:line
                 {
                     // all done
                     callback(files);
@@ -581,7 +581,7 @@
 
             var f = function(i)
             {
-                if (i == descriptors.length)
+                if (i == descriptors.length) // jshint ignore:line
                 {
                     // all done
 
@@ -642,7 +642,7 @@
         var major = parseInt(splitVersion[0]);
         var minor = parseInt(splitVersion[1]);
 
-        var JQ_LT_17 = (major < 1) || (major == 1 && minor < 7);
+        var JQ_LT_17 = (major < 1) || (major === 1 && minor < 7);
 
         function eventsData($el)
         {

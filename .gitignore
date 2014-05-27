@@ -12,3 +12,5 @@ custom-version.properties
 /site/_site
 /site/lib
 custom-local.properties
+
+notes.md

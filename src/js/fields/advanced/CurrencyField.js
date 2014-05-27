@@ -43,7 +43,7 @@
                 }
             }
 
-            if (typeof(data) != "undefined")
+            if (typeof(data) !== "undefined")
             {
                 data = "" + parseFloat(data).toFixed(options.centsLimit);
             }
@@ -85,7 +85,7 @@
 
             var val = $(field).is('input') ? field.val() : field.hmtl();
             if (this.options.unmask || this.options.round !== "none") {
-                var unmasked = (function() {
+                var unmasked = function() {
                     var result = '';
                     for (var i in val) {
                         var cur = val[i];
@@ -96,7 +96,7 @@
                         }
                     }
                     return parseFloat(result);
-                }).bind(this)();
+                }.bind(this)();
                 if (this.options.round !== "none") {
                     unmasked = round(this.options.round)(unmasked);
                     if (!this.options.unmask) {
@@ -104,7 +104,7 @@
                         var unmaskedString = "" + unmasked;
                         for (var i = 0, u = 0; i < val.length; i++) {
                             if (!isNaN(val[i])) {
-                                result.push(unmaskedString[u++] || 0)
+                                result.push(unmaskedString[u++] || 0);
                             } else {
                                 result.push(val[i]);
                             }
@@ -116,10 +116,9 @@
             } else {
                 return val;
             }
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
         getSchemaOfPriceFormatOptions: function() {
             return {
                 "properties": {

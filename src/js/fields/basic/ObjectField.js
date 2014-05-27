@@ -23,16 +23,16 @@
         {
             this.base();
 
-            this.wizardPreIcon = this.view.getStyle("wizardPreIcon");
+            this.wizardPreIcon  = this.view.getStyle("wizardPreIcon");
             this.wizardNextIcon = this.view.getStyle("wizardNextIcon");
-            this.wizardDoneIcon= this.view.getStyle("wizardDoneIcon");
+            this.wizardDoneIcon = this.view.getStyle("wizardDoneIcon");
 
             if (Alpaca.isEmpty(this.data))
             {
                 return;
             }
 
-            if (this.data == "")
+            if (this.data === "")
             {
                 return;
             }
@@ -406,7 +406,7 @@
                     // add the property Id
                     fieldControl.propertyId = propertyId;
                     // setup item path
-                    if (_this.path != "/") {
+                    if (_this.path !== "/") {
                         fieldControl.path = _this.path + "/" + propertyId;
                     } else {
                         fieldControl.path = _this.path + propertyId;
@@ -518,7 +518,7 @@
 
                 var f = function(i)
                 {
-                    if (i == model.items.length)
+                    if (i === model.items.length)
                     {
                         // done
                         callback();
@@ -577,7 +577,7 @@
          */
         _validateMaxProperties: function()
         {
-            if (typeof(this.schema["maxProperties"]) == "undefined")
+            if (typeof(this.schema["maxProperties"]) === "undefined")
             {
                 return true;
             }
@@ -601,7 +601,7 @@
          */
         _validateMinProperties: function()
         {
-            if (typeof(this.schema["minProperties"]) == "undefined")
+            if (typeof(this.schema["minProperties"]) === "undefined")
             {
                 return true;
             }
@@ -721,7 +721,7 @@
                 var dependentField = Alpaca.resolveField(self, dependencyPropertyId);
                 if (dependentField)
                 {
-                    dependentField.getFieldEl().bind("fieldupdate", function(propertyField, dependencyField, propertyId, dependencyPropertyId) {
+                    dependentField.getFieldEl().bind("fieldupdate", (function(propertyField, dependencyField, propertyId, dependencyPropertyId) {
 
                         return function(event)
                         {
@@ -733,7 +733,7 @@
                             propertyField.trigger("fieldupdate");
                         };
 
-                    }(item, dependentField, propertyId, dependencyPropertyId));
+                    })(item, dependentField, propertyId, dependencyPropertyId));
 
                     // trigger field update
                     dependentField.trigger("fieldupdate");
@@ -854,7 +854,7 @@
 
                 // do some data sanity cleanup
                 if (dependentOnField.getType() === "boolean" && !dependentOnData) {
-                    dependentOnData = false
+                    dependentOnData = false;
                 }
 
                 var conditionalData = conditionalDependencies[dependentOnPropertyId];
@@ -916,12 +916,12 @@
             }
             for (var i = 0; i < this.children.length; i++) {
                 var pid = this.children[i].propertyId;
-                if (pid == propertyId) {
+                if (pid == propertyId) { // jshint ignore:line
                     return i;
                 }
             }
             return -1;
-        }
+        },
 
 
 
@@ -1059,7 +1059,6 @@
         */
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private

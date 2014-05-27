@@ -21,7 +21,7 @@
         {
             var lowerValue = val.toLowerCase();
 
-            if (lowerValue != this.getValue())
+            if (lowerValue != this.getValue()) // jshint ignore:line
             {
                 this.base(lowerValue);
             }
@@ -40,10 +40,9 @@
                 var v = _this.getValue();
                 _this.setValue(v);
             });
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @see Alpaca.Fields.TextField#getTitle

@@ -143,24 +143,23 @@
             }
 
             return isValid;
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
-		/**
+        /**
          * @see Alpaca.Fields.TextAreaField#getTitle
-		 */
-		getTitle: function() {
-			return "Map Field";
-		},
+         */
+        getTitle: function() {
+            return "Map Field";
+        },
 
-		/**
+        /**
          * @see Alpaca.Fields.TextAreaField#getDescription
-		 */
-		getDescription: function() {
-			return "Field for objects with key/value pairs that share the same schema for values.";
-		}
+         */
+        getDescription: function() {
+            return "Field for objects with key/value pairs that share the same schema for values.";
+        }
 
         //__END_OF_BUILDER_HELPERS
     });

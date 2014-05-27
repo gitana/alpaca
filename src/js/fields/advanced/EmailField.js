@@ -41,10 +41,9 @@
             }
 
             return baseStatus;
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private

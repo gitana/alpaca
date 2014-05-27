@@ -86,7 +86,7 @@
         getAddress: function()
         {
             var value = this.getValue();
-            if (this.view.type == "view")
+            if (this.view.type === "view")
             {
                 value = this.data;
             }
@@ -151,7 +151,7 @@
                                     'address': address
                                 }, function(results, status)
                                 {
-                                    if (status == google.maps.GeocoderStatus.OK)
+                                    if (status === google.maps.GeocoderStatus.OK)
                                     {
                                         var mapCanvasId = self.getId() + "-map-canvas";
                                         if ($('#' + mapCanvasId).length === 0)
@@ -194,10 +194,9 @@
                 callback();
 
             });
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private

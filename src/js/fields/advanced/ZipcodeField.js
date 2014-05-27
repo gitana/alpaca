@@ -23,11 +23,11 @@
 
             this.options.format = (this.options.format ? this.options.format : "nine");
 
-            if (this.options.format == "nine")
+            if (this.options.format === "nine")
             {
                 this.schema.pattern = Alpaca.regexps["zipcode-nine"];
             }
-            else if (this.options.format == "five")
+            else if (this.options.format === "five")
             {
                 this.schema.pattern = Alpaca.regexps["zipcode-five"];
             }
@@ -41,11 +41,11 @@
             }
 
             // set mask string
-            if (this.options.format == "nine")
+            if (this.options.format === "nine")
             {
                 this.options["maskString"] = "99999-9999";
             }
-            else if (this.options.format == "five")
+            else if (this.options.format === "five")
             {
                 this.options["maskString"] = "99999";
             }
@@ -62,21 +62,20 @@
 
             if (!valInfo["invalidPattern"]["status"]) {
 
-                if (this.options.format == "nine")
+                if (this.options.format === "nine")
                 {
                     valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidZipcodeFormatNine");
                 }
-                else if (this.options.format == "five")
+                else if (this.options.format === "five")
                 {
                     valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidZipcodeFormatFive");
                 }
             }
 
             return baseStatus;
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private

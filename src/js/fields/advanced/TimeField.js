@@ -113,10 +113,9 @@
             {
                 self.getControlEl().timepicker("setTime", val);
             }
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private

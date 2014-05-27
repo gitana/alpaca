@@ -39,10 +39,9 @@
             }
 
             return baseStatus;
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @see Alpaca.Fields.TextField#getTitle

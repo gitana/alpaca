@@ -14,7 +14,6 @@
             return "uppercase";
         },
 
-
         /**
          * @see Alpaca.Fields.TextField#setValue
          */
@@ -22,7 +21,7 @@
         {
             var upperValue = val.toUpperCase();
 
-            if (upperValue != this.getValue())
+            if (upperValue != this.getValue()) // jshint ignore:line
             {
                 this.base(upperValue);
             }
@@ -41,10 +40,9 @@
                 var v = _this.getValue();
                 _this.setValue(v);
             });
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @see Alpaca.Fields.TextField#getTitle
@@ -58,13 +56,6 @@
          */
         getDescription: function() {
             return "Text field for uppercase text.";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getFieldType
-         */
-        getFieldType: function() {
-            return "uppercase";
         }//__END_OF_BUILDER_HELPERS
     });
 

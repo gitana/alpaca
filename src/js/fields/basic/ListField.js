@@ -67,7 +67,7 @@
                 $.each(val, function(index, itemVal) {
                     $.each(_this.selectOptions, function(index2, selectOption) {
 
-                        if (selectOption.value == itemVal)
+                        if (selectOption.value === itemVal)
                         {
                             val[index] = selectOption.value;
                         }
@@ -79,7 +79,7 @@
             {
                 $.each(this.selectOptions, function(index, selectOption) {
 
-                    if (selectOption.value == val)
+                    if (selectOption.value === val)
                     {
                         val = selectOption.value;
                     }
@@ -108,7 +108,7 @@
                             {
                                 for (var i = 0; i < values.length; i++)
                                 {
-                                    if (typeof(values[i]) == "string")
+                                    if (typeof(values[i]) === "string")
                                     {
                                         self.selectOptions.push({
                                             "text": values[i],

@@ -19,7 +19,7 @@
          */
         setValue: function(value)
         {
-            if (Alpaca.isObject(value) || typeof(value) == "object")
+            if (Alpaca.isObject(value) || typeof(value) === "object")
             {
                 value = JSON.stringify(value, null, 3);
             }
@@ -51,7 +51,7 @@
 
             var valInfo = this.validation;
 
-			var status = this._validateJSON();
+            var status = this._validateJSON();
             valInfo["stringNotAJSON"] = {
                 "message": status.status ? "" : this.view.getMessage("stringNotAJSON") +" "+ status.message,
                 "status": status.status
@@ -110,14 +110,15 @@
                     // Some auto-formatting capabilities
                     self.control.bind('keypress', function(e) {
 
-                        //console.log(e.which);
-                        if (e.which == 34) {
+                        var code = e.keyCode || e.wich;
+
+                        if (code === 34) {
                             self.control.insertAtCaret('"');
                         }
-                        if (e.which == 123) {
+                        if (code === 123) {
                             self.control.insertAtCaret('}');
                         }
-                        if (e.which == 91) {
+                        if (code === 91) {
                             self.control.insertAtCaret(']');
                         }
                     });
@@ -136,24 +137,23 @@
 
             });
 
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
-		/**
+        /**
          * @see Alpaca.Fields.TextAreaField#getTitle
-		 */
-		getTitle: function() {
-			return "JSON Editor";
-		},
+         */
+        getTitle: function() {
+            return "JSON Editor";
+        },
 
-		/**
+        /**
          * @see Alpaca.Fields.TextAreaField#getDescription
-		 */
-		getDescription: function() {
-			return "Editor for JSON objects with basic validation and formatting.";
-		}
+         */
+        getDescription: function() {
+            return "Editor for JSON objects with basic validation and formatting.";
+        }
 
         //__END_OF_BUILDER_HELPERS
     });
@@ -177,7 +177,7 @@
                 sel.text = myValue;
                 this.focus();
 
-            } else if (this.selectionStart || this.selectionStart == '0') {
+            } else if (this.selectionStart || this.selectionStart == '0') { // jshint ignore:line
 
                 //MOZILLA / NETSCAPE support
                 var startPos = this.selectionStart;

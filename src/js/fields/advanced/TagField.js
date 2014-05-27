@@ -75,10 +75,9 @@
 
             this.setValue(trimmed);
 
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private
