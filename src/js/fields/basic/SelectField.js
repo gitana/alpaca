@@ -65,7 +65,7 @@
             }
             else
             {
-                if (val != this.getValue())
+                if (val !== this.getValue())
                 {
                     if (!Alpaca.isEmpty(val) && this.control)
                     {
@@ -88,7 +88,7 @@
                 {
                     return this.schema["enum"];
                 }
-                else if (this.schema["type"] && this.schema["type"] == "array" && this.schema["items"] && this.schema["items"]["enum"])
+                else if (this.schema["type"] && this.schema["type"] === "array" && this.schema["items"] && this.schema["items"]["enum"])
                 {
                     return this.schema["items"]["enum"];
                 }
@@ -101,7 +101,7 @@
 
             this.base(model, function() {
 
-                if (self.schema["type"] && self.schema["type"] == "array")
+                if (self.schema["type"] && self.schema["type"] === "array")
                 {
                     self.options.multiple = true;
                 }

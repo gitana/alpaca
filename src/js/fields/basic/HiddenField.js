@@ -30,7 +30,7 @@
         {
             return this.getControlEl().val();
         },
-        
+
         /**
          * @see Alpaca.Field#setValue
          */
@@ -41,13 +41,12 @@
             } else {
                 this.getControlEl().val(value);
             }
-            
+
             // be sure to call into base method
             this.base(value);
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @see Alpaca.Field#getTitle
@@ -55,21 +54,21 @@
         getTitle: function() {
             return "Hidden";
         },
-        
+
         /**
          * @see Alpaca.Field#getDescription
          */
         getDescription: function() {
             return "Field for a hidden HTML input";
         },
-        
+
         /**
          * @see Alpaca.Field#getType
          */
         getType: function() {
             return "string";
         }//__END_OF_BUILDER_HELPERS
-        
+
     });
 
     Alpaca.registerFieldClass("hidden", Alpaca.Fields.HiddenField);

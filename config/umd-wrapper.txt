@@ -31,10 +31,20 @@ var depNames = deps ? _.pluck(deps, 'paramName') : stdDeps;
 }(this, function (<%= depNames.join(', ') %>) {
 
     <% if (exports) { %>
-    <%= contents %>
-    return <%= exports %>;
+        <%= contents %>
+        <% if (typeof defaultView != 'undefined') { %>
+            <%= exports %>.defaultView = '<%= defaultView %>';
+        <% } %>
+        return <%= exports %>;
+
     <% } else { %>
-    return <%= contents %>;
+        var exports = (function() {
+            <%= contents %>
+        })();
+        <% if (typeof defaultView != 'undefined') { %>
+            exports.defaultView = '<%= defaultView %>';
+        <% } %>
+        return exports;
     <% } %>
 
 }));

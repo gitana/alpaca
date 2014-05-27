@@ -26,10 +26,9 @@
 
                 callback();
             });
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @see Alpaca.ControlField#getTitle

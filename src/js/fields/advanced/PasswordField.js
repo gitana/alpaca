@@ -20,7 +20,7 @@
         setup: function()
         {
             this.base();
-            
+
             if (!this.schema.pattern)
             {
                 this.schema.pattern = Alpaca.regexps.password;
@@ -33,18 +33,17 @@
         handleValidate: function()
         {
             var baseStatus = this.base();
-            
+
             var valInfo = this.validation;
-            
+
             if (!valInfo["invalidPattern"]["status"]) {
                 valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidPassword");
             }
-            
+
             return baseStatus;
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private
@@ -61,7 +60,7 @@
                         "default": this.schema.pattern,
                         "enum":[pattern],
                         "readonly": true
-                    },                    
+                    },
 					"format": {
                         "title": "Format",
                         "description": "Property data format",
@@ -87,14 +86,14 @@
 				}
 			});
         },
-        
+
         /**
          * @see Alpaca.Fields.TextField#getTitle
          */
         getTitle: function() {
             return "Password Field";
         },
-        
+
         /**
          * @see Alpaca.Fields.TextField#getDescription
          */

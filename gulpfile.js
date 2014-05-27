@@ -24,11 +24,11 @@ var wrap = require('gulp-wrap-umd');
 var paths = {
     scripts: {
         core: [
-            "lib/base.js",
-            //"lib/json2.js",
-            //"lib/validator.js",
-            "lib/equiv_and_hoozit.js",
-            "lib/jquery.maskedinput-1.3.1.js",
+            "lib/base/Base.js",
+            //"lib/json3/lib/json3.js",
+            //"lib/validate/index.js",
+            "lib/equiv_and_hoozit/index.js",
+            "lib/jquery-maskedinput/dist/jquery.maskedinput.min.js",
 
             "src/js/Alpaca.js",
             "src/js/TemplateEngineRegistry.js",
@@ -302,7 +302,8 @@ gulp.task('scripts', function(cb) {
         }],
         namespace: "Alpaca",
         exports: "Alpaca",
-        template: wrapper
+        template: wrapper,
+        defaultView: 'bootstrap'
     };
     var jqueryui_warp = {
         deps: [{
@@ -320,7 +321,8 @@ gulp.task('scripts', function(cb) {
         }],
         namespace: "Alpaca",
         exports: "Alpaca",
-        template: wrapper
+        template: wrapper,
+        defaultView: 'jqueryui'
     };
     var jquerymobile_wrap = {
         deps: [{
@@ -338,12 +340,16 @@ gulp.task('scripts', function(cb) {
         }],
         namespace: "Alpaca",
         exports: "Alpaca",
-        template: wrapper
+        template: wrapper,
+        defaultView: 'jquerymobile'
     };
 
 
     // core
-    var first = gulp.src(paths.scripts.core).pipe(concat('scripts-core.js')).pipe(gulp.dest('build/tmp'));
+    var first = gulp.src(paths.scripts.core)
+                    .pipe(concat('scripts-core.js'))
+                    .pipe(gulp.dest('build/tmp'));
+
     first.on("end", function() {
 
         es.concat(
@@ -512,7 +518,7 @@ gulp.task('refreshWeb', function()
 });
 
 // Rerun the task when a file changes
-gulp.task('watch', function() {
+gulp.task('watch', ['scripts', 'templates', 'styles'], function() {
 
     // scripts
     gulp.watch(paths.scripts.core, function() {
@@ -553,6 +559,16 @@ gulp.task('testsite', ['watch'], function() {
         script: 'server/test-webserver.js'
     });
 
+});
+
+gulp.task('lint', function() {
+  gulp.src(paths.scripts.core)
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'));
+});
+
+gulp.task('watch:lint', ['lint'], function() {
+  gulp.watch(paths.scripts.core, ['lint']);
 });
 
 // The default task (called when you run `gulp` from cli)

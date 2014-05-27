@@ -27,7 +27,7 @@
                 {
                     upperValue += val.charAt(i).toUpperCase();
                 }
-                else if (val.charAt(i-1) == ' ' ||  val.charAt(i-1) == '-' || val.charAt(i-1) == "'")
+                else if (val.charAt(i-1) === ' ' ||  val.charAt(i-1) === '-' || val.charAt(i-1) === "'")
                 {
                     upperValue += val.charAt(i).toUpperCase();
                 }
@@ -37,7 +37,7 @@
                 }
             }
 
-            if (upperValue != this.getValue())
+            if (upperValue != this.getValue()) // jshint ignore:line
             {
                 this.base(upperValue);
             }

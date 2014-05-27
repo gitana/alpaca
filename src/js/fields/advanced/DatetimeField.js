@@ -25,7 +25,7 @@
 
                 self.options.picker.pickDate = true;
                 self.options.picker.pickTime = true;
-                if (typeof(self.options.picker.sideBySide) == "undefined")
+                if (typeof(self.options.picker.sideBySide) === "undefined")
                 {
                     self.options.picker.sideBySide = true;
                 }
@@ -40,7 +40,7 @@
                     if (Alpaca.isNumber()) {
                         value = new Date(value);
                     }
-                    if (Object.prototype.toString.call(value) == "[object Date]") {
+                    if (Object.prototype.toString.call(value) === "[object Date]") {
                         this.base((value.getMonth() + 1) + "/" + value.getDate() + "/" + value.getFullYear() + " " + value.getHours() + ":" + value.getMinutes());
                     } else {
                         this.base(value);
@@ -57,10 +57,9 @@
              */
             getDatetime: function() {
                 return this.getDate();
-            }
+            },
 
             //__BUILDER_HELPERS
-            ,
 
             /**
              * @private

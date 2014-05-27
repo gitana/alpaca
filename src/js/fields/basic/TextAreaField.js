@@ -91,10 +91,9 @@
         getValue: function()
         {
             return $(this.control).val();
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private

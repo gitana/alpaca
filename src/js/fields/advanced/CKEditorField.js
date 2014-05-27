@@ -21,7 +21,7 @@
         {
             this.base();
 
-            if (typeof(this.options.ckeditor) == "undefined")
+            if (typeof(this.options.ckeditor) === "undefined")
             {
                 this.options.ckeditor = {};
             }
@@ -41,11 +41,10 @@
 
                 callback();
             });
-        }
-        
+        },
+
         //__BUILDER_HELPERS
-        ,
-		
+
         /**
          * @private
          * @see Alpaca.ControlField#getSchemaOfOptions
@@ -76,23 +75,23 @@
             });
         },
 
-		/**
+        /**
          * @see Alpaca.Fields.TextAreaField#getTitle
-		 */
-		getTitle: function() {
-			return "CK Editor";
-		},
-		
-		/**
-         * @see Alpaca.Fields.TextAreaField#getDescription
-		 */
-		getDescription: function() {
-			return "Provides an instance of a CK Editor control for use in editing HTML.";
-		}
+         */
+        getTitle: function() {
+            return "CK Editor";
+        },
 
-		//__END_OF_BUILDER_HELPERS
+        /**
+         * @see Alpaca.Fields.TextAreaField#getDescription
+         */
+        getDescription: function() {
+            return "Provides an instance of a CK Editor control for use in editing HTML.";
+        }
+
+        //__END_OF_BUILDER_HELPERS
     });
-    
+
     Alpaca.registerFieldClass("ckeditor", Alpaca.Fields.CKEditorField);
-    
+
 })(jQuery);

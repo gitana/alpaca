@@ -34,7 +34,7 @@
             }
 
             // validate settings
-            if (this.options.format == "name" || this.options.format == "code")
+            if (this.options.format === "name" || this.options.format === "code")
             {
                 // valid formats
             }
@@ -50,17 +50,16 @@
             var holdings = Alpaca.retrieveUSHoldings(
                 this.options.includeStates,
                 this.options.includeTerritories,
-                (this.options.format == "code"),
+                (this.options.format === "code"),
                 this.options.capitalize);
 
             this.schema["enum"] = holdings.keys;
             this.options.optionLabels = holdings.values;
 
             this.base();
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private
@@ -157,7 +156,7 @@
      *
      * @type {Object} an object containing "keys" and "values", both of which are arrays.
      */
-    Alpaca.retrieveUSHoldings = function()
+    Alpaca.retrieveUSHoldings = (function()
     {
         var holdings = [];
         holdings.push({
@@ -551,6 +550,6 @@
 
             return result;
         };
-    }();
+    })();
 
 })(jQuery);

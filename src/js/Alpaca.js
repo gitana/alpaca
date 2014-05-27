@@ -372,7 +372,7 @@
          * @returns {Boolean} True if the variable is an object, false otherwise.
          */
         isObject: function(obj) {
-            return Object.prototype.toString.call(obj) === '[object Object]';
+            return !Alpaca.isUndefined(obj) && Object.prototype.toString.call(obj) === '[object Object]';
         },
 
         /**
@@ -1500,7 +1500,7 @@
             // make some intelligent guesses about what view id we might default to in case they want to use
             // auto-view selection.  We detect jquery-ui, bootstrap and jquerymobile.  If nothing can be detected,
             // we fall back to straight web views.
-            var fallbackUI = null;
+            var fallbackUI   = Alpaca.defaultView || null;
             var fallbackType = null;
 
             // detect jQuery Mobile
@@ -1509,7 +1509,7 @@
             }
 
             // detect twitter bootstrap
-            var bootstrapDetected = (typeof $().modal == 'function');
+            var bootstrapDetected = (typeof $.fn.modal == 'function');
             if (bootstrapDetected && !fallbackUI) {
                 fallbackUI = "bootstrap";
             }
@@ -4144,32 +4144,6 @@
         };
 
         _swap(source, target, duration, callback);
-    };
-
-    Alpaca.findClosest = function(el, filter)
-    {
-        var $found = $();
-
-        // current place
-        var $currentSet = $(el);
-        while ($currentSet.length)
-        {
-            if (filter)
-            {
-                $found = $currentSet.filter(filter);
-            }
-
-            if ($found.length)
-            {
-                break;
-            }
-
-            // walk down into children
-            $currentSet = $currentSet.children();
-        }
-
-        // return matches
-        return $found;
     };
 
 })(jQuery);

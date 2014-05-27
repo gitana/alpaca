@@ -100,7 +100,7 @@
                 }
 
                 // support for each datasets (local, remote, prefetch)
-                if (tDatasets.type == "local" || tDatasets.type == "remote" || tDatasets.type == "prefetch")
+                if (tDatasets.type === "local" || tDatasets.type === "remote" || tDatasets.type === "prefetch")
                 {
                     var bloodHoundConfig = {
                         datumTokenizer: function(d) {
@@ -109,11 +109,11 @@
                         queryTokenizer: Bloodhound.tokenizers.whitespace
                     };
 
-                    if (tDatasets.type == "local" )
+                    if (tDatasets.type === "local" )
                     {
                         var local = [];
 
-                        if (typeof(tDatasets.source) == "function")
+                        if (typeof(tDatasets.source) === "function")
                         {
                             bloodHoundConfig.local = tDatasets.source;
                         }
@@ -123,7 +123,7 @@
                             for (var i = 0; i < tDatasets.source.length; i++)
                             {
                                 var localElement = tDatasets.source[i];
-                                if (typeof(localElement) == "string")
+                                if (typeof(localElement) === "string")
                                 {
                                     localElement = {
                                         "value": localElement
@@ -142,7 +142,7 @@
                         }
                     }
 
-                    if (tDatasets.type == "prefetch")
+                    if (tDatasets.type === "prefetch")
                     {
                         bloodHoundConfig.prefetch = {
                             url: tDatasets.source
@@ -154,7 +154,7 @@
                         }
                     }
 
-                    if (tDatasets.type == "remote")
+                    if (tDatasets.type === "remote")
                     {
                         bloodHoundConfig.remote = {
                             url: tDatasets.source
@@ -182,7 +182,7 @@
                     for (var k in tDatasets.templates)
                     {
                         var template = tDatasets.templates[k];
-                        if (typeof(template) == "string")
+                        if (typeof(template) === "string")
                         {
                             tDatasets.templates[k] = Handlebars.compile(template);
                         }
@@ -226,7 +226,7 @@
                     var value = $(this).val();
 
                     var newValue = $(fi).typeahead('val');
-                    if (newValue != value)
+                    if (newValue !== value)
                     {
                         $(fi).typeahead('val', newValue);
                     }
@@ -253,7 +253,7 @@
 
             return value;
         },
-        
+
         /**
          * @see Alpaca.Field#setValue
          */
@@ -274,37 +274,37 @@
             // be sure to call into base method
             this.base(value);
         },
-        
+
         /**
          * @see Alpaca.ControlField#handleValidate
          */
         handleValidate: function()
         {
             var baseStatus = this.base();
-            
+
             var valInfo = this.validation;
-			
-			var status =  this._validatePattern();
+
+            var status =  this._validatePattern();
             valInfo["invalidPattern"] = {
                 "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("invalidPattern"), [this.schema.pattern]),
                 "status": status
             };
- 
+
             status = this._validateMaxLength();
-			valInfo["stringTooLong"] = {
+            valInfo["stringTooLong"] = {
                 "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("stringTooLong"), [this.schema.maxLength]),
                 "status": status
             };
 
             status = this._validateMinLength();
-			valInfo["stringTooShort"] = {
+            valInfo["stringTooShort"] = {
                 "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("stringTooShort"), [this.schema.minLength]),
                 "status": status
             };
 
             return baseStatus && valInfo["invalidPattern"]["status"] && valInfo["stringTooLong"]["status"] && valInfo["stringTooShort"]["status"];
         },
-        
+
         /**
          * Validates against the schema pattern property.
          *
@@ -328,10 +328,10 @@
                     return false;
                 }
             }
-            
+
             return true;
         },
-        
+
         /**
          * Validates against the schema minLength property.
          *
@@ -339,9 +339,9 @@
          */
         _validateMinLength: function()
         {
-			if (!Alpaca.isEmpty(this.schema.minLength))
+            if (!Alpaca.isEmpty(this.schema.minLength))
             {
-				var val = this.getValue();
+                var val = this.getValue();
                 if (val === "" && this.options.allowOptionalEmpty && !this.schema.required)
                 {
                     return true;
@@ -354,10 +354,10 @@
                 {
                     return false;
                 }
-			}
-			return true;
-		},
-        
+            }
+            return true;
+        },
+
         /**
          * Validates against the schema maxLength property.
          *
@@ -365,9 +365,9 @@
          */
         _validateMaxLength: function()
         {
-			if (!Alpaca.isEmpty(this.schema.maxLength))
+            if (!Alpaca.isEmpty(this.schema.maxLength))
             {
-				var val = this.getValue();
+                var val = this.getValue();
                 if (val === "" && this.options.allowOptionalEmpty && !this.schema.required)
                 {
                     return true;
@@ -380,10 +380,10 @@
                 {
                     return false;
                 }
-			}
+            }
             return true;
         },
-        
+
         /**
          * @see Alpaca.Field#disable
          */
@@ -394,7 +394,7 @@
                 this.control.disabled = true;
             }
         },
-        
+
         /**
          * @see Alpaca.Field#enable
          */
@@ -405,7 +405,7 @@
                 this.control.disabled = false;
             }
         },
-        
+
         /**
          * @see Alpaca.Field#focus
          */
@@ -429,14 +429,14 @@
                 el.focus();
             }
         },//__BUILDER_HELPERS
-        
+
         /**
          * @private
          * @see Alpaca.ControlField#getSchemaOfSchema
          */
         getSchemaOfSchema: function() {
             return Alpaca.merge(this.base(), {
-                "properties": {                
+                "properties": {
                     "minLength": {
                         "title": "Minimal Length",
                         "description": "Minimal length of the property value.",
@@ -479,19 +479,19 @@
                 }
             });
         },
-		
+
         /**
          * @private
          * @see Alpaca.ControlField#getSchemaOfOptions
          */
         getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(), {
-                "properties": {                
+                "properties": {
                     "size": {
                         "title": "Field Size",
                         "description": "Field size.",
                         "type": "number",
-						"default":40
+                        "default":40
                     },
                     "maskString": {
                         "title": "Mask Expression",
@@ -513,15 +513,15 @@
                     }
                 }
             });
-        },    
-		
+        },
+
         /**
          * @private
          * @see Alpaca.ControlField#getOptionsForOptions
          */
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
-                "fields": {                
+                "fields": {
                     "size": {
                         "type": "integer"
                     },
@@ -537,7 +537,7 @@
                     }
                 }
             });
-        },    
+        },
 
         /**
          * @see Alpaca.Field#getTitle
@@ -545,22 +545,22 @@
         getTitle: function() {
             return "Single-Line Text";
         },
-        
+
         /**
          * @see Alpaca.Field#getDescription
          */
         getDescription: function() {
             return "Text field for single-line text.";
         },
-        
+
         /**
          * @see Alpaca.Field#getType
          */
         getType: function() {
             return "string";
         }
-		//__END_OF_BUILDER_HELPERS
-        
+        //__END_OF_BUILDER_HELPERS
+
     });
 
     Alpaca.registerMessages({

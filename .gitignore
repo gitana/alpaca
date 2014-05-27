@@ -5,3 +5,12 @@
 build/
 custom-deployment.properties
 custom-version.properties
+
+/node_modules
+/lib
+
+/site/_site
+/site/lib
+custom-local.properties
+
+notes.md

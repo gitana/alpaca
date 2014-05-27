@@ -86,7 +86,7 @@
         getAddress: function()
         {
             var value = this.getValue();
-            if (this.view.type == "view")
+            if (this.view.type === "view")
             {
                 value = this.data;
             }
@@ -124,14 +124,15 @@
             var self = this;
 
             this.base(model, function() {
+                var container = self.getContainerEl();
 
                 // apply additional css
-                $(self.getControlEl()).addClass("alpaca-addressfield");
+                $(container).addClass("alpaca-addressfield");
 
                 if (self.options.addressValidation && !self.isDisplayOnly())
                 {
-                    $('<div style="clear:both;"></div>').appendTo(self.getControlEl());
-                    var mapButton = $('<div class="alpaca-form-button">Google Map</div>').appendTo(self.getControlEl());
+                    $('<div style="clear:both;"></div>').appendTo(container);
+                    var mapButton = $('<div class="alpaca-form-button">Google Map</div>').appendTo(container);
                     if (mapButton.button)
                     {
                         mapButton.button({
@@ -150,7 +151,7 @@
                                     'address': address
                                 }, function(results, status)
                                 {
-                                    if (status == google.maps.GeocoderStatus.OK)
+                                    if (status === google.maps.GeocoderStatus.OK)
                                     {
                                         var mapCanvasId = self.getId() + "-map-canvas";
                                         if ($('#' + mapCanvasId).length === 0)
@@ -193,10 +194,9 @@
                 callback();
 
             });
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private

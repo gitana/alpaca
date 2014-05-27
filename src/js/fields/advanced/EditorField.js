@@ -30,46 +30,46 @@
                 self.options.aceMode = "ace/mode/json";
             }
 
-            if (typeof(self.options.beautify) == "undefined")
+            if (typeof(self.options.beautify) === "undefined")
             {
                 self.options.beautify = true;
             }
 
             if (self.options.beautify && this.data)
             {
-                if (self.options.aceMode == "ace/mode/json")
+                if (self.options.aceMode === "ace/mode/json")
                 {
                     this.data = JSON.stringify(JSON.parse(this.data), null, "    ");
                 }
 
-                if (self.options.aceMode == "ace/mode/html")
+                if (self.options.aceMode === "ace/mode/html")
                 {
-                    if (typeof(html_beautify) != "undefined")
+                    if (typeof(html_beautify) !== "undefined")
                     {
                         this.data = html_beautify(this.data);
                     }
                 }
 
-                if (self.options.aceMode == "ace/mode/css")
+                if (self.options.aceMode === "ace/mode/css")
                 {
-                    if (typeof(css_beautify) != "undefined")
+                    if (typeof(css_beautify) !== "undefined")
                     {
                         this.data = css_beautify(this.data);
                     }
                 }
 
-                if (self.options.aceMode == "ace/mode/javascript")
+                if (self.options.aceMode === "ace/mode/javascript")
                 {
-                    if (typeof(js_beautify) != "undefined")
+                    if (typeof(js_beautify) !== "undefined")
                     {
                         this.data = js_beautify(this.data);
                     }
                 }
             }
 
-            if (self.options.aceMode == "ace/mode/json")
+            if (self.options.aceMode === "ace/mode/json")
             {
-                if (!this.data || this.data == "{}")
+                if (!this.data || this.data === "{}")
                 {
                     this.data = "{\n\t\n}";
                 }
@@ -331,10 +331,9 @@
             }
 
             return value;
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private
