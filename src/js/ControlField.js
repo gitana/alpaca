@@ -25,7 +25,7 @@
             this.base();
 
             // we require a control descriptor if we're in a non-display mode
-            if (this.view.type != "display")
+            if (this.view.type !== "display")
             {
                 var controlTemplateType = self.resolveControlTemplateType();
                 if (!controlTemplateType)
@@ -50,7 +50,7 @@
             var finished = false;
             var selectedType = null;
 
-            var b = this.__proto__ || this.constructor.prototype;
+            var b = this.constructor.prototype;
             do
             {
                 if (!b.getFieldType)
@@ -67,7 +67,7 @@
                     }
                     else
                     {
-                        b = b.__proto__ || b.constructor.prototype;
+                        b = b.constructor.prototype;
                     }
                 }
             }

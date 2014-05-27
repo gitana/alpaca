@@ -13,9 +13,9 @@
                 if (html)
                 {
                     // if if starts with a script tag, then we strip that out
-                    if ($(html).length == 1)
+                    if ($(html).length === 1)
                     {
-                        if ($(html)[0].nodeName.toLowerCase() == "script")
+                        if ($(html)[0].nodeName.toLowerCase() === "script")
                         {
                             return $(html).html();
 
@@ -66,13 +66,13 @@
             }
 
             // now extract html and compile
-            if (type == "selector")
+            if (type === "selector")
             {
                 self._compile(cacheKey, template, function(err) {
                     callback(err);
                 });
             }
-            else if (type == "uri")
+            else if (type === "uri")
             {
                 var fileExtension = self.fileExtension();
 
@@ -100,7 +100,7 @@
                     }
                 });
             }
-            else if (type == "html")
+            else if (type === "html")
             {
                 var html = template;
                 if (html instanceof jQuery)

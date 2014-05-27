@@ -6,24 +6,27 @@
     var helpers = {};
     helpers["compare"] = function(lvalue, rvalue, options)
     {
-        if (arguments.length < 3)
+        if (arguments.length < 3) {
             throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+        }
 
         var operator = options.hash.operator || "==";
 
         var operators = {
-            '==':       function(l,r) { return l == r; },
+            '==':       function(l,r) { return l == r; }, // jshint ignore:line
             '===':      function(l,r) { return l === r; },
-            '!=':       function(l,r) { return l != r; },
+            '!=':       function(l,r) { return l != r; }, // jshint ignore:line
+            '!==':      function(l,r) { return l !== r; },
             '<':        function(l,r) { return l < r; },
             '>':        function(l,r) { return l > r; },
             '<=':       function(l,r) { return l <= r; },
             '>=':       function(l,r) { return l >= r; },
-            'typeof':   function(l,r) { return typeof l == r; }
+            'typeof':   function(l,r) { return typeof l == r; } // jshint ignore:line
         };
 
-        if (!operators[operator])
+        if (!operators[operator]) {
             throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
+        }
 
         var result = operators[operator](lvalue,rvalue);
 
@@ -71,11 +74,11 @@
         {
             return "0";
         }
-        else if (typeof(data) == "undefined")
+        else if (typeof(data) === "undefined")
         {
             return "";
         }
-        else if (typeof(data) == "null")
+        else if (data === null)
         {
             return "";
         }
@@ -138,15 +141,15 @@
         {
             message = "Filetype not allowed";
         }
-        else if (error == "maxNumberOfFiles")
+        else if (error === "maxNumberOfFiles")
         {
             message = "Max number of files exceeded";
         }
-        else if (error == "uploadedBytes")
+        else if (error === "uploadedBytes")
         {
             message = "Uploaded bytes exceed file size";
         }
-        else if (error == "emptyResult")
+        else if (error === "emptyResult")
         {
             message = "Empty file upload result";
         }
@@ -192,7 +195,7 @@
                     for (var templateId in viewTemplates)
                     {
                         var template = viewTemplates[templateId];
-                        if (typeof(template) == "function")
+                        if (typeof(template) === "function")
                         {
                             // cache key
                             var cacheKey = Alpaca.makeCacheKey(viewId, "view", viewId, templateId);
@@ -213,7 +216,7 @@
             try
             {
                 var functionString = Handlebars.precompile(html);
-                template = eval("(" + functionString + ")");
+                template = eval("(" + functionString + ")"); // jshint ignore:line
 
                 // CACHE: write
                 COMPILED_TEMPLATES[cacheKey] = template;

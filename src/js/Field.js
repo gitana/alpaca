@@ -104,11 +104,11 @@
             // helper function to determine if we're in a display-only mode
             this.isDisplayOnly = function()
             {
-                return (self.view.type == "view");
+                return (self.view.type === "view");
             };
 
             // schema id cleanup
-            if (this.schema && this.schema.id && this.schema.id.indexOf("#") == 0)
+            if (this.schema && this.schema.id && this.schema.id.indexOf("#") === 0)
             {
                 this.schema.id = this.schema.id.substring(1);
             }
@@ -264,7 +264,7 @@
             var handler = this._events[name];
 
             var ret = null;
-            if (typeof(handler) == "function")
+            if (typeof(handler) === "function")
             {
                 Alpaca.logDebug("Firing event: " + name);
                 try
@@ -332,7 +332,7 @@
                 if (this.parent && this.parent.name && this.path)
                 {
                     var lastSegment = this.path.substring(this.path.lastIndexOf('/')+1);
-                    if (lastSegment.indexOf("[") != -1 && lastSegment.indexOf("]") != -1)
+                    if (lastSegment.indexOf("[") < 0 && lastSegment.indexOf("]") < 0)
                     {
                         lastSegment = lastSegment.substring(lastSegment.indexOf("[") + 1, lastSegment.indexOf("]"));
                     }
@@ -405,7 +405,7 @@
 
                         // bind the top field to the form
                         form.topControl = self;
-                        if (self.view.type && self.view.type != 'view')
+                        if (self.view.type && self.view.type !== 'view')
                         {
                             form.initEvents();
                         }
@@ -492,7 +492,7 @@
             var theData = this.data;
 
             // if we're in display-only mode, and theData is an object, convert to string
-            if (this.isDisplayOnly() && typeof(theData) == "object")
+            if (this.isDisplayOnly() && typeof(theData) === "object")
             {
                 theData = JSON.stringify(theData);
             }
@@ -547,7 +547,7 @@
 
 
             // try to avoid adding unnecessary injections for display view.
-            if (this.view.type != 'view') {
+            if (this.view.type !== 'view') {
 
                 // optional
                 if (this.schema.required)
@@ -636,7 +636,7 @@
 
                 // we bind data if we're in "edit" mode
                 // typically, we don't bind data if we're in "create" or any other mode
-                if (this.view.type && this.view.type == 'edit')
+                if (this.view.type && this.view.type === 'edit')
                 {
                     this.bindData();
                 }
@@ -647,13 +647,13 @@
                 }
 
                 // some logging to be useful
-                if (this.view.type == "create")
+                if (this.view.type === "create")
                 {
                     Alpaca.logDebug("Skipping data binding for field: " + this.id + " since view mode is 'create'");
                 }
 
                 // initialize dom-level events
-                if (this.view.type && this.view.type != 'view')
+                if (this.view.type && this.view.type !== 'view')
                 {
                     this.initEvents();
                 }
@@ -668,7 +668,7 @@
             // finished initializing
             this.initializing = false;
 
-            var defaultHideInitValidationError = (this.view.type == 'create');
+            var defaultHideInitValidationError = (this.view.type === 'create');
             this.hideInitValidationError = Alpaca.isValEmpty(this.options.hideInitValidationError) ? defaultHideInitValidationError : this.options.hideInitValidationError;
 
             // for create view, hide all readonly fields
@@ -831,7 +831,7 @@
             var self = this;
 
             // if string, convert to array
-            if (messages && typeof(messages) == "string")
+            if (messages && typeof(messages) === "string")
             {
                 messages = [messages];
             }
@@ -904,7 +904,7 @@
                         }
                     }
 
-                    if (typeof(contexts) == "object")
+                    if (typeof(contexts) === "object")
                     {
                         // compile the validation context for this field
                         var context = Alpaca.compileValidationContext(field);
@@ -983,12 +983,12 @@
                 // just ourselves
 
                 // compile the validation context for the field
-                var context = Alpaca.compileValidationContext(this);
+                var context2 = Alpaca.compileValidationContext(this);
 
                 // update the UI for these context items
                 if (!self.hideInitValidationError)
                 {
-                    Alpaca.updateValidationStateForContext(self.view, context);
+                    Alpaca.updateValidationStateForContext(self.view, context2);
                 }
             }
         },
@@ -1025,7 +1025,7 @@
                 status = this.handleValidate();
 
                 // support for some debugging
-                if (!status && Alpaca.logLevel == Alpaca.DEBUG)
+                if (!status && Alpaca.logLevel == Alpaca.DEBUG) // jshint ignore:line
                 {
                     // messages
                     var messages = [];
@@ -1242,7 +1242,7 @@
         },
 
         isHidden: function() {
-            return "none" == $(this.field).css("display");
+            return "none" === $(this.field).css("display");
         },
 
         /**
@@ -1650,7 +1650,7 @@
                         "dataSource": function (field, callback) {
                             if (field.parent && field.parent.schemaParent && field.parent.schemaParent.parent) {
                                 for (var key in field.parent.schemaParent.parent.childrenByPropertyId) {
-                                    if (key != field.parent.schemaParent.propertyId) {
+                                    if (key != field.parent.schemaParent.propertyId) { // jshint ignore:line
                                         field.selectOptions.push({
                                             "value": key,
                                             "text": key

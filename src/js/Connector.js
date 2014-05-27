@@ -24,7 +24,7 @@
             };
 
             var ONE_HOUR = 3600000;
-            this.cache = new ajaxCache('URL', true, ONE_HOUR);
+            this.cache = new AjaxCache('URL', true, ONE_HOUR);
         },
 
         /**
@@ -385,11 +385,12 @@
      *
      * Date: 2010-08-03
      */
-    function ajaxCache(type, on, lifetime) {
+    var AjaxCache = function AjaxCache(type, on, lifetime) {
         if (on) {
             this.on = true;
-        } else
+        } else {
             this.on = false;
+        }
 
         // set default cache lifetime
         if (lifetime != null) {
@@ -411,10 +412,10 @@
 
     };
 
-    ajaxCache.prototype.on = false;
-    ajaxCache.prototype.type;
-    ajaxCache.prototype.defaultLifetime = 1800000; // 1800000=30min, 300000=5min, 30000=30sec
-    ajaxCache.prototype.items = Object();
+    AjaxCache.prototype.on = false;
+    AjaxCache.prototype.type = undefined;
+    AjaxCache.prototype.defaultLifetime = 1800000; // 1800000=30min, 300000=5min, 30000=30sec
+    AjaxCache.prototype.items = {};
 
     /**
      * Caches the request and its response. Type: url
@@ -424,16 +425,18 @@
      * @param lifetime - (optional) sets cache lifetime in miliseconds
      * @return true on success
      */
-    ajaxCache.prototype.put_url = function(url, response, lifetime) {
-        if (lifetime == null) lifetime = this.defaultLifetime;
+    AjaxCache.prototype.put_url = function(url, response, lifetime) {
+        if (lifetime == null) {
+            lifetime = this.defaultLifetime;
+        }
         var key = this.make_key(url);
-        this.items[key] = Object();
+        this.items[key] = {};
         this.items[key].key = key;
         this.items[key].url = url;
         this.items[key].response = response;
         this.items[key].expire = (new Date().getTime()) + lifetime;
         return true;
-    }
+    };
 
     /**
      * Caches the request and its response. Type: GET
@@ -444,18 +447,19 @@
      * @param lifetime - (optional) sets cache lifetime in miliseconds
      * @return true on success
      */
-    ajaxCache.prototype.put_GET = function(url, data, response, lifetime) {
-        if (lifetime == null)
+    AjaxCache.prototype.put_GET = function(url, data, response, lifetime) {
+        if (lifetime == null) {
             lifetime = this.defaultLifetime;
+        }
         var key = this.make_key(url, [ data ]);
-        this.items[key] = Object();
+        this.items[key] = {};
         this.items[key].key = key;
         this.items[key].url = url;
         this.items[key].data = data;
         this.items[key].response = response;
         this.items[key].expire = (new Date().getTime()) + lifetime;
         return true;
-    }
+    };
 
     /**
      * Get cached ajax response
@@ -464,20 +468,22 @@
      * @param params - Array of additional parameters, to make key
      * @return ajax response or false if such does not exist or is expired
      */
-    ajaxCache.prototype.get = function(url, params) {
+    AjaxCache.prototype.get = function(url, params) {
         var key = this.make_key(url, params);
 
         // if cache does not exist
-        if (this.items[key] == null)
+        if (this.items[key] == null) {
             return false;
+        }
 
         // if cache expired
-        if (this.items[key].expire < (new Date().getTime()))
+        if (this.items[key].expire < (new Date().getTime())) {
             return false;
+        }
 
         // everything is passed - lets return the response
         return this.items[key].response;
-    }
+    };
 
     /**
      * Make unique key for each request depending on url and additional parameters
@@ -486,7 +492,7 @@
      * @param params - Array of additional parameters, to make key
      * @return unique key
      */
-    ajaxCache.prototype.make_key = function(url, params) {
+    AjaxCache.prototype.make_key = function(url, params) {
         var key = url;
         switch (this.type) {
             case 'URL':
@@ -497,18 +503,18 @@
         }
 
         return key;
-    }
+    };
 
     /**
      * Flush cache
      *
      * @return true on success
      */
-    ajaxCache.prototype.flush = function() {
+    AjaxCache.prototype.flush = function() {
         // flush all cache
-        cache.items = Object();
+        cache.items = {};
         return true;
-    }
+    };
 
     /*
      * Methods to stringify JavaScript/JSON objects.
@@ -521,7 +527,7 @@
      * Methods are slightly modified to best fit ajax-cache functionality
      *
      */
-    ajaxCache.prototype.stringify = function(value, replacer, space) {
+    AjaxCache.prototype.stringify = function(value, replacer, space) {
 
         // The stringify method takes a value and an optional replacer, and an
         // optional
@@ -554,9 +560,9 @@
         // Otherwise, throw an error.
 
         rep = replacer;
-        if (replacer
-            && typeof replacer !== 'function'
-            && (typeof replacer !== 'object' || typeof replacer.length !== 'number')) {
+        if (replacer &&
+              typeof replacer !== 'function' &&
+              (typeof replacer !== 'object' || typeof replacer.length !== 'number')) {
             throw new Error('JSON.stringify');
         }
 
@@ -566,9 +572,9 @@
         return this.str('', {
             '' : value
         });
-    }
+    };
 
-    ajaxCache.prototype.quote = function(string) {
+    AjaxCache.prototype.quote = function(string) {
 
         // If the string contains no control characters, no quote characters, and no
         // backslash characters, then we can safely slap some quotes around it.
@@ -584,9 +590,9 @@
                 return typeof c === 'string' ? c : '\\u' + ('0000' + a
                     .charCodeAt(0).toString(16)).slice(-4);
             }) + '"' : '"' + string + '"';
-    }
+    };
 
-    ajaxCache.prototype.str = function(key, holder) {
+    AjaxCache.prototype.str = function(key, holder) {
 
         // Produce a string from holder[key].
 
@@ -597,8 +603,9 @@
 
         // If the value has a toJSON method, call it to obtain a replacement value.
 
-        if (value && typeof value === 'object'
-            && typeof value.toJSON === 'function') {
+        if (value &&
+            typeof value === 'object' &&
+            typeof value.toJSON === 'function') {
             value = value.toJSON(key);
         }
 
@@ -667,9 +674,9 @@
                     // wrap them in
                     // brackets.
 
-                    v = partial.length === 0 ? '[]' : gap ? '[\n' + gap
-                        + partial.join(',\n' + gap) + '\n' + mind + ']'
-                        : '[' + partial.join(',') + ']';
+                    v = partial.length === 0 ? '[]' : gap ? '[\n' + gap +
+                        partial.join(',\n' + gap) + '\n' + mind + ']' :
+                        '[' + partial.join(',') + ']';
                     gap = mind;
                     return v;
                 }
@@ -705,12 +712,13 @@
                 // Join all of the member texts together, separated with commas,
                 // and wrap them in braces.
 
-                v = partial.length === 0 ? '{}' : gap ? '{\n' + gap
-                    + partial.join(',\n' + gap) + '\n' + mind + '}' : '{' + partial
-                    .join(',') + '}';
+                v = partial.length === 0 ?
+                  '{}' : gap ?
+                    '{\n' + gap + partial.join(',\n' + gap) + '\n' + mind + '}' :
+                    '{' + partial.join(',') + '}';
                 gap = mind;
                 return v;
         }
-    }
+    };
 
 })(jQuery);

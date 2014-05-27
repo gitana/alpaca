@@ -74,7 +74,7 @@
         var optionsSource = null;
         var viewSource = null;
 
-        if (args.length == 1) {
+        if (args.length === 1) {
             // hands back the field instance that is bound directly under the specified element
             // var field = Alpaca(el);
             var domElements = $(el).find(":first");
@@ -143,8 +143,8 @@
         }
 
         if (Alpaca.isEmpty(connector)) {
-            var connectorClass = Alpaca.getConnectorClass("default");
-            connector = new connectorClass("default");
+            var ConnectorClass = Alpaca.getConnectorClass("default");
+            connector = new ConnectorClass("default");
         }
 
         // container can either be a dom id or a dom element
@@ -162,8 +162,8 @@
         var loadAllConnector = connector;
 
         if (notTopLevel) {
-            var loadAllConnectorClass = Alpaca.getConnectorClass("default");
-            loadAllConnector = new loadAllConnectorClass("default");
+            var LoadAllConnectorClass = Alpaca.getConnectorClass("default");
+            loadAllConnector = new LoadAllConnectorClass("default");
         }
 
         if (!options) {
@@ -185,7 +185,7 @@
                 }
 
                 // force hideInitValidationError to false for field and all children
-                if (field.view.type != 'view')
+                if (field.view.type !== 'view')
                 {
                     Alpaca.fieldApplyChildren(field, function(field) {
 
@@ -233,7 +233,7 @@
                                     }
                                 }
                             }
-                            else if (typeof(options.focus) == "string")
+                            else if (typeof(options.focus) === "string")
                             {
                                 // assume it is a path to the child
                                 var child = field.getControlByPath(options.focus);
@@ -702,7 +702,7 @@
                 return "boolean";
             }
             // Last check for data that carries functions -- GitanaConnector case.
-            if (typeof data == 'object') {
+            if (typeof data === 'object') {
                 return "object";
             }
         },
@@ -806,7 +806,7 @@
             {
                 var view = this.normalizedViews[viewId];
 
-                if (view.ui == ui && view.type == type)
+                if (view.ui === ui && view.type === type)
                 {
                     theViewId = viewId;
                     break;
@@ -969,7 +969,7 @@
         getFieldClassType: function(fieldClass) {
             for (var type in this.fieldClassRegistry) {
                 if (this.fieldClassRegistry.hasOwnProperty(type)) {
-                    if (this.fieldClassRegistry[type] == fieldClass) {
+                    if (this.fieldClassRegistry[type] === fieldClass) {
                         return type;
                     }
                 }
@@ -1169,7 +1169,7 @@
             var key = null;
             do {
                 key = keys.shift();
-                if (subprop && key == subprop) {
+                if (subprop && key === subprop) {
                     key = keys.shift();
                 }
                 if (!Alpaca.isEmpty(current[key])) {
@@ -1371,19 +1371,18 @@
          * @param {Array} arr_2 Second array.
          * @returns {Boolean} True if two arrays have same content, false otherwise.
          */
-        compareArrayContent : function(arr_1, arr_2) {
-            var equal = arr_1 && arr_2 && (arr_1.length == arr_2.length);
+        compareArrayContent : function(a, b) {
+            var equal = a && b && (a.length === b.length);
+
             if (equal) {
-                $.each(arr_1, function(foo, val) {
-                    if (!equal)
+                for (var i = a.length - 1; i >= 0; i--) {
+                    var v = a[i];
+                    if ($.inArray(v, b) < 0) {
                         return false;
-                    if ($.inArray(val, arr_2) == -1) {
-                        equal = false;
-                    } else {
-                        equal = true;
                     }
-                });
+                }
             }
+
             return equal;
         },
 
@@ -1509,13 +1508,13 @@
             }
 
             // detect twitter bootstrap
-            var bootstrapDetected = (typeof $.fn.modal == 'function');
+            var bootstrapDetected = (typeof $.fn.modal === 'function');
             if (bootstrapDetected && !fallbackUI) {
                 fallbackUI = "bootstrap";
             }
 
             // detect jquery ui
-            var jQueryUIDetected = (typeof($.ui) != "undefined");
+            var jQueryUIDetected = (typeof($.ui) !== "undefined");
             if (jQueryUIDetected && !fallbackUI) {
                 fallbackUI = "jqueryui";
             }
@@ -1642,7 +1641,7 @@
                             }
 
                             // force hideInitValidationError to false for field and all children
-                            if (field.view.type != 'view')
+                            if (field.view.type !== 'view')
                             {
                                 Alpaca.fieldApplyChildren(field, function(field) {
 
@@ -1681,7 +1680,8 @@
             }
 
             // NOTE: this can be null if an error was thrown or if a view wasn't found
-            return field;
+            // Actually it'd always be undefined because field is in another scope.
+            // return field;
         },
 
         /**
@@ -1701,8 +1701,12 @@
          */
         createFieldInstance : function(el, data, options, schema, view, connector, errorCallback) {
             // make sure options and schema are not empty
-            if (Alpaca.isValEmpty(options)) options = {};
-            if (Alpaca.isValEmpty(schema)) schema = {};
+            if (Alpaca.isValEmpty(options)) {
+                options = {};
+            }
+            if (Alpaca.isValEmpty(schema)) {
+                schema = {};
+            }
             // options can be a string that identifies the kind of field to construct (i.e. "text")
             if (options && Alpaca.isString(options)) {
                 var fieldType = options;
@@ -1729,8 +1733,8 @@
                 }
             }
             // find the field class registered for this field type
-            var fieldClass = Alpaca.getFieldClass(options.type);
-            if (!fieldClass) {
+            var FieldClass = Alpaca.getFieldClass(options.type);
+            if (!FieldClass) {
                 errorCallback({
                     "message":"Unable to find field class for type: " + options.type,
                     "reason": "FIELD_INSTANTIATION_ERROR"
@@ -1738,7 +1742,7 @@
                 return null;
             }
             // if we have data, bind it in
-            return new fieldClass(el, data, options, schema, view, connector, errorCallback);
+            return new FieldClass(el, data, options, schema, view, connector, errorCallback);
         },
 
         /**
@@ -1824,7 +1828,7 @@
                     report.successCount++;
                 }
 
-                if (report.count == totalCalls)
+                if (report.count == totalCalls) // jshint ignore:line
                 {
                     finalCallback(normalizedViews);
                 }
@@ -1857,7 +1861,7 @@
                  * a URL that we should dynamically load and treat the result as a template.  It may also be a
                  * CSS selector used to locate something within the document that we should load text from.
                  */
-                if (template && typeof(template) == "string")
+                if (template && typeof(template) === "string")
                 {
                     var x = template.toLowerCase();
                     if (x.indexOf("http://") === 0 || x.indexOf("https://") === 0 || x.indexOf("/") === 0 || x.indexOf("./") === 0)
@@ -1957,11 +1961,11 @@
                         {
                             var template = view.templates[templateId];
 
-                            functionArray.push(function(normalizedViews, view, scopeType, scopeId, templateId, template) {
+                            functionArray.push((function(normalizedViews, view, scopeType, scopeId, templateId, template) {
                                 return function(totalCalls) {
                                     compileViewTemplate(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls);
                                 };
-                            }(normalizedViews, view, "view", view.id, templateId, template));
+                            })(normalizedViews, view, "view", view.id, templateId, template));
                         }
                     }
 
@@ -1976,11 +1980,11 @@
                                 {
                                     var template = view.fields[path].templates[templateId];
 
-                                    functionArray.push(function(normalizedViews, view, scopeType, scopeId, templateId, template) {
+                                    functionArray.push((function(normalizedViews, view, scopeType, scopeId, templateId, template) {
                                         return function(totalCalls) {
                                             compileViewTemplate(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls);
                                         };
-                                    }(normalizedViews, view, "field", path, templateId, template));
+                                    })(normalizedViews, view, "field", path, templateId, template));
                                 }
                             }
                         }
@@ -1991,11 +1995,11 @@
                     {
                         var template = view.layout.template;
 
-                        functionArray.push(function(normalizedViews, view, scopeType, scopeId, templateId, template) {
+                        functionArray.push((function(normalizedViews, view, scopeType, scopeId, templateId, template) {
                             return function(totalCalls) {
                                 compileViewTemplate(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls);
                             };
-                        }(normalizedViews, view, "layout", "layout", "layoutTemplate", template));
+                        })(normalizedViews, view, "layout", "layout", "layoutTemplate", template));
                     }
 
                     // global template
@@ -2003,11 +2007,11 @@
                     {
                         var template = view.globalTemplate;
 
-                        functionArray.push(function(normalizedViews, view, scopeType, scopeId, templateId, template) {
+                        functionArray.push((function(normalizedViews, view, scopeType, scopeId, templateId, template) {
                             return function(totalCalls) {
                                 compileViewTemplate(normalizedViews, view, scopeType, scopeId, templateId, template, totalCalls);
                             };
-                        }(normalizedViews, view, "global", "global", "globalTemplate", template));
+                        })(normalizedViews, view, "global", "global", "globalTemplate", template));
                     }
                 }
 
@@ -2111,12 +2115,12 @@
                 }
             }
             // is this template defined at the global level?
-            else if (templateId == "globalTemplate" || templateId == "global")
+            else if (templateId === "globalTemplate" || templateId === "global")
             {
                 _cacheKey = Alpaca.makeCacheKey(view.id, "global", "global", "globalTemplate");
             }
             // is this template defined at the layout level?
-            else if (templateId == "layoutTemplate" || templateId == "layout")
+            else if (templateId === "layoutTemplate" || templateId === "layout")
             {
                 _cacheKey = Alpaca.makeCacheKey(view.id, "layout", "layout", "layoutTemplate");
             }
@@ -2242,16 +2246,16 @@
 
             if (typeof console !== 'undefined' && console[method])
             {
-                if ("debug" == method) {
+                if ("debug" === method) {
                     console.debug(obj);
                 }
-                else if ("info" == method) {
+                else if ("info" === method) {
                     console.info(obj);
                 }
-                else if ("warn" == method) {
+                else if ("warn" === method) {
                     console.warn(obj);
                 }
-                else if ("error" == method) {
+                else if ("error" === method) {
                     console.error(obj);
                 }
                 else {
@@ -2268,7 +2272,7 @@
 
     Alpaca.attrProp = function(el, name, value)
     {
-        if (!(typeof(value) === "undefined"))
+        if (typeof(value) !== "undefined")
         {
             // jQuery 1.6+
             if ($(el).prop)
@@ -2301,12 +2305,12 @@
         {
             callback();
         }
-        else if (referenceId == "#")
+        else if (referenceId === "#")
         {
             // this is the uri of the current schema document
             callback(topField.schema, topField.options);
         }
-        else if (referenceId.indexOf("#/") == 0)
+        else if (referenceId.indexOf("#/") === 0)
         {
             // this is a property path relative to the root of the current schema
             var defId = referenceId.substring(2);
@@ -2366,7 +2370,7 @@
 
             callback(defSchema, defOptions);
         }
-        else if (referenceId.indexOf("#") == 0)
+        else if (referenceId.indexOf("#") === 0)
         {
             // this is the ID of a node in the current schema document
 
@@ -2492,7 +2496,7 @@
      */
     Alpaca.resolveReference = function(schema, options, referenceId)
     {
-        if (schema.id == referenceId)
+        if (schema.id == referenceId) // jshint ignore:line
         {
             var result = {};
             if (schema) {
@@ -2590,7 +2594,7 @@
 
     Alpaca.pathParts = function(resource)
     {
-        if (typeof(resource) != "string")
+        if (typeof(resource) !== "string")
         {
             return resource;
         }
@@ -2631,17 +2635,17 @@
     {
         var resolvedField = null;
 
-        if (typeof(propertyIdOrReferenceId) == "string")
+        if (typeof(propertyIdOrReferenceId) === "string")
         {
-            if (propertyIdOrReferenceId.indexOf("#/") == 0 && propertyId.length > 2)
+            if (propertyIdOrReferenceId.indexOf("#/") === 0 && propertyId.length > 2)
             {
                 // TODO: path based lookup?
             }
-            else if (propertyIdOrReferenceId == "#" || propertyIdOrReferenceId == "#/")
+            else if (propertyIdOrReferenceId === "#" || propertyIdOrReferenceId === "#/")
             {
                 resolvedField = containerField;
             }
-            else if (propertyIdOrReferenceId.indexOf("#") == 0)
+            else if (propertyIdOrReferenceId.indexOf("#") === 0)
             {
                 // reference id lookup
 
@@ -2676,7 +2680,7 @@
      */
     Alpaca.resolveFieldByReference = function(field, referenceId)
     {
-        if (field.schema && field.schema.id == referenceId)
+        if (field.schema && field.schema.id == referenceId) // jshint ignore:line
         {
             return field;
         }
@@ -2711,7 +2715,7 @@
     {
         // copy values from first into a values lookup map
         var values = {};
-        if (typeof(first) == "object" || typeof(first) == "array")
+        if (typeof(first) === "object" || Alpaca.isArray(first))
         {
             for (var k in first)
             {
@@ -2726,7 +2730,7 @@
         var result = false;
 
         // check values from second against the lookup map
-        if (typeof(second) == "object" || typeof(second) == "array")
+        if (typeof(second) === "object" || Alpaca.isArray(second))
         {
             for (var k in second)
             {
@@ -2820,7 +2824,7 @@
         // internal method that sets validation for a single field
         var f = function(chain, context)
         {
-            if (!chain || chain.length == 0)
+            if (!chain || chain.length === 0)
             {
                 return;
             }
@@ -2884,7 +2888,7 @@
                     entry.invalidated = true;
                 }
 
-                entry.container = current.isContainer();;
+                entry.container = current.isContainer();
                 entry.valid = entry.after;
 
                 context.push(entry);
@@ -2899,7 +2903,7 @@
     Alpaca.updateValidationStateForContext = function(view, context)
     {
         // not in display mode
-        if (view.type == "display")
+        if (view.type === "display")
         {
             return;
         }
@@ -3085,10 +3089,12 @@
         function only_once(fn) {
             var called = false;
             return function() {
-                if (called) throw new Error("Callback was already called.");
+                if (called) {
+                    throw new Error("Callback was already called.");
+                }
                 called = true;
                 fn.apply(root, arguments);
-            }
+            };
         }
 
         //// cross-browser compatiblity functions ////
@@ -3149,7 +3155,7 @@
             }
             else {
                 async.nextTick = function (fn) {
-                    setTimeout(fn, 0);
+                    setTimeout(fn, 0); // jshint ignore:line
                 };
                 async.setImmediate = async.nextTick;
             }
@@ -3833,21 +3839,27 @@
                     async.setImmediate(cargo.process);
                 },
                 process: function process() {
-                    if (working) return;
+                    if (working) {
+                        return;
+                    }
                     if (tasks.length === 0) {
-                        if(cargo.drain) cargo.drain();
+                        if(cargo.drain) {
+                            cargo.drain();
+                        }
                         return;
                     }
 
-                    var ts = typeof payload === 'number'
-                        ? tasks.splice(0, payload)
-                        : tasks.splice(0);
+                    var ts = typeof payload === 'number' ?
+                        tasks.splice(0, payload) :
+                        tasks.splice(0);
 
                     var ds = _map(ts, function (task) {
                         return task.data;
                     });
 
-                    if(cargo.empty) cargo.empty();
+                    if(cargo.empty) {
+                        cargo.empty();
+                    }
                     working = true;
                     worker(ds, function () {
                         working = false;
@@ -3872,6 +3884,7 @@
             return cargo;
         };
 
+        /* jshint ignore:start */
         var _console_fn = function (name) {
             return function (fn) {
                 var args = Array.prototype.slice.call(arguments, 1);
@@ -3892,6 +3905,8 @@
                 }]));
             };
         };
+        /* jshint ignore:end */
+
         async.log = _console_fn('log');
         async.dir = _console_fn('dir');
         /*async.info = _console_fn('info');
@@ -3964,7 +3979,7 @@
                             var err = arguments[0];
                             var nextargs = Array.prototype.slice.call(arguments, 1);
                             cb(err, nextargs);
-                        }]))
+                        }]));
                     },
                     function (err, results) {
                         callback.apply(that, [err].concat(results));
@@ -4089,7 +4104,7 @@
      */
     Alpaca.animatedSwap = function(source, target, duration, callback)
     {
-        if (typeof(duration) == "function") {
+        if (typeof(duration) === "function") {
             callback = duration;
             duration = 500;
         }
@@ -4107,20 +4122,22 @@
                 route_dest_vertical    = 0,
                 total_route_horizontal = dest_pos.left + dest.width() - from_pos.left,
                 route_from_horizontal  = 0,
-                route_dest_horizontal  = 0
+                route_dest_horizontal  = 0;
 
             from.css("opacity", 0);
             dest.css("opacity", 0);
 
-            from_clone.insertAfter(from).css({position: "absolute", width: from.outerWidth(), height: from.outerHeight()}).offset(from_pos).css("z-index", "999")
-            dest_clone.insertAfter(dest).css({position: "absolute", width: dest.outerWidth(), height: dest.outerHeight()}).offset(dest_pos).css("z-index", "999")
+            from_clone.insertAfter(from).css({position: "absolute", width: from.outerWidth(), height: from.outerHeight()}).offset(from_pos).css("z-index", "999");
+            dest_clone.insertAfter(dest).css({position: "absolute", width: dest.outerWidth(), height: dest.outerHeight()}).offset(dest_pos).css("z-index", "999");
 
-            if(from_pos.top != dest_pos.top)
-                route_from_vertical = total_route_vertical - from.height()
-            route_dest_vertical = total_route_vertical - dest.height()
-            if(from_pos.left != dest_pos.left)
-                route_from_horizontal = total_route_horizontal - from.width()
-            route_dest_horizontal = total_route_horizontal - dest.width()
+            if(from_pos.top !== dest_pos.top) {
+                route_from_vertical = total_route_vertical - from.height();
+            }
+            route_dest_vertical = total_route_vertical - dest.height();
+            if(from_pos.left !== dest_pos.left) {
+                route_from_horizontal = total_route_horizontal - from.width();
+            }
+            route_dest_horizontal = total_route_horizontal - dest.width();
 
             from_clone.animate({
                 top: "+=" + route_from_vertical + "px",

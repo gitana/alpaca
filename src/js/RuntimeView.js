@@ -132,7 +132,7 @@
             }
 
             // array related field path
-            if (fieldPath && fieldPath.indexOf('[') != -1 && fieldPath.indexOf(']') != -1) {
+            if (fieldPath && fieldPath.indexOf('[') < 0 && fieldPath.indexOf(']') < 0) {
                 fieldPath = fieldPath.replace(/\[\d+\]/g,"[*]");
                 if (this.fields && this.fields[fieldPath]) {
                     var configVal = this._getConfigVal(this.fields[fieldPath], configId);
@@ -142,7 +142,7 @@
                 }
             }
 
-            if (!Alpaca.isEmpty(topLevelOnly) && topLevelOnly && this.field.path != "/") {
+            if (!Alpaca.isEmpty(topLevelOnly) && topLevelOnly && this.field.path !== "/") {
                 return null;
             }
 

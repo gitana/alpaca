@@ -1,6 +1,6 @@
 (function()
 {
-    Alpaca.TemplateEngineRegistry = function() {
+    Alpaca.TemplateEngineRegistry = (function() {
 
         var registry = {};
 
@@ -29,7 +29,7 @@
                         var supportedMimetypes = registry[id].supportedMimetypes();
                         for (var i = 0; i < supportedMimetypes.length; i++)
                         {
-                            if (idOrType.toLowerCase() == supportedMimetypes[i].toLowerCase())
+                            if (idOrType.toLowerCase() === supportedMimetypes[i].toLowerCase())
                             {
                                 engine = registry[id];
                                 break;
@@ -53,6 +53,6 @@
                 return ids;
             }
         };
-    }();
+    })();
 
 })();

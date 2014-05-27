@@ -1,21 +1,22 @@
-var fs = require("fs");
+var fs   = require("fs");
 var gulp = require('gulp');
+var _    = require('lodash');
 
-var es = require('event-stream');
+var es   = require('event-stream');
 var exec = require('child_process').exec;
 
 var pkg = require('./package.json');
 
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var jshint = require('gulp-jshint');
-var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var clean = require('gulp-clean');
-var declare = require("gulp-declare");
-var notify = require('gulp-notify');
+var concat      = require('gulp-concat');
+var uglify      = require('gulp-uglify');
+var jshint      = require('gulp-jshint');
+var minifyCss   = require('gulp-minify-css');
+var rename      = require('gulp-rename');
+var clean       = require('gulp-clean');
+var declare     = require("gulp-declare");
+var notify      = require('gulp-notify');
 var runSequence = require('run-sequence');
-var nodemon = require('gulp-nodemon');
+var nodemon     = require('gulp-nodemon');
 
 var handlebars = require('./temp_node_modules/gulp-handlebars'); // until gulp-handlebars supports 1.3.0
 
@@ -562,7 +563,7 @@ gulp.task('testsite', ['watch'], function() {
 });
 
 gulp.task('lint', function() {
-  gulp.src(paths.scripts.core)
+  gulp.src(_.flatten([paths.scripts.core, '!lib/**/*']))
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });

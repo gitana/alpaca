@@ -47,7 +47,7 @@
             var finished = false;
             var selectedType = null;
 
-            var b = this.__proto__ || this.constructor.prototype;
+            var b = this.constructor.prototype;
             do
             {
                 if (!b.getFieldType)
@@ -64,7 +64,7 @@
                     }
                     else
                     {
-                        b = b.__proto__ || b.constructor.prototype;
+                        b = b.constructor.prototype;
                     }
                 }
             }
@@ -340,7 +340,7 @@
                         this.labelDiv.toggleClass("legend-collapsed");
                     }
 
-                    if (this.options.legendStyle == 'link')
+                    if (this.options.legendStyle === 'link')
                     {
                         $('<span class="' + this.commonIcon + " " + initIcon + ' alpaca-fieldset-legend-link"></span>').prependTo(this.labelDiv);
                         this.labelDiv.click(function() {
@@ -355,7 +355,7 @@
                         });
                     }
 
-                    if (this.options.legendStyle == 'button')
+                    if (this.options.legendStyle === 'button')
                     {
                         if (this.buttonBeautifier)
                         {
@@ -632,10 +632,9 @@
             {
                 this.children[i].onDependentConceal();
             }
-        }
+        },
 
         //__BUILDER_HELPERS
-        ,
 
         /**
          * @private
