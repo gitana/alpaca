@@ -332,7 +332,7 @@
                 if (this.parent && this.parent.name && this.path)
                 {
                     var lastSegment = this.path.substring(this.path.lastIndexOf('/')+1);
-                    if (lastSegment.indexOf("[") < 0 && lastSegment.indexOf("]") < 0)
+                    if (lastSegment.indexOf("[") !== -1 && lastSegment.indexOf("]") !== -1)
                     {
                         lastSegment = lastSegment.substring(lastSegment.indexOf("[") + 1, lastSegment.indexOf("]"));
                     }
