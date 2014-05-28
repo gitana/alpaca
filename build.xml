@@ -570,10 +570,12 @@
                        replace='jquery.wysiwyg.min.css' flags="gs">
             <fileset dir="${prep.dir}" includes="examples/**/wysiwyg*.html"/>
         </replaceregexp>
+        <!--
         <replaceregexp match="jquery-ui-timepicker-addon.js"
                        replace='jquery-ui-timepicker-addon.min.js' flags="gs">
             <fileset dir="${prep.dir}" includes="examples/**/datetime*.html"/>
         </replaceregexp>
+        -->
         <replaceregexp match="&lt;!--Alpaca JavaScript--&gt;(.*?)&lt;!--End of Alpaca JavaScript--&gt;"
                        replace='&lt;script type="text\/javascript" src="js/${appkey}.min.js"&gt;&lt;/script&gt;' flags="gs">
             <fileset dir="${prep.dir}" includes="index.html"/>
