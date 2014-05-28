@@ -105,7 +105,7 @@
          * @returns {Boolean} True if it is a valid date, false otherwise.
          */
         _validateDateFormat: function() {
-            var value = this.field.val();
+            var value = this.getValue();
 
             if ($.datepicker) {
                 try {
