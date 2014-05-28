@@ -2,7 +2,7 @@
   "name": "alpaca",
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install",
-    "postupdate":  "./node_modules/.bin/bower update"
+    "postupdate" : "./node_modules/.bin/bower update"
   },
   "version": "1.5.0",
   "devDependencies": {
@@ -13,6 +13,7 @@
     "gulp-clean":       "*",
     "gulp-concat":      "*",
     "gulp-declare":     "*",
+    "gulp-handlebars":  "2.1.0",
     "gulp-jshint":      "*",
     "gulp-minify-css":  "*",
     "gulp-nodemon":     "*",

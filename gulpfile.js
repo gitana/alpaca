@@ -5,10 +5,11 @@ var _    = require('lodash');
 var es   = require('event-stream');
 var exec = require('child_process').exec;
 
-var pkg = require('./package.json');
+var pkg  = require('./package.json');
 
 var concat      = require('gulp-concat');
 var uglify      = require('gulp-uglify');
+var handlebars  = require('gulp-handlebars');
 var jshint      = require('gulp-jshint');
 var minifyCss   = require('gulp-minify-css');
 var rename      = require('gulp-rename');
@@ -17,8 +18,6 @@ var declare     = require("gulp-declare");
 var notify      = require('gulp-notify');
 var runSequence = require('run-sequence');
 var nodemon     = require('gulp-nodemon');
-
-var handlebars = require('./temp_node_modules/gulp-handlebars'); // until gulp-handlebars supports 1.3.0
 
 var wrap = require('gulp-wrap-umd');
 
