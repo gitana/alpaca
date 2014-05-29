@@ -21,6 +21,15 @@ var World = function(cb) {
           });
         };
 
+        world.ith = function(i) {
+          var s = i.toLowerCase();
+          if (s === 'first')  return 0;
+          if (s === 'second') return 1;
+          if (s === 'third')  return 2;
+          if (s === 'fourth') return 3;
+          if (s === 'fifth')  return 4;
+        };
+
         cb(world);
       });
     });
