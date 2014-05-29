@@ -2,6 +2,28 @@ var fields = function() {
 
   this.World = require("../../support/world.js").World;
 
+  this.Given(/^I am on a page with an array field with the data \[(.*)\]$/, function(data, cb) {
+
+    var data = data.split(',').map(function(str) {
+      return str.replace(/\s/, '');
+    });
+
+    this.eval(function(data) {
+      $('#fixture').alpaca({
+        data: data,
+        schema: {
+          type: 'array'
+        },
+        options: {
+
+        }
+      });
+    }, function() {
+      setTimeout(cb, 100);
+    }, data);
+
+  });
+
   this.Given(/^I am on a page with an array field with (\d+) elements?$/, function(num, cb) {
 
     var data = [
