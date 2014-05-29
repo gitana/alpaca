@@ -4,7 +4,7 @@
     <title>Test'em</title>
 
     <script>
-        // Internet explorer 8 indexOf fixer for testem
+        // polyfill for ie8
         if (!Array.prototype.indexOf) {
             Array.prototype.indexOf = function(obj, start) {
                  for (var i = (start || 0), j = this.length; i < j; i++) {

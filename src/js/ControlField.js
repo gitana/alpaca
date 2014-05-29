@@ -50,7 +50,7 @@
             var finished = false;
             var selectedType = null;
 
-            var b = Object.getPrototypeOf(this);
+            var b = this;
             do
             {
                 if (!b.getFieldType)
@@ -67,7 +67,7 @@
                     }
                     else
                     {
-                        b = Object.getPrototypeOf(b);
+                        b = b.constructor.ancestor.prototype;
                     }
                 }
             }
