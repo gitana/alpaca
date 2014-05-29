@@ -209,6 +209,12 @@
                     }
                 });
             }
+
+            var len     = this.data.length;
+            var data    = $.extend(true, {}, this.data);
+            data.length = len;
+            this.data   = Array.prototype.slice.call(data);
+
         },
 
         /**
@@ -1044,9 +1050,6 @@
 
                 // remove from DOM
                 self.getContainerEl().find("[data-alpaca-container-item-index='" + childIndex + "']").remove();
-
-                // remove the data element
-                self.data.splice(childIndex, 1);
 
                 // updates child dom marker elements
                 self.updateChildDOMElements();

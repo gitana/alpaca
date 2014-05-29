@@ -35,6 +35,10 @@
                     equal($(v).val(), data[i], i + 'th field populated correctly.');
                 });
 
+console.log(Array.prototype.slice.call(el.find('input').map(function(i, v) {
+    return $(v).val();
+})));
+
                 // test array item toolbar
                 var firstField = $(inputFields[0]);
                 $(firstField).hover(function() {
@@ -58,30 +62,30 @@
                         equal(newField.val(), '', 'New input field populated correctly.');
 
                         // simulate remove
-                        var removeBtn = btns.filter('[data-alpaca-array-actionbar-action="remove"]');
+                        var removeBtn = $(el.find('[data-alpaca-array-actionbar-action="remove"]')[1]);
                         ok(removeBtn.length, 'Remove button generated.');
                         removeBtn.click(function() {
                             equal(el.find('input').length, data.length, 'New input removed correctly.');
 
                             // simulate up
-                            var upBtn = btns.filter('[data-alpaca-array-actionbar-action="up"]');
+                            var upBtn = $(el.find('[data-alpaca-array-actionbar-action="up"]').last());
                             ok(upBtn.length, 'Up button generated.');
                             upBtn.click(function() {
                                 var first = el.find('input:text:eq(0)');
                                 var last  = el.find('input:text:eq(2)');
 
-                                equal(first.val(), data[data.length - 1], 'First field value properly changed.');
-                                equal(last.val(), data[0],                'Last field value properly changed.');
+                                equal(first.val(), data[0], 'First field value properly unchanged.');
+                                equal(last.val(), data[data.length - 2], 'Last field value properly changed.');
 
                                 // simulate down
-                                var downBtn = btns.filter('[data-alpaca-array-actionbar-action="down"]');
+                                var downBtn = $(el.find('[data-alpaca-array-actionbar-action="down"]')[0]);
                                 ok(downBtn.length, 'Down button generated.');
                                 downBtn.click(function() {
                                     var first = el.find('input:text:eq(0)');
                                     var last  = el.find('input:text:eq(2)');
 
-                                    equal(first.val(), data[0],              'First field value properly changed.');
-                                    equal(last.val(), data[data.length - 1], 'Last field value properly changed.');
+                                    equal(first.val(), data[data.length - 1], 'First field value properly changed.');
+                                    equal(last.val(), data[data.length - 2], 'Last field value properly changed.');
 
                                     start();
                                 });
