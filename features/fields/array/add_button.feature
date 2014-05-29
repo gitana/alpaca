@@ -5,5 +5,5 @@ Feature: Add Array Item Feature
 
   Scenario: Add Item to Array Field
     Given I am on a page with an array field
-    When I click on the add button
-    Then I should see another text field
+    When I click on the array bar's add button
+    Then I should see 4 input

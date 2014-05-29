@@ -22,8 +22,9 @@
     "gulp-rename"    : "*",
     "gulp-uglify"    : "*",
     "gulp-wrap-umd"  : "^0.2.0",
+    "node-gyp"       : "0.11.0",
     "node-static"    : "*",
-    "run-sequence"   : "*",
-    "zombie"         : ""
+    "phantom"        : "0.6.3",
+    "run-sequence"   : "*"
   }
 }

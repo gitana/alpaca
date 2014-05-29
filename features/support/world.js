@@ -1,48 +1,34 @@
-// title case a string
-var tc = function(str) {
-  return str.replace(/\w\S*/g, function(txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
-}
-
-// camel case a string
-var cc = function(str) {
-  var temp = pc(str);
-  return temp.charAt(0).toLowerCase() + temp.slice(1);
-};
-
-// pascal case a string
-var pc = function(str) {
-  var temp = str.replace(/\s/, '');
-  return temp.charAt(0).toUpperCase() + temp.slice(1);
-};
-
-var zombie = require('zombie');
+var path    = require('path');
+var phantom = require('phantom');
 
 var World = function(cb) {
 
   var world = {};
 
-  world.browser = new zombie();
-  world.browser.visit('./zombie.html');
+  // open ./cucumber.html
+  var url = path.join(__dirname, 'cucumber.html');
 
-  var $ = browser.window.$;
+  phantom.create(function(ph) {
+    ph.createPage(function(page) {
+      page.open(url, function(status) {
 
-  var fixture = $('<div></div>');
+        world.page = page;
+        world.eval = page.evaluate;
 
-  $('body').append(fixture);
+        world.clearFixture = function() {
+          page.evaluate(function() {
+            $('#fixture').empty();
+          });
+        };
 
-  world.fixture = fixture;
-
-  world.clearFixture = function() {
-    fixture.empty();
-  };
-
-  world.createField = function(type) {
-    var field = Alpaca.Fields[pc(type) + 'Field'];
-  };
-
-  cb(world);
+        cb(world);
+      });
+    });
+  }, {
+    dnodeOpts: {
+      weak: false
+    }
+  });
 
 };
 
