@@ -24,7 +24,7 @@ var wrap = require('gulp-wrap-umd');
 var paths = {
     scripts: {
         core: [
-            "lib/base/Base.js",
+            "lib/base.js",
             //"lib/json3/lib/json3.js",
             //"lib/validate/index.js",
             "lib/equiv_and_hoozit/index.js",

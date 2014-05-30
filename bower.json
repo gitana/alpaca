@@ -2,7 +2,6 @@
   "name": "alpaca",
   "dependencies": {
     "ace": "",
-    "base": "https://github.com/KenPowers/Base.js-Module.git#5e145bf4be463ab6497b3ed77ce45ec6683c35f2",
     "js-beautify": "",
     "bootstrap": ">=3",
     "bootstrap-multiselect": "",
