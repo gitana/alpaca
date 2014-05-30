@@ -9,7 +9,7 @@ var fields = function() {
   this.Then(/^I should see (\d+) (.*) tags?$/, function(num, type, cb) {
 
     this.eval(function(type) {
-      return $('input:visible').length;
+      return $(type + ':visible').length;
     }, function(n) {
       if (n == num) {
         cb();

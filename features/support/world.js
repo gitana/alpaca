@@ -1,5 +1,9 @@
-var path    = require('path');
-var phantom = require('phantom');
+var path      = require('path');
+var webdriver = require('selenium-webdriver');
+
+var driver = new webdriver.Builder().
+    withCapabilities(webdriver.Capabilities.chrome()).
+    build();
 
 var World = function(cb) {
 
@@ -8,35 +12,27 @@ var World = function(cb) {
   // open ./cucumber.html
   var url = path.join(__dirname, 'cucumber.html');
 
-  phantom.create(function(ph) {
-    ph.createPage(function(page) {
-      page.open(url, function(status) {
+  driver.get('file://' + url).then(function() {
 
-        world.page = page;
-        world.eval = page.evaluate;
+    world.driver = driver;
 
-        world.clearFixture = function() {
-          page.evaluate(function() {
-            $('#fixture').empty();
-          });
-        };
+    world.clearFixture = function() {
+      driver.executeScript("$('#fixture').empty()");
+    };
 
-        world.ith = function(i) {
-          var s = i.toLowerCase();
-          if (s === 'first')  return 0;
-          if (s === 'second') return 1;
-          if (s === 'third')  return 2;
-          if (s === 'fourth') return 3;
-          if (s === 'fifth')  return 4;
-        };
-
-        cb(world);
+    world.eval = function(fn, cb) {
+      var args = Array.prototype.slice.call(arguments, 2).map(function(str) {
+        return JSON.stringify(str);
       });
-    });
-  }, {
-    dnodeOpts: {
-      weak: false
-    }
+      var result = driver.executeScript('return (' + fn.toString() + ')(' + args.join(',') + ');');
+      result.then(function(result) {
+        if (cb) cb(result);
+      });
+      return result;
+    };
+
+    cb(world);
+
   });
 
 };
