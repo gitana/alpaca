@@ -12,7 +12,7 @@
     "lib/validate/index.js",
     "lib/jquery-maskedinput/dist/jquery.maskedinput.min.js",
     "build/alpaca/bootstrap/alpaca.js",
-    "tests/js/**/*.js"
+    "tests/js/fields/**/*.js"
   ],
   "launch_in_dev": [
     "Chrome",

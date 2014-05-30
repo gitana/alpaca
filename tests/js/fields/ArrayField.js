@@ -35,10 +35,6 @@
                     equal($(v).val(), data[i], i + 'th field populated correctly.');
                 });
 
-console.log(Array.prototype.slice.call(el.find('input').map(function(i, v) {
-    return $(v).val();
-})));
-
                 // test array item toolbar
                 var firstField = $(inputFields[0]);
                 $(firstField).hover(function() {
