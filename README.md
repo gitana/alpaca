@@ -126,6 +126,12 @@ for your web server, you can run the QUnit tests by opening a web browser and po
 http://localhost/alpaca/tests/index.html
 ```
 
+## Connecting to Cloud CMS
+
+Alpaca works with any backend HTTP service.  There is a connector layer and you can plug in your own persistence for forms, schema, options and layout.
+
+Alpaca works out-of-the-box with [Cloud CMS](http://www.cloudcms.com).  Cloud CMS is a cost-effective backend content management system for mobile and web applications.  If you're looking for a quick way to capture and report on forms, please consider checking it out.
+
 ## Questions?
 
 If you have any questions, please feel free to submit and issue or ask on
