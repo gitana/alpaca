@@ -141,6 +141,7 @@ the [Alpaca Discussion Forums](http://www.cloudcms.org/forums/categories/alpaca)
 
 + [@cloudcms](http://github.com/cloudcms)
 + [@uzquiano](http://github.com/uzquiano)
++ [@yaworsw](http://www.github.com/yaworsw)
 + [@drq](http://github.com/drq)
 
 
@@ -155,4 +156,4 @@ Thanks for assistance and contributions:
 + [@colegatron](http://www.github.com/colegatron)
 + [@Kirosoft](http://www.github.com/Kirosoft)
 + [@1337](http://www.github.com/1337)
-+ [@yaworsw](http://www.github.com/yaworsw)
+
