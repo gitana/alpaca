@@ -43,7 +43,7 @@
         "fieldSetItemContainer": '<div></div>',
         // Templates for form
         "formFieldsContainer": '<div>{{html this.html}}</div>',
-        "formButtonsContainer": '<div>{{if options.buttons}}{{each(k,v) options.buttons}}<button data-key="${k}" class="alpaca-form-button alpaca-form-button-${k} btn btn-default" {{each(k1,v1) v}}${k1}="${v1}"{{/each}}>${v.value}</button>{{/each}}{{/if}}</div>',
+        "formButtonsContainer": '<div>{{if options.buttons}}{{each(k,v) options.buttons}}<button data-key="${k}" class="alpaca-form-button alpaca-form-button-${k} btn btn-default ${v.class}" {{if !(v.type)}}type="button"{{/if}} {{each(k1,v1) v}}{{if k1 != "class"}}${k1}="${v1}"{{/if}}{{/each}}>${v.value}</button>{{/each}}{{/if}}</div>',
         "form": '<form role="form">{{html Alpaca.fieldTemplate(this,"formFieldsContainer")}}{{html Alpaca.fieldTemplate(this,"formButtonsContainer")}}</form>',
         // Templates for wizard
         "wizardStep" : '<div class="alpaca-clear"></div>',
