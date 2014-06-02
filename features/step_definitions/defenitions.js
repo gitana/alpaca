@@ -12,6 +12,13 @@ var fields = function() {
   });
 
   /**
+   * Just calls the callback's pending method.
+   */
+  this.Then('pending', function(cb) {
+    cb.pending();
+  });
+
+  /**
    * Looks for a number of elements which match a given selector.
    *
    * @param {number} num  The number of tags to look for.

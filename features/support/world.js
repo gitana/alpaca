@@ -1,6 +1,8 @@
 var path      = require('path');
 var webdriver = require('selenium-webdriver');
 
+var _ = require('lodash');
+
 var driver = new webdriver.Builder().
     withCapabilities(webdriver.Capabilities.chrome()).
     build();
@@ -39,6 +41,21 @@ var World = function(cb) {
       });
       var result = driver.executeScript('return (' + fn.toString() + ')(' + args.join(',') + ');');
       return result;
+    };
+
+    /**
+     * Helper function for calling alpaca in the browser.
+     */
+    world.alpaca = function(options, cb) {
+      var p = this.eval(function(o) {
+        $('#fixture').alpaca(o);
+      }, options);
+      p.then(function() {
+        if (cb) {
+          setTimeout(cb, 100);
+        }
+      });
+      return p;
     };
 
     /**

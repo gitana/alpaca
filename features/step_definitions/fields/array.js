@@ -9,16 +9,11 @@ var fields = function() {
    * @param {function} cb      A function to call when complete.
    */
   var createArrayField = function(options, cb) {
-    options = _.extend(options || {}, {
+    this.alpaca(_.extend(options || {}, {
       schema: {
         type: 'array'
       }
-    });
-    this.eval(function(options) {
-      $('#fixture').alpaca(options);
-    }, options).then(function() {
-      setTimeout(cb, 100);
-    });
+    }), cb);
   };
 
   /**

@@ -8,5 +8,5 @@ Feature: Display
     Then I should see 1 "input" tag
 
   Scenario: Display Only Mode
-    Given I am on a page with an any field with the value "Whatever" in display only mode
-    Then I should see "Whatever"
+    Given I am on a page with an any field with the value "Read Only" in display only mode
+    Then I should see "Read Only"
