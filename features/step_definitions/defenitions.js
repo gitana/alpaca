@@ -38,6 +38,26 @@ var fields = function() {
 
   });
 
+  this.Then(/^I should see "([^"]*)"$/, function(val, cb) {
+    this.eval(function(val) {
+      var els = $('*');
+      var i = 0;
+      for (var k in els) {
+        var el = els[k];
+        if ((el.innerHTML || '').replace(/^\s+|\s+$/g, '') == val) {
+          i++;
+        }
+      }
+      return i;
+    }, function(result) {
+      if (result == 1) {
+        cb();
+      } else {
+        cb.fail('Expected to see "' + val + '" one time but saw it ' + result + '  times');
+      }
+    }, val);
+  });
+
 };
 
 module.exports = fields;
