@@ -9,6 +9,7 @@ custom-version.properties
 /node_modules
 /lib
 !/lib/base.js
+!/lib/validate.js
 
 /site/_site
 /site/lib

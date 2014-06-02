@@ -35,6 +35,13 @@ var fields = function() {
     createAnyField.bind(this)({ data: value, view: 'bootstrap-display' }, cb);
   });
 
+  /**
+   * Creates an any field with a max length validator.
+   */
+  this.Given(/^I am on a page with an any field with a max length of (\d+)$/, function(len, cb) {
+    createAnyField.bind(this)({ schema: { maxLength: len, type: 'string' } }, cb);
+  });
+
 };
 
 module.exports = fields;

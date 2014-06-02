@@ -26,8 +26,7 @@
     "moment": "",
     "respond": "",
     "typeahead.js": "",
-    "tooltipsy": "https://github.com/briancray/tooltipsy.git#511901dd0c1815b6092b89b20832449f35b7faae",
-    "validate": "https://raw.githubusercontent.com/kriszyp/json-schema/f56cecb21b176755ad91f58c1ccfa55e5fb93186/lib/validate.js"
+    "tooltipsy": "https://github.com/briancray/tooltipsy.git#511901dd0c1815b6092b89b20832449f35b7faae"
   },
   "resolutions": {
     "bootstrap": ">=3",

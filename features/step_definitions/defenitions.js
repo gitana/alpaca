@@ -77,6 +77,16 @@ var fields = function() {
     });
   });
 
+  /**
+   * Used to set the value of a tag.
+   */
+  this.When(/^I set the value of the (.+) "([^"]*)" tag to "([^"]*)"$/, function(ith, selector, val, cb) {
+    var i = this.ith(ith);
+    this.eval(function(i, selector, val) {
+      $($('#fixture').find(selector)[i]).val(val);
+    }, i, selector, val).then(cb);
+  });
+
 };
 
 module.exports = fields;
