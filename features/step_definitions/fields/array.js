@@ -48,11 +48,22 @@ var fields = function() {
   /**
    * Click on a given button of the the first action bar.
    */
-  this.When(/^I click on the array bar's (\S*) button$/, function(type, cb) {
+  this.When(/^I click on the array bar's (\S+) button$/, function(type, cb) {
     this.eval(function(type) {
       var btn = $($('#fixture').find('[data-alpaca-array-actionbar-action="' + type + '"]')[0]);
       btn.click();
     }, type).then(cb);
+  });
+
+  /**
+   * Click on a given button of a specific action bar.
+   */
+  this.When(/^I click on the array bar's (.+) (\S+) button$/, function(ith, type, cb) {
+    var i = this.ith(ith);
+    this.eval(function(type, i) {
+      var btn = $($('#fixture').find('[data-alpaca-array-actionbar-action="' + type + '"]')[i]);
+      btn.click();
+    }, type, i).then(cb);
   });
 
 };
