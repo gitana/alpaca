@@ -2,8 +2,12 @@ var _ = require('lodash');
 
 var fields = function() {
 
-  this.World = require('../../support/world.js').World;
-
+  /**
+   * Helper to make creating any fields easier.
+   *
+   * @param {Object}   options The options to pass to alpaca.
+   * @param {function} cb      A function to call when complete.
+   */
   var createAnyField = function(options, cb) {
     options = _.extend(options || {}, {
       schema: {
@@ -12,15 +16,21 @@ var fields = function() {
     });
     this.eval(function(options) {
       $('#fixture').alpaca(options);
-    }, function() {
+    }, options).then(function() {
       setTimeout(cb, 100);
-    }, options);
+    });
   };
 
+  /**
+   * Place an any field on the page.
+   */
   this.Given(/^I am on a page with an any field$/, function(cb) {
     createAnyField.bind(this)('', cb);
   });
 
+  /**
+   * Place an any field in display mode with a given value on the page.
+   */
   this.Given(/^I am on a page with an any field with the value "([^"]*)" in display only mode$/, function(value, cb) {
     createAnyField.bind(this)({ data: value, view: 'bootstrap-display' }, cb);
   });

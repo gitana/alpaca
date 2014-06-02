@@ -9,26 +9,57 @@ var World = function(cb) {
 
   var world = {};
 
-  // open ./cucumber.html
   var url = path.join(__dirname, 'cucumber.html');
 
   driver.get('file://' + url).then(function() {
 
     world.driver = driver;
 
+    /**
+     * Clears the #fixture element in the browser.
+     *
+     * @returns {promise} A promise which resolves when the browser is done clearing the element.
+     */
     world.clearFixture = function() {
-      driver.executeScript("$('#fixture').empty()");
+      return driver.executeScript("$('#fixture').empty()");
     };
 
-    world.eval = function(fn, cb) {
-      var args = Array.prototype.slice.call(arguments, 2).map(function(str) {
+
+    /**
+     * Evaluates a given function in a browser.
+     *
+     * @param {function} fn   A function to be evaluated in the browser.
+     * @param {*...}     args Arguments for the function.  Must be JSON serializable.
+     *
+     * @returns {Q.promise} A promise which resolves to the return value of the given function.
+     */
+    world.eval = function(fn /*, args... */) {
+      var args = Array.prototype.slice.call(arguments, 1).map(function(str) {
         return JSON.stringify(str);
       });
       var result = driver.executeScript('return (' + fn.toString() + ')(' + args.join(',') + ');');
-      result.then(function(result) {
-        if (cb) cb(result);
-      });
       return result;
+    };
+
+    /**
+     * Converts a number string like "first"/"second"/"third" to an integer like 0/1/2
+     *
+     * @param {string} ith A string like "first"/"second"/"third"
+     *
+     * @returns {number} The number represented by the given parameter (minus one).
+     */
+    world.ith = function(str) {
+      return [
+        'first',
+        'second',
+        'third',
+        'fourth',
+        'fifth',
+        'sixth',
+        'seventh',
+        'eighth',
+        'ninth'
+      ].indexOf(str.toLowerCase());
     };
 
     cb(world);

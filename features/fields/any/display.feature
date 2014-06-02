@@ -5,7 +5,7 @@ Feature: Display
 
   Scenario: Standard Text Field
     Given I am on a page with an any field
-    Then I should see 1 input tag
+    Then I should see 1 "input" tag
 
   Scenario: Display Only Mode
     Given I am on a page with an any field with the value "Whatever" in display only mode

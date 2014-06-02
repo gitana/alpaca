@@ -2,45 +2,64 @@ var fields = function() {
 
   this.World = require("../support/world.js").World;
 
+  /**
+   * Wait some number of seconds before moving on to the next step.
+   *
+   * @param {number} num The number of seconds to wait.
+   */
   this.Then(/^after (.*) seconds?/, function(num, cb) {
     setTimeout(cb, 1000 * num);
   });
 
-  this.Then(/^I should see (\d+) (.*) tags?$/, function(num, type, cb) {
+  /**
+   * Looks for a number of elements which match a given selector.
+   *
+   * @param {number} num  The number of tags to look for.
+   * @param {string} type The selector to use when looking for tags.
+   */
+  this.Then(/^I should see ([\d\.\,]+) "(.*)" tags?$/, function(num, type, cb) {
+    num = num.replace(/\,/g, '');
 
     this.eval(function(type) {
-      return $(type + ':visible').length;
-    }, function(n) {
+      return $('#fixture').find(type + ':visible').length;
+    }, type).then(function(n) {
       if (n == num) {
         cb();
       } else {
         cb.fail('Expected to see ' + num + ' ' + type + 's but saw ' + n);
       }
-    }, type)
-
+    });
   });
 
-  this.Then(/^the (\S+) (\S+) tag's value should be (.*)$/, function(ith, type, val, cb) {
-
-    var i = (function() {
-      if (ith === 'first') return 0;
-    })();
+  /**
+   * Checks the value of a tag on the screen.
+   *
+   * @param {string} ith  A string representing which tag to check (first, second, etc).
+   * @param {string} type A selector.
+   * @param {string} val  The expected value.
+   */
+  this.Then(/^the (\S+) (\S+) tag's value should be "(.*)"$/, function(ith, type, val, cb) {
+    var i = this.ith(ith);
 
     this.eval(function(type, index) {
       return $($(type)[index]).val();
-    }, function(result) {
+    }, type, i).then(function(result) {
       if (result == val) {
         cb();
       } else {
         cb.fail('The value of the ' + ith + ' ' + type + ' tag was expected to be ' + val + ' but was ' + result);
       }
-    }, type, i);
-
+    });
   });
 
+  /**
+   * Looks for a given string inside a tag exactly once.
+   *
+   * @param {string} val The value being looked for.
+   */
   this.Then(/^I should see "([^"]*)"$/, function(val, cb) {
     this.eval(function(val) {
-      var els = $('*');
+      var els = $('#fixture').find('*').andSelf();
       var i = 0;
       for (var k in els) {
         var el = els[k];
@@ -49,13 +68,13 @@ var fields = function() {
         }
       }
       return i;
-    }, function(result) {
+    }, val).then(function(result) {
       if (result == 1) {
         cb();
       } else {
         cb.fail('Expected to see "' + val + '" one time but saw it ' + result + '  times');
       }
-    }, val);
+    });
   });
 
 };
