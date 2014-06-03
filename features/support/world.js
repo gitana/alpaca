@@ -7,15 +7,39 @@ var driver = new webdriver.Builder().
     withCapabilities(webdriver.Capabilities.chrome()).
     build();
 
-var ucFirst = function (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 var World = function(cb) {
 
   var world = {};
 
   var url = path.join(__dirname, 'cucumber.html');
+
+  /**
+   * Uppercase the first letter in a given string
+   */
+  var ucFirst = world.ucFirst = function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  /**
+   * Converts a number string like "first"/"second"/"third" to an integer like 0/1/2
+   *
+   * @param {string} ith A string like "first"/"second"/"third"
+   *
+   * @returns {number} The number represented by the given parameter (minus one).
+   */
+  world.ith = function(str) {
+    return [
+      'first',
+      'second',
+      'third',
+      'fourth',
+      'fifth',
+      'sixth',
+      'seventh',
+      'eighth',
+      'ninth'
+    ].indexOf(str.toLowerCase());
+  };
 
   driver.get('file://' + url).then(function() {
 
@@ -53,38 +77,20 @@ var World = function(cb) {
       var p = this.eval(function(o) {
         $('#fixture').alpaca(o);
       }, options);
-      p.then(function() {
-        if (cb) {
+      p.then(function(res) {
+        if (typeof cb === 'function') {
           setTimeout(cb, 100);
         }
       });
       return p;
     };
 
+    /**
+     * Make simple fields
+     */
     _.forEach(require('./fields/fields'), function(v, k) {
       world['create' + ucFirst(k) + 'Field'] = v;
     });
-
-    /**
-     * Converts a number string like "first"/"second"/"third" to an integer like 0/1/2
-     *
-     * @param {string} ith A string like "first"/"second"/"third"
-     *
-     * @returns {number} The number represented by the given parameter (minus one).
-     */
-    world.ith = function(str) {
-      return [
-        'first',
-        'second',
-        'third',
-        'fourth',
-        'fifth',
-        'sixth',
-        'seventh',
-        'eighth',
-        'ninth'
-      ].indexOf(str.toLowerCase());
-    };
 
     cb(world);
 

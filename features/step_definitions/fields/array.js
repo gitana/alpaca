@@ -3,20 +3,6 @@ var _ = require('lodash');
 var fields = function() {
 
   /**
-   * Helper to make creating array fields easier.
-   *
-   * @param {Object}   options The options to pass to alpaca.
-   * @param {function} cb      A function to call when complete.
-   */
-  var createArrayField = function(options, cb) {
-    this.alpaca(_.extend(options || {}, {
-      schema: {
-        type: 'array'
-      }
-    }), cb);
-  };
-
-  /**
    * Place an array field on the page with the given data.
    */
   this.Given(/^I am on a page with an array field with the data \[(.*)\]$/, function(data, cb) {
@@ -24,7 +10,7 @@ var fields = function() {
       return str.replace(/\s|"/g, '');
     });
 
-    createArrayField.bind(this)({ data: data }, cb);
+    this.createArrayField({ data: data }, cb);
   });
 
   /**
@@ -37,7 +23,7 @@ var fields = function() {
 
     data = data.slice(0, num);
 
-    createArrayField.bind(this)({ data: data }, cb);
+    this.createArrayField({ data: data }, cb);
   });
 
   /**

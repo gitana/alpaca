@@ -3,6 +3,14 @@ var fields = function() {
   this.World = require("../support/world.js").World;
 
   /**
+   * Basic field creator
+   */
+   this.Given(/^I am on a page with an? (\S+) field(?: with (.+))?$/, function(type, opt, cb) {
+    opt = JSON.parse(opt || '{}');
+    this['create' + this.ucFirst(type) + 'Field'](opt, cb);
+   });
+
+  /**
    * Wait some number of seconds before moving on to the next step.
    *
    * @param {number} num The number of seconds to wait.

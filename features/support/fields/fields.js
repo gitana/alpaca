@@ -18,12 +18,22 @@ var defaults = {
     schema: {
       type: 'boolean'
     }
+  },
+
+  file: {
+    options: {
+      type: 'file'
+    },
+    schema: {
+      type: 'string',
+      format: 'uri'
+    }
   }
 
 };
 
-module.exports = _.mapValues(defaults, function(d, cb) {
-  return function(options) {
+module.exports = _.mapValues(defaults, function(d) {
+  return function(options, cb) {
     _.defaults(options, d);
     this.alpaca(options, cb);
   };
