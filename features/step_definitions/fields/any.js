@@ -20,7 +20,7 @@ var fields = function() {
    * Place an any field on the page.
    */
   this.Given(/^I am on a page with an any field$/, function(cb) {
-    createAnyField.bind(this)('', cb);
+    createAnyField.bind(this)({}, cb);
   });
 
   /**

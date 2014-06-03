@@ -7,6 +7,10 @@ var driver = new webdriver.Builder().
     withCapabilities(webdriver.Capabilities.chrome()).
     build();
 
+var ucFirst = function (string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 var World = function(cb) {
 
   var world = {};
@@ -25,7 +29,6 @@ var World = function(cb) {
     world.clearFixture = function() {
       return driver.executeScript("$('#fixture').empty()");
     };
-
 
     /**
      * Evaluates a given function in a browser.
@@ -57,6 +60,10 @@ var World = function(cb) {
       });
       return p;
     };
+
+    _.forEach(require('./fields/fields'), function(v, k) {
+      world['create' + ucFirst(k) + 'Field'] = v;
+    });
 
     /**
      * Converts a number string like "first"/"second"/"third" to an integer like 0/1/2
