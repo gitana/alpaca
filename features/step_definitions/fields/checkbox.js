@@ -23,8 +23,24 @@ var fields = function() {
     createCheckboxField.bind(this)(undefined, cb);
   });
 
+  /**
+   * Give some json to customize the checkbox field
+   */
   this.Given(/^I am on a page with a checkbox field with (.*)$/, function(json, cb) {
     createCheckboxField.bind(this)(JSON.parse(json), cb);
+  });
+
+  this.Given(/^I am on a page with a checkbox field representing an enum$/, function(cb) {
+    this.alpaca({
+      data: "foo, bar, baz",
+      schema: {
+        type: "string",
+        enum: ["foo", "bar", "bing", "baz"]
+      },
+      options: {
+        type: "checkbox"
+      }
+    }, cb);
   });
 
 };

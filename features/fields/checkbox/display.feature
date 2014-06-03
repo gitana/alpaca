@@ -12,3 +12,9 @@ Feature: Display
   Scenario: Checkbox field with right label
     Given I am on a page with a checkbox field with { "options": { "rightLabel": "Right Label" } }
     Then I should see 1 "input" tag
+
+  Scenario: Checkbox with comma-delimited data
+    Given I am on a page with a checkbox field representing an enum
+    Then I should see 4 "input" tags
+      And I should see 3 "input:checked" tags
+      And I should see 4 "label" tags
