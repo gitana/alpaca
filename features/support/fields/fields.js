@@ -28,6 +28,12 @@ var defaults = {
       type: 'string',
       format: 'uri'
     }
+  },
+
+  hidden: {
+    options: {
+      type: 'hidden'
+    }
   }
 
 };
