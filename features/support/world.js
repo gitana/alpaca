@@ -75,11 +75,14 @@ var World = function(cb) {
      */
     world.alpaca = function(options, cb) {
       var p = this.eval(function(o) {
+        o.postRender = function(field) {
+          window.fields.push(field);
+        };
         $('#fixture').alpaca(o);
       }, options);
       p.then(function(res) {
         if (typeof cb === 'function') {
-          setTimeout(cb, 100);
+          setTimeout(cb, 150);
         }
       });
       return p;

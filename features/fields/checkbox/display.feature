@@ -7,7 +7,7 @@ Feature: Display
     Given I am on a page with a checkbox field
     Then I should see 1 "input[type='checkbox']" tag
       And I should see 0 "input[type='checkbox']:checked" tags
-      And I should see 1 "label" tag
+      And I should see 0 "label" tags
 
   Scenario: Checkbox field with right label
     Given I am on a page with a checkbox field with { "options": { "rightLabel": "Right Label" } }

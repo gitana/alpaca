@@ -34,6 +34,14 @@ var defaults = {
     options: {
       type: 'hidden'
     }
+  },
+
+  number: {
+    data: 0,
+    schema: {
+      minimum: 0,
+      maximum: 100,
+    }
   }
 
 };

@@ -15,7 +15,7 @@ var fields = function() {
    *
    * @param {number} num The number of seconds to wait.
    */
-  this.Then(/^after (.*) seconds?/, function(num, cb) {
+  this.Then(/^(?:after|I wait) (.*) seconds?/, function(num, cb) {
     setTimeout(cb, 1000 * num);
   });
 
@@ -87,7 +87,7 @@ var fields = function() {
       if (result == 1) {
         cb();
       } else {
-        cb.fail('Expected to see "' + val + '" one time but saw it ' + result + '  times');
+        cb.fail('Expected to see "' + val + '" one time but saw it ' + result + ' times');
       }
     });
   });
@@ -100,6 +100,28 @@ var fields = function() {
     this.eval(function(i, selector, val) {
       $($('#fixture').find(selector)[i]).val(val);
     }, i, selector, val).then(cb);
+  });
+
+  /**
+   * Focus control
+   */
+  this.When(/^(?:I )?(un)?focus the (.+) "([^"]*)" tag$/, function(un, ith, selector, cb) {
+    un = un && un.length > 0 ? true : false;
+    var i = this.ith(ith);
+    this.eval(function(i, selector, un) {
+      $($('#fixture').find(selector)[i])[un ? 'blur' : 'focus']();
+    }, i, selector, un).then(cb);
+  });
+
+  /**
+   * Check if forms are valid
+   */
+  this.Then(/^the (?:(.+) )?alpaca field should be (in)?valid$/, function(ith, invalid, cb) {
+    var i     = this.ith(ith || 'first');
+    var valid = invalid && invalid.length > 0 ? false : true;
+    this.eval(function(i, valid) {
+      return valid === window.fields[i].isValid(true);
+    }, i, valid).then(cb);
   });
 
 };
