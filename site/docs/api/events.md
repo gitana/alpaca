@@ -234,8 +234,12 @@ $("#field1").alpaca({
 
 For any field, you can register an event handler by calling ```on``` for the field instance.
 
-In this example, we register a handler for the ```change``` event on the ```title``` field from within
-a ```postHandler``` callback.
+In this example, we register two event handlers.
+
+- The first one listens for the ```change``` event on the  ```title``` field.
+- The second one listens for the ```change``` event on the top level container field.
+
+Both get notified.  When the child field changes its value, it changes the top field's value as well.
 
 <div id="field2"> </div>
 {% raw %}
@@ -259,8 +263,13 @@ $("#field2").alpaca({
     },
     "postRender": function(control) {
         control.childrenByPropertyId["title"].on("change", function() {
-            alert("The value was changed (example #2)");
+            alert("The value was changed (example #2), title = " + this.getValue());
         });
+
+        control.on("change", function() {
+            alert("The value was changed (example #2), data = " + JSON.stringify(this.getValue()));
+        });
+
     }
 });
 </script>
