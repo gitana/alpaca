@@ -2,6 +2,22 @@ var _ = require('lodash');
 
 var fields = function() {
 
+  this.Given(/I am on a page with an alpacaForm with 2 any fields and a length restriction of (\d+)/, function(len, cb) {
+    this.createAnyField({
+      data: { a: '', b: '' },
+      schema: {
+        properties: {
+          a: {
+            maxLength: len
+          },
+          b: {
+            maxLength: len
+          }
+        }
+      }
+    }, cb)
+  });
+
   /**
    * Place an any field in display mode with a given value on the page.
    */

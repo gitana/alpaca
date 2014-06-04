@@ -5,7 +5,7 @@ var beforeHooks = function() {
 
   this.Before(function(cb) {
     this.eval(function() {
-      window.fields = [];
+      window.alpacaForms = [];
     });
     cb();
   });

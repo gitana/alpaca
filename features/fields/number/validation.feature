@@ -6,4 +6,5 @@ Feature: Validation of Input
   Scenario: Number fields should only allow numbers to be entered
     Given I am on a page with a number field
     When I set the value of the first "input" tag to "Not numbers"
-    Then the alpaca field should be invalid
+      And I click on "input"
+    Then the alpaca form should be invalid

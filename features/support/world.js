@@ -70,13 +70,23 @@ var World = function(cb) {
       return result;
     };
 
+    world.click = function(selector) {
+      return driver.findElement(webdriver.By.css(selector))
+        .click();
+    };
+
+    world.type = function(selector, str) {
+      return driver.findElement(webdriver.By.css(selector))
+        .sendKeys(str);
+    };
+
     /**
      * Helper function for calling alpaca in the browser.
      */
     world.alpaca = function(options, cb) {
       var p = this.eval(function(o) {
         o.postRender = function(field) {
-          window.fields.push(field);
+          window.alpacaForms.push(field);
         };
         $('#fixture').alpaca(o);
       }, options);

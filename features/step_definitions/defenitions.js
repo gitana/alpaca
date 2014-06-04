@@ -5,7 +5,7 @@ var fields = function() {
   /**
    * Basic field creator
    */
-   this.Given(/^I am on a page with an? (\S+) field(?: with (.+))?$/, function(type, opt, cb) {
+   this.Given(/^I am on a page with an? (\S+)(?: field)?(?: with (.+))?$/, function(type, opt, cb) {
     opt = JSON.parse(opt || '{}');
     this['create' + this.ucFirst(type) + 'Field'](opt, cb);
    });
@@ -15,7 +15,7 @@ var fields = function() {
    *
    * @param {number} num The number of seconds to wait.
    */
-  this.Then(/^(?:after|I wait) (.*) seconds?/, function(num, cb) {
+  this.Then(/^(?:after|I wait|wait) (.*) seconds?/, function(num, cb) {
     setTimeout(cb, 1000 * num);
   });
 
@@ -116,12 +116,33 @@ var fields = function() {
   /**
    * Check if forms are valid
    */
-  this.Then(/^the (?:(.+) )?alpaca field should be (in)?valid$/, function(ith, invalid, cb) {
-    var i     = this.ith(ith || 'first');
+  this.Then(/^the (?:(.+) )?alpaca form should be (in)?valid$/, function(ith, invalid, cb) {
+    ith = ith || 'first';
+    var i     = this.ith(ith);
     var valid = invalid && invalid.length > 0 ? false : true;
     this.eval(function(i, valid) {
-      return valid === window.fields[i].isValid(true);
-    }, i, valid).then(cb);
+      return window.alpacaForms[i].isValid(true);
+    }, i, valid).then(function(result) {
+      if (result === valid) {
+        cb();
+      } else {
+        cb('Expected ' + ith + ' alpaca to be ' + (valid ? '' : 'in') + 'valid but it was ' + (valid ? 'in' : '') + 'valid');
+      }
+    });
+  });
+
+  this.When(/^(?:I )?click on "([^"]+)"/, function(selector, cb) {
+    this.click(selector).then(function() {
+      cb();
+    });
+  });
+
+  this.When(/^(?:I )?click on "([^"]+)" and type "([^"]+)"/, function(selector, str, cb) {
+    this.type(selector, str).then(function() {
+      setTimeout(function() {
+        cb();
+      }, 1000);
+    });
   });
 
 };

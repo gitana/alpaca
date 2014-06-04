@@ -8,6 +8,10 @@ var defaults = {
     }
   },
 
+  alpacaForm: {
+
+  },
+
   array: {
     schema: {
       type: 'array'
