@@ -79,16 +79,16 @@ var fields = function() {
       var i = 0;
       for (var k in els) {
         var el = els[k];
-        if ((el.innerHTML || '').replace(/^\s+|\s+$/g, '') == val) {
+        if ((el.innerHTML || '').replace(/^\s+|\s+$/g, '').indexOf(val) > -1) {
           i++;
         }
       }
       return i;
     }, val).then(function(result) {
-      if (result == 1) {
+      if (result > 0) {
         cb();
       } else {
-        cb.fail('Expected to see "' + val + '" one time but saw it ' + result + ' times');
+        cb.fail('Expected to see "' + val + '"');
       }
     });
   });
