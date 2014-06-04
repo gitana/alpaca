@@ -29,6 +29,29 @@ var fields = function() {
   /**
    * Looks for a number of elements which match a given selector.
    *
+   * @param {string} atleast  Will have something in it if we're looking for at least x elements.
+   * @param {number} num      The number of tags to look for.
+   * @param {string} type     The selector to use when looking for tags.
+   */
+  this.Then(/^there should be (at least )?([\d\.\,]+) "(.*)" tags?/, function(atleast, num, type, cb) {
+    atleast = atleast && atleast.length > 0 ? true : false;
+    num     = num.replace(/\,/g, '');
+
+    this.eval(function(type) {
+      return $('#fixture').find(type).length;
+    }, type).then(function(res) {
+      if (atleast ? res >= num : res == num) {
+        cb();
+      } else {
+        cb.fail('Expected to have ' + num + ' ' + type + 's but there were ' + res);
+      }
+    });
+  });
+
+  /**
+   * Looks for a number of visible elements which match a given selector.
+   *
+   * @param {string} atleast  Will have something in it if we're looking for at least x elements.
    * @param {number} num  The number of tags to look for.
    * @param {string} type The selector to use when looking for tags.
    */
@@ -79,16 +102,16 @@ var fields = function() {
       var i = 0;
       for (var k in els) {
         var el = els[k];
-        if ((el.innerHTML || '').replace(/^\s+|\s+$/g, '') == val) {
+        if ((el.innerHTML || '').replace(/^\s+|\s+$/g, '').indexOf(val) > -1) {
           i++;
         }
       }
       return i;
     }, val).then(function(result) {
-      if (result == 1) {
+      if (result > 0) {
         cb();
       } else {
-        cb.fail('Expected to see "' + val + '" one time but saw it ' + result + ' times');
+        cb.fail('Expected to see "' + val + '"');
       }
     });
   });

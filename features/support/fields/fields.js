@@ -108,6 +108,28 @@ var defaults = {
       minimum: 0,
       maximum: 100,
     }
+  },
+
+  radio: {
+    data: 'Coffee',
+    options: {
+      label: 'Ice cream',
+      helper: 'Guess my favorite ice cream?'
+    },
+    schema: {
+      enum: ['Vanilla', 'Chocolate', 'Coffee']
+    }
+  },
+
+  select: {
+    data: 'Coffee',
+    options: {
+      label: 'Ice cream',
+      helper: 'Guess my favorite ice cream?'
+    },
+    schema: {
+      enum: ['Vanilla', 'Chocolate', 'Coffee', 'Strawberry', 'Mint']
+    }
   }
 
 };
