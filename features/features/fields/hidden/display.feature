@@ -5,4 +5,4 @@ Feature: Display
 
   Scenario: Hidden Field
     Given I am on a page with a hidden field
-    Then I should see 0 "input[type='file']" tags
+    Then I should see 0 "input" tags
