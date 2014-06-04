@@ -32,16 +32,17 @@ var fields = function() {
    * @param {number} num  The number of tags to look for.
    * @param {string} type The selector to use when looking for tags.
    */
-  this.Then(/^I should see ([\d\.\,]+) "(.*)" tags?/, function(num, type, cb) {
-    num = num.replace(/\,/g, '');
+  this.Then(/^I should see (at least )?([\d\.\,]+) "(.*)" tags?/, function(atleast, num, type, cb) {
+    atleast = atleast && atleast.length > 0 ? true : false;
+    num     = num.replace(/\,/g, '');
 
     this.eval(function(type) {
       return $('#fixture').find(type + ':visible').length;
-    }, type).then(function(n) {
-      if (n == num) {
+    }, type).then(function(res) {
+      if (atleast ? res >= num : res == num) {
         cb();
       } else {
-        cb.fail('Expected to see ' + num + ' ' + type + 's but saw ' + n);
+        cb.fail('Expected to see ' + num + ' ' + type + 's but saw ' + res);
       }
     });
   });
