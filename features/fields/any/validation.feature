@@ -4,10 +4,10 @@ Feature: Validation of Input
   So that I can help the user input the correct data
 
   Scenario: Length validation
-    Given I am on a page with an alpacaForm with 2 any fields and a length restriction of 5
-    Then I should see 2 "input" tags
-    When I click on "input[name='a']" and type "Something longer than 5 characters"
-      And click on "input[name='b']"
+    Given I am on a page with an any field that has a max length of 5
+    Then I should see 1 "input" tag
+    When I click on "input" and type "Something longer than 5 characters"
+      And click on "#click-off"
     Then the alpaca form should be invalid
 
   Scenario: Empty non required should be valid

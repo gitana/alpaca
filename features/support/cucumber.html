@@ -17,8 +17,42 @@
     <script src="../../lib/jquery-maskedinput/dist/jquery.maskedinput.min.js"></script>
     <script src="../../lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../../build/alpaca/bootstrap/alpaca.js"></script>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+        }
+        body > footer {
+            bottom: 0;
+            position: fixed;
+        }
+        body {
+            background: #999;
+        }
+        #fixture-container {
+            margin-top: 100px;
+            padding-top: 10px;
+            background: white;
+        }
+        footer h1 {
+            margin-top: 0;
+        }
+    </style>
   </head>
   <body>
-    <div id="fixture"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-push-3" id="fixture-container">
+                <div id="fixture"></div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-10"><h1>Alpaca Cucumber Tests</h1></div>
+                <div class="col-xs-1"><input type="text" id="click-off" class="form-control"></div>
+            </div>
+        </div>
+    </footer>
   </body>
 </html>
