@@ -4,7 +4,7 @@ Feature: Validation of Input
   So that I can help the user input the correct data
 
   Scenario: Number fields should only allow numbers to be entered
-    Given I am on a page with a number field
-    When I set the value of the first "input" tag to "Not numbers"
-      And I click on "input"
+    Given I am on a page with an alpacaForm with two number fields
+    When I click on "input[name='a']" and type "Not numbers"
+      And I click on "input[name='b']"
     Then the alpaca form should be invalid
