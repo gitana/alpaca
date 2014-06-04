@@ -34,6 +34,68 @@ var defaults = {
     }
   },
 
+  grid: {
+    data: [
+      {
+        sku: 'sku1',
+        name: 'name1',
+        price: 100,
+        quantity: 10,
+        total: 1000
+      },
+      {
+        sku: 'sku2',
+        name: 'name2',
+        price: 100,
+        quantity: 10,
+        total: 1000
+      }
+    ],
+    schema: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          sku: {
+            type: 'string'
+          },
+          name: {
+            type: 'string'
+          },
+          price: {
+            type: 'number'
+          },
+          quantity: {
+            type: 'number'
+          },
+          total: {
+            type: 'number'
+          }
+        }
+      }
+    },
+    options: {
+      type: 'grid',
+      fields: {
+        sky: {
+            label: 'SKU'
+        },
+        name: {
+            label: 'Name'
+        },
+        price: {
+            label: 'Price'
+        },
+        quantity: {
+            label: 'Quantity'
+        },
+        total: {
+            label: 'Total'
+        }
+      }
+    }
+  },
+
   hidden: {
     options: {
       type: 'hidden'

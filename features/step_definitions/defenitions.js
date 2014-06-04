@@ -32,7 +32,7 @@ var fields = function() {
    * @param {number} num  The number of tags to look for.
    * @param {string} type The selector to use when looking for tags.
    */
-  this.Then(/^I should see ([\d\.\,]+) "(.*)" tags?$/, function(num, type, cb) {
+  this.Then(/^I should see ([\d\.\,]+) "(.*)" tags?/, function(num, type, cb) {
     num = num.replace(/\,/g, '');
 
     this.eval(function(type) {
