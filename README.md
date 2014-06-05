@@ -1,4 +1,4 @@
-# Alpaca - Easy Forms for jQuery #
+# Alpaca - Easy Forms for jQuery
 
 Alpaca is the Easy Forms Engine for jQuery and Twitter Bootstrap.
 
@@ -46,85 +46,50 @@ In the spirit of open source software development, Alpaca always encourages comm
 
 ## Building Alpaca
 
-In order to build Alpaca, you need to have [Apache Ant](http://ant.apache.org/) installed on your machine.  Ant executes a build script
-(`build.xml`) to assemble the Alpaca build products.
+To build Alpaca, you will need to have Node.js and Gulp installed.  If you're new to Node.js or Gulp, you could
+check out this writeup - http://travismaynard.com/writing/getting-started-with-gulp.  If you want to build the
+Alpaca web site, you'll also need to install Jekyll.
 
-First, clone a copy of the Alpaca git repo by running:
+The first thing you should do is sync the code:
 
-```
-git clone git://github.com/gitana/alpaca.git
-```
+    git clone https://github.com/gitana/alpaca.git
 
-Make sure you have Apache Ant installed by testing:
+### Alpaca
 
-```
-ant -version
-```
+Building Alpaca is pretty easy.  Just run:
 
-You can then build Alpaca by running:
+    npm install
 
-```
-ant clean package
-```
+And then:
 
-The built version of Alpaca will be put in the `build/package` subdirectory.  This directory contains the Alpaca web site
-(the same site that is deployed to [http://www.alpacajs.org](http://www.alpacajs.org)) along with all of the build
-products.  These build products include:
+    gulp default
 
-### Alpaca JavaScript and CSS
+This will build Alpaca and place the distribution assets in: ```build/alpaca```
 
-The assets you need to reference for the built version of Alpaca are these:
+### Alpaca Web Site
 
- * /js/alpaca.js
- * /css
+To build the Alpaca web site, just run:
 
-The `alpaca.js` file contains all of the basic and advanced fields.  If you only want the basic fields, you can reference the
-`alpaca-core.js` file instead.
+    gulp default web
 
-### Alpaca ZIP distributions
+This will build Alpaca and start it up on ```http://localhost:9999```.
 
-The build also produces two ZIP files which contain all of the assets.
+## Alpaca Distributions
 
- * /downloads/alpaca.zip
- * /downloads/alpaca-basic.zip (just the basic fields)
+The build produces four sets of assets and they are placed in:
 
-### Alpaca Components
+- ```build/alpaca/web``` (for basic web forms and layout)
+- ```build/alpaca/bootstrap``` (for bootstrap enabled forms and layout)
+- ```build/alpaca/jqueryui``` (for jQuery UI enabled forms and layout)
+- ```build/alpaca/jquerymobile``` (for jQuery Mobile enabled forms and layout)
 
-If you're using AMD to include Alpaca, the AMD files are located in:
+Each directory contains a JS file and a CSS file for its respective build.
 
- * /components/alpaca (all fields)
- * /components/alpaca-core (just the basic fields)
- * /components/alpaca-extra (just the advanced fields)
+Each JS file is UMD ready and will work within both an AMD and CommonJS container.
 
 ## Running the Unit Tests
 
-The unit tests are written using QUnit and are located in the `build/package/tests` directory.  
-You will need to run them using your web browser but in order to do that, you first need to mount 
-the `build/package` directory into your web server.  The Ant script provides a helper target to
-let you do this.
-
-First, create a file called `custom-local.properties` in the root of your Alpaca project.  In it, define a single
-property that points to the destination where you would like your Alpaca build directory to be copied.  This should be
-a virtual directory under your web server.
-
-Here is an example:
-
-```
-local.docroot.basepath=/var/www
-```
-
-Then, run the following:
-
-```
-ant full
-```
-
-This will build Alpaca and copy the resulting assets to `/var/www/alpaca`.  If you've set up `/var/www` as the docroot
-for your web server, you can run the QUnit tests by opening a web browser and pointing to:
-
-```
-http://localhost/alpaca/tests/index.html
-```
+TODO
 
 ## Questions?
 
@@ -135,6 +100,7 @@ the [Alpaca Discussion Forums](http://www.cloudcms.org/forums/categories/alpaca)
 
 + [@cloudcms](http://github.com/cloudcms)
 + [@uzquiano](http://github.com/uzquiano)
++ [@yaworsk](http://github.com/yaworsk)
 + [@drq](http://github.com/drq)
 
 

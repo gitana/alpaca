@@ -1,7 +1,7 @@
 {
   "name": "alpaca",
   "dependencies": {
-    "ace": "",
+    "ace-builds": "",
     "js-beautify": "",
     "bootstrap": ">=3",
     "bootstrap-multiselect": "",

@@ -1364,7 +1364,7 @@
                     _this.trigger("mouseout", e);
                 });
 
-                // register general event handlers through options
+                // legacy support - specify events via options.onField<FieldName> = fn
                 $.each(this.options, function(key, func) {
 
                     if (Alpaca.startsWith(key,'onField') && Alpaca.isFunction(func))
@@ -1375,6 +1375,20 @@
                         });
                     }
                 });
+
+                // future support - specify events via options.events.<fieldName> = fn
+                if (this.options && this.options.events)
+                {
+                    $.each(this.options.events, function(event, func) {
+
+                        if (Alpaca.isFunction(func))
+                        {
+                            _this.field.on(event, function(e) {
+                                func.call(_this,e);
+                            });
+                        }
+                    });
+                }
             }
         },
 
