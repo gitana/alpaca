@@ -130,6 +130,12 @@ var defaults = {
     schema: {
       enum: ['Vanilla', 'Chocolate', 'Coffee', 'Strawberry', 'Mint']
     }
+  },
+
+  textarea: {
+    options: {
+      type: 'textarea'
+    }
   }
 
 };
