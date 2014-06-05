@@ -11,7 +11,7 @@ Alpaca comes pre-configured to work nicely with the following web frameworks:
 - jQuery UI
 - jQuery Mobile
 - Barebones (empty CSS)
-     
+
 The Alpaca library is pre-packaged with controls, wizards, layouts, I18N support and pluggable template engines. We ship with support for jQuery Tmpl, EJS and Handlebars. Documentation and API information is provided so that you can extend Alpaca as you see fit.
 
 The philosophy behind Alpaca is that you should design your forms once and have them work on lots of different devices and UI engines without recoding. Here is a sample registration form written once and rendered using four different approaches:
@@ -93,14 +93,14 @@ TODO
 
 ## Questions?
 
-If you have any questions, please feel free to submit and issue or ask on 
+If you have any questions, please feel free to submit and issue or ask on
 the [Alpaca Discussion Forums](http://www.cloudcms.org/forums/categories/alpaca).
 
 ## Authors
 
 + [@cloudcms](http://github.com/cloudcms)
 + [@uzquiano](http://github.com/uzquiano)
-+ [@yaworsk](http://github.com/yaworsk)
++ [@yaworsw](http://github.com/yaworsw)
 + [@drq](http://github.com/drq)
 
 
