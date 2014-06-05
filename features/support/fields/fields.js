@@ -2,14 +2,20 @@ var _ = require('lodash');
 
 var defaults = {
 
-  any: {
-    schema: {
-      type: 'any'
+  address: {
+    options: {
+      type: 'address'
     }
   },
 
   alpacaForm: {
 
+  },
+
+  any: {
+    schema: {
+      type: 'any'
+    }
   },
 
   array: {

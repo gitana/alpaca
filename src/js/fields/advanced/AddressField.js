@@ -22,6 +22,12 @@
         {
             this.base();
 
+            if (this.data === undefined) {
+                this.data = {
+                    street: ['', '']
+                };
+            }
+
             this.schema = {
                 "title": "Home Address",
                 "type": "object",
