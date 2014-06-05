@@ -136,6 +136,10 @@ var defaults = {
     options: {
       type: 'textarea'
     }
+  },
+
+  text: {
+
   }
 
 };
