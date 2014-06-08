@@ -37,6 +37,10 @@
 
             if (!this.options.timeFormatRegex) {
                 this.options.timeFormatRegex = /^(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])$/;
+            } else if (typeof(this.options.timeFormatRegex) === "string") {
+                var flags = this.options.timeFormatRegex.replace(/.*\/([gimy]*)$/, '$1'),
+                    pattern = this.options.timeFormatRegex.replace(new RegExp('^/(.*?)/'+flags+'$'), '$1');
+                this.options.timeFormatRegex = new RegExp(pattern, flags);
             }
 
             if (Alpaca.isEmpty(this.options.maskString)) {
@@ -93,7 +97,7 @@
          */
         _validateTimeFormat: function() {
             var value = this.field.val();
-            if (!this.schema.required && (Alpaca.isValEmpty(value) || value == "__:__:__")) {
+            if (!this.schema.required && (Alpaca.isValEmpty(value) || value == this.options.maskString.replace(/9/g, '_'))) {
                 return true;
             }
             //valitime the time without the help of timepicker.parseTime
