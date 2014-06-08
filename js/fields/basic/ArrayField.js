@@ -178,7 +178,7 @@
             // if we're empty and we're also not required, then we hand back undefined
             if (this.children.length === 0 && !this.schema.required)
             {
-                return;
+                return [];
             }
 
             // otherwise, construct an array and had it back
