@@ -77,8 +77,8 @@ var fields = function() {
    * @param {string} type A selector.
    * @param {string} val  The expected value.
    */
-  this.Then(/^the (\S+) (\S+) tag's value should be "(.*)"$/, function(ith, type, val, cb) {
-    var i = this.ith(ith);
+  this.Then(/^the (?:(\S+) )?"(\S+)" tag's value should be "(.*)"$/, function(ith, type, val, cb) {
+    var i = this.ith(ith || 'first');
 
     this.eval(function(type, index) {
       return $($(type)[index]).val();

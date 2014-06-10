@@ -51,6 +51,12 @@ var defaults = {
     }
   },
 
+  currency: {
+    options: {
+      type: 'currency'
+    }
+  },
+
   file: {
     options: {
       type: 'file'
