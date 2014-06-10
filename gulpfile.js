@@ -577,3 +577,14 @@ gulp.task('default', ['templates', 'scripts', 'styles', 'refreshWeb']);
 gulp.task('default', function(callback) {
     return runSequence(['templates', 'scripts'], 'styles', 'refreshWeb', callback);
 });
+
+gulp.task('cucumber', function(cb) {
+    require('child_process').exec('./node_modules/.bin/cucumber.js -r features', function(err, stdout, stderr) {
+        if (err) {
+            console.log('Error: ' + err);
+        } else {
+            console.log(stdout);
+            console.error(stderr);
+        }
+    });
+});
