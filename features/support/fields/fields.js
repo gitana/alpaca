@@ -45,6 +45,12 @@ var defaults = {
     }
   },
 
+  country: {
+    options: {
+      type: 'country'
+    }
+  },
+
   file: {
     options: {
       type: 'file'
