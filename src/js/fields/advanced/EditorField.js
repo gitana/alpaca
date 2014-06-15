@@ -39,7 +39,16 @@
             {
                 if (self.options.aceMode === "ace/mode/json")
                 {
-                    this.data = JSON.stringify(JSON.parse(this.data), null, "    ");
+                    if (Alpaca.isObject(this.data))
+                    {
+                        // convert to string to format it
+                        this.data = JSON.stringify(this.data, null, "    ");
+                    }
+                    else if (Alpaca.isString(this.data))
+                    {
+                        // convert to object and then back to string to format it
+                        this.data = JSON.stringify(JSON.parse(this.data), null, "    ");
+                    }
                 }
 
                 if (self.options.aceMode === "ace/mode/html")
@@ -310,6 +319,12 @@
 
             if (this.editor)
             {
+                if (self.schema.type == "object" && Alpaca.isObject(value))
+                {
+                    // format
+                    value = JSON.stringify(value, null, "    ");
+                }
+
                 this.editor.setValue(value);
                 self.editor.clearSelection();
             }
@@ -328,6 +343,19 @@
             if (this.editor)
             {
                 value = this.editor.getValue();
+            }
+
+            // if expected type back is "object", we do the conversion
+            if (this.schema.type == "object")
+            {
+                if (!value)
+                {
+                    value = {};
+                }
+                else
+                {
+                    value = JSON.parse(value);
+                }
             }
 
             return value;
