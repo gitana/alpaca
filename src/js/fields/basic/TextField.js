@@ -244,7 +244,7 @@
 
             if (this.control && this.control.length > 0)
             {
-                value = this.control.val();
+                value = this._getControlVal();
             }
             else
             {

@@ -36,7 +36,7 @@
         {
             if (this.control && this.control.length > 0)
             {
-                var val = this.control.val();
+                var val = this._getControlVal();
                 if (!val)
                 {
                     val = this.data;

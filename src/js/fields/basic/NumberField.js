@@ -19,7 +19,7 @@
          */
         getValue: function()
         {
-            var textValue = this.control.val();
+            var textValue = this._getControlVal();
 
             if (Alpaca.isValEmpty(textValue))
             {

@@ -12,7 +12,58 @@
          */
         onConstruct: function()
         {
+            var _this = this;
+
             this.isControlField = true;
+
+            // helper method for getting val() from the control
+            // handles conversion to the correct scalar type
+            this._getControlVal = function() {
+                var val = null;
+
+                if (this.control)
+                {
+                    val = $(this.control).val();
+
+                    if (val)
+                    {
+                        if (Alpaca.isString(val))
+                        {
+                            if (_this.schema.type == "number")
+                            {
+                                val = parseInt(val, 10);
+                            }
+                            else if (_this.schema.type == "boolean")
+                            {
+                                if (val == "" || val.toLowerCase() == "false") {
+                                    val = false;
+                                }
+                                else {
+                                    val = true;
+                                }
+                            }
+                        }
+                        else if (Alpaca.isNumber(val))
+                        {
+                            if (_this.schema.type == "string")
+                            {
+                                val = "" + val;
+                            }
+                            else if (_this.schema.type == "boolean")
+                            {
+                                if (val == -1 || val == 0) {
+                                    val = false;
+                                }
+                                else {
+                                    val = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return val;
+            };
         },
 
         /**
