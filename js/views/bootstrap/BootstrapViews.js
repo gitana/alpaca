@@ -148,7 +148,8 @@
 
         // error fields get the "has-error" class
         "error" : function(targetDiv) {
-            targetDiv.addClass('has-error');
+            if (!targetDiv.is("fieldset.alpaca-field-optional"))
+                targetDiv.addClass('has-error');
 
             /*
             $(targetDiv).popover({
