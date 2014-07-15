@@ -25,8 +25,7 @@
     "jwysiwyg": "",
     "moment": "",
     "respond": "",
-    "typeahead.js": "",
-    "tooltipsy": "https://github.com/briancray/tooltipsy.git#511901dd0c1815b6092b89b20832449f35b7faae"
+    "typeahead.js": ""
   },
   "resolutions": {
     "bootstrap": ">=3",
