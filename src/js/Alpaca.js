@@ -187,7 +187,7 @@
                 // force hideInitValidationError to false for field and all children
                 if (field.view.type !== 'view')
                 {
-                    Alpaca.fieldApplyChildren(field, function(field) {
+                    Alpaca.fieldApplyFieldAndChildren(field, function(field) {
 
                         // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
                         field.hideInitValidationError = false;
@@ -1643,7 +1643,7 @@
                             // force hideInitValidationError to false for field and all children
                             if (field.view.type !== 'view')
                             {
-                                Alpaca.fieldApplyChildren(field, function(field) {
+                                Alpaca.fieldApplyFieldAndChildren(field, function(field) {
 
                                     // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
                                     field.hideInitValidationError = false;
@@ -2787,10 +2787,14 @@
      * This hands back an array of entries with the child field first and continuing up the parent chain.
      * The last entry in the array is the top most parent field.
      *
+     * The callback is fired with the assembled context, allowing for asynchronous validation to run.
+     *
      * @param field
+     * @param callback
+     *
      * @returns {Array}
      */
-    Alpaca.compileValidationContext = function(field)
+    Alpaca.compileValidationContext = function(field, callback)
     {
         // walk up the parent tree until we find the top-most control
         // this serves as our starting point for downward validation
@@ -2822,10 +2826,11 @@
         var context = [];
 
         // internal method that sets validation for a single field
-        var f = function(chain, context)
+        var f = function(chain, context, done)
         {
             if (!chain || chain.length === 0)
             {
+                done();
                 return;
             }
 
@@ -2845,59 +2850,76 @@
 
             entry.before = beforeStatus;
 
+            var ourselvesHandler = function(current, entry, weFinished)
+            {
+                var previouslyValidated = current._previouslyValidated;
+
+                // now run the validation for just this one field
+                current.validate();
+
+                // apply custom validation (if exists) for just this one field
+                // if it doesn't exist, this just fires the callback
+                current._validateCustomValidator(function() {
+
+                    // AFTER field validation state
+                    var afterStatus = current.isValid();
+                    if (current.isContainer())
+                    {
+                        afterStatus = current.isValid(true);
+                    }
+
+                    entry.after = afterStatus;
+
+                    // if this field's validation status flipped, fire triggers
+                    entry.validated = false;
+                    entry.invalidated = false;
+                    if (!beforeStatus && afterStatus)
+                    {
+                        entry.validated = true;
+                    }
+                    else if (beforeStatus && !afterStatus)
+                    {
+                        entry.invalidated = true;
+                    }
+                    // special case for fields that have not yet been validated
+                    else if (!previouslyValidated && !afterStatus)
+                    {
+                        entry.invalidated = true;
+                    }
+
+                    entry.container = current.isContainer();
+                    entry.valid = entry.after;
+
+                    context.push(entry);
+
+                    weFinished();
+                });
+            };
+
             // step down into chain
+            // we do children before ourselves
             if (chain.length > 1)
             {
                 // copy array
                 var childChain = chain.slice(0);
                 childChain.shift();
-                f(childChain, context);
+                f(childChain, context, function() {
+                    ourselvesHandler(current, entry, function() {
+                        done();
+                    });
+                });
             }
-
-            var previouslyValidated = current._previouslyValidated;
-
-            // now run the validation for just this one field
-            current.validate();
-
-            // apply custom validation (if exists) for just this one field
-            current._validateCustomValidator(function() {
-
-                // AFTER field validation state
-                var afterStatus = current.isValid();
-                if (current.isContainer())
-                {
-                    afterStatus = current.isValid(true);
-                }
-
-                entry.after = afterStatus;
-
-                // if this field's validation status flipped, fire triggers
-                entry.validated = false;
-                entry.invalidated = false;
-                if (!beforeStatus && afterStatus)
-                {
-                    entry.validated = true;
-                }
-                else if (beforeStatus && !afterStatus)
-                {
-                    entry.invalidated = true;
-                }
-                // special case for fields that have not yet been validated
-                else if (!previouslyValidated && !afterStatus)
-                {
-                    entry.invalidated = true;
-                }
-
-                entry.container = current.isContainer();
-                entry.valid = entry.after;
-
-                context.push(entry);
-            });
+            else
+            {
+                ourselvesHandler(current, entry, function() {
+                    done();
+                })
+            }
         };
 
-        f(chain, context);
-
-        return context;
+        f(chain, context, function() {
+            callback(context);
+        });
     };
 
     Alpaca.updateValidationStateForContext = function(view, context)
@@ -2991,7 +3013,7 @@
     };
 
     /**
-     * Runs the given function over the field and all of its children recursively.
+     * Runs the given function over the field's children recursively.
      *
      * @param field
      * @param fn
@@ -3011,6 +3033,19 @@
         };
 
         f(field, fn);
+    };
+
+    /**
+     * Runs the given function over the field and all of its children recursively.
+     *
+     * @param field
+     * @param fn
+     */
+    Alpaca.fieldApplyFieldAndChildren = function(field, fn)
+    {
+        fn(field);
+
+        Alpaca.fieldApplyChildren(field, fn);
     };
 
     /**

@@ -60,3 +60,108 @@ and the ```removeMessages``` callback removes all messages for a field.
 Note that if you apply your own callbacks, you will also likely want to override the ```alpaca-message``` class so
 that it doesn't display (i.e. set ```display:none```).
 
+
+## Custom validation by Field
+Validation logic can also be applied per field.  Within the options for the field, you can supply a <code>validator</code>
+property that provides a function with the following signature:
+
+```
+   function(control, callback) {}
+```
+
+The validation function is asynchronous and uses a callback so that you could fire off to a web service to perform
+validation logic.  The callback should be fired with an object like this:
+
+```
+{
+   "status": true | false,
+   "message": "<optional message>"
+}
+```
+
+Here is an example of a custom validator for a single text field:
+
+<div id="field1"> </div>
+{% raw %}
+<script type="text/javascript" id="field1-script">
+$("#field1").alpaca({
+    "schema": {
+        "type": "string",
+        "title": "Enter some text but not 'test'"
+    },
+    "options": {
+        "validator": function(control, callback) {
+           var value = control.getValue();
+           if (value == "test") {
+              callback({
+                 "status": false,
+                 "message": "The value of 'test' is invalid"
+              });
+           }
+           else {
+              callback({
+                 "status": true
+              });
+           }
+        }
+    }
+});
+</script>
+{% endraw %}
+
+
+And here is a more complex example with multiple fields and cross-field value dependencies:
+
+<div id="field2"> </div>
+{% raw %}
+<script type="text/javascript" id="field2-script">
+$("#field2").alpaca({
+    "schema": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string"
+            },
+            "age": {
+                "type": "number",
+                "minimum": 0
+            },
+            "beverage": {
+                "type": "string",
+                "enum": ["water", "soda", "beer", "wine"]
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "name": {
+                "label": "Name"
+            },
+            "age": {
+                "label": "Age",
+                "type": "integer",
+                "slider": true
+            },
+            "beverage": {
+                "label": "Choice of Beverage",
+                "slider": true,
+                "validator": function(control, callback) {
+                    var value = control.getValue();
+                    var age = control.getParent().childrenByPropertyId["age"].getValue();
+                    if ((value == "beer" || value == "wine") && age < 21) {
+                        callback({
+                            "status": false,
+                            "message": "You are too young to drink alcohol!"
+                        });
+                        return;
+                    }
+                    callback({
+                        "status": true
+                    });
+                }
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
