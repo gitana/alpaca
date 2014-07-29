@@ -44,7 +44,9 @@
                     {
                         _this.options.multiple = true;
                     }
-                    else if (typeof(_this.schema["enum"]) != "undefined")
+                    else if (typeof(_this.schema["enum"]) != "undefined" || 
+			     (typeof(_this.schema.items) != "undefined" &&
+                             typeof(_this.schema.items["enum"]) != "undefined"))
                     {
                         _this.options.multiple = true;
                     }
@@ -57,7 +59,17 @@
 
                         var text = value;
 
-                        if (_this.options.optionLabels)
+                        if (_this.options.fields && _this.options.fields.item && _this.options.fields.item.optionsLabels)
+                        {
+                            if (!Alpaca.isEmpty(_this.options.fields.item.optionsLabels[index]))
+                            {
+                                text = _this.options.fields.item.optionsLabels[index];
+                            }
+                            else if (!Alpaca.isEmpty(_this.options.fields.item.optionsLabels[value]))
+                            {
+                                text = _this.options.fields.item.optionsLabels[value];
+                            }
+                        }else if (_this.options.optionLabels)
                         {
                             if (!Alpaca.isEmpty(_this.options.optionLabels[index]))
                             {
@@ -86,10 +98,14 @@
             {
                 var array = [];
 
-                if (this.schema && this.schema["enum"])
+		//look for enum as per typical JSON schema specifications
+                if (this.schema && this.schema.items && this.schema.items["enum"])
                 {
-                    array = this.schema["enum"];
-                }
+                    array = this.schema.items["enum"];
+                }else if(this.schema && this.schema["enum"]){
+		//the simplified aplaca way
+                    array = this.schema["enum"];			
+		}
 
                 return array;
             },
@@ -333,8 +349,8 @@
                 {
                     val = val.split(",");
                 }
-
-                return Alpaca.anyEquality(val, self.schema["enum"]);
+		
+                return Alpaca.anyEquality(val, self.getEnum());
             },
 
             /**
