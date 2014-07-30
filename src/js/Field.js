@@ -882,151 +882,126 @@
          *
          * If told to check children, then all children of the container field will be refreshed as well.
          *
-         * @param {Boolean} children whether to refresh children
+         * @param {Boolean} validateChildren whether to refresh validation for children
+         * @param [Function] optional callback when validation completes
          */
-        refreshValidationState: function(children)
+        refreshValidationState: function(validateChildren, cb)
         {
             var self = this;
 
-            if (children)
+            // run validation context compilation for ourselves and optionally any children
+            var contexts = [];
+            var functions = [];
+
+            // constructs an async function to validate context for a given field
+            var functionBuilder = function(field, contexts)
             {
-                // counts the number of total children in the sub-tree
-                var countValidatingParticipants = function(field)
+                return function(callback)
                 {
-                    // just ourselves
-                    var count = 1;
-
-                    // if the field has children, go depth first
-                    if (field.children && field.children.length > 0)
-                    {
-                        for (var i = 0; i < field.children.length; i++)
-                        {
-                            if (field.children[i].isValidationParticipant())
-                            {
-                                count = count + countValidatingParticipants(field.children[i]);
-                            }
-                        }
-                    }
-
-                    return count;
-                };
-
-                // computes validation context
-                var f = function(field, contexts, totalCount, count, callback)
-                {
-                    count = count + 1;
-
-                    // if the field has children, go depth first
-                    if (field.children && field.children.length > 0)
-                    {
-                        for (var i = 0; i < field.children.length; i++)
-                        {
-                            if (field.children[i].isValidationParticipant())
-                            {
-                                f(field.children[i], contexts, totalCount, count, contexts);
-                            }
-                        }
-                    }
-
-                    //if (typeof(contexts) === "object")
-                    //{
-                        // compile the validation context for this field
-                        Alpaca.compileValidationContext(field, function(context) {
-                            contexts.push(context);
-                        });
-                    //}
-
-                    if (count == totalCount)
-                    {
-                        // all done
+                    Alpaca.compileValidationContext(field, function(context) {
+                        contexts.push(context);
                         callback();
-                        return;
-                    }
-
-                    return contexts;
+                    });
                 };
+            };
 
-                // run again to collect contexts (nothing flips)
-                var totalCount = countValidatingParticipants(this);
-                var contexts = [];
-                f(this, contexts, totalCount, 0, function() {
-
-                    // merge
-                    var mergedMap = {};
-                    var mergedContext = [];
-                    for (var i = 0; i < contexts.length; i++)
+            // wrap up everything we need to do into async callback methods
+            if (validateChildren)
+            {
+                // depth first crawl across all children
+                var crawl = function(field, contexts)
+                {
+                    if (field.isValidationParticipant())
                     {
-                        var context = contexts[i];
-
-                        // NOTE: context is already in order [child, parent, ...]
-
-                        var mIndex = mergedContext.length;
-
-                        // walk forward
-                        for (var j = 0; j < context.length; j++)
+                        // if the field has children, go depth first
+                        if (field.children && field.children.length > 0)
                         {
-                            var entry = context[j];
-
-                            var existing = mergedMap[entry.id];
-                            if (!existing)
+                            for (var i = 0; i < field.children.length; i++)
                             {
-                                // just add to end
-                                var newEntry = {};
-                                newEntry.id = entry.id;
-                                newEntry.path = entry.path;
-                                newEntry.domEl = entry.domEl;
-                                newEntry.field = entry.field;
-                                newEntry.validated = entry.validated;
-                                newEntry.invalidated = entry.invalidated;
-                                newEntry.valid = entry.valid;
-                                mergedContext.splice(mIndex, 0, newEntry);
-
-                                // mark in map
-                                mergedMap[newEntry.id] = newEntry;
+                                crawl(field.children[i], contexts);
                             }
-                            else
-                            {
-                                if (entry.validated && !existing.invalidated)
-                                {
-                                    existing.validated = true;
-                                    existing.invalidated = false;
-                                    existing.valid = entry.valid;
-                                }
+                        }
 
-                                if (entry.invalidated)
-                                {
-                                    existing.invalidated = true;
-                                    existing.validated = false;
-                                    existing.valid = entry.valid;
-                                }
+                        functions.push(functionBuilder(field, contexts));
+                    }
+                };
+                crawl(this, contexts);
+            }
+
+            // add ourselves in last
+            functions.push(functionBuilder(this, contexts));
+
+            // now run all of the functions
+            Alpaca.series(functions, function(err) {
+
+                // contexts now contains all of the validation results
+
+                // merge all contexts into a single validation context for this field
+                var mergedMap = {};
+                var mergedContext = [];
+                for (var i = 0; i < contexts.length; i++)
+                {
+                    var context = contexts[i];
+
+                    // NOTE: context is already in order [child, parent, ...]
+
+                    var mIndex = mergedContext.length;
+
+                    // walk forward
+                    for (var j = 0; j < context.length; j++)
+                    {
+                        var entry = context[j];
+
+                        var existing = mergedMap[entry.id];
+                        if (!existing)
+                        {
+                            // just add to end
+                            var newEntry = {};
+                            newEntry.id = entry.id;
+                            newEntry.path = entry.path;
+                            newEntry.domEl = entry.domEl;
+                            newEntry.field = entry.field;
+                            newEntry.validated = entry.validated;
+                            newEntry.invalidated = entry.invalidated;
+                            newEntry.valid = entry.valid;
+                            mergedContext.splice(mIndex, 0, newEntry);
+
+                            // mark in map
+                            mergedMap[newEntry.id] = newEntry;
+                        }
+                        else
+                        {
+                            if (entry.validated && !existing.invalidated)
+                            {
+                                existing.validated = true;
+                                existing.invalidated = false;
+                                existing.valid = entry.valid;
+                            }
+
+                            if (entry.invalidated)
+                            {
+                                existing.invalidated = true;
+                                existing.validated = false;
+                                existing.valid = entry.valid;
                             }
                         }
                     }
+                }
 
-                    // now reverse it so that context is normalized with child fields first
-                    mergedContext.reverse();
+                // now reverse it so that context is normalized with child fields first
+                mergedContext.reverse();
 
-                    // update validation state
-                    if (!self.hideInitValidationError)
-                    {
-                        Alpaca.updateValidationStateForContext(self.view, mergedContext);
-                    }
-                });
-            }
-            else
-            {
-                // just ourselves
+                // update validation state
+                if (!self.hideInitValidationError)
+                {
+                    Alpaca.updateValidationStateForContext(self.view, mergedContext);
+                }
 
-                // compile the validation context for the field
-                Alpaca.compileValidationContext(this, function(context2) {
-
-                    // update the UI for these context items
-                    if (!self.hideInitValidationError)
-                    {
-                        Alpaca.updateValidationStateForContext(self.view, context2);
-                    }
-                });
-            }
+                if (cb)
+                {
+                    cb();
+                }
+            });
         },
 
         /**
