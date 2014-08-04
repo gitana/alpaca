@@ -182,11 +182,14 @@
                        	{
                             assignedValue = fieldValue;
                         }
-                        else if (fieldValue)
+                        else if (fieldValue) 
                         {
                             assignedValue = fieldValue;
                         }
-
+                        else if(fieldValue === 0){
+                            forceassign=true;
+                            assignedValue = fieldValue;
+                        }
                         if (assignedValue||forceassign)
                        	{
                             o[propertyId] = assignedValue;
