@@ -29,7 +29,7 @@
          * @see Alpaca.Fields.TextField#getValue
          */
         getValue: function() {
-            var textValue = this.field.val();
+            var textValue = this.getTextValue();
             if (Alpaca.isValEmpty(textValue)) {
                 return -1;
             } else {
@@ -119,7 +119,7 @@
          * @returns {Boolean} true if it is a float number
          */
         _validateNumber: function() {
-            var textValue = this.field.val();
+            var textValue = this.getTextValue();
             // allow null
             if (Alpaca.isValEmpty(textValue)) {
                 return true;

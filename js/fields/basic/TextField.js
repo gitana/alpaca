@@ -249,6 +249,15 @@
          * @see Alpaca.Field#getValue
          */
         getValue: function() {
+            return this.getTextValue();
+        },
+
+        /**
+         * Returns the text value of this field.
+         *
+         * @returns Text value.
+         */
+        getTextValue: function() {
             var value = null;
             if (this.field) {
                 value = this.field.val();
