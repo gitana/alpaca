@@ -120,16 +120,15 @@
             "data": 20,
             "options": {
                 "type": "integer",
-                "label": "Snow Days:",
-                "helper": "Number of Snow Days in January 2011",
+                "label": "Percentage:",
                 "slider": {
                     "range": "min",
-                    "step": 5
+                    "step": 10
                 }
             },
             "schema": {
                 minimum: 0,
-                maximum: 30
+                maximum: 100
             },
             "postRender": function (renderedField) {
                 expect(7);
@@ -142,7 +141,7 @@
                 var sliderMinRange = $(sliderElem).find('.ui-slider-range-min');
                 ok(sliderMinRange.length, 'Slider range generated.');
                 equal(renderedField.slider.slider( "option", "range"), "min", 'Slider range set correctly.');
-                equal(renderedField.slider.slider( "option", "step"), 5, 'Slider step set correctly.');
+                equal(renderedField.slider.slider( "option", "step"), 10, 'Slider step set correctly.');
                 start();
             }
         });
