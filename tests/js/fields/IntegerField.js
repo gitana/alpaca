@@ -112,4 +112,38 @@
             }
         });
     });
+
+    // Test case 4 : Integer field with customized slider control.
+    test("Integer field with customized slider control.", function() {
+        stop();
+        $("#integer-4").alpaca({
+            "data": 20,
+            "options": {
+                "type": "integer",
+                "label": "Percentage:",
+                "slider": {
+                    "range": "min",
+                    "step": 10
+                }
+            },
+            "schema": {
+                minimum: 0,
+                maximum: 100
+            },
+            "postRender": function (renderedField) {
+                expect(7);
+                var inputElem = $('#integer-4 input:text');
+                ok(inputElem.length, 'Input field generated.');
+                equal(inputElem.val(), '20', 'Input field value populated correctly.');
+                var sliderElem = $('#integer-4 .ui-slider');
+                ok(sliderElem.length, 'Slider control generated.');
+                equal(renderedField.slider.slider( "value"), 20, 'Slider location set correctly.');
+                var sliderMinRange = $(sliderElem).find('.ui-slider-range-min');
+                ok(sliderMinRange.length, 'Slider range generated.');
+                equal(renderedField.slider.slider( "option", "range"), "min", 'Slider range set correctly.');
+                equal(renderedField.slider.slider( "option", "step"), 10, 'Slider step set correctly.');
+                start();
+            }
+        });
+    });
 }(jQuery) );

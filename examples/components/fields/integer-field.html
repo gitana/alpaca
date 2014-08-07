@@ -126,12 +126,36 @@
                             </script>
 
                             <!-- example #3 -->
-                            <h2>Example 3:</h2>
-                            <p>Integer field rendered in display-only mode.</p>
+                            <h2>Example #3:</h2>
+                            <p>Integer field with customized jQuery UI slider control.</p>
                             <div id="field3"></div>
                             <script type="text/javascript" id="field3-script">
                                 $(function() {
                                     $("#field3").alpaca({
+                                        "data": 20,
+                                        "options": {
+                                            "type": "integer",
+                                            "label": "Percentage:",
+                                            "slider": {
+                                                "range": "min",
+                                                "step": 10
+                                            }
+                                        },
+                                        "schema": {
+                                            "minimum": 0,
+                                            "maximum": 100
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <!-- example #4 -->
+                            <h2>Example 4:</h2>
+                            <p>Integer field rendered in display-only mode.</p>
+                            <div id="field4"></div>
+                            <script type="text/javascript" id="field4-script">
+                                $(function() {
+                                    $("#field4").alpaca({
                                         "data": 17,
                                         "options": {
                                             "type": "integer",
@@ -150,13 +174,13 @@
                                 });
                             </script>
 
-                            <!-- example #4 -->
-                            <h2>Example 4:</h2>
+                            <!-- example #5 -->
+                            <h2>Example 5:</h2>
                             <p>Integer fields with default values.</p>
-                            <div id="field4"></div>
-                            <script type="text/javascript" id="field4-script">
+                            <div id="field5"></div>
+                            <script type="text/javascript" id="field5-script">
                                 $(function() {
-                                    $("#field4").alpaca({
+                                    $("#field5").alpaca({
                                         "schema": {
                                             "type": "object",
                                             "properties": {
