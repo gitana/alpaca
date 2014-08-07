@@ -112,4 +112,37 @@
             }
         });
     });
+
+    // Test case 5 : Integer field rendered in display-only mode.
+    test("Integer field rendered in display-only mode.", function() {
+        stop();
+        $("#integer-5").alpaca({
+            "data": 17,
+            "options": {
+                "type": "integer",
+                "label": "Age:",
+                "helper": "Guess Taylor Swift's Age"
+            },
+            "schema": {
+                "minimum": 18,
+                "maximum": 25,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true,
+                "divisibleBy": 2
+            },
+            "view": "VIEW_WEB_DISPLAY",
+            "postRender": function (renderedField) {
+                expect(5);
+                var inputElem = $('#integer-5 input:text');
+                equal(inputElem.length, 0, 'No input field generated.');
+                var labelElem = $('#integer-5 .alpaca-data-label');
+                equal(labelElem.length, 1, 'Label generated.');
+                equal(labelElem.text().trim(), 'Age:', 'Data field value populated correctly.');
+                var dataElem = $('#integer-5 .alpaca-data');                       
+                equal(dataElem.length, 1, 'Data field generated.');
+                equal(dataElem.text().trim(), '17', 'Data field value populated correctly.');
+                start();
+            }
+        });
+    });
 }(jQuery) );

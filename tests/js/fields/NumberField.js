@@ -70,4 +70,28 @@
         });
     });
 
+    // Test case 3 : Simple number field rendered in display-only-mode.
+    test("Simple number field with rendered in display-only-mode.", function() {
+        stop();
+        $("#number-3").alpaca({
+            "data": 15.5,
+            "options": {
+                "label": "Age"
+            },
+            "view": "VIEW_WEB_DISPLAY",
+            "postRender": function (renderedField) {
+                expect(5);
+                var inputElem = $('#number-3 input:text');
+                equal(inputElem.length, 0, 'No input field generated.');
+                var labelElem = $('#number-3 .alpaca-data-label');
+                equal(labelElem.length, 1, 'Label generated.');
+                equal(labelElem.text().trim(), 'Age', 'Data field value populated correctly.');
+                var dataElem = $('#number-3 .alpaca-data');                       
+                equal(dataElem.length, 1, 'Data field generated.');
+                equal(dataElem.text().trim(), '15.5', 'Data field value populated correctly.');
+                start();
+            }
+        });
+    });
+
 }(jQuery) );
