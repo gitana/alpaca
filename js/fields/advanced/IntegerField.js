@@ -76,8 +76,7 @@
 
                         if (self.field)
                         {
-                            self.field.after('<div id="slider"></div>');
-                            self.slider = $('#slider', self.field.parent()).slider({
+                            var sliderParams = {
                                 value: self.getValue(),
                                 min: self.schema.minimum,
                                 max: self.schema.maximum,
@@ -85,7 +84,15 @@
                                     self.setValue(ui.value);
                                     self.refreshValidationState();
                                 }
-                            });
+                            };
+
+                            if (typeof self.options.slider  === "object") 
+                            {
+                                Alpaca.merge(sliderParams, self.options.slider);
+                            }
+
+                            self.field.after('<div id="slider"></div>');
+                            self.slider = $('#slider', self.field.parent()).slider(sliderParams);
                         }
                     }
                 }
@@ -199,8 +206,8 @@
                 "properties": {
                     "slider": {
                         "title": "Slider",
-                        "description": "Generate jQuery UI slider control with the field if true.",
-                        "type": "boolean",
+                        "description": "Optional. Generates jQuery UI slider control if set. Expects either a boolean or an option hash that is being passed to the control.",
+                        "type": "any",
                         "default": false
                     }
                 }
