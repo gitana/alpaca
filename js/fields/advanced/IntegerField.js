@@ -44,7 +44,7 @@
          * @see Alpaca.Fields.NumberField#getValue
          */
         getValue: function() {
-            var textValue = this.field.val();
+            var textValue = this.getTextValue();
             if (Alpaca.isValEmpty(textValue)) {
                 return -1;
             } else {
@@ -120,16 +120,16 @@
          * @returns {Boolean} true if it is an integer
          */
         _validateNumber: function() {
-            var textValue = this.field.val();
+            var textValue = this.getTextValue();
 
             if (Alpaca.isValEmpty(textValue)) {
                 return true;
             }
 
-            var floatValue = this.getValue();
+            var intValue = this.getValue();
 
             // quick check to see if what they entered was a number
-            if (isNaN(floatValue)) {
+            if (isNaN(intValue)) {
                 return false;
             }
 
