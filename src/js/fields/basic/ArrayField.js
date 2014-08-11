@@ -124,18 +124,6 @@
                     "iconClass": self.addIcon,
                     "click": function(key, action)
                     {
-                        /*
-                        self.resolveItemSchemaOptions(function(schema, options) {
-
-                            var dataInstance = Alpaca.createEmptyDataInstance(schema);
-                            self.data.push(dataInstance);
-
-                            self.refresh(function() {
-
-                            });
-                        });
-                        */
-
                         self.resolveItemSchemaOptions(function(itemSchema, itemOptions) {
                             var itemData = Alpaca.createEmptyDataInstance(itemSchema);
                             self.addItem(0, itemSchema, itemOptions, itemData, function() {
@@ -214,7 +202,6 @@
             var data    = $.extend(true, {}, this.data);
             data.length = len;
             this.data   = Array.prototype.slice.call(data);
-
         },
 
         /**
@@ -426,17 +413,6 @@
                         fieldControl.path = self.path + "[" + index + "]";
                         fieldControl.nameCalculated = true;
                         fieldControl.render(null, function() {
-
-                            // render item label if needed
-//                            if (_this.options && _this.options.itemLabel) {
-//                                var itemLabelTemplateDescriptor = _this.view.getTemplateDescriptor("itemLabel");
-//                                var itemLabelElem = Alpaca.tmpl(itemLabelTemplateDescriptor, {
-//                                    "options": _this.options,
-//                                    "index": index ? index + 1 : 1,
-//                                    "id": _this.id
-//                                });
-//                                itemLabelElem.prependTo(containerElem);
-//                            }
 
                             // remember the control
                             self.refreshValidationState();
@@ -1002,7 +978,7 @@
                     else
                     {
                         // insert at a specific index
-                        var existingElement = self.getFieldEl().find("[data-alpaca-container-item-index='" + (index-1) + "']");
+                        var existingElement = self.getContainerEl().children("[data-alpaca-container-item-index='" + (index-1) + "']");
                         if (existingElement && existingElement.length > 0)
                         {
                             // insert after
@@ -1049,7 +1025,7 @@
                 self.unregisterChild(childIndex);
 
                 // remove from DOM
-                self.getContainerEl().find("[data-alpaca-container-item-index='" + childIndex + "']").remove();
+                self.getContainerEl().children("[data-alpaca-container-item-index='" + childIndex + "']").remove();
 
                 // updates child dom marker elements
                 self.updateChildDOMElements();
@@ -1115,8 +1091,8 @@
             }
 
             // the source and target DOM elements
-            var sourceContainer = self.getFieldEl().find("[data-alpaca-container-item-index='" + sourceIndex + "']");
-            var targetContainer = self.getFieldEl().find("[data-alpaca-container-item-index='" + targetIndex + "']");
+            var sourceContainer = self.getContainerEl().children("[data-alpaca-container-item-index='" + sourceIndex + "']");
+            var targetContainer = self.getContainerEl().children("[data-alpaca-container-item-index='" + targetIndex + "']");
 
             // create two temp elements as markers for switch
             var tempSourceMarker = $("<div class='tempMarker1'></div>");

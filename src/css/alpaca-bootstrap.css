@@ -13,6 +13,11 @@ legend.alpaca-container-label
     margin-bottom: 10px;
 }
 
+.alpaca-array-actionbar
+{
+    padding-bottom: 10px;
+}
+
 .alpaca-array-actionbar, .alpaca-array-actionbar.btn-group
 {
     width: 100%;
@@ -25,12 +30,14 @@ legend.alpaca-container-label
     padding: 10px;
 }
 
+/*
 .alpaca-field-object > .alpaca-container.alpaca-container-has-items
 {
     border: 1px #eee solid;
     border-radius: 4px;
     padding: 10px;
 }
+*/
 
 .alpaca-field-array
 {
@@ -39,11 +46,18 @@ legend.alpaca-container-label
     padding: 10px;
 }
 
+/*
 .alpaca-field-array > .alpaca-container.alpaca-container-has-items
 {
     border: 1px #eee solid;
     border-radius: 4px;
     padding: 10px;
+}
+*/
+
+.alpaca-container-item > .alpaca-container > .alpaca-field-object
+{
+    border: 0px;
 }
 
 .alpaca-form-buttons-container

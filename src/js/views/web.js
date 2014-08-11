@@ -132,8 +132,8 @@
         {
             var templateDescriptor = this.view.getTemplateDescriptor("container-array-actionbar");
 
-            // for each item, render the item toolbar
-            var items = this.getFieldEl().find(".alpaca-container-item");
+            // for each item render the item toolbar
+            var items = this.getContainerEl().children(".alpaca-container-item");
             $(items).each(function(itemIndex) {
 
                 var actionbar = Alpaca.tmpl(templateDescriptor, {

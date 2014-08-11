@@ -288,7 +288,7 @@
                 }
             }
 
-            if (!applied)
+            if (!applied && value)
             {
                 Alpaca.logError("CheckboxField cannot set value for schema.type=" + self.schema.type + " and value=" + value);
             }
