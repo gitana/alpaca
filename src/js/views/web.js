@@ -143,11 +143,16 @@
                     "actionbarStyle": self.options.actionbarStyle
                 });
 
-                // insert above
+                // insert above or below
                 if (self.options.actionbarStyle == "top")
                 {
                     $(this).children().first().before(actionbar);
                 }
+                else if (self.options.actionbarStyle == "bottom")
+                {
+                    $(this).children().last().after(actionbar);
+                }
+
             });
 
 
