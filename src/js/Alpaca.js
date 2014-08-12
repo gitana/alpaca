@@ -1629,6 +1629,7 @@
                             field.getFieldEl().addClass("alpaca-top");
                         }
 
+                        /*
                         // if this is the top-level alpaca field, then we call for validation state to be recalculated across
                         // all child fields
                         if (!field.parent)
@@ -1651,6 +1652,7 @@
                                 });
                             }
                         }
+                        */
 
                         // TEST - swap code
                         // swap placeholder -> el

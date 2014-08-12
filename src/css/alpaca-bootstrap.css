@@ -105,3 +105,11 @@ legend.alpaca-container-label
 {
     float: none;
 }
+
+
+/** FIElDS **/
+.alpaca-field.alpaca-field-upload .fileupload-active-zone
+{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}

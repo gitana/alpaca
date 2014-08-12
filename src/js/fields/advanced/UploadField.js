@@ -320,6 +320,13 @@
                     callback();
                 }
             });
+
+            if (typeof(document) != "undefined")
+            {
+                $(document).bind('drop dragover', function (e) {
+                    e.preventDefault();
+                });
+            }
         },
 
         handleWrapRow: function(row, options)
