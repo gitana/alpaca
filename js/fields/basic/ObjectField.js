@@ -172,25 +172,30 @@
                     if (this.determineAllDependenciesValid(propertyId))
                     {
                         var assignedValue = null;
-
-                        if (typeof(fieldValue) === "boolean")
+                        var forceassign=false;
+                       	if (typeof(fieldValue) === "boolean")
                         {
+                            forceassign=true;
                             assignedValue = (fieldValue? true: false);
-                        }
+                       	}
                         else if (Alpaca.isArray(fieldValue) || Alpaca.isObject(fieldValue))
+                       	{
+                            assignedValue = fieldValue;
+                        }
+                        else if (fieldValue) 
                         {
                             assignedValue = fieldValue;
                         }
-                        else if (fieldValue)
-                        {
+                        else if(fieldValue === 0){
+                            forceassign=true;
                             assignedValue = fieldValue;
                         }
-
-                        if (assignedValue)
-                        {
+                        if (assignedValue||forceassign)
+                       	{
                             o[propertyId] = assignedValue;
                         }
                     }
+
                 }
             }
 
