@@ -1,14 +1,14 @@
 <script type="text/x-handlebars-template">
 
-    <div>
+    <div class="form-group">
 
         {{#if options.label}}
         <label class="alpaca-display-control-label {{#if options.labelClass}}{{options.labelClass}}{{/if}} control-label" for="{{id}}">{{options.label}}</label>
         {{/if}}
 
-        <div class="alpaca-display-control-data">
+        <p class="form-control-static">
             {{#str data}}{{/str}}
-        </div>
+        </p>
 
     </div>
 

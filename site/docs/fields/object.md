@@ -330,9 +330,13 @@ Object field rendered in display-only mode. The <code>gender</code> field is hid
 <script type="text/javascript" id="field7-script">
 $("#field7").alpaca({
     "data": {
-        name: "Taylor Swift",
-        age: 18,
-        gender: "female"
+        name: "Lebron James",
+        age: 28,
+        gender: "male",
+        address: {
+            city: "Cleveland",
+            country: "USA"
+        }
     },
     "schema": {
         "title": "Customer Profile",
@@ -351,6 +355,20 @@ $("#field7").alpaca({
             "gender": {
                 "title": "Gender",
                 "type": "string"
+            },
+            "address": {
+                "title": "Address",
+                "type": "object",
+                "properties": {
+                    "city": {
+                        "type": "string",
+                        "title": "City"
+                    },
+                    "country": {
+                        "type": "string",
+                        "title": "Country"
+                    }
+                }
             }
         }
     },

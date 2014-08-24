@@ -31,6 +31,11 @@ legend.alpaca-container-label
     padding: 10px;
 }
 
+.alpaca-display h3
+{
+    margin-top: 0px;
+}
+
 /*
 .alpaca-field-object > .alpaca-container.alpaca-container-has-items
 {
@@ -105,6 +110,7 @@ legend.alpaca-container-label
 {
     float: none;
 }
+
 
 
 /** FIElDS **/
