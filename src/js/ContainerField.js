@@ -417,6 +417,8 @@
                 var insertionPoint = $(self.container).find("[" + Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY + "='" + item.name + "']");
                 if (!layoutBindings)
                 {
+                    var holder = $(insertionPoint).parent();
+
                     $(insertionPoint).replaceWith(item.field);
                     $(item.field).addClass("alpaca-container-item");
 
@@ -432,6 +434,9 @@
 
                     $(item.field).attr("data-alpaca-container-item-index", i);
                     $(item.field).attr("data-alpaca-container-item-name", item.name);
+
+                    // reset domEl to allow for refresh
+                    item.domEl = holder;
                 }
                 else
                 {
@@ -443,6 +448,9 @@
                         if (holder.length > 0)
                         {
                             $(item.field).appendTo(holder);
+
+                            // reset domEl to allow for refresh
+                            item.domEl = holder;
                         }
                     }
 

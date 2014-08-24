@@ -702,7 +702,12 @@
             var self = this;
 
             self._render(function() {
-                callback();
+
+                if (callback)
+                {
+                    callback();
+                }
+
             });
         },
 
