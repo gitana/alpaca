@@ -3127,7 +3127,7 @@
                 for (var i = 0; i < field.children.length; i++)
                 {
                     fn(field.children[i]);
-					// If field child has children, we must recurse
+                    // If field child has children, we must recurse
                     if(field.children[i].children){
                         f(field.children[i], fn);
                     }
