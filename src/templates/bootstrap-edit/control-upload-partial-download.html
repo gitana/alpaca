@@ -15,7 +15,7 @@
         </td>
     {{else}}
         <td class="preview">
-            {{#if thumbnailUrl}}
+            {{#if file.thumbnailUrl}}
             <a href="{{file.url}}" title="{{file.name}}" data-gallery="gallery" download="{{file.name}}">
                 <img src="{{file.thumbnailUrl}}">
             </a>
@@ -30,7 +30,7 @@
         <td>
             <button class="delete btn btn-danger" data-type="{{file.deleteType}}" data-url="{{file.deleteUrl}}" {{#if file.deleteWithCredentials}}data-xhr-fields="{\"withCredentials\":true}" {{/if}}>
                 <i class="glyphicon glyphicon-trash glyphicon-white"></i>
-                <span>Delete</span>
+                <!--<span>Delete</span>-->
             </button>
         </td>
     </tr>

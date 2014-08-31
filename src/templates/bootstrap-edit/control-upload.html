@@ -17,6 +17,21 @@
             <div class="row alpaca-fileupload-well">
                 <div class="col-md-12 fileupload-active-zone">
                     <table class="table table-striped">
+                        {{#if options.showHeaders}}
+                        <thead>
+                            <tr>
+                                {{#if options.showUploadPreview}}
+                                    <td>Thumbnail</td>
+                                {{else}}
+                                    <td></td>
+                                {{/if}}
+                                <td>Name</td>
+                                <td>Size</td>
+                                <td colspan="2"></td><!-- error or start or progress indicator -->
+                                <td>Actions</td>
+                            </tr>
+                        </thead>
+                        {{/if}}
                         <tbody class="files">
                         </tbody>
                     </table>

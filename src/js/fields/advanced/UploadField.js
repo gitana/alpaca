@@ -99,6 +99,12 @@
             {
                 self.options.showUploadPreview = true;
             }
+
+            if (typeof(self.options.showHeaders) === "undefined")
+            {
+                self.options.showHeaders = true;
+            }
+
         },
 
         afterRenderControl: function(model, callback)
