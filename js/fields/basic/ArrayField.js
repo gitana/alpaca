@@ -410,6 +410,7 @@
 
                                     arrayField.addItem(containerElem.index() + 1, schema, options, null, id, true, function(addedField) {
                                         arrayField.enrichElements(addedField.getEl());
+                                        Alpaca.handleFieldInitialState(addedField);
                                     });
 
                                 });
@@ -521,6 +522,7 @@
 
                             _this.addItem(0, schema, options, "", id, true, function(addedField) {
                                 _this.enrichElements(addedField.getEl());
+                                Alpaca.handleFieldInitialState(addedField);
                             });
 
 
@@ -537,6 +539,7 @@
 
                             _this.addItem(0, schema, options, "", id, true, function(addedField) {
                                 _this.enrichElements(addedField.getEl());
+                                Alpaca.handleFieldInitialState(addedField);
                             });
                         });
 

@@ -1684,19 +1684,20 @@
                     // all child fields
                     if (!field.parent)
                     {
-                        // final call to update validation state
-                        field.refreshValidationState(true);
-
-                        // force hideInitValidationError to false for field and all children
-                        if (field.view.type != 'view')
-                        {
-                            Alpaca.fieldApplyChildren(field, function(field) {
-
-                                // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
-                                field.hideInitValidationError = false;
-
-                            });
-                        }
+//                        // final call to update validation state
+//                        field.refreshValidationState(true);
+//
+//                        // force hideInitValidationError to false for field and all children
+//                        if (field.view.type != 'view')
+//                        {
+//                            Alpaca.fieldApplyChildren(field, function(field) {
+//
+//                                // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
+//                                field.hideInitValidationError = false;
+//
+//                            });
+//                        }
+                        Alpaca.handleFieldInitialState(field);
                     }
 
                     // TEST - swap code
@@ -3127,11 +3128,35 @@
                 for (var i = 0; i < field.children.length; i++)
                 {
                     fn(field.children[i]);
+                    // If field child has children, we must recurse
+                    if(field.children[i].children){
+                        f(field.children[i], fn);
+                    }
                 }
             }
         };
 
         f(field, fn);
+    };
+
+    /**
+     * Helper function to handle configuration of the initial validation state and flags for a new field
+     * Useful for first time form configuration as well as any N+1 dynamic element set (i.e. array fields)
+     *
+     * @param field
+     */
+    Alpaca.handleFieldInitialState = function(field) {
+        // final call to update validation state
+        field.refreshValidationState(true);
+
+        // force hideInitValidationError to false for field and all children
+        if (field.view.type != 'view'){
+            Alpaca.fieldApplyChildren(field, function(field) {
+
+                // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
+                field.hideInitValidationError = false;
+            });
+        }
     };
 
 

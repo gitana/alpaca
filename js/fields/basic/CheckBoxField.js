@@ -22,6 +22,12 @@
              * @param {Function} errorCallback Error callback.
              */
             constructor: function(container, data, options, schema, view, connector, errorCallback) {
+                // Ensure checkbox has a default value to prevent form errors
+                if(Alpaca.isEmpty(schema["default"])) {
+                    schema["default"] = false;
+                }
+
+                // Carry on with typical construction
                 this.base(container, data, options, schema, view, connector, errorCallback);
             },
 
