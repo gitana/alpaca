@@ -60,8 +60,8 @@
                                     if (!timePickerOptions)
                                     {
                                         timePickerOptions = {
-                                            "changeYear": true,
-                                            "changeMonth": true
+                                            "changeYear": false,
+                                            "changeMonth": false
                                         };
                                     }
                                     $(this).datetimepicker(timePickerOptions);

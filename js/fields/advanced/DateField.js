@@ -55,8 +55,8 @@
                     if (!datePickerOptions)
                     {
                         datePickerOptions = {
-                            "changeMonth": true,
-                            "changeYear": true
+                            "changeMonth": false,
+                            "changeYear": false
                         };
                     }
                     if (!datePickerOptions.dateFormat)
