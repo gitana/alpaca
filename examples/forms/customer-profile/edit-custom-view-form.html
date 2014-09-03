@@ -168,7 +168,7 @@ $("#field1").alpaca({
             },
             "/address": {
                 "layout": {
-                    "template": 'twoColumnLayout',
+                    //"template": 'twoColumnLayout',
                     "bindings": {
                         "street": "leftcolumn",
                         "city": "rightcolumn",
@@ -176,6 +176,9 @@ $("#field1").alpaca({
                         "zip": "rightcolumn"
                     }
                 },
+                "templates": {
+			"fieldSetItemsContainer": '<div class="alpaca-layout-two-column-mask"><div class="alpaca-layout-two-column-left" id="leftcolumn"></div><div class="alpaca-layout-two-column-right" id="rightcolumn"></div></div>'
+		},
                 "styles": {
                     "h3": {
                         "font-size": "14px",
