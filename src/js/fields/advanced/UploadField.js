@@ -105,6 +105,10 @@
                 self.options.showHeaders = true;
             }
 
+            if (!self.data)
+            {
+                self.data = [];
+            }
         },
 
         afterRenderControl: function(model, callback)
@@ -564,11 +568,6 @@
          */
         getValue: function()
         {
-            if (!this.data)
-            {
-                this.data = [];
-            }
-
             return this.data;
         },
 
@@ -581,6 +580,11 @@
          */
         setValue: function(data)
         {
+            if (!data)
+            {
+                data = [];
+            }
+
             this.data = data;
         },
 

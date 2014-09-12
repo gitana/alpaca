@@ -100,9 +100,25 @@
 
                 if (self.options.dataSource)
                 {
+                    self.selectOptions = [];
+
+                    var adjustSchemaOptions = function()
+                    {
+                        self.schema.enum = [];
+                        self.options.optionLabels = [];
+
+                        for (var i = 0; i < self.selectOptions.length; i++)
+                        {
+                            self.schema.enum.push(self.selectOptions[i].value);
+                            self.options.optionLabels.push(self.selectOptions[i].text);
+                        }
+
+                        callback();
+                    };
+
                     if (Alpaca.isFunction(self.options.dataSource))
                     {
-                        self.options.dataSource(self, function(values) {
+                        self.options.dataSource.call(self, function(values) {
 
                             if (Alpaca.isArray(values))
                             {
@@ -120,6 +136,8 @@
                                         self.selectOptions.push(values[i]);
                                     }
                                 }
+
+                                adjustSchemaOptions();
                             }
                             else if (Alpaca.isObject(values))
                             {
@@ -130,105 +148,74 @@
                                         "value": values[k]
                                     });
                                 }
-                            }
 
-                            callback();
+                                adjustSchemaOptions();
+                            }
+                        });
+                    }
+                    else if (Alpaca.isUri(self.options.dataSource))
+                    {
+                        $.ajax({
+                            url: self.options.dataSource,
+                            type: "get",
+                            dataType: "json",
+                            success: function(jsonDocument) {
+
+                                var ds = jsonDocument;
+                                if (self.options.dsTransformer && Alpaca.isFunction(self.options.dsTransformer))
+                                {
+                                    ds = self.options.dsTransformer(ds);
+                                }
+
+                                if (ds)
+                                {
+                                    if (Alpaca.isObject(ds))
+                                    {
+                                        // for objects, we walk through one key at a time
+                                        // the insertion order is the order of the keys from the map
+                                        // to preserve order, consider using an array as below
+                                        $.each(ds, function(key, value) {
+                                            self.selectOptions.push({
+                                                "value": key,
+                                                "text": value
+                                            });
+                                        });
+
+                                        adjustSchemaOptions();
+                                    }
+                                    else if (Alpaca.isArray(ds))
+                                    {
+                                        // for arrays, we walk through one index at a time
+                                        // the insertion order is dictated by the order of the indices into the array
+                                        // this preserves order
+                                        $.each(ds, function(index, value) {
+                                            self.selectOptions.push({
+                                                "value": value.value,
+                                                "text": value.text
+                                            });
+                                        });
+
+                                        adjustSchemaOptions();
+                                    }
+                                }
+                            },
+                            "error": function(jqXHR, textStatus, errorThrown) {
+
+                                self.errorCallback({
+                                    "message":"Unable to load data from uri : " + _this.options.dataSource,
+                                    "stage": "DATASOURCE_LOADING_ERROR",
+                                    "details": {
+                                        "jqXHR" : jqXHR,
+                                        "textStatus" : textStatus,
+                                        "errorThrown" : errorThrown
+                                    }
+                                });
+                            }
                         });
                     }
                     else
                     {
-                        if (Alpaca.isUri(self.options.dataSource))
-                        {
-                            $.ajax({
-                                url: self.options.dataSource,
-                                type: "get",
-                                dataType: "json",
-                                success: function(jsonDocument) {
-
-                                    var ds = jsonDocument;
-                                    if (self.options.dsTransformer && Alpaca.isFunction(self.options.dsTransformer))
-                                    {
-                                        ds = self.options.dsTransformer(ds);
-                                    }
-
-                                    if (ds)
-                                    {
-                                        if (Alpaca.isObject(ds))
-                                        {
-                                            // for objects, we walk through one key at a time
-                                            // the insertion order is the order of the keys from the map
-                                            // to preserve order, consider using an array as below
-                                            $.each(ds, function(key, value) {
-                                                self.selectOptions.push({
-                                                    "value": key,
-                                                    "text": value
-                                                });
-                                            });
-                                        }
-                                        else if (Alpaca.isArray(ds))
-                                        {
-                                            // for arrays, we walk through one index at a time
-                                            // the insertion order is dictated by the order of the indices into the array
-                                            // this preserves order
-                                            $.each(ds, function(index, value) {
-                                                self.selectOptions.push({
-                                                    "value": value.value,
-                                                    "text": value.text
-                                                });
-                                            });
-                                        }
-                                    }
-
-                                    callback();
-                                },
-                                "error": function(jqXHR, textStatus, errorThrown) {
-
-                                    self.errorCallback({
-                                        "message":"Unable to load data from uri : " + _this.options.dataSource,
-                                        "stage": "DATASOURCE_LOADING_ERROR",
-                                        "details": {
-                                            "jqXHR" : jqXHR,
-                                            "textStatus" : textStatus,
-                                            "errorThrown" : errorThrown
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                        else
-                        {
-                            var ds = self.options.dataSource;
-                            if (self.options.dsTransformer && Alpaca.isFunction(self.options.dsTransformer))
-                            {
-                                ds = self.options.dsTransformer(ds);
-                            }
-
-                            if (ds)
-                            {
-                                if (Alpaca.isArray(ds))
-                                {
-                                    $.each(ds, function(index, value) {
-                                        self.selectOptions.push({
-                                            "value": value,
-                                            "text": value
-                                        });
-                                    });
-                                }
-
-                                if (Alpaca.isObject(ds))
-                                {
-                                    for (var index in ds)
-                                    {
-                                        self.selectOptions.push({
-                                            "value": index,
-                                            "text": ds[index]
-                                        });
-                                    }
-                                }
-
-                                callback();
-                            }
-                        }
+                        callback();
                     }
                 }
                 else

@@ -116,7 +116,7 @@ $("#field3").alpaca({
 
 
 ## Example 4
-Select a file with instant thumbnail preview
+Select an image file to see it with instant thumbnail preview
 <div id="imageInfo" style="display:none">
     <table>
         <tr>

@@ -101,6 +101,8 @@
             // events
             this._events = {};
 
+
+
             // helper function to determine if we're in a display-only mode
             this.isDisplayOnly = function()
             {
@@ -115,6 +117,19 @@
 
             // has this field been previously validated?
             this._previouslyValidated = false;
+
+            this.updateObservable = function()
+            {
+                // update observable
+                if (this.data)
+                {
+                    Alpaca.observable(this.path).set(this.data);
+                }
+                else
+                {
+                    Alpaca.observable(this.path).clear();
+                }
+            };
 
             this.onConstruct();
         },
@@ -431,7 +446,7 @@
                 this._processRender(self.domEl, function() {
 
                     // add "field" element to the domEl
-                    $(self.field).appendTo(self.domEl);
+                    //$(self.field).appendTo(self.domEl);
 
                     // allow any post-rendering facilities to kick in
                     self.postRender(function() {
@@ -508,9 +523,8 @@
                 "name": this.name
             });
 
-            renderedDomElement.appendTo(parentEl);
-
             this.field = renderedDomElement;
+            this.field.appendTo(parentEl);
 
             onSuccess();
         },
@@ -701,6 +715,12 @@
         {
             var self = this;
 
+            // reset domEl so that we're rendering into the right place
+            self.domEl = self.field.parent();
+
+            // re-setup the field
+            self.setup();
+
             self._render(function() {
 
                 if (callback)
@@ -798,6 +818,9 @@
          */
         setValue: function(value) {
             this.data = value;
+
+            this.updateObservable();
+
             this.triggerUpdate();
         },
 
@@ -1184,6 +1207,9 @@
          */
         destroy: function() {
 
+            // remove observable
+            Alpaca.observable(this.path).clear();
+
             // clean up Alpaca.fieldInstances static reference (used for convenience access to previous rendered fields)
             if (Alpaca && Alpaca.fieldInstances) {
                 if (Alpaca.fieldInstances[this.getId()]) {
@@ -1392,7 +1418,7 @@
                     }
                 });
 
-                // future support - specify events via options.events.<fieldName> = fn
+                // future support - specify events via options.events.<eventName> = fn
                 if (this.options && this.options.events)
                 {
                     $.each(this.options.events, function(event, func) {
@@ -1444,6 +1470,7 @@
         onChange: function(e) {
             // store back into data element
             this.data = this.getValue();
+            this.updateObservable();
             this.triggerUpdate();
         },
 
@@ -1494,6 +1521,38 @@
                 return parentControl;
             }
         },
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // OBSERVABLES
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        subscribe: function()
+        {
+            return Alpaca.subscribe.apply(this, arguments);
+        },
+
+        unsubscribe: function()
+        {
+            return Alpaca.unsubscribe.apply(this, arguments);
+        },
+
+        observable: function()
+        {
+            return Alpaca.observable.apply(this, arguments);
+        },
+
+        clearObservable: function()
+        {
+            return Alpaca.clearObservable.apply(this, arguments);
+        },
+
+        dependentObservable: function()
+        {
+            return Alpaca.dependentObservable.apply(this, arguments);
+        },
+
 
         // Utility Functions for Form Builder
 
@@ -1655,16 +1714,16 @@
                     },
                     "format": {
                         "type": "select",
-                        "dataSource": function(field, callback) {
-                            for (var key in Alpaca.defaultFormatFieldMapping) {
-                                field.selectOptions.push({
+                        "dataSource": function(callback) {
+                            for (var key in Alpaca.defaultFormatFieldMapping)
+                            {
+                                this.selectOptions.push({
                                     "value": key,
                                     "text": key
                                 });
                             }
-                            if (callback) {
-                                callback();
-                            }
+
+                            callback();
                         }
                     },
                     "disallow": {

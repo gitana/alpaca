@@ -76,6 +76,19 @@
                         this.options.buttons.reset.value = 'Reset';
                     }
                 }
+
+                // some general correction
+                for (var k in this.options.buttons)
+                {
+                    if (this.options.buttons[k].label)
+                    {
+                        this.options.buttons[k].value = this.options.buttons[k].label;
+                    }
+                    if (this.options.buttons[k].title)
+                    {
+                        this.options.buttons[k].value = this.options.buttons[k].title;
+                    }
+                }
             }
 
             if (this.attributes.id)
@@ -195,7 +208,7 @@
          */
         processRender: function(parentEl, callback)
         {
-            var _this = this;
+            var self = this;
 
             // lookup the template we should use to render
             this.formDescriptor = this.view.getTemplateDescriptor("form");
@@ -234,9 +247,28 @@
             this.buttons = {};
             $(parentEl).find(".alpaca-form-button").each(function() {
 
-                $(this).click(function() {
+                $(this).click(function(e) {
                     $(this).attr("button-pushed", true);
                 });
+
+                // custom click handler?
+                var key = $(this).attr("data-key");
+                if (key)
+                {
+                    var buttonConfig = self.options.buttons[key];
+                    if (buttonConfig)
+                    {
+                        if (buttonConfig.click)
+                        {
+                            $(this).click(function(form, handler) {
+                                return function(e) {
+                                    e.preventDefault();
+                                    handler.call(form, e);
+                                }
+                            }(self, buttonConfig.click));
+                        }
+                    }
+                }
             });
 
             callback();
@@ -468,6 +500,33 @@
          */
         getFormEl: function() {
             return this.form;
+        },
+
+        /**
+         * Performs a regular old submit.
+         */
+        submit: function()
+        {
+            this.form.submit();
+        },
+
+        /**
+         * Fires the submit in the background and hands back the jQuery promise.
+         *
+         * @param callback
+         * @returns {*}
+         */
+        ajaxSubmit: function(callback)
+        {
+            var self = this;
+
+            var value = this.getValue();
+
+            return $.ajax({
+                url: self.options.attributes.action,
+                type: self.options.attributes.method,
+                dataType: "json"
+            });
         }
 
     });

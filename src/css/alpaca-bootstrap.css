@@ -69,6 +69,7 @@ legend.alpaca-container-label
 .alpaca-form-buttons-container
 {
     margin-top: 10px;
+    text-align: right;
 }
 
 .alpaca-container > .form-group

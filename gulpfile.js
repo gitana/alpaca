@@ -31,6 +31,10 @@ var paths = {
             "lib/jquery-maskedinput/dist/jquery.maskedinput.min.js",
 
             "src/js/Alpaca.js",
+            "src/js/ObservableUtils.js",
+            "src/js/Observables.js",
+            "src/js/Observable.js",
+            "src/js/ScopedObservables.js",
             "src/js/TemplateEngineRegistry.js",
             "src/js/AbstractTemplateEngine.js",
             "src/js/HandlebarsTemplateEngine.js",

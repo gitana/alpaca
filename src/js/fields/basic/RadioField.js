@@ -64,7 +64,7 @@
             });
 
             // mark selected value
-            if (val)
+            if (typeof(val) != "undefined")
             {
                 Alpaca.checked($(self.control).find("input[value='" + val + "']"), "checked");
             }
@@ -133,7 +133,7 @@
             var self = this;
 
             var val = $(e.currentTarget).find("input").val();
-            if (val)
+            if (typeof(val) != "undefined")
             {
                 self.setValue(val);
                 self.refreshValidationState();

@@ -201,7 +201,7 @@ Multiple select field that works with an inline datasource function.
 <script type="text/javascript" id="field10-script">
 $("#field10").alpaca({
     "options": {
-        "dataSource": function(field, callback) {
+        "dataSource": function(callback) {
             callback([{
                 "value": "vanilla",
                 "text": "Vanilla"
@@ -236,7 +236,7 @@ Multiple select field that works with an inline datasource function.
 <script type="text/javascript" id="field11-script">
 $("#field11").alpaca({
     "options": {
-        "dataSource": function(field, callback) {
+        "dataSource": function(callback) {
             callback(["vanilla", "chocolate", "coffee", "strawberry", "mint"]);
         },
         "label": "Select your favorite flavor of ice cream",

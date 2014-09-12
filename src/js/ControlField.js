@@ -341,10 +341,19 @@
 
             if (this.control && this.control.length > 0)
             {
+                this.control.click(function(e) {
+                    _this.onClick.call(_this, e);
+                    _this.trigger("click", e);
+                });
+
                 // trigger control level handlers for things that happen to input element
                 this.control.change(function(e) {
-                    _this.onChange.call(_this, e);
-                    _this.triggerWithPropagation("change", e);
+
+                    // we use a timeout here because we want this to run AFTER control click handlers
+                    setTimeout(function() {
+                        _this.onChange.call(_this, e);
+                        _this.triggerWithPropagation("change", e);
+                    }, 250);
                 });
 
                 this.control.focus(function(e) {
@@ -370,11 +379,6 @@
                 this.control.keydown(function(e) {
                     _this.onKeyDown.call(_this, e);
                     _this.trigger("keydown", e);
-                });
-
-                this.control.click(function(e) {
-                    _this.onClick.call(_this, e);
-                    _this.trigger("click", e);
                 });
             }
 

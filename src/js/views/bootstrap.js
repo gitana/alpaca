@@ -121,7 +121,7 @@
         var formEl = this.getFormEl();
 
         // use pull-right for form buttons
-        $(formEl).find(".alpaca-form-buttons-container").addClass("pull-right");
+        //$(formEl).find(".alpaca-form-buttons-container").addClass("pull-right");
     };
     callbacks["enableButton"] = function(button)
     {
