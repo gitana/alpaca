@@ -20,7 +20,7 @@ var depNames = deps ? _.pluck(deps, 'paramName') : stdDeps;
     else if (umdEnabled && typeof define === 'function' && define.amd)
     {
         // amd
-        define(<%= deps ? JSON.stringify(amdDeps) + ', ' : '' %>factory);
+        define("alpaca", <%= deps ? JSON.stringify(amdDeps) + ', ' : '' %>factory);
     }
     else
     {

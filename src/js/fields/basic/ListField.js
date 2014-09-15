@@ -102,7 +102,7 @@
                 {
                     self.selectOptions = [];
 
-                    var adjustSchemaOptions = function()
+                    var completionFunction = function()
                     {
                         self.schema.enum = [];
                         self.options.optionLabels = [];
@@ -112,6 +112,9 @@
                             self.schema.enum.push(self.selectOptions[i].value);
                             self.options.optionLabels.push(self.selectOptions[i].text);
                         }
+
+                        // push back to model
+                        model.selectOptions = self.selectOptions;
 
                         callback();
                     };
@@ -137,7 +140,7 @@
                                     }
                                 }
 
-                                adjustSchemaOptions();
+                                completionFunction();
                             }
                             else if (Alpaca.isObject(values))
                             {
@@ -149,7 +152,7 @@
                                     });
                                 }
 
-                                adjustSchemaOptions();
+                                completionFunction();
                             }
                         });
                     }
@@ -181,7 +184,7 @@
                                             });
                                         });
 
-                                        adjustSchemaOptions();
+                                        completionFunction();
                                     }
                                     else if (Alpaca.isArray(ds))
                                     {
@@ -195,7 +198,7 @@
                                             });
                                         });
 
-                                        adjustSchemaOptions();
+                                        completionFunction();
                                     }
                                 }
                             },

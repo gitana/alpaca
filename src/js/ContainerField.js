@@ -398,6 +398,19 @@
                 layoutBindings = self.view.getLayout().bindings;
             }
 
+            // if bindings not provided, assume a default strategy
+            if (!layoutBindings && model.items.length > 0)
+            {
+                layoutBindings = {};
+
+                for (var i = 0; i < model.items.length; i++)
+                {
+                    var name = model.items[i].name;
+
+                    layoutBindings[name] = "[data-alpaca-layout-binding='" + name + "']";
+                }
+            }
+
             if (model.items.length > 0)
             {
                 $(self.container).addClass("alpaca-container-has-items");
@@ -444,7 +457,14 @@
                     var bindingId = layoutBindings[item.name];
                     if (bindingId)
                     {
-                        var holder = $('#' + bindingId, self.field);
+                        var holder = $(bindingId, self.field);
+                        if (holder.length == 0)
+                        {
+                            // legacy support, fallback to ID based
+                            try {
+                                holder = $('#' + bindingId, self.field);
+                            } catch (e) { }
+                        }
                         if (holder.length > 0)
                         {
                             $(item.field).appendTo(holder);
