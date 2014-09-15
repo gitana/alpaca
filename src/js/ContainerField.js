@@ -398,8 +398,8 @@
                 layoutBindings = self.view.getLayout().bindings;
             }
 
-            // if bindings not provided, assume a default strategy
-            if (!layoutBindings && model.items.length > 0)
+            // if layout and bindings not provided, assume a default strategy
+            if (self.view.getLayout() && self.view.getLayout().templateDescriptor && !layoutBindings && model.items.length > 0)
             {
                 layoutBindings = {};
 
