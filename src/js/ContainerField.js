@@ -662,6 +662,35 @@
             }
         },
 
+        /**
+         * Focus an element in the container.  Find the first invalid element or if no invalid elements, pick
+         * the first child.
+         */
+        focus: function()
+        {
+            this.base();
+
+            var index = -1;
+
+            for (var i = 0; i < this.children.length; i++)
+            {
+                if (!this.children[i].isValid(true))
+                {
+                    index = i;
+                    break;
+                }
+            }
+            if (index === -1 && this.children.length > 0)
+            {
+                index = 0;
+            }
+
+            if (index > -1)
+            {
+                this.children[i].focus();
+            }
+        },
+
         //__BUILDER_HELPERS
 
         /**
