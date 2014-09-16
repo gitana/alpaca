@@ -357,13 +357,19 @@
                 });
 
                 this.control.focus(function(e) {
-                    _this.onFocus.call(_this, e);
-                    _this.trigger("focus", e);
+                    if (!_this.suspendBlurFocus)
+                    {
+                        _this.onFocus.call(_this, e);
+                        _this.trigger("focus", e);
+                    }
                 });
 
                 this.control.blur(function(e) {
-                    _this.onBlur.call(_this, e);
-                    _this.trigger("blur", e);
+                    if (!_this.suspendBlurFocus)
+                    {
+                        _this.onBlur.call(_this, e);
+                        _this.trigger("blur", e);
+                    }
                 });
 
                 this.control.keypress(function(e) {

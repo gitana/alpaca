@@ -1454,10 +1454,16 @@
          * @param e dom event
          */
         onBlur: function(e) {
+
+            var wasFocused = $(this.field).hasClass("alpaca-field-focused");
+
             $(this.field).removeClass("alpaca-field-focused");
 
             // update the UI validation state
-            this.refreshValidationState();
+            if (wasFocused)
+            {
+                this.refreshValidationState();
+            }
         },
 
         /**

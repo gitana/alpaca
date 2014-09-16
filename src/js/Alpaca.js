@@ -210,12 +210,19 @@
             {
                 window.setTimeout(function() {
 
+                    var doFocus = function(__field)
+                    {
+                        __field.suspendBlurFocus = true;
+                        __field.focus();
+                        __field.suspendBlurFocus = false;
+                    };
+
                     if (options.focus)
                     {
                         if (field.isControlField && field.isAutoFocusable())
                         {
                             // just focus on this one
-                            field.focus();
+                            doFocus(field);
                         }
                         else if (field.isContainerField)
                         {
@@ -228,7 +235,7 @@
                                     {
                                         if (field.children[0].isAutoFocusable())
                                         {
-                                            field.children[0].focus();
+                                            doFocus(field.children[0]);
                                         }
                                     }
                                 }
@@ -237,8 +244,9 @@
                             {
                                 // assume it is a path to the child
                                 var child = field.getControlByPath(options.focus);
-                                if (child && child.isControlField && child.isAutoFocusable()) {
-                                    child.focus();
+                                if (child && child.isControlField && child.isAutoFocusable())
+                                {
+                                    doFocus(child);
                                 }
                             }
                         }

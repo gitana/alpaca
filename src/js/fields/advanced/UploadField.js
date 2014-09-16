@@ -67,6 +67,16 @@
                         }
 
                         self.handleWrapRow(this, options);
+
+                        // this event gets fired when the AJAX has been handled to delete the remote resource
+                        $(this).find("button.delete").on("destroyed", function() {
+                            setTimeout(function() {
+                                self.refreshUIState();
+                                self.onFileDelete(row);
+                                self.triggerWithPropagation("change");
+                            }, 250);
+                        });
+
                     });
 
                     return $(rows);
@@ -227,6 +237,11 @@
 
                 // copy back down into data.files
                 data.files = data.result.files;
+
+                setTimeout(function() {
+                    self.refreshUIState();
+                }, 250);
+
             });
 
             // When files are submitted, the "properties" and "parameters" options map are especially treated
@@ -403,7 +418,6 @@
 
             self.setValue(array);
         },
-
 
         /**
          * Extension point for adding properties and callbacks to the file upload config.
@@ -586,6 +600,10 @@
             }
 
             this.data = data;
+
+            this.updateObservable();
+
+            this.triggerUpdate();
         },
 
         reload: function(callback)
@@ -624,6 +642,52 @@
             };
             f(0);
         },
+
+        plugin: function()
+        {
+            var self = this;
+
+            return $(self.control).find('.alpaca-fileupload-input').data().blueimpFileupload;
+        },
+
+        refreshUIState: function()
+        {
+            var self = this;
+
+            var fileUpload = self.plugin();
+            if (fileUpload)
+            {
+                var maxNumberOfFiles = 99999;
+                if (self.options.upload && typeof(self.options.upload.maxNumberOfFiles) != "undefined")
+                {
+                    maxNumberOfFiles = self.options.upload.maxNumberOfFiles;
+                }
+
+                if (fileUpload.options.getNumberOfFiles && fileUpload.options.getNumberOfFiles() >= maxNumberOfFiles)
+                {
+                    // disable select files button
+                    $(self.control).find("span.btn.fileinput-button").prop("disabled", true);
+                    $(self.control).find("span.btn.fileinput-button").attr("disabled", "disabled");
+
+                    // hide dropzone message
+                    $(self.control).find(".fileupload-active-zone p.dropzone-message").css("display", "none");
+                }
+                else
+                {
+                    // enabled
+                    $(self.control).find("span.btn.fileinput-button").prop("disabled", false);
+                    $(self.control).find("span.btn.fileinput-button").attr("disabled", null);
+
+                    // show dropzone message
+                    $(self.control).find(".fileupload-active-zone p.dropzone-message").css("display", "block");
+                }
+            }
+        },
+
+        onFileDelete: function(domEl)
+        {
+        },
+
         //__BUILDER_HELPERS
 
         /**
