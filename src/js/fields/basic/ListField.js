@@ -43,6 +43,23 @@
             }
         },
 
+        prepareControlModel: function(callback)
+        {
+            var self = this;
+
+            this.base(function(model) {
+
+                model.hideNone = self.schema.required;
+                if (self.options.removeDefaultNone)
+                {
+                    model.hideNone = true;
+                }
+
+                callback(model);
+            });
+        },
+
+
         /**
          * Gets schema enum property.
          *
@@ -152,6 +169,10 @@
                                     });
                                 }
 
+                                completionFunction();
+                            }
+                            else
+                            {
                                 completionFunction();
                             }
                         });

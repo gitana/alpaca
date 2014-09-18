@@ -200,6 +200,12 @@
         // wrap rendered callback to allow for UI treatment (dom focus, etc)
         var _renderedCallback = function(field)
         {
+            // if top level, apply a unique observable scope id
+            if (!field.parent)
+            {
+                field.observableScope = Alpaca.generateId();
+            }
+
             // if top level and focus has not been specified, then auto-set
             if (Alpaca.isUndefined(options.focus) && !field.parent) {
                 options.focus = true;

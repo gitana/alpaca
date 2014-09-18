@@ -180,3 +180,55 @@ $("#field2").alpaca({
     }
 });</script>
 {% endraw %}
+
+
+## Using Observables Programmatically
+
+Each field control has a set of methods that you can use to set and retrieval observable state.  These methods are:
+
+<ul>
+    <li>
+        <code>field.subscribe([scope], <id>, <fn>)</code>
+        <br/>
+        <p>
+            Subscribes a function as an event handler for an observable identified by it's ID.  The scope variable
+            is optional and identifies a namespace for the observable.  If not provided, the namespace is one that
+            is global to the form being rendered and can be acquired using <code>field.getObservableScope()</code>.
+        </p>
+    </li>
+    <li>
+        <code>field.unsubscribe([scope], <id>, <fn>)</code>
+        <br/>
+        <p>
+            Unsubscribes a function as an event handler for an observable identified by it's ID.
+        </p>
+    </li>
+    <li>
+        <code>field.observable([scope], <id>)</code>
+        <br/>
+        <p>
+            Retrieves an observable.  The observable has methods <code>get()</code> (which can return null),
+            <code>set(value)</code> and <code>clear()</code>.  Note that setting or changing the value of an
+            observable will cause any observable subscribers to trigger.
+        </p>
+    </li>
+    <li>
+        <code>field.clearObservable([scope], <id>)</code>
+        <br/>
+        <p>
+            Clears the value of an observable.  This is equivalent to <code>observable(id).clear()</code>.
+            Note that setting or changing the value of an observable will cause any observable subscribers to trigger.
+        </p>
+    </li>
+</ul>
+
+## Observable Scope
+
+By default, each field is rendered with the notion of an observable scope (or namespace) into which the observables
+are written and read from.  If you have two forms rendering on the same page, using two separate <code>$.alpaca()</code>
+calls, you will have two separate observable namespaces by default.  If you set an observable value in form1, it won't
+be accessible by form2.
+
+If you have a nested form, each field in the nested structure will use the same observable scope.
+
+The observable scope can be gotten from a field using <code>field.getObservableScope()</code>.

@@ -119,12 +119,6 @@
 
                 model.selectOptions = self.selectOptions;
 
-                model.hideNone = self.schema.required;
-                if (self.options.removeDefaultNone)
-                {
-                    model.hideNone = true;
-                }
-
                 callback(model);
             });
         },

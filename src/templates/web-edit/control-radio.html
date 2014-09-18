@@ -1,11 +1,12 @@
 <script type="text/x-handlebars-template">
 
-    {{#if required}}
-    <div class="radio">
-        <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value=""/>
-        None
-    </div>
+    {{#if hideNone}}
     {{else}}
+    <div class="radio">
+        <label class="alpaca-controlfield-radio-label">
+            <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value=""/>None
+        </label>
+    </div>
     {{/if}}
 
     {{#each selectOptions}}

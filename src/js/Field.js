@@ -123,12 +123,28 @@
                 // update observable
                 if (this.data)
                 {
-                    Alpaca.observable(this.path).set(this.data);
+                    this.observable(this.path).set(this.data);
                 }
                 else
                 {
-                    Alpaca.observable(this.path).clear();
+                    this.observable(this.path).clear();
                 }
+            };
+
+            this.getObservableScope = function()
+            {
+                var top = this;
+                while (!top.isTop()) {
+                    top = top.parent;
+                }
+
+                var observableScope = top.observableScope;
+                if (!observableScope)
+                {
+                    observableScope = "global";
+                }
+
+                return observableScope;
             };
 
             this.onConstruct();
@@ -1536,27 +1552,42 @@
 
         subscribe: function()
         {
-            return Alpaca.subscribe.apply(this, arguments);
+            var args = Alpaca.makeArray(arguments);
+            args.unshift(this.getObservableScope());
+
+            return Alpaca.subscribe.apply(this, args);
         },
 
         unsubscribe: function()
         {
-            return Alpaca.unsubscribe.apply(this, arguments);
+            var args = Alpaca.makeArray(arguments);
+            args.unshift(this.getObservableScope());
+
+            return Alpaca.unsubscribe.apply(this, args);
         },
 
         observable: function()
         {
-            return Alpaca.observable.apply(this, arguments);
+            var args = Alpaca.makeArray(arguments);
+            args.unshift(this.getObservableScope());
+
+            return Alpaca.observable.apply(this, args);
         },
 
         clearObservable: function()
         {
-            return Alpaca.clearObservable.apply(this, arguments);
+            var args = Alpaca.makeArray(arguments);
+            args.unshift(this.getObservableScope());
+
+            return Alpaca.clearObservable.apply(this, args);
         },
 
         dependentObservable: function()
         {
-            return Alpaca.dependentObservable.apply(this, arguments);
+            var args = Alpaca.makeArray(arguments);
+            args.unshift(this.getObservableScope());
+
+            return Alpaca.dependentObservable.apply(this, args);
         },
 
 
