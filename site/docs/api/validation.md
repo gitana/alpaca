@@ -62,12 +62,15 @@ that it doesn't display (i.e. set ```display:none```).
 
 
 ## Custom validation by Field
-Validation logic can also be applied per field.  Within the options for the field, you can supply a <code>validator</code>
-property that provides a function with the following signature:
+Validation logic can also be applied per field.  Within the options for the field, you can supply a
+<code>validator</code> property that provides a function with the following signature:
 
 ```
-   function(control, callback) {}
+   function(callback) {}
 ```
+
+The <code>this</code> for the function execution is the field instance itself.  From the field instance, you can get
+access to the schema, options as well as programmatic access to other fields in the form.
 
 The validation function is asynchronous and uses a callback so that you could fire off to a web service to perform
 validation logic.  The callback should be fired with an object like this:
@@ -90,8 +93,8 @@ $("#field1").alpaca({
         "title": "Enter some text but not 'test'"
     },
     "options": {
-        "validator": function(control, callback) {
-           var value = control.getValue();
+        "validator": function(callback) {
+           var value = this.getValue();
            if (value == "test") {
               callback({
                  "status": false,
@@ -145,9 +148,9 @@ $("#field2").alpaca({
             "beverage": {
                 "label": "Choice of Beverage",
                 "slider": true,
-                "validator": function(control, callback) {
-                    var value = control.getValue();
-                    var age = control.getParent().childrenByPropertyId["age"].getValue();
+                "validator": function(callback) {
+                    var value = this.getValue();
+                    var age = this.getParent().childrenByPropertyId["age"].getValue();
                     if ((value == "beer" || value == "wine") && age < 21) {
                         callback({
                             "status": false,

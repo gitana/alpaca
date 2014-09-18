@@ -1131,7 +1131,7 @@
 
             if (this.options.validator && Alpaca.isFunction(this.options.validator))
             {
-                this.options.validator(this, function(valInfo) {
+                this.options.validator.call(this, function(valInfo) {
 
                     // always store in "custom"
                     _this.validation["custom"] = valInfo;
