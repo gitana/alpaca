@@ -84,7 +84,7 @@
                     return Alpaca.throwErrorWithCallback("Unable to find template descriptor for control: " + self.getFieldType());
                 }
 
-                this.controlDescriptor = this.view.getTemplateDescriptor("control-" + controlTemplateType);
+                this.controlDescriptor = this.view.getTemplateDescriptor("control-" + controlTemplateType, self);
             }
         },
 
@@ -95,6 +95,8 @@
 
         resolveControlTemplateType: function()
         {
+            var self = this;
+
             // we assume the field type and then check the view to see if there is a template for this view
             // if not, we walk the parent chain until we find a template type
 
@@ -110,7 +112,7 @@
                 }
                 else
                 {
-                    var d = this.view.getTemplateDescriptor("control-" + b.getFieldType());
+                    var d = this.view.getTemplateDescriptor("control-" + b.getFieldType(), self);
                     if (d)
                     {
                         selectedType = b.getFieldType();

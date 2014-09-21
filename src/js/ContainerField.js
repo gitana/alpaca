@@ -56,7 +56,7 @@
                 }
                 else
                 {
-                    var d = this.view.getTemplateDescriptor("container-" + b.getFieldType());
+                    var d = this.view.getTemplateDescriptor("container-" + b.getFieldType(), this);
                     if (d)
                     {
                         selectedType = b.getFieldType();
@@ -88,7 +88,7 @@
                 return Alpaca.throwErrorWithCallback("Unable to find template descriptor for container: " + self.getFieldType());
             }
 
-            this.containerDescriptor = this.view.getTemplateDescriptor("container-" + containerTemplateType);
+            this.containerDescriptor = this.view.getTemplateDescriptor("container-" + containerTemplateType, self);
 
             var collapsible = true;
 

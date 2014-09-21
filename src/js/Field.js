@@ -179,7 +179,7 @@
         {
             var self = this;
 
-            var viewTemplateDescriptor = this.view.getTemplateDescriptor(this.getTemplateDescriptorId());
+            var viewTemplateDescriptor = this.view.getTemplateDescriptor(this.getTemplateDescriptorId(), this);
             var globalTemplateDescriptor = this.view.getGlobalTemplateDescriptor();
             var layout = this.view.getLayout();
 

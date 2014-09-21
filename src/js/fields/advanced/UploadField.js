@@ -52,7 +52,7 @@
                         model.file = Alpaca.cloneObject(files[i]);
                         model.size = formatFileSize(model.size);
 
-                        var row = Alpaca.tmpl(self.view.getTemplateDescriptor(templateId), model);
+                        var row = Alpaca.tmpl(self.view.getTemplateDescriptor(templateId), model, self);
 
                         rows.push(row[0]);
                     }

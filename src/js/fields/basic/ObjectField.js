@@ -1153,7 +1153,7 @@
             model.data = self.data;
 
             // render the actual wizard
-            var wizardTemplateDescriptor = self.view.getTemplateDescriptor("wizard");
+            var wizardTemplateDescriptor = self.view.getTemplateDescriptor("wizard", self);
             if (wizardTemplateDescriptor)
             {
                 var wizardEl = Alpaca.tmpl(wizardTemplateDescriptor, model);

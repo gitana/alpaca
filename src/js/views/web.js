@@ -107,7 +107,7 @@
         else
         {
             // render toolbar
-            var templateDescriptor = this.view.getTemplateDescriptor("container-array-toolbar");
+            var templateDescriptor = this.view.getTemplateDescriptor("container-array-toolbar", self);
             var toolbar = Alpaca.tmpl(templateDescriptor, {
                 "actions": self.toolbar.actions,
                 "fieldId": self.getId(),
@@ -130,7 +130,7 @@
         }
         else
         {
-            var templateDescriptor = this.view.getTemplateDescriptor("container-array-actionbar");
+            var templateDescriptor = this.view.getTemplateDescriptor("container-array-actionbar", self);
 
             // for each item render the item toolbar
             var items = this.getContainerEl().children(".alpaca-container-item");

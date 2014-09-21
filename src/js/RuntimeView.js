@@ -85,8 +85,10 @@
          */
         getLayout: function ()
         {
+            var self = this;
+
             return {
-                "templateDescriptor": this.getTemplateDescriptor("layoutTemplate"),
+                "templateDescriptor": this.getTemplateDescriptor("layoutTemplate", self),
                 "bindings": this.getViewParam(["layout","bindings"], true)
             };
         },
@@ -95,10 +97,11 @@
          * Hands back the compiled template id for a given template.
          *
          * @param templateId
+         * @param field (optional)
          */
-        getTemplateDescriptor: function(templateId)
+        getTemplateDescriptor: function(templateId, field)
         {
-            return Alpaca.getTemplateDescriptor(this, templateId);
+            return Alpaca.getTemplateDescriptor(this, templateId, field);
         },
 
         /**

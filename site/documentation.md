@@ -96,9 +96,9 @@ whereas the extension types depend on various thirdparty libraries.
             <li><a href="{{ BASE_PATH }}/docs/api/i18n.html">Internationalization</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/layouts.html">Layouts</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/observables.html">Observables</a></li>
-            <li><a href="{{ BASE_PATH }}/docs/api/previews.html">Previews</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/references.html">References</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/serialization.html">Serialization</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/api/templates.html">Templates</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/validation.html">Validation</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/views.html">Views</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/wizards.html">Wizards</a></li>

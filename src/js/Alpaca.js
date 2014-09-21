@@ -2120,8 +2120,9 @@
                     _cacheKey = t.cacheKey;
                 }
             }
-            // is this template defined at the field level?
-            else if (field && field.path)
+
+            // OVERRIDE: is this template defined at the field level?
+            if (field && field.path)
             {
                 var path = field.path;
 
@@ -2130,13 +2131,15 @@
                     _cacheKey = Alpaca.makeCacheKey(view.id, "field", path, templateId);
                 }
             }
-            // is this template defined at the global level?
-            else if (templateId === "globalTemplate" || templateId === "global")
+
+            // OVERRIDE: is this template defined at the global level?
+            if (templateId === "globalTemplate" || templateId === "global")
             {
                 _cacheKey = Alpaca.makeCacheKey(view.id, "global", "global", "globalTemplate");
             }
-            // is this template defined at the layout level?
-            else if (templateId === "layoutTemplate" || templateId === "layout")
+
+            // OVERRIDE: is this template defined at the layout level?
+            if (templateId === "layoutTemplate" || templateId === "layout")
             {
                 _cacheKey = Alpaca.makeCacheKey(view.id, "layout", "layout", "layoutTemplate");
             }
