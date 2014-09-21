@@ -1048,21 +1048,36 @@
             var buttonDescriptors = this.wizardConfigs.buttons;
             if (!buttonDescriptors)
             {
-                buttonDescriptors = {};
-                buttonDescriptors["previous"] = {
-                    "title": "Previous"
-                };
-                buttonDescriptors["next"] = {
-                    "title": "Next"
-                };
-                buttonDescriptors["submit"] = {
-                    "title": "Submit"
-                };
+                buttonDescriptors = [];
             }
-            var showNavbar = this.wizardConfigs.showNavbar;
-            if (typeof(showNavbar) == "undefined")
+            if (!buttonDescriptors["previous"])
             {
-                showNavbar = true;
+                buttonDescriptors["previous"] = {}
+            }
+            if (!buttonDescriptors["previous"].title)
+            {
+                buttonDescriptors["previous"].title = "Previous";
+            }
+            if (!buttonDescriptors["next"])
+            {
+                buttonDescriptors["next"] = {}
+            }
+            if (!buttonDescriptors["next"].title)
+            {
+                buttonDescriptors["next"].title = "Next";
+            }
+            if (!buttonDescriptors["submit"])
+            {
+                buttonDescriptors["submit"] = {}
+            }
+            if (!buttonDescriptors["submit"].title)
+            {
+                buttonDescriptors["submit"].title = "Submit";
+            }
+            var showSteps = this.wizardConfigs.showSteps;
+            if (typeof(showSteps) == "undefined")
+            {
+                showSteps = true;
             }
             var performValidation = this.wizardConfigs.validation;
             if (typeof(performValidation) == "undefined")
@@ -1126,7 +1141,7 @@
             var model = {};
             model.wizardTitle = wizardTitle;
             model.wizardDescription = wizardDescription;
-            model.showNavbar = showNavbar;
+            model.showSteps = showSteps;
             model.performValidation = performValidation;
             model.steps = stepDescriptors;
             model.buttons = buttonDescriptors;
@@ -1162,7 +1177,7 @@
                     var refreshSteps = function()
                     {
                         // NAV
-                        if (model.showNavbar)
+                        if (model.showSteps)
                         {
                             var stepElements = $(wizardNav).find("[data-alpaca-wizard-step-index]");
                             $(stepElements).removeClass("disabled");
@@ -1224,7 +1239,7 @@
 
                     };
 
-                    var assertValidation = function(callback)
+                    var assertValidation = function(buttonId, callback)
                     {
                         if (!model.performValidation)
                         {
@@ -1265,7 +1280,19 @@
                                 valid = valid && fields[i].isValid(true);
                             }
 
-                            callback(valid);
+                            // custom validation function?
+                            var b = model.buttons[buttonId];
+                            if (b && b.validate)
+                            {
+                                b.validate.call(self, function(_valid) {
+                                    valid = valid && _valid;
+                                    callback(valid);
+                                });
+                            }
+                            else
+                            {
+                                callback(valid);
+                            }
                         });
                     };
 
@@ -1274,7 +1301,7 @@
 
                         if (currentIndex >= 1)
                         {
-                            assertValidation(function(valid) {
+                            assertValidation("previous", function(valid) {
 
                                 if (valid)
                                 {
@@ -1291,7 +1318,7 @@
 
                         if (currentIndex + 1 <= model.steps.length - 1)
                         {
-                            assertValidation(function(valid) {
+                            assertValidation("next", function(valid) {
 
                                 if (valid)
                                 {
@@ -1308,11 +1335,26 @@
 
                         if (currentIndex === model.steps.length - 1)
                         {
-                            assertValidation(function(valid) {
+                            assertValidation("submit", function(valid) {
 
                                 if (valid)
                                 {
-                                    alert("SUBMIT GOOD");
+                                    var b = model.buttons["submit"];
+                                    if (b)
+                                    {
+                                        if (b.click)
+                                        {
+                                            b.click.call(self);
+                                        }
+                                        else
+                                        {
+                                            // are we in a form?
+                                            if (self.form)
+                                            {
+                                                self.form.submit();
+                                            }
+                                        }
+                                    }
                                 }
                             });
                         }
@@ -1327,7 +1369,7 @@
                             navIndex = parseInt(navIndex, 10);
                             if (navIndex <= currentIndex)
                             {
-                                assertValidation(function(valid) {
+                                assertValidation(null, function(valid) {
 
                                     currentIndex = navIndex;
 

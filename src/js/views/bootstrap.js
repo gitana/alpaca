@@ -105,6 +105,8 @@
 
             $(controlEl).after(wrapper);
             wrapper.append(controlEl);
+
+            $(fieldEl).append("<div style='clear:both;'></div>");
         }
     };
     callbacks["container"] = function()

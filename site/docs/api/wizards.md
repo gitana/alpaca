@@ -153,10 +153,14 @@ $("#field2").alpaca({
 By default, steps are validated prior to transitioning between previous and next.  You can turn this on and off
 using the <code>validation</code> wizard setting.
 
+You can also customize buttons and set up custom validation functions for each transition.  You can add a click
+handler for the submit button.  If no click handler is supplied and the wizard is inside of a form, the form will
+be submitted.
+
 <div id="field3"></div>
 {% raw %}
-<script type="text/javascript" id="field2-script">
-$("#field1").alpaca({
+<script type="text/javascript" id="field3-script">
+$("#field3").alpaca({
     "dataSource": "/data/customer-profile-data.json",
     "schemaSource": "/data/customer-profile-schema.json",
     "optionsSource": "/data//customer-profile-options.json",
@@ -186,7 +190,32 @@ $("#field1").alpaca({
                 "title": "Preferences",
                 "description": "Customize your Profile"
             }],
-            "validation": false
+            "showSteps": true,
+            "validation": true,
+            "buttons": {
+                "previous": {
+                    "validate": function(callback) {
+                        console.log("Previous validate()");
+                        callback(true);
+                    }
+                },
+                "next": {
+                    "validate": function(callback) {
+                        console.log("Next validate()");
+                        callback(true);
+                    }
+                },
+                "submit": {
+                    "title": "All Done!",
+                    "validate": function(callback) {
+                        console.log("Submit validate()");
+                        callback(true);
+                    },
+                    "click": function(e) {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
         }
     }
 });</script>
