@@ -36,7 +36,6 @@ all of the fields have been filled in and are in a valid state.
             }
         },
         "options": {
-            "renderForm": true,
             "form": {
                 "buttons": {
                     "submit":{}

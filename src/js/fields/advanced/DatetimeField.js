@@ -25,7 +25,7 @@
 
                 self.options.picker.pickDate = true;
                 self.options.picker.pickTime = true;
-                if (typeof(self.options.picker.sideBySide) === "undefined")
+                if (typeof(self.options.picker.sideBySide) == "undefined")
                 {
                     self.options.picker.sideBySide = true;
                 }

@@ -33,16 +33,14 @@ We use a special <code>wizard</code> block to tell Alpaca that we want the wizar
 We can also use this block to configure the wizard as we see fit.
 
 <ul>
-    <li><code>renderWizard</code> - whether a wizard should be rendered</li>
     <li><code>title</code> - (optional) title for the wizard</li>
     <li><code>description</code> - (optional) description for the wizard</li>
     <li><code>bindings</code> - (optional) maps fields to steps of the wizard</li>
     <li><code>steps</code> - (optional) provides labels and descriptions for the navigation</li>
 </ul>
 
-The only required property is <code>renderWizard</code>.  If <code>bindings</code> is not provided, all of the fields
-will be placed on a single step wizard.  By providing <code>bindings</code>, you can split fields out onto individual
-steps of the wizard.
+All that is required for the wizard to be rendered is for the <code>wizard</code> block to be present.  Everything
+inside of the wizard block is optional.
 
 <div id="field1"></div>
 {% raw %}
@@ -54,7 +52,6 @@ $("#field1").alpaca({
     "view": {
         "parent": "bootstrap-edit-horizontal",
         "wizard": {
-            "renderWizard": true,
             "title": "Welcome to the Wizard",
             "description": "Please fill things in as you wish",
             "bindings": {
@@ -141,7 +138,6 @@ $("#field2").alpaca({
             }
         },
         "wizard": {
-            "renderWizard": true
         }
     }
 });</script>
@@ -167,7 +163,6 @@ $("#field3").alpaca({
     "view": {
         "parent": "bootstrap-edit-horizontal",
         "wizard": {
-            "renderWizard": true,
             "title": "Welcome to the Wizard",
             "description": "Please fill things in as you wish",
             "bindings": {

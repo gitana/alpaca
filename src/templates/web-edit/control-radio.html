@@ -4,7 +4,7 @@
     {{else}}
     <div class="radio">
         <label class="alpaca-controlfield-radio-label">
-            <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value=""/>{{noneLabel}}
+            <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value=""/>{{{noneLabel}}}
         </label>
     </div>
     {{/if}}
@@ -12,7 +12,7 @@
     {{#each selectOptions}}
     <div class="radio">
         <label class="alpaca-controlfield-radio-label">
-            <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value="{{value}}" {{#compare value ../../data}}checked="checked"{{/compare}}/>{{text}}
+            <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value="{{value}}" {{#compare value ../../data}}checked="checked"{{/compare}}/>{{{text}}}
         </label>
     </div>
     {{/each}}

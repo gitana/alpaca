@@ -27,13 +27,13 @@
                 this.options.rightLabel = "";
             }
 
-            if (typeof(_this.options.multiple) === "undefined")
+            if (typeof(_this.options.multiple) == "undefined")
             {
                 if (_this.schema.type === "array")
                 {
                     _this.options.multiple = true;
                 }
-                else if (typeof(_this.schema["enum"]) !== "undefined")
+                else if (typeof(_this.schema["enum"]) != "undefined")
                 {
                     _this.options.multiple = true;
                 }

@@ -88,7 +88,8 @@ whereas the extension types depend on various thirdparty libraries.
     <div class="col-md-12">
         <ul>
             <li><a href="{{ BASE_PATH }}/docs/api/callbacks.html">Callbacks</a></li>
-            <li><a href="{{ BASE_PATH }}/docs/api/conditional-dependencies">Conditional Dependencies</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/api/custom-fields.html">Custom Fields</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/api/conditional-dependencies.html">Conditional Dependencies</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/dependencies.html">Dependencies</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/events.html">Events</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/forms.html">Forms</a></li>

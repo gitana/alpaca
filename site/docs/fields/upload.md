@@ -180,7 +180,6 @@ $("#field2").alpaca({
             }
         },
         "focus": true,
-        "renderForm": true,
         "form": {
             "attributes": {
                 "method": "POST",

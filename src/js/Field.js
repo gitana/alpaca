@@ -406,13 +406,8 @@
             }
 
             // check if it needs to be wrapped in a form
-            if (self.options.renderForm)
+            if (self.options.form && Alpaca.isObject(self.options.form))
             {
-                if (!self.options.form)
-                {
-                    self.options.form = {};
-                }
-
                 self.options.form.viewType = this.view.type;
 
                 var form = self.form;
@@ -1805,7 +1800,6 @@
                 "description": this.getDescription() + " (Options)",
                 "type": "object",
                 "properties": {
-                    "renderForm": {},
                     "form":{},
                     "id": {
                         "title": "Field Id",
@@ -1884,18 +1878,11 @@
                 }
             };
             if (this.isTopLevel()) {
-                schemaOfOptions.properties.renderForm = {
-                    "title": "Render Form",
-                    "description": "Render a FORM tag as the container for the rest of fields if true.",
-                    "type": "boolean",
-                    "default": false
-                };
 
                 schemaOfOptions.properties.form = {
                     "title": "Form",
                     "description": "Options for rendering the FORM tag.",
                     "type": "object",
-                    "dependencies" : "renderForm",
                     "properties": {
                         "attributes": {
                             "title": "Form Attributes",
@@ -1957,7 +1944,6 @@
                 };
 
             } else {
-                delete schemaOfOptions.properties.renderForm;
                 delete schemaOfOptions.properties.form;
             }
 
@@ -2023,15 +2009,8 @@
                 }
             };
             if (this.isTopLevel()) {
-                optionsForOptions.fields.renderForm = {
-                    "type": "checkbox",
-                    "rightLabel": "Yes"
-                };
                 optionsForOptions.fields.form = {
                     "type": "object",
-                    "dependencies" : {
-                        "renderForm" : true
-                    },
                     "fields": {
                         "attributes": {
                             "type": "object",

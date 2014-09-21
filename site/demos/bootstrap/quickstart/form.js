@@ -79,7 +79,6 @@ $(document).ready(function() {
                 "label": "Country"
             }
         },
-        "renderForm": true,
         "form": {
             "attributes": {
                 "method": "POST",

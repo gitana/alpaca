@@ -179,7 +179,6 @@ $("#field7").alpaca({
     },
     "options" : {
         "toolbarSticky": true,
-        "renderForm": true,
         "fields": {
             "item": {
                 "fields": {
@@ -247,7 +246,6 @@ $("#field8").alpaca({
         }
     },
     "options": {
-        "renderForm":true,
         "fields":{
             "title": {
                 "label": "Channel Title"

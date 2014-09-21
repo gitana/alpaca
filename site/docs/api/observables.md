@@ -56,7 +56,6 @@ $("#field1").alpaca({
         }
     },
     "options": {
-        "renderForm": true,
         "form": {
             "attributes": {
                 "action": "http://testcompany.com/echo.php",
@@ -154,7 +153,6 @@ $("#field2").alpaca({
         }
     },
     "options": {
-        "renderForm": true,
         "form": {
             "buttons": {
                 "save": {
@@ -188,7 +186,7 @@ Each field control has a set of methods that you can use to set and retrieval ob
 
 <ul>
     <li>
-        <code>field.subscribe([scope], <id>, <fn>)</code>
+        <code>field.subscribe([scope], id, fn)</code>
         <br/>
         <p>
             Subscribes a function as an event handler for an observable identified by it's ID.  The scope variable
@@ -197,14 +195,14 @@ Each field control has a set of methods that you can use to set and retrieval ob
         </p>
     </li>
     <li>
-        <code>field.unsubscribe([scope], <id>, <fn>)</code>
+        <code>field.unsubscribe([scope], id, fn)</code>
         <br/>
         <p>
             Unsubscribes a function as an event handler for an observable identified by it's ID.
         </p>
     </li>
     <li>
-        <code>field.observable([scope], <id>)</code>
+        <code>field.observable([scope], id)</code>
         <br/>
         <p>
             Retrieves an observable.  The observable has methods <code>get()</code> (which can return null),
@@ -213,7 +211,7 @@ Each field control has a set of methods that you can use to set and retrieval ob
         </p>
     </li>
     <li>
-        <code>field.clearObservable([scope], <id>)</code>
+        <code>field.clearObservable([scope], id)</code>
         <br/>
         <p>
             Clears the value of an observable.  This is equivalent to <code>observable(id).clear()</code>.

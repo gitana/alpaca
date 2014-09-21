@@ -262,7 +262,6 @@ define(["jquery", "alpaca"], function($) {
                 "wordlimit": 250
             }
         },
-        "renderForm": true,
         "form": {
             "attributes": {
                 "method": "POST",

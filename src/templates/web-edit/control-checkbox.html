@@ -9,7 +9,7 @@
                 <label>
 
                     <input type="checkbox" data-checkbox-index="{{@index}}" data-checkbox-value="{{value}}" {{#if ../../options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each ../../options.data}}data-{{@key}}="{{value}}"{{/each}}/>
-                    {{text}}
+                    {{{text}}}
 
                 </label>
             </div>
@@ -24,7 +24,7 @@
 
                 <input type="checkbox" {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{value}}"{{/each}}/>
 
-                {{options.rightLabel}}
+                {{{options.rightLabel}}}
             </label>
 
         </div>

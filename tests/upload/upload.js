@@ -36,7 +36,6 @@ $(document).ready(function() {
                 }
             },
             "focus": true,
-            "renderForm": true,
             "form": {
                 "attributes": {
                     "method": "POST",

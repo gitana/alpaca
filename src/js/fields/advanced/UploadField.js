@@ -100,17 +100,17 @@
 
             this.base();
 
-            if (typeof(self.options.multiple) === "undefined")
+            if (typeof(self.options.multiple) == "undefined")
             {
                 self.options.multiple = false;
             }
 
-            if (typeof(self.options.showUploadPreview) === "undefined")
+            if (typeof(self.options.showUploadPreview) == "undefined")
             {
                 self.options.showUploadPreview = true;
             }
 
-            if (typeof(self.options.showHeaders) === "undefined")
+            if (typeof(self.options.showHeaders) == "undefined")
             {
                 self.options.showHeaders = true;
             }

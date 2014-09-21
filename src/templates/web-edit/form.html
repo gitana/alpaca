@@ -7,7 +7,7 @@
         <div class="alpaca-form-buttons-container">
             {{#if options.buttons}}
             {{#each options.buttons}}
-            <button data-key="{{@key}}" {{#compare type "submit"}}type="submit"{{/compare}} {{#compare type "reset"}}type="reset"{{/compare}} class="alpaca-form-button alpaca-form-button-{{@key}} btn btn-default" {{#each value}}{{@key}}="{{value}}"{{/each}}>{{value}}</button>
+            <button data-key="{{@key}}" {{#compare type "submit"}}type="submit"{{/compare}} {{#compare type "reset"}}type="reset"{{/compare}} class="alpaca-form-button alpaca-form-button-{{@key}} btn btn-default" {{#each value}}{{@key}}="{{value}}"{{/each}}>{{{value}}}</button>
             {{/each}}
             {{/if}}
         </div>

@@ -12,7 +12,6 @@
             "view": {
                 "parent": "VIEW_WEB_EDIT_LIST",
                 "wizard": {
-                    "renderWizard": true,
                     "statusBar": true,
                     "validation": true,
                     "steps": 3,
@@ -124,7 +123,6 @@
                     }
                 },
                 "wizard": {
-                    "renderWizard": true,
                     "statusBar": true
                 }
             },

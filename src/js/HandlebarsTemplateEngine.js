@@ -74,7 +74,7 @@
         {
             return "0";
         }
-        else if (typeof(data) === "undefined")
+        else if (typeof(data) == "undefined")
         {
             return "";
         }

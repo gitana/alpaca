@@ -18,7 +18,7 @@
         {
             this.base();
 
-            if (typeof(this.options.grid) === "undefined")
+            if (typeof(this.options.grid) == "undefined")
             {
                 this.options.grid = {};
             }

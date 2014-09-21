@@ -58,7 +58,6 @@ $("#field2").alpaca({
         }
     },
     "options" : {
-        "renderForm":true,
         "form":{
             "attributes":{
                 "action":"../../endpoints/echo.php",

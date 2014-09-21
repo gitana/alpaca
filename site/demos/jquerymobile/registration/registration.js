@@ -266,7 +266,6 @@ $(document).ready(function() {
                 "wordlimit": 250
             }
         },
-        "renderForm": true,
         "form": {
             "attributes": {
                 "method": "POST",

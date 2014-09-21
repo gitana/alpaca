@@ -30,7 +30,7 @@
                 self.options.aceMode = "ace/mode/json";
             }
 
-            if (typeof(self.options.beautify) === "undefined")
+            if (typeof(self.options.beautify) == "undefined")
             {
                 self.options.beautify = true;
             }

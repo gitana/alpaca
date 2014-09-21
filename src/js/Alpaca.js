@@ -431,7 +431,7 @@
          * @returns {Boolean} True if the variable is a undefined, false otherwise.
          */
         isUndefined: function(obj) {
-            return (typeof obj === "undefined");
+            return (typeof obj == "undefined");
         },
 
         /**

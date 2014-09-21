@@ -19,16 +19,13 @@
          */
         getValue: function()
         {
-            var textValue = this._getControlVal();
+            var val = this._getControlVal();
+            if (typeof(val) == "undefined" || "" == val)
+            {
+                return val;
+            }
 
-            if (Alpaca.isValEmpty(textValue))
-            {
-                return -1;
-            }
-            else
-            {
-                return parseFloat(textValue);
-            }
+            return parseFloat(val);
         },
 
         /**

@@ -26,6 +26,8 @@ make you forms more dynamic.
 This example shows how to set up a single dependent field.  The <code>icecream</code>
 field only renders when the user specifies that they are a lover of ice cream.
 
+This also wraps a form.  When you hit submit, the JSON is printed for you.
+
 <div id="field1"> </div>
 {% raw %}
 <script type="text/javascript" id="field1-script">
@@ -52,6 +54,15 @@ $("#field1").alpaca({
         "fields": {
             "fan": {
                 "rightLabel": "Why yes, I am..."
+            }
+        },
+        "form": {
+            "buttons": {
+                "submit": {
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
             }
         }
     }

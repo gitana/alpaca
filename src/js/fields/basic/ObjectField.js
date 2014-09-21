@@ -199,13 +199,16 @@
                     if (self.view)
                     {
                         self.wizardConfigs = self.view.getWizard();
-                        if (!self.wizardConfigs)
+                        if (typeof(self.wizardConfigs) != "undefined")
                         {
-                            self.wizardConfigs = {};
+                            if (!self.wizardConfigs)
+                            {
+                                self.wizardConfigs = {};
+                            }
                         }
 
                         var layoutTemplateDescriptor = self.view.getLayout().templateDescriptor;
-                        if (self.wizardConfigs && self.wizardConfigs.renderWizard)
+                        if (self.wizardConfigs && Alpaca.isObject(self.wizardConfigs))
                         {
                             if (layoutTemplateDescriptor)
                             {
@@ -539,7 +542,7 @@
          */
         _validateMaxProperties: function()
         {
-            if (typeof(this.schema["maxProperties"]) === "undefined")
+            if (typeof(this.schema["maxProperties"]) == "undefined")
             {
                 return true;
             }
@@ -563,7 +566,7 @@
          */
         _validateMinProperties: function()
         {
-            if (typeof(this.schema["minProperties"]) === "undefined")
+            if (typeof(this.schema["minProperties"]) == "undefined")
             {
                 return true;
             }

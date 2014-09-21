@@ -34,7 +34,6 @@
                 }
             },
             "options" : {
-                "renderForm":true,
                 "form":{
                     "attributes":{
                         "action":"../../endpoints/save.php",

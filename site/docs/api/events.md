@@ -20,6 +20,14 @@ This document covers how to set these up.
 
 ## Event Types
 
+In general, event handlers are invoked with the <code>this</code> reference set to the field instance being handled.
+This lets you use <code>this.getValue()</code> to get the current value of the field and also gives you a way to
+access <a href="observables.html">observables</a> and traverse through to other fields in the hierarchy.  The
+event object itself is also passed as an argument to event handlers so that you can control the lifecycle of the
+event before it makes its way through the DOM.
+
+All event handlers are synchronous in nature (similar to actual DOM event handlers).
+
 <table class="table table-bordered">
     <tr>
         <th>Event</th>
@@ -219,7 +227,7 @@ $("#field1").alpaca({
                 "label": "Title",
                 "events": {
                     "change": function() {
-                        alert("The value was changed (example #1)");
+                        alert("The value was changed to: " + this.getValue());
                     }
                 }
             }
@@ -263,13 +271,8 @@ $("#field2").alpaca({
     },
     "postRender": function(control) {
         control.childrenByPropertyId["title"].on("change", function() {
-            alert("The value was changed (example #2), title = " + this.getValue());
+            alert("The value of title was changed to: " + this.getValue());
         });
-
-        control.on("change", function() {
-            alert("The value was changed (example #2), data = " + JSON.stringify(this.getValue()));
-        });
-
     }
 });
 </script>
@@ -287,20 +290,15 @@ You can extend the base field classes that Alpaca offers and register event hand
 // register a 'custom' field implementation
 // this extends the text field
 $.alpaca.Fields.CustomField = $.alpaca.Fields.TextField.extend({
-
     getFieldType: function() {
         return "custom";
     },
-
     onChange: function(e)
     {
-        alert("The value was changed (example #3)");
+        alert("The value of: " + this.name + " was changed to: " + this.getValue());
     }
-
 });
 Alpaca.registerFieldClass("custom", Alpaca.Fields.CustomField);
-//
-// invoke alpaca using the 'custom' type
 $("#field3").alpaca({
     "schema": {
         "type": "object",

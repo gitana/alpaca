@@ -38,7 +38,6 @@ $(document).ready(function() {
             }
         },
         "options": {
-            "renderForm":true,
             "form":{
                 "attributes":{
                     "action":"https://www.cloudcms.com/landing/alpaca",

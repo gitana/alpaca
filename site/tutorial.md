@@ -189,7 +189,7 @@ take a look at our <a href="demonstrations.html">Demonstrations</a> page.
     <p>
         For developers, this will be the place to do any required post-processing since Alpaca will feed the callback
         function with the top-most form control that it constructs. We can easily gain access to any other Alpaca form
-        control by using API such as <i>renderedForm.children</i>, <i>renderedForm.childrenByPropertyId</i>, <i>renderForm.getControlByPath</i>
+        control by using API such as <i>renderedForm.children</i>, <i>renderedForm.childrenByPropertyId</i>, <i>renderedForm.getControlByPath</i>
         etc. From any Alpaca form control, we can get the DOM element of its mapped form field by making a simple API
         call, <i>myControl.field</i>.
     </p>

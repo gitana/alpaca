@@ -1,5 +1,4 @@
 {
-    "renderForm":true,
     "form":{
         "attributes":{
             "action":"../../endpoints/echo.php",

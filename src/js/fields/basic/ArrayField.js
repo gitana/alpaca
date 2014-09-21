@@ -74,7 +74,12 @@
                 });
             }
 
-            if (typeof(this.data) === "undefined")
+            if (typeof(this.data) == "undefined")
+            {
+                this.data = [];
+            }
+
+            if (this.data == null)
             {
                 this.data = [];
             }

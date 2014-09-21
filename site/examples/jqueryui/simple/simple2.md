@@ -38,7 +38,6 @@ on our own.
             }
         },
         "options": {
-            "renderForm": true,
             "form": {
                 "buttons": {
                     "submit":{}

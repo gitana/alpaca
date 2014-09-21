@@ -3,14 +3,14 @@
     <div>
 
         {{#if options.label}}
-        <label class="control-label {{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-container-label">{{options.label}}</label>
+        <label class="control-label {{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-container-label">{{{options.label}}}</label>
         <!--<legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-container-label">{{options.label}}</legend>-->
         {{/if}}
 
         {{#if options.helper}}
         <p class="alpaca-helper help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
             <i class="alpaca-icon-16 glyphicon glyphicon-info-sign"></i>
-            {{options.helper}}
+            {{{options.helper}}}
         </p>
         {{/if}}
 

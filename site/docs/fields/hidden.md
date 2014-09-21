@@ -46,7 +46,6 @@ $("#field1").alpaca({
                 "type": "hidden"
             }
         },
-        "renderForm":true,
         "form":{
             "buttons":{
                 "submit":{

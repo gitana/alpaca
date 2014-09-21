@@ -96,7 +96,6 @@ $(document).ready(function() {
             }
         },
         "options" : {
-            "renderForm":true,
             "form":{
                 "attributes":{
                     "action":"examples/endpoints/save.php",

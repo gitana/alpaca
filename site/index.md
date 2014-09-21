@@ -1,10 +1,10 @@
 ---
 layout: page
-title: Welcome to Alpaca!
-#tagline: Easy Forms for jQuery
+title: Easy Web Forms for jQuery
+title2: Alpaca - Easy Web Forms for jQuery
+#tagline: Web Forms for jQuery and Bootstrap
 ---
 {% include JB/setup %}
-
 
 Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices.
 It runs simply as HTML5 or more elaborately using Bootstrap, jQuery Mobile or jQuery UI.  Alpaca uses Handlebars
@@ -41,8 +41,6 @@ layouts, I18N support and an custom data persistence.
 </div>
 
 ## How do I use Alpaca?
-
-<br/>
 
 <!-- STEP 1 -->
 <div class="step">
@@ -368,17 +366,17 @@ $("TABLE.stack").dataTable({
 <script>
 $("#form1").alpaca({
     "schema": {
-        "title": "User Feedback",
+        "title": "What do you think of Alpaca?",
         "type": "object",
         "properties": {
             "name": {
                 "type": "string",
-                "title": "What is your name?"
+                "title": "Name"
             },
             "ranking": {
                 "type": "string",
-                "title": "What do you think of Alpaca?",
-                "enum": ['Most excellent.','Not too shabby, my good man.','Alpaca built my hotrod!']
+                "title": "Ranking",
+                "enum": ['excellent', 'not too shabby', 'alpaca built my hotrod']
             }
         }
     }

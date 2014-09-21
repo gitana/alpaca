@@ -3,6 +3,34 @@ $( document ).ready(function() {
 	/* Sidebar height set */
 	$('.sidebar').css('min-height',$(document).height());
 
+    var resizeSidebar = function()
+    {
+        console.log("W: " + $(window).width());
+        if ($(window).width() >= 992)
+        {
+            var contentHeight = $(document).outerHeight();
+            var windowHeight = $(window).outerHeight();
+            var height = contentHeight;
+            if (windowHeight > contentHeight)
+            {
+                height = windowHeight;
+            }
+            $(".row.top .sidebar-holder").height(height);
+        }
+        else
+        {
+            $(".row.top .sidebar-holder").height("auto");
+        }
+    };
+
+    setTimeout(function() {
+        resizeSidebar();
+    }, 2000);
+
+    $(window).on("resize", function() {
+        resizeSidebar();
+    });
+
 	/* Secondary contact links */
 	var scontacts = $('#contact-list-secondary');
 	var contact_list = $('#contact-list');

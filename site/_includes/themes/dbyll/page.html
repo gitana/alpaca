@@ -1,5 +1,8 @@
 <div class="page-header">
-  <h1>{{ page.title }} {% if page.tagline %} <small>{{ page.tagline }}</small>{% endif %}</h1>
+    <h1>
+        {% if page.title2 %} {{page.title2}} {% else %} {{page.title}} {% endif %}
+        {% if page.tagline %} <small>{{ page.tagline }}</small>{% endif %}
+    </h1>
 </div>
 
 {{ content }}

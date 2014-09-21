@@ -3,13 +3,13 @@
     <div>
 
         {{#if options.label}}
-        <legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}}">{{options.label}}</legend>
+        <legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}}">{{{options.label}}}</legend>
         {{/if}}
 
         {{#if options.helper}}
         <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
             <i class="glyphicon glyphicon-info-sign"></i>
-            {{options.helper}}
+            {{{options.helper}}}
         </p>
         {{/if}}
 
