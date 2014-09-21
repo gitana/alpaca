@@ -353,3 +353,33 @@ $("#field11").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 12
+An array field with four levels of nesting.
+<div id="field12"> </div>
+{% raw %}
+<script type="text/javascript" id="field12-script">
+$("#field12").alpaca({
+    "schema": {
+        "title": "Level1",
+        "type": "array",
+        "items": {
+            "title": "Level2",
+            "type": "array",
+            "items": {
+                "title": "Level3",
+                "type": "array",
+                "items": {
+                    "title": "Level4",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": ["five", "six", "seven", "eight"]
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+{% endraw %}

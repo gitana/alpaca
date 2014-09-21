@@ -4,7 +4,6 @@
 {% include themes/dbyll/header.html %}
 
 	<body>
-
         <nav class="navbar navbar-default visible-xs" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -37,14 +36,14 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Home</a></li>
-                <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
-                <li><a href="{{ BASE_PATH}}/examples.html">Examples and Demos</a></li>
-                <li><a href="{{ BASE_PATH}}/documentation.html">Documentation</a></li>
-                <li><a href="{{ BASE_PATH}}/download.html">Download</a></li>
-                <li><a href="{{ BASE_PATH}}/contact.html">Contact Us</a></li>
-            </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Home</a></li>
+                    <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
+                    <li><a href="{{ BASE_PATH}}/examples.html">Examples and Demos</a></li>
+                    <li><a href="{{ BASE_PATH}}/documentation.html">Documentation</a></li>
+                    <li><a href="{{ BASE_PATH}}/download.html">Download</a></li>
+                    <li><a href="{{ BASE_PATH}}/contact.html">Contact Us</a></li>
+                </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
 
@@ -67,16 +66,23 @@
         </div>
         -->
 
-		<div class="col-sm-3 sidebar hidden-xs">
-			{% include themes/dbyll/sidebar.html %}
-		</div>
-
-		<div class="col-sm-9 col-sm-offset-3">
-			{{ content }}
-
-			{% include themes/dbyll/footer.html %}
-
-		</div>
+        <div class="container-fluid">
+            <!--
+            <div class="row pagetop">
+            </div>
+            -->
+            <div class="row top">
+                <div class="col-md-3 sidebar-holder">
+                    {% include themes/dbyll/sidebar.html %}
+                </div>
+                <div class="col-md-9">
+                    {{ content }}
+                </div>
+            </div>
+            <div class="row">
+                {% include themes/dbyll/footer.html %}
+            </div>
+        </div>
 
         {% include JB/analytics %}
         <script type="text/javascript" src="{{ ASSET_PATH }}/js/app.js"></script>

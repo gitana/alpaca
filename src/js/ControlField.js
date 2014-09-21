@@ -25,7 +25,7 @@
                 {
                     val = $(this.control).val();
 
-                    if (val)
+                    if (typeof(val) != "undefined")
                     {
                         if (Alpaca.isString(val))
                         {

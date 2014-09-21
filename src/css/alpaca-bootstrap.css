@@ -126,3 +126,90 @@ legend.alpaca-container-label
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
+
+
+/** WIZARD **/
+
+.alpaca-wizard .alpaca-wizard-nav li .chevron
+{
+    position: absolute;
+    top: 0;
+    right: -14px;
+    display: block;
+    border: 27px solid transparent;
+    border-right: 0;
+    border-left: 14px solid #d4d4d4;
+}
+
+.alpaca-wizard .alpaca-wizard-nav li .chevron:before
+{
+    position: absolute;
+    top: -27px;
+    right: 1px;
+    display: block;
+    border: 27px solid transparent;
+    border-right: 0;
+    border-left: 14px solid #fcfcfc;
+    content: "";
+}
+
+.alpaca-wizard .alpaca-wizard-nav li div.holder
+{
+    padding-left: 30px;
+    padding-right: 20px;
+    text-align: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.alpaca-wizard .alpaca-wizard-nav li:first-child div.holder
+{
+    padding-left: 10px;
+}
+
+.alpaca-wizard .alpaca-wizard-nav li div.holder div.title
+{
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.alpaca-wizard .alpaca-wizard-nav li div.holder div.description
+{
+    color: #aaa;
+    font-size: 12px;
+}
+
+.alpaca-wizard .alpaca-wizard-nav li.completed div.holder div.title
+{
+    color: #008800;
+}
+
+.alpaca-wizard .alpaca-wizard-nav li.completed div.holder div.description
+{
+    color: #008800;
+}
+
+.alpaca-wizard .alpaca-wizard-nav li.active div.holder div.title
+{
+}
+
+.alpaca-wizard .alpaca-wizard-nav li.active div.holder div.description
+{
+}
+
+.alpaca-wizard .alpaca-wizard-nav li.disabled div.holder div.title
+{
+    color: #ccc;
+}
+
+.alpaca-wizard .alpaca-wizard-nav li.disabled div.holder div.description
+{
+    color: #ccc;
+}
+
+.alpaca-wizard .alpaca-wizard-buttons
+{
+    margin-top: 20px;
+}

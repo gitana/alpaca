@@ -1,7 +1,7 @@
 ---
 layout: documentation-field
-title: Conditionals
-header: Conditionals
+title: Conditional Dependencies
+header: Conditional Dependencies
 group: navigation
 tags: field
 ---

@@ -17,13 +17,13 @@ Select field with data, options and schema parameters. As default, select field 
 {% raw %}
 <script type="text/javascript" id="field1-script">
 $("#field1").alpaca({
-    "data": "Coffee",
+    "data": "coffee",
     "options": {
         "label": "Ice cream",
-        "helper": "Guess my favorite ice cream?"
+        "helper": "What flavor of ice cream do you prefer?"
     },
     "schema": {
-        "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+        "enum": ["vanilla", "chocolate", "coffee", "strawberry", "mint"]
     }
 });
 </script>
@@ -31,19 +31,20 @@ $("#field1").alpaca({
 
 
 ## Example 2
-Select field with option labels.
+Here is the same select field but labels in French.  The important thing to note is that the schema stays the same.
+The options change, letting you customize forms into different languages.
 <div id="field2"> </div>
 {% raw %}
 <script type="text/javascript" id="field2-script">
 $("#field2").alpaca({
-    "data": "Coffee",
+    "data": "coffee",
     "options": {
-        "label": "Ice cream",
-        "helper": "Guess my favorite ice cream?",
-        "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"]
+        "label": "Crème Glacée",
+        "helper": "Quelle saveur de crème glacée préférez-vous?",
+        "optionLabels": ["Vanille", "Chocolat", "Café", "Fraise", "Comme"]
     },
     "schema": {
-        "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
+        "enum": ["vanilla", "chocolate", "coffee", "strawberry", "mint"]
     }
 });
 </script>
@@ -60,7 +61,7 @@ $("#field3").alpaca({
         "label": "Ice cream",
         "helper": "Guess my favorite ice cream?",
         "type": "select",
-        "dataSource": "{{ BASE_PATH }}/data/icecream-list.json"
+        "dataSource": "/data/icecream-list.json"
     }
 });
 </script>
@@ -80,7 +81,7 @@ $("#field4").alpaca({
         "type": "select",
         "multiple": true,
         "size": 3,
-        "dataSource": "{{ BASE_PATH }}/data/icecream-list.json"
+        "dataSource": "/data/icecream-list.json"
     }
 });
 </script>
@@ -99,7 +100,7 @@ $("#field5").alpaca({
         "helper": "Guess my favorite ice cream?",
         "optionLabels": ["Vanilla Flavor", "Chocolate Flavor", "Coffee Flavor"],
         "onFieldChange" : function(e) {
-            alert("Current select is " + this.getValue());
+            alert("You picked: " + this.getValue());
         }
     },
     "schema": {
@@ -275,6 +276,37 @@ $("#field12").alpaca({
         "type": "select",
         "label": "Who is your favorite guitarist?",
         "removeDefaultNone": true
+    }
+});
+</script>
+{% endraw %}
+
+## Example 13
+A select field that is required but which keeps the <code>None</code> option.  By default, required fields do not
+have a <code>None</code> option.  Here we set the <code>removeDefaultNone</code> option to false explicitly so that
+the none option still appears.
+
+This also changes the label from <code>"None"</code> to <code>"-- Select --"</code>.
+
+<div id="field13"> </div>
+{% raw %}
+<script type="text/javascript" id="field13-script">
+$("#field13").alpaca({
+    "schema": {
+        "enum": [
+            "Jimi Hendrix",
+            "Mark Knopfler",
+            "Joe Satriani",
+            "Eddie Van Halen",
+            "Orianthi"
+        ],
+        "required": true
+    },
+    "options": {
+        "type": "select",
+        "label": "Who is your favorite guitarist?",
+        "noneLabel": "-- Select --",
+        "removeDefaultNone": false
     }
 });
 </script>

@@ -37,7 +37,7 @@
             if (this.control && this.control.length > 0)
             {
                 var val = this._getControlVal();
-                if (!val)
+                if (typeof(val) == "undefined")
                 {
                     val = this.data;
                 }
@@ -67,7 +67,13 @@
             {
                 if (val !== this.getValue())
                 {
+                    /*
                     if (!Alpaca.isEmpty(val) && this.control)
+                    {
+                        this.control.val(val);
+                    }
+                    */
+                    if (this.control && typeof(val) != "undefined" && val != null)
                     {
                         this.control.val(val);
                     }

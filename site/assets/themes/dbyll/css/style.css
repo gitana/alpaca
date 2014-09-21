@@ -1,7 +1,13 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext);
 
+html{
+    height: 100%;
+}
+
 body{
   color: #2c3e50;
+  /*background: radial-gradient(circle,#ffffff,#dddddd);*/
+    height: 100%;
 }
 
 .sidebar {
@@ -63,9 +69,14 @@ article{
 article.home div a, article.home pre a { color: #2c3e50; }
 article.home div a:hover, article.home pre a:hover { color: #2c3e50; text-decoration: none; }
 
+/*
 h1,h2,h3,h4,h5,h6{ font-family: 'Ubuntu', sans-serif; color: #f2756a; }
 h1 a,h2 a,h3 a,h4 a{ color: #f2756a; }
 h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover{ color: #e74c3c; }
+*/
+h1,h2,h3,h4,h5,h6{ font-family: 'Ubuntu', sans-serif; color: #bb9977; }
+h1 a,h2 a,h3 a,h4 a{ color: #bb9977; }
+h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover{ color: #997755; }
 
 footer {
   padding-top: 15px;
@@ -92,7 +103,7 @@ footer {
 
 h2:not(:first-child)
 {
-    padding-top: 50px;
+    padding-top: 30px;
 }
 
 UL.nav.sidenav>li>a
@@ -103,3 +114,29 @@ UL.nav.sidenav>li>a
     color: #555;
 }
 
+/*
+.row.top
+{
+    padding-top: 70px;
+}
+*/
+
+/*
+.pagetop
+{
+    background: radial-gradient(circle,#3A92C8,#0074ad);
+    color: white;
+    height: 20px;
+}
+*/
+
+.sidebar-holder
+{
+    background-color: #fafafa;
+    height: 100%;
+}
+
+.h4
+{
+    padding-top: 20px;
+}

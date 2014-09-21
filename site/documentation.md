@@ -6,13 +6,15 @@ group: navigation
 ---
 {% include JB/setup %}
 
-This page serves as an entry point into the documentation.
+This documentation provides form builders and developers with a reference for working with field controls, layouts,
+templates, callbacks and other extensibility points within Alpaca.  As a very richly designed and powerful forms
+engine, you can do quite a lot with Alpaca and so we encourage you to read through the docs thoroughly.
+Within them, you will find configuration details as well as inline examples that you can tweak and play with.
 
 <h2>Fields</h2>
 Alpaca provides many different out-of-the-box field types.  The core field types have no external dependencies
 whereas the extension types depend on various thirdparty libraries.
 
-<br/><br/>
 <h4>Core Fields</h4>
 <div class="row">
     <div class="col-md-4">
@@ -40,7 +42,6 @@ whereas the extension types depend on various thirdparty libraries.
     </div>
 </div>
 
-<br/>
 <h4>Extension Fields</h4>
 <div class="row">
     <div class="col-md-4">
@@ -87,7 +88,7 @@ whereas the extension types depend on various thirdparty libraries.
     <div class="col-md-12">
         <ul>
             <li><a href="{{ BASE_PATH }}/docs/api/callbacks.html">Callbacks</a></li>
-            <li><a href="{{ BASE_PATH }}/docs/api/conditionals.html">Conditionals</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/api/conditional-dependencies">Conditional Dependencies</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/dependencies.html">Dependencies</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/events.html">Events</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/forms.html">Forms</a></li>

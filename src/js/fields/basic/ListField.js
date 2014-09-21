@@ -49,10 +49,16 @@
 
             this.base(function(model) {
 
-                model.hideNone = self.schema.required;
-                if (self.options.removeDefaultNone)
+                model.noneLabel = "None";
+                if (typeof(self.options.noneLabel) != "undefined")
                 {
-                    model.hideNone = true;
+                    model.noneLabel = self.options.noneLabel;
+                }
+
+                model.hideNone = self.schema.required;
+                if (typeof(self.options.removeDefaultNone) != "undefined")
+                {
+                    model.hideNone = self.options.removeDefaultNone;
                 }
 
                 callback(model);

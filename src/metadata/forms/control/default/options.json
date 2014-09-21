@@ -1,0 +1,18 @@
+{
+    "schema": {
+        "properties": {
+            "name": {
+                "title": "Field Name",
+                "description": "Field Name.",
+                "type": "string"
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "name": {
+                "type": "text"
+            }
+        }
+    }
+}

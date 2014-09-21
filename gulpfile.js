@@ -543,16 +543,20 @@ gulp.task('watch', ['scripts', 'templates', 'styles'], function() {
     });
 
     // web
-    gulp.watch("site/**", function() {
+    gulp.watch(["site/*/**"], function() {
         refreshWeb();
     });
 
 });
 
-gulp.task('web', ['watch'], function() {
+gulp.task('server', ['default', 'watch'], function() {
 
     nodemon({
-        script: 'server/webserver.js'
+        script: 'server/webserver.js',
+        ignore: [
+            '*/**',
+            '*'
+        ]
     });
 
 });
@@ -575,11 +579,16 @@ gulp.task('watch:lint', ['lint'], function() {
   gulp.watch(paths.scripts.core, ['lint']);
 });
 
-// The default task (called when you run `gulp` from cli)
-gulp.task('default', ['templates', 'scripts', 'styles', 'refreshWeb']);
+gulp.task('package', function(callback) {
+    var jQueryJson = require("./alpaca.jquery.json");
+    jQueryJson.version = pkg.version;
+    fs.writeFileSync("./alpaca.jquery.json", JSON.stringify(jQueryJson, null, "  "));
+
+    callback();
+});
 
 gulp.task('default', function(callback) {
-    return runSequence(['templates', 'scripts'], 'styles', 'refreshWeb', callback);
+    return runSequence(['templates', 'scripts'], 'styles', 'package', 'refreshWeb', callback);
 });
 
 gulp.task('cucumber', function(cb) {
@@ -591,4 +600,14 @@ gulp.task('cucumber', function(cb) {
             console.error(stderr);
         }
     });
+});
+
+gulp.task('metadata', function(callback) {
+
+
+    var jQueryJson = require("./alpaca.jquery.json");
+    jQueryJson.version = pkg.version;
+    fs.writeFileSync("./alpaca.jquery.json", JSON.stringify(jQueryJson, null, "  "));
+
+    callback();
 });

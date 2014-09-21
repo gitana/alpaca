@@ -168,6 +168,11 @@
     Handlebars.registerHelper("times", helpers["times"]);
     Handlebars.registerHelper("str", helpers["str"]);
 
+    // with
+    Handlebars.registerHelper('with', function(context, options) {
+        return options.fn(context);
+    });
+
     var partials = {};
 
     Alpaca.HandlebarsTemplateEngine = Alpaca.AbstractTemplateEngine.extend(

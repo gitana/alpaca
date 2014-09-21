@@ -162,6 +162,11 @@
             return valid;
         },
 
+        isValid: function()
+        {
+            return this.isFormValid();
+        },
+
         validate: function(children)
         {
             return this.topControl.validate(children);
@@ -392,9 +397,9 @@
          *
          * @returns {Object} Form validation state.
          */
-        refreshValidationState: function(children)
+        refreshValidationState: function(children, callback)
         {
-            this.topControl.refreshValidationState(children);
+            this.topControl.refreshValidationState(children, callback);
         },
 
         /**

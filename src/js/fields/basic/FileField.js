@@ -20,17 +20,18 @@
          */
         setValue: function(value)
         {
-            /*
-            // be sure to call into base method
-            // We won't be able to actually set the value for file input field so we use the mask input
-            var tmp = this.getControlEl();
-            this.field = $('.alpaca-filefield-control',this.fieldContainer);
-            this.base(value);
+            this.data = value;
 
-            // switch it back to actual file input
-            this.field = tmp;
-            */
-            this.base(value);
+            this.data = value;
+
+            this.updateObservable();
+
+            this.triggerUpdate();
+        },
+
+        getValue: function()
+        {
+            return this.data;
         },
 
         onChange: function(e)

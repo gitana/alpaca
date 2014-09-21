@@ -42,7 +42,7 @@
                 this.options.items = {};
             }
 
-            var toolbarSticky = false;
+            var toolbarSticky = true;
 
             if (!Alpaca.isEmpty(this.view.toolbarSticky))
             {
@@ -75,6 +75,11 @@
             }
 
             if (typeof(this.data) === "undefined")
+            {
+                this.data = [];
+            }
+
+            if ("" == this.data)
             {
                 this.data = [];
             }

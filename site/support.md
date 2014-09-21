@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Contact Us
+title: Support
 #tagline: Easy Forms for jQuery
 ---
 {% include JB/setup %}

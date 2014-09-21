@@ -199,47 +199,9 @@
                     if (self.view)
                     {
                         self.wizardConfigs = self.view.getWizard();
-                        if (self.wizardConfigs)
+                        if (!self.wizardConfigs)
                         {
-                            // set up defaults for wizard
-                            if (Alpaca.isUndefined(self.wizardConfigs.validation))
-                            {
-                                self.wizardConfigs.validation = true;
-                            }
-                            if (!self.wizardConfigs.buttons)
-                            {
-                                self.wizardConfigs.buttons = {};
-                            }
-
-                            // done
-                            if (!self.wizardConfigs.buttons.done)
-                            {
-                                self.wizardConfigs.buttons.done = {};
-                            }
-                            if (Alpaca.isUndefined(self.wizardConfigs.buttons.done.validateOnClick))
-                            {
-                                self.wizardConfigs.buttons.done.validateOnClick = true;
-                            }
-
-                            // prev
-                            if (!self.wizardConfigs.buttons.prev)
-                            {
-                                self.wizardConfigs.buttons.prev = {};
-                            }
-                            if (Alpaca.isUndefined(self.wizardConfigs.buttons.prev.validateOnClick))
-                            {
-                                self.wizardConfigs.buttons.prev.validateOnClick = true;
-                            }
-
-                            // next
-                            if (!self.wizardConfigs.buttons.next)
-                            {
-                                self.wizardConfigs.buttons.next = {};
-                            }
-                            if (Alpaca.isUndefined(self.wizardConfigs.buttons.next.validateOnClick))
-                            {
-                                self.wizardConfigs.buttons.next.validateOnClick = true;
-                            }
+                            self.wizardConfigs = {};
                         }
 
                         var layoutTemplateDescriptor = self.view.getLayout().templateDescriptor;
@@ -247,12 +209,12 @@
                         {
                             if (layoutTemplateDescriptor)
                             {
-                                //Wizard based on layout
+                                // manual wizard based on layout
                                 self.wizard();
                             }
                             else
                             {
-                                //Wizard based on injections
+                                // automatic wizard
                                 self.autoWizard();
                             }
                         }
@@ -652,6 +614,8 @@
                 item.hide();
                 item.onDependentConceal();
             }
+
+            item.getFieldEl().trigger("fieldupdate");
         },
 
         /**
@@ -730,13 +694,13 @@
                             // update UI state for target property
                             self.showOrHidePropertyBasedOnDependencies(propertyId);
 
-                            propertyField.trigger("fieldupdate");
+                            propertyField.getFieldEl().trigger("fieldupdate");
                         };
 
                     })(item, dependentField, propertyId, dependencyPropertyId));
 
                     // trigger field update
-                    dependentField.trigger("fieldupdate");
+                    dependentField.getFieldEl().trigger("fieldupdate");
                 }
             };
 
@@ -776,7 +740,7 @@
                 if (dependentField)
                 {
                     // trigger field update
-                    dependentField.trigger("fieldupdate");
+                    dependentField.getFieldEl().trigger("fieldupdate");
                 }
             };
 
@@ -1057,6 +1021,393 @@
             }
         }
         */
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WIZARD
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Wraps the current object into a wizard container and wires up the navigation and buttons so that
+         * wizard elements flip nicely.
+         */
+        wizard: function()
+        {
+            var self = this;
+
+            // config-driven
+            var stepDescriptors = this.wizardConfigs.steps;
+            if (!stepDescriptors)
+            {
+                stepDescriptors = [];
+            }
+            var wizardTitle = this.wizardConfigs.title;
+            var wizardDescription = this.wizardConfigs.description;
+            var buttonDescriptors = this.wizardConfigs.buttons;
+            if (!buttonDescriptors)
+            {
+                buttonDescriptors = {};
+                buttonDescriptors["previous"] = {
+                    "title": "Previous"
+                };
+                buttonDescriptors["next"] = {
+                    "title": "Next"
+                };
+                buttonDescriptors["submit"] = {
+                    "title": "Submit"
+                };
+            }
+            var showNavbar = this.wizardConfigs.showNavbar;
+            if (typeof(showNavbar) == "undefined")
+            {
+                showNavbar = true;
+            }
+            var performValidation = this.wizardConfigs.validation;
+            if (typeof(performValidation) == "undefined")
+            {
+                performValidation = true;
+            }
+
+            // DOM-driven configuration
+            var wizardTitleDomEl = $(this.field).find("[data-alpaca-wizard-title]");
+            if (wizardTitleDomEl.length > 0)
+            {
+                wizardTitle = wizardTitleDomEl.attr("data-alpaca-wizard-title");
+            }
+            var wizardDescriptionDomEl = $(this.field).find("[data-alpaca-wizard-description]");
+            if (wizardDescriptionDomEl.length > 0)
+            {
+                wizardDescription = wizardDescriptionDomEl.attr("data-alpaca-wizard-description");
+            }
+            var wizardValidationDomEl = $(this.field).find("[data-alpaca-wizard-validation]");
+            if (wizardValidationDomEl.length > 0)
+            {
+                performValidation = wizardValidationDomEl.attr("data-alpaca-wizard-validation");
+                performValidation = performValidation ? true: false;
+            }
+
+            // find all of the steps
+            var stepEls = $(this.field).find("[data-alpaca-wizard-role='step']");
+
+            // DOM-driven configuration of step descriptors
+            if (stepDescriptors.length == 0)
+            {
+                stepEls.each(function(i) {
+
+                    var stepDescriptor = {};
+
+                    var stepTitleEl = $(this).find("[data-alpaca-wizard-step-title]");
+                    if (stepTitleEl.length > 0)
+                    {
+                        stepDescriptor.title = stepTitleEl.attr("[data-alpaca-wizard-step-title]");
+                    }
+                    if (!stepDescriptor.title)
+                    {
+                        stepDescriptor.title = "Step " + i;
+                    }
+
+                    var stepDescriptionEl = $(this).find("[data-alpaca-wizard-step-description]");
+                    if (stepDescriptionEl.length > 0)
+                    {
+                        stepDescriptor.description = stepTitleEl.attr("[data-alpaca-wizard-step-description]");
+                    }
+                    if (!stepDescriptor.description)
+                    {
+                        stepDescriptor.description = "Step " + i;
+                    }
+
+                    stepDescriptors.push(stepDescriptor);
+                });
+            }
+
+            // model for use in rendering the wizard
+            var model = {};
+            model.wizardTitle = wizardTitle;
+            model.wizardDescription = wizardDescription;
+            model.showNavbar = showNavbar;
+            model.performValidation = performValidation;
+            model.steps = stepDescriptors;
+            model.buttons = buttonDescriptors;
+            model.schema = self.schema;
+            model.options = self.options;
+            model.data = self.data;
+
+            // render the actual wizard
+            var wizardTemplateDescriptor = self.view.getTemplateDescriptor("wizard");
+            if (wizardTemplateDescriptor)
+            {
+                var wizardEl = Alpaca.tmpl(wizardTemplateDescriptor, model);
+
+                $(self.field).append(wizardEl);
+
+                var wizardNav = $(wizardEl).find(".alpaca-wizard-nav");
+                var wizardSteps = $(wizardEl).find(".alpaca-wizard-steps");
+                var wizardButtons = $(wizardEl).find(".alpaca-wizard-buttons");
+
+                // move steps into place
+                $(wizardSteps).append(stepEls);
+
+                (function(wizardNav, wizardSteps, wizardButtons, model) {
+
+                    var currentIndex = 0;
+
+                    var previousButtonEl = $(wizardButtons).find("[data-alpaca-wizard-button-key='previous']");
+                    var nextButtonEl = $(wizardButtons).find("[data-alpaca-wizard-button-key='next']");
+                    var submitButtonEl = $(wizardButtons).find("[data-alpaca-wizard-button-key='submit']");
+
+                    // snap into place a little controller to work the buttons
+                    // assume the first step
+                    var refreshSteps = function()
+                    {
+                        // NAV
+                        if (model.showNavbar)
+                        {
+                            var stepElements = $(wizardNav).find("[data-alpaca-wizard-step-index]");
+                            $(stepElements).removeClass("disabled");
+                            $(stepElements).removeClass("completed");
+                            $(stepElements).removeClass("active");
+                            for (var g = 0; g < stepElements.length; g++)
+                            {
+                                if (g < currentIndex)
+                                {
+                                    $(wizardNav).find("[data-alpaca-wizard-step-index='" + g + "']").addClass("completed");
+                                }
+                                else if (g === currentIndex)
+                                {
+                                    $(wizardNav).find("[data-alpaca-wizard-step-index='" + g + "']").addClass("active");
+                                }
+                                else
+                                {
+                                    $(wizardNav).find("[data-alpaca-wizard-step-index='" + g + "']").addClass("disabled");
+                                }
+                            }
+                        }
+
+
+                        // BUTTONS
+
+                        // hide everything
+                        previousButtonEl.hide();
+                        nextButtonEl.hide();
+                        submitButtonEl.hide();
+
+                        // simple case
+                        if (model.steps.length == 1)
+                        {
+                            submitButtonEl.show();
+                        }
+                        else if (model.steps.length > 1)
+                        {
+                            if (currentIndex > 0)
+                            {
+                                previousButtonEl.show();
+                            }
+
+                            nextButtonEl.show();
+
+                            if (currentIndex == 0)
+                            {
+                                nextButtonEl.show();
+                            }
+                            else if (currentIndex == model.steps.length - 1)
+                            {
+                                nextButtonEl.hide();
+                                submitButtonEl.show();
+                            }
+                        }
+
+                        // hide all steps
+                        $(wizardSteps).find("[data-alpaca-wizard-role='step']").hide();
+                        $($(wizardSteps).find("[data-alpaca-wizard-role='step']")[currentIndex]).show();
+
+                    };
+
+                    var assertValidation = function(callback)
+                    {
+                        if (!model.performValidation)
+                        {
+                            callback(true);
+                            return;
+                        }
+
+                        // collect all of the fields on the current step
+                        var fields = [];
+
+                        var currentStepEl = $($(wizardSteps).find("[data-alpaca-wizard-role='step']")[currentIndex]);
+                        $(currentStepEl).children(".alpaca-field").each(function() {
+                            var fieldId = $(this).attr("data-alpaca-field-id");
+                            var field = self.childrenById[fieldId];
+                            fields.push(field);
+                        });
+
+                        // wrap into validation functions
+                        var fns = [];
+                        for (var i = 0; i < fields.length; i++)
+                        {
+                            fns.push(function(field) {
+                                return function(cb)
+                                {
+                                    field.refreshValidationState(true, function() {
+                                        cb();
+                                    });
+                                }
+                            }(fields[i]));
+                        }
+
+                        // run all validations
+                        Alpaca.series(fns, function() {
+
+                            var valid = true;
+                            for (var i = 0; i < fields.length; i++)
+                            {
+                                valid = valid && fields[i].isValid(true);
+                            }
+
+                            callback(valid);
+                        });
+                    };
+
+                    $(previousButtonEl).click(function(e) {
+                        e.preventDefault();
+
+                        if (currentIndex >= 1)
+                        {
+                            assertValidation(function(valid) {
+
+                                if (valid)
+                                {
+                                    currentIndex--;
+
+                                    refreshSteps();
+                                }
+                            });
+                        }
+                    });
+
+                    $(nextButtonEl).click(function(e) {
+                        e.preventDefault();
+
+                        if (currentIndex + 1 <= model.steps.length - 1)
+                        {
+                            assertValidation(function(valid) {
+
+                                if (valid)
+                                {
+                                    currentIndex++;
+
+                                    refreshSteps();
+                                }
+                            });
+                        }
+                    });
+
+                    $(submitButtonEl).click(function(e) {
+                        e.preventDefault();
+
+                        if (currentIndex === model.steps.length - 1)
+                        {
+                            assertValidation(function(valid) {
+
+                                if (valid)
+                                {
+                                    alert("SUBMIT GOOD");
+                                }
+                            });
+                        }
+                    });
+
+                    $(wizardNav).find("[data-alpaca-wizard-step-index]").click(function(e) {
+                        e.preventDefault();
+
+                        var navIndex = $(this).attr("data-alpaca-wizard-step-index");
+                        if (navIndex)
+                        {
+                            navIndex = parseInt(navIndex, 10);
+                            if (navIndex <= currentIndex)
+                            {
+                                assertValidation(function(valid) {
+
+                                    currentIndex = navIndex;
+
+                                    refreshSteps();
+                                });
+                            }
+                        }
+                    });
+
+                    refreshSteps();
+
+                }(wizardNav, wizardSteps, wizardButtons, model));
+            }
+        },
+
+        /**
+         * Renders a configuration-based wizard without a layout template.
+         */
+        autoWizard: function()
+        {
+            var stepBindings = this.wizardConfigs.bindings;
+            if (!stepBindings)
+            {
+                stepBindings = {};
+            }
+
+            for (var propertyId in this.childrenByPropertyId)
+            {
+                if (!stepBindings.hasOwnProperty(propertyId))
+                {
+                    stepBindings[propertyId] = 1;
+                }
+            }
+
+            var step = 1;
+            var col = [];
+            do
+            {
+                var stepId = "step" + step;
+
+                // collect fields in this step
+                col = [];
+                for (var propertyId in stepBindings)
+                {
+                    if (stepBindings[propertyId] == step)
+                    {
+                        if (this.childrenByPropertyId && this.childrenByPropertyId[propertyId])
+                        {
+                            col.push(this.childrenByPropertyId[propertyId].field);
+                        }
+                    }
+                }
+
+                if (col.length > 0)
+                {
+                    // create a dom element to represent this step
+                    // append into field
+                    var stepEl = $('<div data-alpaca-wizard-role="step" id="' + stepId + '"></div>');
+                    $(this.field).append(stepEl);
+
+                    // move elements in
+                    for (var i = 0; i < col.length; i++)
+                    {
+                        $(stepEl).append(col[i]);
+                    }
+
+                    step++;
+                }
+            }
+            while (col.length > 0);
+
+            // now run the normal wizard
+            this.wizard();
+        },
+
+
+
+
+
+
 
         //__BUILDER_HELPERS
 
