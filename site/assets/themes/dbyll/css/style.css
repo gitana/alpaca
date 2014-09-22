@@ -25,7 +25,7 @@ body{
   text-transform: uppercase;
 }
 
-.sidebar-header .title a{
+.sidebar-header .title a {
   text-decoration: none;
   color: #2c3e50;
 }
@@ -111,7 +111,14 @@ UL.nav.sidenav>li>a
     font-family: Ubuntu;
     text-align: center;
     font-size: 22px;
-    color: #555;
+    color: #777;
+}
+
+UL.nav.sidenav>li>a
+{
+    position: relative;
+    display: block;
+    padding: 2px 15px;
 }
 
 /*

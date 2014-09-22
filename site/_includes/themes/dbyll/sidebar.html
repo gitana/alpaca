@@ -1,7 +1,6 @@
 <! -- sidebar.html -->
+<br/>
 <header class="sidebar-header" role="banner">
-    <br/>
-    <br/>
 	<a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">
 		<img src="{{ ASSET_PATH }}/images/alpaca-icon.png" class="img-circle" />
 	</a>
@@ -10,39 +9,99 @@
     </h3>
     <p class="subtitle">
         Easy Web Forms for jQuery
+        <br/>
+        Open Source
     </p>
 </header>
 
+<br/>
+
+<div>
+    <ul class="nav nav-pills nav-stacked sidenav">
+        <li><a href="{{ BASE_PATH }}/index.html">Overview</a></li>
+        <li><a href="{{ BASE_PATH }}/download.html">Download</a></li>
+        <li><a href="{{ BASE_PATH }}/source.html">Source Code</a></li>
+        <li><a href="{{ BASE_PATH }}/documentation.html">Documentation</a></li>
+        <li><a href="{{ BASE_PATH }}/examples.html">Examples</a></li>
+<!--        <li><a href="{{ BASE_PATH }}/tutorial.html">Tutorial</a></li>-->
+        <li><a href="{{ BASE_PATH }}/support.html">Support</a></li>
+    </ul>
+</div>
+
+<br/>
+<hr/>
+<br/>
+
+<header class="sidebar-header" role="banner">
+    <a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">
+        <img src="{{ ASSET_PATH }}/images/alpaca-icon-cloud.png" class="img-circle" />
+    </a>
+    <h3 class="title">
+        <a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Alpaca Cloud</a>
+    </h3>
+    <p class="subtitle">
+        Cloud Hosted Forms
+    </p>
+</header>
+
+<br/>
+
+<div>
+    <ul class="nav nav-pills nav-stacked sidenav">
+        <li><a href="{{ BASE_PATH }}/cloudcms.html">Overview</a></li>
+        <li><a href="{{ BASE_PATH }}/widget.html">Widget</a></li>
+        <li><a href="{{ BASE_PATH }}/reports.html">Reports</a></li>
+        <li><a href="{{ BASE_PATH }}/form-builder.html">Form Builder</a></li>
+        <li><a href="{{ BASE_PATH }}/enterprise-support.html">Enterprise Support</a></li>
+    </ul>
+</div>
+
+<br/>
+<hr/>
+<br/>
+
+<header class="sidebar-header" role="banner">
+    <a href="https://www.cloudcms.com" target="_blank">
+        <img src="{{ ASSET_PATH }}/images/cloudcms_logo.png" style="width: 250px"/>
+    </a>
+    <p class="subtitle">
+        Alpaca is sponsored by<br/>
+        <a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a>
+    </p>
+</header>
+
+<br/>
+
 {% if site.author.bio %}
 <div id="bio" class="text-center">
-	{{ site.author.bio }}
+    {{ site.author.bio }}
 </div>
 {% endif %}
 
 <div id="contact-list" class="text-center">
-	<ul class="list-unstyled list-inline">
-		{% if site.author.github %}
-		<li>
-			<a class="btn btn-default btn-sm" href="https://github.com/{{ site.author.github }}">
-				<i class="fa fa-github-alt fa-lg"></i>
-			</a>
-		</li>
-		{% endif %}
-		{% if site.author.twitter %}
-		<li>
-			<a class="btn btn-default btn-sm" href="https://twitter.com/{{ site.author.twitter }}">
-				<i class="fa fa-twitter fa-lg"></i>
-			</a>
-		</li>
-		{% endif %}
-		{% if site.author.email %}
-		<li>
-			<a class="btn btn-default btn-sm" href="mailto:{{ site.author.email }}">
-				<i class="fa fa-envelope fa-lg"></i>
-			</a>
-		</li>
-		{% endif %}
-	</ul>
+    <ul class="list-unstyled list-inline">
+        {% if site.author.github %}
+        <li>
+            <a class="btn btn-default btn-sm" href="https://github.com/{{ site.author.github }}">
+                <i class="fa fa-github-alt fa-lg"></i>
+            </a>
+        </li>
+        {% endif %}
+        {% if site.author.twitter %}
+        <li>
+            <a class="btn btn-default btn-sm" href="https://twitter.com/{{ site.author.twitter }}">
+                <i class="fa fa-twitter fa-lg"></i>
+            </a>
+        </li>
+        {% endif %}
+        {% if site.author.email %}
+        <li>
+            <a class="btn btn-default btn-sm" href="mailto:{{ site.author.email }}">
+                <i class="fa fa-envelope fa-lg"></i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
     <!--
 	<ul id="contact-list-secondary" class="list-unstyled list-inline">
 		{% if site.author.pinterest %}
@@ -68,24 +127,5 @@
 	-->
 </div>
 
-<br/>
-<br/>
-
-<div>
-    <ul class="nav nav-pills nav-stacked sidenav">
-        <li><a href="{{ BASE_PATH }}/index.html">Overview</a></li>
-        <li><a href="{{ BASE_PATH }}/examples.html">Examples</a></li>
-        <li><a href="{{ BASE_PATH }}/documentation.html">Documentation</a></li>
-        <li><a href="{{ BASE_PATH }}/download.html">Downloads</a></li>
-        <li><a href="{{ BASE_PATH }}/source.html">Source Code</a></li>
-<!--        <li><a href="{{ BASE_PATH }}/tutorial.html">Tutorial</a></li>-->
-        <li><a href="{{ BASE_PATH }}/support.html">Support</a></li>
-    </ul>
-</div>
-
-<!-- github-->
-        <!--
-<a href="https://github.com/gitana/alpaca" target="_blank" class="hidden-xs"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
--->
 
 <! -- sidebar.html end -->

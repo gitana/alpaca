@@ -8,7 +8,7 @@ pygments: true
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : Alpaca.js
+title : Alpaca Forms
 tagline: Web Forms for jQuery
 author :
   name : Gitana Software, Inc.
