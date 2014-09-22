@@ -1300,15 +1300,15 @@
 
                         if (currentIndex >= 1)
                         {
-                            assertValidation("previous", function(valid) {
+                            //assertValidation("previous", function(valid) {
 
-                                if (valid)
-                                {
+                                //if (valid)
+                                //{
                                     currentIndex--;
 
                                     refreshSteps();
-                                }
-                            });
+                                //}
+                            //});
                         }
                     });
 
