@@ -1250,7 +1250,7 @@
                         var fields = [];
 
                         var currentStepEl = $($(wizardSteps).find("[data-alpaca-wizard-role='step']")[currentIndex]);
-                        $(currentStepEl).children(".alpaca-field").each(function() {
+                        $(currentStepEl).find(".alpaca-field").each(function() {
                             var fieldId = $(this).attr("data-alpaca-field-id");
                             var field = self.childrenById[fieldId];
                             fields.push(field);
@@ -1370,9 +1370,39 @@
                             {
                                 assertValidation(null, function(valid) {
 
-                                    currentIndex = navIndex;
+                                    if (valid)
+                                    {
+                                        currentIndex = navIndex;
 
-                                    refreshSteps();
+                                        refreshSteps();
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                    self.on("moveToStep", function(event) {
+
+                        var index = event.index;
+                        var skipValidation = event.skipValidation;
+
+                        if ((typeof(index) != "undefined") && index <= model.steps.length - 1)
+                        {
+                            if (skipValidation)
+                            {
+                                currentIndex = index;
+                                refreshSteps();
+                            }
+                            else
+                            {
+                                assertValidation(null, function(valid) {
+
+                                    if (valid)
+                                    {
+                                        currentIndex = index;
+
+                                        refreshSteps();
+                                    }
                                 });
                             }
                         }
