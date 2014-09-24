@@ -27,8 +27,10 @@ and you can get all the source code from there.
 ## Looking for Support?
 
 If you're using Alpaca in production and are looking for production support for Alpaca or a service-level agreement
-for bug fixes and patches, please contact <a href="https://www.cloudcms.com">Cloud CMS</a>.  Cloud CMS sponsors the
+for bug fixes and patches, please contact <a href="support.html">Cloud CMS</a>.  Cloud CMS sponsors the
 Alpaca project and code base and the company's developers provide continuous improvement to the offering.
 
 Cloud CMS offers monthly and annual support contracts in addition to consulting and development services designed to
-assist with your projects. <a href="https://www.cloudcms.com">Let us know how we can help</a>!
+assist with your projects.
+
+<a href="support.html">Let us know how we can help</a>!

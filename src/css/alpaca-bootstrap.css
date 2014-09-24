@@ -126,6 +126,11 @@ legend.alpaca-container-label
     margin-top: 50px;
     margin-bottom: 50px;
 }
+.alpaca-field.alpaca-field-upload .template-download TD.error
+{
+    color: red;
+}
+
 
 
 

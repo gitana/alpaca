@@ -1,5 +1,7 @@
 <! -- sidebar.html -->
 <br/>
+<br/>
+
 <header class="sidebar-header" role="banner">
 	<a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">
 		<img src="{{ ASSET_PATH }}/images/alpaca-icon.png" class="img-circle" />
@@ -33,14 +35,16 @@
 <br/>
 
 <header class="sidebar-header" role="banner">
-    <a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">
-        <img src="{{ ASSET_PATH }}/images/alpaca-icon-cloud.png" class="img-circle" />
+    <a href="cloud-forms.html" target="_blank">
+        <img src="{{ ASSET_PATH }}/images/alpaca-icon-cloud.png" class="img-circle"/>
     </a>
     <h3 class="title">
-        <a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Alpaca Cloud</a>
+        <a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Cloud Forms</a>
     </h3>
     <p class="subtitle">
-        Cloud Hosted Forms
+        For Web Sites and Mobile Apps
+        <br/>
+        <a href="https://www.cloudcms.com/trial.html" target="_blank">14 Day Free Trial</a>
     </p>
 </header>
 
@@ -48,28 +52,14 @@
 
 <div>
     <ul class="nav nav-pills nav-stacked sidenav">
-        <li><a href="{{ BASE_PATH }}/cloudcms.html">Overview</a></li>
-        <li><a href="{{ BASE_PATH }}/widget.html">Widget</a></li>
+        <li><a href="{{ BASE_PATH }}/cloud-forms.html">Overview</a></li>
         <li><a href="{{ BASE_PATH }}/reports.html">Reports</a></li>
         <li><a href="{{ BASE_PATH }}/form-builder.html">Form Builder</a></li>
-        <li><a href="{{ BASE_PATH }}/enterprise-support.html">Enterprise Support</a></li>
+        <li><a href="{{ BASE_PATH }}/plugin.html">Plugin</a></li>
     </ul>
 </div>
 
 <br/>
-<hr/>
-<br/>
-
-<header class="sidebar-header" role="banner">
-    <a href="https://www.cloudcms.com" target="_blank">
-        <img src="{{ ASSET_PATH }}/images/cloudcms_logo.png" style="width: 250px"/>
-    </a>
-    <p class="subtitle">
-        Alpaca is sponsored by<br/>
-        <a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a>
-    </p>
-</header>
-
 <br/>
 
 {% if site.author.bio %}

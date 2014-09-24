@@ -394,21 +394,23 @@
             var self = this;
 
             var layoutBindings = null;
-            if (self.view.getLayout()) {
-                layoutBindings = self.view.getLayout().bindings;
-            }
-
-            // if layout and bindings not provided, assume a default strategy
-            if (self.view.getLayout() && self.view.getLayout().templateDescriptor && !layoutBindings && model.items.length > 0)
+            if (self.isTopLevel() && self.view.getLayout())
             {
-                layoutBindings = {};
+                layoutBindings = self.view.getLayout().bindings;
 
-                for (var i = 0; i < model.items.length; i++)
+                // if layout and bindings not provided, assume a default strategy
+                if (!layoutBindings && self.view.getLayout().templateDescriptor && model.items.length > 0)
                 {
-                    var name = model.items[i].name;
+                    layoutBindings = {};
 
-                    layoutBindings[name] = "[data-alpaca-layout-binding='" + name + "']";
+                    for (var i = 0; i < model.items.length; i++)
+                    {
+                        var name = model.items[i].name;
+
+                        layoutBindings[name] = "[data-alpaca-layout-binding='" + name + "']";
+                    }
                 }
+
             }
 
             if (model.items.length > 0)
@@ -433,20 +435,6 @@
                     var holder = $(insertionPoint).parent();
 
                     $(insertionPoint).replaceWith(item.field);
-                    $(item.field).addClass("alpaca-container-item");
-
-                    if (i === 0)
-                    {
-                        $(item.field).addClass("alpaca-container-item-first");
-                    }
-
-                    if (i + 1 === model.items.length)
-                    {
-                        $(item.field).addClass("alpaca-container-item-last");
-                    }
-
-                    $(item.field).attr("data-alpaca-container-item-index", i);
-                    $(item.field).attr("data-alpaca-container-item-name", item.name);
 
                     // reset domEl to allow for refresh
                     item.domEl = holder;
@@ -477,6 +465,21 @@
                     // remove insertion point
                     $(insertionPoint).remove();
                 }
+
+                $(item.field).addClass("alpaca-container-item");
+
+                if (i === 0)
+                {
+                    $(item.field).addClass("alpaca-container-item-first");
+                }
+
+                if (i + 1 === model.items.length)
+                {
+                    $(item.field).addClass("alpaca-container-item-last");
+                }
+
+                $(item.field).attr("data-alpaca-container-item-index", i);
+                $(item.field).attr("data-alpaca-container-item-name", item.name);
 
                 // register the child
                 self.registerChild(item, i);

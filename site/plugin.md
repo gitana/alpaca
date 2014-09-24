@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Widget
-header: Widget
+title: Cloud Plugin
+header: Cloud Plugin
 group: navigation
 ---
 {% include JB/setup %}

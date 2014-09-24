@@ -111,7 +111,7 @@ UL.nav.sidenav>li>a
     font-family: Ubuntu;
     text-align: center;
     font-size: 22px;
-    color: #777;
+    color: #555;
 }
 
 UL.nav.sidenav>li>a
@@ -159,3 +159,12 @@ a:hover
     color: #bb9977;
 }
 */
+
+footer
+{
+    background-color: #fafafa;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 0px;
+    padding-top: 15px;
+}

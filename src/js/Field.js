@@ -426,7 +426,7 @@
                         // insert the field before our form fields container
                         form.formFieldsContainer.before(self.field);
 
-                        // remove the formFieldscOntainer marker
+                        // remove the formFieldsContainer marker
                         form.formFieldsContainer.remove();
 
                         // bind the top field to the form

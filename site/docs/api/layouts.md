@@ -127,3 +127,127 @@ $("#field3").alpaca({
     }
 });</script>
 {% endraw %}
+
+
+## Two-Column Layout with sub-properties
+
+Here is a simple two column layout with sub-properties.  They layout is provided as a string in the config.
+
+<div id="field4"></div>
+{% raw %}
+<script type="text/javascript" id="field4-script">
+$("#field4").alpaca({
+    "data": {
+        "name": {
+            "first": "John",
+            "last": "McClane"
+        }
+    },
+    "schema": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "object",
+                "properties": {
+                    "first": {
+                        "type": "string"
+                    },
+                    "last": {
+                        "type": "string"
+                    }
+                }
+            },
+            "address": {
+                "type": "object",
+                "properties": {
+                    "street": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    }
+                }
+            },
+            "preferences": {
+                "type": "object",
+                "properties": {
+                    "meal": {
+                        "type": "boolean"
+                    },
+                    "hotel": {
+                        "type": "boolean"
+                    },
+                    "taxi": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "name": {
+                "label": "Name",
+                "fields": {
+                    "first": {
+                        "label": "First Name",
+                        "type": "text"
+                    },
+                    "last": {
+                        "label": "Last Name",
+                        "type": "text"
+                    }
+                }
+            },
+            "address": {
+                "label": "Address",
+                "fields": {
+                    "street": {
+                        "label": "First Name",
+                        "type": "text"
+                    },
+                    "city": {
+                        "label": "City",
+                        "type": "text"
+                    },
+                    "state": {
+                        "label": "State",
+                        "type": "state"
+                    }
+                }
+            },
+            "preferences": {
+                "label": "Preferences",
+                "fields": {
+                    "meal": {
+                        "rightLabel": "Sign me up for a meal plan",
+                        "type": "checkbox"
+                    },
+                    "hotel": {
+                        "rightLabel": "Book a hotel for me",
+                        "type": "checkbox"
+                    },
+                    "taxi": {
+                        "rightLabel": "Schedule a taxi for me from the airport",
+                        "type": "checkbox"
+                    }
+                }
+            }
+        }
+    },
+    "view": {
+        "parent": "bootstrap-edit",
+        "layout": {
+            "template": "<div class='row'><div class='col-md-6' id='column-1'></div><div class='col-md-6' id='column-2'></div></div>",
+            "bindings": {
+                "name": "column-1",
+                "address": "column-1",
+                "preferences": "column-2"
+            }
+        }
+    }
+});</script>
+{% endraw %}
