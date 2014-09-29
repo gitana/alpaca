@@ -143,9 +143,10 @@
             }
 
             return isValid;
-        },
+        }
 
-        //__BUILDER_HELPERS
+        /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.Fields.TextAreaField#getTitle
@@ -161,7 +162,7 @@
             return "Field for objects with key/value pairs that share the same schema for values.";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("map", Alpaca.Fields.MapField);

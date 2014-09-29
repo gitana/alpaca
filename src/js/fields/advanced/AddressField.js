@@ -202,7 +202,30 @@
             });
         },
 
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.Fields.ObjectField#getType
+         */
+        getType: function() {
+            return "any";
+        }
+
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Fields.ObjectField#getTitle
+         */
+        getTitle: function() {
+            return "Address";
+        },
+
+        /**
+         * @see Alpaca.Fields.ObjectField#getDescription
+         */
+        getDescription: function() {
+            return "Standard US Address with Street, City, State and Zip. Also comes with support for Google map.";
+        },
 
         /**
          * @private
@@ -239,29 +262,9 @@
                     }
                 }
             });
-        },
-        /**
-         * @see Alpaca.Fields.ObjectField#getTitle
-         */
-        getTitle: function() {
-            return "Address";
-        },
-
-        /**
-         * @see Alpaca.Fields.ObjectField#getDescription
-         */
-        getDescription: function() {
-            return "Standard US Address with Street, City, State and Zip. Also comes with support for Google map.";
-        },
-
-        /**
-         * @see Alpaca.Fields.ObjectField#getType
-         */
-        getType: function() {
-            return "any";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("address", Alpaca.Fields.AddressField);

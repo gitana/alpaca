@@ -428,7 +428,32 @@
 
                 el.focus();
             }
-        },//__BUILDER_HELPERS
+        },
+
+        /**
+         * @see Alpaca.Field#getType
+         */
+        getType: function() {
+            return "string";
+        }
+
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Field#getTitle
+         */
+        getTitle: function() {
+            return "Single-Line Text";
+        },
+
+        /**
+         * @see Alpaca.Field#getDescription
+         */
+        getDescription: function() {
+            return "Text field for single-line text.";
+        },
 
         /**
          * @private
@@ -537,29 +562,9 @@
                     }
                 }
             });
-        },
-
-        /**
-         * @see Alpaca.Field#getTitle
-         */
-        getTitle: function() {
-            return "Single-Line Text";
-        },
-
-        /**
-         * @see Alpaca.Field#getDescription
-         */
-        getDescription: function() {
-            return "Text field for single-line text.";
-        },
-
-        /**
-         * @see Alpaca.Field#getType
-         */
-        getType: function() {
-            return "string";
         }
-        //__END_OF_BUILDER_HELPERS
+
+        /* end_builder_helpers */
 
     });
 

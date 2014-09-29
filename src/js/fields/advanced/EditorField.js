@@ -359,9 +359,25 @@
             }
 
             return value;
+        }
+
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Fields.TextField#getTitle
+         */
+        getTitle: function() {
+            return "Editor";
         },
 
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.Fields.TextField#getDescription
+         */
+        getDescription: function() {
+            return "Editor";
+        },
 
         /**
          * @private
@@ -428,23 +444,9 @@
                     }
                 }
             });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Editor";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Editor";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
 
     });
 

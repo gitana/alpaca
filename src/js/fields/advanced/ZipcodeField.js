@@ -73,9 +73,12 @@
             }
 
             return baseStatus;
-        },
+        }
 
-        //__BUILDER_HELPERS
+
+
+        /* builder_helpers */
+        ,
 
         /**
          * @private
@@ -126,7 +129,7 @@
             return "Provides a five or nine-digital US zipcode control with validation.";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerMessages({

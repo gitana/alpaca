@@ -30,6 +30,10 @@
     "phantom": "0.6.3",
     "q": "^1.0.1",
     "run-sequence": "*",
-    "wd": ""
+    "wd": "",
+
+    "gulp-util": "*",
+    "through2": "*"
+
   }
 }

@@ -70,7 +70,31 @@
         focus: function()
         {
             this.control.focus();
-        },//__BUILDER_HELPERS
+        },
+
+        /**
+         * @see Alpaca.Field#getType
+         */
+        getType: function() {
+            return "any";
+        }
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Field#getTitle
+         */
+        getTitle: function() {
+            return "Any Field";
+        },
+
+        /**
+         * @see Alpaca.Field#getDescription
+         */
+        getDescription: function() {
+            return "Any field.";
+        },
 
         /**
          * @private
@@ -114,30 +138,9 @@
                 "fields": {
                 }
             });
-        },
-
-        /**
-         * @see Alpaca.Field#getTitle
-         */
-        getTitle: function() {
-            return "Any Field";
-        },
-
-        /**
-         * @see Alpaca.Field#getDescription
-         */
-        getDescription: function() {
-            return "Any field.";
-        },
-
-        /**
-         * @see Alpaca.Field#getType
-         */
-        getType: function() {
-            return "any";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("any", Alpaca.Fields.AnyField);

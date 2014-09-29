@@ -137,9 +137,10 @@
 
             });
 
-        },
+        }
 
-        //__BUILDER_HELPERS
+        /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.Fields.TextAreaField#getTitle
@@ -155,7 +156,7 @@
             return "Editor for JSON objects with basic validation and formatting.";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     // Additional Registrations

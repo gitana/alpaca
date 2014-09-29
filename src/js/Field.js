@@ -1611,7 +1611,6 @@
         {
             return "";
         },
-        //__BUILDER_HELPERS
 
         /**
          * Finds if this field is a container of other fields.
@@ -1620,7 +1619,10 @@
          */
         isContainer: function() {
             return false;
-        },
+        }
+
+        /* builder_helpers */
+        ,
 
         /**
          * Returns field title.
@@ -2035,7 +2037,8 @@
             }
 
             return optionsForOptions;
-        }//__END_OF_BUILDER_HELPERS
+        }
+        /* end_builder_helpers */
     });
 
     // Registers additional messages

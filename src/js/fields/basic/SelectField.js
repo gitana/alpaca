@@ -300,7 +300,24 @@
             };
 
             return baseStatus && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"];
-        },//__BUILDER_HELPERS
+        }
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Field#getTitle
+         */
+        getTitle: function() {
+            return "Select Field";
+        },
+
+        /**
+         * @see Alpaca.Field#getDescription
+         */
+        getDescription: function() {
+            return "Select Field";
+        },
 
         /**
          * @private
@@ -358,21 +375,9 @@
                     }
                 }
             });
-        },
+        }
 
-        /**
-         * @see Alpaca.Field#getTitle
-         */
-        getTitle: function() {
-            return "Select Field";
-        },
-
-        /**
-         * @see Alpaca.Field#getDescription
-         */
-        getDescription: function() {
-            return "Select Field";
-        }//__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
 
     });
 

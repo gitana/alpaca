@@ -116,9 +116,25 @@
             } else {
                 return val;
             }
+        }
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Fields.TextField#getTitle
+         */
+        getTitle: function() {
+            return "Currency Field";
         },
 
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.Fields.TextField#getDescription
+         */
+        getDescription: function() {
+            return "Provides an automatically formatted and configurable input for entering currency amounts.";
+        },
+
         getSchemaOfPriceFormatOptions: function() {
             return {
                 "properties": {
@@ -254,23 +270,9 @@
                     }
                 }
             });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Currency Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Provides an automatically formatted and configurable input for entering currency amounts.";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("currency", Alpaca.Fields.CurrencyField);

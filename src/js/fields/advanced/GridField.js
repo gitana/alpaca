@@ -81,7 +81,15 @@
             });
         },
 
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.ControlField#getType
+         */
+        getType: function() {
+            return "array";
+        }
+
+        /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.ControlField#getTitle
@@ -95,16 +103,9 @@
          */
         getDescription: function() {
             return "Renders array items into a grid";
-        },
-
-        /**
-         * @see Alpaca.ControlField#getType
-         */
-        getType: function() {
-            return "array";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("grid", Alpaca.Fields.GridField);

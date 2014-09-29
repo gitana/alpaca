@@ -40,9 +40,10 @@
                 var v = _this.getValue();
                 _this.setValue(v);
             });
-        },
+        }
 
-        //__BUILDER_HELPERS
+        /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.Fields.TextField#getTitle
@@ -58,7 +59,7 @@
             return "Text field for lowercase text.";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("lowercase", Alpaca.Fields.LowerCaseField);

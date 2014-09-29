@@ -688,7 +688,7 @@
         {
         },
 
-        //__BUILDER_HELPERS
+        /* builder_helpers */
 
         /**
          * @see Alpaca.ControlField#getTitle
@@ -711,7 +711,7 @@
             return "array";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("upload", Alpaca.Fields.UploadField);

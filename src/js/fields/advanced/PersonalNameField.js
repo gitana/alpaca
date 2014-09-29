@@ -57,7 +57,10 @@
                 _this.setValue(v);
             });
 
-        },//__BUILDER_HELPERS
+        }
+
+        /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.Fields.TextField#getTitle
@@ -73,7 +76,7 @@
             return "Text Field for personal name with captical letter for first letter & after hyphen, space or apostrophe.";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("personalname", Alpaca.Fields.PersonalNameField);

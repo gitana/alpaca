@@ -1,25 +1,28 @@
 var fs   = require("fs");
-var gulp = require('gulp');
-var _    = require('lodash');
+var gulp = require("gulp");
+var _    = require("lodash");
 
-var es   = require('event-stream');
-var exec = require('child_process').exec;
+var es   = require("event-stream");
+var exec = require("child_process").exec;
 
-var pkg  = require('./package.json');
+var pkg  = require("./package.json");
 
-var concat      = require('gulp-concat');
-var uglify      = require('gulp-uglify');
-var handlebars  = require('gulp-handlebars');
-var jshint      = require('gulp-jshint');
-var minifyCss   = require('gulp-minify-css');
-var rename      = require('gulp-rename');
-var clean       = require('gulp-clean');
+var concat      = require("gulp-concat");
+var uglify      = require("gulp-uglify");
+var handlebars  = require("gulp-handlebars");
+var jshint      = require("gulp-jshint");
+var minifyCss   = require("gulp-minify-css");
+var rename      = require("gulp-rename");
+var clean       = require("gulp-clean");
 var declare     = require("gulp-declare");
-var notify      = require('gulp-notify');
-var runSequence = require('run-sequence');
-var nodemon     = require('gulp-nodemon');
+var notify      = require("gulp-notify");
+var runSequence = require("run-sequence");
+var nodemon     = require("gulp-nodemon");
 
-var wrap = require('gulp-wrap-umd');
+var wrap = require("gulp-wrap-umd");
+
+// custom builder_helper stripper to remove builder helper functions
+var stripper = require("./gulp/gulp-stripper");
 
 var paths = {
     scripts: {
@@ -245,36 +248,6 @@ gulp.task('scripts', function(cb) {
 
     // alpaca umd
     var wrapper = "" + fs.readFileSync("./config/umd-wrapper.txt");
-    /*
-    var web_wrap = {
-        deps: ['jquery', 'handlebars'],
-        params: ['$', 'Handlebars'],
-        namespace: "Alpaca",
-        exports: "Alpaca",
-        template: wrapper
-    };
-    var bootstrap_wrap = {
-        deps: ['jquery', 'handlebars', 'bootstrap'],
-        params: ['$', 'Handlebars', 'bootstrap'],
-        namespace: "Alpaca",
-        exports: "Alpaca",
-        template: wrapper
-    };
-    var jqueryui_warp = {
-        deps: ['jquery', 'handlebars', 'jquery-ui'],
-        params: ['$', 'Handlebars', 'jqueryui'],
-        namespace: "Alpaca",
-        exports: "Alpaca",
-        template: wrapper
-    };
-    var jquerymobile_wrap = {
-        deps: ['jquery', 'handlebars', 'jquery-mobile'],
-        params: ['$', 'Handlebars', 'jqm'],
-        namespace: "Alpaca",
-        exports: "Alpaca",
-        template: wrapper
-    };
-    */
 
     var web_wrap = {
         deps: [{
@@ -348,7 +321,6 @@ gulp.task('scripts', function(cb) {
         defaultView: 'jquerymobile'
     };
 
-
     // core
     var first = gulp.src(paths.scripts.core)
                     .pipe(concat('scripts-core.js'))
@@ -362,40 +334,43 @@ gulp.task('scripts', function(cb) {
             gulp.src(paths.scripts.web)
                 .pipe(concat('alpaca.js'))
                 .pipe(wrap(web_wrap))
-                .pipe(gulp.dest('build/alpaca/web')),
-            gulp.src(paths.scripts.web)
-                .pipe(uglify())
+                .pipe(gulp.dest('build/alpaca/web'))
                 .pipe(concat('alpaca.min.js'))
+                .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/web')),
+            /*
+            gulp.src(paths.scripts.web)
+                .pipe(concat('alpaca-nobuilder.js'))
+                .pipe(wrap(web_wrap))
+                .pipe(stripper())
+                .pipe(gulp.dest('build/alpaca/web')),
+            */
 
             // bootstrap
             gulp.src(paths.scripts.bootstrap)
                 .pipe(concat('alpaca.js'))
                 .pipe(wrap(bootstrap_wrap))
-                .pipe(gulp.dest('build/alpaca/bootstrap')),
-            gulp.src(paths.scripts.bootstrap)
-                .pipe(uglify())
+                .pipe(gulp.dest('build/alpaca/bootstrap'))
                 .pipe(concat('alpaca.min.js'))
+                .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/bootstrap')),
 
             // jqueryui
             gulp.src(paths.scripts.jqueryui)
                 .pipe(concat('alpaca.js'))
                 .pipe(wrap(jqueryui_warp))
-                .pipe(gulp.dest('build/alpaca/jqueryui')),
-            gulp.src(paths.scripts.jqueryui)
-                .pipe(uglify())
+                .pipe(gulp.dest('build/alpaca/jqueryui'))
                 .pipe(concat('alpaca.min.js'))
+                .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/jqueryui')),
 
             // jquerymobile
             gulp.src(paths.scripts.jquerymobile)
                 .pipe(concat('alpaca.js'))
                 .pipe(wrap(jquerymobile_wrap))
-                .pipe(gulp.dest('build/alpaca/jquerymobile')),
-            gulp.src(paths.scripts.jquerymobile)
-                .pipe(uglify())
+                .pipe(gulp.dest('build/alpaca/jquerymobile'))
                 .pipe(concat('alpaca.min.js'))
+                .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/jquerymobile'))
 
         ).pipe(es.wait(function() {

@@ -93,7 +93,21 @@
             return $(this.control).val();
         },
 
-        //__BUILDER_HELPERS
+        /* builder_helpers */
+
+        /**
+         * @see Alpaca.Fields.TextField#getTitle
+         */
+        getTitle: function() {
+            return "Multi-Line Text";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#getDescription
+         */
+        getDescription: function() {
+            return "Textarea field for multiple line text.";
+        },
 
         /**
          * @private
@@ -142,22 +156,9 @@
                     }
                 }
             });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Multi-Line Text";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Textarea field for multiple line text.";
         }
-        //__END_OF_BUILDER_HELPERS
+
+        /* end_builder_helpers */
 
     });
 

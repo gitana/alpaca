@@ -117,7 +117,31 @@
             }
 
             return true;
-        },//__BUILDER_HELPERS
+        },
+
+        /**
+         * @see Alpaca.Fields.NumberField#getType
+         */
+        getType: function() {
+            return "integer";
+        }
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Fields.NumberField#getTitle
+         */
+        getTitle: function() {
+            return "Integer Field";
+        },
+
+        /**
+         * @see Alpaca.Fields.NumberField#getDescription
+         */
+        getDescription: function() {
+            return "Field for integers.";
+        },
 
         /**
          * @private
@@ -199,29 +223,9 @@
                     }
                 }
             });
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getTitle
-         */
-        getTitle: function() {
-            return "Integer Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getDescription
-         */
-        getDescription: function() {
-            return "Field for integers.";
-        },
-
-        /**
-         * @see Alpaca.Fields.NumberField#getType
-         */
-        getType: function() {
-            return "integer";
         }
-        //__END_OF_BUILDER_HELPERS
+
+        /* end_builder_helpers */
     });
 
     // Additional Registrations

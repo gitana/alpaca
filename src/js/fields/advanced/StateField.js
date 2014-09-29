@@ -57,9 +57,25 @@
             this.options.optionLabels = holdings.values;
 
             this.base();
+        }
+
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Fields.TextField#getTitle
+         */
+        getTitle: function() {
+            return "State Field";
         },
 
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.Fields.TextField#getDescription
+         */
+        getDescription: function() {
+            return "Provides a dropdown selector of states and/or territories in the United States, keyed by their two-character code.";
+        },
 
         /**
          * @private
@@ -124,23 +140,9 @@
                     }
                 }
             });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "State Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Provides a dropdown selector of states and/or territories in the United States, keyed by their two-character code.";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("state", Alpaca.Fields.StateField);

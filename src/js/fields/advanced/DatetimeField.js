@@ -57,9 +57,24 @@
              */
             getDatetime: function() {
                 return this.getDate();
+            }
+
+            /* builder_helpers */
+            ,
+
+            /**
+             * @see Alpaca.Fields.TextField#getTitle
+             */
+            getTitle: function() {
+                return "Datetime Field";
             },
 
-            //__BUILDER_HELPERS
+            /**
+             * @see Alpaca.Fields.TextField#getDescription
+             */
+            getDescription: function() {
+                return "Datetime Field based on Trent Richardson's <a href='http://trentrichardson.com/examples/timepicker/'>jQuery timepicker addon</a>.";
+            },
 
             /**
              * @private
@@ -89,23 +104,9 @@
                         }
                     }
                 });
-            },
-
-            /**
-             * @see Alpaca.Fields.TextField#getTitle
-             */
-            getTitle: function() {
-                return "Datetime Field";
-            },
-
-            /**
-             * @see Alpaca.Fields.TextField#getDescription
-             */
-            getDescription: function() {
-                return "Datetime Field based on Trent Richardson's <a href='http://trentrichardson.com/examples/timepicker/'>jQuery timepicker addon</a>.";
             }
 
-            //__END_OF_BUILDER_HELPERS
+            /* end_builder_helpers */
         });
 
     Alpaca.registerFieldClass("datetime", Alpaca.Fields.DatetimeField);

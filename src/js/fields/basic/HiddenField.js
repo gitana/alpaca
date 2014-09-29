@@ -46,7 +46,15 @@
             this.base(value);
         },
 
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.Field#getType
+         */
+        getType: function() {
+            return "string";
+        },
+
+
+        /* builder_helpers */
 
         /**
          * @see Alpaca.Field#getTitle
@@ -60,14 +68,9 @@
          */
         getDescription: function() {
             return "Field for a hidden HTML input";
-        },
+        }
 
-        /**
-         * @see Alpaca.Field#getType
-         */
-        getType: function() {
-            return "string";
-        }//__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
 
     });
 

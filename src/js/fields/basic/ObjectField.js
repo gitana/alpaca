@@ -1486,13 +1486,29 @@
             this.wizard();
         },
 
+        /**
+         * @see Alpaca.Field#getType
+         */
+        getType: function() {
+            return "object";
+        },
 
 
+        /* builder_helpers */
 
+        /**
+         * @see Alpaca.Field#getTitle
+         */
+        getTitle: function() {
+            return "Object Field";
+        },
 
-
-
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.Field#getDescription
+         */
+        getDescription: function() {
+            return "Object field for containing other fields";
+        },
 
         /**
          * @private
@@ -1567,30 +1583,9 @@
             }
 
             return Alpaca.merge(schemaOfOptions, properties);
-        },
-
-        /**
-         * @see Alpaca.Field#getTitle
-         */
-        getTitle: function() {
-            return "Object Field";
-        },
-
-        /**
-         * @see Alpaca.Field#getDescription
-         */
-        getDescription: function() {
-            return "Object field for containing other fields";
-        },
-
-        /**
-         * @see Alpaca.Field#getType
-         */
-        getType: function() {
-            return "object";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     // Additional Registrations

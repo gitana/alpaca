@@ -348,7 +348,29 @@
 
         },
 
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.Field#getType
+         */
+        getType: function() {
+            return "boolean";
+        },
+
+
+        /* builder_helpers */
+
+        /**
+         * @see Alpaca.Field#getTitle
+         */
+        getTitle: function() {
+            return "Checkbox Field";
+        },
+
+        /**
+         * @see Alpaca.Field#getDescription
+         */
+        getDescription: function() {
+            return "Checkbox Field for boolean (true/false), string ('true', 'false' or comma-delimited string of values) or data array.";
+        },
 
         /**
          * @private
@@ -386,29 +408,9 @@
                     }
                 }
             });
-        },
-
-        /**
-         * @see Alpaca.Field#getTitle
-         */
-        getTitle: function() {
-            return "Checkbox Field";
-        },
-
-        /**
-         * @see Alpaca.Field#getDescription
-         */
-        getDescription: function() {
-            return "Checkbox Field for boolean (true/false), string ('true', 'false' or comma-delimited string of values) or data array.";
-        },
-
-        /**
-         * @see Alpaca.Field#getType
-         */
-        getType: function() {
-            return "boolean";
         }
-        //__END_OF_BUILDER_HELPERS
+
+        /* end_builder_helpers */
 
     });
 

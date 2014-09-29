@@ -147,8 +147,25 @@
             });
             */
 
-        },//__BUILDER_HELPERS
-		
+        }
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Field#getTitle
+         */
+        getTitle: function() {
+            return "Radio Group Field";
+        },
+
+        /**
+         * @see Alpaca.Field#getDescription
+         */
+        getDescription: function() {
+            return "Radio Group Field with list of options.";
+        },
+
         /**
          * @private
          * @see Alpaca.Fields.ListField#getSchemaOfOptions
@@ -176,22 +193,9 @@
                     }
 				}
 			});
-        },
+        }
 
-		/**
-         * @see Alpaca.Field#getTitle
-		 */
-		getTitle: function() {
-			return "Radio Group Field";
-		},
-		
-		/**
-         * @see Alpaca.Field#getDescription
-		 */
-		getDescription: function() {
-			return "Radio Group Field with list of options.";
-		}
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
         
     });
     

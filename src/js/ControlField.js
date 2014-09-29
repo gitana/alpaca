@@ -448,10 +448,11 @@
          */
         onClick: function(e)
         {
-        },
+        }
 
 
-        //__BUILDER_HELPERS
+        /* builder_helpers */
+        ,
 
         /**
          * @private
@@ -512,7 +513,8 @@
                     }
                 }
             });
-        }//__END_OF_BUILDER_HELPERS
+        }
+        /* end_builder_helpers */
     });
 
     // Registers additional messages

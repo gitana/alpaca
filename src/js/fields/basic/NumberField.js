@@ -191,7 +191,14 @@
             return true;
         },
 
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.Fields.TextField#getType
+         */
+        getType: function() {
+            return "number";
+        },
+
+        /* builder_helpers */
 
         /**
          * @private
@@ -279,14 +286,9 @@
          */
         getDescription: function() {
             return "Field for float numbers.";
-        },
+        }
 
-        /**
-         * @see Alpaca.Fields.TextField#getType
-         */
-        getType: function() {
-            return "number";
-        }//__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     // Additional Registrations

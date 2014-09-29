@@ -43,7 +43,22 @@
             });
         },
 
-        //__BUILDER_HELPERS
+
+        /* builder_helpers */
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#getTitle
+         */
+        getTitle: function() {
+            return "CK Editor";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#getDescription
+         */
+        getDescription: function() {
+            return "Provides an instance of a CK Editor control for use in editing HTML.";
+        },
 
         /**
          * @private
@@ -73,23 +88,9 @@
                     }
                 }
             });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextAreaField#getTitle
-         */
-        getTitle: function() {
-            return "CK Editor";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextAreaField#getDescription
-         */
-        getDescription: function() {
-            return "Provides an instance of a CK Editor control for use in editing HTML.";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("ckeditor", Alpaca.Fields.CKEditorField);

@@ -39,9 +39,10 @@
             }
 
             return baseStatus;
-        },
+        }
 
-        //__BUILDER_HELPERS
+        /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.Fields.TextField#getTitle
@@ -57,7 +58,7 @@
             return "Provides a text control with validation for an internet web address.";
         }
 
-        //__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerMessages({

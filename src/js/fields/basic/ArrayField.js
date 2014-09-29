@@ -1159,7 +1159,29 @@
             });
         },
 
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.ContainerField#getType
+         */
+        getType: function() {
+            return "array";
+        },
+
+
+        /* builder_helpers */
+
+        /**
+         * @see Alpaca.ContainerField#getTitle
+         */
+        getTitle: function() {
+            return "Array Field";
+        },
+
+        /**
+         * @see Alpaca.ContainerField#getDescription
+         */
+        getDescription: function() {
+            return "Field for list of items with same data type or structure.";
+        },
 
         /**
          * @private
@@ -1225,6 +1247,7 @@
                 }
             });
         },
+
         /**
          * @private
          * @see Alpaca.ContainerField#getSchemaOfOptions
@@ -1314,27 +1337,9 @@
                     }
                 }
             });
-        },
-        /**
-         * @see Alpaca.ContainerField#getTitle
-         */
-        getTitle: function() {
-            return "Array Field";
-        },
+        }
 
-        /**
-         * @see Alpaca.ContainerField#getDescription
-         */
-        getDescription: function() {
-            return "Field for list of items with same data type or structure.";
-        },
-
-        /**
-         * @see Alpaca.ContainerField#getType
-         */
-        getType: function() {
-            return "array";
-        }//__END_OF_BUILDER_HELPERS
+        /* end_builder_helpers */
     });
 
     Alpaca.registerMessages({

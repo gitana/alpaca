@@ -80,7 +80,21 @@
             }
         },
 
-        //__BUILDER_HELPERS
+        /* builder_helpers */
+
+        /**
+         * @see Alpaca.Fields.TextField#getTitle
+         */
+        getTitle: function() {
+            return "File Field";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#getDescription
+         */
+        getDescription: function() {
+            return "Field for uploading files.";
+        },
 
         /**
          * @private
@@ -111,22 +125,9 @@
                     }
                 }
             });
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "File Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Field for uploading files.";
         }
-        //__END_OF_BUILDER_HELPERS
+
+        /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("file", Alpaca.Fields.FileField);

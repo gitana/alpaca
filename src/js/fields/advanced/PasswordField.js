@@ -41,9 +41,24 @@
             }
 
             return baseStatus;
+        }
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Fields.TextField#getTitle
+         */
+        getTitle: function() {
+            return "Password Field";
         },
 
-        //__BUILDER_HELPERS
+        /**
+         * @see Alpaca.Fields.TextField#getDescription
+         */
+        getDescription: function() {
+            return "Password Field.";
+        },
 
         /**
          * @private
@@ -85,23 +100,9 @@
 					}
 				}
 			});
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getTitle
-         */
-        getTitle: function() {
-            return "Password Field";
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getDescription
-         */
-        getDescription: function() {
-            return "Password Field.";
         }
 
-		//__END_OF_BUILDER_HELPERS
+		/* end_builder_helpers */
     });
 
     Alpaca.registerMessages({
