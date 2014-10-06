@@ -131,6 +131,11 @@ legend.alpaca-container-label
     color: red;
 }
 
+.alpaca-field.alpaca-field-address .alpaca-field-address-mapcanvas
+{
+    height: 250px;
+}
+
 
 
 
@@ -218,3 +223,4 @@ legend.alpaca-container-label
 {
     margin-top: 20px;
 }
+

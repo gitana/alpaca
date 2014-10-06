@@ -82,7 +82,7 @@ $(document).ready(function() {
         "form": {
             "attributes": {
                 "method": "POST",
-                "action": "save.php",
+                "action": "http://httpbin.org/post",
                 "enctype": "multipart/form-data"
             },
             "buttons": {
@@ -115,7 +115,7 @@ $(document).ready(function() {
         "schema": schema,
         "options": options,
         "postRender": postRenderCallback,
-        "view": "bootstrap-edit"//,
-        //"view": "bootstrap-edit-horizontal"
+        //"view": "bootstrap-edit"//,
+        "view": "bootstrap-edit-horizontal"
     });
 });

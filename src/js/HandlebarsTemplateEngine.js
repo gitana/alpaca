@@ -70,6 +70,10 @@
         {
             return "false";
         }
+        else if (data === true)
+        {
+            return "true";
+        }
         else if (data === 0)
         {
             return "0";
@@ -81,6 +85,14 @@
         else if (data === null)
         {
             return "";
+        }
+        else if (Alpaca.isString(data))
+        {
+            return data;
+        }
+        else if (Alpaca.isNumber(data))
+        {
+            return data;
         }
         else if (Alpaca.isObject(data))
         {

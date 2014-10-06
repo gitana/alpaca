@@ -1,4 +1,4 @@
-define(["jquery", "alpaca"], function($) {
+define(["jquery", "alpaca", "bootstrap"], function($) {
 
     /**
      * Initial data
@@ -101,8 +101,7 @@ define(["jquery", "alpaca"], function($) {
         "data": data,
         "schema": schema,
         "options": options,
-        "postRender": postRenderCallback,
-		"ui": "jqueryui"
+        "postRender": postRenderCallback
     });
 
 });

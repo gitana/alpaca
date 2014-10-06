@@ -33,7 +33,10 @@ $( document ).ready(function() {
     $(".alpaca-discussions").append(DISCUSSIONS_HTML);
 
     // do some pretty print
-    window.prettyPrint && prettyPrint();
+    if (window.prettyPrint)
+    {
+        window.prettyPrint();
+    }
 
 });
 

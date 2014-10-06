@@ -579,6 +579,10 @@
 
                     var field = child.getFieldEl();
 
+                    // reset path and name
+                    child.path = self.path + "[" + i + "]";
+                    child.calculateName();
+
                     //$(field).removeClass("alpaca-container-item");
                     $(field).removeClass("alpaca-container-item-first");
                     $(field).removeClass("alpaca-container-item-last");
@@ -597,7 +601,7 @@
                     }
 
                     $(field).attr("data-alpaca-container-item-index", i);
-                    $(field).attr("data-alpaca-container-item-name", field.name);
+                    $(field).attr("data-alpaca-container-item-name", child.name);
                 }
             }
         },
@@ -728,6 +732,12 @@
                         "type": "string",
                         "enum":["button","link"],
                         "default": "button"
+                    },
+                    "animate": {
+                        "title": "Animate movements and transitions",
+                        "description": "Up and down transitions will be animated",
+                        "type": "boolean",
+                        "default": true
                     }
                 }
             });
@@ -757,6 +767,10 @@
                     },
                     "legendStyle": {
                         "type":"select"
+                    },
+                    "animate": {
+                        "rightLabel": "Animate movements and transitions",
+                        "type": "checkbox"
                     }
                 }
             });

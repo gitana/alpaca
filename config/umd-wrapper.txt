@@ -30,6 +30,8 @@ var depNames = deps ? _.pluck(deps, 'paramName') : stdDeps;
 
 }(this, function (<%= depNames.join(', ') %>) {
 
+    //jQuery = $;
+
     <% if (exports) { %>
         <%= contents %>
         <% if (typeof defaultView != 'undefined') { %>

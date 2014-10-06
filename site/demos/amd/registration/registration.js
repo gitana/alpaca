@@ -1,4 +1,4 @@
-define(["jquery", "alpaca"], function($) {
+define(["jquery", "alpaca", "bootstrap"], function($) {
 
     /**
      * Initial data
@@ -23,6 +23,7 @@ define(["jquery", "alpaca"], function($) {
      *
      */
     var schema = {
+        "type": "object",
         "properties": {
             "name": {
                 "type": "string"
@@ -313,7 +314,7 @@ define(["jquery", "alpaca"], function($) {
      */
     Alpaca.registerView({
         "id": "registration",
-        "parent": "jqueryui-create",
+        "parent": "bootstrap-create",
         "title": "Registration Create View for the Web",
         "layout" : {
             "template": './registration-layout.html',
@@ -330,15 +331,15 @@ define(["jquery", "alpaca"], function($) {
                 "zipcode": "contact-info-fields",
                 "country": "contact-info-fields",
                 "emergencyContact": "contact-info-fields",
-                "vegetarian": "contact-info-fields",
-                "dietaryComments": "contact-info-fields",
-                "roomJune3": "contact-info-fields",
-                "roomJune4": "contact-info-fields",
-                "roomJune5": "contact-info-fields",
-                "smoking": "contact-info-fields",
-                "dinnerJune3": "contact-info-fields",
-                "dinnerJune4": "contact-info-fields",
-                "cambridgeTour": "contact-info-fields",
+                "vegetarian": "preferences-fields",
+                "dietaryComments": "preferences-fields",
+                "roomJune3": "preferences-fields",
+                "roomJune4": "preferences-fields",
+                "roomJune5": "preferences-fields",
+                "smoking": "preferences-fields",
+                "dinnerJune3": "preferences-fields",
+                "dinnerJune4": "preferences-fields",
+                "cambridgeTour": "preferences-fields",
                 "travel": "travel-arrangements-fields",
                 "labWebsite": "interests-1",
                 "photoFile": "interests-2",

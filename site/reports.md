@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Reports
-header: Reports
+title: Cloud Reports
+header: Cloud Reports
 group: navigation
 ---
 {% include JB/setup %}

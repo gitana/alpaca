@@ -52,6 +52,13 @@
         {
             $(this.getFieldEl()).addClass('has-error');
         }
+
+        // if this is a container field, add class "has-error"
+        if (this.isContainerField)
+        {
+            $(this.getFieldEl()).addClass('has-error');
+        }
+
     };
     callbacks["valid"] = function()
     {

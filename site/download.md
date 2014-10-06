@@ -1,25 +1,37 @@
 ---
 layout: page
-title: Downloads
+title: Download Alpaca
 #tagline: Easy Forms for jQuery
 ---
 {% include JB/setup %}
 
+The latest version of Alpaca is 1.5.0.
+
 ## Bower
 The easiest way to get Alpaca is to use Bower:
+
 ````
 bower install alpaca
 ````
 
+
 ## NPM
 Another easy way is to use NPM:
+
 ````
 npm install alpaca
 ````
 
+
 ## Direct Download
-You can also download a version directly.  Take your pick.  Alpaca has been around awhile.
-I wouldn't choose anything too old if I were you.
+We've also packaged things up for direct download:
+
+* <a href="http://www.alpacajs.org/dist/alpaca-1.5.0.zip">alpaca-1.5.0.zip</a>
+
+
+## Previous Releases
+We've made available previous releases and version of the web site.  In some cases, you may have to build
+Alpaca yourself from source.  We strongly recommend upgrading to the latest version of Alpaca.
 
 <ul>
     <li>
@@ -66,8 +78,10 @@ I wouldn't choose anything too old if I were you.
     </li>
 </ul>
 
+
 ## Build from Source
 If you're a system integrator, a developer or someone who likes to understand how things work, then the best way to
 get your hands on Alpaca is to build from <a href="source.html">source</a>.  The build is pretty straightforward.
-It uses bower, node and gulp to produce different distributions.
+It uses Bower, Node and Gulp to produce different distributions.  It also uses Jekyll to produce the web site,
+documentation and samples, all of which you can run locally.
 

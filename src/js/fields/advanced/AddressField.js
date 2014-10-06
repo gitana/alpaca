@@ -138,7 +138,7 @@
                 if (self.options.addressValidation && !self.isDisplayOnly())
                 {
                     $('<div style="clear:both;"></div>').appendTo(container);
-                    var mapButton = $('<div class="alpaca-form-button">Google Map</div>').appendTo(container);
+                    var mapButton = $('<div class="alpaca-form-button">Show Google Map</div>').appendTo(container);
                     if (mapButton.button)
                     {
                         mapButton.button({
@@ -162,7 +162,7 @@
                                         var mapCanvasId = self.getId() + "-map-canvas";
                                         if ($('#' + mapCanvasId).length === 0)
                                         {
-                                            $("<div id='" + mapCanvasId + "' class='alpaca-controlfield-address-mapcanvas'></div>").appendTo(self.getFieldEl());
+                                            $("<div id='" + mapCanvasId + "' class='alpaca-field-address-mapcanvas'></div>").appendTo(self.getFieldEl());
                                         }
 
                                         var map = new google.maps.Map(document.getElementById(self.getId() + "-map-canvas"), {

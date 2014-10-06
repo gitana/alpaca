@@ -78,7 +78,7 @@
         {
             var self = this;
 
-            if (self.control.typeahead && self.options.typeahead)
+            if (self.control.typeahead && self.options.typeahead && !Alpaca.isEmpty(self.options.typeahead))
             {
                 var tConfig = self.options.typeahead.config;
                 if (!tConfig) {

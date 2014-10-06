@@ -2,22 +2,22 @@ require.config({
     "packages": [
         {
             "name": "jquery",
-            "location": "/lib/jquery-2.1.0",
-            "main": "jquery-2.1.0.min"
+            "location": "../../../lib/jquery",
+            "main": "jquery.min"
         },
         {
             "name": "handlebars",
-            "location": "/lib/handlebars",
-            "main": "handlebars-v1.3.0"
+            "location": "../../../lib/handlebars",
+            "main": "handlebars"
         },
         {
-            "name": "jquery-ui",
-            "location": "/lib/jquery-ui/js",
-            "main": "jquery-ui-1.10.4.custom.min"
+            "name": "bootstrap",
+            "location": "../../../lib/bootstrap/dist/js",
+            "main": "bootstrap"
         },
         {
             "name": "alpaca",
-            "location": "/lib/alpaca/jqueryui",
+            "location": "../../../lib/alpaca/bootstrap",
             "main": "alpaca"
         },
         {
@@ -26,7 +26,7 @@ require.config({
         }
     ],
     "shim": {
-        "jquery-ui": ["jquery"],
+        "bootstrap": ["jquery"],
         "jquery": [],
         "handlebars": {
             "exports": "Handlebars"

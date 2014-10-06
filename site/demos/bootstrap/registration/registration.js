@@ -23,6 +23,7 @@ $(document).ready(function() {
      *
      */
     var schema = {
+        "type": "object",
         "properties": {
             "name": {
                 "type": "string"

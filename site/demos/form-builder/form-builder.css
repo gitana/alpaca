@@ -1,0 +1,93 @@
+body
+{
+    padding-top: 70px;
+}
+
+.row
+{
+    padding-top: 20px;
+}
+
+#schema
+{
+    width: 99%;
+    height: 400px;
+    border: 1px #aaa solid;
+}
+
+#options
+{
+    width: 99%;
+    height: 400px;
+    border: 1px #aaa solid;
+}
+
+#data
+{
+    width: 99%;
+    height: 400px;
+    border: 1px #aaa solid;
+}
+
+#codeDiv
+{
+    width: 99%;
+    height: 400px;
+    border: 1px #aaa solid;
+}
+
+.form-element
+{
+    padding: 5px;
+    border: 1px #ccc solid;
+    box-shadow: #ccc 2px 2px;
+    margin: 10px;
+    border-radius: 4px;
+    background-color: #eee;
+}
+
+.form-element-title
+{
+    font-weight: 600;
+}
+
+.dropzone
+{
+    clear: both;
+    margin: 0px;
+    padding: 0px;
+}
+
+.dropzone-highlight
+{
+    margin-top: 4px;
+    height: 20px;
+    border: 1px #888 dashed;
+}
+
+.dropzone-hover
+{
+    height: 100px;
+    border: 1px #888 dashed;
+    background-color: #eee;
+}
+
+.modal-header
+{
+    background-color: #f5f5f5;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.ui-hover-state
+{
+    background-color: #aaa !important;
+    opacity: 0.1 !important;
+}
+
+.dashed
+{
+    border: 1px #ccc dashed;
+    padding: 10px;
+}
+

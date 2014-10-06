@@ -5,7 +5,6 @@ $( document ).ready(function() {
 
     var resizeSidebar = function()
     {
-        console.log("W: " + $(window).width());
         if ($(window).width() >= 992)
         {
             var contentHeight = $(document).outerHeight();
@@ -25,7 +24,7 @@ $( document ).ready(function() {
 
     setTimeout(function() {
         resizeSidebar();
-    }, 2000);
+    }, 1000);
 
     $(window).on("resize", function() {
         resizeSidebar();

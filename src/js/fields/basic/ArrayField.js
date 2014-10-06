@@ -188,7 +188,7 @@
                     "iconClass": self.upIcon,
                     "click": function(key, action, itemIndex) {
 
-                        self.moveItem(itemIndex, true, function() {
+                        self.moveItem(itemIndex, itemIndex - 1, self.options.animate, function() {
                             // all done
                         });
 
@@ -200,7 +200,7 @@
                     "iconClass": self.downIcon,
                     "click": function(key, action, itemIndex) {
 
-                        self.moveItem(itemIndex, false, function() {
+                        self.moveItem(itemIndex, itemIndex + 1, self.options.animate, function() {
                             // all done
                         });
 
@@ -421,7 +421,7 @@
                         fieldControl.parent = self;
                         // setup item path
                         fieldControl.path = self.path + "[" + index + "]";
-                        fieldControl.nameCalculated = true;
+                        //fieldControl.nameCalculated = true;
                         fieldControl.render(null, function() {
 
                             // remember the control
@@ -959,8 +959,8 @@
         /**
          * Adds an item to the array.
          *
-         * This gets called automatically from setValue() when the data array length exceeds the number of
-         * child fields.
+         * This gets called from the toolbar when items are added via the user interface.  The method can also
+         * be called programmatically to insert items on the fly.
          *
          * @param {Integer} index the index where the item should be inserted
          * @param {Object} schema the json schema
@@ -1023,7 +1023,7 @@
          * of field elements.
 
          * @param {Number} childIndex index of the child to be removed
-         * @param [Function] callback called after the child is added
+         * @param [Function] callback called after the child is removed
          */
         removeItem: function(childIndex, callback)
         {
@@ -1057,27 +1057,38 @@
         },
 
         /**
-         * Dynamically moves a child up or down.
+         * Dynamically moves a child to a new index in the array.
          *
          * @param {Number} sourceIndex the index of the child to be moved
-         * @param {Boolean} isUp true if the moving is upwards
+         * @param {Number} targetIndex the index to be moved to
+         * @param {Boolean} animate whether to animate the movement
          * @param [Function] callback called after the child is added
          */
-        moveItem: function(sourceIndex, isUp, callback)
+        moveItem: function(sourceIndex, targetIndex, animate, callback)
         {
             var self = this;
 
-            if (typeof(sourceIndex) === "string") {
+            if (typeof(animate) == "function")
+            {
+                callback = animate;
+                animate = self.options.animate;
+            }
+
+            if (typeof(animate) == "undefined")
+            {
+                animate = self.options.animate ? self.options.animate : true;
+            }
+
+            if (typeof(sourceIndex) === "string")
+            {
                 sourceIndex = parseInt(sourceIndex, 10);
             }
 
-            // determine the "targetIndex"
-            var targetIndex = sourceIndex;
-            if (isUp) {
-                targetIndex -= 1;
-            } else {
-                targetIndex += 1;
+            if (typeof(targetIndex) === "string")
+            {
+                targetIndex = parseInt(targetIndex, 10);
             }
+
             if (targetIndex < 0)
             {
                 targetIndex = 0;
@@ -1092,6 +1103,14 @@
                 // nothing to swap with
                 return;
             }
+
+            if (sourceIndex === targetIndex)
+            {
+                // nothing to do
+                return;
+            }
+
+            console.log("Source: " + sourceIndex + ", Target: " + targetIndex);
 
             var targetChild = self.children[targetIndex];
             if (!targetChild)
@@ -1138,6 +1157,10 @@
                 // updates child dom marker elements
                 self.updateChildDOMElements();
 
+                // update the action bar bindings
+                $(sourceContainer).find("[data-alpaca-array-actionbar-item-index='" + sourceIndex + "']").attr("data-alpaca-array-actionbar-item-index", targetIndex);
+                $(targetContainer).find("[data-alpaca-array-actionbar-item-index='" + targetIndex + "']").attr("data-alpaca-array-actionbar-item-index", sourceIndex);
+
                 // update the array item toolbar state
                 self.updateToolbars();
 
@@ -1153,10 +1176,17 @@
                 }
             };
 
-            // swap divs visually
-            Alpaca.animatedSwap(sourceContainer, targetContainer, 500, function() {
+            if (animate)
+            {
+                // swap divs visually
+                Alpaca.animatedSwap(sourceContainer, targetContainer, 500, function() {
+                    onComplete();
+                });
+            }
+            else
+            {
                 onComplete();
-            });
+            }
         },
 
         /**

@@ -16,52 +16,6 @@
     </p>
 </header>
 
-<br/>
-
-<div>
-    <ul class="nav nav-pills nav-stacked sidenav">
-        <li><a href="{{ BASE_PATH }}/index.html">Overview</a></li>
-        <li><a href="{{ BASE_PATH }}/download.html">Download</a></li>
-        <li><a href="{{ BASE_PATH }}/source.html">Source Code</a></li>
-        <li><a href="{{ BASE_PATH }}/documentation.html">Documentation</a></li>
-        <li><a href="{{ BASE_PATH }}/examples.html">Examples</a></li>
-<!--        <li><a href="{{ BASE_PATH }}/tutorial.html">Tutorial</a></li>-->
-        <li><a href="{{ BASE_PATH }}/support.html">Support</a></li>
-    </ul>
-</div>
-
-<br/>
-<hr/>
-<br/>
-
-<header class="sidebar-header" role="banner">
-    <a href="cloud-forms.html" target="_blank">
-        <img src="{{ ASSET_PATH }}/images/alpaca-icon-cloud.png" class="img-circle"/>
-    </a>
-    <h3 class="title">
-        <a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Cloud Forms</a>
-    </h3>
-    <p class="subtitle">
-        For Web Sites and Mobile Apps
-        <br/>
-        <a href="https://www.cloudcms.com/trial.html" target="_blank">14 Day Free Trial</a>
-    </p>
-</header>
-
-<br/>
-
-<div>
-    <ul class="nav nav-pills nav-stacked sidenav">
-        <li><a href="{{ BASE_PATH }}/cloud-forms.html">Overview</a></li>
-        <li><a href="{{ BASE_PATH }}/reports.html">Reports</a></li>
-        <li><a href="{{ BASE_PATH }}/form-builder.html">Form Builder</a></li>
-        <li><a href="{{ BASE_PATH }}/plugin.html">Plugin</a></li>
-    </ul>
-</div>
-
-<br/>
-<br/>
-
 {% if site.author.bio %}
 <div id="bio" class="text-center">
     {{ site.author.bio }}
@@ -116,6 +70,62 @@
 	</ul>
 	-->
 </div>
+
+<br/>
+<br/>
+
+<div>
+    <ul class="nav nav-pills nav-stacked sidenav">
+        <li><a href="{{ BASE_PATH }}/index.html">Overview</a></li>
+        <li><a href="{{ BASE_PATH }}/demos.html">Demos</a></li>
+        <li><a href="{{ BASE_PATH }}/download.html">Download</a></li>
+        <li><a href="{{ BASE_PATH }}/source.html">Source Code</a></li>
+        <li><a href="{{ BASE_PATH }}/tutorial.html">Tutorial</a></li>
+        <li><a href="{{ BASE_PATH }}/documentation.html">Documentation</a></li>
+        <li><a href="{{ BASE_PATH }}/support.html">Support</a></li>
+    </ul>
+</div>
+
+<br/>
+<hr/>
+<br/>
+
+<header class="sidebar-header" role="banner">
+    <h3 class="title">
+        <a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a>
+    </h3>
+    <p class="subtitle" style="color: #888">
+        Connect your Forms to the Cloud
+        <br/>
+        <a href="https://www.cloudcms.com/trial.html" target="_blank">Start a Free Trial</a>
+    </p>
+</header>
+
+<br/>
+
+<div>
+    <ul class="nav nav-pills nav-stacked sidenav">
+        <li><a href="{{ BASE_PATH }}/form-builder.html">Form Builder</a></li>
+        <li><a href="{{ BASE_PATH }}/storage.html">Storage</a></li>
+        <li><a href="{{ BASE_PATH }}/reports.html">Reports</a></li>
+        <li><a href="{{ BASE_PATH }}/plugin.html">Web Site Plugin</a></li>
+    </ul>
+</div>
+
+<br/>
+<hr/>
+<br/>
+
+<header class="sidebar-header" role="banner">
+    <a href="https://www.cloudcms.com">
+        <img src="{{ ASSET_PATH }}/images/cloudcms_logo.png" style="width: 225px" />
+    </a>
+    <p class="subtitle" style="color: #888">
+        Alpaca is sponsored
+        <br/>
+        by <a href="https://www.cloudcms.com">Cloud CMS</a>
+    </p>
+</header>
 
 
 <! -- sidebar.html end -->

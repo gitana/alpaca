@@ -41,6 +41,17 @@
                     });
                 });
             }
+
+            if (_this.schema.required && !_this.data)
+            {
+                if ((typeof(_this.options.removeDefaultNone) == "undefined") || _this.options.removeDefaultNone === false)
+                {
+                    if (_this.schema.enum && _this.schema.enum.length > 0)
+                    {
+                        _this.data = _this.schema.enum[0];
+                    }
+                }
+            }
         },
 
         prepareControlModel: function(callback)

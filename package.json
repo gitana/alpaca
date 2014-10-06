@@ -14,7 +14,7 @@
     "gulp-clean": "*",
     "gulp-concat": "*",
     "gulp-declare": "*",
-    "gulp-handlebars": "",
+    "gulp-handlebars": "2.1.0",
     "gulp-jshint": "*",
     "gulp-minify-css": "*",
     "gulp-nodemon": "*",
@@ -23,6 +23,7 @@
     "gulp-rename": "*",
     "gulp-uglify": "*",
     "gulp-wrap-umd": "^0.2.0",
+    "gulp-watch": "*",
     "jshint-stylish":             "0.1.5",
     "lodash": "",
     "node-gyp": "0.11.0",
@@ -33,7 +34,12 @@
     "wd": "",
 
     "gulp-util": "*",
-    "through2": "*"
+    "through2": "*",
+
+    "wrench": "*",
+    
+    "jquery": "*",
+    "handlebars": "*"
 
   }
 }

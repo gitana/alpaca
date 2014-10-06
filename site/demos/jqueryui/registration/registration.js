@@ -313,10 +313,8 @@ $(document).ready(function() {
      */
     Alpaca.registerView({
         "id": "registration",
-        "parent": "web-create",
+        "parent": "jqueryui-create",
         "title": "Registration Create View for the Web",
-		"ui": "jqueryui",
-		"style": "jqueryui",
         "layout" : {
             "template": './registration-layout.html',
             "bindings": {

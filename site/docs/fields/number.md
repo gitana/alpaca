@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```number``` field.
+
+<!-- INCLUDE_API_DOCS:number -->
 
 
 ## Example 1

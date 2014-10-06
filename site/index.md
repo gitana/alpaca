@@ -6,35 +6,20 @@ title2: Alpaca - Easy Web Forms for jQuery
 ---
 {% include JB/setup %}
 
-Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices.
-It runs simply as HTML5 or more elaborately using Bootstrap, jQuery Mobile or jQuery UI.  Alpaca uses Handlebars
-to process JSON schema and provide developers with an extensible framework for implementing controls, wizards,
-layouts, I18N support and an custom data persistence.
+Alpaca provides the easiest way to generate interactive HTML5 forms for web and mobile applications.
+It uses JSON Schema and simple Handlebars templates to generate great looking user interfaces on top of
+<a href="http://twitter.github.com/bootstrap" target="_blank">Twitter Bootstrap</a>,
+<a href="http://jqueryui.com" target="_blank">jQuery UI</a>,
+<a href="http://jquerymobile.com" target="_blank">jQuery Mobile</a>
+and HTML5.
 
-<br/>
+Everything you need is provided out of the box.  Alpaca comes pre-stocked with a large library of controls,
+templates, layouts and features to make rendering JSON-driven forms easy.  It is designed around an extensible
+object-oriented pattern, allowing you to implement new controls, templates, I18N bundles and custom data
+persistence for your projects.
 
-<!--
-<div align="center" class="front-ui-images">
-    <span class="bootstrap">
-        <a href="http://twitter.github.com/bootstrap" target="_blank">
-            <img src="{{ BASE_PATH }}/images/bootstrap.png" alt="Twitter Bootstrap" title="Twitter Bootstrap" style="width: 200px">
-        </a>
-    </span>
-    <span class="jquerymobile">
-        <a href="http://jquerymobile.com" target="_blank">
-            <img src="{{ BASE_PATH }}/images/jquery-mobile.png" alt="JQuery Mobile" title="JQuery Mobile" style="width: 200px">
-        </a>
-    </span>
-    <span class="jqueryui">
-        <a href="http://jqueryui.com" target="_blank">
-            <img src="{{ BASE_PATH }}/images/jquery-ui.jpg" alt="JQuery UI" title="JQuery UI" style="width: 200px">
-        </a>
-    </span>
-</div>
-
-<br/>
--->
-
+Alpaca is open-source and provided to you under the Apache 2.0 license.  It is supported by
+<a href="https://www.cloudcms.com">Cloud CMS</a> and is in use by organizations and within projects all around the world.
 
 <div class="video-container" align="center">
      <iframe src="http://www.youtube.com/embed/mK4BXiGNbvA" frameborder="0" width="560" height="315"> </iframe>
@@ -111,10 +96,9 @@ $("#form1").alpaca({
 
 ## Who uses Alpaca?
 
-Alpaca is an open source project that is in use by lots of companies and individuals in the community.  Here are
-a few organizations that we're glad to have Alpaca contribute to:
-
-<br/>
+Lots of people.  Alpaca is an open-source project and has been around for almost 3 years.  We've had a great time
+building it and have enjoyed the pull requests and adoption within some really great companies worldwide.  Here
+are a few notable ones:
 
 <div class="community">
 
@@ -210,11 +194,9 @@ a few organizations that we're glad to have Alpaca contribute to:
     </div>
 </div>
 
-<br/>
+If you'd like to have your company logo listed above, please <a href="contact.html">drop us a line</a>.
 
-If you'd like to list your company, just <a href="contact.html">contact us</a>.
-
-## Browser Support
+## What Browsers are Supported?
 
 Alpaca is a JavaScript library that uses jQuery and runs in most modern web browsers.  With every release of Alpaca,
 we run a library of unit tests across a matrix of operating systems, browsers and versions.  As the project grows,
@@ -328,30 +310,36 @@ Alpaca will run just fine.
 </div>
 
 
-## Getting Started
+## How do I get started?
 
-It's easy to get started.  You can grab the code and drop it into your new or existing projects.  You can also download
-the source code, build it yourself and customize Alpaca for your own projects.  Check out our
-<a href="documentation.html">documentation</a> and <a href="download.html">downloads</a>.
-
-
-## Open Source Project
-
-Alpaca is a community-led <a href="https://github.com/gitana/alpaca" target="_blank">open-source project</a>
-licensed under Apache 2.0.
-
-Join the <a href="http://www.github.com/gitana/alpaca" target="_blank">Alpaca Project</a> on GitHub to
-grab a copy of the source code and contribute to the growing Alpaca Community.
-
-If you have a question about Alpaca, please visit the <a href="http://www.cloudcms.org">Alpaca Forums</a>.
-We'd love to get to know you and to hear your feedback!
+You can drop Alpaca into your new or existing web or mobile projects.  Alpaca is a simple JavaScript library that
+you can plug in wherever you'd like.  You can <a href="download.html">install or download Alpaca</a> using conventional
+tools like Bower or NPM.  Or you can <a href="download.html">grab a release</a> from our
+ <a href="download.html">download page</a>.
 
 
-## Enterprise Support
+## Why is Alpaca open source?
 
-If you're using Alpaca within an enterprise application and would like formal support, please <a href="contact.html">contact us</a>
- with information about your project.  We will have someone contact you right away.
+When we were building Cloud CMS, we ended up producing a really great forms engine to serve as part of our front end
+We're big on open source, having worked on such projects as Alfresco and the Spring Framework in the past.  We thought
+it only made sense to put Alpaca into the wild to see what it could do.
 
+We're thrilled with the results.  Alpaca has enjoyed several years of iteration and today stands as a really nicely
+packaged library for developers, system integrators and many others to use within their projects.
+
+We'd love for you to <a href="download.html">try out Alpaca</a> and to <a href="source.html">contribute to the
+project</a>.  If you're able to fix a bug, add a new feature or implement something cool, it'll probably go a long
+way to helping someone else out there.  And that's what community is all about.
+
+
+## Do you offer Support for Alpaca?
+
+We offer formal, production and development support for Alpaca via a support contract.  A support contract gives your
+developers a channel for expressing priority features and requirements.  It also provides our team with a way to
+guarantee a service-level commitment for your production apps.
+
+To learn more about production support, please <a href="contact.html">contact Cloud CMS</a>
+ with information about your project.  A member of team will be in touch with you right away.
 
 <script>
 $("TABLE.stack").dataTable({
@@ -381,7 +369,4 @@ $("#form1").alpaca({
         }
     }
 });
-</script>
-<script>
-    //window.prettyPrint && prettyPrint();
 </script>

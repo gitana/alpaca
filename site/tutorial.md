@@ -3,10 +3,13 @@ layout: page
 title: Getting Started with Alpaca
 #tagline: Easy Web Forms for jQuery
 ---
+{% include JB/setup %}
 
-This page provides a walkthrough tutorial that describes how you might go about building your first Alpaca form.
-This is here for your enjoyment!  If you're looking for sample code or prebuilt projects, you may also want to
-take a look at our <a href="demonstrations.html">Demonstrations</a> page.
+This page provides a detailed, walk-through tutorial that describes how you might go about building your first
+Alpaca form.  It isn't all that complicated but this guide goes step-by-step.  Because, well... some people
+are all about step-by-step instructions with lots of details.
+
+If you're more interested in seeing a quick demo, check out our <a href="demos.html">demonstrations</a> page.
 
 {% capture page1 %}{% include tutorial/page1.html %}{% endcapture %}
 {% capture page2 %}{% include tutorial/page2.html %}{% endcapture %}
@@ -19,21 +22,24 @@ take a look at our <a href="demonstrations.html">Demonstrations</a> page.
 
     <img src="{{ BASE_PATH }}/images/step-1.png"/>
 
-    <p>Launch your favorite text editor and create an empty HTML file.  We're going to build a web page so you're
-    going to want to make sure the HTML file has a <code>head</code> section and a <code>body</code> section.  In the
-    <code>head</code> section, make sure that you include jQuery and also Alpaca.</p>
+    <p>
+        Launch your favorite text editor and create an empty HTML file.  We're going to build a web page so you're
+        going to want to make sure the HTML file has a <code>head</code> section and a <code>body</code> section.
+        In the <code>head</code> section, make sure that you include jQuery and also Alpaca.
+    </p>
     <p>
         In the body, we'll add a single <code>DIV</code> element.  We'll use this to hold our form.
     </p>
-    <p>It might end up looking something like this:</p>
-
-<div class="codewrap">
-<pre class="prettyprint linenums">
-{{ page1 | xml_escape }}
-</pre>
+    <p>
+        It might end up looking something like this:
+    </p>
+    <div class="codewrap">
+        <pre class="prettyprint linenums">{{ page1 | xml_escape }}</pre>
+    </div>
 </div>
 
-</div>
+<!-- END OF STEP 1 -->
+
 
 <!-- STEP 2 -->
 <div class="step">
@@ -60,16 +66,13 @@ take a look at our <a href="demonstrations.html">Demonstrations</a> page.
     e.g. the size of text field is set as 40 as default.
     </p>
 
-<div class="codewrap">
-<pre class="prettyprint linenums">
-{{ page2 | xml_escape }}
-</pre>
-</div>
+    <div class="codewrap">
+        <pre class="prettyprint linenums">{{ page2 | xml_escape }}</pre>
+    </div>
 
     <p>
     If you load this page in a browser, you'll then see the following:
     </p>
-
     <div class="tutorial-panel">
         <div class="panel panel-default">
           <div class="panel-body">
@@ -78,6 +81,9 @@ take a look at our <a href="demonstrations.html">Demonstrations</a> page.
         </div>
     </div>
 </div>
+
+<!-- END OF STEP 2 -->
+
 
 <!-- STEP 3 -->
 <div class="step">
@@ -94,16 +100,13 @@ take a look at our <a href="demonstrations.html">Demonstrations</a> page.
         different options parameters to render the form in various formats.
     </p>
 
-<div class="codewrap">
-<pre class="prettyprint linenums">
-{{ page3 | xml_escape }}
-</pre>
-</div>
+    <div class="codewrap">
+        <pre class="prettyprint linenums">{{ page3 | xml_escape }}</pre>
+    </div>
 
     <p>
         If you reload your browser, you'll now see something like this:
     </p>
-
     <div class="tutorial-panel">
         <div class="panel panel-default">
           <div class="panel-body">
@@ -111,7 +114,6 @@ take a look at our <a href="demonstrations.html">Demonstrations</a> page.
           </div>
         </div>
     </div>
-
 </div>
 
 <!-- STEP 4 -->
@@ -153,16 +155,13 @@ take a look at our <a href="demonstrations.html">Demonstrations</a> page.
         Alpaca with a view parameter which makes Alpaca to pick a different set of templates for form rendition.
     </p>
 
-<div class="codewrap">
-<pre class="prettyprint linenums">
-{{ page4 | xml_escape }}
-</pre>
-</div>
+    <div class="codewrap">
+        <pre class="prettyprint linenums">{{ page4 | xml_escape }}</pre>
+    </div>
 
     <p>
         If you reload your browser, you'll now see something like this:
     </p>
-
     <div class="tutorial-panel">
         <div class="panel panel-default">
           <div class="panel-body">
@@ -194,16 +193,13 @@ take a look at our <a href="demonstrations.html">Demonstrations</a> page.
         call, <i>myControl.field</i>.
     </p>
 
-<div class="codewrap">
-<pre class="prettyprint linenums">
-{{ page5 | xml_escape }}
-</pre>
-</div>
+    <div class="codewrap">
+        <pre class="prettyprint linenums">{{ page5 | xml_escape }}</pre>
+    </div>
 
     <p>
         If you reload your browser, you'll now see something like this:
     </p>
-
     <div class="tutorial-panel">
         <div class="panel panel-default">
           <div class="panel-body">
@@ -241,7 +237,6 @@ take a look at our <a href="demonstrations.html">Demonstrations</a> page.
         Alpaca <a href="resources.html" title="Alpaca Resources">resources</a> page
         for download links, documentation, samples <i>etc.</i>
     </p>
-
 </div>
 
 <script type="text/javascript" src="{{ BASE_PATH }}/tutorial/tutorial.js"> </script>

@@ -356,13 +356,22 @@
                 this.name = this.options.name;
             }
 
-            // set default name value if it is not provided through options.
-            if (!this.name)
+            // calculate name
+            this.calculateName();
+
+            this.setup();
+
+            this._render(callback);
+        },
+
+        calculateName: function()
+        {
+            if (!this.name || (this.name && this.nameCalculated))
             {
                 // has path?
                 if (this.parent && this.parent.name && this.path)
                 {
-                    var lastSegment = this.path.substring(this.path.lastIndexOf('/')+1);
+                    var lastSegment = this.path.substring(this.path.lastIndexOf('/') + 1);
                     if (lastSegment.indexOf("[") !== -1 && lastSegment.indexOf("]") !== -1)
                     {
                         lastSegment = lastSegment.substring(lastSegment.indexOf("[") + 1, lastSegment.indexOf("]"));
@@ -378,15 +387,11 @@
                 {
                     if (this.path)
                     {
-                       this.name = this.path.replace(/\//g,"").replace(/\[/g,"_").replace(/\]/g,"");
-                       this.nameCalculated = true;
+                        this.name = this.path.replace(/\//g,"").replace(/\[/g,"_").replace(/\]/g,"");
+                        this.nameCalculated = true;
                     }
                 }
             }
-
-            this.setup();
-
-            this._render(callback);
         },
 
         /**
@@ -699,7 +704,7 @@
             // for create view, hide all readonly fields
             if (!this.view.displayReadonly)
             {
-                $(this.field).find(".alpaca-field-readonly").hide();
+                $(this.field).find(".alpaca-readonly").hide();
             }
 
             // field level post render

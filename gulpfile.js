@@ -18,6 +18,7 @@ var declare     = require("gulp-declare");
 var notify      = require("gulp-notify");
 var runSequence = require("run-sequence");
 var nodemon     = require("gulp-nodemon");
+var watch       = require("gulp-watch");
 
 var wrap = require("gulp-wrap-umd");
 
@@ -192,59 +193,82 @@ var paths = {
     }
 };
 
-gulp.task('clean', function() {
-    gulp.src('build', {read: false})
+gulp.task("clean", function() {
+    return gulp.src("build", {read: false})
         .pipe(clean());
 });
 
-gulp.task('styles', function() {
+gulp.task("build-templates", function(cb)
+{
+    var processName = function(filepath)
+    {
+        // strip .js from end
+        var i = filepath.indexOf(".js");
+        if (i > -1)
+        {
+            filepath = filepath.substring(0, i);
+        }
 
+        // find "src/templates/" and index up
+        var z = filepath.indexOf("src/templates/");
+        filepath = filepath.substring(z + 14);
+
+        // replace any "/" with .
+        filepath = filepath.replace(new RegExp("/", 'g'), ".");
+
+        return filepath;
+    };
+
+    //console.log("build-templates start");
     return es.concat(
 
         // web
-        gulp.src(paths.styles.web)
-            .pipe(concat('alpaca.css'))
-            .pipe(gulp.dest('build/alpaca/web'))
-            .pipe(rename({suffix: ".min"}))
-            .pipe(minifyCss())
-            .pipe(gulp.dest('build/alpaca/web')),
-        gulp.src("src/css/images/**")
-            .pipe(gulp.dest('./build/alpaca/web/images')),
+        gulp.src(paths.templates["web"])
+            .pipe(handlebars())
+            .pipe(declare({
+                namespace: 'HandlebarsPrecompiled',
+                processName: processName
+            }))
+            .pipe(concat('templates-web.js'))
+            .pipe(gulp.dest('build/tmp/')),
 
-        // bootstrap (includes web)
-        gulp.src(paths.styles.bootstrap)
-            .pipe(concat('alpaca.css'))
-            .pipe(gulp.dest('build/alpaca/bootstrap'))
-            .pipe(rename({suffix: ".min"}))
-            .pipe(minifyCss())
-            .pipe(gulp.dest('build/alpaca/bootstrap')),
-        gulp.src("src/css/images/**")
-            .pipe(gulp.dest('./build/alpaca/bootstrap/images')),
+        // bootstrap
+        gulp.src(paths.templates["bootstrap"])
+            .pipe(handlebars())
+            .pipe(declare({
+                namespace: 'HandlebarsPrecompiled',
+                processName: processName
+            }))
+            .pipe(concat('templates-bootstrap.js'))
+            .pipe(gulp.dest('build/tmp/')),
 
         // jqueryui
-        gulp.src(paths.styles.jqueryui)
-            .pipe(concat('alpaca.css'))
-            .pipe(gulp.dest('build/alpaca/jqueryui'))
-            .pipe(rename({suffix: ".min"}))
-            .pipe(minifyCss())
-            .pipe(gulp.dest('build/alpaca/jqueryui')),
-        gulp.src("src/css/images/**")
-            .pipe(gulp.dest('./build/alpaca/jqueryui/images')),
+        gulp.src(paths.templates["jqueryui"])
+            .pipe(handlebars())
+            .pipe(declare({
+                namespace: 'HandlebarsPrecompiled',
+                processName: processName
+            }))
+            .pipe(concat('templates-jqueryui.js'))
+            .pipe(gulp.dest('build/tmp/')),
 
         // jquerymobile
-        gulp.src(paths.styles.jquerymobile)
-            .pipe(concat('alpaca.css'))
-            .pipe(gulp.dest('build/alpaca/jquerymobile'))
-            .pipe(rename({suffix: ".min"}))
-            .pipe(minifyCss())
-            .pipe(gulp.dest('build/alpaca/jquerymobile')),
-        gulp.src("src/css/images/**")
-            .pipe(gulp.dest('./build/alpaca/jquerymobile/images'))
+        gulp.src(paths.templates["jquerymobile"])
+            .pipe(handlebars())
+            .pipe(declare({
+                namespace: 'HandlebarsPrecompiled',
+                processName: processName
+            }))
+            .pipe(concat('templates-jquerymobile.js'))
+            .pipe(gulp.dest('build/tmp/'))
 
-    ).pipe(es.wait()).pipe(notify({message: "Built Alpaca CSS"}));
+    ).pipe(es.wait(function() {
+        //console.log("build-templates complete");
+        //cb();
+    })).pipe(notify({message: "Built Alpaca Templates"}));
 });
 
-gulp.task('scripts', function(cb) {
+gulp.task("build-scripts", function(cb) {
 
     // alpaca umd
     var wrapper = "" + fs.readFileSync("./config/umd-wrapper.txt");
@@ -321,6 +345,7 @@ gulp.task('scripts', function(cb) {
         defaultView: 'jquerymobile'
     };
 
+    //console.log("build-scripts start");
     // core
     var first = gulp.src(paths.scripts.core)
                     .pipe(concat('scripts-core.js'))
@@ -375,95 +400,93 @@ gulp.task('scripts', function(cb) {
 
         ).pipe(es.wait(function() {
 
+            //console.log("build-scripts completed");
             cb();
 
         })).pipe(notify({message: "Built Alpaca JS"}));
     });
 });
 
-gulp.task('templates', function()
-{
-    var processName = function(filepath)
-    {
-        // strip .js from end
-        var i = filepath.indexOf(".js");
-        if (i > -1)
-        {
-            filepath = filepath.substring(0, i);
-        }
+gulp.task("build-styles", function(cb) {
 
-        // find "src/templates/" and index up
-        var z = filepath.indexOf("src/templates/");
-        filepath = filepath.substring(z + 14);
-
-        // replace any "/" with .
-        filepath = filepath.replace(new RegExp("/", 'g'), ".");
-
-        return filepath;
-    };
-
+    //console.log("build-styles start");
     return es.concat(
 
-        // web
-        gulp.src(paths.templates["web"])
-            .pipe(handlebars())
-            .pipe(declare({
-                namespace: 'HandlebarsPrecompiled',
-                processName: processName
-            }))
-            .pipe(concat('templates-web.js'))
-            .pipe(gulp.dest('build/tmp/')),
+            // web
+            gulp.src(paths.styles.web)
+                .pipe(concat('alpaca.css'))
+                .pipe(gulp.dest('build/alpaca/web'))
+                .pipe(rename({suffix: ".min"}))
+                .pipe(minifyCss())
+                .pipe(gulp.dest('build/alpaca/web')),
+            gulp.src("src/css/images/**")
+                .pipe(gulp.dest('./build/alpaca/web/images')),
 
-        // bootstrap
-        gulp.src(paths.templates["bootstrap"])
-            .pipe(handlebars())
-            .pipe(declare({
-                namespace: 'HandlebarsPrecompiled',
-                processName: processName
-            }))
-            .pipe(concat('templates-bootstrap.js'))
-            .pipe(gulp.dest('build/tmp/')),
+            // bootstrap
+            gulp.src(paths.styles.bootstrap)
+                .pipe(concat('alpaca.css'))
+                .pipe(gulp.dest('build/alpaca/bootstrap'))
+                .pipe(rename({suffix: ".min"}))
+                .pipe(minifyCss())
+                .pipe(gulp.dest('build/alpaca/bootstrap')),
+            gulp.src("src/css/images/**")
+                .pipe(gulp.dest('./build/alpaca/bootstrap/images')),
 
-        // jqueryui
-        gulp.src(paths.templates["jqueryui"])
-            .pipe(handlebars())
-            .pipe(declare({
-                namespace: 'HandlebarsPrecompiled',
-                processName: processName
-            }))
-            .pipe(concat('templates-jqueryui.js'))
-            .pipe(gulp.dest('build/tmp/')),
+            // jqueryui
+            gulp.src(paths.styles.jqueryui)
+                .pipe(concat('alpaca.css'))
+                .pipe(gulp.dest('build/alpaca/jqueryui'))
+                .pipe(rename({suffix: ".min"}))
+                .pipe(minifyCss())
+                .pipe(gulp.dest('build/alpaca/jqueryui')),
+            gulp.src("src/css/images/**")
+                .pipe(gulp.dest('./build/alpaca/jqueryui/images')),
 
-        // jquerymobile
-        gulp.src(paths.templates["jquerymobile"])
-            .pipe(handlebars())
-            .pipe(declare({
-                namespace: 'HandlebarsPrecompiled',
-                processName: processName
-            }))
-            .pipe(concat('templates-jquerymobile.js'))
-            .pipe(gulp.dest('build/tmp/'))
+            // jquerymobile
+            gulp.src(paths.styles.jquerymobile)
+                .pipe(concat('alpaca.css'))
+                .pipe(gulp.dest('build/alpaca/jquerymobile'))
+                .pipe(rename({suffix: ".min"}))
+                .pipe(minifyCss())
+                .pipe(gulp.dest('build/alpaca/jquerymobile')),
+            gulp.src("src/css/images/**")
+                .pipe(gulp.dest('./build/alpaca/jquerymobile/images'))
 
-    ).pipe(es.wait()).pipe(notify({message: "Built Alpaca Templates"}));
+        ).pipe(es.wait(function() {
 
+            //console.log("build-styles completed");
+            //cb();
+
+        })).pipe(notify({message: "Built Alpaca CSS"}));
 });
 
-gulp.task('jekyll', function(cb)
+gulp.task("build-site", function(cb)
 {
-    exec('jekyll build -s ./site -d ./build/site --trace', function(err, stdout, stderr) {
+    console.log("build-site start");
+    exec("jekyll build -s ./site -d ./build/site --trace", function(err, stdout, stderr) {
 
+        console.log("jekyll completed");
         if (err)
         {
             console.log(stderr);
+            cb(err);
+            return;
         }
 
-        cb(err);
+        /*
+        // now run post-processors over all of the HTML to insert builder code
+        applyBuilder("./build/site", function() {
+            console.log("build-site completed");
+        });
+        */
+        cb();
     });
 
 });
 
-gulp.task('update-web', function() {
+gulp.task("update-site-full", function(cb) {
 
+    //console.log("update-site-full start");
     return es.concat(
 
         // copy site into web
@@ -477,99 +500,127 @@ gulp.task('update-web', function() {
         gulp.src("build/alpaca/**")
             .pipe(gulp.dest('./build/web/lib/alpaca'))
 
-    ).pipe(es.wait()).pipe(notify({message: "Built Alpaca Web Site"}));
-
+    ).pipe(es.wait(function() {
+        //console.log("update-site-full completed");
+    })).pipe(notify({message: "Built Alpaca Web Site"}));
 });
 
-gulp.task('stamp-version', function() {
+gulp.task("update-site-alpaca", function(cb) {
 
-    fs.writeFileSync("./build/version.properties", "version=" + pkg.version);
-});
+    //console.log("update-site-alpaca start");
+    return es.concat(
 
-var refreshWeb = function()
-{
-    runSequence('jekyll', 'update-web', 'stamp-version');
-};
+        // copy alpaca into web
+        gulp.src("build/alpaca/**")
+            .pipe(gulp.dest('./build/web/lib/alpaca'))
 
-gulp.task('refreshWeb', function()
-{
-    refreshWeb();
+    ).pipe(es.wait(function() {
+        //console.log("update-site-alpaca completed");
+    })).pipe(notify({message: "Updated Alpaca into Web Site"}));
 });
 
 // Rerun the task when a file changes
-gulp.task('watch', ['scripts', 'templates', 'styles'], function() {
+gulp.task('watch', function() {
 
     // scripts
-    gulp.watch(paths.scripts.core, function() {
-        return runSequence('scripts', refreshWeb);
+    watch(paths.scripts.core, function(files, cb) {
+        runSequence("build-scripts", "update-site-alpaca", function() {
+            cb();
+        });
     });
-    gulp.watch(paths.scripts.all_views, function() {
-        return runSequence('scripts', refreshWeb);
+    watch(paths.scripts.all_views, function(files, cb) {
+        runSequence("build-scripts", "update-site-alpaca", function() {
+            cb();
+        });
     });
 
     // templates
-    gulp.watch(paths.templates.all, function() {
-        return runSequence('templates', 'scripts', refreshWeb);
+    watch(paths.templates.all, function(files, cb) {
+        runSequence("build-templates", "build-scripts", "update-site-alpaca", function() {
+            cb();
+        });
     });
 
     // styles
-    gulp.watch(paths.styles.all, function() {
-        return runSequence('styles', refreshWeb);
+    watch(paths.styles.all, function(files, cb) {
+        runSequence("build-styles", "update-site-alpaca", function() {
+            cb();
+        });
     });
 
     // web
-    gulp.watch(["site/*/**"], function() {
-        refreshWeb();
+    watch(["site/*/**", "site/*", "site/*.*"], function(files, cb) {
+        runSequence("build-site", "update-site-full", function() {
+            cb();
+        });
     });
-
 });
 
-gulp.task('server', ['default', 'watch'], function() {
+gulp.task("server", ["watch"], function() {
 
     nodemon({
-        script: 'server/webserver.js',
+        script: "server/webserver.js",
         ignore: [
-            '*/**',
-            '*'
+            "*/**",
+            "*",
+            "*.*"
         ]
     });
 
 });
 
-gulp.task('testsite', ['watch'], function() {
+gulp.task("package", function(cb) {
 
-    nodemon({
-        script: 'server/test-webserver.js'
-    });
+    //console.log("package start");
+    fs.writeFileSync("./build/version.properties", "version=" + pkg.version);
 
-});
-
-gulp.task('lint', function() {
-  gulp.src(_.flatten([paths.scripts.core, '!lib/**/*']))
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'));
-});
-
-gulp.task('watch:lint', ['lint'], function() {
-  gulp.watch(paths.scripts.core, ['lint']);
-});
-
-gulp.task('package', function(callback) {
     var jQueryJson = require("./alpaca.jquery.json");
     jQueryJson.version = pkg.version;
     fs.writeFileSync("./alpaca.jquery.json", JSON.stringify(jQueryJson, null, "  "));
 
-    callback();
+    //console.log("package completed");
+    cb();
 });
 
-gulp.task('default', function(callback) {
-    return runSequence(['templates', 'scripts'], 'styles', 'package', 'refreshWeb', callback);
+gulp.task("default", function(cb) {
+    runSequence(
+        "build-templates",
+        ["build-scripts", "build-styles", "package"],
+        "build-site",
+        "update-site-full",
+        function() {
+            cb();
+        }
+    );
 });
 
-gulp.task('cucumber', function(cb) {
-    require('child_process').exec('./node_modules/.bin/cucumber.js -r features', function(err, stdout, stderr) {
+
+//
+// TESTING
+//
+
+gulp.task("testsite", ["watch"], function() {
+
+    nodemon({
+        script: "server/test-webserver.js"
+    });
+
+});
+
+gulp.task("lint", function() {
+  gulp.src(_.flatten([paths.scripts.core, "!lib/**/*"]))
+    .pipe(jshint())
+    .pipe(jshint.reporter("jshint-stylish"));
+});
+
+gulp.task("watch:lint", ["lint"], function() {
+  gulp.watch(paths.scripts.core, ["lint"]);
+});
+
+gulp.task("cucumber", function(cb) {
+    require("child_process").exec("./node_modules/.bin/cucumber.js -r features", function(err, stdout, stderr) {
         if (err) {
-            console.log('Error: ' + err);
+            console.log("Error: " + err);
         } else {
             console.log(stdout);
             console.error(stderr);
@@ -577,12 +628,157 @@ gulp.task('cucumber', function(cb) {
     });
 });
 
-gulp.task('metadata', function(callback) {
+var _applyBuilder = function(text, token, method)
+{
+    var c1 = text.indexOf("<!-- " + token + ":");
+    if (c1 > -1)
+    {
+        var c2 = text.indexOf("-->", c1 + 28);
+        if (c2 > -1)
+        {
+            var type = text.substring(c1 + 28, c2);
 
+            var instance = Alpaca.fieldClassRegistry[type]();
 
-    var jQueryJson = require("./alpaca.jquery.json");
-    jQueryJson.version = pkg.version;
-    fs.writeFileSync("./alpaca.jquery.json", JSON.stringify(jQueryJson, null, "  "));
+            var schema = instance[method]();
+            var schemaSchema = instance.getSchemaOfSchema();
+            var schemaOptions = instance.getOptionsForSchema();
+            var optionsSchema = instance.getSchemaOfOptions();
+            var optionsOptions = instance.getOptionsForOptions();
+            var title = instance.getTitle();
+            var description = instance.getDescription();
+            var type = instance.getType();
+            var fieldType = instance.getFieldType();
 
-    callback();
-});
+            var table = "";
+
+            table += "<table class='table table-hover'>";
+
+            table += "<thead>";
+            table += "<tr>";
+            table += "<th>Property</th>";
+            table += "<th>Description</th>";
+            table += "<th>Type</th>";
+            table += "<th>Default</th>";
+            table += "</tr>";
+            table += "</thead>";
+
+            table += "<tbody>";
+            for (var name in schemaSchema.properties)
+            {
+                var property = schemaSchema.properties[name];
+
+                table += "<tr>";
+                table += "<td>" + name + "</td>";
+                table += "<td>" + property.description ? property.description : "" + "</td>";
+                table += "<td>" + property.type ? property.type : "" + "</td>";
+                table += "<td>" + property.default ? property.default : "" + "</td>";
+                table += "</tr>";
+            }
+            table += "</tbody>";
+
+            table += "</table>";
+
+            text = text.substring(0, c1) + table + text.substring(c2 + 3);
+
+            fs.writeFileSync(filePath, text);
+        }
+    }
+};
+
+var generateTable = function(schema)
+{
+    var table = "";
+
+    table += "<table class='table table-hover'>";
+
+    table += "<thead>";
+    table += "<tr>";
+    table += "<th>Property</th>";
+    table += "<th>Description</th>";
+    table += "<th>Type</th>";
+    table += "<th>Default</th>";
+    table += "</tr>";
+    table += "</thead>";
+
+    table += "<tbody>";
+    for (var name in schema.properties)
+    {
+        var property = schema.properties[name];
+
+        table += "<tr>";
+        table += "<td>" + name + "</td>";
+        table += "<td>" + property.description ? property.description : "" + "</td>";
+        table += "<td>" + property.type ? property.type : "" + "</td>";
+        table += "<td>" + property.default ? property.default : "" + "</td>";
+        table += "</tr>";
+    }
+    table += "</tbody>";
+
+    table += "</table>";
+
+    return table;
+};
+
+var applyBuilderToFile = function(filePath, Alpaca)
+{
+    var text = "" + fs.readFileSync(filePath);
+
+    var c1 = text.indexOf("<!-- INCLUDE_API_DOCS:");
+    if (c1 > -1)
+    {
+        var c2 = text.indexOf("-->", c1 + 28);
+        if (c2 > -1)
+        {
+            var type = text.substring(c1 + 28, c2);
+
+            var instance = Alpaca.fieldClassRegistry[type]();
+
+            var schemaSchema = instance.getSchemaOfSchema();
+            //var schemaOptions = instance.getOptionsForSchema();
+            var optionsSchema = instance.getSchemaOfOptions();
+            //var optionsOptions = instance.getOptionsForOptions();
+            var title = instance.getTitle();
+            var description = instance.getDescription();
+            var type = instance.getType();
+            var fieldType = instance.getFieldType();
+
+            var gen = "";
+            gen += "<h3>" + fieldType + "</h3>";
+            gen += "<h4>" + type + "</h4>";
+            gen += "<h5>" + title + "</h5>";
+            gen += "<h5>" + description + "</h5>";
+            gen += "<h3>Schema</h3>";
+            gen += generateTable(schemaSchema);
+            gen += "<h3>Options</h3>";
+            gen += generateTable(optionsSchema);
+
+            text = text.substring(0, c1) + gen + text.substring(c2 + 3);
+
+            fs.writeFileSync(filePath, text);
+        }
+    }
+};
+
+var applyBuilder = function(basePath)
+{
+    var Alpaca = require("./build/alpaca/web/alpaca");
+
+    var all = wrench.readdirSyncRecursive(basePath);
+
+    var files = [];
+    for (var i = 0; i < all.length; i++)
+    {
+        if (all[i].indexOf(".html") > -1)
+        {
+            files.push(all[i]);
+        }
+    }
+
+    for (var i = 0; i < files.length; i++)
+    {
+        console.log("Apply: " + files[i] + " (" + i + "/" + files.length + ")");
+
+        applyBuilderToFile(files[i], Alpaca);
+    }
+};

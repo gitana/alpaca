@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Alpaca Form Builder</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- jQuery -->
+        <script type="text/javascript" src="../../lib/jquery/jquery.min.js"></script>
+
+        <!-- Bootstrap -->
+        <link href="../../lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+        <link type="text/css" href="../../lib/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" />
+        <script type="text/javascript" src="../../lib/bootstrap/dist/js/bootstrap.js"></script>
+
+        <!-- Handlebars -->
+        <script type="text/javascript" src="../../lib/handlebars/handlebars.min.js"></script>
+
+        <!-- Alpaca -->
+        <script type="text/javascript" src="../../lib/alpaca/bootstrap/alpaca.js"></script>
+        <link type="text/css" href="../../lib/alpaca/bootstrap/alpaca.css" rel="stylesheet" />
+
+
+        <!-- Beautify (used by EditorField) -->
+        <script src="../../lib/js-beautify/js/lib/beautify.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../lib/js-beautify/js/lib/beautify-css.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../lib/js-beautify/js/lib/beautify-html.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- typeahead.js -->
+        <script src="../../lib/typeahead.js/dist/bloodhound.min.js" type="text/javascript"></script>
+        <script src="../../lib/typeahead.js/dist/typeahead.bundle.min.js" type="text/javascript"></script>
+
+        <!-- datatables (for TableField) -->
+        <script src="../../lib/datatables/media/js/jquery.dataTables.js" type="text/javascript"></script>
+        <link type="text/css" href="../../lib/datatables/media/css/jquery.dataTables.css" rel="stylesheet"/>
+        <script src="../../lib/datatables-bootstrap3/BS3/assets/js/datatables.js" type="text/javascript"></script>
+        <link type="text/css" href="../../lib/datatables-bootstrap3/BS3/assets/css/datatables.css" rel="stylesheet"/>
+
+        <!-- ckeditor (for the ckeditor field) -->
+        <script src="../../lib/ckeditor/ckeditor.js" type="text/javascript"></script>
+        <script src="../../lib/ckeditor/adapters/jquery.js" type="text/javascript"></script>
+
+        <!-- fileupload control (for UploadField) -->
+        <link rel="stylesheet" type="text/css" href="../../lib/jquery-file-upload/css/jquery.fileupload.css"/>
+        <link rel="stylesheet" type="text/css" href="../../lib/jquery-file-upload/css/jquery.fileupload-ui.css"/>
+        <script src="../../lib/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+        <script src="../../lib/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+        <script src="../../lib/jquery-file-upload/js/jquery.fileupload.js"></script>
+        <script src="../../lib/jquery-file-upload/js/jquery.fileupload-process.js"></script>
+        <script src="../../lib/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
+
+        <!-- handsontable (for GridField) -->
+        <script src="../../lib/handsontable/dist/jquery.handsontable.full.js"></script>
+        <link rel="stylesheet" media="screen" href="../../lib/handsontable/dist/jquery.handsontable.full.css"/>
+
+        <!-- moment for date and datetime controls -->
+        <script src="../../lib/moment/min/moment-with-langs.min.js"></script>
+        <!-- bootstrap datetimepicker for date and datetime controls -->
+        <script src="../../lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+        <link rel="stylesheet" media="screen" href="../../lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"/>
+
+        <!-- bootstrap-timepicker for time field -->
+        <script src="../../lib/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+        <link rel="stylesheet" media="screen" href="../../lib/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
+
+        <!-- bootstrap-multiselect for time field -->
+        <script src="../../lib/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+        <link rel="stylesheet" media="screen" href="../../lib/bootstrap-multiselect/css/bootstrap-multiselect.css"/>
+
+        <!-- jQuery Price Format for currency field -->
+        <script type="text/javascript" src="../../lib/Jquery-Price-Format/jquery.price_format.min.js"></script>
+
+        <!-- ACE editor -->
+        <script src="../../lib/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- jQuery UI for draggable support -->
+        <script src="../../lib/jquery-ui/ui/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- START - Google Analytics -->
+        <script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-35134350-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        <!-- END - Google Analytics -->
+
+        <script type="text/javascript" src="form-builder.js"></script>
+        <link type="text/css" href="form-builder.css" rel="stylesheet" />
+
+    </head>
+    <body data-spy="scroll" data-target=".demo-nav">
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../demos.html">Alpaca Demos</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="form-builder.html">Form Builder Demo</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <p class="alert alert-warning">
+                        This is a sample visual form builder using Alpaca.  It uses the field API to derive metadata
+                        attributes, provide modal popup editors and a drag and drop environment for assembling your
+                        form.  It also provides instant preview while editing your JSON schema, data and options.
+                        <br/>
+                        <br/>
+                        A <a href="/form-builder.html">cloud-hosted and production-ready version of this Form Builder</a>
+                        is available along with schema management, reports and analytics.
+                    </p>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#source" data-toggle="tab" class="tab-item tab-item-source">Source</a></li>
+                            <li><a href="#designer" data-toggle="tab" class="tab-item tab-item-designer">Designer</a></li>
+                            <li><a href="#view" data-toggle="tab" class="tab-item tab-item-view">View</a></li>
+                            <li><a href="#code" data-toggle="tab" class="tab-item tab-item-code">Code</a></li>
+                            <li><a href="#loadsave" data-toggle="tab" class="tab-item tab-item-loadsave">Load / Save</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="source">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div>
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#schema" data-toggle="tab" class="tab-source-schema">Schema</a></li>
+                                            <li><a href="#options" data-toggle="tab" class="tab-source-options">Options</a></li>
+                                            <li><a href="#data" data-toggle="tab" class="tab-source-data">Data</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="schema">
+                                        </div>
+                                        <div class="tab-pane" id="options">
+                                        </div>
+                                        <div class="tab-pane" id="data">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#preview" data-toggle="tab">Preview</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="preview">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="previewDiv"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="designer">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="designerDiv"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div>
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active"><a href="#types" data-toggle="tab">Types</a></li>
+                                                    <li><a href="#basic" data-toggle="tab">Basic</a></li>
+                                                    <li><a href="#advanced" data-toggle="tab">Advanced</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="types"></div>
+                                                <div class="tab-pane" id="basic"></div>
+                                                <div class="tab-pane" id="advanced"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="view">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="viewDiv"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="code">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="codeDiv"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="loadsave">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <button class="btn btn-default load-button">Load Form</button>
+                                    <br/>
+                                    <br/>
+                                    <button class="btn btn-default save-button">Save Form</button>
+                                    <br/>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

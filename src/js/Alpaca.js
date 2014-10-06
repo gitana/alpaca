@@ -291,6 +291,12 @@
             loadedOptions = loadedOptions ? loadedOptions : options;
             loadedView = loadedView ? loadedView : view;
 
+            // some correct in case schema is missing "type" field
+            if (loadedSchema && !loadedSchema.type)
+            {
+                loadedSchema.type = "object";
+            }
+
             // some defaults for the case where data is null
             // if schema + options are not provided, we assume a text field
 
@@ -492,7 +498,51 @@
          * @returns {Boolean} True if the variable is empty, false otherwise.
          */
         isEmpty: function(obj) {
-            return Alpaca.isUndefined(obj) || obj === null;
+
+            var self = this;
+
+            if (Alpaca.isUndefined(obj))
+            {
+                return true;
+            }
+            else if (obj === null)
+            {
+                return true;
+            }
+
+            if (obj && Alpaca.isObject(obj))
+            {
+                var count = self.countProperties(obj);
+                if (count === 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+
+        /**
+         * Counts the number of properties in an object.
+         *
+         * @param obj
+         * @returns {number}
+         */
+        countProperties: function(obj) {
+            var count = 0;
+
+            if (obj && Alpaca.isObject(obj))
+            {
+                for (var k in obj)
+                {
+                    if (obj.hasOwnProperty(k) && typeof(obj[k]) !== "function")
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
         },
 
         /**
@@ -4211,6 +4261,8 @@
             });
 
             window.setTimeout(function() {
+                from_clone.remove();
+                dest_clone.remove();
                 callback();
             }, duration + 1);
         };

@@ -14,11 +14,30 @@
             return "map";
         },
 
+        getType: function()
+        {
+            return "object"
+        },
+
         /**
          * @see Alpaca.Fields.TextAreaField#setup
          */
         setup: function()
         {
+            // special handling - data can come in as an object, we convert to array
+            if (this.data && Alpaca.isObject(this.data))
+            {
+                var newData = [];
+
+                $.each(this.data, function(key, value) {
+                    var newValue = Alpaca.copyOf(value);
+                    newValue["_key"] = key;
+                    newData.push(newValue);
+                });
+
+                this.data = newData;
+            }
+
             this.base();
 
             Alpaca.mergeObject(this.options, {
@@ -28,22 +47,6 @@
             if (Alpaca.isEmpty(this.data))
             {
                 return;
-            }
-
-            if (!Alpaca.isArray(this.data))
-            {
-                if (Alpaca.isObject(this.data))
-                {
-                    var newData = [];
-
-                    $.each(this.data, function(key, value) {
-                        var newValue = Alpaca.copyOf(value);
-                        newValue["_key"] = key;
-                        newData.push(newValue);
-                    });
-
-                    this.data = newData;
-                }
             }
         },
 
@@ -58,6 +61,7 @@
                 return;
             }
 
+            // special handling, convert back to object
             var o = {};
             for (var i = 0; i < this.children.length; i++)
             {

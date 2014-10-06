@@ -899,113 +899,92 @@
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Adds a child item.  Returns the container element right away.
-         * The postRenderCallback method is called upon completion.
+         * Adds an item to the object.
          *
          * @param {String} propertyId Child field property ID.
          * @param {Object} itemSchema schema
          * @param {Object} fieldOptions Child field options.
          * @param {Any} value Child field value
          * @param {String} insertAfterId Location where the child item will be inserted.
-         * @param [Function} postRenderCallback called once the item has been added
+         * @param [Function} callback called once the item has been added
          */
-            /*
-        //addItem: function(propertyId, itemSchema, itemOptions, itemData, insertAfterId, postRenderCallback)
-        addItem: function(index, schema, options, data, callback)
+        addItem: function(propertyId, itemSchema, itemOptions, itemData, insertAfterId, callback)
         {
-            var _this = this;
+            var self = this;
 
-            var containerElem = _this.renderItemContainer(insertAfterId, this, propertyId);
-            containerElem.alpaca({
-                "data" : itemData,
-                "options": itemOptions,
-                "schema" : itemSchema,
-                "view" : this.view.id ? this.view.id : this.view,
-                "connector": this.connector,
-                "error": function(err)
+            this.createItem(propertyId, itemSchema, itemOptions, itemData, insertAfterId, function(child) {
+
+                var index = null;
+                if (insertAfterId && self.childrenById[insertAfterId])
                 {
-                    _this.destroy();
-
-                    _this.errorCallback.call(_this, err);
-                },
-                "notTopLevel":true,
-                "render" : function(fieldControl, cb) {
-                    // render
-                    fieldControl.parent = _this;
-                    // add the property Id
-                    fieldControl.propertyId = propertyId;
-                    // setup item path
-                    if (_this.path != "/") {
-                        fieldControl.path = _this.path + "/" + propertyId;
-                    } else {
-                        fieldControl.path = _this.path + propertyId;
-                    }
-                    fieldControl.render(null, function() {
-
-                        containerElem.attr("id", fieldControl.getId() + "-item-container");
-                        containerElem.attr("alpaca-id", fieldControl.getId());
-                        containerElem.addClass("alpaca-fieldset-item-container");
-                        // remember the control
-                        if (Alpaca.isEmpty(insertAfterId)) {
-                            _this.addChild(fieldControl);
-                        } else {
-                            var index = _this.getIndex(insertAfterId);
-                            if (index != -1) {
-                                _this.addChild(fieldControl, index + 1);
-                            } else {
-                                _this.addChild(fieldControl);
-                            }
-                        }
-                        if (insertAfterId) {
-                            _this.refreshValidationState();
-                        }
-
-                        // if not empty, mark the "last" and "first" dom elements in the list
-                        if ($(containerElem).siblings().addBack().length > 0)
-                        {
-                            $(containerElem).parent().removeClass("alpaca-fieldset-items-container-empty");
-
-                            $(containerElem).siblings().addBack().removeClass("alpaca-item-container-first");
-                            $(containerElem).siblings().addBack().removeClass("alpaca-item-container-last");
-                            $(containerElem).siblings().addBack().first().addClass("alpaca-item-container-first");
-                            $(containerElem).siblings().addBack().last().addClass("alpaca-item-container-last");
-                        }
-
-                        // store key on dom element
-                        $(containerElem).attr("data-alpaca-item-container-item-key", propertyId);
-
-                        // trigger update on the parent array
-                        _this.triggerUpdate();
-
-                        if (cb)
-                        {
-                            cb();
-                        }
-
-                    });
-                },
-                "postRender": function(control) {
-
-                    if (postRenderCallback)
+                    for (var z = 0; z < self.children.length; z++)
                     {
-                        postRenderCallback(control);
+                        if (self.children[z].getId() == insertAfterId)
+                        {
+                            index = z;
+                            break;
+                        }
                     }
                 }
+
+                // register the child
+                self.registerChild(child, ((index != null) ? index + 1 : null));
+
+                // insert into dom
+                if (!index)
+                {
+                    // insert first into container
+                    $(self.container).append(child.getFieldEl());
+                }
+                else
+                {
+                    // insert at a specific index
+                    var existingElement = self.getContainerEl().children("[data-alpaca-container-item-index='" + index + "']");
+                    if (existingElement && existingElement.length > 0)
+                    {
+                        // insert after
+                        existingElement.after(child.getFieldEl());
+                    }
+                }
+
+                // updates child dom marker elements
+                self.updateChildDOMElements();
+
+                // update the array item toolbar state
+                //self.updateToolbars();
+
+                // refresh validation state
+                self.refreshValidationState(true, function() {
+
+                    // trigger update
+                    self.triggerUpdate();
+
+                    if (callback)
+                    {
+                        callback();
+                    }
+
+                });
             });
+        },
 
-            return containerElem;
-        },*/
-
-        /*
-        removeItem: function(id, callback)
+        /**
+         * Removes an item from the object.
+         *
+         * @param propertyId
+         * @param callback
+         */
+        removeItem: function(propertyId, callback)
         {
+            var self = this;
+
             this.children = $.grep(this.children, function(val, index) {
-                return (val.getId() != id);
+                return (val.getId() != propertyId);
             });
 
-            var childField = this.childrenById[id];
+            var childField = this.childrenById[propertyId];
 
-            delete this.childrenById[id];
+            delete this.childrenById[propertyId];
             if (childField.propertyId)
             {
                 delete this.childrenByPropertyId[childField.propertyId];
@@ -1013,17 +992,18 @@
 
             childField.destroy();
 
-            this.refreshValidationState();
+            this.refreshValidationState(true, function() {
 
-            // trigger update handler
-            this.triggerUpdate();
+                // trigger update handler
+                self.triggerUpdate();
 
-            if (callback)
-            {
-                callback();
-            }
-        }
-        */
+                if (callback)
+                {
+                    callback();
+                }
+            });
+        },
+
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1491,6 +1471,128 @@
          */
         getType: function() {
             return "object";
+        },
+
+        /**
+         * Moves a field.
+         *
+         * @param {Number} sourceIndex the index of the child to be moved
+         * @param {Number} targetIndex the index to which the child should be moved
+         * @param [Boolean] animate whether to animate the movement
+         * @param [Function] callback called after the child is added
+         */
+        moveItem: function(sourceIndex, targetIndex, animate, callback)
+        {
+            var self = this;
+
+            if (typeof(animate) == "function")
+            {
+                callback = animate;
+                animate = self.options.animate;
+            }
+
+            if (typeof(animate) == "undefined")
+            {
+                animate = self.options.animate ? self.options.animate : true;
+            }
+
+            if (typeof(sourceIndex) === "string")
+            {
+                sourceIndex = parseInt(sourceIndex, 10);
+            }
+
+            if (typeof(targetIndex) === "string")
+            {
+                targetIndex = parseInt(targetIndex, 10);
+            }
+
+            if (targetIndex < 0)
+            {
+                targetIndex = 0;
+            }
+            if (targetIndex >= self.children.length)
+            {
+                targetIndex = self.children.length - 1;
+            }
+
+            if (targetIndex === -1)
+            {
+                // nothing to swap with
+                return;
+            }
+
+            var targetChild = self.children[targetIndex];
+            if (!targetChild)
+            {
+                // target child not found
+                return;
+            }
+
+            // the source and target DOM elements
+            var sourceContainer = self.getContainerEl().children("[data-alpaca-container-item-index='" + sourceIndex + "']");
+            var targetContainer = self.getContainerEl().children("[data-alpaca-container-item-index='" + targetIndex + "']");
+
+            // create two temp elements as markers for switch
+            var tempSourceMarker = $("<div class='tempMarker1'></div>");
+            sourceContainer.before(tempSourceMarker);
+            var tempTargetMarker = $("<div class='tempMarker2'></div>");
+            targetContainer.before(tempTargetMarker);
+
+            var onComplete = function()
+            {
+                // swap order in children
+                var tempChildren = [];
+                for (var i = 0; i < self.children.length; i++)
+                {
+                    if (i === sourceIndex)
+                    {
+                        tempChildren[i] = self.children[targetIndex];
+                    }
+                    else if (i === targetIndex)
+                    {
+                        tempChildren[i] = self.children[sourceIndex];
+                    }
+                    else
+                    {
+                        tempChildren[i] = self.children[i];
+                    }
+                }
+                self.children = tempChildren;
+
+                // swap order in DOM
+                tempSourceMarker.replaceWith(targetContainer);
+                tempTargetMarker.replaceWith(sourceContainer);
+
+                // updates child dom marker elements
+                self.updateChildDOMElements();
+
+                // update the action bar bindings
+                $(sourceContainer).find("[data-alpaca-array-actionbar-item-index='" + sourceIndex + "']").attr("data-alpaca-array-actionbar-item-index", targetIndex);
+                $(targetContainer).find("[data-alpaca-array-actionbar-item-index='" + targetIndex + "']").attr("data-alpaca-array-actionbar-item-index", sourceIndex);
+
+                // refresh validation state
+                self.refreshValidationState();
+
+                // trigger update
+                self.triggerUpdate();
+
+                if (callback)
+                {
+                    callback();
+                }
+            };
+
+            if (animate)
+            {
+                // swap divs visually
+                Alpaca.animatedSwap(sourceContainer, targetContainer, 500, function() {
+                    onComplete();
+                });
+            }
+            else
+            {
+                onComplete();
+            }
         },
 
 

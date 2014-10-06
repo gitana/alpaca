@@ -12,7 +12,8 @@ The ```map``` field.
 
 
 ## Example 1
-Map field for user profiles.
+Map field for user profiles.  A map field allows you express unique key IDs for an associative array object.
+Click on the "view" button to show the resulting JSON.
 <div id="field1"> </div>
 {% raw %}
 <script type="text/javascript" id="field1-script">
@@ -35,7 +36,7 @@ $("#field1").alpaca({
             "type": "object",
             "properties": {
                 "_key" : {
-                    "title" : "User Id",
+                    "title" : "User ID",
                     "type": "string"
                 },
                 "firstName" : {
@@ -63,6 +64,18 @@ $("#field1").alpaca({
                     "_key" : {
                         "size" : 60,
                         "helper" : "This value serves as a unique key into the associative array."
+                    }
+                }
+            }
+        },
+        "form": {
+            "buttons": {
+                "submit": {
+                    "title": "View",
+                    "click": function() {
+                        var value = this.getValue();
+
+                        alert(JSON.stringify(value, null, "  "));
                     }
                 }
             }
