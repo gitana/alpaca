@@ -291,12 +291,6 @@
             loadedOptions = loadedOptions ? loadedOptions : options;
             loadedView = loadedView ? loadedView : view;
 
-            // some correct in case schema is missing "type" field
-            if (loadedSchema && !loadedSchema.type)
-            {
-                loadedSchema.type = "object";
-            }
-
             // some defaults for the case where data is null
             // if schema + options are not provided, we assume a text field
 
@@ -745,30 +739,35 @@
          * @param {Any} data The variable.
          * @returns {String} Schema type of the variable.
          */
-        getSchemaType: function (data) {
+        getSchemaType: function(data) {
+
+            var schemaType = null;
+
             // map data types to default field types
             if (Alpaca.isEmpty(data)) {
-                return "string";
+                schemaType = "string";
             }
             if (Alpaca.isObject(data)) {
-                return "object";
+                schemaType = "object";
             }
             if (Alpaca.isString(data)) {
-                return "string";
+                schemaType = "string";
             }
             if (Alpaca.isNumber(data)) {
-                return "number";
+                schemaType = "number";
             }
             if (Alpaca.isArray(data)) {
-                return "array";
+                schemaType = "array";
             }
             if (Alpaca.isBoolean(data)) {
-                return "boolean";
+                schemaType = "boolean";
             }
             // Last check for data that carries functions -- GitanaConnector case.
             if (typeof data === 'object') {
-                return "object";
+                schemaType = "object";
             }
+
+            return schemaType;
         },
 
         /**
@@ -1783,6 +1782,9 @@
                 // if nothing passed in, we can try to make a guess based on the type of data
                 if (!schema.type) {
                     schema.type = Alpaca.getSchemaType(data);
+                }
+                if (!schema.type) {
+                    schema.type = "object"; // fallback
                 }
                 if (schema && schema["enum"]) {
                     if (schema["enum"].length > 3) {

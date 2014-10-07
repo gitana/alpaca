@@ -31,7 +31,8 @@
                         {
                             if (_this.schema.type == "number")
                             {
-                                val = parseInt(val, 10);
+                                //val = parseInt(val, 10);
+                                val = parseFloat(val);
                             }
                             else if (_this.schema.type == "boolean")
                             {
