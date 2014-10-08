@@ -50,10 +50,6 @@
 
             this.base(function() {
 
-                if (self.getFieldEl()) {
-                    self.getFieldEl().addClass('alpaca-controlfield-phone');
-                }
-
                 callback();
 
             });

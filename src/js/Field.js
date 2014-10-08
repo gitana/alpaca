@@ -106,7 +106,7 @@
             // helper function to determine if we're in a display-only mode
             this.isDisplayOnly = function()
             {
-                return (self.view.type === "view");
+                return (self.view.type === "view" || self.view.type == "display");
             };
 
             // schema id cleanup
@@ -1881,6 +1881,11 @@
                         "title": "Enumerated Value Labels",
                         "description": "An array of string labels for items in the enum array",
                         "type": "array"
+                    },
+                    "view": {
+                        "title": "Override of the view for this field",
+                        "description": "Allows for this field to be rendered with a different view (such as 'display' or 'create')",
+                        "type": "string"
                     }
                 }
             };
@@ -2012,6 +2017,9 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "view": {
+                        "type": "text"
                     }
                 }
             };

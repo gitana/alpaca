@@ -46,13 +46,31 @@ $("#field2").alpaca({
 </script>
 {% endraw %}
 
-
 ## Example 3
-URL field - display only
+URL field - with field set to display mode
 <div id="field3"> </div>
 {% raw %}
 <script type="text/javascript" id="field3-script">
 $("#field3").alpaca({
+    "data": "http://www.cloudcms.com",
+    "schema": {
+        "format": "uri"
+    },
+    "options": {
+        "type": "url",
+        "view": "bootstrap-display"
+    }
+});
+</script>
+{% endraw %}
+
+
+## Example 4
+URL field - display only view
+<div id="field4"> </div>
+{% raw %}
+<script type="text/javascript" id="field4-script">
+$("#field4").alpaca({
     "data": "http://www.cloudcms.com",
     "options": {
         "type": "url",

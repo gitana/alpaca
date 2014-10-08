@@ -3,12 +3,17 @@
     <div class="form-group">
 
         {{#if options.label}}
-        <label class="alpaca-display-control-label {{#if options.labelClass}}{{options.labelClass}}{{/if}} control-label" for="{{id}}">{{options.label}}</label>
+        <label class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} control-label alpaca-control-label" for="{{id}}">{{{options.label}}}</label>
         {{/if}}
 
-        <p class="form-control-static">
-            {{#str data}}{{/str}}
+        {{#control}}{{/control}}
+
+        {{#if options.helper}}
+        <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+            <i class="glyphicon glyphicon-info-sign"></i>
+            {{{options.helper}}}
         </p>
+        {{/if}}
 
     </div>
 

@@ -311,6 +311,11 @@
                 }
             }
 
+            if (loadedOptions.view)
+            {
+                loadedView = loadedOptions.view;
+            }
+
             // init alpaca
             return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, initialSettings, callback, _renderedCallback, connector, errorCallback);
 
@@ -2996,12 +3001,6 @@
 
     Alpaca.updateValidationStateForContext = function(view, context)
     {
-        // not in display mode
-        if (view.type === "display")
-        {
-            return;
-        }
-
         // walk through each and flip any DOM UI based on entry state
         for (var i = 0; i < context.length; i++)
         {

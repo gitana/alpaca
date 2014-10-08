@@ -34,7 +34,7 @@
             this.base(model, function() {
 
                 // see if we can render CK Editor
-                if (self.control && $.fn.ckeditor)
+                if (!self.isDisplayOnly() && self.control && $.fn.ckeditor)
                 {
                     self.plugin = $( self.control ).ckeditor(self.options.ckeditor); // Use CKEDITOR.replace() if element is <textarea>.
                 }

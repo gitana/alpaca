@@ -46,12 +46,58 @@ Country field rendered in display-only mode.
 {% raw %}
 <script type="text/javascript" id="field3-script">
 $("#field3").alpaca({
-    "data": "USA",
+    "data": "usa",
     "options": {
         "type": "country",
         "label": "Country"
     },
     "view": "bootstrap-display"
+});
+</script>
+{% endraw %}
+
+## Example 4
+Object form with country field override to display mode.
+<div id="field4"> </div>
+{% raw %}
+<script type="text/javascript" id="field4-script">
+$("#field4").alpaca({
+    "data": {
+        "name": "John McClane",
+        "age": 36,
+        "country": "usa"
+    },
+    "schema": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string"
+            },
+            "age": {
+                "type": "number"
+            },
+            "country": {
+                "type": "string"
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "name": {
+                "type": "text",
+                "label": "Name"
+            },
+            "age": {
+                "type": "integer",
+                "label": "Age"
+            },
+            "country": {
+                "type": "country",
+                "label": "Country",
+                "view": "bootstrap-display"
+            }
+        }
+    }
 });
 </script>
 {% endraw %}

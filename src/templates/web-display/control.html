@@ -6,7 +6,14 @@
         <label class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-control-label" for="{{id}}">{{{options.label}}}</label>
         {{/if}}
 
-        <div>&nbsp;{{data}}</div>
+        {{#control}}{{/control}}
+
+        {{#if options.helper}}
+        <p class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+            <i class="info-sign"></i>
+            {{{options.helper}}}
+        </p>
+        {{/if}}
 
     </div>
 

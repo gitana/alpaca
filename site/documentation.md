@@ -55,6 +55,7 @@ whereas the extension types depend on various thirdparty libraries.
             <li><a href="{{ BASE_PATH }}/docs/fields/editor.html">Editor</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/email.html">Email</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/grid.html">Grid</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/image.html">Image</a></li>
         </ul>
     </div>
     <div class="col-md-4">
@@ -67,12 +68,12 @@ whereas the extension types depend on various thirdparty libraries.
             <li><a href="{{ BASE_PATH }}/docs/fields/password.html">Password</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/personalname.html">Personal Name</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/phone.html">Phone</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/state.html">State</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/table.html">Table</a></li>
         </ul>
     </div>
     <div class="col-md-4">
         <ul>
-            <li><a href="{{ BASE_PATH }}/docs/fields/state.html">State</a></li>
-            <li><a href="{{ BASE_PATH }}/docs/fields/table.html">Table</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/tag.html">Tag</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/time.html">Time</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/upload.html">Upload</a></li>

@@ -242,7 +242,7 @@
         {
             var value = null;
 
-            if (this.control && this.control.length > 0)
+            if (!this.isDisplayOnly() && this.control && this.control.length > 0)
             {
                 value = this._getControlVal();
             }

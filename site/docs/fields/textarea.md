@@ -82,3 +82,23 @@ $("#field4").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 5
+This example overrides the <code>view</code> property on the field to have just the single field render
+in an alternate, display-only view.
+<div id="field5"> </div>
+{% raw %}
+<script type="text/javascript" id="field5-script">
+$("#field5").alpaca({
+    "data": "My name is Dr. Jacobian and I am a neuroscientist from the Cornell University.  I've perfected a DNA transcription process which makes it possible for the first time to use DNA nucleotides to store pedabytes of information in real-time.",
+    "schema": {
+        "type": "string"
+    },
+    "options": {
+        "type": "textarea",
+        "label": "Tell us about yourself",
+        "view": "bootstrap-display"
+    }
+});
+</script>
+{% endraw %}

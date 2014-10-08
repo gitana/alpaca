@@ -76,17 +76,13 @@
 
             this.base();
 
-            // we require a control descriptor if we're in a non-display mode
-            if (this.view.type !== "display")
+            var controlTemplateType = self.resolveControlTemplateType();
+            if (!controlTemplateType)
             {
-                var controlTemplateType = self.resolveControlTemplateType();
-                if (!controlTemplateType)
-                {
-                    return Alpaca.throwErrorWithCallback("Unable to find template descriptor for control: " + self.getFieldType());
-                }
-
-                this.controlDescriptor = this.view.getTemplateDescriptor("control-" + controlTemplateType, self);
+                return Alpaca.throwErrorWithCallback("Unable to find template descriptor for control: " + self.getFieldType());
             }
+
+            this.controlDescriptor = this.view.getTemplateDescriptor("control-" + controlTemplateType, self);
         },
 
         getControlEl: function()

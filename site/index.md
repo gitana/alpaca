@@ -367,6 +367,9 @@ $("#form1").alpaca({
                 "enum": ['excellent', 'not too shabby', 'alpaca built my hotrod']
             }
         }
+    },
+    "options": {
+        "focus": false
     }
 });
 </script>

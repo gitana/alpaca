@@ -136,6 +136,11 @@ legend.alpaca-container-label
     height: 250px;
 }
 
+.alpaca-field.alpaca-field-image .alpaca-image-display
+{
+    margin-top: 20px;
+}
+
 
 
 
