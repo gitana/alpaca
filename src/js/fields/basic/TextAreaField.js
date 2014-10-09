@@ -71,12 +71,13 @@
             }
 
             return true;
-        },
+        }
 
 
         /**
          *@see Alpaca.Fields.TextField#setValue
          */
+            /*
         setValue: function(value)
         {
             $(this.control).val(value);
@@ -84,16 +85,20 @@
             // be sure to call into base method
             this.base(value);
         },
+        */
 
         /**
          * @see Alpaca.Fields.TextField#getValue
          */
+        /*
         getValue: function()
         {
             return $(this.control).val();
         },
+        */
 
         /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.Fields.TextField#getTitle

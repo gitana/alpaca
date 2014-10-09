@@ -1062,6 +1062,7 @@
             {
                 showSteps = true;
             }
+            var showProgressBar = this.wizardConfigs.showProgressBar;
             var performValidation = this.wizardConfigs.validation;
             if (typeof(performValidation) == "undefined")
             {
@@ -1080,6 +1081,11 @@
             if (typeof(_wizardShowSteps) != "undefined")
             {
                 showSteps = _wizardShowSteps ? true : false;
+            }
+            var _wizardShowProgressBar = $(this.field).attr("data-alpaca-wizard-show-progress-bar");
+            if (typeof(_wizardShowProgressBar) != "undefined")
+            {
+                showProgressBar = _wizardShowProgressBar ? true : false;
             }
 
             // find all of the steps
@@ -1116,6 +1122,16 @@
                 });
             }
 
+            // assume something for progress bar if not specified
+            if (typeof(showProgressBar) == "undefined")
+            {
+                if (stepDescriptors.length > 1)
+                {
+                    showProgressBar = true;
+                }
+            }
+
+
             // model for use in rendering the wizard
             var model = {};
             model.wizardTitle = wizardTitle;
@@ -1127,6 +1143,7 @@
             model.schema = self.schema;
             model.options = self.options;
             model.data = self.data;
+            model.showProgressBar = showProgressBar;
 
             // render the actual wizard
             var wizardTemplateDescriptor = self.view.getTemplateDescriptor("wizard", self);
@@ -1139,6 +1156,7 @@
                 var wizardNav = $(wizardEl).find(".alpaca-wizard-nav");
                 var wizardSteps = $(wizardEl).find(".alpaca-wizard-steps");
                 var wizardButtons = $(wizardEl).find(".alpaca-wizard-buttons");
+                var wizardProgressBar = $(wizardEl).find(".alpaca-wizard-progress-bar");
 
                 // move steps into place
                 $(wizardSteps).append(stepEls);
@@ -1177,6 +1195,18 @@
                                     $(wizardNav).find("[data-alpaca-wizard-step-index='" + g + "']").addClass("disabled");
                                 }
                             }
+                        }
+
+                        // PROGRESS BAR
+                        if (model.showProgressBar)
+                        {
+                            var valueNow = currentIndex;
+                            var valueMax = model.steps.length;
+                            var width = parseInt(((valueNow / valueMax) * 100), 10) + "%";
+
+                            $(wizardProgressBar).find(".progress-bar").attr("aria-valuemax", valueMax);
+                            $(wizardProgressBar).find(".progress-bar").attr("aria-valuenow", valueNow);
+                            $(wizardProgressBar).find(".progress-bar").css("width", width);
                         }
 
 

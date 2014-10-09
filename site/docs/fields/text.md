@@ -304,3 +304,31 @@ $("#field10").alpaca({
 </script>
 {% endraw %}
 
+
+## Example 11
+This example constrains the entered text value, forcing it to be at minimum 3 and at most 25.
+This not only runs validation checks but also enforces some UI behavior.
+
+This also shows how many characters are left for <code>maxLength</code> as you type.
+
+<div id="field11"></div>
+{% raw %}
+<script type="text/javascript" id="field11-script">
+$("#field11").alpaca({
+    "schema": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 25
+    },
+    "options": {
+        "type": "text",
+        "label": "What is your name?",
+        "constrainMaxLength": true,
+        "constrainMinLength": true,
+        "showMaxLengthIndicator": true
+    },
+    "data": "Jackie Robinson"
+});
+</script>
+{% endraw %}
+

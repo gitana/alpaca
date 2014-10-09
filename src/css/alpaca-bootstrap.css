@@ -141,6 +141,15 @@ legend.alpaca-container-label
     margin-top: 20px;
 }
 
+.alpaca-field-text-max-length-indicator
+{
+    color: #aaa;
+}
+
+.alpaca-field-text-max-length-indicator.err
+{
+    color: #aa0000;
+}
 
 
 
@@ -225,6 +234,11 @@ legend.alpaca-container-label
 }
 
 .alpaca-wizard .alpaca-wizard-buttons
+{
+    margin-top: 20px;
+}
+
+.alpaca-wizard .alpaca-wizard-progress-bar
 {
     margin-top: 20px;
 }

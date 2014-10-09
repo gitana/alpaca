@@ -57,6 +57,9 @@
 
                     // typeahead
                     self.applyTypeAhead();
+
+                    // update max length indicator
+                    self.updateMaxLengthIndicator();
                 }
 
                 callback();
@@ -235,6 +238,45 @@
             }
         },
 
+        updateMaxLengthIndicator: function()
+        {
+            var self = this;
+
+            var indicator = $(self.field).find(".alpaca-field-text-max-length-indicator");
+            if (indicator.length === 0)
+            {
+                indicator = $("<p class='alpaca-field-text-max-length-indicator'></p>");
+                $(self.control).after(indicator);
+            }
+
+            var errState = false;
+
+            var message = "";
+            if (!Alpaca.isEmpty(self.schema.maxLength) && self.options.showMaxLengthIndicator)
+            {
+                var val = self.getValue() || "";
+
+                var diff = self.schema.maxLength - val.length;
+                if (diff >= 0)
+                {
+                    message = "You have " + diff + " characters remaining";
+                }
+                else
+                {
+                    message = "Your message is too long by " + (diff*-1) + " characters";
+                    errState = true;
+                }
+
+                $(indicator).html(message);
+                $(indicator).removeClass("err");
+                if (errState)
+                {
+                    $(indicator).addClass("err");
+                }
+            }
+
+        },
+
         /**
          * @see Alpaca.Field#getValue
          */
@@ -273,6 +315,9 @@
 
             // be sure to call into base method
             this.base(value);
+
+            // if applicable, update the max length indicator
+            this.updateMaxLengthIndicator();
         },
 
         /**
@@ -435,7 +480,51 @@
          */
         getType: function() {
             return "string";
+        },
+
+        /**
+         * @see Alpaca.ControlField#onKeyPress
+         */
+        onKeyDown: function(e)
+        {
+            var self = this;
+
+            if (e.keyCode === 8) // backspace
+            {
+                if (!Alpaca.isEmpty(self.schema.minLength) && (self.options.constrainLengths || self.options.constrainMinLength))
+                {
+                    var newValue = self.getValue() || "";
+                    if (newValue.length <= self.schema.minLength)
+                    {
+                        // kill event
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                    }
+                }
+            }
+            else
+            {
+                if (!Alpaca.isEmpty(self.schema.maxLength) && (self.options.constrainLengths || self.options.constrainMaxLength))
+                {
+                    var newValue = self.getValue() || "";
+                    if (newValue.length >= self.schema.maxLength)
+                    {
+                        // kill event
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                    }
+                }
+            }
+        },
+
+        onKeyUp: function(e)
+        {
+            var self = this;
+
+            // if applicable, update the max length indicator
+            self.updateMaxLengthIndicator();
         }
+
 
 
         /* builder_helpers */

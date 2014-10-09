@@ -404,11 +404,13 @@
         {
             var self = this;
 
+            /*
             // remove the previous "field" element if it exists
             if (self.field)
             {
                 $(self.field).remove();
             }
+            */
 
             // check if it needs to be wrapped in a form
             if (self.options.form && Alpaca.isObject(self.options.form))
@@ -538,6 +540,9 @@
                 "path": this.path,
                 "name": this.name
             });
+
+            // remove the previous "field" element if it exists
+            self._oldFieldEl = self.field;
 
             this.field = renderedDomElement;
             this.field.appendTo(parentEl);
@@ -731,13 +736,32 @@
         {
             var self = this;
 
+            // insert element before current field to mark where we'll render
+            var markerEl = $("<div></div>");
+            $(self.field).before(markerEl);
+
+            // temp domEl
+            self.domEl = $("<div></div>");
+
             // reset domEl so that we're rendering into the right place
-            self.domEl = self.field.parent();
+            //self.domEl = self.field.parent();
 
             // re-setup the field
             self.setup();
 
             self._render(function() {
+
+                // move ahead of marker
+                $(markerEl).before(self.domEl.children());
+
+                // remove marker
+                $(markerEl).remove();
+
+                // clean up old field element if exists
+                if (self._oldFieldEl)
+                {
+                    $(self._oldFieldEl).remove();
+                }
 
                 if (callback)
                 {

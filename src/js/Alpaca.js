@@ -1731,6 +1731,13 @@
                         $(el).removeClass("alpaca-field-rendering");
                         $(el).removeClass("alpaca-hidden");
 
+                        // if there was a previous field that needs to be cleaned up, do so now
+                        if (field._oldFieldEl)
+                        {
+                            $(field._oldFieldEl).remove();
+                        }
+
+
                         renderedCallback(field);
                     };
 

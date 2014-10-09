@@ -175,6 +175,10 @@
                 {
                     value = Alpaca.checked($(input[0]));
                 }
+                else
+                {
+                    value = false;
+                }
             }
             else
             {
