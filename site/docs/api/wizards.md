@@ -150,6 +150,7 @@ For the top-level DOM element:
     <li><code>data-alpaca-wizard-description</code> - the wizard description (<code>wizard.description</code>)</li>
     <li><code>data-alpaca-wizard-validation</code> - whether to run validation between steps (<code>wizard.validation</code>)</li>
     <li><code>data-alpaca-wizard-show-steps</code> - whether to render the steps selector (<code>wizard.showSteps</code>)</li>
+    <li><code>data-alpaca-wizard-show-progress-bar</code> - whether to render the progress bar (<code>wizard.showProgressBar</code>)</li>
 </ul>
 
 And for each step:
@@ -268,6 +269,7 @@ $("#field5").alpaca({
                 "description": "Customize your Profile"
             }],
             "showSteps": true,
+            "showProgressBar": false,
             "validation": true,
             "buttons": {
                 "previous": {
