@@ -1,5 +1,11 @@
 <script type="text/x-handlebars-template">
 
-    <a href="{{data}}" target="_blank">{{data}}</a>
+    <a href="{{data}}" {{#if options.anchorTarget}}target="{{options.anchorTarget}}"{{/if}} title="{{#if options.anchorTitle}}{{options.anchorTitle}}{{else}}{{data}}{{/if}}">
+        {{#if options.anchorTitle}}
+            {{options.anchorTitle}}
+        {{else}}
+            {{data}}
+        {{/if}}
+    </a>
 
 </script>

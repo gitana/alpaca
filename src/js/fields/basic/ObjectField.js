@@ -1200,8 +1200,8 @@
                         // PROGRESS BAR
                         if (model.showProgressBar)
                         {
-                            var valueNow = currentIndex;
-                            var valueMax = model.steps.length;
+                            var valueNow = currentIndex + 1;
+                            var valueMax = model.steps.length + 1;
                             var width = parseInt(((valueNow / valueMax) * 100), 10) + "%";
 
                             $(wizardProgressBar).find(".progress-bar").attr("aria-valuemax", valueMax);

@@ -233,6 +233,11 @@ legend.alpaca-container-label
     color: #ccc;
 }
 
+.alpaca-wizard .alpaca-wizard-nav .alpaca-wizard-back
+{
+    background-color: #fcfcfc;
+}
+
 .alpaca-wizard .alpaca-wizard-buttons
 {
     margin-top: 20px;

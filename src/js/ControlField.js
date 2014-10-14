@@ -229,6 +229,21 @@
          */
         afterRenderControl: function(model, callback)
         {
+            var self = this;
+
+            if (!self.firstUpdateObservableFire)
+            {
+                if ((typeof(self.data) == "undefined") || self.data == null)
+                {
+                    // do not handle
+                }
+                else
+                {
+                    self.firstUpdateObservableFire = true;
+                    self.updateObservable();
+                }
+            }
+
             callback();
         },
 

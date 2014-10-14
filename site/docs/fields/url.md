@@ -47,7 +47,7 @@ $("#field2").alpaca({
 {% endraw %}
 
 ## Example 3
-URL field - with field set to display mode
+URL field - with field set to display mode.  Override the anchor title and anchor target.
 <div id="field3"> </div>
 {% raw %}
 <script type="text/javascript" id="field3-script">
@@ -58,6 +58,8 @@ $("#field3").alpaca({
     },
     "options": {
         "type": "url",
+        "anchorTitle": "Cloud CMS",
+        "anchorTarget": "_blank",
         "view": "bootstrap-display"
     }
 });
