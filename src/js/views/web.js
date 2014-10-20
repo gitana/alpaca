@@ -167,11 +167,6 @@
     styles["downIcon"] = "";
     styles["containerExpandedIcon"] = "";
     styles["containerCollapsedIcon"] = "";
-    /*
-    styles["wizardPreIcon"] = "";
-    styles["wizardNextIcon"] = "";
-    styles["wizardDoneIcon"] = "";
-    */
 
     Alpaca.registerView({
         "id": "web-display",

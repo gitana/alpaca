@@ -133,9 +133,6 @@
     styles["removeIcon"] = "ui-icon-circle-minus";
     styles["upIcon"] = "ui-icon-circle-arrow-n";
     styles["downIcon"] = "ui-icon-circle-arrow-s";
-    styles["wizardPreIcon"] = "ui-icon-triangle-1-w";
-    styles["wizardNextIcon"] = "ui-icon-triangle-1-e";
-    styles["wizardDoneIcon"] = "ui-icon-triangle-1-e";
 
     Alpaca.registerView({
         "id": "jqueryui-display",

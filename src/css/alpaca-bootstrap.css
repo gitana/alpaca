@@ -212,20 +212,40 @@ legend.alpaca-container-label
 
 .alpaca-wizard .alpaca-wizard-nav li.completed div.holder div.title
 {
-    color: #008800;
+    color: #333;
 }
 
 .alpaca-wizard .alpaca-wizard-nav li.completed div.holder div.description
 {
-    color: #008800;
+    color: #333;
+}
+
+.alpaca-wizard .alpaca-wizard-nav li.visited:hover
+{
+    cursor: pointer;
+}
+
+.alpaca-wizard .alpaca-wizard-nav li.visited div.holder div.title
+{
+}
+
+.alpaca-wizard .alpaca-wizard-nav li.visited div.holder div.description
+{
+}
+
+.alpaca-wizard .alpaca-wizard-nav li.active:hover
+{
+    cursor: pointer;
 }
 
 .alpaca-wizard .alpaca-wizard-nav li.active div.holder div.title
 {
+    color: #3071a9;
 }
 
 .alpaca-wizard .alpaca-wizard-nav li.active div.holder div.description
 {
+    color: #3071a9;
 }
 
 .alpaca-wizard .alpaca-wizard-nav li.disabled div.holder div.title

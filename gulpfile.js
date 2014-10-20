@@ -599,13 +599,17 @@ gulp.task("site", function(cb) {
 
 gulp.task("server", ["watch"], function() {
 
+    // NOTE: aaaaa is just a dummy folder to avoid nodemon from setting up a proper watch
+    // we control the watch separately
     nodemon({
         script: "server/webserver.js",
         ignore: [
+            "./**",
             "*/**",
             "*",
             "*.*"
-        ]
+        ],
+        watch: "aaaaa/**"
     });
 
 });

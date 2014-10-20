@@ -23,10 +23,6 @@
         {
             this.base();
 
-            this.wizardPreIcon  = this.view.getStyle("wizardPreIcon");
-            this.wizardNextIcon = this.view.getStyle("wizardNextIcon");
-            this.wizardDoneIcon = this.view.getStyle("wizardDoneIcon");
-
             if (Alpaca.isEmpty(this.data))
             {
                 return;
@@ -1176,10 +1172,18 @@
                         // NAV
                         if (model.showSteps)
                         {
+                            // mark current step as visited
+                            if (!model.visits)
+                            {
+                                model.visits = {};
+                            }
+                            model.visits[currentIndex] = true;
+
                             var stepElements = $(wizardNav).find("[data-alpaca-wizard-step-index]");
                             $(stepElements).removeClass("disabled");
                             $(stepElements).removeClass("completed");
                             $(stepElements).removeClass("active");
+                            $(stepElements).removeClass("visited");
                             for (var g = 0; g < stepElements.length; g++)
                             {
                                 if (g < currentIndex)
@@ -1192,7 +1196,20 @@
                                 }
                                 else
                                 {
-                                    $(wizardNav).find("[data-alpaca-wizard-step-index='" + g + "']").addClass("disabled");
+                                    if (model.visits && model.visits[g])
+                                    {
+                                        // do not mark disabled for this case
+                                    }
+                                    else
+                                    {
+                                        $(wizardNav).find("[data-alpaca-wizard-step-index='" + g + "']").addClass("disabled");
+                                    }
+
+                                }
+
+                                if (model.visits && model.visits[g])
+                                {
+                                    $(wizardNav).find("[data-alpaca-wizard-step-index='" + g + "']").addClass("visited");
                                 }
                             }
                         }
@@ -1376,7 +1393,8 @@
                         if (navIndex)
                         {
                             navIndex = parseInt(navIndex, 10);
-                            if (navIndex <= currentIndex)
+
+                            if (navIndex == currentIndex || (model.visits && model.visits[navIndex]))
                             {
                                 assertValidation(null, function(valid) {
 

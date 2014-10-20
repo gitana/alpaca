@@ -30,9 +30,6 @@
     styles["downIcon"] = "glyphicon glyphicon-chevron-down";
     styles["containerExpandedIcon"] = "glyphicon glyphicon-circle-arrow-down";
     styles["containerCollapsedIcon"] = "glyphicon glyphicon-circle-arrow-right";
-    styles["wizardPreIcon"] = "glyphicon glyphicon-chevron-left";
-    styles["wizardNextIcon"] = "glyphicon glyphicon-chevron-right";
-    styles["wizardDoneIcon"] = "glyphicon glyphicon-ok";
 
     // custom callbacks
     var callbacks = {};
