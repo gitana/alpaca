@@ -9,7 +9,7 @@ This page provides a detailed, walk-through tutorial that describes how you migh
 Alpaca form.  It isn't all that complicated but this guide goes step-by-step.  Because, well... some people
 are all about step-by-step instructions with lots of details.
 
-If you're more interested in seeing a quick demo, check out our <a href="demos.html">demonstrations</a> page.
+If you're more interested in seeing a quick demo, check out our <a href="examples.html">examples</a> page.
 
 {% capture page1 %}{% include tutorial/page1.html %}{% endcapture %}
 {% capture page2 %}{% include tutorial/page2.html %}{% endcapture %}
@@ -181,16 +181,24 @@ If you're more interested in seeing a quick demo, check out our <a href="demos.h
     </p>
     <p>
         This brings us a better option for interacting Alpaca with backend services. As shown in the following example,
-        by introducing a "postRender"
-        callback function which gets invoked once the form rendition is finished, we are able to get hold of the
-        reassembled JSON document, validate it and post it to a backend service.
+        we can specify a click handler for any of our form buttons.  The handler has a <code>this</code> set to the
+        form instance which we can use to call <code>getValue</code> as well manually run validation, check validation
+        state and execute any other form methods we'd like.  The form instance exposes a method called
+        <code>submit</code> to post the form as well as a method called <code>ajaxSubmit</code> that will submit
+        behind the scenes and hand back a jQuery promise object.
+    </p>
+    <p>
+        We also can use a <code>postRender</code> callback to get a hold of the rendered form object once it has been
+        drawn to the screen.  We can use this to hook in additional event listeners, change CSS or bind other parts
+        of the DOM to our form for interactivity.
     </p>
     <p>
         For developers, this will be the place to do any required post-processing since Alpaca will feed the callback
         function with the top-most form control that it constructs. We can easily gain access to any other Alpaca form
-        control by using API such as <i>renderedForm.children</i>, <i>renderedForm.childrenByPropertyId</i>, <i>renderedForm.getControlByPath</i>
-        etc. From any Alpaca form control, we can get the DOM element of its mapped form field by making a simple API
-        call, <i>myControl.field</i>.
+        control by using API such as
+        <code>renderedForm.children</code>, <code>renderedForm.childrenByPropertyId</code>,
+        <code>renderedForm.getControlByPath</code>, etc. From any Alpaca form control, we can get the DOM element
+        of its outer DOM element calling <i>field.getFieldEl()</i>.
     </p>
 
     <div class="codewrap">
@@ -204,7 +212,6 @@ If you're more interested in seeing a quick demo, check out our <a href="demos.h
         <div class="panel panel-default">
           <div class="panel-body">
             <div id="form5" class="tutorial-example"></div>
-            <div><input type="button" id="form5-button" value="Save"/></div>
           </div>
         </div>
     </div>
@@ -231,11 +238,6 @@ If you're more interested in seeing a quick demo, check out our <a href="demos.h
         schema and options parameters are also JSON documents, they can be stored in and served by your back
         systems as well. If you can plugin an adapter that converts XML document to JSON document, you can use Alpaca for
         your XML data as well.
-    </p>
-    <p>
-        If you are interested in learning more about Alpaca or planning to use Alpaca for your project, please check out
-        Alpaca <a href="resources.html" title="Alpaca Resources">resources</a> page
-        for download links, documentation, samples <i>etc.</i>
     </p>
 </div>
 

@@ -7,6 +7,8 @@ var exec = require("child_process").exec;
 
 var pkg  = require("./package.json");
 
+var path = require("path");
+
 var concat      = require("gulp-concat");
 var uglify      = require("gulp-uglify");
 var handlebars  = require("gulp-handlebars");
@@ -19,20 +21,23 @@ var notify      = require("gulp-notify");
 var runSequence = require("run-sequence");
 var nodemon     = require("gulp-nodemon");
 var watch       = require("gulp-watch");
-
-var wrap = require("gulp-wrap-umd");
+var bump        = require('gulp-bump');
+var wrap        = require("gulp-wrap-umd");
+var awspublish  = require('gulp-awspublish');
 
 // custom builder_helper stripper to remove builder helper functions
 var stripper = require("./gulp/gulp-stripper");
 
+var VERSIONABLE_FILES = [
+    "package.json",
+    "alpaca.jquery.json",
+    "bower.json"
+];
+
 var paths = {
     scripts: {
         core: [
-            "lib/base.js",
-            //"lib/json3/lib/json3.js",
-            //"lib/validate/index.js",
-            "lib/equiv_and_hoozit/index.js",
-            "lib/jquery-maskedinput/dist/jquery.maskedinput.min.js",
+            "thirdparty/base/Base.js",
 
             "src/js/Alpaca.js",
             "src/js/ObservableUtils.js",
@@ -557,6 +562,41 @@ gulp.task('watch', function() {
     });
 });
 
+gulp.task("package", function(cb) {
+
+    //console.log("package start");
+    fs.writeFileSync("./build/version.properties", "version=" + pkg.version);
+
+    /*
+    var jQueryJson = require("./alpaca.jquery.json");
+    jQueryJson.version = pkg.version;
+    fs.writeFileSync("./alpaca.jquery.json", JSON.stringify(jQueryJson, null, "  "));
+    */
+
+    //console.log("package completed");
+    cb();
+});
+
+gulp.task("default", function(cb) {
+    runSequence(
+        "build-templates",
+        ["build-scripts", "build-styles", "package"],
+        function() {
+            cb();
+        }
+    );
+});
+
+gulp.task("site", function(cb) {
+    runSequence(
+        "build-site",
+        "update-site-full",
+        function() {
+            cb();
+        }
+    );
+});
+
 gulp.task("server", ["watch"], function() {
 
     nodemon({
@@ -570,29 +610,33 @@ gulp.task("server", ["watch"], function() {
 
 });
 
-gulp.task("package", function(cb) {
 
-    //console.log("package start");
-    fs.writeFileSync("./build/version.properties", "version=" + pkg.version);
-
-    var jQueryJson = require("./alpaca.jquery.json");
-    jQueryJson.version = pkg.version;
-    fs.writeFileSync("./alpaca.jquery.json", JSON.stringify(jQueryJson, null, "  "));
-
-    //console.log("package completed");
-    cb();
+gulp.task("bump", function(){
+    gulp.src(VERSIONABLE_FILES).pipe(bump()).pipe(gulp.dest("./"));
 });
 
-gulp.task("default", function(cb) {
-    runSequence(
-        "build-templates",
-        ["build-scripts", "build-styles", "package"],
-        "build-site",
-        "update-site-full",
-        function() {
-            cb();
-        }
-    );
+gulp.task("bumpMinor", function(){
+    gulp.src(VERSIONABLE_FILES).pipe(bump({type:"minor"})).pipe(gulp.dest("./"));
+});
+
+gulp.task("bumpMajor", function(){
+    gulp.src(VERSIONABLE_FILES).pipe(bump({type:"major"})).pipe(gulp.dest("./"));
+});
+
+gulp.task("cdn", function(){
+
+    var aws = JSON.parse(fs.readFileSync("./_s3.json"));
+
+    // create a new publisher
+    var publisher = awspublish.create(aws);
+    gulp
+        .src("./build/alpaca/**/*")
+        .pipe(rename(function(x) {
+            x.dirname = path.join("alpaca", pkg.version, x.dirname);
+        }))
+        .pipe(publisher.publish())
+        //.pipe(publisher.sync())
+        .pipe(awspublish.reporter());
 });
 
 

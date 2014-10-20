@@ -36,8 +36,8 @@ Alpaca is open-source and provided to you under the Apache 2.0 license.  It is s
 
 <div class="codewrap">
 <pre class="prettyprint linenums">
-&lt;script type="text/javascript" src="alpaca.min.js"&gt;&lt;/script&gt;
-&lt;link type="text/css" href="alpaca.min.css" rel="stylesheet"/&gt;
+&lt;script type="text/javascript" src="//code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.js"&gt;&lt;/script&gt;
+&lt;link type="text/css" href="//code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.css" rel="stylesheet"/&gt;
 </pre>
 </div>
 
@@ -53,7 +53,6 @@ Alpaca is open-source and provided to you under the Apache 2.0 license.  It is s
 <div class="codewrap">
 <pre class="prettyprint linenums">
 &lt;div id="form1"&gt;&lt;/div&gt;
-
 &lt;script type="text/javascript"&gt;
 $("#form1").alpaca({
     "schema": {
@@ -286,11 +285,9 @@ Alpaca will run just fine.
                 </td>
             </tr>
             <tr>
-                <td>IE</td>
+                <td>IE9+</td>
                 <td>
                     <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                    <br/>
-                    (IE 9 and beyond)
                 </td>
                 <td>
                     <!-- not applicable -->
@@ -318,6 +315,27 @@ tools like Bower or NPM.  Or you can <a href="download.html">grab a release</a> 
  <a href="download.html">download page</a>.
 
 
+## Is Alpaca open-source?
+
+Yes.  Alpaca is an open-source project and the source code is freely available.  It is licensed under the Apache 2 license
+which affords everyone the opportunity to use, distribute and incorporate Alpaca into their products.  It's a
+permissive license which lets you get the most out of Alpaca.
+
+The goal with this project, the source code and all of the documentation is to provide the community with a really
+great tool that can be used within various projects.  It is powerful but it's also intended to be extensible.
+Our hope is that you'll have a great time with Alpaca and that it will improve your life.  With any luck, you'll build
+something great and contribute back to the project by putting in new features, fixing bugs, contributing new language
+packs and building cool and interesting new field controls.  And even if you don't, at least you'll have a better life
+and think hot dog that was fun.
+
+In being free and open-source, it's important to understand that Alpaca is supported by the community.  If you have
+a question or think that you've found a bug, please visit our
+<a href="https://github.com/gitana/alpaca" target="_blank">GitHub Issues page</a> and let the community know.
+ Chances are that someone has run into something similar and can help out.
+
+You can freely <a href="https://github.com/gitana/alpaca" target="_blank">fork Alpaca</a> by visiting the
+<a href="https://github.com/gitana/alpaca" target="_blank">Alpaca project at GitHub</a>.
+
 ## Why is Alpaca open source?
 
 When we were building Cloud CMS, we ended up producing a really great forms engine to serve as part of our front end
@@ -327,19 +345,22 @@ it only made sense to put Alpaca into the wild to see what it could do.
 We're thrilled with the results.  Alpaca has enjoyed several years of iteration and today stands as a really nicely
 packaged library for developers, system integrators and many others to use within their projects.
 
-We'd love for you to <a href="download.html">try out Alpaca</a> and to <a href="source.html">contribute to the
-project</a>.  If you're able to fix a bug, add a new feature or implement something cool, it'll probably go a long
+We'd love for you to <a href="download.html">try out Alpaca</a> and to contribute to the project.
+If you're able to fix a bug, add a new feature or implement something cool, it'll probably go a long
 way to helping someone else out there.  And that's what community is all about.
 
 
 ## Do you offer Support for Alpaca?
 
-We offer formal, production and development support for Alpaca via a support contract.  A support contract gives your
-developers a channel for expressing priority features and requirements.  It also provides our team with a way to
-guarantee a service-level commitment for your production apps.
+Yes.  If you're using Alpaca in production and are looking for <a href="support.html">production support for Alpaca</a>
+or a service-level agreement for bug fixes and patches, please contact <a href="support.html">Cloud CMS</a>.
+Cloud CMS sponsors Alpaca and maintains the code base.  We can connect you with
+<a href="support.html">Cloud CMS engineers</a> to deliver support for your applications.
 
-To learn more about production support, please <a href="contact.html">contact Cloud CMS</a>
- with information about your project.  A member of team will be in touch with you right away.
+Cloud CMS offers monthly and annual support contracts in addition to consulting and development services designed to
+assist with your projects.
+
+<a href="support.html">Let us know how we can help</a>!
 
 <script>
 $("TABLE.stack").dataTable({

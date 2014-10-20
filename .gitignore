@@ -15,4 +15,6 @@ custom-version.properties
 /site/lib
 custom-local.properties
 
+./_s3.json
+
 notes.md

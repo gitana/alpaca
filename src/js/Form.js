@@ -518,10 +518,9 @@
         /**
          * Fires the submit in the background and hands back the jQuery promise.
          *
-         * @param callback
          * @returns {*}
          */
-        ajaxSubmit: function(callback)
+        ajaxSubmit: function()
         {
             var self = this;
 

@@ -7,6 +7,18 @@ title: Download Alpaca
 
 The latest version of Alpaca is 1.5.0.
 
+## CDN
+
+You can include Alpaca in your projects by referencing the JS and CSS right from our CDN:
+
+```
+http://code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.js
+http://code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.css
+```
+
+The example above is for <code>bootstrap</code>.  You can also access the builds for <code>web</code>,
+<code>jquerymobile</code> and <code>jqueryui</code>.
+
 ## Bower
 The easiest way to get Alpaca is to use Bower:
 
@@ -21,12 +33,6 @@ Another easy way is to use NPM:
 ````
 npm install alpaca
 ````
-
-
-## Direct Download
-We've also packaged things up for direct download:
-
-* <a href="http://www.alpacajs.org/dist/alpaca-1.5.0.zip">alpaca-1.5.0.zip</a>
 
 
 ## Previous Releases
@@ -85,3 +91,6 @@ get your hands on Alpaca is to build from <a href="source.html">source</a>.  The
 It uses Bower, Node and Gulp to produce different distributions.  It also uses Jekyll to produce the web site,
 documentation and samples, all of which you can run locally.
 
+Here is a link to the download of the project source:
+
+* <a href="https://github.com/gitana/alpaca/archive/master.zip">alpaca-1.5.0.zip</a>

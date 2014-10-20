@@ -2,7 +2,8 @@
   "name": "alpaca",
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install",
-    "postupdate": "./node_modules/.bin/bower update"
+    "postupdate": "./node_modules/.bin/bower update",
+    "start": "./node_modules/.bin/gulp clean default"
   },
   "version": "1.5.0",
   "devDependencies": {
@@ -11,6 +12,8 @@
     "event-stream": "*",
     "express": "3.5.1",
     "gulp": "*",
+    "gulp-awspublish": "0.0.23",
+    "gulp-bump": "^0.1.11",
     "gulp-clean": "*",
     "gulp-concat": "*",
     "gulp-declare": "*",
@@ -22,24 +25,20 @@
     "gulp-order": "*",
     "gulp-rename": "*",
     "gulp-uglify": "*",
-    "gulp-wrap-umd": "^0.2.0",
+    "gulp-util": "*",
     "gulp-watch": "*",
-    "jshint-stylish":             "0.1.5",
+    "gulp-wrap-umd": "^0.2.0",
+    "handlebars": "*",
+    "jquery": "*",
+    "jshint-stylish": "0.1.5",
     "lodash": "",
     "node-gyp": "0.11.0",
     "node-static": "*",
     "phantom": "0.6.3",
     "q": "^1.0.1",
     "run-sequence": "*",
-    "wd": "",
-
-    "gulp-util": "*",
     "through2": "*",
-
-    "wrench": "*",
-    
-    "jquery": "*",
-    "handlebars": "*"
-
+    "wd": "",
+    "wrench": "*"
   }
 }

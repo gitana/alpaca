@@ -1,7 +1,7 @@
 {
   "name": "alpaca",
   "title": "Alpaca Forms",
-  "description": "Easy Forms Engine for jQuery / Bootstrap.",
+  "description": "JSON Schema Web Forms for jQuery / Bootstrap.",
   "keywords": [
     "form",
     "forms",

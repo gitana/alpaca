@@ -118,6 +118,11 @@ legend.alpaca-container-label
     float: none;
 }
 
+.bootstrap-timepicker-widget table td input
+{
+    width: 50px !important;
+}
+
 
 
 /** FIElDS **/

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    $('#form2').alpaca({
+    $("#form2").alpaca({
         "schema" : {
             "title" : "User Feedback",
             "description" : "What do you think about Alpaca?",
@@ -23,7 +23,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#form3').alpaca({
+    $("#form3").alpaca({
         "schema" : {
             "title" : "User Feedback",
             "description" : "What do you think about Alpaca?",
@@ -63,134 +63,152 @@ $(document).ready(function() {
                     "helper" : "Select your ranking.",
                     "optionLabels" : ["Awesome!","It's Ok","Hmm..."]
                 }
-            }
+            },
+            "focus": false
         }
     });
 
-    $('#form4').alpaca({
-        "data" : {
-            "name" : "Diego Maradona",
-            "feedback" : "Very impressive.",
-            "ranking" : "excellent"
+    $("#form4").alpaca({
+        "data": {
+            "name": "Diego Maradona",
+            "feedback": "Very impressive.",
+            "ranking": "excellent"
         },
-        "schema" : {
-            "title" : "User Feedback",
-            "description" : "What do you think about Alpaca?",
-            "type" : "object",
-            "properties" : {
-                "name" : {
-                    "type" : "string",
-                    "title" : "Name",
-                    "required" : true
+        "schema": {
+            "title":"User Feedback",
+            "description":"What do you think about Alpaca?",
+            "type":"object",
+            "properties": {
+                "name": {
+                    "type":"string",
+                    "title":"Name",
+                    "required":true
                 },
-                "feedback" : {
-                    "type" : "string",
-                    "title" : "Feedback"
+                "feedback": {
+                    "type":"string",
+                    "title":"Feedback"
                 },
-                "ranking" : {
-                    "type" : "string",
-                    "title" : "Ranking",
-                    "enum" : ['excellent','ok','so so'],
-                    "required" : true
+                "ranking": {
+                    "type":"string",
+                    "title":"Ranking",
+                    "enum":['excellent','ok','so so'],
+                    "required":true
                 }
             }
         },
-        "options" : {
+        "options": {
             "form":{
                 "attributes":{
-                    "action":"examples/endpoints/save.php",
+                    "action":"http://httpbin.org/post",
                     "method":"post"
                 },
                 "buttons":{
                     "submit":{}
                 }
             },
-            "fields" : {
-                "helper" : "Tell us what you think about Alpaca!",
-                "name" : {
-                    "size" : 20,
-                    "helper" : "Please enter your name."
+            "helper": "Tell us what you think about Alpaca!",
+            "fields": {
+                "name": {
+                    "size": 20,
+                    "helper": "Please enter your name."
                 },
                 "feedback" : {
-                    "type" : "textarea",
-                    "name" : "your_feedback",
-                    "rows" : 5,
-                    "cols" : 30,
-                    "helper" : "Please enter your feedback."
+                    "type": "textarea",
+                    "name": "your_feedback",
+                    "rows": 5,
+                    "cols": 40,
+                    "helper": "Please enter your feedback."
                 },
-                "ranking" : {
-                    "type" : "select",
-                    "helper" : "Select your ranking.",
-                    "optionLabels" : ["Awesome!","It's Ok","Hmm..."]
+                "ranking": {
+                    "type": "select",
+                    "helper": "Select your ranking.",
+                    "optionLabels": ["Awesome!",
+                        "It's Ok",
+                        "Hmm..."]
                 }
-            }
+            },
+            "focus": false
         },
         "view" : "bootstrap-edit"
     });
 
-    $('#form5').alpaca({
-        "data" : {
-            "name" : "Diego Maradona",
-            "feedback" : "Very impressive.",
-            "ranking" : "excellent"
+    $("#form5").alpaca({
+        "data": {
+            "name": "Diego Maradona",
+            "feedback": "Very impressive.",
+            "ranking": "excellent"
         },
-        "schema" : {
-            "title" : "User Feedback",
-            "description" : "What do you think about Alpaca?",
-            "type" : "object",
-            "properties" : {
-                "name" : {
-                    "type" : "string",
-                    "title" : "Name",
-                    "required" : true
+        "schema": {
+            "title":"User Feedback",
+            "description":"What do you think about Alpaca?",
+            "type":"object",
+            "properties": {
+                "name": {
+                    "type":"string",
+                    "title":"Name",
+                    "required":true
                 },
-                "feedback" : {
-                    "type" : "string",
-                    "title" : "Feedback"
+                "feedback": {
+                    "type":"string",
+                    "title":"Feedback"
                 },
-                "ranking" : {
-                    "type" : "string",
-                    "title" : "Ranking",
-                    "enum" : ['excellent','ok','so so'],
-                    "required" : true
+                "ranking": {
+                    "type":"string",
+                    "title":"Ranking",
+                    "enum":['excellent','ok','so so'],
+                    "required":true
                 }
             }
         },
-        "options" : {
-            "fields" : {
-                "helper" : "Tell us what you think about Alpaca!",
-                "name" : {
-                    "size" : 20,
-                    "helper" : "Please enter your name."
+        "options": {
+            "form":{
+                "attributes":{
+                    "action":"http://httpbin.org/post",
+                    "method":"post"
                 },
-                "feedback" : {
-                    "type" : "textarea",
-                    "name" : "your_feedback",
-                    "rows" : 5,
-                    "cols" : 30,
-                    "helper" : "Please enter your feedback."
-                },
-                "ranking" : {
-                    "type" : "select",
-                    "helper" : "Select your ranking.",
-                    "optionLabels" : ["Awesome!","It's Ok","Hmm..."]
-                }
-            }
-        },
-        "postRender": function(renderedForm) {
-            $('#form4-button').click(function() {
-                if (renderedForm.isValid(true)) {
-                    var val = renderedForm.getValue();
-                    $.ajax({
-                        type: "POST",
-                        url: "examples/endpoints/save2.php",
-                        data: {json:JSON.stringify(val)},
-                        success: function(msg) {
-                            alert("Request received: " + msg);
+                "buttons":{
+                    "submit":{
+                        "title": "Send Form Data",
+                        "click": function() {
+                            var val = this.getValue();
+                            if (this.isValid(true)) {
+
+                                alert("Valid value: " + JSON.stringify(val, null, "  "));
+                                this.ajaxSubmit().done(function() {
+                                    alert("Posted!");
+                                });
+                            } else {
+                                alert("Invalid value: " + JSON.stringify(val, null, "  "));
+                            }
                         }
-                    });
+                    }
                 }
-            });
+            },
+            "helper": "Tell us what you think about Alpaca!",
+            "fields": {
+                "name": {
+                    "size": 20,
+                    "helper": "Please enter your name."
+                },
+                "feedback" : {
+                    "type": "textarea",
+                    "name": "your_feedback",
+                    "rows": 5,
+                    "cols": 40,
+                    "helper": "Please enter your feedback."
+                },
+                "ranking": {
+                    "type": "select",
+                    "helper": "Select your ranking.",
+                    "optionLabels": ["Awesome!",
+                        "It's Ok",
+                        "Hmm..."]
+                }
+            },
+            "focus": false
+        },
+        "postRender": function(control) {
+            control.childrenByPropertyId["name"].getFieldEl().css("background-color", "lightgreen");
         }
     });
 

@@ -1,8 +1,8 @@
 <html>
     <head>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <script type="text/javascript" src="http://www.alpacajs.org/js/alpaca.min.js"></script>
-        <link type="text/css" href="http://www.alpacajs.org/css/alpaca.min.css" rel="stylesheet"/>
+        <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="//code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.js"></script>
+        <link type="text/css" href="//code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.css" rel="stylesheet"/>
     </head>
     <body>
         <div id="form"></div>
@@ -37,6 +37,28 @@
                         }
                     },
                     "options": {
+                        "form":{
+                            "attributes":{
+                                "action":"http://httpbin.org/post",
+                                "method":"post"
+                            },
+                            "buttons":{
+                                "submit":{
+                                    "title": "Send Form Data",
+                                    "click": function() {
+                                        var val = this.getValue();
+                                        if (this.isValid(true)) {
+                                            alert("Valid value: " + JSON.stringify(val, null, "  "));
+                                            this.ajaxSubmit().done(function() {
+                                                alert("Posted!");
+                                            });
+                                        } else {
+                                            alert("Invalid value: " + JSON.stringify(val, null, "  "));
+                                        }
+                                    }
+                                }
+                            }
+                        },
                         "helper": "Tell us what you think about Alpaca!",
                         "fields": {
                             "name": {
@@ -59,20 +81,8 @@
                             }
                         }
                     },
-                    "postRender": function(renderedForm) {
-                        $('#form-button').click(function() {
-                            if (renderedForm.isValid(true)) {
-                                var val = renderedForm.getValue();
-                                $.ajax({
-                                    type: "POST",
-                                    url: "examples/endpoints/save2.php",
-                                    data: {json:JSON.stringify(val)},
-                                    success: function(msg) {
-                                        alert("Request received: " + msg);
-                                    }
-                                });
-                            }
-                        });
+                    "postRender": function(control) {
+                        control.childrenByPropertyId["name"].getFieldEl().css("background-color", "lightgreen");
                     }
                 });
             });

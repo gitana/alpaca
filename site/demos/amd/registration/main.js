@@ -2,7 +2,7 @@ require.config({
     "packages": [
         {
             "name": "jquery",
-            "location": "../../../lib/jquery",
+            "location": "../../../lib/jquery/dist",
             "main": "jquery.min"
         },
         {

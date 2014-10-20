@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Demos
-header: Demos
+title: Examples
+header: Examples
 group: navigation
 ---
 {% include JB/setup %}
@@ -14,6 +14,7 @@ And you can also load it via AMD or right within a browser.
 ### Getting Started
 
 * <a href="{{ BASE_PATH }}/tutorial.html">Tutorial</a> - a step-by-step guide to building your first Alpaca form on a standalone web page.
+* <a href="{{ BASE_PATH }}/demos/alpaca-standalone-sample.html">Standalone Sample</a> - a standalone sample you can use to start your own forms.
 
 ### Bootstrap 3
 
