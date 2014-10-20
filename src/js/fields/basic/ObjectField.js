@@ -1396,15 +1396,23 @@
 
                             if (navIndex == currentIndex || (model.visits && model.visits[navIndex]))
                             {
-                                assertValidation(null, function(valid) {
+                                // if we're going backwards, then we do not run validation
+                                if (navIndex < currentIndex)
+                                {
+                                    currentIndex = navIndex;
+                                    refreshSteps();
+                                }
+                                else
+                                {
+                                    assertValidation(null, function(valid) {
 
-                                    if (valid)
-                                    {
-                                        currentIndex = navIndex;
-
-                                        refreshSteps();
-                                    }
-                                });
+                                        if (valid)
+                                        {
+                                            currentIndex = navIndex;
+                                            refreshSteps();
+                                        }
+                                    });
+                                }
                             }
                         }
                     });
