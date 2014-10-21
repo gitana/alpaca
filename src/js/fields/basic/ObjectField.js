@@ -1402,7 +1402,7 @@
                                     currentIndex = navIndex;
                                     refreshSteps();
                                 }
-                                else
+                                else if (navIndex > currentIndex)
                                 {
                                     assertValidation(null, function(valid) {
 
@@ -1412,6 +1412,10 @@
                                             refreshSteps();
                                         }
                                     });
+                                }
+                                else
+                                {
+                                    // current item should not be clickable
                                 }
                             }
                         }

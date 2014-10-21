@@ -703,7 +703,7 @@
             // finished initializing
             this.initializing = false;
 
-            var defaultHideInitValidationError = (this.view.type === 'create');
+            var defaultHideInitValidationError = (this.view.type === 'create') && !this.refreshed;
             this.hideInitValidationError = Alpaca.isValEmpty(this.options.hideInitValidationError) ? defaultHideInitValidationError : this.options.hideInitValidationError;
 
             // for create view, hide all readonly fields
@@ -735,6 +735,8 @@
         refresh: function(callback)
         {
             var self = this;
+
+            self.refreshed = true;
 
             // insert element before current field to mark where we'll render
             var markerEl = $("<div></div>");
