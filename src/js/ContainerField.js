@@ -694,7 +694,7 @@
 
             if (index > -1)
             {
-                this.children[i].focus();
+                this.children[index].focus();
             }
         }
 

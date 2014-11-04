@@ -1426,7 +1426,7 @@
                         var index = event.index;
                         var skipValidation = event.skipValidation;
 
-                        if ((typeof(index) != "undefined") && index <= model.steps.length - 1)
+                        if ((typeof(index) !== "undefined") && index <= model.steps.length - 1)
                         {
                             if (skipValidation)
                             {
@@ -1447,6 +1447,25 @@
                             }
                         }
                     });
+
+                    self.on("advanceOrSubmit", function(event) {
+
+                        assertValidation(null, function(valid) {
+
+                            if (valid)
+                            {
+                                if (currentIndex === model.steps.length - 1)
+                                {
+                                    $(submitButtonEl).click();
+                                }
+                                else
+                                {
+                                    $(nextButtonEl).click();
+                                }
+                            }
+                        });
+                    });
+
 
                     refreshSteps();
 

@@ -1141,7 +1141,7 @@
 
             status = this._validateDisallow();
             valInfo["disallowValue"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("disallowValue"), [this.schema["disallow"].join(',')]),
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("disallowValue"), [this.schema["disallow"].join(', ')]),
                 "status": status
             };
 

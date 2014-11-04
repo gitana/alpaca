@@ -163,6 +163,14 @@
                     if (!settings.nonSelectedText)
                     {
                         settings.nonSelectedText = "None";
+                        if (self.options.noneLabel)
+                        {
+                            settings.nonSelectedText = self.options.noneLabel;
+                        }
+                    }
+                    if (self.options.hideNone)
+                    {
+                        delete settings.nonSelectedText;
                     }
 
                     $(self.getControlEl()).multiselect(settings);
