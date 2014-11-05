@@ -1,32 +1,52 @@
 ---
 layout: page
-title: Cloud Forms
-header: Cloud Forms
+title: Alpaca Forms in the Cloud
+header: Alpaca Forms in the Cloud
 group: navigation
 ---
 {% include JB/setup %}
 
-Are you interested in hosting your forms in the cloud?  <a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a>
-provides a cloud hosting service for all of your forms and web content.  This makes it possible for your team to
-design and build forms in the cloud and deploy them to your web sites and mobile applications.
+Interested in connecting Alpaca forms to a hosted backend?
 
-It lets your teams work together
-via a collaborative user interface, collect form entries and generate reports on them.
+<a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> provides a hosted cloud service for Alpaca Forms that
+provides everything your organization needs to run Alpaca Forms on your own web sites.  Forms are presented and
+form data is captured, allowing you to retrieve information and generate real-time reports.
 
-Cloud CMS is available as a monthly subscription.  You can
+In addition to forms management, <a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> provides storage,
+<a href="#collaboration">team collaboration</a>,
+<a href="#reports">reporting</a> and a
+<a href="#form-builder">visual form designer</a>.  It is a fully fledged enterprise content management system
+complete with an abundance of features made available to empower your organization's productivity.
+
+<a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a>
+is available as a monthly subscription.  You can
 <a href="https://www.cloudcms.com/trial.html">sign up for a free trial</a> at any time.
 
-## Hosting
+<a name="hosting"></a>
+## Cloud Hosting
 
-Alpaca connects to Cloud CMS to load forms and post data when your end user submits the form.  Cloud CMS captures
-and stores all of the form information so that you can access it, view it and report on it in real-time.
+Alpaca connects seamlessly to <a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> to load form information
+(such as JSON schema, options and layout information) and then uses that to render right on your web site.  When
+your customers complete the form, the form data is posted back to
+<a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> and stored in a data list.  All of this data is
+captured, including JSON fields and binary form attachments, allowing your team to query against it and generate
+reports (such as PDF or CSV/Excel) at any time.
 
-## Form Builder
+<a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> provides numerous subscription plans that are
+both cost-effective and scalable for your organization's needs.
 
+<a name="reports"></a>
 ## Reports
 
+Clou
+
+<a name="collaboration"></a>
 ## Collaboration
 
+<a name="form-builder"></a>
+## Form Builder
+
+<a name="plugin"></a>
 ## Run on any Web Site
 
 With Cloud CMS, you define your forms in the cloud and then surface them inside of your web pages using a simple

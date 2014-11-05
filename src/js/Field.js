@@ -893,17 +893,26 @@
         /**
          * Sets the validation state messages to show for a given field.
          *
-         * @param {String|Array} messages either a string message or an array of string messages
+         * @param {Object|Array} messages either a message object {id, message} or an array of message objects
          * @param {Boolean} beforeStatus Previous validation status.
          */
         displayMessage: function(messages, beforeStatus) {
 
             var self = this;
 
-            // if string, convert to array
-            if (messages && typeof(messages) === "string")
+            // if object, convert to array
+            if (messages && Alpaca.isObject(messages))
             {
                 messages = [messages];
+            }
+
+            // if string, convert
+            if (messages && Alpaca.isString(messages))
+            {
+                messages = [{
+                    "id": "custom",
+                    "message": messages
+                }];
             }
 
             // remove any alpaca messages for this field
@@ -915,34 +924,32 @@
             // add message and generate it
             if (messages && messages.length > 0)
             {
-                $.each(messages, function(index, message) {
+                $.each(messages, function(index, messageObject) {
 
-                    if (message.length > 0)
+                    var hidden = false;
+                    if (self.hideInitValidationError)
                     {
-                        var hidden = false;
-                        if (self.hideInitValidationError)
-                        {
-                            hidden = true;
-                        }
-
-                        // add message to the field
-                        var messageTemplateDescriptor = self.view.getTemplateDescriptor("message");
-                        if (messageTemplateDescriptor)
-                        {
-                            var messageElement = Alpaca.tmpl(messageTemplateDescriptor, {
-                                "message": message
-                            });
-                            messageElement.addClass("alpaca-message");
-                            if (hidden)
-                            {
-                                messageElement.addClass("alpaca-message-hidden");
-                            }
-                            $(self.getFieldEl()).append(messageElement);
-                        }
-
-                        // CALLBACK: "addMessage"
-                        self.fireCallback("addMessage", index, message, hidden);
+                        hidden = true;
                     }
+
+                    // add message to the field
+                    var messageTemplateDescriptor = self.view.getTemplateDescriptor("message");
+                    if (messageTemplateDescriptor)
+                    {
+                        var messageElement = Alpaca.tmpl(messageTemplateDescriptor, {
+                            "id": messageObject.id,
+                            "message": messageObject.message
+                        });
+                        messageElement.addClass("alpaca-message");
+                        if (hidden)
+                        {
+                            messageElement.addClass("alpaca-message-hidden");
+                        }
+                        $(self.getFieldEl()).append(messageElement);
+                    }
+
+                    // CALLBACK: "addMessage"
+                    self.fireCallback("addMessage", index, messageObject.id, messageObject.message, hidden);
                 });
             }
         },
@@ -1177,9 +1184,11 @@
          * @returns {Boolean} False if this field value is empty but required, true otherwise.
          */
         _validateOptional: function() {
+
             if (this.schema.required && this.isEmpty()) {
                 return false;
             }
+
             return true;
         },
 

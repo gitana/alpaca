@@ -78,7 +78,7 @@
     {
     };
     // fired to add a message to an invalid field
-    callbacks["addMessage"] = function(index, message, hidden)
+    callbacks["addMessage"] = function(index, messageId, messageText, hidden)
     {
     };
     // fired to remove all messages for a field

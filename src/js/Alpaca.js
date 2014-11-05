@@ -3079,7 +3079,10 @@
                         {
                             if (!field.validation[messageId]["status"])
                             {
-                                messages.push(field.validation[messageId]["message"]);
+                                messages.push({
+                                    "id": messageId,
+                                    "message": field.validation[messageId]["message"]
+                                });
                             }
                         }
 
