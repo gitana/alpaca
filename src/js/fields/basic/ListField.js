@@ -258,6 +258,25 @@
                             }
                         });
                     }
+                    else if (Alpaca.isArray(self.options.dataSource))
+                    {
+                        for (var i = 0; i < self.options.dataSource.length; i++)
+                        {
+                            if (typeof(self.options.dataSource[i]) === "string")
+                            {
+                                self.selectOptions.push({
+                                    "text": self.options.dataSource[i],
+                                    "value": self.options.dataSource[i]
+                                });
+                            }
+                            else if (Alpaca.isObject(self.options.dataSource[i]))
+                            {
+                                self.selectOptions.push(self.options.dataSource[i]);
+                            }
+                        }
+
+                        completionFunction();
+                    }
                     else
                     {
                         callback();
