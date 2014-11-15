@@ -147,6 +147,49 @@
                 return observableScope;
             };
 
+            this.ensureProperType = function(val)
+            {
+                var self = this;
+
+                if (typeof(val) !== "undefined")
+                {
+                    if (Alpaca.isString(val))
+                    {
+                        if (self.schema.type === "number")
+                        {
+                            val = parseFloat(val);
+                        }
+                        else if (self.schema.type === "boolean")
+                        {
+                            if (val === "" || val.toLowerCase() === "false") {
+                                val = false;
+                            }
+                            else {
+                                val = true;
+                            }
+                        }
+                    }
+                    else if (Alpaca.isNumber(val))
+                    {
+                        if (self.schema.type === "string")
+                        {
+                            val = "" + val;
+                        }
+                        else if (self.schema.type === "boolean")
+                        {
+                            if (val === -1 || val === 0) {
+                                val = false;
+                            }
+                            else {
+                                val = true;
+                            }
+                        }
+                    }
+                }
+
+                return val;
+            };
+
             this.onConstruct();
         },
 
@@ -849,8 +892,15 @@
          *
          * @returns {Any} value Field value.
          */
-        getValue: function() {
-            return this.data;
+        getValue: function()
+        {
+            var self = this;
+
+            var val = this.data;
+
+            val = self.ensureProperType(val);
+
+            return val;
         },
 
         /**

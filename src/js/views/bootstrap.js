@@ -139,21 +139,31 @@
     {
         $(button).attr("disabled", "disabled");
     };
+    callbacks["collapsible"] = function()
+    {
+        var fieldEl = this.getFieldEl();
+        var legendEl = $("legend", fieldEl);
+        var anchorEl = $(legendEl).find("[data-toggle='collapse']");
+        if ($(anchorEl).length > 0)
+        {
+            var containerEl = this.getContainerEl();
 
+            // generate an ID
+            var id = Alpaca.generateId();
 
+            // set up container
+            $(containerEl).attr("id", id);
+            $(containerEl).addClass("collapse in");
 
-    /*
-    // The Wizard still relies on jQuery UI
-    "wizardStatusBar" : function(targetDiv) {
-        targetDiv.addClass('ui-widget-header ui-corner-all');
-    },
-    "wizardCurrentStep" : function(targetDiv) {
-        targetDiv.addClass('ui-state-highlight ui-corner-all');
-    },
-    "wizardUnCurrentStep" : function(targetDiv) {
-        targetDiv.removeClass('ui-state-highlight ui-corner-all');
-    },
-    */
+            // set up legend anchor
+            $(anchorEl).attr("data-target", "#" + id);
+            //$(anchorEl).attr("href", "#" + id);
+
+            $(anchorEl).mouseover(function(e) {
+                $(this).css("cursor", "pointer");
+            })
+        }
+    };
 
     Alpaca.registerView({
         "id": "bootstrap-display",

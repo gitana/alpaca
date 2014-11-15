@@ -314,10 +314,17 @@
          */
         initEvents: function()
         {
-            var _this = this;
+            var self = this;
 
             this.base();
 
+            if (self.options.collapsible)
+            {
+                // CALLBACK: "collapsible"
+                self.fireCallback("collapsible");
+            }
+
+            /*
             // if collapsible
             if (this.labelDiv)
             {
@@ -375,6 +382,7 @@
                     }
                 }
             }
+            */
         },
 
         /**

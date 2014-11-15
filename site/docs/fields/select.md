@@ -52,7 +52,7 @@ $("#field2").alpaca({
 
 
 ## Example 3
-Select field with options loaded from external <a href="{{ BASE_PATH }}/data/icecream-list.json" target="_datasource">data source</a>.
+Select field with options loaded from external <a href="/data/icecream-list.json" target="_datasource">data source</a>.
 <div id="field3"> </div>
 {% raw %}
 <script type="text/javascript" id="field3-script">
@@ -69,7 +69,7 @@ $("#field3").alpaca({
 
 
 ## Example 4
-Multiple select field with options loaded from external <a href="{{ BASE_PATH }}/data/icecream-list.json" target="_datasource">data source</a>.
+Multiple select field with options loaded from external <a href="/data/icecream-list.json" target="_datasource">data source</a>.
 <div id="field4"> </div>
 {% raw %}
 <script type="text/javascript" id="field4-script">
@@ -170,7 +170,7 @@ $("#field8").alpaca({
         "type": "select",
         "multiple": true,
         "size": 3,
-        "dataSource": "{{ BASE_PATH }}/data/icecream-list.json"
+        "dataSource": "/data/icecream-list.json"
     }
 });
 </script>
@@ -188,7 +188,7 @@ $("#field9").alpaca({
         "type": "select",
         "multiple": true,
         "size": 3,
-        "dataSource": "{{ BASE_PATH }}/data/icecream-list-array.json"
+        "dataSource": "/data/icecream-list-array.json"
     }
 });
 </script>

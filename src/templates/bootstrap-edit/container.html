@@ -3,7 +3,19 @@
     <div>
 
         {{#if options.label}}
-        <legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-container-label">{{{options.label}}}</legend>
+        <legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-container-label">
+
+            {{#if options.collapsible}}
+            <span data-toggle="collapse">
+            {{/if}}
+
+            {{{options.label}}}
+
+            {{#if options.collapsible}}
+            </span>
+            {{/if}}
+
+        </legend>
         <!--<legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-container-label">{{options.label}}</legend>-->
         {{/if}}
 

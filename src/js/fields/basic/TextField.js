@@ -282,11 +282,20 @@
          */
         getValue: function()
         {
+            var self = this;
+
             var value = null;
 
             if (!this.isDisplayOnly() && this.control && this.control.length > 0)
             {
                 value = this._getControlVal();
+
+                if (self.control.mask && self.options.maskString)
+                {
+                    // get unmasked value
+                    value = $(this.control).data($.mask.dataName)();
+                    value = self.ensureProperType(value);
+                }
             }
             else
             {

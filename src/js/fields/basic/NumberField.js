@@ -20,6 +20,7 @@
         getValue: function()
         {
             var val = this._getControlVal();
+
             if (typeof(val) == "undefined" || "" == val)
             {
                 return val;

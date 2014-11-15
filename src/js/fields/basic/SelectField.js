@@ -37,7 +37,7 @@
             if (this.control && this.control.length > 0)
             {
                 var val = this._getControlVal();
-                if (typeof(val) == "undefined")
+                if (typeof(val) === "undefined")
                 {
                     val = this.data;
                 }
@@ -98,6 +98,34 @@
                 {
                     return this.schema["items"]["enum"];
                 }
+            }
+        },
+
+        initControlEvents: function()
+        {
+            var self = this;
+
+            self.base();
+
+            if (self.options.multiple)
+            {
+                var button = this.control.parent().find("button.multiselect");
+
+                button.focus(function(e) {
+                    if (!self.suspendBlurFocus)
+                    {
+                        self.onFocus.call(self, e);
+                        self.trigger("focus", e);
+                    }
+                });
+
+                button.blur(function(e) {
+                    if (!self.suspendBlurFocus)
+                    {
+                        self.onBlur.call(self, e);
+                        self.trigger("blur", e);
+                    }
+                });
             }
         },
 

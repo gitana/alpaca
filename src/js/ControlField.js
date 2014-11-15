@@ -25,42 +25,7 @@
                 {
                     val = $(this.control).val();
 
-                    if (typeof(val) != "undefined")
-                    {
-                        if (Alpaca.isString(val))
-                        {
-                            if (_this.schema.type == "number")
-                            {
-                                //val = parseInt(val, 10);
-                                val = parseFloat(val);
-                            }
-                            else if (_this.schema.type == "boolean")
-                            {
-                                if (val == "" || val.toLowerCase() == "false") {
-                                    val = false;
-                                }
-                                else {
-                                    val = true;
-                                }
-                            }
-                        }
-                        else if (Alpaca.isNumber(val))
-                        {
-                            if (_this.schema.type == "string")
-                            {
-                                val = "" + val;
-                            }
-                            else if (_this.schema.type == "boolean")
-                            {
-                                if (val == -1 || val == 0) {
-                                    val = false;
-                                }
-                                else {
-                                    val = true;
-                                }
-                            }
-                        }
-                    }
+                    val = _this.ensureProperType(val);
                 }
 
                 return val;
@@ -312,6 +277,7 @@
         {
             if (this.schema["enum"]) {
                 var val = this.data;
+                val = this.getValue();
                 /*this.getValue();*/
                 if (!this.schema.required && Alpaca.isValEmpty(val)) {
                     return true;
@@ -351,57 +317,63 @@
         {
             this.base();
 
-            var _this = this;
-
             if (this.control && this.control.length > 0)
             {
-                this.control.click(function(e) {
-                    _this.onClick.call(_this, e);
-                    _this.trigger("click", e);
-                });
-
-                // trigger control level handlers for things that happen to input element
-                this.control.change(function(e) {
-
-                    // we use a timeout here because we want this to run AFTER control click handlers
-                    setTimeout(function() {
-                        _this.onChange.call(_this, e);
-                        _this.triggerWithPropagation("change", e);
-                    }, 250);
-                });
-
-                this.control.focus(function(e) {
-                    if (!_this.suspendBlurFocus)
-                    {
-                        _this.onFocus.call(_this, e);
-                        _this.trigger("focus", e);
-                    }
-                });
-
-                this.control.blur(function(e) {
-                    if (!_this.suspendBlurFocus)
-                    {
-                        _this.onBlur.call(_this, e);
-                        _this.trigger("blur", e);
-                    }
-                });
-
-                this.control.keypress(function(e) {
-                    _this.onKeyPress.call(_this, e);
-                    _this.trigger("keypress", e);
-                });
-
-                this.control.keyup(function(e) {
-                    _this.onKeyUp.call(_this, e);
-                    _this.trigger("keyup", e);
-                });
-
-                this.control.keydown(function(e) {
-                    _this.onKeyDown.call(_this, e);
-                    _this.trigger("keydown", e);
-                });
+                this.initControlEvents();
             }
+        },
 
+        initControlEvents: function()
+        {
+            var self = this;
+
+            var control = this.control;
+
+            control.click(function(e) {
+                self.onClick.call(self, e);
+                self.trigger("click", e);
+            });
+
+            // trigger control level handlers for things that happen to input element
+            control.change(function(e) {
+
+                // we use a timeout here because we want this to run AFTER control click handlers
+                setTimeout(function() {
+                    self.onChange.call(self, e);
+                    self.triggerWithPropagation("change", e);
+                }, 250);
+            });
+
+            control.focus(function(e) {
+                if (!self.suspendBlurFocus)
+                {
+                    self.onFocus.call(self, e);
+                    self.trigger("focus", e);
+                }
+            });
+
+            control.blur(function(e) {
+                if (!self.suspendBlurFocus)
+                {
+                    self.onBlur.call(self, e);
+                    self.trigger("blur", e);
+                }
+            });
+
+            control.keypress(function(e) {
+                self.onKeyPress.call(self, e);
+                self.trigger("keypress", e);
+            });
+
+            control.keyup(function(e) {
+                self.onKeyUp.call(self, e);
+                self.trigger("keyup", e);
+            });
+
+            control.keydown(function(e) {
+                self.onKeyDown.call(self, e);
+                self.trigger("keydown", e);
+            });
         },
 
         /**

@@ -42,10 +42,14 @@
          */
         getValue: function()
         {
+            var self = this;
+
             var val = null;
 
             $(this.control).find(":checked").each(function() {
                 val = $(this).val();
+
+                val = self.ensureProperType(val);
             });
 
             return val;
@@ -79,6 +83,31 @@
             }
 
             this.base(val);
+        },
+
+        initControlEvents: function()
+        {
+            var self = this;
+
+            self.base();
+
+            var inputs = $(this.control).find("input");
+
+            inputs.focus(function(e) {
+                if (!self.suspendBlurFocus)
+                {
+                    self.onFocus.call(self, e);
+                    self.trigger("focus", e);
+                }
+            });
+
+            inputs.blur(function(e) {
+                if (!self.suspendBlurFocus)
+                {
+                    self.onBlur.call(self, e);
+                    self.trigger("blur", e);
+                }
+            });
         },
 
         prepareControlModel: function(callback)
