@@ -19,7 +19,7 @@
 				},
 				"notOptional": "Ce champ n'est pas optionnel.",
 				"disallowValue": "{0} sont des valeurs interdites.",
-				"invalidValueOfEnum": "Ce champ doit prendre une des valeurs suivantes : {0}.",
+				"invalidValueOfEnum": "Ce champ doit prendre une des valeurs suivantes : {0}. [{1}]",
 				"notEnoughItems": "Le nombre minimum d'éléments est {0}",
 				"tooManyItems": "Le nombre maximum d'éléments est {0}",
 				"valueNotUnique": "Les valeurs sont uniques",

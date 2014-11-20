@@ -19,7 +19,7 @@
                 },
                 "notOptional": "Dieses Feld ist nicht optional",
                 "disallowValue": "Diese Werte sind nicht erlaubt: {0}",
-                "invalidValueOfEnum": "Diese Feld sollte einen der folgenden Werte enthalten: {0}",
+                "invalidValueOfEnum": "Diese Feld sollte einen der folgenden Werte enthalten: {0}. [{1}]",
                 "notEnoughItems": "Die Mindestanzahl von Elementen ist {0}",
                 "tooManyItems": "Die Maximalanzahl von Elementen ist {0}",
                 "valueNotUnique": "Diese Werte sind nicht eindeutig",

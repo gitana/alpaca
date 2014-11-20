@@ -19,7 +19,7 @@
 				},
 				"notOptional": "Este campo no es opcional.",
 				"disallowValue": "{0} son los valores rechazados.",
-				"invalidValueOfEnum": "Este campo debe tener uno de los valores adentro {0}.",
+				"invalidValueOfEnum": "Este campo debe tener uno de los valores adentro {0}. [{1}]",
 				"notEnoughItems": "El número mínimo de artículos es {0}",
 				"tooManyItems": "El número máximo de artículos es {0}",
 				"valueNotUnique": "Los valores no son únicos",

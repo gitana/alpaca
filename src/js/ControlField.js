@@ -303,7 +303,7 @@
 
             var status = this._validateEnum();
             valInfo["invalidValueOfEnum"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("invalidValueOfEnum"), [this.schema["enum"].join(', ')]),
+                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("invalidValueOfEnum"), [this.schema["enum"].join(', '), this.data]),
                 "status": status
             };
 
@@ -503,7 +503,7 @@
 
     // Registers additional messages
     Alpaca.registerMessages({
-        "invalidValueOfEnum": "This field should have one of the values in {0}."
+        "invalidValueOfEnum": "This field should have one of the values in {0}.  Current value is: {1}"
     });
 
 })(jQuery);

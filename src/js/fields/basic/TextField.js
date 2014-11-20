@@ -293,8 +293,12 @@
                 if (self.control.mask && self.options.maskString)
                 {
                     // get unmasked value
-                    value = $(this.control).data($.mask.dataName)();
-                    value = self.ensureProperType(value);
+                    var fn = $(this.control).data($.mask.dataName);
+                    if (fn)
+                    {
+                        value = fn();
+                        value = self.ensureProperType(value);
+                    }
                 }
             }
             else
