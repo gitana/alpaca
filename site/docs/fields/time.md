@@ -6,7 +6,6 @@ group: navigation
 ---
 {% include JB/setup %}
 
-
 The ```time``` field.
 
 The time Field uses the Bootstrap time picker under the hood.  You can learn more about the picker at it's GitHub
@@ -16,6 +15,7 @@ project page:
 For more information on date and time formatting strings, see the Moment.js documentation:
 <a href="http://momentjs.com/docs/">http://momentjs.com/docs/</a>.
 
+<!-- INCLUDE_API_DOCS: time -->
 
 
 ## Example 1

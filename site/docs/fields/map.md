@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```map``` field.
+
+<!-- INCLUDE_API_DOCS: map -->
 
 
 ## Example 1

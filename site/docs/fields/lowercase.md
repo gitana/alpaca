@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```lowercase``` field.
+
+<!-- INCLUDE_API_DOCS: lowercase -->
 
 
 ## Example 1

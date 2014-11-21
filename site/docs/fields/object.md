@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```object``` field.
+
+<!-- INCLUDE_API_DOCS: object -->
 
 
 ## Example 1

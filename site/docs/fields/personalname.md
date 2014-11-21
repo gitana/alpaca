@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```personalname``` field.
+
+<!-- INCLUDE_API_DOCS: personalname -->
 
 
 ## Example 1

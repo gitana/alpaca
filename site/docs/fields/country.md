@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```country``` field.
+
+<!-- INCLUDE_API_DOCS: country -->
 
 
 ## Example 1

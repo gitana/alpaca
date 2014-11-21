@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```array``` field.
+
+<!-- INCLUDE_API_DOCS: array -->
 
 
 ## Example 1

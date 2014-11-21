@@ -9,6 +9,7 @@ group: navigation
 
 The ```text``` field is used to represent text within a form.
 
+<!-- INCLUDE_API_DOCS: text -->
 
 ## Example 1
 A simple example of using Alpaca with nothing more than a string of text.  Alpaca looks at your data and determines that it

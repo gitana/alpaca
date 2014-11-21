@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```grid``` field.
+
+<!-- INCLUDE_API_DOCS: grid -->
 
 
 ## Example 1

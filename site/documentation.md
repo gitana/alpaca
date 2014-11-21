@@ -13,7 +13,7 @@ Within them, you will find configuration details as well as inline examples that
 
 <h2>Fields</h2>
 Alpaca provides many different out-of-the-box field types.  The core field types have no external dependencies
-whereas the extension types depend on various thirdparty libraries.
+whereas the extension types depend on various third-party libraries.
 
 <h4>Core Fields</h4>
 <div class="row">
@@ -42,7 +42,7 @@ whereas the extension types depend on various thirdparty libraries.
     </div>
 </div>
 
-<h4>Extension Fields</h4>
+<h4>Additional Fields</h4>
 <div class="row">
     <div class="col-md-4">
         <ul>
@@ -84,7 +84,8 @@ whereas the extension types depend on various thirdparty libraries.
     </div>
 </div>
 
-<h2>API</h2>
+<h2>Topics</h2>
+We've provided chapters here on a variety of interesting topics.
 <div class="row">
     <div class="col-md-12">
         <ul>
@@ -100,6 +101,7 @@ whereas the extension types depend on various thirdparty libraries.
             <li><a href="{{ BASE_PATH }}/docs/api/references.html">References</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/serialization.html">Serialization</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/templates.html">Templates</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/api/usage.html">Usage</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/validation.html">Validation</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/views.html">Views</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/wizards.html">Wizards</a></li>

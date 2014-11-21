@@ -24,10 +24,10 @@
         /**
          * Normalization occurs once per view upon startup of Alpaca.
          */
-        normalize: function()
+        normalize: function(views)
         {
             // load the view object
-            var viewObject  = Alpaca.views[this.id];
+            var viewObject  = views[this.id];
             if (!viewObject)
             {
                 Alpaca.logError("View compilation failed - view not found: " + this.id);
@@ -42,7 +42,7 @@
 
                 var parentId = current.parent;
                 if (parentId) {
-                    var parent = Alpaca.views[current.parent];
+                    var parent = views[current.parent];
                     if (!parent) {
                         Alpaca.logError("View compilation failed - cannot find parent view: " + parentId + " for view: " + current.id);
                         return false;

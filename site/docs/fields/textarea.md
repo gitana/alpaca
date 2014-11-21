@@ -6,8 +6,9 @@ group: navigation
 ---
 {% include JB/setup %}
 
-
 The ```textarea``` field is used to represent text within a form.
+
+<!-- INCLUDE_API_DOCS: textarea -->
 
 
 ## Example 1

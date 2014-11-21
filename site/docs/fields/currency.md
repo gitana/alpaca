@@ -7,11 +7,12 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```currency``` field.
 
 The currency field uses the <a target="_blank" href="http://jquerypriceformat.com/">JQuery Price Format</a> plugin to
 render format the input as it's entered.
+
+<!-- INCLUDE_API_DOCS: currency -->
 
 ## Requirements
 The Editor field requires the <a target="_blank" href="http://jquerypriceformat.com/">JQuery Price Format</a> to be loaded

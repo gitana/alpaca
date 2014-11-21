@@ -1385,7 +1385,7 @@
         },
 
         isHidden: function() {
-            return "none" === $(this.field).css("display");
+            return ("none" === $(this.field).css("display"));
         },
 
         /**
@@ -1437,7 +1437,8 @@
         /**
          * Clears the field and resets the field to its original value.
          */
-        clear: function() {
+        clear: function()
+        {
             var newValue = null;
 
             if (this.data) {
@@ -1452,7 +1453,8 @@
          *
          * @return {Boolean} True if the field value is empty, false otherwise.
          */
-        isEmpty: function() {
+        isEmpty: function()
+        {
             return Alpaca.isValEmpty(this.getValue());
         },
 
@@ -1461,8 +1463,8 @@
          *
          * @return {Boolean} True if the field is valid, false otherwise.
          */
-        isValid: function(checkChildren) {
-
+        isValid: function(checkChildren)
+        {
             if (checkChildren && this.children)
             {
                 for (var i = 0; i < this.children.length; i++) {
@@ -1700,6 +1702,22 @@
         getFieldType: function()
         {
             return "";
+        },
+
+        /**
+         * @returns {String} the type of the base class (or null if none)
+         */
+        getBaseFieldType: function()
+        {
+            var baseFieldType = null;
+
+            var x = this.constructor.ancestor.prototype;
+            if (x && x.getFieldType)
+            {
+                baseFieldType = x.getFieldType();
+            }
+
+            return baseFieldType;
         },
 
         /**

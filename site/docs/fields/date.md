@@ -7,7 +7,6 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```date``` field.
 
 The Date Field uses the Bootstrap Datetime picker under the hood.  You can learn more about the picker at it's GitHub
@@ -17,7 +16,7 @@ project page:
 For more information on date and time formatting strings, see the Moment.js documentation:
 <a href="http://momentjs.com/docs/">http://momentjs.com/docs/</a>.
 
-
+<!-- INCLUDE_API_DOCS: date -->
 
 
 ## Example 1

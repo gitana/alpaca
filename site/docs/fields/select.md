@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```select``` field.
+
+<!-- INCLUDE_API_DOCS: select -->
 
 
 ## Example 1

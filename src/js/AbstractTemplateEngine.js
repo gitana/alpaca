@@ -85,7 +85,7 @@
                 $.ajax({
                     "url": url,
                     "dataType": "html",
-                    "success": function(html)
+                    "success": function(html, code, xhr)
                     {
                         // cleanup html
                         html = self.cleanup(html);
@@ -94,9 +94,13 @@
                             callback(err);
                         });
                     },
-                    "failure": function(http)
+                    "error": function(xhr, code)
                     {
-                        callback(http, null);
+                        callback({
+                            "message": xhr.responseText,
+                            "xhr": xhr,
+                            "code": code
+                        }, null);
                     }
                 });
             }

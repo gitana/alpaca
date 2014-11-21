@@ -7,13 +7,15 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```editor``` field.
 
 The editor field uses the <a target="_blank" href="http://ace.ajax.org">Cloud 9 ACE Editor</a> plugin to
 render an inline editor that supports a wide array of textual content types.  The editor provides a number of
 very powerful features and allows for the creation and modification of markup and code such as HTML, JavaScript,
 Java and other languages.
+
+<!-- INCLUDE_API_DOCS: editor -->
+
 
 ## Requirements
 The Editor field requires the <a target="_blank" href="http://ace.ajax.org">Cloud 9 ACE Editor</a> to be loaded

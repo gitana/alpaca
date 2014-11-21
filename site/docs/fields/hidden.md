@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```hidden``` field.
+
+<!-- INCLUDE_API_DOCS: hidden -->
 
 
 ## Example 1: Form with Hidden Field

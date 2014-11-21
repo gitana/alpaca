@@ -5,48 +5,38 @@
  */
 (function($) {
 
-    var Alpaca;
-
     /**
-     * @namespace Static method to build an Alpaca field instance bound to a DOM element.
-     * @description <p>Usage:</p>
-     * <p>
-     * 1: Binds a control using the contents of $(el) or hands back a previously bound control<br/>
+     * Renders an Alpaca field instance that is bound to a DOM element.
+     *
+     * The basic syntax is:
+     *
      * <code>
      *     <pre>
-     *      Alpaca(el)
+     *         Alpaca(el, config);
      *     </pre>
      * </code>
-     * </p>
-     * <p>
-     * 2: Binds a control to $(el) using the given data (only for non-object types).<br/>
+     *
+     * The full syntax is:
+     *
      * <code>
      *     <pre>
-     *      Alpaca(el, data)
+     *         Alpaca(el, {
+     *              "data" : {Any} field data (optional),
+     *              "schema": {Object} field schema (optional),
+     *              "options" : {Object} field options (optional),
+     *              "view": {Object|String} field view (object or id reference) (optional),
+     *              "render": {Function} callback function for replacing default rendering method (optional),
+     *              "postRender": {Function} callback function for post-rendering  (optional),
+     *              "error": {Function} callback function for error handling  (optional),
+     *              "connector": {Alpaca.Connector} connector for retrieving or storing data, schema, options, view and templates. (optional)
+     *         });
      *     </pre>
      * </code>
-     * </p>
-     * <p>
-     * 3: Binds a control to $(el) using the given configuration object.<br/>
-     * </p>
-     * <code>
-     *     <pre>
-     * Alpaca(el,{
-     *   "data" : {Any} field data (optional),
-     *   "schema": {Object} field schema (optional),
-     *   "options" : {Object} field options (optional),
-     *   "view": {Object|String} field view (object or id reference) (optional),
-     *   "render": {Function} callback function for replacing default rendering method (optional),
-     *   "postRender": {Function} callback function for post-rendering  (optional),
-     *   "error": {Function} callback function for error handling  (optional),
-     *   "connector": {Alpaca.Connector} connector for retrieving or storing data, schema, options,
-     *                view and templates. (optional),
-     * });
-     *    </pre>
-     *</code>
-     * @returns {Object} alpaca field instance
+     *
+     * @returns {*}
      */
-    Alpaca = function() {
+    var Alpaca = function()
+    {
         var args = Alpaca.makeArray(arguments);
         if (args.length === 0) {
             // illegal
@@ -208,7 +198,7 @@
 
             // if top level and focus has not been specified, then auto-set
             if (Alpaca.isUndefined(options.focus) && !field.parent) {
-                options.focus = true;
+                options.focus = Alpaca.defaultFocus;
             }
 
             // auto-set the focus?
@@ -323,9 +313,6 @@
             errorCallback(loadError);
             return null;
         });
-
-        // hand back the field
-        return $(el);
     };
 
     /**
@@ -352,11 +339,6 @@
     Alpaca.Extend(Alpaca,
     /** @lends Alpaca */
     {
-        /**
-         * Version number.
-         */
-        VERSION: "0.1.0",
-
         /**
          * Makes an array.
          *
@@ -696,6 +678,11 @@
         defaultLocale: "en_US",
 
         /**
+         * Whether to set focus by default
+         */
+        defaultFocus: true,
+
+        /**
          * Sets the default Locale.
          *
          * @param {String} locale New default locale.
@@ -844,7 +831,6 @@
                     }
                 }
             }
-
         },
 
         /**
@@ -1530,23 +1516,30 @@
 
                 if (report.errors && report.errors.length > 0)
                 {
+                    var messages = [];
+
                     for (var i = 0; i < report.errors.length; i++)
                     {
-                        var viewId = report.errors[i].viewId;
-                        var templateId = report.errors[i].templateId;
+                        var viewId = report.errors[i].view;
+                        var cacheKey = report.errors[i].cacheKey
                         var err = report.errors[i].err;
 
-                        var text = "The template: " + templateId + " for view: " + viewId + " failed to compile";
+                        var text = "The template with cache key: " + cacheKey + " for view: " + viewId + " failed to compile";
                         if (err && err.message) {
                             text += ", message: " + err.message;
+
+                            messages.push(err.message);
                         }
                         if (err) {
                             text += ", err: " + JSON.stringify(err);
                         }
                         Alpaca.logError(text);
+
+                        delete self.normalizedViews[viewId];
+                        delete self.views[viewId];
                     }
 
-                    return Alpaca.throwErrorWithCallback("View compilation failed, cannot initialize Alpaca.  Please check the error logs.", errorCallback);
+                    return Alpaca.throwErrorWithCallback("View compilation failed, cannot initialize Alpaca. " + messages.join(", "), errorCallback);
                 }
 
                 self._init(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback);
@@ -2106,7 +2099,7 @@
 
             var normalizeViews = function()
             {
-                // the views that we're going to normalized
+                // the views that we're going to normalize
                 var normalizedViews = {};
                 var normalizedViewCount = 0;
 
@@ -2123,7 +2116,7 @@
                     if (!Alpaca.normalizedViews[viewId])
                     {
                         var normalizedView = new Alpaca.NormalizedView(viewId);
-                        if (normalizedView.normalize())
+                        if (normalizedView.normalize(self.views))
                         {
                             normalizedViews[viewId] = normalizedView;
                             normalizedViewCount++;
@@ -2629,8 +2622,11 @@
         // append this into the front of args
         var newArgs = [].concat(this, args);
 
-        // hand back the field instance
-        return Alpaca.apply(this, newArgs);
+        // invoke Alpaca against current element
+        Alpaca.apply(this, newArgs);
+
+        // as per jQuery's pattern, hand back $el
+        return this;
     };
 
     /**

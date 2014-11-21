@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```state``` field.
+
+<!-- INCLUDE_API_DOCS: state -->
 
 
 ## Example 1

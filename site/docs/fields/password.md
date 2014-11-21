@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```password``` field.
+
+<!-- INCLUDE_API_DOCS: password -->
 
 
 ## Example 1

@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```radio``` field.
+
+<!-- INCLUDE_API_DOCS: radio -->
 
 
 ## Example 1

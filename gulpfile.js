@@ -479,13 +479,13 @@ gulp.task("build-site", function(cb)
             return;
         }
 
-        /*
         // now run post-processors over all of the HTML to insert builder code
-        applyBuilder("./build/site", function() {
-            console.log("build-site completed");
+        console.log("Annotating Field-Level Documentation");
+        applyFieldAnnotations("./build/site", function() {
+            console.log("Annotations Completed");
+            cb();
         });
-        */
-        cb();
+        //cb();
     });
 
 });
@@ -614,6 +614,18 @@ gulp.task("server", ["watch"], function() {
 
 });
 
+gulp.task("web", function(cb) {
+    runSequence(
+        "default",
+        "site",
+        "server",
+        function() {
+            cb();
+        }
+    );
+});
+
+
 
 gulp.task("bump", function(){
     gulp.src(VERSIONABLE_FILES).pipe(bump()).pipe(gulp.dest("./"));
@@ -739,7 +751,7 @@ var generateTable = function(schema)
 {
     var table = "";
 
-    table += "<table class='table table-hover'>";
+    table += "<table class='table table-bordered table-responsive table-hover table-condensed'>";
 
     table += "<thead>";
     table += "<tr>";
@@ -757,9 +769,9 @@ var generateTable = function(schema)
 
         table += "<tr>";
         table += "<td>" + name + "</td>";
-        table += "<td>" + property.description ? property.description : "" + "</td>";
-        table += "<td>" + property.type ? property.type : "" + "</td>";
-        table += "<td>" + property.default ? property.default : "" + "</td>";
+        table += "<td>" + (property.description ? property.description : "") + "</td>";
+        table += "<td>" + (property.type ? property.type : "") + "</td>";
+        table += "<td>" + (property.default ? property.default : "") + "</td>";
         table += "</tr>";
     }
     table += "</tbody>";
@@ -769,65 +781,145 @@ var generateTable = function(schema)
     return table;
 };
 
-var applyBuilderToFile = function(filePath, Alpaca)
+var applyFieldAnnotationsToFile = function(filePath, Alpaca)
 {
     var text = "" + fs.readFileSync(filePath);
 
     var c1 = text.indexOf("<!-- INCLUDE_API_DOCS:");
     if (c1 > -1)
     {
-        var c2 = text.indexOf("-->", c1 + 28);
+        var c2 = text.indexOf("-->", c1 + 1);
         if (c2 > -1)
         {
-            var type = text.substring(c1 + 28, c2);
+            var type = text.substring(c1 + 22, c2);
+            type = type.trim();
 
-            var instance = Alpaca.fieldClassRegistry[type]();
+            console.log(" -> Annotating type: " + type + " in file: " + filePath);
 
-            var schemaSchema = instance.getSchemaOfSchema();
-            //var schemaOptions = instance.getOptionsForSchema();
-            var optionsSchema = instance.getSchemaOfOptions();
-            //var optionsOptions = instance.getOptionsForOptions();
-            var title = instance.getTitle();
-            var description = instance.getDescription();
-            var type = instance.getType();
-            var fieldType = instance.getFieldType();
+            var constructor = Alpaca.fieldClassRegistry[type];
+            if (constructor)
+            {
+                var instance = new constructor();
+                //domEl, data, options, schema, viewId, connector, errorCallback
 
-            var gen = "";
-            gen += "<h3>" + fieldType + "</h3>";
-            gen += "<h4>" + type + "</h4>";
-            gen += "<h5>" + title + "</h5>";
-            gen += "<h5>" + description + "</h5>";
-            gen += "<h3>Schema</h3>";
-            gen += generateTable(schemaSchema);
-            gen += "<h3>Options</h3>";
-            gen += generateTable(optionsSchema);
+                // schema
+                var schemaSchema = instance.getSchemaOfSchema();
+                //var schemaOptions = instance.getOptionsForSchema();
 
-            text = text.substring(0, c1) + gen + text.substring(c2 + 3);
+                // options
+                var optionsSchema = instance.getSchemaOfOptions();
+                //var optionsOptions = instance.getOptionsForOptions();
 
-            fs.writeFileSync(filePath, text);
+                // general
+                var stampFunction = function(name, value, link)
+                {
+                    var x = "";
+                    x += "<tr>";
+                    x += "<td>" + name + "</td>";
+                    x += "<td>";
+                    if (link)
+                    {
+                        x += "<a href='" + link + "'>";
+                    }
+                    x += value;
+                    if (link)
+                    {
+                        x += "</a>";
+                    }
+                    x += "</td>";
+                    x += "</tr>";
+
+                    return x;
+                };
+                var title = instance.getTitle();
+                var description = instance.getDescription();
+                var type = instance.getType();
+                var fieldType = instance.getFieldType();
+                var baseFieldType = instance.getBaseFieldType();
+
+                var gen = "";
+                gen += "<h3>Properties</h3>";
+
+                gen += "<table class='table table-bordered table-responsive table-hover table-condensed'>";
+                gen += "<tbody>";
+                gen += stampFunction("Title", title);
+                gen += stampFunction("Description", description);
+                gen += stampFunction("JSON Schema Type(s)", type);
+                gen += stampFunction("Field Type", fieldType, "/docs/fields/" + fieldType + ".html");
+                if (baseFieldType)
+                {
+                    gen += stampFunction("Base Field Type", baseFieldType, "/docs/fields/" + baseFieldType + ".html");
+                }
+                else
+                {
+                    gen += stampFunction("Base Field Type", "None");
+                }
+                gen += "</tbody>";
+                gen += "</table>";
+
+                gen += "<h3>Schema</h3>";
+                gen += generateTable(schemaSchema);
+                gen += "<h3>Options</h3>";
+                gen += generateTable(optionsSchema);
+
+                text = text.substring(0, c1) + gen + text.substring(c2 + 3);
+
+                fs.writeFileSync(filePath, text);
+            }
+            else
+            {
+                console.log(" -> Could not find field type: " + type);
+            }
         }
     }
 };
 
-var applyBuilder = function(basePath)
+var applyFieldAnnotations = function(basePath, callback)
 {
-    var Alpaca = require("./build/alpaca/web/alpaca");
+    var env = require('jsdom').env;
+    var html = '<html><body><div id="form"></div></html>';
 
-    var all = wrench.readdirSyncRecursive(basePath);
+    var jQuerySrc = fs.readFileSync("./lib/jquery/dist/jquery.js", "utf-8");
+    var alpacaSrc = fs.readFileSync("./build/alpaca/web/alpaca.js", "utf-8");
+    var handlebarsSrc = fs.readFileSync("./lib/handlebars/handlebars.js", "utf-8");
 
-    var files = [];
-    for (var i = 0; i < all.length; i++)
-    {
-        if (all[i].indexOf(".html") > -1)
-        {
-            files.push(all[i]);
-        }
-    }
+    var wrench = require("wrench");
 
-    for (var i = 0; i < files.length; i++)
-    {
-        console.log("Apply: " + files[i] + " (" + i + "/" + files.length + ")");
+    // first argument can be html string, filename, or url
+    env(html, {
+        src: [jQuerySrc, handlebarsSrc, alpacaSrc]
+    }, function (errors, window) {
 
-        applyBuilderToFile(files[i], Alpaca);
-    }
+        global.$ = window.$;
+        global.Alpaca = window.Alpaca;
+        global.jQuery = window.$;
+        global.Base = window.Base;
+        global.Handlebars = window.Handlebars;
+
+        $("#form").alpaca({
+            "data": "",
+            "view": "web-edit",
+            "postRender": function(control)
+            {
+                var all = wrench.readdirSyncRecursive(basePath);
+
+                var files = [];
+                for (var i = 0; i < all.length; i++)
+                {
+                    if (all[i].indexOf(".html") > -1)
+                    {
+                        files.push(path.join(basePath, all[i]));
+                    }
+                }
+
+                for (var i = 0; i < files.length; i++)
+                {
+                    applyFieldAnnotationsToFile(files[i], Alpaca);
+                }
+
+                callback();
+            }
+        });
+
+    });
 };

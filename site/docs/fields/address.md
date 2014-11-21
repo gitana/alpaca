@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```address``` field.
+
+<!-- INCLUDE_API_DOCS: address -->
 
 
 ## Example 1

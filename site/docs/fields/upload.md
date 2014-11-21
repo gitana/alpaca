@@ -7,7 +7,6 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```upload``` field provides a mechanism that enables end users to upload one or more files to a server endpoint and
 have references to those files stored in the JSON of your form.  For example, you may have an array of files in your
 JSON consisting of filenames to assets that are uploaded to your server - something like:
@@ -66,6 +65,8 @@ And more properties can be specified as needed by the underlying plugin.
 
 The control also supports drag and drop of files from the desktop into the web page provided that you're using
 an HTML5 File API compatible browser.  Which, as you might expect, doesn't include IE8 or IE9.
+
+<!-- INCLUDE_API_DOCS: upload -->
 
 
 ## Example 1

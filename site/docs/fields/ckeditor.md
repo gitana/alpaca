@@ -7,13 +7,12 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```ckeditor``` field.
-
 
 The CK Editor field renders the CK editor control that allows users to visually work with HTML
 and save the results back into a text property.
 
+<!-- INCLUDE_API_DOCS: ckeditor -->
 
 
 ## Requirements

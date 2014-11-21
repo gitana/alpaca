@@ -30,6 +30,7 @@
     "gulp-wrap-umd": "^0.2.0",
     "handlebars": "*",
     "jquery": "*",
+    "jsdom": "*",
     "jshint-stylish": "0.1.5",
     "lodash": "",
     "node-gyp": "0.11.0",

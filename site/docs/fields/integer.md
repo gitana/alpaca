@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```integer``` field.
+
+<!-- INCLUDE_API_DOCS: integer -->
 
 
 ## Example 1

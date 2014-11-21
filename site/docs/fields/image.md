@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```image``` field.
+
+<!-- INCLUDE_API_DOCS: image -->
 
 
 ## Example 1

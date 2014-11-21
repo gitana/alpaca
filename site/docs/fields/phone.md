@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```phone``` field.
+
+<!-- INCLUDE_API_DOCS: phone -->
 
 
 ## Example 1

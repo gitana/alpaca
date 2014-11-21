@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```ipv4``` field.
+
+<!-- INCLUDE_API_DOCS: ipv4 -->
 
 
 ## Example 1

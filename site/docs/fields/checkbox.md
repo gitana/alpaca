@@ -10,6 +10,8 @@ tags: field
 
 The ```checkbox``` field.
 
+<!-- INCLUDE_API_DOCS: checkbox -->
+
 
 ## Example 1
 Simple checkbox field for boolean data.

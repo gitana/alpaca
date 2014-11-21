@@ -7,8 +7,9 @@ tags: field
 ---
 {% include JB/setup %}
 
-
 The ```zipcode``` field.
+
+<!-- INCLUDE_API_DOCS: zipcode -->
 
 
 ## Example 1
