@@ -83,6 +83,12 @@
         $(fieldEl).find("input[type=file]").removeClass("form-control");
         $(fieldEl).find("input[type=radio]").removeClass("form-control");
 
+        // special case for type == color, remove form-control
+        if (this.inputType === "color")
+        {
+            $(fieldEl).find("input").removeClass("form-control");
+        }
+
         // any checkbox inputs get the "checkbox" class on their checkbox
         $(fieldEl).find("input[type=checkbox]").parent().parent().addClass("checkbox");
         // any radio inputs get the "radio" class on their radio

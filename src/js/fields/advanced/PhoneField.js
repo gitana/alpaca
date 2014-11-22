@@ -8,27 +8,13 @@
      */
     {
         /**
-         * @constructs
-         * @augments Alpaca.Fields.TextField
-         *
-         * @class Control for standard US phone numbers.
-         *
-         * @param {Object} container Field container.
-         * @param {Any} data Field data.
-         * @param {Object} options Field options.
-         * @param {Object} schema Field schema.
-         * @param {Object|String} view Field view.
-         * @param {Alpaca.Connector} connector Field connector.
-         * @param {Function} errorCallback Error callback.
-         */
-        constructor: function(container, data, options, schema, view, connector, errorCallback) {
-            this.base(container, data, options, schema, view, connector, errorCallback);
-        },
-
-        /**
          * @see Alpaca.Fields.TextField#setup
          */
-        setup: function() {
+        setup: function()
+        {
+            // default html5 input type = "tel";
+            this.inputType = "tel";
+
             this.base();
 
             if (!this.schema.pattern) {

@@ -21,6 +21,9 @@
             {
                 var self = this;
 
+                // default html5 input type = "datetime";
+                this.inputType = "datetime";
+
                 this.base();
 
                 self.options.picker.pickDate = true;

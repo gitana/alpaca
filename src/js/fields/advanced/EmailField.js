@@ -19,6 +19,9 @@
          */
         setup: function()
         {
+            // default html5 input type = "email";
+            this.inputType = "email";
+
             this.base();
 
             if (!this.schema.pattern)

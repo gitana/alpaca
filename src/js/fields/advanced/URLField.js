@@ -19,6 +19,9 @@
          */
         setup: function()
         {
+            // default html5 input type = "url";
+            this.inputType = "url";
+
             this.base();
 
             this.schema.pattern = Alpaca.regexps.url;

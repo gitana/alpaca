@@ -25,6 +25,27 @@
             if (!this.options.size) {
                 this.options.size = 40;
             }
+
+            // assume html5 input type = "text"
+            if (!this.inputType)
+            {
+                this.inputType = "text";
+            }
+
+            if (this.options.inputType)
+            {
+                this.inputType = this.options.inputType;
+            }
+
+            // DOM data-* attributes support
+            if (!this.options.data) {
+                this.options.data = {};
+            }
+
+            // DOM * attributes support
+            if (!this.options.attributes) {
+                this.options.attributes = {};
+            }
         },
 
         /**
@@ -236,6 +257,18 @@
 
                 });
             }
+        },
+
+        prepareControlModel: function(callback)
+        {
+            var self = this;
+
+            this.base(function(model) {
+
+                model.inputType = self.inputType;
+
+                callback(model);
+            });
         },
 
         updateMaxLengthIndicator: function()
@@ -637,6 +670,16 @@
                     "allowOptionalEmpty": {
                         "title": "Allow Optional Empty",
                         "description": "Allows this non-required field to validate when the value is empty"
+                    },
+                    "inputType": {
+                        "title": "HTML5 Input Type",
+                        "description": "Allows for the override of the underlying HTML5 input type.  If not specified, an assumed value is provided based on the kind of input control (i.e. 'text', 'date', 'email' and so forth)",
+                        "type": "string"
+                    },
+                    "data": {
+                        "title": "Data attributes for the underlying DOM input control",
+                        "description": "Allows you to specify a key/value map of data attributes that will be added as DOM attribuets for the underlying input control.  The data attributes will be added as data-{name}='{value}'.",
+                        "type": "object"
                     }
                 }
             });
@@ -661,6 +704,12 @@
                     },
                     "allowOptionalEmpty": {
                         "type": "checkbox"
+                    },
+                    "inputType": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object"
                     }
                 }
             });

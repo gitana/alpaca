@@ -8,6 +8,17 @@
      */
     {
         /**
+         * @see Alpaca.Fields.TextField#setup
+         */
+        setup: function()
+        {
+            // default html5 input type = "number";
+            this.inputType = "number";
+
+            this.base();
+        },
+
+        /**
          * @see Alpaca.Fields.TextField#getFieldType
          */
         getFieldType: function() {
