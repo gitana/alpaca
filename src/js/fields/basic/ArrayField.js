@@ -1110,7 +1110,7 @@
                 return;
             }
 
-            console.log("Source: " + sourceIndex + ", Target: " + targetIndex);
+            //console.log("Source: " + sourceIndex + ", Target: " + targetIndex);
 
             var targetChild = self.children[targetIndex];
             if (!targetChild)

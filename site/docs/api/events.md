@@ -1,5 +1,5 @@
 ---
-layout: documentation-field
+layout: documentation-api
 title: Events
 header: Events
 group: navigation

@@ -1,5 +1,5 @@
 ---
-layout: documentation-field
+layout: documentation-api
 title: Templates
 header: Templates
 group: navigation

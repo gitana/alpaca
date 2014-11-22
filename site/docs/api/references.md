@@ -1,5 +1,5 @@
 ---
-layout: documentation-field
+layout: documentation-api
 title: References
 header: References
 group: navigation

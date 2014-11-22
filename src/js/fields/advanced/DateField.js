@@ -45,18 +45,21 @@
 
             this.base(model, function() {
 
-                if ($.fn.datetimepicker)
+                if (self.view.type !== "display")
                 {
-                    self.getControlEl().datetimepicker(self.options.picker);
+                    if ($.fn.datetimepicker)
+                    {
+                        self.getControlEl().datetimepicker(self.options.picker);
 
-                    self.picker = self.getControlEl().data("DateTimePicker");
-                    if (self.picker && self.options.dateFormat)
-                    {
-                        self.picker.format =  self.options.dateFormat;
-                    }
-                    if (self.picker)
-                    {
-                        self.options.dateFormat = self.picker.format;
+                        self.picker = self.getControlEl().data("DateTimePicker");
+                        if (self.picker && self.options.dateFormat)
+                        {
+                            self.picker.format =  self.options.dateFormat;
+                        }
+                        if (self.picker)
+                        {
+                            self.options.dateFormat = self.picker.format;
+                        }
                     }
                 }
 

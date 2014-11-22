@@ -1,5 +1,5 @@
 ---
-layout: documentation-field
+layout: documentation-api
 title: Custom Fields
 header: Custom Fields
 group: navigation

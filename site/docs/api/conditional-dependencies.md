@@ -1,5 +1,5 @@
 ---
-layout: documentation-field
+layout: documentation-api
 title: Conditional Dependencies
 header: Conditional Dependencies
 group: navigation

@@ -25,6 +25,7 @@ Alpaca is open-source and provided to you under the Apache 2.0 license.  It is s
      <iframe src="http://www.youtube.com/embed/mK4BXiGNbvA" frameborder="0" width="560" height="315"> </iframe>
 </div>
 
+
 ## How do I use Alpaca?
 
 <!-- STEP 1 -->
@@ -193,118 +194,45 @@ are a few notable ones:
     </div>
 </div>
 
-If you'd like to have your company logo listed above, please <a href="contact.html">drop us a line</a>.
+If you'd like to have your company logo listed above, please <a href="support.html">drop us a line</a>.
+
 
 ## What Browsers are Supported?
 
-Alpaca is a JavaScript library that uses jQuery and runs in most modern web browsers.  With every release of Alpaca,
-we run a library of unit tests across a matrix of operating systems, browsers and versions.  As the project grows,
-we are expanding this matrix to include more combinations and testing.
+Alpaca works in with any browser that supports jQuery 1.10.x and above.  This includes web browsers and
+browsers running on mobile devices.
 
-This table shows our tested stack.  If not shown, it means that Alpaca hasn't been tested on that platform and
-browser combination.  That said, please feel free to evaluate on your own.  There is a good chance
-Alpaca will run just fine.
+We've tested Alpaca against IE 9 and beyond.  It may work with earlier versions but you're getting into tedious
+territory there.  This is not your fault.  Don't blame yourself.  Just be thorough and give your forms a test on IE 8
+and below.
 
-<br/>
 
-<div align="center" class="stack">
-    <table class="stack">
-        <thead>
-            <th>Browser</th>
-            <th>Windows</th>
-            <th>Mac OSX</th>
-            <th>iOS</th>
-            <th>Android</th>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Chrome</td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                </td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                </td>
-                <td>
-                    <!-- not applicable -->
-                    -
-                </td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                    <!-- not applicable -->
-                </td>
-            </tr>
-            <tr>
-                <td>Firefox</td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                </td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                </td>
-                <td>
-                    <!-- not applicable -->
-                    -
-                </td>
-                <td>
-                    <!-- not applicable -->
-                    -
-                </td>
-            </tr>
-            <tr>
-                <td>Safari</td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                </td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                </td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                </td>
-                <td>
-                    <!-- not applicable -->
-                    -
-                </td>
-            </tr>
-            <tr>
-                <td>Opera</td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                </td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                </td>
-                <td>
-                    <!-- not tested -->
-                    -
-                </td>
-                <td>
-                    <!-- not applicable -->
-                    -
-                </td>
-            </tr>
-            <tr>
-                <td>IE9+</td>
-                <td>
-                    <img src="{{ BASE_PATH }}/images/supported-yes.png">
-                </td>
-                <td>
-                    <!-- not applicable -->
-                    -
-                </td>
-                <td>
-                    <!-- not applicable -->
-                    -
-                </td>
-                <td>
-                    <!-- not applicable -->
-                    -
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+## Is Alpaca open source?
+
+Yes.  Alpaca is an open-source project and the source code is freely available under the Apache 2 license.  We chose
+the Apache 2 license because it is permissive and lets you get the most out of open source.
+
+We any luck, Alpaca will improve your life.  Save you time.  And let you play with your kids more.
+
+Alpaca is supported by the community and several active contributors who have supplied pull requests with new features,
+ideas and technical wonder.  The project started at Cloud CMS where we used Alpaca as our forms engine of choice.
+
+If you have a question or think that you've found a bug, please visit our
+<a href="https://github.com/gitana/alpaca" target="_blank">GitHub Issues page</a> and let the community know.
+ Chances are that someone has run into something similar and can help out.
+
+You can freely <a href="https://github.com/gitana/alpaca" target="_blank">fork Alpaca</a> by visiting the
+<a href="https://github.com/gitana/alpaca" target="_blank">Alpaca project at GitHub</a>.
+
+
+## Is Alpaca supported?
+
+Yes, Alpaca is supported if you <a href="support.html">sign up for a support contract with Cloud CMS</a>.
+We have engineers who offer consulting services, technical support and training.
+
+<a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> sponsors Alpaca and is ready to work with you to support your live engagements.
+
+<a href="support.html">Let us know how we can help</a>!
 
 
 ## How do I get started?
@@ -313,54 +241,6 @@ You can drop Alpaca into your new or existing web or mobile projects.  Alpaca is
 you can plug in wherever you'd like.  You can <a href="download.html">install or download Alpaca</a> using conventional
 tools like Bower or NPM.  Or you can <a href="download.html">grab a release</a> from our
  <a href="download.html">download page</a>.
-
-
-## Is Alpaca open-source?
-
-Yes.  Alpaca is an open-source project and the source code is freely available.  It is licensed under the Apache 2 license
-which affords everyone the opportunity to use, distribute and incorporate Alpaca into their products.  It's a
-permissive license which lets you get the most out of Alpaca.
-
-The goal with this project, the source code and all of the documentation is to provide the community with a really
-great tool that can be used within various projects.  It is powerful but it's also intended to be extensible.
-Our hope is that you'll have a great time with Alpaca and that it will improve your life.  With any luck, you'll build
-something great and contribute back to the project by putting in new features, fixing bugs, contributing new language
-packs and building cool and interesting new field controls.  And even if you don't, at least you'll have a better life
-and think hot dog that was fun.
-
-In being free and open-source, it's important to understand that Alpaca is supported by the community.  If you have
-a question or think that you've found a bug, please visit our
-<a href="https://github.com/gitana/alpaca" target="_blank">GitHub Issues page</a> and let the community know.
- Chances are that someone has run into something similar and can help out.
-
-You can freely <a href="https://github.com/gitana/alpaca" target="_blank">fork Alpaca</a> by visiting the
-<a href="https://github.com/gitana/alpaca" target="_blank">Alpaca project at GitHub</a>.
-
-## Why is Alpaca open source?
-
-When we were building Cloud CMS, we ended up producing a really great forms engine to serve as part of our front end
-We're big on open source, having worked on such projects as Alfresco and the Spring Framework in the past.  We thought
-it only made sense to put Alpaca into the wild to see what it could do.
-
-We're thrilled with the results.  Alpaca has enjoyed several years of iteration and today stands as a really nicely
-packaged library for developers, system integrators and many others to use within their projects.
-
-We'd love for you to <a href="download.html">try out Alpaca</a> and to contribute to the project.
-If you're able to fix a bug, add a new feature or implement something cool, it'll probably go a long
-way to helping someone else out there.  And that's what community is all about.
-
-
-## Do you offer Support for Alpaca?
-
-Yes.  If you're using Alpaca in production and are looking for <a href="support.html">production support for Alpaca</a>
-or a service-level agreement for bug fixes and patches, please contact <a href="support.html">Cloud CMS</a>.
-Cloud CMS sponsors Alpaca and maintains the code base.  We can connect you with
-<a href="support.html">Cloud CMS engineers</a> to deliver support for your applications.
-
-Cloud CMS offers monthly and annual support contracts in addition to consulting and development services designed to
-assist with your projects.
-
-<a href="support.html">Let us know how we can help</a>!
 
 <script>
 $("TABLE.stack").dataTable({

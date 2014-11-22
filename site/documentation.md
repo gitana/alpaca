@@ -11,9 +11,12 @@ templates, callbacks and other extensibility points within Alpaca.  As a very ri
 engine, you can do quite a lot with Alpaca and so we encourage you to read through the docs thoroughly.
 Within them, you will find configuration details as well as inline examples that you can tweak and play with.
 
+<a name="fields"></a>
 <h2>Fields</h2>
 Alpaca provides many different out-of-the-box field types.  The core field types have no external dependencies
 whereas the extension types depend on various third-party libraries.
+
+<br/>
 
 <h4>Core Fields</h4>
 <div class="row">
@@ -42,7 +45,7 @@ whereas the extension types depend on various third-party libraries.
     </div>
 </div>
 
-<h4>Additional Fields</h4>
+<h4>More Fields</h4>
 <div class="row">
     <div class="col-md-4">
         <ul>
@@ -84,8 +87,10 @@ whereas the extension types depend on various third-party libraries.
     </div>
 </div>
 
-<h2>Topics</h2>
-We've provided chapters here on a variety of interesting topics.
+<a name="api"></a>
+<h2>API Topics</h2>
+We've provided chapters here on a variety of interesting API-related topics.
+
 <div class="row">
     <div class="col-md-12">
         <ul>

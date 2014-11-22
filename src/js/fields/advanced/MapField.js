@@ -102,8 +102,9 @@
         },
 
         /**
-         * Validates if key fields are unique.
-         * @returns {Boolean} true if keys are unique
+         * Validates that key fields are not empty.
+         *
+         * @returns {Boolean} true if keys are not empty
          */
         _validateMapKeysNotEmpty: function()
         {
@@ -126,6 +127,7 @@
 
         /**
          * Validates if key fields are unique.
+         *
          * @returns {Boolean} true if keys are unique
          */
         _validateMapKeysUnique: function()

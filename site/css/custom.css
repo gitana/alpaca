@@ -171,3 +171,10 @@ li.L0, li.L1, li.L2, li.L3, li.L4, li.L5, li.L6, li.L7, li.L8, li.L9
     list-style-type: decimal !important;
     color: #aaa !important;
 }
+
+.cloud-image
+{
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 30px;
+}

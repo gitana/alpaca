@@ -2,6 +2,10 @@
 
 $(document).ready(function() {
 
+    var redirectUri = window.location.href + "?received=true";
+    //console.log(redirectUri);
+    //debugger;
+
     $("#contactus").alpaca({
         "view": "bootstrap-create",
         "schema": {
@@ -27,13 +31,9 @@ $(document).ready(function() {
                     "type": "string",
                     "required": true
                 },
-                "newsletter": {
-                    "type": "boolean",
-                    "default": true
-                },
                 "redirectUri": {
                     "type": "string",
-                    "default": window.location.href + "?received=true"
+                    "default": redirectUri
                 }
             }
         },
@@ -65,23 +65,21 @@ $(document).ready(function() {
                     "type": "text"
                 },
                 "comments": {
-                    "label": "Project Description",
+                    "label": "Tell us about your Project",
                     "type": "textarea"
-                },
-                "newsletter": {
-                    "label": false,
-                    "rightLabel": "Sign up for the Cloud CMS Newsletter"
                 },
                 "redirectUri": {
                     "label": false,
                     "hidden": true
                 }
-            }
+            },
+            "focus": "name"
         },
         "postRender": function() {
-            $(".alpaca-form-button-submit").css({
-                "padding": "10px"
-            }).click(function() {
+            $(".alpaca-form-buttons-container").css({
+                "text-align": "center"
+            });
+            $(".alpaca-form-button-submit").off().click(function() {
                 doBlock("Please wait while your form is submitted...", true);
             });
         }
@@ -92,7 +90,7 @@ $(document).ready(function() {
 // if received, modal popup
 var doBlock = function(message, hideClose)
 {
-    var modal = (function (message) {
+    var modal = (function (message, hideClose) {
 
         var TEMPLATE = ' \
             <div class="modal fade"> \
@@ -128,7 +126,7 @@ var doBlock = function(message, hideClose)
                 div.modal('hide');
             }
         };
-    })(message);
+    })(message, hideClose);
 
     modal.show();
 

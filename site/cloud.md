@@ -35,6 +35,14 @@ reports (such as PDF or CSV/Excel) at any time.
 We offer several <a href="https://www.cloudcms.com/pricing.html" target="_blank">subscription plans</a>
 that are cost-effective and scalable for your organization's needs.
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="cloud-image">
+            <img src="/images/cloud/cloudcms.png" style="max-width: 600px">
+        </div>
+    </div>
+</div>
+
 <a name="reports"></a>
 ## Reports
 
@@ -45,12 +53,32 @@ interface for managing the data capture from your web sites and mobile applicati
 It's easy to export all of your form data to various formats including PDF, Excel and comma-separated values.
 Template processors allow you to massage data into any format you'd like so as to generate text, HTML or PDF output.
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="cloud-image">
+            <img src="/images/cloud/json.png" style="max-width: 600px">
+        </div>
+    </div>
+</div>
+
 <a name="collaboration"></a>
 ## Collaboration
 
 Work together as one team within Cloud CMS.  Invite your team members into project workspaces and assign them roles to
 play within the project so as to designate exactly who has rights to work with forms, form data, exports and more.
 Customize the user interface to make your team more productive.
+
+Cloud CMS is a fully-fledged, enterprise-class content management system that can not only handle the content
+for your mobile/web applications, but also handles images, users, groups, push notifications, registration, workflow,
+publishing and much more.
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="cloud-image">
+            <img src="/images/cloud/collaboration.png" style="max-width: 600px">
+        </div>
+    </div>
+</div>
 
 <a name="form-builder"></a>
 ## Form Builder
@@ -61,6 +89,14 @@ your web pages using a simple plugin.
 
 In addition, take advantage of role-based delegation of forms within the Cloud CMS user interface.  Provision forms
 for your content workers based on their roles within your application.
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="cloud-image">
+            <img src="/images/cloud/formbuilder.png" style="max-width: 600px">
+        </div>
+    </div>
+</div>
 
 <a name="plugin"></a>
 ## Run on any Web Site
