@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Getting Started with Alpaca
-#tagline: Easy Web Forms for jQuery
+#tagline: Easy Forms for jQuery
 ---
 {% include JB/setup %}
 

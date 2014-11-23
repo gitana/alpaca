@@ -1,8 +1,10 @@
 ---
 layout: page
-title: Easy Web Forms for jQuery
-title2: Alpaca - Easy Web Forms for jQuery
-#tagline: Web Forms for jQuery and Bootstrap
+title: Easy Forms for jQuery
+title2: Alpaca - Easy Forms for jQuery
+description: Easily create forms for your web site using Alpaca, jQuery and Bootstrap
+keywords: alpaca,forms,jquery,bootstrap
+#tagline: Easy Forms for jQuery
 ---
 {% include JB/setup %}
 

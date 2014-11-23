@@ -15,6 +15,10 @@ author :
   email : info@cloudcms.com
   github : gitana/alpaca
   twitter : cloudcms
+meta:
+  description: Easily create forms for your web site using jQuery, Bootstrap and JSON Schema
+  keywords: alpaca,forms,jquery,bootstrap,json,json-schema,schema,form,html,html5,angular,builder,cms
+
 
 markdown: redcarpet
 redcarpet:

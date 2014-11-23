@@ -1,7 +1,16 @@
 <! -- header.html -->
 <meta charset="utf-8">
 <title>Alpaca Forms - {{ page.title }}</title>
-{% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+{% if page.description %}
+<meta name="description" content="{{ page.description }}">
+{% else %}
+<meta name="description" content="{{ site.meta.description }}">
+{% endif %}
+{% if page.keywords %}
+<meta name="keywords" content="{{ page.keywords }}">
+{% else %}
+<meta name="keywords" content="{{ site.meta.keywords }}">
+{% endif %}
 <meta name="author" content="{{ site.author.name }}">
 
 <!-- Enable responsive viewport -->
