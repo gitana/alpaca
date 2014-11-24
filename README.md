@@ -69,7 +69,7 @@ This will do the following for you:
 
 To then build, you can do this:
 
-   npm start
+    npm start
 
 If you want to use Gulp directly, you can alternatively run this:
 
