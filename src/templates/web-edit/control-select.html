@@ -1,0 +1,31 @@
+<script type="text/x-handlebars-template">
+
+    <select id="{{id}}" {{#if options.readonly}}readonly="readonly"{{/if}} {{#if options.multiple}}multiple="multiple"{{/if}} {{#if options.size}}size="{{options.size}}"{{/if}} {{#if name}}name="{{name}}"{{/if}}>
+
+    {{#if options.multiple}}
+
+        {{#if hideNone}}
+        {{else}}
+        <option value="">{{{noneLabel}}}</option>
+        {{/if}}
+
+        {{#each selectOptions}}
+        <option value="{{{value}}}" {{#each ../data}}{{#compare value ../../value}}selected="selected"{{/compare}}{{/each}}>{{text}}</option>
+        {{/each}}
+
+    {{else}}
+
+        {{#if hideNone}}
+        {{else}}
+        <option value="">{{{noneLabel}}}</option>
+        {{/if}}
+
+        {{#each selectOptions}}
+        <option value="{{{value}}}" {{#compare value ../../data}}selected="selected"{{/compare}}>{{text}}</option>
+        {{/each}}
+
+    {{/if}}
+
+    </select>
+
+</script>

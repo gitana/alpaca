@@ -46,7 +46,7 @@
                     }
                 }
             },
-            "view": "VIEW_WEB_EDIT_LIST",
+            "view": "web-edit",
             "postRender": function (renderedField) {
                 expect(11);
                 var inputElem = $('#conditional-1 fieldset');

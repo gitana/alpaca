@@ -53,7 +53,7 @@
                 ok(invalidElem.length, 'Field marked as invalid with value Coffee2.');
                 var messageElem = $('#radio-2 .alpaca-controlfield-message-text');
                 ok(messageElem.length, 'Field invalid message generated.');
-                var subst = Alpaca.substituteTokens(renderedField.view.getMessage("invalidValueOfEnum"), ["Vanilla,Chocolate,Coffee"]);
+                var subst = Alpaca.substituteTokens(renderedField.view.getMessage("invalidValueOfEnum"), ["Vanilla,Chocolate,Coffee"], "");
                 ok(messageElem.text().indexOf(subst) > -1, 'Invalid message text populated correctly.');
                 var rightLabelElem0 = $('#radio-2 .alpaca-controlfield-radio-label:eq(0)');
                 ok(rightLabelElem0.length, 'First option right label generated.');

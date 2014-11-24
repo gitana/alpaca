@@ -1,0 +1,66 @@
+<script type="text/x-handlebars-template">
+
+    <div class="alpaca-wizard">
+
+        <!-- nav bar -->
+        {{#if showSteps}}
+        <div class="alpaca-wizard-nav">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid alpaca-wizard-back">
+                    <ul class="nav navbar-nav">
+                        {{#each steps}}
+                        <li data-alpaca-wizard-step-index="{{@index}}">
+                            <div class="holder">
+                                <div class="title">{{{title}}}</div>
+                                <div class="description">{{{description}}}</div>
+                            </div>
+                            <div class="chevron"></div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        {{/if}}
+
+        <!-- wizard progress bar -->
+        {{#if showProgressBar}}
+        <div class="alpaca-wizard-progress-bar">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        {{#if wizardTitle}}
+            <h3>{{{wizardTitle}}}</h3>
+        {{/if}}
+        {{#if wizardDescription}}
+            <h4>{{{wizardDescription}}}</h4>
+        {{/if}}
+
+        <!-- wizard steps -->
+        <div class="alpaca-wizard-steps">
+
+        </div>
+
+        <!-- wizard buttons -->
+        <div class="alpaca-wizard-buttons">
+
+            <div class="pull-left">
+                <button class="btn btn-default" data-alpaca-wizard-button-key="previous">{{{buttons.previous.title}}}</button>
+            </div>
+
+            <div class="pull-right">
+                <button class="btn btn-default" data-alpaca-wizard-button-key="next">{{{buttons.next.title}}}</button>
+                <button class="btn btn-default" data-alpaca-wizard-button-key="submit">{{{buttons.submit.title}}}</button>
+            </div>
+
+            <div style="clear:both"></div>
+
+        </div>
+
+    </div>
+
+</script>

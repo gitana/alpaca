@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=9">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- jQuery -->
+        <script type="text/javascript" src="/lib/jquery/dist/jquery.min.js"></script>
+
+        <!-- Handlebars -->
+        <script type="text/javascript" src="/lib/handlebars/handlebars.js"></script>
+
+        <!-- jQuery Mobile -->
+        <script type="text/javascript" src="/lib/jquery-mobile-bower/js/jquery.mobile-1.4.2.min.js"></script>
+        <link type="text/css" href="/lib/jquery-mobile-bower/css/jquery.mobile-1.4.2.min.css" rel="stylesheet" />
+
+        <!-- Alpaca -->
+        <script type="text/javascript" src="/lib/alpaca/jquerymobile/alpaca.js"></script>
+        <link type="text/css" href="/lib/alpaca/jquerymobile/alpaca.css" rel="stylesheet" />
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#field1").alpaca({
+                    "dataSource": "./customer-profile-data.json",
+                    "optionsSource": "./customer-profile-options.json",
+                    "schemaSource": "./customer-profile-schema.json",
+                    "view": "jquerymobile-edit"
+                });
+            });
+        </script>
+
+    </head>
+    <body>
+        <div data-role="page" data-theme="a" data-content-theme="a">
+            <div data-role="header" data-position="fixed" data-add-back-btn="true">
+                <h1>Customer Profile</h1>
+            </div>
+            <div data-role="content">
+                <div id="field1"></div>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h4>Copyright &copy; 2013 My Company | All Rights Reserved</h4>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include themes/dbyll/header.html %}
+
+	<body>
+        <nav class="navbar navbar-default visible-xs" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                {% if site.author.github %}
+                <a type="button" class="navbar-toggle nav-link" href="http://github.com/{{ site.author.github }}">
+                    <i class="fa fa-github"></i>
+                </a>
+                {% endif %}
+                {% if site.author.twitter %}
+                <a type="button" class="navbar-toggle nav-link" href="http://twitter.com/{{ site.author.twitter }}">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                {% endif %}
+                {% if site.author.email %}
+                <a type="button" class="navbar-toggle nav-link" href="mailto:{{ site.author.email }}">
+                    <i class="fa fa-envelope"></i>
+                </a>
+                {% endif %}
+                <a class="navbar-brand" href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">
+                    <img src="http://www.gravatar.com/avatar/{{site.author.email_md5}}?s=35" class="img-circle" />
+                    {{ site.title }}
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Home</a></li>
+                    <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
+                    <li><a href="{{ BASE_PATH}}/examples.html">Examples and Demos</a></li>
+                    <li><a href="{{ BASE_PATH}}/documentation.html">Documentation</a></li>
+                    <li><a href="{{ BASE_PATH}}/download.html">Download</a></li>
+                    <li><a href="{{ BASE_PATH}}/contact.html">Contact Us</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+
+        <!-- nav-menu-dropdown -->
+        <!--
+        <div class="btn-group visible-xs" id="nav-menu">
+           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+             <i class="fa fa-bars"></i>
+           </button>
+           <ul class="dropdown-menu" role="menu">
+             <li><a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Home</a></li>
+             <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
+             <li><a href="{{ BASE_PATH}}/examples.html">Examples and Demos</a></li>
+             <li><a href="{{ BASE_PATH}}/documentation.html">Documentation</a></li>
+             <li><a href="{{ BASE_PATH}}/download.html">Download</a></li>
+             <li><a href="{{ BASE_PATH}}/contact.html">Contact Us</a></li>
+             <li class="divider"></li>
+             <li><a href="#">Top of Page</a></li>
+           </ul>
+        </div>
+        -->
+
+        <div class="container-fluid">
+            <!--
+            <div class="row pagetop">
+            </div>
+            -->
+            <div class="row top">
+                <div class="col-md-3 sidebar-holder">
+                    {% include themes/dbyll/sidebar.html %}
+                </div>
+                <div class="col-md-9">
+                    {{ content }}
+                </div>
+            </div>
+            <div class="row">
+                {% include themes/dbyll/footer.html %}
+            </div>
+        </div>
+
+        {% include JB/analytics %}
+        <script type="text/javascript" src="{{ ASSET_PATH }}/js/app.js"></script>
+
+	</body>
+
+</html>
+

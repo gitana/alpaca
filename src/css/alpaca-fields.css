@@ -1,0 +1,149 @@
+/** ************************************** **/
+/** TWITTER TYPEAHEAD                      **/
+/** ************************************** **/
+
+.twitter-typeahead .tt-dropdown-menu
+{
+    background-color: white;
+    border: 1px #ccc solid;
+    padding: 10px;
+    padding-top: 0px;
+    color: #999;
+    width: 100%;
+}
+
+.twitter-typeahead .tt-dropdown-menu P
+{
+    font-size: 1em;
+}
+
+.tt-suggestion.tt-is-under-cursor
+{
+    background-color: #ccc;
+    color: #333;
+}
+
+.tt-dropdown-menu
+{
+    background-color: white;
+    border: 1px solid rgb(204, 204, 204);
+    width: 100%;
+}
+
+
+
+
+/** ************************************** **/
+/** EDITOR FIELD                           **/
+/** ************************************** **/
+
+.alpaca-controlfield-editor
+{
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border: 1px #ccc solid;
+}
+
+.alpaca-controlfield-editor .control-field-editor-el
+{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right:0
+}
+
+
+
+/** ************************************** **/
+/** DATEPICKER (jQueryUI)                  **/
+/** ************************************** **/
+
+#ui-datepicker-div
+{
+    display: none;
+    background-color:white;
+    z-index: 9999999 !important;
+    width: 22em !important;
+}
+
+/* Fix for Chrome issue with Button text */
+.ui-button .ui-button-text {
+    white-space: nowrap;
+}
+
+.ui-datepicker
+{
+    z-index: 100;
+}
+
+
+
+
+
+
+
+
+/** ************************************** **/
+/** FILE UPLOAD (jQueryUI)                 **/
+/** ************************************** **/
+
+.alpaca-fileupload-container
+{
+    border: 1px #ccc solid;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.alpaca-fileupload-container .row
+{
+    margin-bottom: 10px;
+}
+
+.alpaca-fileupload-well
+{
+    /*border: 1px #ccc solid;*/
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 100px;
+}
+
+.alpaca-fileupload-container table
+{
+    border: 1px #ccc solid;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.alpaca-fileupload-well p
+{
+    padding-top: 20px;
+    color: #888;
+}
+
+
+
+
+
+
+
+
+/** ************************************** **/
+/** ACE EDITOR                             **/
+/** ************************************** **/
+
+.ace_editor
+{
+    border: 1px solid rgb(204, 204, 204);
+}
+
+
+
+
+.has-error .multiselect
+{
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}

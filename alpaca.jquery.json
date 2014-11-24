@@ -1,43 +1,43 @@
 {
-    "name": "alpaca",
-    "title": "Alpaca Forms",
-    "description": "Easy Forms Engine for jQuery / Bootstrap.",
-    "keywords": [
-        "form",
-        "forms",
-        "json",
-        "jsonschema",
-        "json-schema",
-        "bootstrap",
-        "jqueryui",
-        "jquery-ui",
-        "jquerymobile",
-        "jquery-mobile",
-        "html5"
-    ],
-    "version": "1.1.3",
-    "author": {
-        "name": "Cloud CMS",
-        "url": "http://www.cloudcms.com"
-    },
-    "maintainers": [
-        {
-            "name": "Michael Uzquiano",
-            "email": "uzi@cloudcms.com",
-            "url": "http://www.cloudcms.com"
-        }
-    ],
-    "licenses": [
-        {
-            "type": "Apache 2.0",
-            "url": "https://github.com/gitana/alpaca/blob/master/license.txt"
-        }
-    ],
-    "bugs": "https://github.com/gitana/alpaca/issues",
-    "homepage": "https://github.com/gitana/alpaca",
-    "docs": "http://www.alpacajs.org",
-    "download": "http://www.alpacajs.org/download.html",
-    "dependencies": {
-        "jquery": ">=1.7"
+  "name": "alpaca",
+  "title": "Alpaca Forms",
+  "description": "JSON Schema Web Forms for jQuery / Bootstrap.",
+  "keywords": [
+    "form",
+    "forms",
+    "json",
+    "jsonschema",
+    "json-schema",
+    "bootstrap",
+    "jqueryui",
+    "jquery-ui",
+    "jquerymobile",
+    "jquery-mobile",
+    "html5"
+  ],
+  "version": "1.5.0",
+  "author": {
+    "name": "Cloud CMS",
+    "url": "http://www.cloudcms.com"
+  },
+  "maintainers": [
+    {
+      "name": "Michael Uzquiano",
+      "email": "uzi@cloudcms.com",
+      "url": "http://www.cloudcms.com"
     }
+  ],
+  "licenses": [
+    {
+      "type": "Apache 2.0",
+      "url": "https://github.com/gitana/alpaca/blob/master/license.txt"
+    }
+  ],
+  "bugs": "https://github.com/gitana/alpaca/issues",
+  "homepage": "https://github.com/gitana/alpaca",
+  "docs": "http://www.alpacajs.org",
+  "download": "http://www.alpacajs.org/download.html",
+  "dependencies": {
+    "jquery": ">=1.7"
+  }
 }

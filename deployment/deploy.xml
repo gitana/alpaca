@@ -1,0 +1,42 @@
+<project name="Alpaca Website Deployer" basedir="." default="publish">
+
+    <property file="custom-deployment.properties"/>
+    <property file="../build/version.properties"/>
+
+    <target name="unpublish">
+        <sshexec host="${scp.cloudcms.host}"
+                 username="${scp.cloudcms.username}"
+                 keyfile="${scp.cloudcms.keyfile}"
+                 trust="true"
+                 command="rm -r ${scp.cloudcms.alpaca.basepath}/${version}/*"
+                 failonerror="false"/>
+    </target>
+
+    <target name="publish" depends="unpublish">
+       <delete file="../build/website.zip" failonerror="false"/>
+	   <zip destfile="../build/website.zip">
+           <zipfileset dir="../build/web"></zipfileset>
+	   </zip>
+       <scp todir="${scp.cloudcms.username}@${scp.cloudcms.host}:${scp.cloudcms.alpaca.basepath}"
+            keyfile="${scp.cloudcms.keyfile}"
+            trust="true"
+            verbose="true"
+            passphrase="${scp.cloudcms.passphrase}"
+            failonerror="true">
+           <fileset dir="../build" includes="website.zip"/>
+       </scp>
+       <sshexec host="${scp.cloudcms.host}"
+                username="${scp.cloudcms.username}"
+                keyfile="${scp.cloudcms.keyfile}"
+                trust="true"
+                command="unzip ${scp.cloudcms.alpaca.basepath}/website.zip -d ${scp.cloudcms.alpaca.basepath}/${version}/"
+                failonerror="false"/>
+       <sshexec host="${scp.cloudcms.host}"
+                username="${scp.cloudcms.username}"
+                keyfile="${scp.cloudcms.keyfile}"
+                trust="true"
+                command="rm ${scp.cloudcms.alpaca.basepath}/website.zip"
+                failonerror="false"/>
+    </target>
+
+</project>

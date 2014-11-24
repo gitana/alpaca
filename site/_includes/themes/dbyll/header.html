@@ -1,0 +1,162 @@
+<! -- header.html -->
+<meta charset="utf-8">
+<title>Alpaca Forms - {{ page.title }}</title>
+{% if page.description %}
+<meta name="description" content="{{ page.description }}">
+{% else %}
+<meta name="description" content="{{ site.meta.description }}">
+{% endif %}
+{% if page.keywords %}
+<meta name="keywords" content="{{ page.keywords }}">
+{% else %}
+<meta name="keywords" content="{{ site.meta.keywords }}">
+{% endif %}
+<meta name="author" content="{{ site.author.name }}">
+
+<!-- Enable responsive viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+ <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- Le styles -->
+<link href="{{ BASE_PATH }}/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="{{ BASE_PATH }}/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="{{ ASSET_PATH }}/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="{{ ASSET_PATH }}/resources/bootstrap.vertical-tabs/bootstrap.vertical-tabs.css" rel="stylesheet">
+<link href="{{ ASSET_PATH }}/resources/syntax/syntax.css" rel="stylesheet">
+<link href="{{ ASSET_PATH }}/css/style.css" rel="stylesheet">
+<link href="{{ BASE_PATH }}/css/custom.css" rel="stylesheet">
+
+<!-- Le fav and touch icons -->
+<!-- Update these with your own images
+<link rel="shortcut icon" href="images/favicon.ico">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+-->
+
+<!-- atom & rss feed -->
+<link href="{{ BASE_PATH }}{{ site.JB.atom_path }}" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+<link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+<!-- Google Maps -->
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+<!-- jQuery -->
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap -->
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Handlebars -->
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/handlebars/handlebars.min.js"></script>
+
+<!-- Alpaca -->
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/alpaca/bootstrap/alpaca.js"></script>
+<link type="text/css" href="{{ BASE_PATH }}/lib/alpaca/bootstrap/alpaca.css" rel="stylesheet"/>
+
+<!-- jQuery UI Support -->
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/jquery-ui/jquery-ui.js"></script>
+<link type="text/css" href="{{ BASE_PATH }}/lib/jquery-ui/themes/cupertino/jquery-ui.min.css" rel="stylesheet"/>
+
+<!-- Required for jQuery UI DateTimePicker control -->
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js"></script>
+<link type="text/css" href="{{ BASE_PATH }}/lib/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css" rel="stylesheet"/>
+
+<!-- Required for Bootstrap-DateTimePicker -->
+<!--
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/moment/moment.min.js"></script>
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<link type="text/css" href="{{ BASE_PATH }}/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+-->
+
+<!-- Required for Text Field masking -->
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/jquery-maskedinput/dist/jquery.maskedinput.min.js"></script>
+
+<!-- Required for the Editor field (sample code viewing) -->
+<script src="{{ BASE_PATH }}/lib/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Beautify (used by EditorField) -->
+<script src="{{ BASE_PATH }}/lib/js-beautify/js/lib/beautify.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ BASE_PATH }}/lib/js-beautify/js/lib/beautify-css.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ BASE_PATH }}/lib/js-beautify/js/lib/beautify-html.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- typeahead.js -->
+<script src="{{ BASE_PATH }}/lib/typeahead.js/dist/bloodhound.min.js" type="text/javascript"></script>
+<script src="{{ BASE_PATH }}/lib/typeahead.js/dist/typeahead.bundle.min.js" type="text/javascript"></script>
+
+<!-- datatables (for TableField) -->
+<script src="{{ BASE_PATH }}/lib/datatables/media/js/jquery.dataTables.js" type="text/javascript"></script>
+<link type="text/css" href="{{ BASE_PATH }}/lib/datatables/media/css/jquery.dataTables.css" rel="stylesheet"/>
+<script src="{{ BASE_PATH }}/lib/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.js" type="text/javascript"></script>
+<link type="text/css" href="{{ BASE_PATH }}/lib/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet"/>
+
+<!-- ckeditor (for the ckeditor field) -->
+<script src="{{ BASE_PATH }}/lib/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="{{ BASE_PATH }}/lib/ckeditor/adapters/jquery.js" type="text/javascript"></script>
+
+<!-- fileupload control (for UploadField) -->
+<link rel="stylesheet" type="text/css" href="{{ BASE_PATH }}/lib/jquery-file-upload/css/jquery.fileupload.css"/>
+<link rel="stylesheet" type="text/css" href="{{ BASE_PATH }}/lib/jquery-file-upload/css/jquery.fileupload-ui.css"/>
+<script src="{{ BASE_PATH }}/lib/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="{{ BASE_PATH }}/lib/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+<script src="{{ BASE_PATH }}/lib/jquery-file-upload/js/jquery.fileupload.js"></script>
+<script src="{{ BASE_PATH }}/lib/jquery-file-upload/js/jquery.fileupload-process.js"></script>
+<script src="{{ BASE_PATH }}/lib/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
+
+<!-- handsontable (for GridField) -->
+<script src="{{ BASE_PATH }}/lib/handsontable/dist/jquery.handsontable.full.js"></script>
+<link rel="stylesheet" media="screen" href="{{ BASE_PATH }}/lib/handsontable/dist/jquery.handsontable.full.css"/>
+
+<!-- moment for date and datetime controls -->
+<script src="{{ BASE_PATH }}/lib/moment/min/moment-with-locales.min.js"></script>
+<!-- bootstrap datetimepicker for date and datetime controls -->
+<script src="{{ BASE_PATH }}/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" media="screen" href="{{ BASE_PATH }}/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"/>
+
+<!-- bootstrap-timepicker for time field -->
+<script src="{{ BASE_PATH }}/lib/bootstrap-3-timepicker/js/bootstrap-timepicker.js"></script>
+<link rel="stylesheet" media="screen" href="{{ BASE_PATH }}/lib/bootstrap-3-timepicker/css/bootstrap-timepicker.css"/>
+
+<!-- bootstrap-multiselect for time field -->
+<script src="{{ BASE_PATH }}/lib/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" media="screen" href="{{ BASE_PATH }}/lib/bootstrap-multiselect/css/bootstrap-multiselect.css"/>
+
+<!-- jQuery Price Format for currency field -->
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/Jquery-Price-Format/jquery.price_format.min.js"></script>
+
+<!-- START - Google Analytics -->
+<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-35134350-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<!-- END - Google Analytics -->
+
+<!-- pretty print -->
+<script type="text/javascript" src="{{ BASE_PATH }}/lib/google-code-prettify/src/prettify.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ BASE_PATH }}/lib/google-code-prettify/src/prettify.css"/>
+
+<!-- custom js -->
+<script src="{{ BASE_PATH }}/js/global.js"></script>
+
+<!--[if lt IE 9]>
+  <script src="/lib/respond/dest/respond.min.js"></script>
+<![endif]-->
+
+
+<script>
+    Alpaca.defaultFocus = false;
+</script>
+
+<! -- header.html end -->

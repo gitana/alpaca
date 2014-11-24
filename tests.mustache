@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+    <title>Test'em</title>
+
+    <script>
+        // polyfill for ie8
+        if (!Array.prototype.indexOf) {
+            Array.prototype.indexOf = function(obj, start) {
+                 for (var i = (start || 0), j = this.length; i < j; i++) {
+                     if (this[i] === obj) { return i; }
+                 }
+                 return -1;
+            };
+        }
+    </script>
+
+    <script src="/testem/qunit.js"></script>
+    <script src="/testem.js"></script>
+
+    {{#serve_files}}
+        <script src="{{src}}"></script>
+    {{/serve_files}}
+
+    <link rel="stylesheet" href="/testem/qunit.css"/>
+</head>
+<body>
+    <h1 id="qunit-header">Tests</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <div id="qunit-fixture"></div>
+</body>
+</html>

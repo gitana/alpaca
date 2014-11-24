@@ -1,0 +1,19 @@
+<script type="text/x-handlebars-template">
+
+    <fieldset data-role="collapsible" id="{{id}}" data-collapsed="{{#if options.collapsed}}true{{else}}false{{/if}}">
+
+        {{#if options.label}}
+        <legend for="{{id}}" class="{{#if options.labelClass}}{{options.labelClass}}{{/if}}">{{{options.label}}}</legend>
+        {{/if}}
+
+        {{#if options.helper}}
+        <h3 class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">{{{options.helper}}}</h3>
+        {{/if}}
+
+        <div data-role="controlgroup" class="alpaca-fieldset-items-container">
+
+        </div>
+
+    </fieldset>
+
+</script>

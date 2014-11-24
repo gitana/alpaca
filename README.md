@@ -1,130 +1,137 @@
-# Alpaca - Easy Forms for jQuery #
+# Alpaca - Easy Forms for jQuery and Bootstrap
 
-Alpaca is the Easy Forms Engine for jQuery and Twitter Bootstrap.
+Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices. It runs simply as HTML5 or more elaborately using Bootstrap, jQuery Mobile or jQuery UI. Alpaca uses Handlebars to process JSON schema and provide developers with an extensible framework for implementing controls, wizards, layouts, I18N support and an custom data persistence.
 
-It is built around JSON schema to keep things simple. Using Alpaca, you can express your forms object model, types, properties and validation logic. Forms rendered with Alpaca provide intuitive interfaces for your users while giving your business an assurance of data compliance.
+The goal of Alpaca is to provide the open source community with a fantastic forms engine that rivals or beats what most
+proprietary vendors offer.  Using Alpaca, you can host really nice forms for your back end services, whether they
+are proprietary, enterprise or SaaS offerings.
 
-Alpaca comes pre-configured to work nicely with the following web frameworks:
+The philosophy behind Alpaca is that you should design your forms once and have them work on lots of different devices
+and UI engines without having to do the same work twice.
 
-- jQuery
-- Twitter Bootstrap
-- jQuery UI
-- jQuery Mobile
-- Barebones (empty CSS)
-
-The Alpaca library is pre-packaged with controls, wizards, layouts, I18N support and pluggable template engines. We ship with support for jQuery Tmpl, EJS and Handlebars. Documentation and API information is provided so that you can extend Alpaca as you see fit.
-
-The philosophy behind Alpaca is that you should design your forms once and have them work on lots of different devices and UI engines without recoding. Here is a sample registration form written once and rendered using four different approaches:
+Here is a sample registration form written once and rendered using four different approaches:
 
 - [Twitter Bootstrap](http://www.alpacajs.org/demos/bootstrap/registration)
 - [jQuery Mobile](http://www.alpacajs.org/demos/jquerymobile/registration)
 - [jQuery UI](http://www.alpacajs.org/demos/browser/registration)
 - [With AMD and RequireJS](http://www.alpacajs.org/demos/amd/registration)
 
-Alpaca is an community-led open-source project licensed under Apache 2.0.
+Alpaca is an open-source project licensed under Apache 2.0.  It is actively developed and maintained by
+<a href="https://www.cloudcms.com">Cloud CMS</a>.
+<a href="https://www.alpacajs.org/contact.html">Enterprise support is available</a> for your live deployments.
 
 ## Project Home Page
 
-For information about the Alpaca Project, visit its home page at http://www.alpacajs.org.
-
-We've collected videos, tutorials, API documentation and much more to help you get started.
+For information, demos and documentation regarding Alpaca, please visit the
+<a href="http://www.alpacajs.org">the Alpaca Forms home page</a>.
 
 ## Compatibility
 
-Alpaca is compatible with jQuery 1.8.x and jQuery 1.9.x.
+Alpaca is compatible with jQuery 1.9.1 and up.
 
-## Discussion Board
+## Issues and Discussions
 
 If you have a question about Alpaca, please visit the [Alpaca Forums](http://www.cloudcms.org/forums/categories/alpaca).
-
 This is a place where we encourage the community and developer community to get together to support one another in their Alpaca-related
 projects.
 
-## Contributions
+If you find an issue with Alpaca, please <a href="https://github.com/gitana/alpaca/issues">add a new issue ticket</a>.
 
-In the spirit of open source software development, Alpaca always encourages community code contributions.
+## How to Build Alpaca
 
-## Building Alpaca
+The first thing you should do is grab the source.  We won't cover how to do that here but instead we recommend that
+you learn about Git and GitHub.  You can pull the source down to your local machine to build things locally.
 
-In order to build Alpaca, you need to have [Apache Ant](http://ant.apache.org/) installed on your machine.  Ant executes a build script
-(`build.xml`) to assemble the Alpaca build products.
+The command line for doing this is basically:
 
-First, clone a copy of the Alpaca git repo by running:
+    git clone https://github.com/gitana/alpaca.git
 
-```
-git clone git://github.com/gitana/alpaca.git
-```
+### Prerequisites
 
-Make sure you have Apache Ant installed by testing:
+To build Alpaca, you will need to have Node.js, Gulp and Bower installed.  If you're new to Node.js or Gulp, you could
+check out this writeup - http://travismaynard.com/writing/getting-started-with-gulp.
 
-```
-ant -version
-```
+Once you have Node.js installed, you essentially need to do this:
 
-You can then build Alpaca by running:
+    npm install gulp -g
+    npm install bower -g
 
-```
-ant clean package
-```
+### Building Alpaca
 
-The built version of Alpaca will be put in the `build/package` subdirectory.  This directory contains the Alpaca web site
-(the same site that is deployed to [http://www.alpacajs.org](http://www.alpacajs.org)) along with all of the build
-products.  These build products include:
+Building Alpaca is pretty easy.  Just run:
 
-### Alpaca JavaScript and CSS
+    npm install
 
-The assets you need to reference for the built version of Alpaca are these:
+This will do the following for you:
 
- * /js/alpaca.js
- * /css
+- pull down all of the Node module dependencies
+- run Bower to pull down client-side (browser) dependencies
 
-The `alpaca.js` file contains all of the basic and advanced fields.  If you only want the basic fields, you can reference the
-`alpaca-core.js` file instead.
+To then build, you can do this:
 
-### Alpaca ZIP distributions
+   npm start
 
-The build also produces two ZIP files which contain all of the assets.
+If you want to use Gulp directly, you can alternatively run this:
 
- * /downloads/alpaca.zip
- * /downloads/alpaca-basic.zip (just the basic fields)
+    gulp clean default
 
-### Alpaca Components
+Either ```npm start``` or ```gulp clean default``` will build everything.
+The build distribution assets will be in ```build/alpaca```.
 
-If you're using AMD to include Alpaca, the AMD files are located in:
+### Building the Web Site and Running a local Web Server
 
- * /components/alpaca (all fields)
- * /components/alpaca-core (just the basic fields)
- * /components/alpaca-extra (just the advanced fields)
+Alpaca includes a web site along with documentation, samples and much more.
+To build the web site, you will first need to install Jekyll (not covered here).
+
+Simply do this:
+
+    gulp site
+
+And you can run a local web server like this:
+
+    gulp server
+
+
+### Alpaca Distributions
+
+The build produces four sets of assets and they are placed in:
+
+- ```build/alpaca/web``` (for basic web forms and layout)
+- ```build/alpaca/bootstrap``` (for bootstrap enabled forms and layout)
+- ```build/alpaca/jqueryui``` (for jQuery UI enabled forms and layout)
+- ```build/alpaca/jquerymobile``` (for jQuery Mobile enabled forms and layout)
+
+Each directory contains a JS file and a CSS file for its respective build.
+
+Each JS file is UMD ready and will work within both an AMD and CommonJS container.
+
+### Troubleshooting
+
+If you run into any Bower related issues during the build, you might want to clear out your Bower cache using this
+command:
+
+    bower cache clean
+
+And then try again.
+
+### Manual build commands
+
+While ```npm install``` will pretty much do everything for you, there are also some manual commands you can run if you
+need to perform individual steps:
+
+- To install Bower assets, do ```bower install```
+- To clear Bower cache, do ```bower cache clean```
+- To run the Gulp build, do ```gulp```
+- To build the Alpaca web site, do ```gulp default server```
+- To run a local Alpaca web server, ```gulp default server```
 
 ## Running the Unit Tests
 
-The unit tests are written using QUnit and are located in the `build/package/tests` directory.
-You will need to run them using your web browser but in order to do that, you first need to mount
-the `build/package` directory into your web server.  The Ant script provides a helper target to
-let you do this.
+TODO
 
-First, create a file called `custom-local.properties` in the root of your Alpaca project.  In it, define a single
-property that points to the destination where you would like your Alpaca build directory to be copied.  This should be
-a virtual directory under your web server.
+## CDN
 
-Here is an example:
-
-```
-local.docroot.basepath=/var/www
-```
-
-Then, run the following:
-
-```
-ant full
-```
-
-This will build Alpaca and copy the resulting assets to `/var/www/alpaca`.  If you've set up `/var/www` as the docroot
-for your web server, you can run the QUnit tests by opening a web browser and pointing to:
-
-```
-http://localhost/alpaca/tests/index.html
-```
+All of the Alpaca distribution assets are available via CDN at http://cdn.alpacajs.org.
 
 ## Connecting to Cloud CMS
 
@@ -141,7 +148,7 @@ the [Alpaca Discussion Forums](http://www.cloudcms.org/forums/categories/alpaca)
 
 + [@cloudcms](http://github.com/cloudcms)
 + [@uzquiano](http://github.com/uzquiano)
-+ [@yaworsw](http://www.github.com/yaworsw)
++ [@yaworsw](http://github.com/yaworsw)
 + [@drq](http://github.com/drq)
 
 

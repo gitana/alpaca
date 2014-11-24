@@ -1,0 +1,20 @@
+<script type="text/x-handlebars-template">
+
+    <div>
+
+        {{#if options.label}}
+        <legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-container-label">{{{options.label}}}</legend>
+        {{/if}}
+
+        {{#if options.helper}}
+        <p class="alpaca-helper {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+            <i class="alpaca-icon-helper"></i>
+            {{{options.helper}}}
+        </p>
+        {{/if}}
+
+        {{#container}}{{/container}}
+
+    </div>
+
+</script>

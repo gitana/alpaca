@@ -1,0 +1,52 @@
+<%
+var stdDeps = ['require', 'exports', 'module'];
+var amdDeps = _.pluck(deps, 'amdName');
+var globalDeps = _.map(deps, function(dep) { return 'root["' + dep.globalName + '"]' });
+var cjsDeps = deps ? _.map(deps, function(dep) { return "require('" + dep.cjsName + "')" }) : stdDeps;
+var depNames = deps ? _.pluck(deps, 'paramName') : stdDeps;
+%>
+(function(root, factory)
+{
+    var umdEnabled = true;
+    if (root && typeof(root.umd) != "undefined") {
+        umdEnabled = root.umd;
+    }
+
+    if (umdEnabled && typeof exports === 'object')
+    {
+        // common js
+        module.exports = factory(<%= cjsDeps.join(', ') %>);
+    }
+    else if (umdEnabled && typeof define === 'function' && define.amd)
+    {
+        // amd
+        define("alpaca", <%= deps ? JSON.stringify(amdDeps) + ', ' : '' %>factory);
+    }
+    else
+    {
+        // global
+        root["<%= namespace %>"] = factory(<%= globalDeps.join(', ') %>);
+    }
+
+}(this, function (<%= depNames.join(', ') %>) {
+
+    //jQuery = $;
+
+    <% if (exports) { %>
+        <%= contents %>
+        <% if (typeof defaultView != 'undefined') { %>
+            <%= exports %>.defaultView = '<%= defaultView %>';
+        <% } %>
+        return <%= exports %>;
+
+    <% } else { %>
+        var exports = (function() {
+            <%= contents %>
+        })();
+        <% if (typeof defaultView != 'undefined') { %>
+            exports.defaultView = '<%= defaultView %>';
+        <% } %>
+        return exports;
+    <% } %>
+
+}));

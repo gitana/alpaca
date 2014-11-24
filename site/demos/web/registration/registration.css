@@ -1,0 +1,10 @@
+body
+{
+    font-size: 16px;
+}
+
+#form label
+{
+    width: 200px;
+    display: inline-block;
+}

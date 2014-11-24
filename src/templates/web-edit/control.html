@@ -1,0 +1,20 @@
+<script type="text/x-handlebars-template">
+
+    <div>
+
+        {{#if options.label}}
+        <label class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-control-label" for="{{id}}">{{{options.label}}}</label>
+        {{/if}}
+
+        {{#control}}{{/control}}
+
+        {{#if options.helper}}
+        <p class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+            <i class="info-sign"></i>
+            {{{options.helper}}}
+        </p>
+        {{/if}}
+
+    </div>
+
+</script>

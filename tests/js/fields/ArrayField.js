@@ -1,80 +1,103 @@
 (function($) {
 
-    module("fields: array");
+    module("fields: array", {
+        "setup": function() {
+            $("#qunit-fixture").append('<div id="array-fixture"></div>');
+
+            $.fn.getArrayBar = function() {
+                var $this = $(this[0]);
+                var id    = $this.attr('id');
+                return $('[data-alpaca-field-id="' + id + '"] > .alpaca-array-actionbar');
+            };
+        },
+        "teardown": function() {
+            $("#address-fixture").remove();
+
+            delete $.fn.getArrayBar;
+        }
+    });
+
 
     // Test case 1 : Array field with only array data input.
     test("Array field with only array data input", function() {
         stop();
-        $("#array-1").alpaca({
-            "data": ["test1", "test2", "test3"],
+        var el   = $('#array-fixture');
+        var data = ["foo", "bar", "baz"];
+        el.alpaca({
+            "data": data,
             "postRender": function (renderedField) {
-                expect(20);
-                var inputElem0 = $('#array-1 input:text:eq(0)');
-                ok(inputElem0.length, 'First text input field generated.');
-                equal(inputElem0.val(), 'test1', 'First input field value populated correctly.');
-                var inputElem1 = $('#array-1 input:text:eq(1)');
-                ok(inputElem1.length, 'Second text input field generated.');
-                equal(inputElem1.val(), 'test2', 'Second input field value populated correctly.');
-                var inputElem2 = $('#array-1 input:text:eq(2)');
-                ok(inputElem2.length, 'Third text input field generated.');
-                equal(inputElem2.val(), 'test3', 'Third input field value populated correctly.');
-                // test array item toolbar
-                inputElem0.hover(function() {
-                    var id = inputElem0.attr('id');
-                    var itemArrayBar = $("#array-1 #" + id + "-item-container > .alpaca-fieldset-array-item-toolbar");
-                    ok(itemArrayBar.length, 'First item toolbar generated.');
-                    var buttons = $('button', itemArrayBar);
-                    equal(buttons.length, 4, 'Four buttons generated.');
-                    // simulate add
-                    var addButton = $('button.alpaca-fieldset-array-item-toolbar-add', itemArrayBar);
-                    ok(addButton.length, 'Add button generated.');
-                    addButton.click(function() {
-                        var newInputElem = $('#array-1 input:text:eq(1)');
-                        ok(newInputElem.length, 'New text input field generated.');
-                        //equal(newInputElem.val(), 'test1', 'New input field value populated correctly.');
-                        // new elements populate with empty value
-                        equal(newInputElem.val(), '', 'New input field value populated correctly.');
-                        // simulate remove
-                        var newId = newInputElem.attr('id');
-                        var newItemArrayBar = $("#array-1 #" + newId + "-item-container > .alpaca-fieldset-array-item-toolbar");
-                        var removeButton = $('button.alpaca-fieldset-array-item-toolbar-remove', newItemArrayBar);
-                        ok(removeButton.length, 'Remove button generated.');
-                        removeButton.click(function() {
-                            var inputElems = $('#array-1 input:text');
-                            equal(inputElems.length, 3, 'Item removed successfully.');
-                            // simulate up
-                            var upButton = $('button.alpaca-fieldset-array-item-toolbar-up', itemArrayBar);
-                            ok(upButton.length, 'Up button generated.');
-                            upButton.click(function() {
-                                var newInputElem0 = $('#array-1 input:text:eq(0)');
-                                equal(newInputElem0.val(), 'test3', 'New first input field value populated correctly.');
-                                var newInputElem2 = $('#array-1 input:text:eq(2)');
-                                equal(newInputElem2.val(), 'test1', 'New last input field value populated correctly.');
-                                // simulate down
-                                itemArrayBar = $("#array-1 #" + id + "-item-container > .alpaca-fieldset-array-item-toolbar");
-                                var downButton = $('button.alpaca-fieldset-array-item-toolbar-down', itemArrayBar);
-                                ok(downButton.length, 'Down button generated.');
-                                downButton.click(function() {
-                                    var newInputElem00 = $('#array-1 input:text:eq(0)');
-                                    equal(newInputElem00.val(), 'test1', 'New first input field value populated correctly.');
-                                    var newInputElem22 = $('#array-1 input:text:eq(2)');
-                                    equal(newInputElem22.val(), 'test3', 'New last input field value populated correctly.');
-                                });
-                                downButton.click();
-                            });
-                            upButton.click();
-                        });
-                        removeButton.click();
-                    });
-                    addButton.click();
-                }, function() {
-                    var id = inputElem0.attr('id');
-                    var itemArrayBar = $("#array-1 #" + id + "-item-container > .alpaca-fieldset-array-item-toolbar");
-                    ok(itemArrayBar.length, 'First item toolbar generated.');
-                    inputElem0.mouseenter();
+                expect(17);
+
+                var inputFields = el.find('input');
+                equal(inputFields.length, 3, 'Input fields generated correctly.');
+
+                $.each(inputFields, function(i, v) {
+                    equal($(v).val(), data[i], i + 'th field populated correctly.');
                 });
-                inputElem0.mouseleave();
-                start();
+
+                // test array item toolbar
+                var firstField = $(inputFields[0]);
+                $(firstField).hover(function() {
+                    var $this  = $(this);
+                    var bar    = $this.getArrayBar();
+                    ok(bar.length, 'First item toolbar generated.');
+
+                    var btns   = bar.find('button');
+                    equal(btns.length, 4, 'Four buttons generated.');
+
+                    // simulate add
+                    var addBtn = btns.filter('[data-alpaca-array-actionbar-action="add"]');
+                    ok(addBtn.length, 'Add button generated.');
+                    addBtn.click(function() {
+                        var newInputFields = el.find('input');
+                        equal(newInputFields.length, data.length + 1, 'New input field generated.');
+
+                        var newField = $(newInputFields.filter(function(i) {
+                            return inputFields.filter('#' + $(this).attr('id')).length == 0;
+                        })[0]);
+                        equal(newField.val(), '', 'New input field populated correctly.');
+
+                        // simulate remove
+                        var removeBtn = $(el.find('[data-alpaca-array-actionbar-action="remove"]')[1]);
+                        ok(removeBtn.length, 'Remove button generated.');
+                        removeBtn.click(function() {
+                            equal(el.find('input').length, data.length, 'New input removed correctly.');
+
+                            // simulate up
+                            var upBtn = $(el.find('[data-alpaca-array-actionbar-action="up"]').last());
+                            ok(upBtn.length, 'Up button generated.');
+                            upBtn.click(function() {
+                                var first = el.find('input:text:eq(0)');
+                                var last  = el.find('input:text:eq(2)');
+
+                                equal(first.val(), data[0], 'First field value properly unchanged.');
+                                equal(last.val(), data[data.length - 2], 'Last field value properly changed.');
+
+                                // simulate down
+                                var downBtn = $(el.find('[data-alpaca-array-actionbar-action="down"]')[0]);
+                                ok(downBtn.length, 'Down button generated.');
+                                downBtn.click(function() {
+                                    var first = el.find('input:text:eq(0)');
+                                    var last  = el.find('input:text:eq(2)');
+
+                                    equal(first.val(), data[data.length - 1], 'First field value properly changed.');
+                                    equal(last.val(), data[data.length - 2], 'Last field value properly changed.');
+
+                                    start();
+                                });
+                                downBtn.click();
+                            });
+                            upBtn.click();
+                        });
+                        removeBtn.click();
+                    });
+                    addBtn.click();
+
+                }, function() {
+                    firstField.mouseenter();
+                });
+
+                firstField.mouseleave();
             }
         });
     });
@@ -82,7 +105,8 @@
     // Test case 2 : Array field with options and schema.
     test("Array field with options and schema", function() {
         stop();
-        $("#array-2").alpaca({
+        var el = $('#array-fixture');
+        el.alpaca({
             "data": ["M"],
             "options": {
                 "label": "Ice Cream",
@@ -103,26 +127,29 @@
             },
             "postRender": function (renderedField) {
                 expect(22);
-                var inputElem0 = $('#array-2 input:text:eq(0)');
+                var inputElem0 = el.find('input:text:eq(0)');
                 ok(inputElem0.length, 'First text input field generated.');
                 equal(inputElem0.val(), 'M', 'First input field value populated correctly.');
+
                 var id = inputElem0.attr('id');
-                var arrayHelperItem = $('#array-2 .alpaca-fieldset-helper');
+                var arrayHelperItem = el.find('.alpaca-helper');
                 ok(arrayHelperItem.length, 'Array helper generated.');
-                equal(arrayHelperItem.text(), 'Favorite Ice Cream', 'Array helper text populated correctly.');
-                var item0LabelElem = $('#array-2 #' + id + '-item-container > .alpaca-controlfield-label > div');
+                equal(arrayHelperItem.text().replace(/^\s+|\s+$/g, ''), 'Favorite Ice Cream', 'Array helper text populated correctly.');
+
+                var item0LabelElem = el.find('label');
                 ok(item0LabelElem.length, 'Item label generated.');
                 equal(item0LabelElem.text(), 'Favorite 1', 'Item label text populated correctly.');
-                var inputElem0LabelElem = $('#array-2 #' + id + '-controlfield-label > div');
+
+                var inputElem0LabelElem = el.find('#' + id + '-controlfield-label > div');
                 ok(inputElem0LabelElem.length, 'Array item label generated.');
                 equal(inputElem0LabelElem.text(), 'Ice Cream', 'Array item label text populated correctly.');
-                var inputElem0MessageElem = $('#array-2 #' + id + '-field-message-0 > .alpaca-controlfield-message-text');
+                var inputElem0MessageElem = el.find('#' + id + '-field-message-0 > .alpaca-controlfield-message-text');
                 ok(inputElem0MessageElem.length, 'Array item invalid message generated.');
                 equal(inputElem0MessageElem.text(), Alpaca.substituteTokens(renderedField.view.getMessage("stringTooShort"), [3]), 'Array item invalid text populated correctly.');
-                var arrayElem = $('#array-2 fieldset.alpaca-field-invalid');
+                var arrayElem = el.find('fieldset.alpaca-field-invalid');
                 ok(arrayElem.length, 'Array marked as invalid.');
                 var arrayId = arrayElem.attr('alpaca-field-id');
-                var arrayMessageElem = $('#array-2 #' + arrayId + '-field-message-0 > .alpaca-controlfield-message-text');
+                var arrayMessageElem = el.find('#' + arrayId + '-field-message-0 > .alpaca-controlfield-message-text');
                 ok(arrayMessageElem.length, 'Array invalid message generated.');
                 equal(arrayMessageElem.text(), Alpaca.substituteTokens(renderedField.view.getMessage("notEnoughItems"), [2]), 'Array invalid text populated correctly.');
 
@@ -139,12 +166,12 @@
                     var addButton = $('button.alpaca-fieldset-array-item-toolbar-add', itemArrayBar);
                     ok(addButton.length, 'Add button generated.');
                     addButton.click(function() {
-                        var newInputElem = $('#array-2 input:text:eq(1)');
+                        var newInputElem = el.find('input:text:eq(1)');
                         ok(newInputElem.length, 'New text input field generated.');
                         //equal(newInputElem.val(), 'M', 'New input field value populated correctly.');
                         // new elements populate with empty value
                         equal(newInputElem.val(), '', 'New input field value populated correctly.');
-                        var arrayMessageElem = $('#array-2 #' + arrayId + '-field-message-0');
+                        var arrayMessageElem = el.find('#' + arrayId + '-field-message-0');
                         ok(arrayMessageElem.length == 0, 'Array invalid message removed.');
                         itemArrayBar = $("#array-2 #" + id + "-item-container > .alpaca-fieldset-array-item-toolbar");
                         addButton = $('button.alpaca-fieldset-array-item-toolbar-add', itemArrayBar);
