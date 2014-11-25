@@ -1,0 +1,28 @@
+{
+	"tags"      : {
+		"allowUnknownTags" : true
+	},
+	"plugins"   : ["plugins/markdown"],
+
+	"templates" : {
+		"cleverLinks"           : false,
+		"monospaceLinks"        : false,
+		"dateFormat"            : "ddd MMM Do YYYY",
+		"outputSourceFiles"     : true,
+		"outputSourcePath"      : true,
+		"systemName"            : "Alpaca Forms",
+		"footer"                : "",
+		"copyright"             : "Copyright © 2014 Gitana Software, Inc.",
+		"navType"               : "vertical",
+		"theme"                 : "cerulean",
+		"linenums"              : true,
+		"collapseSymbols"       : false,
+		"inverseNav"            : false,
+		"highlightTutorialCode" : true,
+		"protocol": "fred://"
+	},
+	"markdown"  : {
+		"parser"   : "gfm",
+		"hardwrap" : true
+	}
+}

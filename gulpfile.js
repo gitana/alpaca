@@ -202,7 +202,7 @@ var paths = {
 };
 
 gulp.task("clean", function() {
-    return gulp.src("build", {read: false})
+    return gulp.src(["build", "dist"], {read: false})
         .pipe(clean());
 });
 
@@ -627,6 +627,10 @@ gulp.task("web", function(cb) {
     );
 });
 
+gulp.task("dist", function() {
+    return gulp.src("build/alpaca/**/*")
+        .pipe(gulp.dest("dist/alpaca"));
+});
 
 
 gulp.task("bump", function(){

@@ -156,7 +156,7 @@
      * @param {Boolean} codeValue whether to hand back US holding codes (instead of names)
      * @param {Boolean} capitalize whether to capitalize the values handed back
      *
-     * @type {Object} an object containing "keys" and "values", both of which are arrays.
+     * @returns {Object} an object containing "keys" and "values", both of which are arrays.
      */
     Alpaca.retrieveUSHoldings = (function()
     {

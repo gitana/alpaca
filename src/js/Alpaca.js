@@ -667,7 +667,6 @@
         },
 
         /**
-         * @private
          * Static counter for generating a unique ID.
          */
         uniqueIdCounter: 0,
@@ -763,8 +762,6 @@
         },
 
         /**
-         * @private
-         *
          * Alpaca Views.
          */
         views: {},
@@ -1124,7 +1121,6 @@
         },
 
         /**
-         * @private
          * Helper function to provide YAHOO later like capabilities.
          */
         later: function(when, o, fn, data, periodic) {
@@ -1468,8 +1464,6 @@
         },
 
         /**
-         * @private
-         *
          * Initial function for setting up field instance and executing callbacks if needed.
          *
          * @param {Object} el Container element.
@@ -1755,8 +1749,6 @@
         },
 
         /**
-         * @private
-         *
          * Internal method for constructing a field instance.
          *
          * @param {Object} el The dom element to act as the container of the constructed field.
