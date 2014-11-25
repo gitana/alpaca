@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-invalidate-cloudfront');
 
     // register one or more task lists (you should ALWAYS have a "default" task list)
-    grunt.registerTask('publish_cdn', ['aws_s3:clean', 'aws_s3:publish', 'invalidate_cloudfront:production']);
+    grunt.registerTask('publish', ['aws_s3:clean', 'aws_s3:publish', 'invalidate_cloudfront:production']);
 
     var pkg = grunt.file.readJSON('package.json');
     var awsConfig = grunt.file.readJSON("../settings/__aws.json");

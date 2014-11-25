@@ -3,8 +3,6 @@
 *.iws
 .idea/
 build/
-custom-deployment.properties
-custom-version.properties
 
 /node_modules
 /lib
@@ -13,8 +11,6 @@ custom-version.properties
 
 /site/_site
 /site/lib
-custom-local.properties
-
-./_s3.json
 
 notes.md
+dist/

@@ -43,7 +43,7 @@ git commit -m "alpaca release build $VERSION"
 #
 
 # publish alpaca to CDN
-grunt publish_dist
+#grunt publish
 
 
 
@@ -52,12 +52,16 @@ grunt publish_dist
 #
 
 rm build/$ZIP
-cd build/site
+cd build/web
 zip -r ../$ZIP *
 cd ../..
 scp -i ~/keys/gitana.pem -r build/$ZIP ec2-user@alpacajs.org:/web/code/alpaca
-ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org 'cd /web/code/alpaca; rm /web/code/alpaca/$VERSION; unzip /web/code/alpaca/$ZIP -d /web/code/alpaca/$VERSION'
-ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org 'cd /web/code/alpaca; rm -r /web/code/alpaca/latest; unzip /web/code/alpaca/$ZIP -d /web/code/alpaca/latest'
+CMD1="cd /web/code/alpaca; rm /web/code/alpaca/$VERSION; unzip -o /web/code/alpaca/$ZIP -d /web/code/alpaca/$VERSION"
+echo $CMD1
+ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org $CMD1
+CMD2="cd /web/code/alpaca; rm -r /web/code/alpaca/latest; unzip -o /web/code/alpaca/$ZIP -d /web/code/alpaca/latest"
+echo $CMD2
+ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org $CMD2
 
 
 
