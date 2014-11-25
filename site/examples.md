@@ -3,6 +3,8 @@ layout: page
 title: Examples
 header: Examples
 group: navigation
+sitemap:
+  priority: 1.0
 ---
 {% include JB/setup %}
 

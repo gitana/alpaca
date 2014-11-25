@@ -2,6 +2,8 @@
 layout: page
 title: Getting Started with Alpaca
 #tagline: Easy Forms for jQuery
+sitemap:
+  priority: 1.0
 ---
 {% include JB/setup %}
 

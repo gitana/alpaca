@@ -3,6 +3,8 @@ layout: page
 title: Alpaca Forms in the Cloud
 header: Alpaca Forms in the Cloud
 group: navigation
+sitemap:
+  priority: 1.0
 ---
 {% include JB/setup %}
 
