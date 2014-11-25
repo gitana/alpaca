@@ -471,9 +471,18 @@ gulp.task("build-styles", function(cb) {
 gulp.task("build-site", function(cb)
 {
     console.log("build-site start");
-    exec("jekyll build -s ./site -d ./build/site --trace", function(err, stdout, stderr) {
+
+    // write temp file
+    fs.writeFileSync("./_custom_config.yml", "alpaca_version: " + pkg.version);
+
+    var cmd = "jekyll build --config ./site/_config.yml,./_custom_config.yml -s ./site -d ./build/site --trace";
+    exec(cmd, function(err, stdout, stderr) {
 
         console.log("jekyll completed");
+
+        // clean up temp file
+        fs.unlinkSync("./_custom_config.yml");
+
         if (err)
         {
             console.log(stderr);

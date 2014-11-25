@@ -41,8 +41,8 @@ Alpaca is open-source and provided to you under the Apache 2.0 license.  It is s
 
 <div class="codewrap">
 <pre class="prettyprint linenums">
-&lt;script type="text/javascript" src="//code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.js"&gt;&lt;/script&gt;
-&lt;link type="text/css" href="//code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.css" rel="stylesheet"/&gt;
+&lt;script type="text/javascript" src="//code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.js"&gt;&lt;/script&gt;
+&lt;link type="text/css" href="//code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.css" rel="stylesheet"/&gt;
 </pre>
 </div>
 

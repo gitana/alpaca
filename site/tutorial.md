@@ -13,11 +13,11 @@ are all about step-by-step instructions with lots of details.
 
 If you're more interested in seeing a quick demo, check out our <a href="examples.html">examples</a> page.
 
-{% capture page1 %}{% include tutorial/page1.html %}{% endcapture %}
-{% capture page2 %}{% include tutorial/page2.html %}{% endcapture %}
-{% capture page3 %}{% include tutorial/page3.html %}{% endcapture %}
-{% capture page4 %}{% include tutorial/page4.html %}{% endcapture %}
-{% capture page5 %}{% include tutorial/page5.html %}{% endcapture %}
+{% capture page1 %}{% include tutorial/page1.md %}{% endcapture %}
+{% capture page2 %}{% include tutorial/page2.md %}{% endcapture %}
+{% capture page3 %}{% include tutorial/page3.md %}{% endcapture %}
+{% capture page4 %}{% include tutorial/page4.md %}{% endcapture %}
+{% capture page5 %}{% include tutorial/page5.md %}{% endcapture %}
 
 <!-- STEP 1 -->
 <div class="step">

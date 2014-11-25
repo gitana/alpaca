@@ -30,7 +30,7 @@ gulp default site dist
 grunt jsdoc
 
 # add the ./dist directory to the commit
-git add ./dist
+git add dist -f
 
 # commit changes to local branch
 git commit -m "alpaca release build $VERSION"
@@ -43,7 +43,7 @@ git commit -m "alpaca release build $VERSION"
 #
 
 # publish alpaca to CDN
-#grunt publish
+grunt publish
 
 
 
@@ -71,10 +71,11 @@ ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org $CMD2
 #
 
 # create a tag
-#git tag $VERSION
+git tag $VERSION
 
 # push the tag
-#git push remote $BRANCH --tags
+#git push origin $BRANCH --tags
+git push origin $VERSION
 
 
 

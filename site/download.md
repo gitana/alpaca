@@ -7,39 +7,31 @@ sitemap:
 ---
 {% include JB/setup %}
 
-The latest version of Alpaca is 1.5.0.
+The latest version of Alpaca is {{ site.alpaca_version }}.
 
 ## CDN
-
 You can include Alpaca in your projects by referencing the JS and CSS right from our CDN:
 
 ```
-http://code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.js
-http://code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.css
+http://code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.js
+http://code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.css
 ```
 
 The example above is for <code>bootstrap</code>.  You can also access the builds for <code>web</code>,
 <code>jquerymobile</code> and <code>jqueryui</code>.
 
 ## Bower
-The easiest way to get Alpaca is to use Bower:
+The easiest way to get Alpaca is to use <a href="http://bower.io" target="_blank">Twitter Bower</a>:
 
 ````
 bower install alpaca
 ````
 
-
-## NPM
-Another easy way is to use NPM:
-
-````
-npm install alpaca
-````
-
-
 ## Previous Releases
 We've made available previous releases and version of the web site.  In some cases, you may have to build
-Alpaca yourself from source.  We strongly recommend upgrading to the latest version of Alpaca.
+Alpaca yourself from source.  For convenience, we provide archived "old versions" of Alpaca and the documentation.
+
+If you're on a previous release, we recommend you upgrade to the latest release!
 
 <ul>
     <li>
@@ -89,10 +81,13 @@ Alpaca yourself from source.  We strongly recommend upgrading to the latest vers
 
 ## Build from Source
 If you're a system integrator, a developer or someone who likes to understand how things work, then the best way to
-get your hands on Alpaca is to build from <a href="source.html">source</a>.  The build is pretty straightforward.
-It uses Bower, Node and Gulp to produce different distributions.  It also uses Jekyll to produce the web site,
+get your hands on Alpaca is to build from <a href="https://github.com/gitana/alpaca" target="_blank">source</a>.
+
+The build is pretty straightforward.
+
+It uses Bower, Node and Gulp to produce different distributions.  It also optionally uses Jekyll to produce the web site,
 documentation and samples, all of which you can run locally.
 
 Here is a link to the download of the project source:
 
-* <a href="https://github.com/gitana/alpaca/archive/master.zip">alpaca-1.5.0.zip</a>
+* <a href="https://github.com/gitana/alpaca/archive/master.zip">alpaca-{{site.alpaca_version}}.zip</a>

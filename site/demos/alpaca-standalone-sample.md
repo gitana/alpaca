@@ -1,3 +1,7 @@
+---
+layout: null
+---
+{% capture html %}
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -5,12 +9,12 @@
     <meta charset="UTF-8">
 
 	<link type="text/css" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link type="text/css" rel="stylesheet" href="http://code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.css">
+	<link type="text/css" rel="stylesheet" href="http://code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.css">
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js"></script>
-	<script type="text/javascript" src="http://code.cloudcms.com/alpaca/1.5.0/bootstrap/alpaca.min.js"></script>
+	<script type="text/javascript" src="http://code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.js"></script>
 
 </head>
 <body>
@@ -75,6 +79,8 @@ $(document).ready(function() {
 </body>
 
 </html>
+{% endcapture %}
+{{ html }}
 
 
 
