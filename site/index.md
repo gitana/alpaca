@@ -222,7 +222,7 @@ and below.
 Yes.  Alpaca is an open-source project and the source code is freely available under the Apache 2 license.  We chose
 the Apache 2 license because it is permissive and lets you get the most out of open source.
 
-We any luck, Alpaca will improve your life.  Save you time.  And let you play with your kids more.
+With any luck, Alpaca will improve your life.  Save you time.  And let you play with your kids more.
 
 Alpaca is supported by the community and several active contributors who have supplied pull requests with new features,
 ideas and technical wonder.  The project started at Cloud CMS where we used Alpaca as our forms engine of choice.
