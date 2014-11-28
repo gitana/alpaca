@@ -146,8 +146,8 @@ are a few notable ones:
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
-                <a href="http://hbsp.harvard.edu/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/harvard-business-publishing-150.jpg" style="max-width:125px" />
+                <a href="https://iilab.org/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/iilab-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>
@@ -160,8 +160,8 @@ are a few notable ones:
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
-                <a href="http://www.exari.com/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/exari-150.png" style="max-width:125px" />
+                <a href="http://www.fii-inc.com/" target="_blank">
+                    <img src="{{ BASE_PATH }}/images/community/fii-inc-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>
@@ -197,6 +197,8 @@ are a few notable ones:
         </div>
     </div>
 </div>
+
+<br/>
 
 If you'd like to have your company logo listed above, please <a href="support.html">drop us a line</a>.
 

@@ -1279,8 +1279,14 @@
                         var currentStepEl = $($(wizardSteps).find("[data-alpaca-wizard-role='step']")[currentIndex]);
                         $(currentStepEl).find(".alpaca-field").each(function() {
                             var fieldId = $(this).attr("data-alpaca-field-id");
-                            var field = self.childrenById[fieldId];
-                            fields.push(field);
+                            if (fieldId)
+                            {
+                                var field = self.childrenById[fieldId];
+                                if (field)
+                                {
+                                    fields.push(field);
+                                }
+                            }
                         });
 
                         // wrap into validation functions

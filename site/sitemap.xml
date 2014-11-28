@@ -6,7 +6,7 @@ layout: nil
 
     {% for page in site.pages %}
     <url>
-        <loc>{{ site.url }}{{ page.url }}</loc>
+        <loc>{{ site.production_url }}{{ page.url }}</loc>
         {% if page.sitemap != null and page.sitemap != empty %}
         <priority>{{ page.sitemap.priority }}</priority>
         {% else %}
