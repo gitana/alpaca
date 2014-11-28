@@ -472,8 +472,14 @@ gulp.task("build-site", function(cb)
 {
     console.log("build-site start");
 
+    var now = new Date();
+    var datetime = "";
+    datetime += (now.getMonth()+1) + "/" + now.getDate() + "/" + now.getFullYear();
+    //datetime += " ";
+    //datetime += now.getHours()+':'+now.getMinutes()+':'+now.getSeconds();
+
     // write temp file
-    fs.writeFileSync("./_custom_config.yml", "alpaca_version: " + pkg.version);
+    fs.writeFileSync("./_custom_config.yml", "alpaca_version: " + pkg.version + "\r\nalpaca_date: " + datetime);
 
     var cmd = "jekyll build --config ./site/_config.yml,./_custom_config.yml -s ./site -d ./build/site --trace";
     exec(cmd, function(err, stdout, stderr) {

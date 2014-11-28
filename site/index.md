@@ -10,6 +10,10 @@ sitemap:
 ---
 {% include JB/setup %}
 
+<p class="alert alert-warning" style="text-align: center">
+Latest version: <a href="download.html">{{ site.alpaca_version }}</a> released on {{ site.alpaca_date }}.
+</p>
+
 Alpaca provides the easiest way to generate interactive HTML5 forms for web and mobile applications.
 It uses JSON Schema and simple Handlebars templates to generate great looking user interfaces on top of
 <a href="http://twitter.github.com/bootstrap" target="_blank">Twitter Bootstrap</a>,

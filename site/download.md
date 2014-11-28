@@ -7,7 +7,7 @@ sitemap:
 ---
 {% include JB/setup %}
 
-The latest version of Alpaca is {{ site.alpaca_version }}.
+The latest version of Alpaca is {{ site.alpaca_version }} released on {{ site.alpaca_date }}.
 
 ## CDN
 You can include Alpaca in your projects by referencing the JS and CSS right from our CDN:

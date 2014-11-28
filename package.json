@@ -5,7 +5,7 @@
     "postupdate": "./node_modules/.bin/bower update",
     "start": "./node_modules/.bin/gulp clean default"
   },
-  "version": "1.5.0",
+  "version": "1.5.1",
   "devDependencies": {
     "bower": "1.3.*",
     "cucumber": "~0.3.3",
@@ -41,7 +41,6 @@
     "through2": "*",
     "wd": "",
     "wrench": "*",
-    
     "grunt": "*",
     "grunt-aws-s3": "^0.9.4",
     "grunt-cloudfront": "^0.2.0",
