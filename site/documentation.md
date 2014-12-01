@@ -117,3 +117,15 @@ We've provided chapters here on a variety of interesting API-related topics.
         </ul>
     </div>
 </div>
+
+<a name="api"></a>
+<h2>JavaScript Documentation</h2>
+We generate JSDoc for all of the Alpaca source code.
+
+<div class="row">
+    <div class="col-md-12">
+        <ul>
+            <li><a href="http://code.cloudcms.com/alpaca/{{ site.alpaca_version }}/jsdoc/index.html" target="_blank">Alpaca JSDoc</a></li>
+        </ul>
+    </div>
+</div>

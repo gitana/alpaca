@@ -154,7 +154,22 @@
             {
                 this.picker.setValue(val);
             }
-        } ,
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#getValue
+         */
+        getValue: function()
+        {
+            var val = this.base();
+
+            if (this.picker && this.picker.getDate())
+            {
+                val = this.picker.getDate()._i;
+            }
+
+            return val;
+        },
 
         destroy: function()
         {
