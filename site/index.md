@@ -45,8 +45,15 @@ Alpaca is open-source and provided to you under the Apache 2.0 license.  It is s
 
 <div class="codewrap">
 <pre class="prettyprint linenums">
-&lt;script type="text/javascript" src="//code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.js"&gt;&lt;/script&gt;
+&lt;!-- dependencies (jquery, handlebars and bootstrap) --&gt;
+&lt;script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"&gt;&lt;/script&gt;
+&lt;link type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"/&gt;
+&lt;script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- alpaca --&gt;
 &lt;link type="text/css" href="//code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.css" rel="stylesheet"/&gt;
+&lt;script type="text/javascript" src="//code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.js"&gt;&lt;/script&gt;
 </pre>
 </div>
 
@@ -100,6 +107,12 @@ $("#form1").alpaca({
         </div>
     </div>
 </div>
+
+The example above uses the Alpaca + Bootstrap combination.  Combinations are also available for jQuery UI, jQuery Mobile
+and straight-up web HTML5.  The required assets (jQuery, Bootstrap and Handlebars) are loaded from CDN sources.
+
+To get started on your own projects, take a look at the
+<a href="/demos/alpaca-standalone-sample.html">sample Alpaca/Bootstrap HTML page</a>.
 
 
 ## Who uses Alpaca?

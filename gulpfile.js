@@ -496,13 +496,18 @@ gulp.task("build-site", function(cb)
             return;
         }
 
-        // now run post-processors over all of the HTML to insert builder code
-        console.log("Annotating Field-Level Documentation");
-        applyFieldAnnotations("./build/site", function() {
-            console.log("Annotations Completed");
-            cb();
+        // fix up alpaca-standalone-sample.html
+        console.log("Apply HTML Variables");
+        applyHtmlVariables("./build/site", function() {
+
+            // now run post-processors over all of the HTML to insert builder code
+            console.log("Annotating Field-Level Documentation");
+            applyFieldAnnotations("./build/site", function() {
+                console.log("Annotations Completed");
+                cb();
+            });
+
         });
-        //cb();
     });
 
 });
@@ -943,4 +948,51 @@ var applyFieldAnnotations = function(basePath, callback)
         });
 
     });
+};
+
+var applyHtmlVariables = function(basePath, callback)
+{
+    var wrench = require("wrench");
+    var all = wrench.readdirSyncRecursive(basePath);
+
+    var files = [];
+    for (var i = 0; i < all.length; i++)
+    {
+        if (all[i].indexOf(".html") > -1)
+        {
+            files.push(path.join(basePath, all[i]));
+        }
+    }
+
+    for (var i = 0; i < files.length; i++)
+    {
+        applyHtmlVariablesToFile(files[i]);
+    }
+
+    callback();
+};
+
+var applyHtmlVariablesToFile = function(filePath)
+{
+    var text = "" + fs.readFileSync(filePath);
+
+    text = doReplace(text, "$ALPACA_VERSION", pkg.version);
+
+    fs.writeFileSync(filePath, text);
+};
+
+var doReplace = function(text, token, value)
+{
+    var i = -1;
+    do
+    {
+        i = text.indexOf(token);
+        if (i > -1)
+        {
+            text = text.replace(token, value);
+        }
+    }
+    while (i > -1);
+
+    return text;
 };
