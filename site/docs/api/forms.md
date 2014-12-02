@@ -284,3 +284,75 @@ $("#field4").alpaca({
 });
 </script>
 {% endraw %}
+
+
+## Forms with Custom Buttons
+
+Here is a form that includes custom buttons.  We declare one button inline within the config (to validate and view the
+form's JSON).  And we declare the other button as a "noop" (engineering term for no-operation).  It's a button that
+does nothing.  However, in the postRender callback, we look it up and register a click handler.
+
+<div id="field5"> </div>
+{% raw %}
+<script type="text/javascript" id="field5-script">
+$("#field5").alpaca({
+    "schema": {
+        "title": "Your Information",
+        "type": "object",
+        "properties": {
+            "firstName": {
+                "title": "First Name",
+                "type": "string"
+            },
+            "lastName": {
+                "title": "Last Name",
+                "type": "string"
+            },
+            "age": {
+                "title": "Age",
+                "type": "integer",
+                "minValue": 0,
+                "maxValue": 100
+            }
+        }
+    },
+    "options": {
+        "form": {
+            "attributes":{
+                "action": "http://httpbin.org/post",
+                "method": "post"
+            },
+            "buttons": {
+                "noop": {
+                    "type": "button",
+                    "value": "Do Nothing"
+                },
+                "validate": {
+                    "title": "Validate and view JSON!",
+                    "click": function() {
+                        this.refreshValidationState(true);
+                        if (this.isValid(true)) {
+                            var value = this.getValue();
+                            alert(JSON.stringify(value, null, "  "));
+                        }
+                    }
+                },
+                "submit": {
+                    "click": function() {
+                        this.ajaxSubmit().always(function() {
+                            alert("Form submitted!");
+                        });
+                    }
+                }
+            }
+        }
+    },
+    "postRender": function(control)
+    {
+        control.form.getButtonEl("noop").click(function() {
+            alert("Ain't gonna do it");
+        });
+    }
+});
+</script>
+{% endraw %}

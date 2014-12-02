@@ -236,6 +236,35 @@ You can also customize buttons and set up custom validation functions for each t
 handler for the submit button.  If no click handler is supplied and the wizard is inside of a form, the form will
 be submitted.
 
+Custom buttons are also possible as shown with the "start over" button below.  Use the <code>align</code> property
+to indicate placement of the button.
+
+## Wizard Events
+
+Wizards also support custom events that you can fire using the top level control (returned during the <code>postRender</code>
+callback).  These callbacks let you transition to specific pages and control wizard flow within your button handlers.
+
+#### moveToStep
+Moves to a specific step in the wizard.  Takes a configuration object to indicate the page number and whether
+validation should be skipped.  If validation processes and determines the current page in the wizard is invalid,
+the transition will be blocked.
+
+Example:
+````
+control.trigger("moveToStep", {
+    "index": 1,
+    "skipValidation": true
+});
+````
+
+#### advanceOrSubmit
+Advances the wizard to the next page.  If the wizard is on the last page, the wizard is submitted.
+
+Example:
+````
+control.trigger("advanceOrSubmit");
+````
+
 <div id="field5"></div>
 {% raw %}
 <script type="text/javascript" id="field5-script">
@@ -272,6 +301,16 @@ $("#field5").alpaca({
             "showProgressBar": false,
             "validation": true,
             "buttons": {
+                "first": {
+                    "title": "Go to First Page",
+                    "align": "left",
+                    "click": function(e) {
+                        this.trigger("moveToStep", {
+                            "index": 0,
+                            "skipValidation": true
+                        });
+                    }
+                },
                 "previous": {
                     "validate": function(callback) {
                         console.log("Previous validate()");

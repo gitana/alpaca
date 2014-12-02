@@ -49,12 +49,19 @@
         <div class="alpaca-wizard-buttons">
 
             <div class="pull-left">
-                <button class="btn btn-default" data-alpaca-wizard-button-key="previous">{{{buttons.previous.title}}}</button>
+                {{#each buttons}}
+                    {{#compare align "left"}}
+                        <button type="{{type}}" class="btn btn-default" data-alpaca-wizard-button-key="{{@key}}">{{{title}}}</button>
+                    {{/compare}}
+                {{/each}}
             </div>
 
             <div class="pull-right">
-                <button class="btn btn-default" data-alpaca-wizard-button-key="next">{{{buttons.next.title}}}</button>
-                <button class="btn btn-default" data-alpaca-wizard-button-key="submit">{{{buttons.submit.title}}}</button>
+                {{#each buttons}}
+                    {{#compare align "right"}}
+                        <button type="{{type}}" class="btn btn-default" data-alpaca-wizard-button-key="{{@key}}">{{{title}}}</button>
+                    {{/compare}}
+                {{/each}}
             </div>
 
             <div style="clear:both"></div>

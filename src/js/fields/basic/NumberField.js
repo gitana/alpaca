@@ -13,7 +13,10 @@
         setup: function()
         {
             // default html5 input type = "number";
-            this.inputType = "number";
+            //this.inputType = "number";
+            // TODO: we can't do this because Chrome screws up it's handling of number type
+            // and prevents us from validating properly
+            // @see http://stackoverflow.com/questions/16420828/jquery-val-refuses-to-return-non-numeric-input-from-a-number-field-under-chrome
 
             this.base();
         },

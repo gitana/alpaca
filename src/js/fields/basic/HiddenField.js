@@ -28,7 +28,7 @@
          */
         getValue: function()
         {
-            return this.getControlEl().val();
+            return this._getControlVal();
         },
 
         /**

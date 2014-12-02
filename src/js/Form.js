@@ -88,6 +88,10 @@
                     {
                         this.options.buttons[k].value = this.options.buttons[k].title;
                     }
+                    if (!this.options.buttons[k].type)
+                    {
+                        this.options.buttons[k].type = "button";
+                    }
                 }
             }
 
@@ -354,6 +358,11 @@
 
                 this.adjustSubmitButtonState();
             }
+        },
+
+        getButtonEl: function(buttonId)
+        {
+            return $(this.domEl).find(".alpaca-form-button-" + buttonId);
         },
 
         /**

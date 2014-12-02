@@ -85,9 +85,11 @@
 
             var valInfo = this.validation;
 
-            if (!valInfo["stringNotANumber"]["status"]) {
-                valInfo["stringNotANumber"]["message"] = this.view.getMessage("stringNotAnInteger");
-            }
+            var status = this._validateInteger();
+            valInfo["stringNotANumber"] = {
+                "message": status ? "" : this.view.getMessage("stringNotAnInteger"),
+                "status": status
+            };
 
             return baseStatus;
         },
@@ -96,9 +98,9 @@
          * Validates if it is an integer.
          * @returns {Boolean} true if it is an integer
          */
-        _validateNumber: function()
+        _validateInteger: function()
         {
-            var textValue = this.getControlEl().val();
+            var textValue = this._getControlVal();
 
             if (Alpaca.isValEmpty(textValue)) {
                 return true;

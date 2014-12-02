@@ -1027,7 +1027,7 @@
             var buttonDescriptors = this.wizardConfigs.buttons;
             if (!buttonDescriptors)
             {
-                buttonDescriptors = [];
+                buttonDescriptors = {};
             }
             if (!buttonDescriptors["previous"])
             {
@@ -1037,6 +1037,14 @@
             {
                 buttonDescriptors["previous"].title = "Previous";
             }
+            if (!buttonDescriptors["previous"].align)
+            {
+                buttonDescriptors["previous"].align = "left";
+            }
+            if (!buttonDescriptors["previous"].type)
+            {
+                buttonDescriptors["previous"].type = "button";
+            }
             if (!buttonDescriptors["next"])
             {
                 buttonDescriptors["next"] = {}
@@ -1045,6 +1053,14 @@
             {
                 buttonDescriptors["next"].title = "Next";
             }
+            if (!buttonDescriptors["next"].align)
+            {
+                buttonDescriptors["next"].align = "right";
+            }
+            if (!buttonDescriptors["next"].type)
+            {
+                buttonDescriptors["next"].type = "button";
+            }
             if (!buttonDescriptors["submit"])
             {
                 buttonDescriptors["submit"] = {}
@@ -1052,6 +1068,21 @@
             if (!buttonDescriptors["submit"].title)
             {
                 buttonDescriptors["submit"].title = "Submit";
+            }
+            if (!buttonDescriptors["submit"].align)
+            {
+                buttonDescriptors["submit"].align = "right";
+            }
+            if (!buttonDescriptors["submit"].type)
+            {
+                buttonDescriptors["submit"].type = "button";
+            }
+            for (var buttonKey in buttonDescriptors)
+            {
+                if (!buttonDescriptors[buttonKey].type)
+                {
+                    buttonDescriptors[buttonKey].type = "button";
+                }
             }
             var showSteps = this.wizardConfigs.showSteps;
             if (typeof(showSteps) == "undefined")
@@ -1389,6 +1420,20 @@
                                     }
                                 }
                             });
+                        }
+                    });
+
+                    // all custom buttons
+                    $(wizardButtons).find("[data-alpaca-wizard-button-key]").each(function() {
+                        var key = $(this).attr("data-alpaca-wizard-button-key");
+                        var b = model.buttons[key];
+                        if (b && b.click)
+                        {
+                            $(this).click(function(b) {
+                                return function(e) {
+                                    b.click.call(self, e);
+                                };
+                            }(b));
                         }
                     });
 
