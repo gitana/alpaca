@@ -130,7 +130,7 @@
             if (self.options.dateFormat)
             {
                 var value = this.getControlEl().val();
-                if (value || self.schema.required)
+                if (value || self.isRequired())
                 {
                     return moment(value, self.options.dateFormat, true).isValid();
                 }

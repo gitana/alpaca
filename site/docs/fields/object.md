@@ -384,3 +384,59 @@ $("#field7").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 8
+Object with a required field specified at the field level.
+<div id="field8"> </div>
+{% raw %}
+<script type="text/javascript" id="field8-script">
+$("#field8").alpaca({
+    "schema": {
+        "title": "Customer Profile",
+        "description": "Customer Contact Information",
+        "type": "object",
+        "default": '{"name":"John Matrix","age":40}',
+        "properties": {
+            "name": {
+                "title": "Full Name",
+                "description": "Enter Your Full Name",
+                "type": "string",
+                "required": true
+            },
+            "age": {
+                "title": "Age",
+                "type": "number"
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
+
+## Example 9
+Object with a required field specified at the object-level.
+<div id="field9"> </div>
+{% raw %}
+<script type="text/javascript" id="field9-script">
+$("#field9").alpaca({
+    "schema": {
+        "title": "Customer Profile",
+        "description": "Customer Contact Information",
+        "type": "object",
+        "default": '{"name":"John Matrix","age":40}',
+        "properties": {
+            "name": {
+                "title": "Full Name",
+                "description": "Enter Your Full Name",
+                "type": "string"
+            },
+            "age": {
+                "title": "Age",
+                "type": "number"
+            }
+        },
+        "required": ["name"]
+    }
+});
+</script>
+{% endraw %}

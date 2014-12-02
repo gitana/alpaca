@@ -222,7 +222,7 @@
             {
                 var val = this.data;
 
-                if (!this.schema.required && Alpaca.isValEmpty(val))
+                if (!this.isRequired() && Alpaca.isValEmpty(val))
                 {
                     return true;
                 }

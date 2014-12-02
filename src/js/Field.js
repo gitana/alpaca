@@ -628,7 +628,7 @@
             if (this.view.type !== 'view') {
 
                 // optional
-                if (this.schema.required)
+                if (this.isRequired())
                 {
                     $(this.field).addClass("alpaca-required");
 
@@ -1235,7 +1235,7 @@
          */
         _validateOptional: function() {
 
-            if (this.schema.required && this.isEmpty()) {
+            if (this.isRequired() && this.isEmpty()) {
                 return false;
             }
 
@@ -1727,6 +1727,47 @@
          */
         isContainer: function() {
             return false;
+        },
+
+        /**
+         * Determines whether the current field is required.
+         *
+         * A field can be specified as required by either specifying required: true on the schema for a field or by
+         * specifying a required array on the parent object with the name of the child field (as per json schema v 04).
+         *
+         * @returns {boolean}
+         */
+        isRequired: function()
+        {
+            // assume not required
+            var required = false;
+
+            if (typeof(this.schema.required) === "boolean")
+            {
+                required = this.schema.required;
+            }
+
+            // support for json-schema draft 04
+            if (this.parent && this.parent.schema.required)
+            {
+                if (Alpaca.isArray(this.parent.schema.required))
+                {
+                    var requiredArray = this.parent.schema.required;
+                    if (requiredArray)
+                    {
+                        for (var i = 0; i < requiredArray.length; i++)
+                        {
+                            if (requiredArray[i] === this.name)
+                            {
+                                required = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return required;
         }
 
         /* builder_helpers */

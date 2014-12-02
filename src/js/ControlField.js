@@ -167,7 +167,7 @@
             model.options = this.options;
             model.schema = this.schema;
             model.data = this.data;
-            model.required = this.schema.required;
+            model.required = this.isRequired();
 
             callback(model);
         },
@@ -279,7 +279,7 @@
                 var val = this.data;
                 val = this.getValue();
                 /*this.getValue();*/
-                if (!this.schema.required && Alpaca.isValEmpty(val)) {
+                if (!this.isRequired() && Alpaca.isValEmpty(val)) {
                     return true;
                 }
                 if ($.inArray(val, this.schema["enum"]) > -1) {

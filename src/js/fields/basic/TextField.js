@@ -406,7 +406,7 @@
             if (this.schema.pattern)
             {
                 var val = this.getValue();
-                if (val === "" && this.options.allowOptionalEmpty && !this.schema.required)
+                if (val === "" && this.options.allowOptionalEmpty && !this.isRequired())
                 {
                     return true;
                 }
@@ -433,7 +433,7 @@
             if (!Alpaca.isEmpty(this.schema.minLength))
             {
                 var val = this.getValue();
-                if (val === "" && this.options.allowOptionalEmpty && !this.schema.required)
+                if (val === "" && this.options.allowOptionalEmpty && !this.isRequired())
                 {
                     return true;
                 }
@@ -459,7 +459,7 @@
             if (!Alpaca.isEmpty(this.schema.maxLength))
             {
                 var val = this.getValue();
-                if (val === "" && this.options.allowOptionalEmpty && !this.schema.required)
+                if (val === "" && this.options.allowOptionalEmpty && !this.isRequired())
                 {
                     return true;
                 }

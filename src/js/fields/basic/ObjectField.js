@@ -130,7 +130,7 @@
         getValue: function()
         {
             // if we don't have any children and we're not required, hand back empty object
-            if (this.children.length === 0 && !this.schema.required)
+            if (this.children.length === 0 && !this.isRequired())
             {
                 return {};
             }

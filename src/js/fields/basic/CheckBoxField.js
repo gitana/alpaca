@@ -316,7 +316,7 @@
             }
 
             var val = self.getValue();
-            if (!self.schema.required && Alpaca.isValEmpty(val))
+            if (!self.isRequired() && Alpaca.isValEmpty(val))
             {
                 return true;
             }

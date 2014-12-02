@@ -45,7 +45,7 @@
             /**
              * Auto assign data if we have data and the field is required and removeDefaultNone is either unspecified or true
              */
-            if (_this.schema.required && !_this.data)
+            if (_this.isRequired() && !_this.data)
             {
                 //if ((typeof(_this.options.removeDefaultNone) == "undefined") || _this.options.removeDefaultNone === true)
                 if ((_this.options.removeDefaultNone === true))
@@ -70,7 +70,7 @@
                     model.noneLabel = self.options.noneLabel;
                 }
 
-                model.hideNone = self.schema.required;
+                model.hideNone = self.isRequired();
                 if (typeof(self.options.removeDefaultNone) != "undefined")
                 {
                     model.hideNone = self.options.removeDefaultNone;

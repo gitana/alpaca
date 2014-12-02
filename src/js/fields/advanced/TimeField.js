@@ -95,7 +95,7 @@
         _validateTime: function()
         {
             var value = this.getControlEl().val();
-            if (value || this.schema.required)
+            if (value || this.isRequired())
             {
                 return Alpaca.REGEX_TIME.test(value);
             }
