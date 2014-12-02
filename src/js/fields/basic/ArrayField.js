@@ -842,7 +842,8 @@
                     var action = self.findAction(self.toolbar.actions, actionKey);
                     if (action)
                     {
-                        $(this).off().click(function() {
+                        $(this).off().click(function(e) {
+                            e.preventDefault();
                             action.click.call(self, actionKey, action);
                         });
                     }
@@ -898,7 +899,8 @@
                     var action = self.findAction(self.actionbar.actions, actionKey);
                     if (action)
                     {
-                        $(this).off().click(function() {
+                        $(this).off().click(function(e) {
+                            e.preventDefault();
                             action.click.call(self, actionKey, action, targetIndex);
                         });
                     }
