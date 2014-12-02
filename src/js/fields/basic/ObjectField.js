@@ -314,9 +314,9 @@
                                 // by the time we get here, we may have constructed a very large child chain of
                                 // sub-dependencies and so we use nextTick() instead of a straight callback so as to
                                 // avoid blowing out the stack size
-                                //Alpaca.nextTick(function() {
-                                callback();
-                                //});
+                                Alpaca.nextTick(function() {
+                                    callback();
+                                });
                             });
                         });
                     };
@@ -458,16 +458,16 @@
                         Alpaca.mergeObject(resolvedPropertyOptions, propertyOptions);
                     }
 
-                    //Alpaca.nextTick(function() {
-                    callback(resolvedPropertySchema, resolvedPropertyOptions, circular);
-                    //});
+                    Alpaca.nextTick(function() {
+                        callback(resolvedPropertySchema, resolvedPropertyOptions, circular);
+                    });
                 });
             }
             else
             {
-                //Alpaca.nextTick(function() {
-                callback(propertySchema, propertyOptions);
-                //});
+                Alpaca.nextTick(function() {
+                    callback(propertySchema, propertyOptions);
+                });
             }
         },
 

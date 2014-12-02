@@ -51,6 +51,12 @@
                 return;
             }
 
+            if (!val)
+            {
+                this.base("");
+                return;
+            }
+
             this.base(val.join(this.options.separator));
         },
 
