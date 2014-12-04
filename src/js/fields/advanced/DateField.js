@@ -25,7 +25,7 @@
             var self = this;
 
             // default html5 input type = "date";
-            this.inputType = "date";
+            //this.inputType = "date";
 
             this.base();
 

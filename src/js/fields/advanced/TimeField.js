@@ -25,7 +25,7 @@
             var self = this;
 
             // default html5 input type = "time";
-            this.inputType = "time";
+            //this.inputType = "time";
 
             this.base();
 
