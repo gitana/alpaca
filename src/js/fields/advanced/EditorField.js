@@ -131,6 +131,8 @@
                         maxLines: Infinity
                     });
 
+                    self.editor.getSession().setUseWrapMode(true);
+
                     // theme
                     var aceTheme = self.options.aceTheme;
                     self.editor.setTheme(aceTheme);
