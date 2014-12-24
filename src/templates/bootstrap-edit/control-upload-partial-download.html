@@ -1,6 +1,6 @@
 <script type="text/x-handlebars-template">
 
-    <tr class="template-download fade">
+    <tr class="template-download">
     {{#if file.error}}
         <td></td>
         <td class="name">
@@ -28,10 +28,24 @@
         <td colspan="2"></td>
     {{/if}}
         <td>
-            <button class="delete btn btn-danger" data-type="{{file.deleteType}}" data-url="{{file.deleteUrl}}" {{#if file.deleteWithCredentials}}data-xhr-fields="{\"withCredentials\":true}" {{/if}}>
-                <i class="glyphicon glyphicon-trash glyphicon-white"></i>
-                <!--<span>Delete</span>-->
-            </button>
+            {{#if buttons}}
+                {{#each buttons}}
+                    {{#if isDelete}}
+                        <button class="delete btn btn-danger" data-type="{{file.deleteType}}" data-file-id="{{file.id}}" data-url="{{file.deleteUrl}}" {{#if file.deleteWithCredentials}}data-xhr-fields="{\"withCredentials\":true}" {{/if}}>
+                            <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                        </button>
+                    {{else}}
+                        <button class="{{key}} btn {{buttonClass}}" data-file-id="{{../../file.id}}">
+                            {{#if iconClass}}
+                                <i class="{{iconClass}}"></i>
+                            {{/if}}
+                            {{#if label}}
+                                {{label}}
+                            {{/if}}
+                        </button>
+                    {{/if}}
+                {{/each}}
+            {{/if}}
         </td>
     </tr>
 

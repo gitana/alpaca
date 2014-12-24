@@ -22,6 +22,8 @@
          */
         constructor: function(container, data, options, schema, view, connector)
         {
+            var self = this;
+
             this.base(container, data, options, schema, view, connector);
 
             // wraps an existing template descriptor into a method that looks like fn(model)
@@ -33,8 +35,6 @@
             //       "options": {}
             //    }
             //
-
-            var self = this;
 
             this.wrapTemplate = function(templateId)
             {
@@ -51,6 +51,7 @@
                         model.options = self.options;
                         model.file = Alpaca.cloneObject(files[i]);
                         model.size = formatFileSize(model.size);
+                        model.buttons = self.options.buttons;
 
                         var row = Alpaca.tmpl(self.view.getTemplateDescriptor(templateId), model, self);
 
@@ -99,6 +100,19 @@
             var self = this;
 
             this.base();
+
+            if (!self.options.buttons)
+            {
+                self.options.buttons = [];
+            }
+
+            if (!self.options.hideDeleteButton)
+            {
+                self.options.buttons.push({
+                    "key": "delete",
+                    "isDelete": true
+                });
+            }
 
             if (typeof(self.options.multiple) == "undefined")
             {
@@ -616,7 +630,7 @@
 
             var f = function(i)
             {
-                if (i == descriptors.length) // jshint ignore:line
+                if (i === descriptors.length) // jshint ignore:line
                 {
                     // all done
 

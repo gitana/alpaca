@@ -19,6 +19,11 @@
          */
         setup: function()
         {
+            if (!this.data)
+            {
+                this.data = "";
+            }
+
             this.base();
 
             if (typeof(this.options.ckeditor) == "undefined")

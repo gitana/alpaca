@@ -223,15 +223,21 @@
                         else if (field.isContainerField)
                         {
                             // if focus = true, then focus on the first child control if it is auto-focusable
+                            // and not read-only
                             if (options.focus === true)
                             {
                                 // pick first element in form
-                                if (field.children && field.children.length > 0) {
-                                    if (field.children[0].isControlField)
+                                if (field.children && field.children.length > 0)
+                                {
+                                    for (var z = 0; z < field.children.length; z++)
                                     {
-                                        if (field.children[0].isAutoFocusable())
+                                        if (field.children[z].isControlField)
                                         {
-                                            doFocus(field.children[0]);
+                                            if (field.children[z].isAutoFocusable() && !field.children[z].options.readonly)
+                                            {
+                                                doFocus(field.children[z]);
+                                                break;
+                                            }
                                         }
                                     }
                                 }

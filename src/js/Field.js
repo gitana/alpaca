@@ -78,9 +78,11 @@
                 this.options.label = this.schema.title;
             }
 
+            /*
             if (!this.options.helper && this.schema.description !== null) {
                 this.options.helper = this.schema.description;
             }
+            */
 
             if (Alpaca.isEmpty(this.options.readonly) && !Alpaca.isEmpty(this.schema.readonly)) {
                 this.options.readonly = this.schema.readonly;

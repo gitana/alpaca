@@ -38,13 +38,20 @@
             }
 
             // DOM data-* attributes support
-            if (!this.options.data) {
+            if (!this.options.data)
+            {
                 this.options.data = {};
             }
 
             // DOM * attributes support
-            if (!this.options.attributes) {
+            if (!this.options.attributes)
+            {
                 this.options.attributes = {};
+            }
+
+            if (typeof(this.options.allowOptionalEmpty) == "undefined")
+            {
+                this.options.allowOptionalEmpty = true;
             }
         },
 
