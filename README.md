@@ -18,7 +18,7 @@ Here is a sample registration form written once and rendered using four differen
 
 Alpaca is an open-source project licensed under Apache 2.0.  It is actively developed and maintained by
 <a href="https://www.cloudcms.com">Cloud CMS</a>.
-<a href="https://www.alpacajs.org/contact.html">Enterprise support is available</a> for your live deployments.
+<a href="https://www.alpacajs.org/contact.html">Enterprise support is available</a> for your production deployments.
 
 
 ## Project Home Page
@@ -155,7 +155,7 @@ There are several ways to interact with the Alpaca community.
 - [Visit the Alpaca.js forums](http://www.cloudcms.org) and ask your question to the broader Cloud CMS community.  Be sure to include code samples, URLs or http://jsfiddle.net/ links so that others can reproduce your scenario quickly.  It's always best to empower others to help you.
 - [Add a GitHub Issue](https://github.com/gitana/alpaca/issues) if you've found an actual bug or have a feature request that you'd like to get prioritized into the roadmap.
 - [Submit a Pull Request](https://github.com/gitana/alpaca) if you've fixed a bug and want to contribute code back to the Alpaca project.  This is the most powerful and effective way to influence the product.  Pull requests give you a way to write your own additions or adjustments to the code base and make it very easy for us to merge your changes into the product.
-- [Contact Cloud CMS](http://alpacajs.org/support.html) if you have an urgent issue, a high priority deliverable or need technical support for Alpaca in production.  Cloud CMS sponsors the Alpaca project and can put engineers on your project to get things done quickly.
+- [Contact Cloud CMS](https://www.cloudcms.com) if you have an urgent issue, a high priority deliverable or need technical support for Alpaca in production.  Cloud CMS sponsors the Alpaca project and can put engineers on your project to get things done quickly.
 
 ## Contributors
 
