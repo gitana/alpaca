@@ -20,14 +20,17 @@ Alpaca is an open-source project licensed under Apache 2.0.  It is actively deve
 <a href="https://www.cloudcms.com">Cloud CMS</a>.
 <a href="https://www.alpacajs.org/contact.html">Enterprise support is available</a> for your live deployments.
 
+
 ## Project Home Page
 
 For information, demos and documentation regarding Alpaca, please visit the
 <a href="http://www.alpacajs.org">the Alpaca Forms home page</a>.
 
+
 ## Compatibility
 
 Alpaca is compatible with jQuery 1.9.1 and up.
+
 
 ## Issues and Discussions
 
@@ -36,6 +39,7 @@ This is a place where we encourage the community and developer community to get 
 projects.
 
 If you find an issue with Alpaca, please <a href="https://github.com/gitana/alpaca/issues">add a new issue ticket</a>.
+
 
 ## How to Build Alpaca
 
@@ -46,6 +50,7 @@ The command line for doing this is basically:
 
     git clone https://github.com/gitana/alpaca.git
 
+
 ### Prerequisites
 
 To build Alpaca, you will need to have Node.js, Gulp and Bower installed.  If you're new to Node.js or Gulp, you could
@@ -55,6 +60,7 @@ Once you have Node.js installed, you essentially need to do this:
 
     npm install gulp -g
     npm install bower -g
+
 
 ### Building Alpaca
 
@@ -77,6 +83,7 @@ If you want to use Gulp directly, you can alternatively run this:
 
 Either ```npm start``` or ```gulp clean default``` will build everything.
 The build distribution assets will be in ```build/alpaca```.
+
 
 ### Building the Web Site and Running a local Web Server
 
@@ -105,6 +112,7 @@ Each directory contains a JS file and a CSS file for its respective build.
 
 Each JS file is UMD ready and will work within both an AMD and CommonJS container.
 
+
 ### Troubleshooting
 
 If you run into any Bower related issues during the build, you might want to clear out your Bower cache using this
@@ -113,6 +121,7 @@ command:
     bower cache clean
 
 And then try again.
+
 
 ### Manual build commands
 
@@ -125,13 +134,11 @@ need to perform individual steps:
 - To build the Alpaca web site, do ```gulp default server```
 - To run a local Alpaca web server, ```gulp default server```
 
-## Running the Unit Tests
-
-TODO
 
 ## CDN
 
 All of the Alpaca distribution assets are available via CDN at http://cdn.alpacajs.org.
+
 
 ## Connecting to Cloud CMS
 
@@ -139,21 +146,23 @@ Alpaca works with any backend HTTP service.  There is a connector layer and you 
 
 Alpaca works out-of-the-box with [Cloud CMS](http://www.cloudcms.com).  Cloud CMS is a cost-effective backend content management system for mobile and web applications.  If you're looking for a quick way to capture and report on forms, please consider checking it out.
 
-## Questions?
 
-If you have any questions, please feel free to submit and issue or ask on
-the [Alpaca Discussion Forums](http://www.cloudcms.org/forums/categories/alpaca).
+## Questions, Getting Involved and Contributing
 
-## Authors
+There are several ways to interact with the Alpaca community.
+
+- [Browse the documentation](http://www.alpacajs.org/documentation.html) and try out the interactive examples.  On each page, you'll find a Disqus forum that you can use to ask questions specific to that page.  As others browse the documentation, they'll find your question and will have the context at hand to answer it.
+- [Visit the Alpaca.js forums](http://www.cloudcms.org) and ask your question to the broader Cloud CMS community.  Be sure to include code samples, URLs or http://jsfiddle.net/ links so that others can reproduce your scenario quickly.  It's always best to empower others to help you.
+- [Add a GitHub Issue](https://github.com/gitana/alpaca/issues) if you've found an actual bug or have a feature request that you'd like to get prioritized into the roadmap.
+- [Submit a Pull Request](https://github.com/gitana/alpaca) if you've fixed a bug and want to contribute code back to the Alpaca project.  This is the most powerful and effective way to influence the product.  Pull requests give you a way to write your own additions or adjustments to the code base and make it very easy for us to merge your changes into the product.
+- [Contact Cloud CMS](http://alpacajs.org/support.html) if you have an urgent issue, a high priority deliverable or need technical support for Alpaca in production.  Cloud CMS sponsors the Alpaca project and can put engineers on your project to get things done quickly.
+
+## Contributors
 
 + [@cloudcms](http://github.com/cloudcms)
 + [@uzquiano](http://github.com/uzquiano)
 + [@yaworsw](http://github.com/yaworsw)
 + [@drq](http://github.com/drq)
-
-
-Thanks for assistance and contributions:
-
 + [@Maethorin](http://github.com/Maethorin)
 + [@jlanders68](http://github.com/jlanders68)
 + [@JocelynDelalande](http://github.com/JocelynDelalande)
@@ -163,4 +172,9 @@ Thanks for assistance and contributions:
 + [@colegatron](http://www.github.com/colegatron)
 + [@Kirosoft](http://www.github.com/Kirosoft)
 + [@1337](http://www.github.com/1337)
++ [@jkernagis2](https://github.com/jkernagis2)
++ [@ASchriever](https://github.com/ASchriever)
++ [@hooflung64](https://github.com/hooflung64)
++ [@Shadowsrik](https://github.com/Shadowsrik)
 
+...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and [Alpaca Forums](http://www.cloudcms.org)!

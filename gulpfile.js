@@ -648,10 +648,19 @@ gulp.task("web", function(cb) {
 });
 
 gulp.task("dist", function() {
-    return gulp.src("build/alpaca/**/*")
-        .pipe(gulp.dest("dist/alpaca"));
-});
 
+    return es.concat(
+
+        gulp.src("build/alpaca/**/*")
+            .pipe(gulp.dest("dist/alpaca")),
+
+        gulp.src("lib/**/*")
+            .pipe(gulp.dest("dist/lib"))
+
+    ).pipe(es.wait(function() {
+        // all done
+    }));
+});
 
 gulp.task("bump", function(){
     gulp.src(VERSIONABLE_FILES).pipe(bump()).pipe(gulp.dest("./"));
