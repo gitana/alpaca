@@ -7,9 +7,9 @@
     background-color: white;
     border: 1px #ccc solid;
     padding: 10px;
-    padding-top: 0px;
     color: #999;
     width: 100%;
+    padding-bottom: 0px;
 }
 
 .twitter-typeahead .tt-dropdown-menu P

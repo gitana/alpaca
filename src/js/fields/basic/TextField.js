@@ -226,11 +226,13 @@
                 // listen for "autocompleted" event and set the value of the field
                 $(self.control).on("typeahead:autocompleted", function(event, datum) {
                     self.setValue(datum.value);
+                    $(self.control).change();
                 });
 
                 // listen for "selected" event and set the value of the field
                 $(self.control).on("typeahead:selected", function(event, datum) {
                     self.setValue(datum.value);
+                    $(self.control).change();
                 });
 
                 // custom events
@@ -263,6 +265,10 @@
                     }
 
                 });
+
+                // some UI cleanup (we don't want typeahead to restyle)
+                $(self.field).find("span.twitter-typeahead").first().css("display", "block"); // SPAN to behave more like DIV, next line
+                $(self.field).find("span.twitter-typeahead input.tt-input").first().css("background-color", "");
             }
         },
 
