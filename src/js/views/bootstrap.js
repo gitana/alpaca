@@ -148,22 +148,24 @@
     callbacks["collapsible"] = function()
     {
         var fieldEl = this.getFieldEl();
-        var legendEl = $("legend", fieldEl);
-        var anchorEl = $(legendEl).find("[data-toggle='collapse']");
+        var legendEl = $(fieldEl).find("legend").first();
+        var anchorEl = $("[data-toggle='collapse']", legendEl);
         if ($(anchorEl).length > 0)
         {
             var containerEl = this.getContainerEl();
 
-            // generate an ID
-            var id = Alpaca.generateId();
+            // container id
+            var id = $(containerEl).attr("id");
+            if (!id) {
+                id = Alpaca.generateId();
+                $(containerEl).attr("id", id);
+            }
 
-            // set up container
-            $(containerEl).attr("id", id);
+            // set up container to be collapsible
             $(containerEl).addClass("collapse in");
 
             // set up legend anchor
             $(anchorEl).attr("data-target", "#" + id);
-            //$(anchorEl).attr("href", "#" + id);
 
             $(anchorEl).mouseover(function(e) {
                 $(this).css("cursor", "pointer");

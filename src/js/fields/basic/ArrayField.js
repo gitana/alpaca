@@ -806,6 +806,12 @@
                 return;
             }
 
+            // if we're in readonly mode, don't do this
+            if (this.schema.readonly)
+            {
+                return;
+            }
+
             // fire callbacks to view to remove and create toolbar
             if (self.toolbar)
             {

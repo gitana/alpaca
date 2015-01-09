@@ -318,69 +318,11 @@
 
             this.base();
 
+            /*
             if (self.options.collapsible)
             {
                 // CALLBACK: "collapsible"
                 self.fireCallback("collapsible");
-            }
-
-            /*
-            // if collapsible
-            if (this.labelDiv)
-            {
-                if (this.options.collapsible)
-                {
-                    this.labelDiv.addClass("legend-expanded");
-                    this.fieldSetDiv.addClass("fieldset-expanded");
-
-                    var initIcon = this.expandedIcon;
-
-                    if (!Alpaca.isEmpty(this.options.collapsed) && this.options.collapsed)
-                    {
-                        initIcon = this.collapsedIcon;
-                        this.labelDiv.nextAll(".alpaca-fieldset-helper").slideToggle(500);
-                        this.labelDiv.nextAll(".alpaca-fieldset-items-container").slideToggle(500);
-                        this.labelDiv.nextAll(".alpaca-fieldset-array-toolbar").slideToggle(500);
-                        this.fieldSetDiv.toggleClass("fieldset-expanded");
-                        this.fieldSetDiv.toggleClass("fieldset-collapsed");
-                        this.labelDiv.toggleClass("legend-expanded");
-                        this.labelDiv.toggleClass("legend-collapsed");
-                    }
-
-                    if (this.options.legendStyle === 'link')
-                    {
-                        $('<span class="' + this.commonIcon + " " + initIcon + ' alpaca-fieldset-legend-link"></span>').prependTo(this.labelDiv);
-                        this.labelDiv.click(function() {
-                            _this.fieldSetDiv.toggleClass("fieldset-collapsed");
-                            _this.fieldSetDiv.toggleClass("fieldset-expanded");
-                            $(this).toggleClass("legend-collapsed");
-                            $(this).toggleClass("legend-expanded");
-                            $('.alpaca-fieldset-legend-link', this).toggleClass(_this.collapsedIcon).toggleClass(_this.expandedIcon);
-                            $(this).nextAll(".alpaca-fieldset-helper").slideToggle(500);
-                            $(this).nextAll(".alpaca-fieldset-items-container").slideToggle(500);
-                            $(this).nextAll(".alpaca-fieldset-array-toolbar").slideToggle(500);
-                        });
-                    }
-
-                    if (this.options.legendStyle === 'button')
-                    {
-                        if (this.buttonBeautifier)
-                        {
-                            this.buttonBeautifier.call(this, this.labelDiv, initIcon, true);
-                        }
-
-                        this.labelDiv.click(function() {
-                            _this.fieldSetDiv.toggleClass("fieldset-collapsed");
-                            _this.fieldSetDiv.toggleClass("fieldset-expanded");
-                            $(this).toggleClass("legend-collapsed");
-                            $(this).toggleClass("legend-expanded");
-                            $('.alpaca-fieldset-legend-button', this).toggleClass(_this.collapsedIcon).toggleClass(_this.expandedIcon);
-                            $(this).nextAll(".alpaca-fieldset-helper").slideToggle(500);
-                            $(this).nextAll(".alpaca-fieldset-items-container").slideToggle(500);
-                            $(this).nextAll(".alpaca-fieldset-array-toolbar").slideToggle(500);
-                        });
-                    }
-                }
             }
             */
         },
@@ -491,6 +433,12 @@
 
                 // register the child
                 self.registerChild(item, i);
+            }
+
+            if (self.options.collapsible)
+            {
+                // CALLBACK: "collapsible"
+                self.fireCallback("collapsible");
             }
 
             self.triggerUpdate();
