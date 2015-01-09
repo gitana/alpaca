@@ -232,12 +232,25 @@ $("#field4").alpaca({
 By default, steps are validated prior to transitioning between previous and next.  You can turn this on and off
 using the <code>validation</code> wizard setting.
 
-You can also customize buttons and set up custom validation functions for each transition.  You can add a click
+You can also customize buttons and set up custom validation functions for each transition.  You can add a <code>click</code>
 handler for the submit button.  If no click handler is supplied and the wizard is inside of a form, the form will
 be submitted.
 
 Custom buttons are also possible as shown with the "start over" button below.  Use the <code>align</code> property
 to indicate placement of the button.
+
+By default, three buttons are placed into the wizard - <code>previous</code>, <code>next</code> and <code>submit</code>.
+If you are embedding the wizard within an outer form and wish to handle the submit yourself, you can set the
+<code>hideSubmitButton</code> wizard setting to true.  The submit button will then be hidden.  By default, this
+setting is falsy and the submit button will be shown.
+
+The wizard tracks multiple pages (or steps).  As you moved from to step, the current step is marked as "active" as well
+as "visited".  When you track backwards by clicking the "previous" button, knowledge about the visited steps is retained
+and made visible to the end user.
+
+If you'd like to mark all steps as visited upon initial load, set the <code>markAllStepsVisited</code> wizard setting
+to true.
+
 
 ## Wizard Events
 

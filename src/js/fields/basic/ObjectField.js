@@ -1061,22 +1061,23 @@
             {
                 buttonDescriptors["next"].type = "button";
             }
-            if (!buttonDescriptors["submit"])
+
+            if (!this.wizardConfigs.hideSubmitButton)
             {
-                buttonDescriptors["submit"] = {}
+                if (!buttonDescriptors["submit"]) {
+                    buttonDescriptors["submit"] = {}
+                }
+                if (!buttonDescriptors["submit"].title) {
+                    buttonDescriptors["submit"].title = "Submit";
+                }
+                if (!buttonDescriptors["submit"].align) {
+                    buttonDescriptors["submit"].align = "right";
+                }
+                if (!buttonDescriptors["submit"].type) {
+                    buttonDescriptors["submit"].type = "button";
+                }
             }
-            if (!buttonDescriptors["submit"].title)
-            {
-                buttonDescriptors["submit"].title = "Submit";
-            }
-            if (!buttonDescriptors["submit"].align)
-            {
-                buttonDescriptors["submit"].align = "right";
-            }
-            if (!buttonDescriptors["submit"].type)
-            {
-                buttonDescriptors["submit"].type = "button";
-            }
+
             for (var buttonKey in buttonDescriptors)
             {
                 if (!buttonDescriptors[buttonKey].type)
@@ -1171,6 +1172,7 @@
             model.options = self.options;
             model.data = self.data;
             model.showProgressBar = showProgressBar;
+            model.markAllStepsVisited = this.wizardConfigs.markAllStepsVisited;
 
             // render the actual wizard
             var wizardTemplateDescriptor = self.view.getTemplateDescriptor("wizard", self);
@@ -1203,11 +1205,22 @@
                         // NAV
                         if (model.showSteps)
                         {
-                            // mark current step as visited
                             if (!model.visits)
                             {
                                 model.visits = {};
                             }
+
+                            // optionally mark all steps as visited
+                            if (model.markAllStepsVisited)
+                            {
+                                var stepElements = $(wizardNav).find("[data-alpaca-wizard-step-index]");
+                                for (var g = 0; g < stepElements.length; g++)
+                                {
+                                    model.visits[g] = true;
+                                }
+                            }
+
+                            // mark current step as visited
                             model.visits[currentIndex] = true;
 
                             var stepElements = $(wizardNav).find("[data-alpaca-wizard-step-index]");
@@ -1368,6 +1381,15 @@
 
                                 //if (valid)
                                 //{
+                                    var b = model.buttons["previous"];
+                                    if (b)
+                                    {
+                                        if (b.click)
+                                        {
+                                            b.click.call(self, e);
+                                        }
+                                    }
+
                                     currentIndex--;
 
                                     refreshSteps();
@@ -1385,6 +1407,15 @@
 
                                 if (valid)
                                 {
+                                    var b = model.buttons["next"];
+                                    if (b)
+                                    {
+                                        if (b.click)
+                                        {
+                                            b.click.call(self, e);
+                                        }
+                                    }
+
                                     currentIndex++;
 
                                     refreshSteps();
@@ -1426,14 +1457,15 @@
                     // all custom buttons
                     $(wizardButtons).find("[data-alpaca-wizard-button-key]").each(function() {
                         var key = $(this).attr("data-alpaca-wizard-button-key");
-                        var b = model.buttons[key];
-                        if (b && b.click)
-                        {
-                            $(this).click(function(b) {
-                                return function(e) {
-                                    b.click.call(self, e);
-                                };
-                            }(b));
+                        if (key != "submit" && key != "next" && key != "previous") { // standard buttons have different behavior
+                            var b = model.buttons[key];
+                            if (b && b.click) {
+                                $(this).click(function (b) {
+                                    return function (e) {
+                                        b.click.call(self, e);
+                                    };
+                                }(b));
+                            }
                         }
                     });
 
