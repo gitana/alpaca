@@ -78,7 +78,7 @@
             {
                 if ($(this.control).find("input:checked").length === 0)
                 {
-                    Alpaca.checked($(this.control).find("input:first"), "checked");
+                    Alpaca.checked($(self.control).find("input:radio").first(), "checked");
                 }
             }
 
@@ -137,7 +137,7 @@
 
                     if ($("input:radio:checked", self.control).length === 0)
                     {
-                        $("input:radio:first", self.control).attr("checked","checked");
+                        Alpaca.checked($(self.control).find("input:radio").first(), "checked");
                     }
                 }
 
