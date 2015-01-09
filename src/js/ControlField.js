@@ -18,14 +18,17 @@
 
             // helper method for getting val() from the control
             // handles conversion to the correct scalar type
-            this._getControlVal = function() {
+            this._getControlVal = function(ensureProperType) {
                 var val = null;
 
                 if (this.control)
                 {
                     val = $(this.control).val();
 
-                    val = _this.ensureProperType(val);
+                    if (ensureProperType)
+                    {
+                        val = _this.ensureProperType(val);
+                    }
                 }
 
                 return val;

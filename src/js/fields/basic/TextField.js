@@ -328,7 +328,7 @@
 
             if (!this.isDisplayOnly() && this.control && this.control.length > 0)
             {
-                value = this._getControlVal();
+                value = this._getControlVal(true);
 
                 if (self.control.mask && self.options.maskString)
                 {

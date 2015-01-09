@@ -1442,6 +1442,13 @@
             return equal;
         },
 
+        testRegex: function(expression, textValue)
+        {
+            var regex = new RegExp(expression);
+
+            return regex.test(textValue);
+        },
+
         /**
          * Finds whether a variable has empty value or not.
          *

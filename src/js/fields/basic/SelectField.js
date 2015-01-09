@@ -36,7 +36,7 @@
         {
             if (this.control && this.control.length > 0)
             {
-                var val = this._getControlVal();
+                var val = this._getControlVal(true);
                 if (typeof(val) === "undefined")
                 {
                     val = this.data;

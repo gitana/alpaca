@@ -33,7 +33,7 @@
          */
         getValue: function()
         {
-            var val = this._getControlVal();
+            var val = this._getControlVal(true);
 
             if (typeof(val) == "undefined" || "" == val)
             {
@@ -108,20 +108,29 @@
          * @returns {Boolean} true if it is a float number
          */
         _validateNumber: function() {
-            var textValue = this.getControlEl().val();
-            // allow null
+
+            // get value as text
+            var textValue = this._getControlVal();
+            if (typeof(textValue) === "number")
+            {
+                textValue = "" + textValue;
+            }
+
+            // allow empty
             if (Alpaca.isValEmpty(textValue)) {
                 return true;
             }
-            var floatValue = this.getValue();
 
-            // quick check to see if what they entered was a number
-            if (isNaN(floatValue)) {
+            // check if valid number format
+            var validNumber = Alpaca.testRegex(Alpaca.regexps.number, textValue);
+            if (!validNumber)
+            {
                 return false;
             }
 
-            // check if valid number format
-            if (!textValue.match(Alpaca.regexps.number)) {
+            // quick check to see if what they entered was a number
+            var floatValue = this.getValue();
+            if (isNaN(floatValue)) {
                 return false;
             }
 

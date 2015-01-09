@@ -96,25 +96,33 @@
 
         /**
          * Validates if it is an integer.
+         *
          * @returns {Boolean} true if it is an integer
          */
         _validateInteger: function()
         {
+            // get value as text
             var textValue = this._getControlVal();
+            if (typeof(textValue) === "number")
+            {
+                textValue = "" + textValue;
+            }
 
+            // allow empty
             if (Alpaca.isValEmpty(textValue)) {
                 return true;
             }
 
-            var floatValue = this.getValue();
-
-            // quick check to see if what they entered was a number
-            if (isNaN(floatValue)) {
+            // check if valid integer format
+            var validNumber = Alpaca.testRegex(Alpaca.regexps.integer, textValue);
+            if (!validNumber)
+            {
                 return false;
             }
 
-            // check if valid number format
-            if (!textValue.match(Alpaca.regexps.integer)) {
+            // quick check to see if what they entered was a number
+            var floatValue = this.getValue();
+            if (isNaN(floatValue)) {
                 return false;
             }
 
