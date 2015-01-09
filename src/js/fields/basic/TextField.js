@@ -483,28 +483,6 @@
         },
 
         /**
-         * @see Alpaca.Field#disable
-         */
-        disable: function()
-        {
-            if (this.control && this.control.length > 0)
-            {
-                this.control.disabled = true;
-            }
-        },
-
-        /**
-         * @see Alpaca.Field#enable
-         */
-        enable: function()
-        {
-            if (this.control && this.control.length > 0)
-            {
-                this.control.disabled = false;
-            }
-        },
-
-        /**
          * @see Alpaca.Field#focus
          */
         focus: function()

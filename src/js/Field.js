@@ -625,7 +625,6 @@
             // all fields get field id data attribute
             this.field.attr("data-alpaca-field-id", this.getId());
 
-
             // try to avoid adding unnecessary injections for display view.
             if (this.view.type !== 'view') {
 
@@ -1817,19 +1816,19 @@
                     },
                     "readonly": {
                         "title": "Readonly",
-                        "description": "Property will be readonly if true.",
+                        "description": "Indicates that the field is read-only.  A read-only field cannot have it's value changed.  Read-only fields render in a grayed-out or disabled control.  If the field is rendered using a view with the <code>displayReadonly</code> attribute set to false, the read-only field will not appear.",
                         "type": "boolean",
                         "default": false
                     },
                     "required": {
                         "title": "Required",
-                        "description": "Property value must be set if true.",
+                        "description": "Indicates whether the field's value is required.  If set to true, the field must take on a valid value and cannnot be left empty or unassigned.",
                         "type": "boolean",
                         "default": false
                     },
                     "default": {
                         "title": "Default",
-                        "description": "Default value of the property.",
+                        "description": "The default value to be assigned for this property.  If the data for the field is empty or not provided, this default value will be plugged in for you.  Specify a default value when you want to pre-populate the field's value ahead of time.",
                         "type": "any"
                     },
                     "type": {

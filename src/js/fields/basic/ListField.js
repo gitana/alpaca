@@ -333,6 +333,18 @@
                         "description": "If true, the default 'None' option will not be shown.",
                         "type": "boolean",
                         "default": false
+                    },
+                    "noneLabel": {
+                        "title": "None Label",
+                        "description": "The label to use for the 'None' option in a list (select, radio or otherwise).",
+                        "type": "string",
+                        "default": "None"
+                    },
+                    "hideNone": {
+                        "title": "Hide None",
+                        "description": "Whether to hide the None option from a list (select, radio or otherwise).  This will be true if the field is required and false otherwise.",
+                        "type": "boolean",
+                        "default": false
                     }
                 }
             });
@@ -355,6 +367,13 @@
                     "removeDefaultNone": {
                         "type": "checkbox",
                         "rightLabel": "Remove Default None"
+                    },
+                    "noneLabel": {
+                        "type": "text"
+                    },
+                    "hideNone": {
+                        "type": "checkbox",
+                        "rightLabel": "Hide the 'None' option from the list"
                     }
                 }
             });

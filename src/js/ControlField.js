@@ -432,7 +432,34 @@
          */
         onClick: function(e)
         {
+        },
+
+        /**
+         * @see Alpaca.Field#disable
+         */
+        disable: function()
+        {
+            this.base();
+
+            if (this.control && this.control.length > 0)
+            {
+                $(this.control).prop("disabled", true);
+            }
+        },
+
+        /**
+         * @see Alpaca.Field#enable
+         */
+        enable: function()
+        {
+            this.base();
+
+            if (this.control && this.control.length > 0)
+            {
+                $(this.control).prop("disabled", false);
+            }
         }
+
 
 
         /* builder_helpers */

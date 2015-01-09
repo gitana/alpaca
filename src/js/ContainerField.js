@@ -704,6 +704,32 @@
             {
                 this.children[index].focus();
             }
+        },
+
+        /**
+         * @see Alpaca.Field#disable
+         */
+        disable: function()
+        {
+            this.base();
+
+            for (var i = 0; i < this.children.length; i++)
+            {
+                this.children[i].disable();
+            }
+        },
+
+        /**
+         * @see Alpaca.Field#enable
+         */
+        enable: function()
+        {
+            this.base();
+
+            for (var i = 0; i < this.children.length; i++)
+            {
+                this.children[i].enable();
+            }
         }
 
         /* builder_helpers */

@@ -533,9 +533,8 @@
         {
             var self = this;
 
-            var value = this.getValue();
-
             return $.ajax({
+                data: this.getValue(),
                 url: self.options.attributes.action,
                 type: self.options.attributes.method,
                 dataType: "json"

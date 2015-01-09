@@ -408,6 +408,8 @@
                         "rightLabel": "Empty Select First"
                     },
                     "multiselect": {
+                        "type": "object",
+                        "rightLabel": "Multiselect plugin properties - http://davidstutz.github.io/bootstrap-multiselect"
                     }
                 }
             });

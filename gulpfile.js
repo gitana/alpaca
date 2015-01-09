@@ -715,64 +715,6 @@ gulp.task("cucumber", function(cb) {
     });
 });
 
-var _applyBuilder = function(text, token, method)
-{
-    var c1 = text.indexOf("<!-- " + token + ":");
-    if (c1 > -1)
-    {
-        var c2 = text.indexOf("-->", c1 + 28);
-        if (c2 > -1)
-        {
-            var type = text.substring(c1 + 28, c2);
-
-            var instance = Alpaca.fieldClassRegistry[type]();
-
-            var schema = instance[method]();
-            var schemaSchema = instance.getSchemaOfSchema();
-            var schemaOptions = instance.getOptionsForSchema();
-            var optionsSchema = instance.getSchemaOfOptions();
-            var optionsOptions = instance.getOptionsForOptions();
-            var title = instance.getTitle();
-            var description = instance.getDescription();
-            var type = instance.getType();
-            var fieldType = instance.getFieldType();
-
-            var table = "";
-
-            table += "<table class='table table-hover'>";
-
-            table += "<thead>";
-            table += "<tr>";
-            table += "<th>Property</th>";
-            table += "<th>Description</th>";
-            table += "<th>Type</th>";
-            table += "<th>Default</th>";
-            table += "</tr>";
-            table += "</thead>";
-
-            table += "<tbody>";
-            for (var name in schemaSchema.properties)
-            {
-                var property = schemaSchema.properties[name];
-
-                table += "<tr>";
-                table += "<td>" + name + "</td>";
-                table += "<td>" + property.description ? property.description : "" + "</td>";
-                table += "<td>" + property.type ? property.type : "" + "</td>";
-                table += "<td>" + property.default ? property.default : "" + "</td>";
-                table += "</tr>";
-            }
-            table += "</tbody>";
-
-            table += "</table>";
-
-            text = text.substring(0, c1) + table + text.substring(c2 + 3);
-
-            fs.writeFileSync(filePath, text);
-        }
-    }
-};
-
 var generateTable = function(schema)
 {
     var table = "";
@@ -782,9 +724,9 @@ var generateTable = function(schema)
     table += "<thead>";
     table += "<tr>";
     table += "<th>Property</th>";
-    table += "<th>Description</th>";
     table += "<th>Type</th>";
     table += "<th>Default</th>";
+    table += "<th>Description</th>";
     table += "</tr>";
     table += "</thead>";
 
@@ -795,9 +737,9 @@ var generateTable = function(schema)
 
         table += "<tr>";
         table += "<td>" + name + "</td>";
-        table += "<td>" + (property.description ? property.description : "") + "</td>";
         table += "<td>" + (property.type ? property.type : "") + "</td>";
         table += "<td>" + (property.default ? property.default : "") + "</td>";
+        table += "<td>" + (property.description ? property.description : "") + "</td>";
         table += "</tr>";
     }
     table += "</tbody>";
@@ -828,13 +770,34 @@ var applyFieldAnnotationsToFile = function(filePath, Alpaca)
                 var instance = new constructor();
                 //domEl, data, options, schema, viewId, connector, errorCallback
 
-                // schema
+                // schema and options
                 var schemaSchema = instance.getSchemaOfSchema();
                 //var schemaOptions = instance.getOptionsForSchema();
-
-                // options
                 var optionsSchema = instance.getSchemaOfOptions();
                 //var optionsOptions = instance.getOptionsForOptions();
+
+                // sort the schema and options
+                var leSort = function(properties)
+                {
+                    var newProperties = {};
+
+                    var keys = [];
+                    for (var key in properties) {
+                        keys.push(key);
+                    }
+
+                    keys.sort();
+
+                    for (var i = 0; i < keys.length; i++)
+                    {
+                        newProperties[keys[i]] = properties[keys[i]];
+                    }
+
+                    return newProperties;
+                };
+                schemaSchema.properties = leSort(schemaSchema.properties);
+                optionsSchema.properties = leSort(optionsSchema.properties);
+
 
                 // general
                 var stampFunction = function(name, value, link)
@@ -859,7 +822,7 @@ var applyFieldAnnotationsToFile = function(filePath, Alpaca)
                 };
                 var title = instance.getTitle();
                 var description = instance.getDescription();
-                var type = instance.getType();
+                var schemaType = instance.getType();
                 var fieldType = instance.getFieldType();
                 var baseFieldType = instance.getBaseFieldType();
 
@@ -870,7 +833,9 @@ var applyFieldAnnotationsToFile = function(filePath, Alpaca)
                 gen += "<tbody>";
                 gen += stampFunction("Title", title);
                 gen += stampFunction("Description", description);
-                gen += stampFunction("JSON Schema Type(s)", type);
+                if (schemaType) {
+                    gen += stampFunction("JSON Schema Type(s)", schemaType);
+                }
                 gen += stampFunction("Field Type", fieldType, "/docs/fields/" + fieldType + ".html");
                 if (baseFieldType)
                 {
