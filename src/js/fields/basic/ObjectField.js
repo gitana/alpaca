@@ -160,7 +160,7 @@
                         {
                             assignedValue = (fieldValue? true: false);
                         }
-                        else if (Alpaca.isArray(fieldValue) || Alpaca.isObject(fieldValue))
+                        else if (Alpaca.isArray(fieldValue) || Alpaca.isObject(fieldValue) || Alpaca.isNumber(fieldValue))
                         {
                             assignedValue = fieldValue;
                         }
