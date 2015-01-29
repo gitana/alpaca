@@ -24,6 +24,7 @@ for everything else.
 
 A detailed explanation of this structure is provided on the <a href="views.html">views</a> documentation page.
 
+
 ## Layouts
 
 You can control the layout of fields using a layout template.  A layout template is simply an HTML block with CSS
@@ -33,6 +34,7 @@ right might have a CSS class <code>right</code>.  These can be used to allocate 
 
 For more information on layouts, please read through the <a href="layouts.html">layouts documentation</a>.
 
+
 ## Wizards
 
 You can allocate your fields onto multi-step wizards complete with Previous and Next buttons so that users can
@@ -41,6 +43,7 @@ complete some fields before moving on the next set of fields.  This is achieved 
 custom validation logic and more.
 
 For more information on wizards, please read through the <a href="wizards.html">wizards documentation</a>.
+
 
 ## Specific Template Overrides
 
@@ -54,6 +57,7 @@ provide HTML templates at runtime.  Alpaca compiles them and uses them straight 
 Using this mechanism, if you want, you can override specific templates for a given view at runtime.
 
 Here is an example where we override the <code>message</code> template so that messages are displayed in big red text.
+
 
 <div id="field1"> </div>
 {% raw %}
@@ -89,6 +93,7 @@ $("#field1").alpaca({
 </script>
 {% endraw %}
 
+
 ## Individual Field Overrides
 
 In the previous example, we changed the <code>message</code> template for all fields in the form.  We can also
@@ -100,6 +105,7 @@ below root.  In this example, we use a URL to load a template from another file.
 
 In this case, we override the template <code>control-text</code> which is the template for the <code>text</code>
 field control.
+
 
 <div id="field2"> </div>
 {% raw %}
@@ -139,6 +145,114 @@ $("#field2").alpaca({
 {% endraw %}
 
 
+## Field Overrides, Paths and Arrays
+
+In the example above, we did a very simple field-level override using a single path element.  If you have nested fields,
+you can use the very sample approach and reference fields using the path semantics.  For example, a form with an
+<code>address</code> object that has a <code>city</code> text field on it could be referenced like this:
+
+    /address/city
+
+Using these mechanics, you can override individual fields anywhere in your form.
+
+Alpaca expresses paths for array elements using [x] notation.  For example, you might have a form that supports
+multiple addresses.  In this case, the <code>address</code> field might be an <code>array</code> instead of an
+<code>object</code>.
+
+If you had two elements in the <code>address</code> array, you could reference them like this:
+
+    /address[0]
+    /address[1]
+
+And similarly, if you wanted to reference the city field of either one separately, you would do it like this:
+
+    /address[0]/city
+    /address[1]/city
+
+You can use this fine-grained path specification to override templates at a field level for specific parts of your form.
+For example, you might want to override the <code>city</code> field for the first address but not the second.
+
+At other times, you might want to generally describe an override for all items in an array.  In this case, you can use
+a generalized field path match like this:
+
+    /address/city
+
+Alpaca uses a best-fit approach to find a matching path override.  Exact index-based ([x]) path matches are preferred.
+If you have a path with multiple index-based elements (for example, <code>/a[0]/b[1]/c[2]/d</code>), then multiple
+matching path overrides might be specified (such as <code>/a/b/c/d</code> or <code>/a[0]/b/c[2]/d</code>).  Alpaca
+does it's thing and finds all matches.  It then picks the one that is the most specific to the path.
+
+Here is a list of names with a <code>people</code> array.  Each person has a <code>name</code>.  We override the second
+entry (John Rambo)'s name field (<a href="./templates-example3-control.html">templates-example3-control.html</a>).
+We override to draw a blue box around the control field.  We also override all of the fields using a non-index
+specific path and set names to italics and read-only
+(<a href="./templates-example3-control-text.html">templates-example3-control-text.html</a>).
+
+Note: At present, adding and removing new elements only performs DOM creation once (when the new element is inserted).
+Field overrides are respected at creation time and do not recalibrate on each incremental insert.  Thus, be careful
+with the matching path overrides.  They are often more useful for slight tweaks and adjustments.  If you're looking
+for more full-blown custom layout and formatting, <a href="/docs/api/views.html">custom views</a>,
+<a href="/docs/api/layouts.html">custom layouts</a>
+and <a href="/docs/api/custom-fields.html">custom fields</a> will prove to be more powerful.
+
+<div id="field3"> </div>
+{% raw %}
+<script type="text/javascript" id="field3-script">
+$("#field3").alpaca({
+    "data": {
+        "people": [{
+            "name": "John McClane",
+            "age": 32
+        }, {
+            "name": "John Rambo",
+            "age": 37
+        }, {
+            "name": "Chuck Norris",
+            "age": 35
+        }]
+    },
+    "schema": {
+        "type": "object",
+        "properties": {
+            "people": {
+                "title": "People",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "title": "Name",
+                            "type": "string"
+                        },
+                        "age": {
+                            "title": "Age",
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "view": {
+        "parent": "bootstrap-edit",
+        "fields": {
+            "/people[1]/name": {
+                "templates": {
+                    "control": "./templates-example3-control.html",
+                }
+            },
+            "/people/name": {
+                "templates": {
+                    "control-text": "./templates-example3-control-text.html"
+                }
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
+
+
 ## Global Templates
 
 If you want to completely do away with Alpaca's views engine and simply provide your own global template to do the
@@ -150,12 +264,12 @@ form interaction, the view engine is extremely useful because it works its way d
 all the actual data binding management for you.  However, for pure display purposes, global templates can be quite
 a valuable thing.
 
-Here's a simple display template.  This just provdes the HTML template as a string.
+Here's a simple display template.  This just provides the HTML template as a string.
 
-<div id="field3"> </div>
+<div id="field4"> </div>
 {% raw %}
-<script type="text/javascript" id="field3-script">
-$("#field3").alpaca({
+<script type="text/javascript" id="field4-script">
+$("#field4").alpaca({
     "data": {
         "name": "John McClane",
         "age": 32
@@ -193,11 +307,11 @@ Note:  To use this DOM approach, you have to be sure that the DOM is ready befor
 the DOM to retrieve the template when Alpaca is initialized (which is right away when you call $.alpaca).  Thus, be
 sure to use the <code>$(document).ready</code> method to ensure the DOM has loaded before Alpaca inits.
 
-You'll have to view source to find the <code>script</code tag with ID <code>#template4</code>.  But for reference,
+You'll have to view source to find the <code>script</code tag with ID <code>#template5</code>.  But for reference,
 it looks like this:
 
 ````
-<script type="text/x-handlebars-template" id="template4">
+<script type="text/x-handlebars-template" id="template5">
     <div>
         <p>Name: {% raw %}{{data.name}}{% endraw %}</p>
         <p>Age: {% raw %}{{data.age}}{% endraw %}</p>
@@ -205,11 +319,11 @@ it looks like this:
 </script>
 ````
 
-<div id="field4"> </div>
+<div id="field5"> </div>
 {% raw %}
-<script type="text/javascript" id="field4-script">
+<script type="text/javascript" id="field5-script">
 $(document).ready(function() {
-    $("#field4").alpaca({
+    $("#field5").alpaca({
         "data": {
             "name": "John McClane",
             "age": 32
@@ -228,14 +342,14 @@ $(document).ready(function() {
             }
         },
         "view": {
-            "globalTemplate": "#template4"
+            "globalTemplate": "#template5"
         }
     });
 });
 </script>
 {% endraw %}
 {% raw %}
-<script type="text/x-handlebars-template" id="template4">
+<script type="text/x-handlebars-template" id="template5">
     <div>
         <p>Name: {{data.name}}</p>
         <p>Age: {{data.age}}</p>

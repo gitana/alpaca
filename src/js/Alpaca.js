@@ -1512,7 +1512,7 @@
                 var parentId = view.parent;
                 if (!parentId)
                 {
-                    view.parent = "web-edit";
+                    view.parent = "bootstrap-edit";
                 }
                 this.registerView(view);
                 view = view.id;
@@ -2183,6 +2183,85 @@
                 }
             }
 
+            // OVERRIDE: is this template overridden at the field level?
+            if (field && field.path)
+            {
+                var path = field.path;
+
+                if (view && view.fields)
+                {
+                    // let's try different
+                    // combinations of permutated and generalized lookups to see if we can find a best fit
+                    //
+                    // for example, if they path is: /first[1]/second[2]/third
+                    // we can look for the following generalized permutations in descending order of applicability:
+                    //
+                    //    /first[1]/second[2]/third
+                    //    /first[1]/second/third
+                    //    /first/second[2]/third
+                    //    /first/second/third
+                    //
+                    if (path && path.length > 1)
+                    {
+                        var collectMatches = function(tokens, index, matches)
+                        {
+                            // if we hit the end of the array, we're done
+                            if (index == tokens.length)
+                            {
+                                return;
+                            }
+
+                            // copy the tokens
+                            var newTokens = tokens.slice();
+
+                            // if we have an array in the path at this element, update newTokens to reflect
+                            var toggled = false;
+                            var token = tokens[index];
+                            var x1 = token.indexOf("[");
+                            if (x1 > -1)
+                            {
+                                token = token.substring(0, x1);
+                                toggled = true;
+                            }
+                            newTokens[index] = token;
+
+                            // see if we can find a match for this path
+                            var _path = newTokens.join("/");
+
+                            if (view.fields[_path] && view.fields[_path].templates && view.fields[_path].templates[templateId])
+                            {
+                                var _ck = Alpaca.makeCacheKey(view.id, "field", _path, templateId);
+                                if (_ck)
+                                {
+                                    matches.push({
+                                        "path": _path,
+                                        "cacheKey": _ck
+                                    });
+                                }
+                            }
+
+                            // proceed down the token array
+                            collectMatches(tokens, index + 1, matches);
+
+                            // if we toggled, proceed with that as well
+                            if (toggled) {
+                                collectMatches(newTokens, index + 1, matches);
+                            }
+                        };
+
+                        var tokens = path.split("/");
+                        var matches = [];
+                        collectMatches(tokens, 0, matches);
+
+                        if (matches.length > 0)
+                        {
+                            _cacheKey = matches[0].cacheKey;
+                        }
+                    }
+                }
+            }
+
+            /*
             // OVERRIDE: is this template defined at the field level?
             if (field && field.path)
             {
@@ -2193,6 +2272,7 @@
                     _cacheKey = Alpaca.makeCacheKey(view.id, "field", path, templateId);
                 }
             }
+            */
 
             // OVERRIDE: is this template defined at the global level?
             if (templateId === "globalTemplate" || templateId === "global")
