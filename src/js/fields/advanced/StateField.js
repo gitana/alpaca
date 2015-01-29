@@ -2,6 +2,73 @@
 
     var Alpaca = $.alpaca;
 
+    Alpaca.usHoldings = {};
+
+    Alpaca.usHoldings.territories = {
+        "American Samoa"                 : "AS",
+        "District Of Columbia"           : "DC",
+        "Federated States Of Micronesia" : "FM",
+        "Guam"                           : "GU",
+        "Marshall Islands"               : "MH",
+        "Northern Mariana Islands"       : "MP",
+        "Palau"                          : "PW",
+        "Puerto Rico"                    : "PR",
+        "Virgin Islands"                 : "VI"
+    };
+
+    Alpaca.usHoldings.states =  {
+        "Alabama"                        : "AL",
+        "Alaska"                         : "AK",
+        "Arizona"                        : "AZ",
+        "Arkansas"                       : "AR",
+        "California"                     : "CA",
+        "Colorado"                       : "CO",
+        "Connecticut"                    : "CT",
+        "Delaware"                       : "DE",
+        "Florida"                        : "FL",
+        "Georgia"                        : "GA",
+        "Hawaii"                         : "HI",
+        "Idaho"                          : "ID",
+        "Illinois"                       : "IL",
+        "Indiana"                        : "IN",
+        "Iowa"                           : "IA",
+        "Kansas"                         : "KS",
+        "Kentucky"                       : "KY",
+        "Louisiana"                      : "LA",
+        "Maine"                          : "ME",
+        "Maryland"                       : "MD",
+        "Massachusetts"                  : "MA",
+        "Michigan"                       : "MI",
+        "Minnesota"                      : "MN",
+        "Mississippi"                    : "MS",
+        "Missouri"                       : "MO",
+        "Montana"                        : "MT",
+        "Nebraska"                       : "NE",
+        "Nevada"                         : "NV",
+        "New Hampshire"                  : "NH",
+        "New Jersey"                     : "NJ",
+        "New Mexico"                     : "NM",
+        "New York"                       : "NY",
+        "North Carolina"                 : "NC",
+        "North Dakota"                   : "ND",
+        "Ohio"                           : "OH",
+        "Oklahoma"                       : "OK",
+        "Oregon"                         : "OR",
+        "Pennsylvania"                   : "PA",
+        "Rhode Island"                   : "RI",
+        "South Carolina"                 : "SC",
+        "South Dakota"                   : "SD",
+        "Tennessee"                      : "TN",
+        "Texas"                          : "TX",
+        "Utah"                           : "UT",
+        "Vermont"                        : "VT",
+        "Virginia"                       : "VA",
+        "Washington"                     : "WA",
+        "West Virginia"                  : "WV",
+        "Wisconsin"                      : "WI",
+        "Wyoming"                        : "WY"
+    };
+
     Alpaca.Fields.StateField = Alpaca.Fields.SelectField.extend(
     /**
      * @lends Alpaca.Fields.StateField.prototype
@@ -160,397 +227,29 @@
      */
     Alpaca.retrieveUSHoldings = (function()
     {
-        var holdings = [];
-        holdings.push({
-            "name": "Arkansas",
-            "code": "AK",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Alabama",
-            "code": "AL",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "American Samoa",
-            "code": "AS",
-            "state": false,
-            "territory": true
-        });
-        holdings.push({
-            "name": "Arizona",
-            "code": "AR",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "California",
-            "code": "CA",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Colorado",
-            "code": "CO",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Connecticut",
-            "code": "CT",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Delaware",
-            "code": "DE",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Distict of Columbia",
-            "code": "DC",
-            "state": false,
-            "territory": true
-        });
-        holdings.push({
-            "name": "Federated States of Micronesia",
-            "code": "FM",
-            "state": false,
-            "territory": true
-        });
-        holdings.push({
-            "name": "Florida",
-            "code": "FL",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Georgia",
-            "code": "GA",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Guam",
-            "code": "GU",
-            "state": false,
-            "territory": true
-        });
-        holdings.push({
-            "name": "Georgia",
-            "code": "GA",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Hawaii",
-            "code": "HI",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Idaho",
-            "code": "ID",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Illinois",
-            "code": "IL",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Indiana",
-            "code": "IN",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Iowa",
-            "code": "IA",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Kansas",
-            "code": "KS",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Kentucky",
-            "code": "KY",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Louisiana",
-            "code": "LA",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Maine",
-            "code": "ME",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Marshall Islands",
-            "code": "MH",
-            "state": false,
-            "territory": true
-        });
-        holdings.push({
-            "name": "Maryland",
-            "code": "MD",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Massachusetts",
-            "code": "MA",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Michigan",
-            "code": "MI",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Minnesota",
-            "code": "MN",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Mississippi",
-            "code": "MS",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Missouri",
-            "code": "MO",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Montana",
-            "code": "MT",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Nebraska",
-            "code": "NE",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Nevada",
-            "code": "NV",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "New Hampshire",
-            "code": "NH",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "New Jersey",
-            "code": "NJ",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "New Mexico",
-            "code": "NM",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "New York",
-            "code": "NY",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "North Carolina",
-            "code": "NC",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "North Dakota",
-            "code": "ND",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Northern Mariana Islands",
-            "code": "MP",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Ohio",
-            "code": "OH",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Oklahoma",
-            "code": "OK",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Oregon",
-            "code": "OR",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Palau",
-            "code": "PW",
-            "state": false,
-            "territory": true
-        });
-        holdings.push({
-            "name": "Pennsylvania",
-            "code": "PA",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Puerto Rico",
-            "code": "PR",
-            "state": false,
-            "territory": true
-        });
-        holdings.push({
-            "name": "Rhode Island",
-            "code": "RI",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "South Carolina",
-            "code": "SC",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "South Dakota",
-            "code": "SD",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Tennessee",
-            "code": "TN",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Texas",
-            "code": "TX",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Utah",
-            "code": "UT",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Vermont",
-            "code": "VT",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Virgin Islands",
-            "code": "VI",
-            "state": false,
-            "territory": true
-        });
-        holdings.push({
-            "name": "Virginia",
-            "code": "VA",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Washington",
-            "code": "WA",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "West Virginia",
-            "code": "WV",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Wisconsin",
-            "code": "WI",
-            "state": true,
-            "territory": false
-        });
-        holdings.push({
-            "name": "Wyoming",
-            "code": "WY",
-            "state": true,
-            "territory": false
-        });
-
         return function(includeStates, includeTerritories, codeValue, capitalize) {
-
-            var result = {
-                "keys": [],
-                "values": []
+            var res  = {
+                keys:   [],
+                values: []
             };
-
-            for (var i = 0; i < holdings.length; i++)
-            {
-                var keep = false;
-
-                if (holdings[i].state && includeStates) {
-                    keep = true;
-                } else if (holdings[i].territory && includeTerritories) {
-                    keep = true;
+            var opts = $.extend(
+                {},
+                includeStates      ? Alpaca.usHoldings.states      : {},
+                includeTerritories ? Alpaca.usHoldings.territories : {}
+            );
+            var sorted = Object.keys(opts);
+            sorted.sort();
+            for (var i in sorted) {
+                var state = sorted[i];
+                var key   = opts[state];
+                var value = codeValue ? key : state;
+                if (capitalize) {
+                    value = value.toUpperCase();
                 }
-
-                if (keep) {
-
-                    var key = holdings[i].code;
-                    var value = holdings[i].name;
-
-                    if (codeValue) {
-                        value = holdings[i].code;
-                    }
-                    if (capitalize) {
-                        value = value.toUpperCase();
-                    }
-
-                    result.keys.push(key);
-                    result.values.push(value);
-                }
+                res.keys.push(key);
+                res.values.push(value);
             }
-
-            return result;
+            return res;
         };
     })();
 
