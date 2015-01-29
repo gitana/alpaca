@@ -176,5 +176,6 @@ There are several ways to interact with the Alpaca community.
 + [@ASchriever](https://github.com/ASchriever)
 + [@hooflung64](https://github.com/hooflung64)
 + [@Shadowsrik](https://github.com/Shadowsrik)
++ [@deviant32](https://github.com/deviant32)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and [Alpaca Forums](http://www.cloudcms.org)!
