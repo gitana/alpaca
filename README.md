@@ -157,6 +157,15 @@ There are several ways to interact with the Alpaca community.
 - [Submit a Pull Request](https://github.com/gitana/alpaca) if you've fixed a bug and want to contribute code back to the Alpaca project.  This is the most powerful and effective way to influence the product.  Pull requests give you a way to write your own additions or adjustments to the code base and make it very easy for us to merge your changes into the product.
 - [Contact Cloud CMS](https://www.cloudcms.com) if you have an urgent issue, a high priority deliverable or need technical support for Alpaca in production.  Cloud CMS sponsors the Alpaca project and can put engineers on your project to get things done quickly.
 
+## Can I fork Alpaca and use it my own projects?
+
+Yes, absolutely.  That's the whole idea.  Fork it, use it in your projects, make money from it, live a better life, spend more time with
+your kids.  We hope that Alpaca proves useful to you.
+
+If you come up with something good (like a bug fix or a new feature), consider submitting a Pull Request back to the project so that
+others may benefit.  And so that they too might, in turn, get more sleep, enjoy your work, be happier and get more out of this adventure
+called life.
+
 ## Contributors
 
 + [@cloudcms](http://github.com/cloudcms)
@@ -177,5 +186,7 @@ There are several ways to interact with the Alpaca community.
 + [@hooflung64](https://github.com/hooflung64)
 + [@Shadowsrik](https://github.com/Shadowsrik)
 + [@deviant32](https://github.com/deviant32)
++ [@vikramsawant786](https://github.com/vikramsawant786)
 
-...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and [Alpaca Forums](http://www.cloudcms.org)!
+...and many others via the [Alpaca Web Site](http://www.alpacajs.org), the [Alpaca Forums](http://www.cloudcms.org) and
+[Alpaca Issues](https://github.com/gitana/alpaca/issues)!
