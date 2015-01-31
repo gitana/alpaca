@@ -81,3 +81,44 @@ $("#field4").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 5
+Form using number fields to represent geolocation latitude and longitude.
+<div id="field5"> </div>
+{% raw %}
+<script type="text/javascript" id="field5-script">
+$("#field5").alpaca({
+    "data": {
+        "latitude": 0,
+        "longitude": 0
+    },
+    "schema": {
+        "type": "object",
+        "properties": {
+            "latitude": {
+                "minimum": -180,
+                "maximum": 180,
+                "title": "Latitude",
+                "required": true
+            },
+            "longitude": {
+                "minimum": -180,
+                "maximum": 180,
+                "title": "Longitude",
+                "required": true
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "latitude": {
+                "type": "number"
+            },
+            "longitude": {
+                "type": "number"
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
