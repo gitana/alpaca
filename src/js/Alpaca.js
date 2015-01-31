@@ -4308,7 +4308,7 @@
         }
 
         // Test for equality any JavaScript type.
-        var equiv = function ()
+        var equiv = root.equiv = function ()
         {
             var innerEquiv; // the real equiv function
             var callers = []; // stack to decide between skip/abort functions

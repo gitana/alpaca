@@ -1255,7 +1255,7 @@
                 if (Alpaca.isArray(disallow)) {
                     var isAllowed = true;
                     $.each(disallow, function(index, value) {
-                        if ((Alpaca.isObject(val) || Alpaca.isArray(val)) && Alpaca.isString(value)) {
+                        if ((Alpaca.isObject(val) || (Alpaca.isArray(val)) && Alpaca.isString(value))) {
                             value = Alpaca.parseJSON(value);
                         }
                         if (Alpaca.compareObject(val, value)) {
@@ -1264,7 +1264,7 @@
                     });
                     return isAllowed;
                 } else {
-                    if ((Alpaca.isObject(val) || Alpaca.isArray(val)) && Alpaca.isString(disallow)) {
+                    if ((Alpaca.isObject(val) || (Alpaca.isArray(val)) && Alpaca.isString(disallow))) {
                         disallow = Alpaca.parseJSON(disallow);
                     }
                     return !Alpaca.compareObject(val, disallow);

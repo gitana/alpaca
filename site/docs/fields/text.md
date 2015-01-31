@@ -333,3 +333,23 @@ $("#field11").alpaca({
 </script>
 {% endraw %}
 
+
+## Example 12
+A text field with disallowed values.
+
+<div id="field12"></div>
+{% raw %}
+<script type="text/javascript" id="field12-script">
+$("#field12").alpaca({
+    "data": "Mickey Mantle",
+    "schema": {
+        "type": "string",
+        "disallow": ["Mickey Mantle", "Mickey"]
+    },
+    "options": {
+        "label": "Name"
+    }
+});
+</script>
+{% endraw %}
+
