@@ -48,12 +48,28 @@
             });
         },
 
+        /**
+         * @see Alpaca.Field#destroy
+         */
+        destroy: function()
+        {
+            // destroy the plugin instance
+            if (this.plugin)
+            {
+                this.plugin.destroy();
+                this.plugin = null;
+            }
+
+            // call up to base method
+            this.base();
+        }
 
         /* builder_helpers */
 
         /**
          * @see Alpaca.Fields.TextAreaField#getTitle
          */
+        ,
         getTitle: function() {
             return "CK Editor";
         },
@@ -88,7 +104,7 @@
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
                 "fields": {
-                    "wysiwyg": {
+                    "ckeditor": {
                         "type": "any"
                     }
                 }

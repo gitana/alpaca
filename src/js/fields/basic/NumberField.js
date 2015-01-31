@@ -323,7 +323,7 @@
         "stringValueTooLargeExclusive": "Value of this field must be less than {0}",
         "stringDivisibleBy": "The value must be divisible by {0}",
         "stringNotANumber": "This value is not a number.",
-        "stringValueNotMultipleOf": "This value is nu"
+        "stringValueNotMultipleOf": "This value is not a multiple of {0}"
     });
     Alpaca.registerFieldClass("number", Alpaca.Fields.NumberField);
     Alpaca.registerDefaultSchemaFieldMapping("number", "number");

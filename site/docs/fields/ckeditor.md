@@ -62,3 +62,38 @@ $("#field2").alpaca({
 });
 </script>
 {% endraw %}
+
+
+## Example 3
+Here we bind multiple CK Editors into the same form.
+
+<div id="field3"> </div>
+{% raw %}
+<script type="text/javascript" id="field3-script">
+$("#field3").alpaca({
+    "schema": {
+        "type": "object",
+        "properties": {
+            "summary": {
+                "type": "string",
+                "title": "Summary"
+            },
+            "body": {
+                "type": "string",
+                "title": "Body"
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "summary": {
+                "type": "ckeditor"
+            },
+            "body": {
+                "type": "ckeditor"
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
