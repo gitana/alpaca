@@ -160,13 +160,14 @@
     };
 
     var styles = {};
-    styles["commonIcon"] = "";
+    styles["button"] = "";
+    styles["smallButton"] = "";
     styles["addIcon"] = "";
     styles["removeIcon"] = "";
     styles["upIcon"] = "";
     styles["downIcon"] = "";
-    styles["containerExpandedIcon"] = "";
-    styles["containerCollapsedIcon"] = "";
+    styles["expandedIcon"] = "";
+    styles["collapsedIcon"] = "";
 
     Alpaca.registerView({
         "id": "web-display",

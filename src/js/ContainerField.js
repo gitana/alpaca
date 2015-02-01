@@ -128,13 +128,14 @@
             this.childrenById = {};
             this.childrenByPropertyId = {};
             // style icons
-            this.expandedIcon = this.view.getStyle("expandedIcon");
-            this.collapsedIcon = this.view.getStyle("collapsedIcon");
             this.commonIcon = this.view.getStyle("commonIcon");
             this.addIcon = this.view.getStyle("addIcon");
             this.removeIcon = this.view.getStyle("removeIcon");
             this.upIcon = this.view.getStyle("upIcon");
             this.downIcon = this.view.getStyle("downIcon");
+            this.expandedIcon = this.view.getStyle("expandedIcon");
+            this.collapsedIcon = this.view.getStyle("collapsedIcon");
+            this.buttonClass = this.view.getStyle("button");
         },
 
         /**

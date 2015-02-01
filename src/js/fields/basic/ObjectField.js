@@ -1173,6 +1173,7 @@
             model.data = self.data;
             model.showProgressBar = showProgressBar;
             model.markAllStepsVisited = this.wizardConfigs.markAllStepsVisited;
+            model.view = self.view;
 
             // render the actual wizard
             var wizardTemplateDescriptor = self.view.getTemplateDescriptor("wizard", self);

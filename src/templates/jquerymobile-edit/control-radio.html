@@ -1,0 +1,16 @@
+<script type="text/x-handlebars-template">
+
+    <fieldset data-role="controlgroup">
+        {{#if hideNone}}
+        {{else}}
+        <input type="radio" name="{{name}}" id="{{name}}-none" value="" checked="checked" {{#if options.readonly}}readonly="readonly"{{/if}}>
+        <label for="{{name}}-none">{{{noneLabel}}}</label>
+        {{/if}}
+
+        {{#each selectOptions}}
+        <input type="radio" name="{{../name}}" id="{{../name}}-{{@index}}" value="{{value}}" checked="checked" {{#if ../options.readonly}}readonly="readonly"{{/if}} {{#compare value ../data}}checked="checked"{{/compare}}>
+        <label for="{{../name}}-{{@index}}">{{{text}}}</label>
+        {{/each}}
+    </fieldset>
+
+</script>

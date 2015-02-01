@@ -1,20 +1,22 @@
 <script type="text/x-handlebars-template">
 
-    <div>
+    <div class="ui-field-contain">
+        <div class="ui-body ui-body-a ui-corner-all">
 
-        {{#if options.label}}
-        <legend class="{{#if options.labelClass}}{{options.labelClass}}{{/if}}">{{{options.label}}}</legend>
-        {{/if}}
+            {{#if options.label}}
+            <h3 {{#if options.labelClass}}class="{{options.labelClass}}"{{/if}}>{{{options.label}}}</h3>
+            {{/if}}
 
-        {{#if options.helper}}
-        <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-            <i class="glyphicon glyphicon-info-sign"></i>
-            {{{options.helper}}}
-        </p>
-        {{/if}}
+            {{#container}}{{/container}}
 
-        {{#container}}{{/container}}
+            {{#if options.helper}}
+            <input type="image" data-icon="icon-info">
+            <small class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+                {{{options.helper}}}
+            </small>
+            {{/if}}
 
+        </div>
     </div>
 
 </script>

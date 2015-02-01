@@ -23,13 +23,14 @@
 
     // custom styles
     var styles = {};
-    styles["commonIcon"] = "";
+    styles["button"] = "btn btn-default";
+    styles["smallButton"] = "btn btn-default btn-sm";
     styles["addIcon"] = "glyphicon glyphicon-plus-sign";
     styles["removeIcon"] = "glyphicon glyphicon-minus-sign";
     styles["upIcon"] = "glyphicon glyphicon-chevron-up";
     styles["downIcon"] = "glyphicon glyphicon-chevron-down";
-    styles["containerExpandedIcon"] = "glyphicon glyphicon-circle-arrow-down";
-    styles["containerCollapsedIcon"] = "glyphicon glyphicon-circle-arrow-right";
+    styles["expandedIcon"] = "glyphicon glyphicon-circle-arrow-down";
+    styles["collapsedIcon"] = "glyphicon glyphicon-circle-arrow-right";
 
     // custom callbacks
     var callbacks = {};

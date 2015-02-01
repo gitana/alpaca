@@ -1,0 +1,52 @@
+.alpaca-helper
+{
+    opacity: 0.5;
+}
+
+.alpaca-message
+{
+    opacity: 0.5;
+}
+
+.alpaca-invalid .alpaca-message
+{
+    color: #a94442;
+    opacity: 1.0;
+}
+
+.alpaca-invalid p, .alpaca-invalid select, .alpaca-invalid label
+{
+    color: #a94442;
+}
+
+.alpaca-invalid input
+{
+    border-color: #a94442 !important;
+    color: #a94442;
+}
+
+
+.alpaca-jqm-icon
+{
+    position: relative;
+    height: 32px;
+    width: 32px;
+    left: -12px;
+    top: 0px;
+}
+
+button.alpaca-array-actionbar-action
+{
+    height: 32px;
+    width: 32px;
+}
+
+button.alpaca-array-actionbar-action:hover
+{
+    cursor:hand;
+}
+
+div.alpaca-array-actionbar
+{
+    padding-bottom: 4px;
+}

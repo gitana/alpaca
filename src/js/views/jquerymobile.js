@@ -22,6 +22,14 @@
 
     // custom styles
     var styles = {};
+    styles["button"] = "";
+    styles["smallButton"] = "";
+    styles["addIcon"] = "ui-icon-plus ui-btn-icon-left alpaca-jqm-icon";
+    styles["removeIcon"] = "ui-icon-minus ui-btn-icon-left alpaca-jqm-icon";
+    styles["upIcon"] = "ui-icon-carat-u ui-btn-icon-left alpaca-jqm-icon";
+    styles["downIcon"] = "ui-icon-carat-d ui-btn-icon-left alpaca-jqm-icon";
+    styles["expandedIcon"] = "ui-icon-carat-r ui-btn-icon-left alpaca-jqm-icon";
+    styles["collapsedIcon"] = "ui-icon-carat-d ui-btn-icon-left alpaca-jqm-icon";
 
     // custom callbacks
     var callbacks = {};

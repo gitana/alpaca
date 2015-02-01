@@ -11,7 +11,7 @@
                 {{/compare}}
 
                 {{#compare ../options.toolbarStyle "button"}}
-                    <button class="alpaca-array-toolbar-action btn btn-default" data-array-toolbar-action="{{this.action}}">
+                    <button class="alpaca-array-toolbar-action btn {{../../view.styles.button}}" data-array-toolbar-action="{{this.action}}">
                         {{#if this.iconClass}}
                         <i class="{{this.iconClass}}"></i>
                         {{/if}}
@@ -29,7 +29,7 @@
 
             <div class="alpaca-array-item-actions btn-group">
                 {{#each ../arrayItemActions}}
-                <button class="alpaca-array-item-action btn btn-default" data-array-item-action="{{action}}">
+                <button class="alpaca-array-item-action {{../../view.styles.button}}" data-array-item-action="{{action}}">
                     {{#if this.iconClass}}
                     <i class="{{this.iconClass}}"></i>
                     {{/if}}

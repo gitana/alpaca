@@ -6,18 +6,18 @@
 
             {{#each arrayToolbarActions}}
 
-            {{#compare ../options.toolbarStyle "link"}}
-            <a href="#" class="alpaca-array-toolbar-action" data-array-toolbar-action="{{this.action}}">{{{this.label}}}</a>
-            {{/compare}}
+                {{#compare ../options.toolbarStyle "link"}}
+                <a href="#" class="alpaca-array-toolbar-action" data-array-toolbar-action="{{this.action}}">{{{this.label}}}</a>
+                {{/compare}}
 
-            {{#compare ../options.toolbarStyle "button"}}
-            <button class="alpaca-array-toolbar-action btn btn-default" data-array-toolbar-action="{{this.action}}">
-                {{#if this.iconClass}}
-                <i class="{{this.iconClass}}"></i>
-                {{/if}}
-                {{#if label}}{{{label}}}{{/if}}
-            </button>
-            {{/compare}}
+                {{#compare ../options.toolbarStyle "button"}}
+                <button class="alpaca-array-toolbar-action btn {{../../view.styles.button}}" data-array-toolbar-action="{{this.action}}">
+                    {{#if this.iconClass}}
+                    <i class="{{this.iconClass}}"></i>
+                    {{/if}}
+                    {{#if label}}{{{label}}}{{/if}}
+                </button>
+                {{/compare}}
 
             {{/each}}
 

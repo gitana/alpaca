@@ -167,54 +167,6 @@ $("#field3").alpaca({
 </script>
 {% endraw %}
 
-
-## POSTing to an echo handler
-
-Here is an example where we post to an echo handler.  Nothing too crazy.  The POST happens in the browser and so the
-browser is redirected to the POST handler's page.
-
-<div id="field2"> </div>
-{% raw %}
-<script type="text/javascript" id="field2-script">
-$("#field2").alpaca({
-    "schema": {
-        "title": "Your Information",
-        "type": "object",
-        "properties": {
-            "firstName": {
-                "title": "First Name",
-                "type": "string"
-            },
-            "lastName": {
-                "title": "Last Name",
-                "type": "string"
-            },
-            "age": {
-                "title": "Age",
-                "type": "integer",
-                "minValue": 0,
-                "maxValue": 100
-            }
-        }
-    },
-    "options": {
-        "form": {
-            "attributes": {
-                "method": "post",
-                "action": "http://httpbin.org/post"
-            },
-            "buttons": {
-                "submit": {
-                    "title": "Bring it on!"
-                }
-            }
-        }
-    }
-});
-</script>
-{% endraw %}
-
-
 ## Form with Buttons
 
 Here is an example of a form with a submit and reset button.

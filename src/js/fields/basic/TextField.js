@@ -697,7 +697,7 @@
                         "type": "checkbox"
                     },
                     "inputType": {
-                        "type": "string"
+                        "type": "text"
                     },
                     "data": {
                         "type": "object"

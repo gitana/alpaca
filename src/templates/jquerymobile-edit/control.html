@@ -1,6 +1,6 @@
 <script type="text/x-handlebars-template">
 
-    <div data-role="fieldcontain">
+    <div data-role="fieldcontainer">
 
         {{#if options.label}}
         <label class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-control-label" for="{{id}}">{{{options.label}}}</label>
@@ -9,10 +9,9 @@
         {{#control}}{{/control}}
 
         {{#if options.helper}}
-        <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-            <i class="glyphicon glyphicon-info-sign"></i>
+        <small class="alpaca-helper {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
             {{{options.helper}}}
-        </p>
+        </small>
         {{/if}}
 
     </div>

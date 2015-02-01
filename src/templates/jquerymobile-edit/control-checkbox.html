@@ -1,0 +1,25 @@
+<script type="text/x-handlebars-template">
+
+    <fieldset data-role="controlgroup">
+
+        {{#if options.multiple}}
+
+            {{#each checkboxOptions}}
+                <input type="checkbox" name="{{name}}" id="{{name}}-{{@index}}" data-checkbox-index="{{@index}}" data-checkbox-value="{{value}}" {{#if ../../options.readonly}}readonly="readonly"{{/if}} {{#each ../../options.data}}data-{{@key}}="{{value}}"{{/each}}>
+                <label for="{{name}}"-{{@index}}>{{{options.rightLabel}}}</label>
+            {{/each}}
+
+        {{else}}
+            <input type="checkbox" name="{{name}}" id="{{name}}" {{#if options.readonly}}readonly="readonly"{{/if}} {{#each options.data}}data-{{@key}}="{{value}}"{{/each}}>
+            <label for="{{name}}">
+                {{#if options.rightLabel}}
+                    {{{options.rightLabel}}}
+                {{else}}
+                    {{options.label}}
+                {{/if}}
+            </label>
+        {{/if}}
+
+    </fieldset>
+
+</script>

@@ -215,8 +215,8 @@ var setup = function()
                         $(interaction).attr("icount-ref", iCount);
                         $(this).append(interaction);
                         $(buttonGroup).css({
-                            "margin-top": ($(interaction).height() / 2) - ($(buttonGroup).height() / 2),
-                            "margin-right": "8px"
+                            "margin-top": 2 + (($(interaction).height() / 2) - ($(buttonGroup).height() / 2)),
+                            "margin-right": "16px"
                         });
                         $(schemaButton).off().click(function(e) {
 
@@ -682,7 +682,6 @@ var setup = function()
 
     };
     rtFunction();
-
 
     var isCoreField = function(type)
     {

@@ -126,13 +126,14 @@
 
     // custom styles
     var styles = {};
-    styles["containerExpandedIcon"] = "ui-icon-circle-arrow-s";
-    styles["containerCollapsedIcon"] = "ui-icon-circle-arrow-e";
-    styles["commonIcon"] = "ui-icon";
-    styles["addIcon"] = "ui-icon-circle-plus";
-    styles["removeIcon"] = "ui-icon-circle-minus";
-    styles["upIcon"] = "ui-icon-circle-arrow-n";
-    styles["downIcon"] = "ui-icon-circle-arrow-s";
+    styles["button"] = "";
+    styles["smallButton"] = "";
+    styles["addIcon"] = "ui-icon ui-icon-circle-plus";
+    styles["removeIcon"] = "ui-icon ui-icon-circle-minus";
+    styles["upIcon"] = "ui-icon ui-icon-circle-arrow-n";
+    styles["downIcon"] = "ui-icon ui-icon-circle-arrow-s";
+    styles["expandedIcon"] = "ui-icon ui-icon-circle-arrow-s";
+    styles["collapsedIcon"] = "ui-icon ui-icon-circle-arrow-e";
 
     Alpaca.registerView({
         "id": "jqueryui-display",

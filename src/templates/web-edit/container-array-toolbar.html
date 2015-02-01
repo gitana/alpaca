@@ -9,7 +9,7 @@
             {{/compare}}
 
             {{#compare ../toolbarStyle "button"}}
-                <button class="alpaca-array-toolbar-action btn btn-default btn-sm" data-alpaca-array-toolbar-action="{{this.action}}">
+                <button class="alpaca-array-toolbar-action {{views.styles.smallButtonClass}}" data-alpaca-array-toolbar-action="{{this.action}}">
                     {{#if this.iconClass}}
                     <i class="{{this.iconClass}}"></i>
                     {{/if}}
