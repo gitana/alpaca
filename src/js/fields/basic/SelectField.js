@@ -21,12 +21,6 @@
         setup: function()
         {
             this.base();
-
-            // empty select first to false by default
-            if (Alpaca.isUndefined(this.options.emptySelectFirst))
-            {
-                this.options.emptySelectFirst = false;
-            }
         },
 
         /**

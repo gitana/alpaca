@@ -35,6 +35,13 @@
             {
                 this.options.emptySelectFirst = false;
             }
+
+            // assume vertical orientation
+            // empty select first to false by default
+            if (Alpaca.isUndefined(this.options.vertical))
+            {
+                this.options.vertical = true;
+            }
         },
 
         /**
@@ -137,14 +144,18 @@
 
                     if ($("input:radio:checked", self.control).length === 0)
                     {
-                        Alpaca.checked($(self.control).find("input:radio").first(), "checked");
+                        Alpaca.checked($(self.control).find("input:radio[value='" + self.data + "']"), "checked");
                     }
                 }
 
                 // stack radio selectors vertically
                 if (self.options.vertical)
                 {
-                    $(".alpaca-controlfield-radio-item", self.control).css("display", "block");
+                    $(self.control).css("display", "block");
+                }
+                else
+                {
+                    $(self.control).css("display", "inline-block");
                 }
 
                 callback();
@@ -216,9 +227,9 @@
                     },
                     "vertical": {
                         "title": "Position the radio selector items vertically",
-                        "description": "When true, the radio selector items will be stacked vertically and not horizontally",
+                        "description": "By default, radio controls are stacked vertically.  Set to false if you'd like radio controls to lay out horizontally.",
                         "type": "boolean",
-                        "default": false
+                        "default": true
                     }
 				}
 			});
