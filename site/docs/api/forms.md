@@ -40,10 +40,25 @@ $("#field1").alpaca({
                 "type": "integer",
                 "minValue": 0,
                 "maxValue": 100
+            },
+            "preferences": {
+                "title": "Preferences",
+                "type": "string",
+                "enum": [
+                    "Non-Smoking",
+                    "Vegetarian",
+                    "Wheelchair Accessible",
+                    "Child Friendly"
+                ]
             }
         }
     },
     "options": {
+        "fields": {
+            "preferences": {
+                "type": "checkbox"
+            }
+        },
         "form": {
             "buttons": {
                 "submit": {
