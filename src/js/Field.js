@@ -647,25 +647,25 @@
                 var doDisableField = function()
                 {
                     // mark "disabled" attribute onto underlying element
-                    Alpaca.disabled($(':input', this.field), true);
-                    Alpaca.disabled($('select', this.field), true);
-                    Alpaca.disabled($(':radio', this.field), true);
-                    Alpaca.disabled($(':checkbox', this.field), true);
+                    Alpaca.disabled($(':input', self.field), true);
+                    Alpaca.disabled($('select', self.field), true);
+                    Alpaca.disabled($(':radio', self.field), true);
+                    Alpaca.disabled($(':checkbox', self.field), true);
 
                     // special case for radio buttons (prevent clicks)
-                    $(":radio", this.field).off().click(function(e) {
+                    $(":radio", self.field).off().click(function(e) {
                         e.preventDefault();
                         e.stopImmediatePropagation();
                         return false;
                     });
-                    $(".radio label", this.field).off().click(function(e) {
+                    $(".radio label", self.field).off().click(function(e) {
                         e.preventDefault();
                         e.stopImmediatePropagation();
                         return false;
                     });
 
                     // special case (input field)
-                    $(":input", this.field).off().click(function(e) {
+                    $(":input", self.field).off().click(function(e) {
                         e.preventDefault();
                         e.stopImmediatePropagation();
                         return false;
