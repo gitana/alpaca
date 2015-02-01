@@ -36,7 +36,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
         It might end up looking something like this:
     </p>
     <div class="codewrap">
-        <pre class="prettyprint linenums">{{ page1 | xml_escape }}</pre>
+        <pre class="prettyprint linenums tutorial">{{ page1 | xml_escape }}</pre>
     </div>
 </div>
 
@@ -69,7 +69,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
     </p>
 
     <div class="codewrap">
-        <pre class="prettyprint linenums">{{ page2 | xml_escape }}</pre>
+        <pre class="prettyprint linenums tutorial">{{ page2 | xml_escape }}</pre>
     </div>
 
     <p>
@@ -103,7 +103,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
     </p>
 
     <div class="codewrap">
-        <pre class="prettyprint linenums">{{ page3 | xml_escape }}</pre>
+        <pre class="prettyprint linenums tutorial">{{ page3 | xml_escape }}</pre>
     </div>
 
     <p>
@@ -158,7 +158,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
     </p>
 
     <div class="codewrap">
-        <pre class="prettyprint linenums">{{ page4 | xml_escape }}</pre>
+        <pre class="prettyprint linenums tutorial">{{ page4 | xml_escape }}</pre>
     </div>
 
     <p>
@@ -204,7 +204,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
     </p>
 
     <div class="codewrap">
-        <pre class="prettyprint linenums">{{ page5 | xml_escape }}</pre>
+        <pre class="prettyprint linenums tutorial">{{ page5 | xml_escape }}</pre>
     </div>
 
     <p>
