@@ -111,7 +111,8 @@
             var toolbar = Alpaca.tmpl(templateDescriptor, {
                 "actions": self.toolbar.actions,
                 "fieldId": self.getId(),
-                "toolbarStyle": self.options.toolbarStyle
+                "toolbarStyle": self.options.toolbarStyle,
+                "view": self.view
             });
 
             $(this.getContainerEl()).before(toolbar);
@@ -140,7 +141,8 @@
                     "actions": self.actionbar.actions,
                     "fieldId": self.getId(),
                     "itemIndex": itemIndex,
-                    "actionbarStyle": self.options.actionbarStyle
+                    "actionbarStyle": self.options.actionbarStyle,
+                    "view": self.view
                 });
 
                 // insert above or below

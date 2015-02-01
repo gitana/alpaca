@@ -382,3 +382,44 @@ $("#field12").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 13
+An array field with nested radio elements.
+<div id="field13"> </div>
+{% raw %}
+<script type="text/javascript" id="field13-script">
+$("#field3").alpaca({
+   "schema": {
+       "title": "Array Test",
+           "type": "object",
+           "properties": {
+           "devices": {
+               "title": "Array test",
+                   "type": "array",
+                   "items": {
+                   "title": "Device",
+                       "type": "radio",
+                       "enum": ["Android", "iOS"],
+                       "default": "Android",
+                       "required": true
+               }
+           }
+       }
+   },
+   "options": {
+       "type": "object",
+           "collapsible": false,
+           "fields": {
+           "devices": {
+               "type": "array",
+                   "toolbarSticky": true,
+                   "fields": {
+                   "item": {
+                       "type": "radio"
+                   }
+               }
+           }
+       }
+   }
+});</script>
+{% endraw %}

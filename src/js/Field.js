@@ -1030,7 +1030,8 @@
                     {
                         var messageElement = Alpaca.tmpl(messageTemplateDescriptor, {
                             "id": messageObject.id,
-                            "message": messageObject.message
+                            "message": messageObject.message,
+                            "view": self.view
                         });
                         messageElement.addClass("alpaca-message");
                         if (hidden)

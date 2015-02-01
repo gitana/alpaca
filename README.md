@@ -187,6 +187,9 @@ called life.
 + [@Shadowsrik](https://github.com/Shadowsrik)
 + [@deviant32](https://github.com/deviant32)
 + [@vikramsawant786](https://github.com/vikramsawant786)
++ [@tylerperyea](https://github.com/tylerperyea)
++ [@picsoung](https://github.com/picsoung)
++ [@jmcgdz](https://github.com/jmcgdz)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org), the [Alpaca Forums](http://www.cloudcms.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!

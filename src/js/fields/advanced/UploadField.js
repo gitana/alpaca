@@ -52,6 +52,7 @@
                         model.file = Alpaca.cloneObject(files[i]);
                         model.size = formatFileSize(model.size);
                         model.buttons = self.options.buttons;
+                        model.view = self.view;
 
                         var row = Alpaca.tmpl(self.view.getTemplateDescriptor(templateId), model, self);
 
