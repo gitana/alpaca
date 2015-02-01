@@ -644,18 +644,59 @@
                     self.fireCallback("optional");
                 }
 
+                var doDisableField = function()
+                {
+                    // mark "disabled" attribute onto underlying element
+                    Alpaca.disabled($(':input', this.field), true);
+                    Alpaca.disabled($('select', this.field), true);
+                    Alpaca.disabled($(':radio', this.field), true);
+                    Alpaca.disabled($(':checkbox', this.field), true);
+
+                    // special case for radio buttons (prevent clicks)
+                    $(":radio", this.field).off().click(function(e) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        return false;
+                    });
+                    $(".radio label", this.field).off().click(function(e) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        return false;
+                    });
+
+                    // special case (input field)
+                    $(":input", this.field).off().click(function(e) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        return false;
+                    });
+
+                };
+
                 // readonly
                 if (this.options.readonly)
                 {
                     $(this.field).addClass("alpaca-readonly");
 
                     $(':input', this.field).attr('readonly', 'readonly');
-                    $('select', this.field).attr('disabled', 'disabled');
-                    $(':radio', this.field).attr('disabled', 'disabled');
-                    $(':checkbox', this.field).attr('disabled', 'disabled');
+
+                    // disable the field
+                    doDisableField();
 
                     // CALLBACK: "readonly"
                     self.fireCallback("readonly");
+                }
+
+                // disabled
+                if (this.options.disabled)
+                {
+                    $(this.field).addClass("alpaca-disabled");
+
+                    // disable the field
+                    doDisableField();
+
+                    // CALLBACK: "disabled"
+                    self.fireCallback("disabled");
                 }
 
                 // allow single or multiple field classes to be specified via the "fieldClass"

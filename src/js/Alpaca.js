@@ -2432,6 +2432,11 @@
         return Alpaca.attrProp(el, "checked", value);
     };
 
+    Alpaca.disabled = function(el, value)
+    {
+        return Alpaca.attrProp(el, "disabled", value);
+    };
+
     Alpaca.attrProp = function(el, name, value)
     {
         if (typeof(value) !== "undefined")

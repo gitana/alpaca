@@ -122,6 +122,12 @@
 
 }
 
+/** Added to any field that is disabled **/
+.alpaca-disabled
+{
+
+}
+
 /** Added to the container that holds Alpaca field helper text **/
 .alpaca-helper
 {
