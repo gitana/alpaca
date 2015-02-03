@@ -190,6 +190,7 @@ called life.
 + [@tylerperyea](https://github.com/tylerperyea)
 + [@picsoung](https://github.com/picsoung)
 + [@jmcgdz](https://github.com/jmcgdz)
++ [@ytaka](https://github.com/ytaka)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org), the [Alpaca Forums](http://www.cloudcms.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!
