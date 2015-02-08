@@ -171,6 +171,7 @@
             model.schema = this.schema;
             model.data = this.data;
             model.required = this.isRequired();
+            model.view = this.view;
 
             callback(model);
         },

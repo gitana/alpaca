@@ -122,6 +122,10 @@
     color: #888;
 }
 
+.alpaca-fileupload-well table tbody.files tr td.name
+{
+    word-wrap: break-word;
+}
 
 
 

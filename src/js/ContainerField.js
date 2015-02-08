@@ -221,7 +221,8 @@
             var model = {
                 "id": this.getId(),
                 "name": this.name,
-                "options": this.options
+                "options": this.options,
+                "view": this.view
             };
 
             // load items into array and store on model for future use
