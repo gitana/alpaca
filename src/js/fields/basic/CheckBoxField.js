@@ -149,7 +149,7 @@
 
                         for (var k in dataArray)
                         {
-                            $(self.getFieldEl()).find("input:checkbox[data-checkbox-value='" + dataArray[k] + "']").prop("checked", true);
+                            $(self.getFieldEl()).find("input:checkbox[data-checkbox-value=\"" + dataArray[k] + "\"]").prop("checked", true);
                         }
                     }
                 }
@@ -250,7 +250,7 @@
                 // walk through values and assign into appropriate inputs
                 for (var j = 0; j < values.length; j++)
                 {
-                    var input = $(self.getFieldEl()).find("input[data-checkbox-value='" + values[j] + "']");
+                    var input = $(self.getFieldEl()).find("input[data-checkbox-value=\"" + values[j] + "\"]");
                     if (input.length > 0)
                     {
                         Alpaca.checked($(input[0]), value);

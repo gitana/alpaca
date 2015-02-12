@@ -77,7 +77,7 @@
             // mark selected value
             if (typeof(val) != "undefined")
             {
-                Alpaca.checked($(self.control).find("input[value='" + val + "']"), "checked");
+                Alpaca.checked($(self.control).find("input[value=\"" + val + "\"]"), "checked");
             }
 
             // if none selected and "emptySelectFirst", then select
@@ -144,7 +144,7 @@
 
                     if ($("input:radio:checked", self.control).length === 0)
                     {
-                        Alpaca.checked($(self.control).find("input:radio[value='" + self.data + "']"), "checked");
+                        Alpaca.checked($(self.control).find("input:radio[value=\"" + self.data + "\"]"), "checked");
                     }
                 }
 
