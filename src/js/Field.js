@@ -586,6 +586,34 @@
                 "name": this.name
             });
 
+            // if we got back multiple elements, try to pick at the first DIV
+            if ($(renderedDomElement).length > 0)
+            {
+                var single = null;
+                for (var i = 0; i < $(renderedDomElement).length; i++)
+                {
+                    var name = $(renderedDomElement)[i].nodeName;
+                    if (name)
+                    {
+                        name = name.toLowerCase();
+
+                        if ("div" === name || "span" === name)
+                        {
+                            single = $($(renderedDomElement)[i]);
+                            break;
+                        }
+                    }
+                }
+                if (!single)
+                {
+                    single = $($(renderedDomElement).last());
+                }
+                if (single)
+                {
+                    renderedDomElement = single;
+                }
+            }
+
             // remove the previous "field" element if it exists
             self._oldFieldEl = self.field;
 
