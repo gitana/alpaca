@@ -150,6 +150,7 @@ var defaults = {
       helper: 'Guess my favorite ice cream?'
     },
     schema: {
+      required: true,
       enum: ['Vanilla', 'Chocolate', 'Coffee']
     }
   },

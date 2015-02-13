@@ -5,7 +5,6 @@ Feature: Hide Init Validation Error
 
   Scenario: If the form is invalid then it should be detected, just not displayed
     Given I am on a page with required fields and the hideInitValidationError flag on
-    Then pending
     Then the alpaca form should be invalid
 
   Scenario: Errors should not be shown right after the form is initialized
