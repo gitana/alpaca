@@ -53,7 +53,8 @@ var fields = function() {
    *
    * @param {string} the text to look for
    */
-  this.Then(/^I should see the text "(.*)"$/, function(text, cb) {
+  this.Then(/^I should (not )?see the text "(.*)"$/, function(not, text, cb) {
+    not = !!not;
     this.eval(function(text) {
       var selector = ':contains(' + text + ')';
       var visible  = $('#fixture').find(selector).filter(function() {
@@ -66,10 +67,18 @@ var fields = function() {
       }).is(':visible');
       return visible;
     }, text).then(function(res) {
-      if (!res) {
-        cb('Expected to see the text "' + text + '" but did not');
+      if (!not) {
+        if (!res) {
+          cb('Expected to see the text "' + text + '" but did not');
+        } else {
+          cb();
+        }
       } else {
-        cb();
+        if (res) {
+          cb('Expected to not see text "' + text + '" but did');
+        } else {
+          cb();
+        }
       }
     });
   });

@@ -12,7 +12,13 @@ Feature: Toggle display of array inside object fields
   @wip
   Scenario: I should be able toggle visibility of nested array fields by clicking on their title
     Given I am on a page with an array field with {"data":[{"params":[{"name":"test"}]}],"schema":{"title":"Outer Array Field","type":"array","items":{"type":"object","properties":{"params":{"title":"Nested Array Field","type":"array","items":{"type":"object","properties":{"name":{"title":"Name","type":"string"}}}}}}}}
+
     When I click on the text "Nested Array Field"
       And after 1 second # give the animation some time to play out
     Then I should see the text "Outer Array Field"
-    Then I should see the text "Inner Array Field"
+    And I should see the text "Nested Array Field"
+
+    When I click on the text "Outer Array Field"
+      And after 1 second # give the animation some time to play out
+    Then I should see the text "Outer Array Field"
+    And I should not see the text "Nested Array Field"
