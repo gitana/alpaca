@@ -27,7 +27,6 @@
               self.options.toolbar = standardToolbar;
             }
             this.base();
-            /* TODO  - allow tinyMCE options here */
         },
 
         getValue:function() {
