@@ -1,0 +1,116 @@
+(function($) {
+
+    var Alpaca = $.alpaca;
+
+    Alpaca.Fields.tinyMCEField = Alpaca.Fields.TextAreaField.extend(
+    /**
+     * @lends Alpaca.Fields.tinyMCEField.prototype
+     */
+    {
+        /**
+         * @see Alpaca.Fields.TextAreaField#getFieldType
+         */
+        getFieldType: function() {
+            return "tinyMCE";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#setup
+         */
+        setup: function() {
+            var self=this;
+            if (!this.data)  {
+                this.data = "";
+            }
+            var standardToolbar="insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image";
+            if (!self.options.toolbar) {
+              self.options.toolbar = standardToolbar;
+            }
+            this.base();
+            /* TODO  - allow tinyMCE options here */
+        },
+
+        getValue:function() {
+          //return "haha";
+          var self=this;
+          var rteFieldID=self.control[0].id;
+          var rteRef=tinymce.get(rteFieldID);
+          var returnVal="";
+          if (rteRef != null) {  //when page intially loads and tinyMCE not yet initialized, this check prevents an error
+            returnVal=rteRef.getContent()  
+          }
+
+          return returnVal;
+        },
+
+        afterRenderControl: function(model, callback) {
+            //"insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+            var self = this;
+            this.base(model, function() {
+            if (!this.data)
+                if (!self.isDisplayOnly() && self.control) {
+                  var rteFieldID=self.control[0].id;
+                  setTimeout( function() {
+                    tinymce.init({
+                      selector: "#"+rteFieldID,
+                      toolbar: self.options.toolbar
+                    });
+                  },250); //There may be a better/more proper way to wait to be able to call tinymce, but calling it in a setTimeout seems to be reliable
+                }
+                callback();
+            });
+        },
+
+
+        /* builder_helpers */
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#getTitle
+         */
+        getTitle: function() {
+            return "TinyMCE Editor";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#getDescription
+         */
+        getDescription: function() {
+            return "Provides an instance of a TinyMCE control for use in editing HTML.";
+        },
+
+        /**
+         * @private
+         * @see Alpaca.ControlField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "toolbar": {
+                        "title": "TinyMCE toolbar options",
+                        "description": "Toolbar options for TinyMCE plugin.",
+                        "type": "string"
+                    }
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @see Alpaca.ControlField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                  "toolbar": {
+                    "type": "text"
+                  }
+                }
+            });
+        }
+
+        /* end_builder_helpers */
+    });
+
+    Alpaca.registerFieldClass("tinyMCE", Alpaca.Fields.tinyMCEField);
+
+})(jQuery);
