@@ -16,6 +16,10 @@ You can learn more about this plugin on its GitHub page:
 For more information on date and time formatting strings, see the Moment.js documentation:
 <a href="http://momentjs.com/docs/">http://momentjs.com/docs/</a>.
 
+The default date time format is assumed to be <code>MM/DD/YYYY HH:mm:ss</code>.  This is an American approach to the
+date with a 24-hour clock.  If you want to have an AM/PM selector, you can set the dateFormat to
+<code>MM/DD/YYYY hh:mm:ss a</code>.
+
 <!-- INCLUDE_API_DOCS: datetime -->
 
 
@@ -40,8 +44,8 @@ Multiple datetime fields wrapped in a FORM.
 <script type="text/javascript" id="field2-script">
 $("#field2").alpaca({
     "data" : {
-        "start" : "10/12/2012 01:20",
-        "end" : "10/15/2012 18:55"
+        "start" : "10/12/2015 13:20",
+        "end" : "10/15/2015 18:55"
     },
     "schema": {
         "type" : "object",
@@ -87,20 +91,17 @@ $("#field3").alpaca({
         "format": "datetime"
     },
     "options": {
-        "datetime": {
-            "showSecond": true,
-            "timeFormat": 'hh:mm:ss.lZ',
-            "dateFormat": 'yy-mm-dd',
-            "separator": 'T',
-            "stepHour": 2,
-            "stepMinute": 10,
-            "stepSecond": 10
+        "picker": {
+            "format": "DD/MM/YYYY HH:mm:ss",
+            "extraFormats": [
+                "DD/MM/YYYY hh:mm:ss a"
+            ]
         }
     },
     "postRender": function(form) {
         var button = $("<div><button class='btn btn-default'>Get Datetime</button></div>");
         button.click(function() {
-            alert(form.getDatetime());
+            alert(form.getDate());
         }).appendTo($("#field3"));
     }
 });

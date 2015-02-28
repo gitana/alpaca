@@ -12,12 +12,13 @@ The ```table``` field.
 <!-- INCLUDE_API_DOCS: table -->
 
 
-## Example 1
-Table field for an array of text items.
-<div id="field1"> </div>
+
+## Example 3
+Empty table
+<div id="field3"> </div>
 {% raw %}
-<script type="text/javascript" id="field1-script">
-$("#field1").alpaca({
+<script type="text/javascript" id="field3-script">
+$("#field3").alpaca({
     "data": [{
         "key": "key1",
         "title": "title1",
@@ -37,33 +38,24 @@ $("#field1").alpaca({
             "type": "object",
             "properties": {
                 "key": {
-                    "type": "string"
+                    "type": "string",
+                    "title": "Key"
                 },
                 "title": {
-                    "type": "string"
+                    "type": "string",
+                    "title": "Title"
                 },
                 "amount": {
-                    "type": "number"
+                    "type": "number",
+                    "title": "Amount"
                 }
             }
         }
     },
     "options": {
-        "type": "table",
-        "fields": {
-            "key": {
-                "label": "Key"
-            },
-            "title": {
-                "label": "Title"
-            },
-            "amount": {
-                "label": "Amount"
-            }
-        }
+        "type": "table"
     }
 });
 </script>
 {% endraw %}
-
 

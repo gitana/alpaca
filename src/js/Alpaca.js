@@ -4453,6 +4453,12 @@
     Alpaca.CLASS_CONTROL = "alpaca-control";
     Alpaca.MARKER_CLASS_INSERT = "alpaca-marker-insert";
     Alpaca.MARKER_DATA_INSERT_KEY = "data-alpaca-marker-insert-key";
+    Alpaca.MARKER_CLASS_ARRAY_TOOLBAR = "alpaca-marker-array-field-toolbar";
+    Alpaca.MARKER_DATA_ARRAY_TOOLBAR_FIELD_ID = "data-alpaca-array-field-toolbar-field-id";
+    Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR = "alpaca-marker-array-field-item-actionbar";
+    Alpaca.MARKER_DATA_ARRAY_ITEM_KEY = "data-alpaca-marker-array-field-item-key";
+    Alpaca.MARKER_DATA_ARRAY_ITEM_PARENT_FIELD_ID = "data-alpaca-marker-array-field-item-parent-field-id";
+    Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD = "alpaca-marker-container-field-item-field";
 
     Alpaca.makeCacheKey = function(viewId, scopeType, scopeId, templateId)
     {

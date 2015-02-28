@@ -7,6 +7,17 @@
      * @lends Alpaca.Fields.TableField.prototype
      */
     {
+        setup: function()
+        {
+            this.base();
+
+            if (!this.options.items.type)
+            {
+                this.options.items.type = "tablerow";
+            }
+
+        },
+
         /**
          * @see Alpaca.ControlField#getFieldType
          */
@@ -20,9 +31,14 @@
 
             this.base(model, function() {
 
-                $(self.container).find("table").dataTable({
+                /*
+                if ($.fn.dataTable)
+                {
+                    $(self.container).find("table").dataTable({
 
-                });
+                    });
+                }
+                */
 
                 callback();
             });

@@ -1,0 +1,18 @@
+<script type="text/x-handlebars-template">
+
+    <div class="alpaca-inserted-tablerow">
+
+        {{#each items}}
+            {{#item}}{{/item}}
+        {{/each}}
+
+        <!-- actions cell -->
+        {{#compare options.readonly false}}
+        <td>
+            {{#arrayActionbar}}{{/arrayActionbar}}
+        </td>
+        {{/compare}}
+
+    </div>
+
+</script>

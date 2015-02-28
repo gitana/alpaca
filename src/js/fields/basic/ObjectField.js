@@ -21,7 +21,18 @@
          */
         setup: function()
         {
+            var self = this;
+
             this.base();
+
+            var containerItemTemplateType = self.resolveContainerItemTemplateType();
+            if (!containerItemTemplateType)
+            {
+                var x = self.resolveContainerItemTemplateType();
+                return Alpaca.throwErrorWithCallback("Unable to find template descriptor for container item: " + self.getFieldType());
+            }
+
+            this.containerItemTemplateDescriptor = self.view.getTemplateDescriptor("container-" + containerItemTemplateType + "-item", self);
 
             if (Alpaca.isEmpty(this.data))
             {
@@ -345,10 +356,10 @@
          */
         createItem: function(propertyId, itemSchema, itemOptions, itemData, insertAfterId, postRenderCallback)
         {
-            var _this = this;
+            var self = this;
 
-            var containerElem = $("<div></div>");
-            containerElem.alpaca({
+            var formEl = $("<div></div>");
+            formEl.alpaca({
                 "data" : itemData,
                 "options": itemOptions,
                 "schema" : itemSchema,
@@ -356,27 +367,60 @@
                 "connector": this.connector,
                 "error": function(err)
                 {
-                    _this.destroy();
+                    self.destroy();
 
-                    _this.errorCallback.call(_this, err);
+                    self.errorCallback.call(_this, err);
                 },
                 "notTopLevel":true,
                 "render" : function(fieldControl, cb) {
                     // render
-                    fieldControl.parent = _this;
+                    fieldControl.parent = self;
                     // add the property Id
                     fieldControl.propertyId = propertyId;
                     // setup item path
-                    if (_this.path !== "/") {
-                        fieldControl.path = _this.path + "/" + propertyId;
+                    if (self.path !== "/") {
+                        fieldControl.path = self.path + "/" + propertyId;
                     } else {
-                        fieldControl.path = _this.path + propertyId;
+                        fieldControl.path = self.path + propertyId;
                     }
                     fieldControl.render(null, function() {
                         cb();
                     });
                 },
                 "postRender": function(control) {
+
+                    // alpaca finished
+
+                    // render the outer container
+                    var containerItemEl = Alpaca.tmpl(self.containerItemTemplateDescriptor, {
+                        "id": self.getId(),
+                        "name": control.name,
+                        "parentFieldId": self.getId(),
+                        "actionbarStyle": self.options.actionbarStyle,
+                        "view": self.view
+                    });
+
+                    // find the insertion point
+                    var insertionPointEl = $(containerItemEl).find("." + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD);
+                    if (insertionPointEl.length === 0)
+                    {
+                        if ($(containerItemEl).hasClass(Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD)) {
+                            insertionPointEl = $(containerItemEl);
+                        }
+                    }
+                    if (insertionPointEl.length === 0)
+                    {
+                        self.errorCallback.call(self, {
+                            "message": "Cannot find insertion point for field: " + self.getId()
+                        });
+                        return;
+                    }
+
+                    // copy into place
+                    $(insertionPointEl).before(control.getFieldEl());
+                    $(insertionPointEl).remove();
+
+                    control.containerItemEl = containerItemEl;
 
                     if (postRenderCallback)
                     {

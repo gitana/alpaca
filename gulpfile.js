@@ -92,6 +92,7 @@ var paths = {
             "src/js/fields/advanced/SearchField.js",
             "src/js/fields/advanced/StateField.js",
             "src/js/fields/advanced/TableField.js",
+            "src/js/fields/advanced/TableRowField.js",
             "src/js/fields/advanced/TagField.js",
             "src/js/fields/advanced/TimeField.js",
             "src/js/fields/advanced/UploadField.js",

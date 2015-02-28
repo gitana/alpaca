@@ -8,12 +8,14 @@ group: navigation
 
 The ```time``` field.
 
-The time Field uses the Bootstrap time picker under the hood.  You can learn more about the picker at it's GitHub
-project page:
-<a href="https://github.com/m3wolf/bootstrap3-timepicker" target="_blank">https://github.com/m3wolf/bootstrap3-timepicker</a>.
+The time Field uses the
+<a href="https://github.com/Eonasdan/bootstrap-datetimepicker" target="_blank">https://github.com/Eonasdan/bootstrap-datetimepicker</a>.
+plugin under the hood.
 
 For more information on date and time formatting strings, see the Moment.js documentation:
 <a href="http://momentjs.com/docs/">http://momentjs.com/docs/</a>.
+
+The default time format is assumed as <code>h:mm:ss a</code>.
 
 <!-- INCLUDE_API_DOCS: time -->
 
@@ -24,7 +26,7 @@ Simple example that displays the time and lets you change it.
 {% raw %}
 <script type="text/javascript" id="field1-script">
 $("#field1").alpaca({
-    "data": "1:15 PM",
+    "data": "1:15:00 PM",
     "schema": {
         "format": "time"
     }
@@ -34,7 +36,8 @@ $("#field1").alpaca({
 
 
 ## Example 2
-Displays the time in an alternative format.
+Displays the time in an alternative 24-hour format.  This is passed in using the <code>dateFormat</code> option but
+could also be passed in using <code>picker.format</code> as per example 3.
 <div id="field2"> </div>
 {% raw %}
 <script type="text/javascript" id="field2-script">
@@ -44,7 +47,7 @@ $("#field2").alpaca({
         "format": "time"
     },
     "options": {
-        "dateFormat": "hh:mm:ss"
+        "dateFormat": "HH:mm:ss"
     }
 });
 </script>
@@ -54,8 +57,8 @@ $("#field2").alpaca({
 ## Example 3
 The time field with invalid time data.  The time control rounds the time to nearest valid value.
 In addition, we can override the time picker plugin's settings directly by specifying them in the ```picker```
-option.  Here we set things up so that seconds are shown and time increments are by 1 second for minutes
-and seconds:
+option.  Here we set things up so that seconds increment by 2.
+
 In addition, we specify the time picker settings directly so that seconds are shown:
 <div id="field3"> </div>
 {% raw %}
@@ -65,9 +68,8 @@ $("#field3").alpaca({
     "options": {
         "type": "time",
         "picker": {
-            "showSeconds": true,
-            "minuteStep": 1,
-            "secondStep": 1
+            "stepping": 2,
+            "format": "HH:mm:ss"
         }
     }
 });

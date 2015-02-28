@@ -96,68 +96,98 @@
     // fired to add or remove the array toolbar for a field
     callbacks["arrayToolbar"] = function(remove)
     {
-        var self = this;
+        // NOTE: this = array field
 
-        var fieldId = this.getId();
+        var self = this;
 
         if (remove)
         {
-            $(this.getFieldEl()).find(".alpaca-array-toolbar[data-alpaca-array-toolbar-field-id='" + fieldId + "']").remove();
+            // swap existing toolbar with an insertion point marker
+            var existingToolbar = $(self.getFieldEl()).find(".alpaca-array-toolbar[data-alpaca-array-toolbar-field-id='" + self.getId() + "']");
+            if (existingToolbar.length > 0)
+            {
+                var insertionPointEl = $("<div class='" + Alpaca.MARKER_CLASS_ARRAY_TOOLBAR + "' " + Alpaca.MARKER_DATA_ARRAY_TOOLBAR_FIELD_ID + "='" + self.getId() + "'></div>");
+
+                existingToolbar.before(insertionPointEl);
+                existingToolbar.remove();
+            }
         }
         else
         {
-            // render toolbar
-            var templateDescriptor = this.view.getTemplateDescriptor("container-array-toolbar", self);
-            var toolbar = Alpaca.tmpl(templateDescriptor, {
-                "actions": self.toolbar.actions,
-                "fieldId": self.getId(),
-                "toolbarStyle": self.options.toolbarStyle,
-                "view": self.view
-            });
+            // find the the insertion point marker
+            var insertionPointEl = $(self.getContainerEl()).find("." + Alpaca.MARKER_CLASS_ARRAY_TOOLBAR + "[" + Alpaca.MARKER_DATA_ARRAY_TOOLBAR_FIELD_ID + "='" + self.getId() + "']");
+            if (insertionPointEl.length > 0)
+            {
+                // render toolbar
+                var templateDescriptor = self.view.getTemplateDescriptor("container-array-toolbar", self);
+                if (templateDescriptor)
+                {
+                    var toolbar = Alpaca.tmpl(templateDescriptor, {
+                        "actions": self.toolbar.actions,
+                        "id": self.getId(),
+                        "toolbarStyle": self.options.toolbarStyle,
+                        "view": self.view
+                    });
 
-            $(this.getContainerEl()).before(toolbar);
+                    // replace the insertion point
+                    $(insertionPointEl).before(toolbar);
+                    $(insertionPointEl).remove();
+                }
+            }
         }
     };
-    // fired to add or remove the array actionbars for a field
+    // fired to add or remove the array actionbars all children of an array field
     callbacks["arrayActionbars"] = function(remove)
     {
+        // NOTE: this = array field
+
         var self = this;
 
-        var fieldId = this.getId();
-
-        if (remove)
+        // walk over all children
+        for (var childIndex = 0; childIndex < self.children.length; childIndex++)
         {
-            $(this.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-field-id='" + fieldId + "']").remove();
-        }
-        else
-        {
-            var templateDescriptor = this.view.getTemplateDescriptor("container-array-actionbar", self);
+            var childField = self.children[childIndex];
+            var childFieldId = childField.getId();
 
-            // for each item render the item toolbar
-            var items = this.getContainerEl().children(".alpaca-container-item");
-            $(items).each(function(itemIndex) {
-
-                var actionbar = Alpaca.tmpl(templateDescriptor, {
-                    "actions": self.actionbar.actions,
-                    "fieldId": self.getId(),
-                    "itemIndex": itemIndex,
-                    "actionbarStyle": self.options.actionbarStyle,
-                    "view": self.view
-                });
-
-                // insert above or below
-                if (self.options.actionbarStyle == "top")
+            if (remove)
+            {
+                // find the existing action bar for this child
+                // if we have one, remove it and replace it with an insertion point marker
+                var existingActionbar = $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-field-id='" + childFieldId + "']");
+                if (existingActionbar.length > 0)
                 {
-                    $(this).children().first().before(actionbar);
+                    var insertionPointEl = $("<div class='" + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR + "' " + Alpaca.MARKER_DATA_ARRAY_ITEM_KEY + "='" + childField.name + "'></div>");
+
+                    existingActionbar.before(insertionPointEl);
+                    existingActionbar.remove();
                 }
-                else if (self.options.actionbarStyle == "bottom")
+            }
+            else
+            {
+                // find the insertion point marker
+                // if we find one, bind in the action toolbar
+                var insertionPointEl = $(self.getFieldEl()).find("." + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR + "[" + Alpaca.MARKER_DATA_ARRAY_ITEM_KEY + "='" + childField.name + "']");
+                if (insertionPointEl.length > 0)
                 {
-                    $(this).children().last().after(actionbar);
+                    var templateDescriptor = self.view.getTemplateDescriptor("container-array-actionbar", self);
+                    if (templateDescriptor)
+                    {
+                        var actionbar = Alpaca.tmpl(templateDescriptor, {
+                            "actions": self.actionbar.actions,
+                            "name": childField.name,
+                            "parentFieldId": self.getId(),
+                            "fieldId": childField.getId(),
+                            "itemIndex": childIndex,
+                            "actionbarStyle": self.options.actionbarStyle,
+                            "view": self.view
+                        });
+
+                        // replace the insertion point
+                        $(insertionPointEl).before(actionbar);
+                        $(insertionPointEl).remove();
+                    }
                 }
-
-            });
-
-
+            }
         }
     };
 

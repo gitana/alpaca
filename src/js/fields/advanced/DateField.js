@@ -17,6 +17,14 @@
             return "date";
         },
 
+        getDefaultFormat: function() {
+            return "MM/DD/YYYY";
+        },
+
+        getDefaultExtraFormats: function() {
+            return [];
+        },
+
         /**
          * @see Alpaca.Fields.TextField#setup
          */
@@ -34,9 +42,29 @@
                 self.options.picker = {};
             }
 
-            self.options.picker.pickDate = true;
-            self.options.picker.pickTime = false;
-            self.options.picker.useCurrent = false;
+            if (typeof(self.options.picker.useCurrent) === "undefined") {
+                self.options.picker.useCurrent = false;
+            }
+
+            // date format
+
+            if (self.options.picker.format) {
+                self.options.dateFormat = self.options.picker.format;
+            }
+            if (!self.options.dateFormat) {
+                self.options.dateFormat = self.getDefaultFormat();
+            }
+            if (!self.options.picker.format) {
+                self.options.picker.format = self.options.dateFormat;
+            }
+
+            // extra formats
+            if (!self.options.picker.extraFormats) {
+                var extraFormats = self.getDefaultExtraFormats();
+                if (extraFormats) {
+                    self.options.picker.extraFormats = extraFormats;
+                }
+            }
         },
 
         /**
@@ -57,11 +85,11 @@
                         self.picker = self.getControlEl().data("DateTimePicker");
                         if (self.picker && self.options.dateFormat)
                         {
-                            self.picker.format =  self.options.dateFormat;
+                            self.picker.format(self.options.dateFormat);
                         }
                         if (self.picker)
                         {
-                            self.options.dateFormat = self.picker.format;
+                            self.options.dateFormat = self.picker.format();
                         }
                     }
                 }
@@ -78,11 +106,24 @@
          */
         getDate: function()
         {
-            try {
-                return this.getControlEl().datetimepicker('getDate');
+            var self = this;
+
+            var date = null;
+            try
+            {
+                if (self.picker)
+                {
+                    date = self.picker.date();
+                }
+                else
+                {
+                    date = new Date(this.getValue());
+                }
             } catch (e) {
-                return this.getValue();
+                console.error(e);
             }
+
+            return date;
         },
 
         /**
@@ -127,32 +168,49 @@
         {
             var self = this;
 
+            var isValid = true;
+
             if (self.options.dateFormat)
             {
-                var value = this.getControlEl().val();
+                var value = self.getValue();
                 if (value || self.isRequired())
                 {
-                    return moment(value, self.options.dateFormat, true).isValid();
-                }
+                    // collect all formats
+                    var dateFormats = [];
+                    dateFormats.push(self.options.dateFormat);
+                    if (self.options.picker && self.options.picker.extraFormats)
+                    {
+                        for (var i = 0; i < self.options.picker.extraFormats.length; i++)
+                        {
+                            dateFormats.push(self.options.picker.extraFormats[i]);
+                        }
+                    }
 
-                return true;
+                    for (var i = 0; i < dateFormats.length; i++)
+                    {
+                        isValid = isValid || moment(value, self.options.dateFormat, true).isValid();
+                    }
+                }
             }
-            else
-            {
-                return true;
-            }
+
+            return isValid;
         },
 
         /**
          * @see Alpaca.Fields.TextField#setValue
          */
-        setValue: function(val)
+        setValue: function(value)
         {
-            this.base(val);
+            var self = this;
+
+            this.base(value);
 
             if (this.picker)
             {
-                this.picker.setValue(val);
+                if (moment(value, self.options.dateFormat, true).isValid())
+                {
+                    this.picker.date(value);
+                }
             }
         },
 
@@ -161,14 +219,7 @@
          */
         getValue: function()
         {
-            var val = this.base();
-
-            if (this.picker && this.picker.getDate())
-            {
-                val = this.picker.getDate()._i;
-            }
-
-            return val;
+            return this.base();
         },
 
         destroy: function()
@@ -238,7 +289,7 @@
                 "properties": {
                     "dateFormat": {
                         "title": "Date Format",
-                        "description": "Date format",
+                        "description": "Date format (using moment.js format)",
                         "type": "string"
                     },
                     "picker": {

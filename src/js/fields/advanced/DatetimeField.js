@@ -14,6 +14,18 @@
                 return "datetime";
             },
 
+            getDefaultFormat: function() {
+                return "MM/DD/YYYY HH:mm:ss";
+            },
+
+            getDefaultExtraFormats: function() {
+                return [
+                    "MM/DD/YYYY hh:mm:ss a",
+                    "MM/DD/YYYY HH:mm",
+                    "MM/DD/YYYY"
+                ];
+            },
+
             /**
              * @see Alpaca.Fields.TextField#setup
              */
@@ -25,41 +37,6 @@
                 //this.inputType = "datetime";
 
                 this.base();
-
-                self.options.picker.pickDate = true;
-                self.options.picker.pickTime = true;
-                if (typeof(self.options.picker.sideBySide) == "undefined")
-                {
-                    self.options.picker.sideBySide = true;
-                }
-            },
-
-            /**
-             *@see Alpaca.Fields.TextField#setValue
-             */
-            setValue: function(value)
-            {
-                if (value) {
-                    if (Alpaca.isNumber()) {
-                        value = new Date(value);
-                    }
-                    if (Object.prototype.toString.call(value) === "[object Date]") {
-                        this.base((value.getMonth() + 1) + "/" + value.getDate() + "/" + value.getFullYear() + " " + value.getHours() + ":" + value.getMinutes());
-                    } else {
-                        this.base(value);
-                    }
-                } else {
-                    this.base(value);
-                }
-            },
-
-            /**
-             * Returns field value in datetime.
-             *
-             * @returns {Date} Field value.
-             */
-            getDatetime: function() {
-                return this.getDate();
             }
 
             /* builder_helpers */
@@ -76,37 +53,7 @@
              * @see Alpaca.Fields.TextField#getDescription
              */
             getDescription: function() {
-                return "Datetime Field based on Trent Richardson's <a href='http://trentrichardson.com/examples/timepicker/'>jQuery timepicker addon</a>.";
-            },
-
-            /**
-             * @private
-             * @see Alpaca.ControlField#getSchemaOfOptions
-             */
-            getSchemaOfOptions: function() {
-                return Alpaca.merge(this.base(), {
-                    "properties": {
-                        "picker": {
-                            "title": "DatetimePicker options",
-                            "description": "Options that are supported by the <a href='http://eonasdan.github.io/bootstrap-datetimepicker/'>Bootstrap DateTime Picker</a>.",
-                            "type": "any"
-                        }
-                    }
-                });
-            },
-
-            /**
-             * @private
-             * @see Alpaca.ControlField#getOptionsForOptions
-             */
-            getOptionsForOptions: function() {
-                return Alpaca.merge(this.base(), {
-                    "fields": {
-                        "picker": {
-                            "type": "any"
-                        }
-                    }
-                });
+                return "Datetime Field based on <a href='http://eonasdan.github.io/bootstrap-datetimepicker/'>Bootstrap DateTime Picker</a>.";
             }
 
             /* end_builder_helpers */

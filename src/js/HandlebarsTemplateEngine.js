@@ -36,6 +36,17 @@
             return options.inverse(this);
         }
     };
+    helpers["ifnot"] = function(value, options)
+    {
+        if (!value)
+        {
+            return options.fn(this);
+        }
+        else
+        {
+            return options.inverse(this);
+        }
+    };
     helpers["times"] = function(n, block) {
         var accum = '';
         for(var i = 0; i < n; ++i)
@@ -52,9 +63,25 @@
     {
         return "<div class='" + Alpaca.MARKER_CLASS_CONTAINER_FIELD + "'></div>";
     };
-    helpers["item"] = function(options)
+    helpers["item"] = function(tag, options)
     {
-        return "<div class='" + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM + "' " + Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY + "='" + this.name + "'></div>";
+        if (Alpaca.isObject(tag))
+        {
+            options = tag;
+            tag = "div";
+        }
+
+        return "<" + tag + " class='" + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM + "' " + Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY + "='" + this.name + "'></" + tag + ">";
+    };
+    helpers["itemField"] = function(tag, options)
+    {
+        if (Alpaca.isObject(tag))
+        {
+            options = tag;
+            tag = "div";
+        }
+
+        return "<" + tag + " class='" + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD + "'></" + tag + ">";
     };
     helpers["formItems"] = function(options)
     {
@@ -105,9 +132,30 @@
 
         return data;
     };
-    Handlebars.registerHelper('setIndex', function(value){
+    helpers["arrayToolbar"] = function(options)
+    {
+        return "<div class='" + Alpaca.MARKER_CLASS_ARRAY_TOOLBAR + "' " + Alpaca.MARKER_DATA_ARRAY_TOOLBAR_FIELD_ID + "='" + this.id + "'></div>";
+    };
+    helpers["arrayActionbar"] = function(options)
+    {
+        return "<div class='" + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR + "' " + Alpaca.MARKER_DATA_ARRAY_ITEM_KEY + "='" + this.name + "' " + Alpaca.MARKER_DATA_ARRAY_ITEM_PARENT_FIELD_ID + "='" + this.parentFieldId + "'></div>";
+    };
+    Handlebars.registerHelper("arrayToolbar", helpers["arrayToolbar"]);
+    Handlebars.registerHelper("arrayActionbar", helpers["arrayActionbar"]);
+
+    Handlebars.registerHelper("setIndex", function(value){
         this.index = Number(value);
     });
+
+    Handlebars.registerHelper("eachProperty", function(context, options) {
+        var ret = "";
+        for(var prop in context)
+        {
+            ret = ret + options.fn({key:prop,value:context[prop]});
+        }
+        return ret;
+    });
+
 
     Handlebars.registerHelper("uploadErrorMessage", function(error) {
 
@@ -176,6 +224,7 @@
     Handlebars.registerHelper("control", helpers["control"]);
     Handlebars.registerHelper("container", helpers["container"]);
     Handlebars.registerHelper("item", helpers["item"]);
+    Handlebars.registerHelper("itemField", helpers["itemField"]);
     Handlebars.registerHelper("formItems", helpers["formItems"]);
     Handlebars.registerHelper("times", helpers["times"]);
     Handlebars.registerHelper("str", helpers["str"]);
@@ -184,6 +233,9 @@
     Handlebars.registerHelper('with', function(context, options) {
         return options.fn(context);
     });
+
+    // ifnot
+    Handlebars.registerHelper("ifnot", helpers["ifnot"]);
 
     var partials = {};
 
