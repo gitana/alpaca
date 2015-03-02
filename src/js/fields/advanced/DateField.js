@@ -100,7 +100,7 @@
         },
 
         /**
-         * Returns field value as a date.
+         * Returns field value as a JavaScript Date.
          *
          * @returns {Date} Field value.
          */
@@ -113,17 +113,29 @@
             {
                 if (self.picker)
                 {
-                    date = self.picker.date();
+                    date = (self.picker.date() ? self.picker.date()._d: null);
                 }
                 else
                 {
                     date = new Date(this.getValue());
                 }
-            } catch (e) {
+            }
+            catch (e)
+            {
                 console.error(e);
             }
 
             return date;
+        },
+
+        /**
+         * Returns field value as a JavaScript Date.
+         *
+         * @returns {Date} Field value.
+         */
+        date: function()
+        {
+            return this.getDate();
         },
 
         /**
