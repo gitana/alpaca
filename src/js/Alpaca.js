@@ -76,11 +76,19 @@
             var field = null;
             for (var i = 0; i < domElements.length; i++) {
                 var domElement = domElements[i];
-                var fieldId = $(domElement).attr("data-alpaca-field-id");
+                var fieldId = $(domElement).attr("alpaca-field-id");
                 if (fieldId) {
-                    var _field = Alpaca.fieldInstances[fieldId];
-                    if (_field) {
-                        field = _field;
+                    var domElements2 = $(domElement).find(":first");
+
+                    for (var j = 0; j < domElements2.length; j++) {
+                        var domElement2 = domElements2[j];
+                        var fieldId2 = $(domElement2).attr("data-alpaca-field-id");
+                        if (fieldId2) {
+                            var _field = Alpaca.fieldInstances[fieldId2];
+                            if (_field) {
+                                field = _field;
+                            }
+                        }
                     }
                 }
             }
