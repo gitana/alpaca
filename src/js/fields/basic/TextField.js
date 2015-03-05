@@ -22,9 +22,11 @@
         {
             this.base();
 
+            /*
             if (!this.options.size) {
                 this.options.size = 40;
             }
+            */
 
             // assume html5 input type = "text"
             if (!this.inputType)
@@ -288,13 +290,6 @@
         {
             var self = this;
 
-            var indicator = $(self.field).find(".alpaca-field-text-max-length-indicator");
-            if (indicator.length === 0)
-            {
-                indicator = $("<p class='alpaca-field-text-max-length-indicator'></p>");
-                $(self.control).after(indicator);
-            }
-
             var errState = false;
 
             var message = "";
@@ -311,6 +306,13 @@
                 {
                     message = "Your message is too long by " + (diff*-1) + " characters";
                     errState = true;
+                }
+
+                var indicator = $(self.field).find(".alpaca-field-text-max-length-indicator");
+                if (indicator.length === 0)
+                {
+                    indicator = $("<p class='alpaca-field-text-max-length-indicator'></p>");
+                    $(self.control).after(indicator);
                 }
 
                 $(indicator).html(message);

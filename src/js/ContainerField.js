@@ -161,17 +161,6 @@
             this.children = [];
             this.childrenById = {};
             this.childrenByPropertyId = {};
-            /*
-            // style icons
-            this.commonIcon = this.view.getStyle("commonIcon");
-            this.addIcon = this.view.getStyle("addIcon");
-            this.removeIcon = this.view.getStyle("removeIcon");
-            this.upIcon = this.view.getStyle("upIcon");
-            this.downIcon = this.view.getStyle("downIcon");
-            this.expandedIcon = this.view.getStyle("expandedIcon");
-            this.collapsedIcon = this.view.getStyle("collapsedIcon");
-            this.buttonClass = this.view.getStyle("button");
-            */
         },
 
         /**
@@ -335,9 +324,7 @@
             self.beforeApplyCreatedItems(model, function() {
                 self.applyCreatedItems(model, function () {
                     self.afterApplyCreatedItems(model, function () {
-
                         callback();
-
                     });
                 });
             });
@@ -483,6 +470,7 @@
 
                 $(item.containerItemEl).attr("data-alpaca-container-item-index", i);
                 $(item.containerItemEl).attr("data-alpaca-container-item-name", item.name);
+                $(item.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
 
                 // register the child
                 self.registerChild(item, i);
@@ -608,6 +596,7 @@
 
                     $(child.containerItemEl).attr("data-alpaca-container-item-index", i);
                     $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
+                    $(item.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
                 }
             }
         },

@@ -158,3 +158,56 @@
 {
     display: none;
 }
+
+.alpaca-field-table .actionbar
+{
+    white-space: nowrap;
+    text-align: center;
+}
+
+.alpaca-field-table table tr td .alpaca-field
+{
+    width: 100%;
+}
+
+.alpaca-field-table table tr td .alpaca-field .form-control
+{
+    width: 100%;
+}
+
+.alpaca-field-table .form-group
+{
+    margin-bottom: 0px;
+}
+
+.alpaca-field-table .form-group.alpaca-field-checkbox
+{
+    text-align: center;
+}
+
+.alpaca-field-table .alpaca-control.checkbox
+{
+    /*
+    margin: 0px;
+    padding: 0px;
+    */
+    padding-top: 6px;
+}
+
+/*
+.alpaca-field-table .alpaca-control.checkbox input[type='checkbox']
+{
+    margin-left: -16px;
+    margin-top: -3px;
+}
+*/
+
+.alpaca-field-table table tr td.actionbar .alpaca-array-actionbar
+{
+    padding-bottom: 0px;
+}
+
+.alpaca-field-table .actionbar .alpaca-array-actionbar.btn-group
+{
+    width: auto;
+}

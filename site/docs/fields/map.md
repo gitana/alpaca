@@ -59,13 +59,11 @@ $("#field1").alpaca({
     "options" : {
         "type" : "map",
         "toolbarSticky" : true,
-        "fields": {
-            "item" : {
-                "fields" : {
-                    "_key" : {
-                        "size" : 60,
-                        "helper" : "This value serves as a unique key into the associative array."
-                    }
+        "items" : {
+            "fields" : {
+                "_key" : {
+                    "size" : 60,
+                    "helper" : "This value serves as a unique key into the associative array."
                 }
             }
         },
@@ -88,11 +86,92 @@ $("#field1").alpaca({
 
 
 ## Example 2
-Map field rendered in display-only mode.
+Here is an example where we hide the <code>_key</code> field.
 <div id="field2"> </div>
 {% raw %}
 <script type="text/javascript" id="field2-script">
 $("#field2").alpaca({
+    "data": {
+        "sonny" : {
+            "firstName" : "Santino",
+            "lastName" : "Corleone",
+            "gender" : "Male"
+        },
+        "fredo" : {
+            "firstName" : "Fredo",
+            "lastName" : "Corleone",
+            "gender" : "Male"
+        },
+        "michael" : {
+            "firstName" : "Michael",
+            "lastName" : "Corleone",
+            "gender" : "Male"
+        },
+        "connie" : {
+            "firstName" : "Connie",
+            "lastName" : "Corleone",
+            "gender" : "Female"
+        }
+    },
+    "schema": {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "_key" : {
+                    "title" : "User ID",
+                    "type": "string"
+                },
+                "firstName" : {
+                    "title" : "First Name",
+                    "type": "string"
+                },
+                "lastName" : {
+                    "title" : "Last Name",
+                    "type": "string"
+                },
+                "gender" : {
+                    "title" : "Gender",
+                    "type": "string",
+                    "enum" : ["Male","Female"]
+                }
+            }
+        }
+    },
+    "options" : {
+        "type" : "map",
+        "toolbarSticky" : true,
+        "items" : {
+            "fields" : {
+                "_key" : {
+                    "type": "hidden"
+                }
+            }
+        },
+        "form": {
+            "buttons": {
+                "submit": {
+                    "title": "View",
+                    "click": function() {
+                        var value = this.getValue();
+
+                        alert(JSON.stringify(value, null, "  "));
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
+
+
+## Example 3
+Map field rendered in display-only mode.
+<div id="field3"> </div>
+{% raw %}
+<script type="text/javascript" id="field3-script">
+$("#field3").alpaca({
     "data": {
         "john316" : {
             "firstName" : "Tim",
@@ -132,13 +211,11 @@ $("#field2").alpaca({
     "options" : {
         "type" : "map",
         "toolbarSticky" : true,
-        "fields": {
-            "item" : {
-                "fields" : {
-                    "_key" : {
-                        "size" : 60,
-                        "helper" : "Provide a unique user id."
-                    }
+        "items" : {
+            "fields" : {
+                "_key" : {
+                    "size" : 60,
+                    "helper" : "Provide a unique user id."
                 }
             }
         }
@@ -149,13 +226,13 @@ $("#field2").alpaca({
 {% endraw %}
 
 
-## Example 3: Map Validation
+## Example 4: Map Validation
 This example shows an object with an empty ```_key``` property.  As a result, the form renders with a validation error.
 If a non-empty key is filled in, the form validates just fine.
-<div id="field3"></div>
+<div id="field4"></div>
 {% raw %}
-<script type="text/javascript" id="field3-script">
-$("#field3").alpaca({
+<script type="text/javascript" id="field4-script">
+$("#field4").alpaca({
     "data": {
         "": {
             "firstName": "Bruce",

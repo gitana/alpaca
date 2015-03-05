@@ -473,7 +473,8 @@
                             "name": control.name,
                             "parentFieldId": self.getId(),
                             "actionbarStyle": self.options.actionbarStyle,
-                            "view": self.view
+                            "view": self.view,
+                            "data": itemData
                         });
 
                         // find the insertion point
@@ -522,12 +523,17 @@
         {
             var _this = this;
 
+            var completionFunction = function(resolvedItemSchema, resolvedItemOptions, circular)
+            {
+                // special caveat:  if we're in read-only mode, the child must also be in read-only mode
+                if (_this.options.readonly) {
+                    resolvedItemOptions.readonly = true;
+                }
+
+                callback(resolvedItemSchema, resolvedItemOptions, circular);
+            };
+
             var itemOptions;
-            /*
-            if (_this.options && _this.options.fields && _this.options.fields["item"]) {
-                itemOptions = _this.options.fields["item"];
-            }
-            */
             if (_this.options && _this.options.items) {
                 itemOptions = _this.options.items;
             }
@@ -585,12 +591,16 @@
                         Alpaca.mergeObject(resolvedItemOptions, itemOptions);
                     }
 
-                    callback(resolvedItemSchema, resolvedItemOptions, circular);
+                    Alpaca.nextTick(function() {
+                        completionFunction(resolvedItemSchema, resolvedItemOptions, circular);
+                    });
                 });
             }
             else
             {
-                callback(itemSchema, itemOptions);
+                Alpaca.nextTick(function() {
+                    completionFunction(itemSchema, itemOptions);
+                });
             }
         },
 
@@ -1027,6 +1037,44 @@
         //
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+        doResolveItemContainer: function()
+        {
+            var self = this;
+
+            return $(self.container);
+        },
+
+        doAddItem: function(index, item)
+        {
+            var self = this;
+
+            var addItemContainer = self.doResolveItemContainer();
+
+            // insert into dom
+            if (index === 0)
+            {
+                // insert first into container
+                $(addItemContainer).append(item.containerItemEl);
+            }
+            else
+            {
+                // insert at a specific index
+                var existingElement = addItemContainer.children("[data-alpaca-container-item-index='" + (index-1) + "']");
+                if (existingElement && existingElement.length > 0)
+                {
+                    // insert after
+                    existingElement.after(item.containerItemEl);
+                }
+            }
+
+            self.doAfterAddItem(item);
+        },
+
+        doAfterAddItem: function(item)
+        {
+
+        },
+
         /**
          * Adds an item to the array.
          *
@@ -1051,21 +1099,7 @@
                     self.registerChild(item, index);
 
                     // insert into dom
-                    if (index === 0)
-                    {
-                        // insert first into container
-                        $(self.container).append(item.containerItemEl);
-                    }
-                    else
-                    {
-                        // insert at a specific index
-                        var existingElement = self.getContainerEl().children("[data-alpaca-container-item-index='" + (index-1) + "']");
-                        if (existingElement && existingElement.length > 0)
-                        {
-                            // insert after
-                            existingElement.after(item.containerItemEl);
-                        }
-                    }
+                    self.doAddItem(index, item);
 
                     // updates child dom marker elements
                     self.updateChildDOMElements();
@@ -1087,6 +1121,15 @@
             }
         },
 
+        doRemoveItem: function(childIndex)
+        {
+            var self = this;
+
+            var removeItemContainer = self.doResolveItemContainer();
+
+            removeItemContainer.children(".alpaca-container-item[data-alpaca-container-item-index='" + childIndex + "']").remove();
+        },
+
         /**
          * Removes an item from the array.
          *
@@ -1106,7 +1149,7 @@
                 self.unregisterChild(childIndex);
 
                 // remove itemContainerEl from DOM
-                self.getContainerEl().children(".alpaca-container-item[data-alpaca-container-item-index='" + childIndex + "']").remove();
+                self.doRemoveItem(childIndex);
 
                 // updates child dom marker elements
                 self.updateChildDOMElements();
@@ -1190,9 +1233,11 @@
                 return;
             }
 
+            var parentFieldId = self.getId();
+
             // the source and target DOM elements
-            var sourceContainer = self.getContainerEl().children(".alpaca-container-item[data-alpaca-container-item-index='" + sourceIndex + "']");
-            var targetContainer = self.getContainerEl().children(".alpaca-container-item[data-alpaca-container-item-index='" + targetIndex + "']");
+            var sourceContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + sourceIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
+            var targetContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + targetIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
 
             // create two temp elements as markers for switch
             var tempSourceMarker = $("<div class='tempMarker1'></div>");
@@ -1247,17 +1292,16 @@
                 }
             };
 
+            var duration = 0;
             if (animate)
             {
-                // swap divs visually
-                Alpaca.animatedSwap(sourceContainer, targetContainer, 500, function() {
-                    onComplete();
-                });
+                duration = 500;
             }
-            else
-            {
+
+            // swap divs visually
+            Alpaca.animatedSwap(sourceContainer, targetContainer, duration, function() {
                 onComplete();
-            }
+            });
         },
 
         /**

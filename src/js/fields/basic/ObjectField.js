@@ -397,7 +397,8 @@
                         "name": control.name,
                         "parentFieldId": self.getId(),
                         "actionbarStyle": self.options.actionbarStyle,
-                        "view": self.view
+                        "view": self.view,
+                        "data": itemData
                     });
 
                     // find the insertion point
@@ -439,6 +440,16 @@
         resolvePropertySchemaOptions: function(propertyId, callback)
         {
             var _this = this;
+
+            var completionFunction = function(resolvedPropertySchema, resolvedPropertyOptions, circular)
+            {
+                // special caveat:  if we're in read-only mode, the child must also be in read-only mode
+                if (_this.options.readonly) {
+                    resolvedPropertyOptions.readonly = true;
+                }
+
+                callback(resolvedPropertySchema, resolvedPropertyOptions, circular);
+            };
 
             var propertySchema = null;
             if (_this.schema && _this.schema.properties && _this.schema.properties[propertyId]) {
@@ -503,14 +514,14 @@
                     }
 
                     Alpaca.nextTick(function() {
-                        callback(resolvedPropertySchema, resolvedPropertyOptions, circular);
+                        completionFunction(resolvedPropertySchema, resolvedPropertyOptions, circular);
                     });
                 });
             }
             else
             {
                 Alpaca.nextTick(function() {
-                    callback(propertySchema, propertyOptions);
+                    completionFunction(propertySchema, propertyOptions);
                 });
             }
         },

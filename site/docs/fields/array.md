@@ -180,16 +180,14 @@ $("#field7").alpaca({
     },
     "options" : {
         "toolbarSticky": true,
-        "fields": {
-            "item": {
-                "fields": {
-                    "type": {
-                        "label": "Type",
-                        "optionLabels": ["Internal", "External"]
-                    },
-                    "url": {
-                        "label": "URL"
-                    }
+        "items": {
+            "fields": {
+                "type": {
+                    "label": "Type",
+                    "optionLabels": ["Internal", "External"]
+                },
+                "url": {
+                    "label": "URL"
                 }
             }
         },
@@ -255,21 +253,17 @@ $("#field8").alpaca({
                 "label": "Clip Details",
                 "toolbarSticky": true,
                 "collapsed": true,
-                "fields": {
-                    "item": {
-                        "fields": {
-                            "array_videoClipMedias": {
-                                "label": "Clip Medias",
-                                "toolbarSticky": true,
-                                "collapsed": true,
+                "items": {
+                    "fields": {
+                        "array_videoClipMedias": {
+                            "label": "Clip Medias",
+                            "toolbarSticky": true,
+                            "collapsed": true,
+                            "items": {
                                 "fields": {
-                                    "item": {
-                                        "fields": {
-                                            "mediaUrl": {
-                                                "label": "Media URL",
-                                                "helper": "Sample URL"
-                                            }
-                                        }
+                                    "mediaUrl": {
+                                        "label": "Media URL",
+                                        "helper": "Sample URL"
                                     }
                                 }
                             }
@@ -388,35 +382,32 @@ An array field with nested radio elements.
 <div id="field13"> </div>
 {% raw %}
 <script type="text/javascript" id="field13-script">
-$("#field3").alpaca({
+$("#field13").alpaca({
    "schema": {
        "title": "Array Test",
-           "type": "object",
-           "properties": {
+       "type": "object",
+       "properties": {
            "devices": {
                "title": "Array test",
-                   "type": "array",
-                   "items": {
+               "type": "array",
+               "items": {
                    "title": "Device",
-                       "type": "radio",
-                       "enum": ["Android", "iOS"],
-                       "default": "Android",
-                       "required": true
+                   "type": "radio",
+                   "enum": ["Android", "iOS"],
+                   "default": "Android",
+                   "required": true
                }
            }
        }
    },
    "options": {
-       "type": "object",
-           "collapsible": false,
-           "fields": {
+       "collapsible": false,
+       "fields": {
            "devices": {
                "type": "array",
-                   "toolbarSticky": true,
-                   "fields": {
-                   "item": {
-                       "type": "radio"
-                   }
+               "toolbarSticky": true,
+               "items": {
+                   "type": "radio"
                }
            }
        }

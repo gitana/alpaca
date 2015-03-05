@@ -7,22 +7,37 @@
      * @lends Alpaca.Fields.TableRowField.prototype
      */
     {
-        setup: function()
+        prepareContainerModel: function(callback)
         {
-            this.base();
+            var self = this;
 
-            /*
-            // disable labels for all properties
-            for (var k in this.schema.properties)
-            {
-                delete this.schema.properties[k].title;
-            }
-            for (var k in this.options.fields)
-            {
-                delete this.options.fields[k].label;
-            }
-            */
+            this.base(function(model) {
+
+                model.options.showActionsColumn = self.parent.options.showActionsColumn;
+
+                callback(model);
+            });
         },
+
+        /*
+        afterRenderContainer: function(model, callback)
+        {
+            var self = this;
+
+            this.base(model, function() {
+
+                // apply "data-search" to the TD elements
+                var tds = $(this.container).find("td");
+                for (var i = 0; i < self.children.length; i++)
+                {
+                    $(tds[i]).attr("data-filter", "abc");//self.children[i].getValue());
+                }
+
+                callback();
+
+            }.bind(self));
+        },
+        */
 
         /**
          * @see Alpaca.ControlField#getFieldType

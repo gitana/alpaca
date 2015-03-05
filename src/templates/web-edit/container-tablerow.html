@@ -1,17 +1,17 @@
 <script type="text/x-handlebars-template">
 
-    <div class="alpaca-inserted-tablerow">
+    <div class="alpaca-merge-up">
 
         {{#each items}}
             {{#item}}{{/item}}
         {{/each}}
 
         <!-- actions cell -->
-        {{#compare options.readonly false}}
-        <td>
-            {{#arrayActionbar}}{{/arrayActionbar}}
-        </td>
-        {{/compare}}
+        {{#if options.showActionsColumn}}
+            <div class="alpaca-merge-up">
+                {{#arrayActionbar}}{{/arrayActionbar}}
+            </div>
+        {{/if}}
 
     </div>
 

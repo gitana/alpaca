@@ -200,6 +200,7 @@
     styles["downIcon"] = "";
     styles["expandedIcon"] = "";
     styles["collapsedIcon"] = "";
+    styles["table"] = "";
 
     Alpaca.registerView({
         "id": "web-display",
