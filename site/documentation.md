@@ -83,6 +83,7 @@ whereas the extension types depend on various third-party libraries.
             <li><a href="{{ BASE_PATH }}/docs/fields/table.html">Table</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/tag.html">Tag</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/time.html">Time</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/tinymce.html">Tiny MCE</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/upload.html">Upload</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/uppercase.html">Upper Case</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/url.html">URL</a></li>
