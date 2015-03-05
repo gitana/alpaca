@@ -289,21 +289,22 @@ $("#field8").alpaca({
 
 
 ## Example 9
-Array field with an extra "clear" button on each item.
+Array field with an extra "clear" button in each item's action bar.
 <div id="field9"> </div>
 {% raw %}
 <script type="text/javascript" id="field9-script">
 $("#field9").alpaca({
     "data": ["test1", "test2", "test3"],
     "options": {
-        "items": {
-            "extraToolbarButtons" : [{
-                "feature": "clear",
-                "icon": "ui-icon-cancel",
-                "label": "Clear inputs",
-                "clickCallback": function(id, arrayField) {
-                    var item = arrayField.childrenById[id];
-                    $(item.field).val('');
+        "actionbar": {
+            "showLabels": true,
+            "actions": [{
+                "label": "Clear",
+                "action": "clear",
+                "iconClass": "fa fa-cancel",
+                "click": function(key, action, itemIndex) {
+                    var item = this.children[itemIndex];
+                    item.setValue("");
                 }
             }]
         }
@@ -314,20 +315,61 @@ $("#field9").alpaca({
 
 
 ## Example 10
-Array field with up and down buttons disabled and custom button text.
+Array fields support <code>toolbar</code> and <code>actionbar</code> options for defining custom actions.  Actions are
+rendered by the view into the form and usually appear as a button bar.
+
+For the toolbar, Alpaca assumes and auto-populates a single button - <code>add</code>.
+
+For the actionbar (per item), Alpaca assumes and auto-populates the following buttons:
+<ul>
+    <li><code>add</code></li>
+    <li><code>remove</code></li>
+    <li><code>up</code></li>
+    <li><code>down</code></li>
+</ul>
+
+Any properties you define for these actions will override the existing presets.  Any new actions you define will be
+added to the overall set.  You can explicitly enable or disable actions via the <code>enabled</code> property.
+Disabled actions are removed from display.
+
+By default, the array field keeps labels turned off. If you want to turn labels on, use the <code>toolbar.showLabels</code>
+and <code>actionbar.showLabels</code> options.
 <div id="field10"> </div>
 {% raw %}
 <script type="text/javascript" id="field10-script">
 $("#field10").alpaca({
     "data": ["test1", "test2", "test3"],
     "options": {
-        "items": {
-            "moveUpItemLabel" : "Get on up",
-            "moveDownItemLabel": "Get down",
-            "removeItemLabel": "Begone ye' item",
-            "addItemLabel": "I addeth thee",
-            "showMoveDownItemButton": false,
-            "showMoveUpItemButton": false
+        "toolbar": {
+            "showLabels": true,
+            "actions": [{
+                "label": "I addeth thee",
+                "action": "add"
+            }]
+        },
+        "actionbar": {
+            "showLabels": true,
+            "actions": [{
+                "label": "Gimme another!",
+                "action": "add"
+            }, {
+                "label": "Begone ye' item",
+                "action": "remove"
+            }, {
+                "label": "Movin' on up",
+                "action": "up",
+                "enabled": false
+            }, {
+                "label": "Get down",
+                "action": "down",
+            }, {
+                "label": "I do amazing things!",
+                "action": "custom",
+                "iconClass": "fa fa-file",
+                "click": function(key, action, itemIndex) {
+                    alert("forsooth! i have been clicked and my value is: " + this.children[itemIndex].getValue());
+                }
+            }]
         }
     }
 });

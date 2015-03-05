@@ -596,7 +596,7 @@
 
                     $(child.containerItemEl).attr("data-alpaca-container-item-index", i);
                     $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
-                    $(item.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
+                    $(child.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
                 }
             }
         },

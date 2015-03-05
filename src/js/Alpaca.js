@@ -40,11 +40,14 @@
         var args = Alpaca.makeArray(arguments);
         if (args.length === 0) {
             // illegal
-            return Alpaca.throwDefaultError("You must supply at least one argument which is the element against which to apply the Alpaca generated form");
+            return Alpaca.throwDefaultError("You must supply at least one argument.  This argument can either be a DOM element against which Alpaca will generate a form or it can be a function name.  See http://www.alpacajs.org for more details.");
         }
 
-        // element is the first argument
+        // element is the first argument (either a string or a DOM element)
         var el = args[0];
+        if (el && Alpaca.isString(el)) {
+            el = $("#" + el);
+        }
 
         // other arguments we may want to figure out
         var data = null;
@@ -64,7 +67,8 @@
         var optionsSource = null;
         var viewSource = null;
 
-        if (args.length === 1) {
+        var findExistingAlpacaField = function()
+        {
             // hands back the field instance that is bound directly under the specified element
             // var field = Alpaca(el);
             var domElements = $(el).find(":first");
@@ -72,7 +76,7 @@
             var field = null;
             for (var i = 0; i < domElements.length; i++) {
                 var domElement = domElements[i];
-                var fieldId = $(domElement).attr("alpaca-field-id");
+                var fieldId = $(domElement).attr("data-alpaca-field-id");
                 if (fieldId) {
                     var _field = Alpaca.fieldInstances[fieldId];
                     if (_field) {
@@ -81,49 +85,101 @@
                 }
             }
 
-            if (field !== null) {
-                return field;
-            } else {
-                // otherwise, grab the data inside the element and use that for the control
-                var domData = $(el).html();
-                $(el).html("");
-                data = domData;
+            return field;
+        };
+
+        var field = findExistingAlpacaField();
+        if (field)
+        {
+            // an alpaca form is already bound to this field
+
+            // if we only have 1 argument, then we don't do anything
+            if (args.length === 1)
+            {
+                return;
             }
+
+            // second argument must be a special function name
+            var specialFunctionName = args[1];
+            if ("get" === specialFunctionName)
+            {
+                return field;
+            }
+            else if ("exists" === specialFunctionName)
+            {
+                return (field ? true: false);
+            }
+            else if ("destroy" === specialFunctionName)
+            {
+                field.destroy();
+                return;
+            }
+
+            return Alpaca.throwDefaultError("Unknown special function: " + specialFunctionName);
         }
+        else
+        {
+            var config = null;
 
-        if (args.length >= 2) {
-            if (Alpaca.isObject(args[1])) {
-                data = args[1].data;
-                schema = args[1].schema;
-                options = args[1].options;
-                view = args[1].view;
-                callback = args[1].render;
-                renderedCallback = args[1].postRender;
-                errorCallback = args[1].error;
-                connector = args[1].connector;
+            // just a dom element, no other args?
+            if (args.length === 1)
+            {
+                // grab the data inside of the element and use that for config
+                var jsonString = $(el).text();
 
-                // sources
-                dataSource = args[1].dataSource;
-                schemaSource = args[1].schemaSource;
-                optionsSource = args[1].optionsSource;
-                viewSource = args[1].viewSource;
+                config = JSON.parse(jsonString);
+                $(el).html("");
+            }
+            else
+            {
+                if (Alpaca.isObject(args[1]))
+                {
+                    config = args[1];
+                }
+                else if (Alpaca.isFunction(args[1]))
+                {
+                    config = args[1]();
+                }
+                else
+                {
+                    config = {
+                        "data": args[1]
+                    };
+                }
+            }
 
-                // other
-                if (args[1].ui) {
-                    initialSettings["ui"] = args[1].ui;
-                }
-                if (args[1].type) {
-                    initialSettings["type"] = args[1].type;
-                }
-                if (!Alpaca.isEmpty(args[1].notTopLevel)) {
-                    notTopLevel = args[1].notTopLevel;
-                }
-            } else {
-                // "data" is the second argument
-                data = args[1];
-                if (Alpaca.isFunction(data)) {
-                    data = data();
-                }
+            if (!config)
+            {
+                return Alpaca.throwDefaultError("Unable to determine Alpaca configuration");
+            }
+
+            data = config.data;
+            schema = config.schema;
+            options = config.options;
+            view = config.view;
+            callback = config.render;
+            if (config.callback) {
+                callback = config.callback;
+            }
+            renderedCallback = config.postRender;
+            errorCallback = config.error;
+            connector = config.connector;
+
+            // sources
+            dataSource = config.dataSource;
+            schemaSource = config.schemaSource;
+            optionsSource = config.optionsSource;
+            viewSource = config.viewSource;
+
+            // other
+            if (config.ui) {
+                initialSettings["ui"] = config.ui;
+            }
+            if (config.type) {
+                initialSettings["type"] = config.type;
+            }
+            if (!Alpaca.isEmpty(config.notTopLevel)) {
+                notTopLevel = config.notTopLevel;
             }
         }
 
@@ -135,13 +191,6 @@
         if (Alpaca.isEmpty(connector)) {
             var ConnectorClass = Alpaca.getConnectorClass("default");
             connector = new ConnectorClass("default");
-        }
-
-        // container can either be a dom id or a dom element
-        if (el) {
-            if (Alpaca.isString(el)) {
-                el = $("#" + el);
-            }
         }
 
         // For second or deeper level of fields, default loader should be the one to do loadAll
@@ -744,23 +793,23 @@
             if (Alpaca.isEmpty(data)) {
                 schemaType = "string";
             }
-            if (Alpaca.isObject(data)) {
-                schemaType = "object";
-            }
-            if (Alpaca.isString(data)) {
-                schemaType = "string";
-            }
-            if (Alpaca.isNumber(data)) {
-                schemaType = "number";
-            }
-            if (Alpaca.isArray(data)) {
+            else if (Alpaca.isArray(data)) {
                 schemaType = "array";
             }
-            if (Alpaca.isBoolean(data)) {
+            else if (Alpaca.isObject(data)) {
+                schemaType = "object";
+            }
+            else if (Alpaca.isString(data)) {
+                schemaType = "string";
+            }
+            else if (Alpaca.isNumber(data)) {
+                schemaType = "number";
+            }
+            else if (Alpaca.isBoolean(data)) {
                 schemaType = "boolean";
             }
             // Last check for data that carries functions -- GitanaConnector case.
-            if (typeof data === 'object') {
+            if (!schemaType && (typeof data === 'object')) {
                 schemaType = "object";
             }
 
@@ -1794,7 +1843,12 @@
                     schema.type = Alpaca.getSchemaType(data);
                 }
                 if (!schema.type) {
-                    schema.type = "object"; // fallback
+                    if (data && Alpaca.isArray(data)) {
+                        schema.type = "array";
+                    }
+                    else {
+                        schema.type = "object"; // fallback
+                    }
                 }
                 if (schema && schema["enum"]) {
                     if (schema["enum"].length > 3) {
@@ -2713,10 +2767,13 @@
         var newArgs = [].concat(this, args);
 
         // invoke Alpaca against current element
-        Alpaca.apply(this, newArgs);
+        var ret = Alpaca.apply(this, newArgs);
+        if (!ret) {
+            // as per jQuery's pattern, assume we hand back $el
+            ret = $(this);
+        }
 
-        // as per jQuery's pattern, hand back $el
-        return this;
+        return ret;
     };
 
     /**

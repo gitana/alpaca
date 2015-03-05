@@ -136,7 +136,56 @@
                 return;
             }
 
-            // determine which actions to add into the top array toolbar
+            //
+            // ACTIONS
+            //
+            var applyAction = function(actions, key, actionConfig) {
+                var action = self.findAction(actions, key);
+                if (!action) {
+                    action = {
+                        "core": true
+                    };
+                    actions.push(action);
+                }
+                for (var k in actionConfig) {
+                    action[k] = actionConfig[k];
+                }
+            };
+            var cleanupActions = function(actions, showLabels) {
+                var i = 0;
+                do {
+
+                    // assume enabled by default
+                    if (typeof(actions[i].enabled) === "undefined") {
+                        actions[i].enabled = true;
+                    }
+
+                    // hide label if global disable
+                    if (!showLabels) {
+                        delete actions[i].label;
+                    }
+
+                    if (!actions[i].enabled) {
+                        actions.splice(i, 1);
+                    } else {
+                        i++;
+                    }
+
+                } while (i < actions.length);
+
+                // sort so that core actions appear first
+                actions.sort(function(a, b) {
+                    if (a.core && !b.core) {
+                        return -1;
+                    }
+                    if (!a.core && b.core) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            };
+
+            // set up default actions for the top array toolbar
             self.toolbar = {};
             if (self.options.toolbar)
             {
@@ -144,26 +193,29 @@
                     self.toolbar[k] = self.options.toolbar[k];
                 }
             }
-            if (!self.toolbar.actions)
-            {
-                self.toolbar.actions = [];
-                self.toolbar.actions.push({
-                    "label": (self.options.items && self.options.items.addItemLabel) ? self.options.items.addItemLabel : "Add Item",
-                    "action": "add",
-                    "iconClass": self.view.getStyle("addIcon"),
-                    "click": function(key, action)
-                    {
-                        self.resolveItemSchemaOptions(function(itemSchema, itemOptions) {
-                            var itemData = Alpaca.createEmptyDataInstance(itemSchema);
-                            self.addItem(0, itemSchema, itemOptions, itemData, function() {
-                                // all done
-                            });
-                        });
-
-                    }
-                });
+            if (typeof(self.toolbar.showLabels) === "undefined") {
+                self.toolbar.showLabels = false;
             }
+            if (!self.toolbar.actions) {
+                self.toolbar.actions = [];
+            }
+            applyAction(self.toolbar.actions, "add", {
+                "label": "Add New Item",
+                "action": "add",
+                "iconClass": self.view.getStyle("addIcon"),
+                "click": function(key, action)
+                {
+                    self.resolveItemSchemaOptions(function(itemSchema, itemOptions) {
+                        var itemData = Alpaca.createEmptyDataInstance(itemSchema);
+                        self.addItem(0, itemSchema, itemOptions, itemData, function() {
+                            // all done
+                        });
+                    });
+                }
+            });
+            cleanupActions(self.toolbar.actions, self.toolbar.showLabels);
 
+            // determine which actions to add into the per-item actionbar
             self.actionbar = {};
             if (self.options.actionbar)
             {
@@ -171,61 +223,64 @@
                     self.actionbar[k2] = self.options.actionbar[k2];
                 }
             }
-            if (!self.actionbar.actions)
-            {
-                self.actionbar.actions = [];
-                self.actionbar.actions.push({
-                    //"label": "Add",
-                    "action": "add",
-                    "iconClass": self.view.getStyle("addIcon"),
-                    "click": function(key, action, itemIndex) {
-
-                        self.resolveItemSchemaOptions(function(itemSchema, itemOptions) {
-                            var itemData = Alpaca.createEmptyDataInstance(itemSchema);
-                            self.addItem(itemIndex + 1, itemSchema, itemOptions, itemData, function() {
-                                // all done
-                            });
-                        });
-
-                    }
-                });
-                self.actionbar.actions.push({
-                    //"label": "Remove",
-                    "action": "remove",
-                    "iconClass": self.view.getStyle("removeIcon"),
-                    "click": function(key, action, itemIndex) {
-
-                        self.removeItem(itemIndex, function() {
-                            // all done
-                        });
-
-                    }
-                });
-                self.actionbar.actions.push({
-                    //"label": "Up",
-                    "action": "up",
-                    "iconClass": self.view.getStyle("upIcon"),
-                    "click": function(key, action, itemIndex) {
-
-                        self.moveItem(itemIndex, itemIndex - 1, self.options.animate, function() {
-                            // all done
-                        });
-
-                    }
-                });
-                self.actionbar.actions.push({
-                    //"label": "Down",
-                    "action": "down",
-                    "iconClass": self.view.getStyle("downIcon"),
-                    "click": function(key, action, itemIndex) {
-
-                        self.moveItem(itemIndex, itemIndex + 1, self.options.animate, function() {
-                            // all done
-                        });
-
-                    }
-                });
+            if (typeof(self.actionbar.showLabels) === "undefined") {
+                self.actionbar.showLabels = false;
             }
+            if (!self.actionbar.actions) {
+                self.actionbar.actions = [];
+            }
+            applyAction(self.actionbar.actions, "add", {
+                "label": "Add",
+                "action": "add",
+                "iconClass": self.view.getStyle("addIcon"),
+                "click": function(key, action, itemIndex) {
+
+                    self.resolveItemSchemaOptions(function(itemSchema, itemOptions) {
+                        var itemData = Alpaca.createEmptyDataInstance(itemSchema);
+                        self.addItem(itemIndex + 1, itemSchema, itemOptions, itemData, function() {
+                            // all done
+                        });
+                    });
+
+                }
+            });
+            applyAction(self.actionbar.actions, "remove", {
+                "label": "Remove",
+                "action": "remove",
+                "iconClass": self.view.getStyle("removeIcon"),
+                "click": function(key, action, itemIndex) {
+
+                    self.removeItem(itemIndex, function() {
+                        // all done
+                    });
+
+                }
+            });
+            applyAction(self.actionbar.actions, "up", {
+                "label": "Up",
+                "action": "up",
+                "iconClass": self.view.getStyle("upIcon"),
+                "click": function(key, action, itemIndex) {
+
+                    self.moveItem(itemIndex, itemIndex - 1, self.options.animate, function() {
+                        // all done
+                    });
+
+                }
+            });
+            applyAction(self.actionbar.actions, "down", {
+                "label": "Down",
+                "action": "down",
+                "iconClass": self.view.getStyle("downIcon"),
+                "click": function(key, action, itemIndex) {
+
+                    self.moveItem(itemIndex, itemIndex + 1, self.options.animate, function() {
+                        // all done
+                    });
+
+                }
+            });
+            cleanupActions(self.actionbar.actions, self.actionbar.showLabels);
 
             var len = this.data.length;
             var data = $.extend(true, {}, this.data);
@@ -1418,52 +1473,78 @@
                         "type": "string",
                         "default": "top"
                     },
-                    "items": {
-                        "title": "Array Items",
-                        "description": "Options for array items.",
+                    "toolbar": {
+                        "type": "object",
+                        "title": "Toolbar Configuration",
+                        "properties": {
+                            "showLabels": {
+                                "type": "boolean",
+                                "default": false,
+                                "title": "Whether to show labels next to actions"
+                            },
+                            "actions": {
+                                "type": "array",
+                                "title": "Toolbar Actions Configuration",
+                                "items": {
+                                    "action": {
+                                        "type": "string",
+                                        "title": "Action Key"
+                                    },
+                                    "label": {
+                                        "type": "string",
+                                        "title": "Action Label"
+                                    },
+                                    "iconClass": {
+                                        "type": "string",
+                                        "title": "Action CSS Classes for Icon"
+                                    },
+                                    "click": {
+                                        "type": "function",
+                                        "title": "Action Click Handler"
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "title": "Whether to enable the action",
+                                        "default": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "actionbar": {
                         "type": "object",
                         "properties": {
-                            "extraToolbarButtons": {
-                                "title": "Extra Toolbar buttons",
-                                "description": "Buttons to be added next to add/remove/up/down, see examples",
+                            "showLabels": {
+                                "type": "boolean",
+                                "default": false,
+                                "title": "Whether to show labels next to actions"
+                            },
+                            "actions": {
                                 "type": "array",
-                                "default": undefined
-                            },
-                            "moveUpItemLabel": {
-                                "title": "Move Up Item Label",
-                                "description": "The label to use for the toolbar's 'move up' button.",
-                                "type": "string",
-                                "default": "Move Up"
-                            },
-                            "moveDownItemLabel": {
-                                "title": "Move Down Item Label",
-                                "description": "The label to use for the toolbar's 'move down' button.",
-                                "type": "string",
-                                "default": "Move Down"
-                            },
-                            "removeItemLabel": {
-                                "title": "Remove Item Label",
-                                "description": "The label to use for the toolbar's 'remove item' button.",
-                                "type": "string",
-                                "default": "Remove Item"
-                            },
-                            "addItemLabel": {
-                                "title": "Add Item Label",
-                                "description": "The label to use for the toolbar's 'add item' button.",
-                                "type": "string",
-                                "default": "Add Item"
-                            },
-                            "showMoveDownItemButton": {
-                                "title": "Show Move Down Item Button",
-                                "description": "Whether to show to the 'Move Down' button on the toolbar.",
-                                "type": "boolean",
-                                "default": true
-                            },
-                            "showMoveUpItemButton": {
-                                "title": "Show Move Up Item Button",
-                                "description": "Whether to show the 'Move Up' button on the toolbar.",
-                                "type": "boolean",
-                                "default": true
+                                "title": "Actions Bar Actions Configuration",
+                                "items": {
+                                    "action": {
+                                        "type": "string",
+                                        "title": "Action Key"
+                                    },
+                                    "label": {
+                                        "type": "string",
+                                        "title": "Action Label"
+                                    },
+                                    "iconClass": {
+                                        "type": "string",
+                                        "title": "Action CSS Classes for Icon"
+                                    },
+                                    "click": {
+                                        "type": "function",
+                                        "title": "Action Click Handler"
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "title": "Whether to enable the action",
+                                        "default": true
+                                    }
+                                }
                             }
                         }
                     }
