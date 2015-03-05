@@ -49,6 +49,41 @@ var fields = function() {
   });
 
   /**
+   * Checks to make sure text is visible
+   *
+   * @param {string} the text to look for
+   */
+  this.Then(/^I should (not )?see the text "(.*)"$/, function(not, text, cb) {
+    not = !!not;
+    this.eval(function(text) {
+      var selector = ':contains(' + text + ')';
+      var visible  = $('#fixture').find(selector).filter(function() {
+          return (
+          $(this).clone()
+          .children()
+          .remove()
+          .end()
+          .filter(selector).length > 0)
+      }).is(':visible');
+      return visible;
+    }, text).then(function(res) {
+      if (!not) {
+        if (!res) {
+          cb('Expected to see the text "' + text + '" but did not');
+        } else {
+          cb();
+        }
+      } else {
+        if (res) {
+          cb('Expected to not see text "' + text + '" but did');
+        } else {
+          cb();
+        }
+      }
+    });
+  });
+
+  /**
    * Looks for a number of visible elements which match a given selector.
    *
    * @param {string} atleast  Will have something in it if we're looking for at least x elements.
@@ -150,7 +185,7 @@ var fields = function() {
       if (result === valid) {
         cb();
       } else {
-        cb('Expected ' + ith + ' alpaca to be ' + (valid ? '' : 'in') + 'valid but it was ' + (valid ? 'in' : '') + 'valid');
+        cb('Expected ' + ith + ' alpaca to be ' + (valid ? '' : 'in') + 'valid but it was ' + (result ? '' : 'in') + 'valid');
       }
     });
   });
@@ -159,6 +194,13 @@ var fields = function() {
     this.click(selector).then(function() {
       cb();
     });
+  });
+
+  this.When(/^(?:I )?click on the text "([^"]+)"/, function(text, cb) {
+    this.eval(function(text) {
+      text = ':contains(' + text + ')';
+      $('#fixture').find(text).click();
+    }, text).then(cb);
   });
 
   this.When(/^(?:I )?click on "([^"]+)" and type "([^"]+)"/, function(selector, str, cb) {

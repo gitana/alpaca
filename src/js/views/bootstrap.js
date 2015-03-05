@@ -167,7 +167,9 @@
             $(containerEl).addClass("collapse in");
 
             // set up legend anchor
-            $(anchorEl).attr("data-target", "#" + id);
+            if (!$(anchorEl).attr("data-target")) {
+                $(anchorEl).attr("data-target", "#" + id);
+            }
 
             $(anchorEl).mouseover(function(e) {
                 $(this).css("cursor", "pointer");
