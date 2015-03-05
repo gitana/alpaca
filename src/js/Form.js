@@ -442,7 +442,7 @@
          */
         destroy: function(skipParent)
         {
-            this.getFieldEl().remove();
+            this.getFormEl().remove();
 
             // we allow form.destroy() which tells parent control to destroy
             // if skipParent == true, then we do not call up (invoked from container)
@@ -457,7 +457,7 @@
          */
         show: function()
         {
-            this.getFieldEl().css({
+            this.getFormEl().css({
                 "display": ""
             });
         },
@@ -467,7 +467,7 @@
          */
         hide: function()
         {
-            this.getFieldEl().css({
+            this.getFormEl().css({
                 "display": "none"
             });
         },
