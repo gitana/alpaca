@@ -64,7 +64,7 @@
 
             this.base(function(model) {
 
-                model.noneLabel = "None";
+                model.noneLabel = self.view.getMessage("noneLabel");
                 if (typeof(self.options.noneLabel) != "undefined")
                 {
                     model.noneLabel = self.options.noneLabel;
