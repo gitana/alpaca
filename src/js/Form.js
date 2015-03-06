@@ -244,9 +244,9 @@
             {
                 this.form.attr("id", this.getId() + "-form-outer");
             }
-            if (Alpaca.isEmpty(this.form.attr("alpaca-field-id")))
+            if (Alpaca.isEmpty(this.form.attr("data-alpaca-form-id")))
             {
-                this.form.attr("alpaca-field-id", this.getId());
+                this.form.attr("data-alpaca-form-id", this.getId());
             }
 
             // the form field
@@ -442,7 +442,7 @@
          */
         destroy: function(skipParent)
         {
-            this.getFieldEl().remove();
+            this.getFormEl().remove();
 
             // we allow form.destroy() which tells parent control to destroy
             // if skipParent == true, then we do not call up (invoked from container)
@@ -457,7 +457,7 @@
          */
         show: function()
         {
-            this.getFieldEl().css({
+            this.getFormEl().css({
                 "display": ""
             });
         },
@@ -467,7 +467,7 @@
          */
         hide: function()
         {
-            this.getFieldEl().css({
+            this.getFormEl().css({
                 "display": "none"
             });
         },
