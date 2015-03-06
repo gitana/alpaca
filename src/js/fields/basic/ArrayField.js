@@ -148,7 +148,7 @@
             {
                 self.toolbar.actions = [];
                 self.toolbar.actions.push({
-                    "label": (self.options.items && self.options.items.addItemLabel) ? self.options.items.addItemLabel : "Add Item",
+                    "label": (self.options.items && self.options.items.addItemLabel) ? self.options.items.addItemLabel : self.view.getMessage("addItemLabel"),
                     "action": "add",
                     "iconClass": self.view.getStyle("addIcon"),
                     "click": function(key, action)
@@ -497,6 +497,11 @@
                         $(insertionPointEl).remove();
 
                         control.containerItemEl = containerItemEl;
+
+                        // Reset hideInitValidationError after render
+                        Alpaca.fieldApplyFieldAndChildren(control, function(control) {
+                            control.hideInitValidationError = false;
+                        });
 
                         // PR: https://github.com/gitana/alpaca/pull/124
                         if (Alpaca.isFunction(self.options.items.postRender))

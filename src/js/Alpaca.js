@@ -3194,7 +3194,7 @@
             {
                 for (var i = 0; i < field.children.length; i++)
                 {
-                    fn(field.children[i]);
+                    Alpaca.fieldApplyFieldAndChildren(field.children[i], fn);
                 }
             }
         };
@@ -3212,7 +3212,11 @@
     {
         fn(field);
 
-        Alpaca.fieldApplyChildren(field, fn);
+        if (field.children && field.children.length > 0) {
+            for (var i = 0; i < field.children.length; i++) {
+                Alpaca.fieldApplyFieldAndChildren(field.children[i], fn);
+            }
+        }
     };
 
     /**
