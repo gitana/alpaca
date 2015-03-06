@@ -263,7 +263,9 @@
             "valid": "",
             "invalid": "This field is invalid",
             "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-            "timeUnits": { SECOND: "seconds", MINUTE: "minutes", HOUR: "hours", DAY: "days", MONTH: "months", YEAR: "years" }
+            "timeUnits": { SECOND: "seconds", MINUTE: "minutes", HOUR: "hours", DAY: "days", MONTH: "months", YEAR: "years" },
+            "addItemLabel": "Add Item",
+            "noneLabel": "None"
         }
     });
 

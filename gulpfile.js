@@ -110,7 +110,8 @@ var paths = {
             "src/js/messages/i18n/ja_JP.js",
             "src/js/messages/i18n/pl_PL.js",
             "src/js/messages/i18n/pt_BR.js",
-            "src/js/messages/i18n/zh_CN.js"
+            "src/js/messages/i18n/zh_CN.js",
+            "src/js/messages/i18n/it_IT.js"
         ],
         all_views: [
             "src/js/views/web.js",

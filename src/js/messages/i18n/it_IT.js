@@ -36,9 +36,11 @@
 				"stringNotANumber": "Questo valore non è un numero",
 				"invalidPassword": "Password invalida",
 				"invalidPhone": "Numero di telefono invalido, si attendono valori del tipo: (123) 456-9999",
-				"invalidPattern": "Questo campo deve rispettare il seguente pattern: {0}",
+				"invalidPattern": "Questo campo deve avere la seguente struttura: {0}",
 				"stringTooShort": "Questo campo non deve contenere meno di {0} caratteri",
-				"stringTooLong": "Questo campo non deve contenere più di {0} caratteri"
+				"stringTooLong": "Questo campo non deve contenere più di {0} caratteri",
+				"addItemLabel": "Aggiungi",
+				"noneLabel": "Nessuno"
 			}
         }
 	});
