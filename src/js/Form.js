@@ -244,9 +244,9 @@
             {
                 this.form.attr("id", this.getId() + "-form-outer");
             }
-            if (Alpaca.isEmpty(this.form.attr("alpaca-field-id")))
+            if (Alpaca.isEmpty(this.form.attr("data-alpaca-form-id")))
             {
-                this.form.attr("alpaca-field-id", this.getId());
+                this.form.attr("data-alpaca-form-id", this.getId());
             }
 
             // the form field

@@ -67,37 +67,50 @@
         var optionsSource = null;
         var viewSource = null;
 
-        var findExistingAlpacaField = function()
+        // hands back the field instance that is bound directly under the element el
+        var findExistingAlpacaBinding = function()
         {
-            // hands back the field instance that is bound directly under the specified element
-            // var field = Alpaca(el);
-            var domElements = $(el).find(":first");
+            var existing = null;
 
-            var field = null;
-            for (var i = 0; i < domElements.length; i++) {
-                var domElement = domElements[i];
-                var fieldId = $(domElement).attr("alpaca-field-id");
-                if (fieldId) {
-                    var domElements2 = $(domElement).find(":first");
-
-                    for (var j = 0; j < domElements2.length; j++) {
-                        var domElement2 = domElements2[j];
-                        var fieldId2 = $(domElement2).attr("data-alpaca-field-id");
-                        if (fieldId2) {
-                            var _field = Alpaca.fieldInstances[fieldId2];
-                            if (_field) {
-                                field = _field;
+            var topElements = $(el).find(":first");
+            if (topElements.length > 0)
+            {
+                // does a field binding exist?
+                var fieldId = $(topElements[0]).attr("data-alpaca-field-id");
+                if (fieldId)
+                {
+                    var _existing = Alpaca.fieldInstances[fieldId];
+                    if (_existing) {
+                        existing = _existing;
+                    }
+                }
+                else
+                {
+                    // does a form binding exist?
+                    var formId = $(topElements[0]).attr("data-alpaca-form-id");
+                    if (formId)
+                    {
+                        var subElements = $(topElements[0]).find(":first");
+                        if (subElements.length > 0)
+                        {
+                            var subFieldId = $(subElements[0]).attr("data-alpaca-field-id");
+                            if (subFieldId)
+                            {
+                                var _existing = Alpaca.fieldInstances[subFieldId];
+                                if (_existing) {
+                                    existing = _existing;
+                                }
                             }
                         }
                     }
                 }
             }
 
-            return field;
+            return existing;
         };
 
-        var field = findExistingAlpacaField();
-        if (field)
+        var existing = findExistingAlpacaBinding();
+        if (existing)
         {
             // an alpaca form is already bound to this field
 
@@ -111,15 +124,15 @@
             var specialFunctionName = args[1];
             if ("get" === specialFunctionName)
             {
-                return field;
+                return existing;
             }
             else if ("exists" === specialFunctionName)
             {
-                return (field ? true: false);
+                return (existing ? true: false);
             }
             else if ("destroy" === specialFunctionName)
             {
-                field.destroy();
+                existing.destroy();
                 return;
             }
 

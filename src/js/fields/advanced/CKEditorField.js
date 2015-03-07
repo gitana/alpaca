@@ -39,10 +39,27 @@
             this.base(model, function() {
 
                 // see if we can render CK Editor
-                if (!self.isDisplayOnly() && self.control && $.fn.ckeditor)
+                if (!self.isDisplayOnly() && self.control && typeof(CKEDITOR) !== "undefined")
                 {
-                    self.plugin = $( self.control ).ckeditor(self.options.ckeditor); // Use CKEDITOR.replace() if element is <textarea>.
+                    // use a timeout because CKEditor has some odd timing dependencies
+                    setTimeout(function() {
+
+                        self.editor = CKEDITOR.replace($(self.control)[0], self.options.ckeditor);
+
+                    }, 250);
                 }
+
+                // if the ckeditor's dom element gets destroyed, make sure we clean up the editor instance
+                $(self.control).bind('destroyed', function() {
+
+                    if (self.editor)
+                    {
+                        self.editor.removeAllListeners();
+                        self.editor.destroy(false);
+                        self.editor = null;
+                    }
+
+                });
 
                 callback();
             });
@@ -54,10 +71,10 @@
         destroy: function()
         {
             // destroy the plugin instance
-            if (this.plugin)
+            if (this.editor)
             {
-                this.plugin.destroy();
-                this.plugin = null;
+                this.editor.destroy();
+                this.editor = null;
             }
 
             // call up to base method

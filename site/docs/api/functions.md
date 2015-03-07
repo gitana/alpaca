@@ -174,3 +174,69 @@ $("#field4").alpaca({
 </script>
 {% endraw %}
 
+<br/>
+<br/>
+
+Here is an example where we do the same thing against a more complex form.  We create a few buttons for 'show', 'hide'
+ and 'destroy'.  The buttons use special functions to find the form instance and do things with it.
+
+<div id="field5"></div>
+{% raw %}
+<script type="text/javascript" id="field5-script">
+$("#field5").alpaca({
+    "data": {
+        "name": "Joe Smith",
+        "age": 35
+    },
+    "schema": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "title": "Name"
+            },
+            "age": {
+                "type": "number",
+                "title": "Age"
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "name": {
+                "type": "text"
+            },
+            "age": {
+                "type": "integer"
+            }
+        },
+        "form": {
+            "buttons": {
+                "show": {
+                    "label": "Show",
+                    "click": function() {
+                        var form = $("#field5").alpaca("get");
+                        form.show();
+                    }
+                },
+                "hide": {
+                    "label": "Hide",
+                    "click": function() {
+                        var form = $("#field5").alpaca("get");
+                        form.hide();
+                    }
+                },
+                "destroy": {
+                    "label": "Destroy",
+                    "click": function() {
+                        $("#field5").alpaca("destroy");
+                    }
+                }
+            }
+        }
+    }
+})
+</script>
+{% endraw %}
+
+
