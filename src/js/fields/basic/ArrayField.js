@@ -73,16 +73,6 @@
                 toolbarSticky = this.options.toolbarSticky;
             }
 
-            if (Alpaca.isEmpty(this.options.items.showMoveUpItemButton))
-            {
-                this.options.items.showMoveUpItemButton = true;
-            }
-
-            if (Alpaca.isEmpty(this.options.items.showMoveDownItemButton))
-            {
-                this.options.items.showMoveDownItemButton = true;
-            }
-
             this.options.toolbarSticky = toolbarSticky;
 
             // Enable forceRevalidation option so that any change in children will trigger parent's revalidation.
@@ -471,18 +461,6 @@
 
             if (self._validateEqualMaxItems())
             {
-                /*
-                if (itemOptions === null && self.options && self.options.fields && self.options.fields["item"])
-                {
-                    itemOptions = self.options.fields["item"];
-                }
-                */
-
-                if (itemOptions === null && self.options && self.options.items)
-                {
-                    itemOptions = self.options.items;
-                }
-
                 var formEl = $("<div></div>");
                 formEl.alpaca({
                     "data" : itemData,
@@ -589,7 +567,11 @@
             };
 
             var itemOptions;
-            if (_this.options && _this.options.items) {
+            // legacy support for options.fields.item
+            if (!itemOptions && _this.options && _this.options.fields && _this.options.fields.item) {
+                itemOptions = _this.options.fields.item;
+            }
+            if (!itemOptions && _this.options && _this.options.items) {
                 itemOptions = _this.options.items;
             }
             var itemSchema;
