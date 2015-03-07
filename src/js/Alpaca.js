@@ -109,34 +109,31 @@
             return existing;
         };
 
+        var specialFunctionNames = ["get", "exists", "destroy"];
+        var isSpecialFunction = (args.length > 1 && Alpaca.isString(args[1]) && (specialFunctionNames.indexOf(args[1]) > -1));
+
         var existing = findExistingAlpacaBinding();
-        if (existing)
+        if (existing || isSpecialFunction)
         {
-            // an alpaca form is already bound to this field
+            if (isSpecialFunction)
+            {
+                // second argument must be a special function name
+                var specialFunctionName = args[1];
+                if ("get" === specialFunctionName) {
+                    return existing;
+                }
+                else if ("exists" === specialFunctionName) {
+                    return (existing ? true : false);
+                }
+                else if ("destroy" === specialFunctionName) {
+                    existing.destroy();
+                    return;
+                }
 
-            // if we only have 1 argument, then we don't do anything
-            if (args.length === 1)
-            {
-                return;
-            }
-
-            // second argument must be a special function name
-            var specialFunctionName = args[1];
-            if ("get" === specialFunctionName)
-            {
-                return existing;
-            }
-            else if ("exists" === specialFunctionName)
-            {
-                return (existing ? true: false);
-            }
-            else if ("destroy" === specialFunctionName)
-            {
-                existing.destroy();
-                return;
+                return Alpaca.throwDefaultError("Unknown special function: " + specialFunctionName);
             }
 
-            return Alpaca.throwDefaultError("Unknown special function: " + specialFunctionName);
+            return existing;
         }
         else
         {
@@ -2789,7 +2786,7 @@
 
         // invoke Alpaca against current element
         var ret = Alpaca.apply(this, newArgs);
-        if (!ret) {
+        if (typeof(ret) === "undefined") {
             // as per jQuery's pattern, assume we hand back $el
             ret = $(this);
         }

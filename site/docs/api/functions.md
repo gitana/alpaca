@@ -214,7 +214,8 @@ $("#field5").alpaca({
             "buttons": {
                 "show": {
                     "label": "Show",
-                    "click": function() {
+                    "click": function()
+                    {
                         var form = $("#field5").alpaca("get");
                         form.show();
                     }
