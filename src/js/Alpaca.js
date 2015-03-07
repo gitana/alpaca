@@ -128,12 +128,12 @@
             }
             else if ("exists" === specialFunctionName)
             {
-                return (existing ? true: false);
+                return true;
             }
             else if ("destroy" === specialFunctionName)
             {
                 existing.destroy();
-                return;
+                return true;
             }
 
             return Alpaca.throwDefaultError("Unknown special function: " + specialFunctionName);
@@ -163,6 +163,21 @@
                 }
                 else
                 {
+                    // second argument could be a special function name
+                    var specialFunctionName = args[1];
+                    if ("get" === specialFunctionName)
+                    {
+                        return null;
+                    }
+                    else if ("exists" === specialFunctionName)
+                    {
+                        return false;
+                    }
+                    else if ("destroy" === specialFunctionName)
+                    {
+                        return false;
+                    }
+
                     config = {
                         "data": args[1]
                     };
