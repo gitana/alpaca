@@ -1833,7 +1833,7 @@
                     {
                         for (var i = 0; i < requiredArray.length; i++)
                         {
-                            if (requiredArray[i] === this.name)
+                            if (requiredArray[i] === this.propertyId)
                             {
                                 required = true;
                                 break;

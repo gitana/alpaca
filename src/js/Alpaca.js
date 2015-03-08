@@ -3255,29 +3255,6 @@
     };
 
     /**
-     * Runs the given function over the field's children recursively.
-     *
-     * @param field
-     * @param fn
-     */
-    Alpaca.fieldApplyChildren = function(field, fn)
-    {
-        var f = function(field, fn)
-        {
-            // if the field has children, go depth first
-            if (field.children && field.children.length > 0)
-            {
-                for (var i = 0; i < field.children.length; i++)
-                {
-                    fn(field.children[i]);
-                }
-            }
-        };
-
-        f(field, fn);
-    };
-
-    /**
      * Runs the given function over the field and all of its children recursively.
      *
      * @param field
@@ -3287,7 +3264,14 @@
     {
         fn(field);
 
-        Alpaca.fieldApplyChildren(field, fn);
+        // if the field has children, go depth first
+        if (field.children && field.children.length > 0)
+        {
+            for (var i = 0; i < field.children.length; i++)
+            {
+                Alpaca.fieldApplyFieldAndChildren(field.children[i], fn);
+            }
+        }
     };
 
     /**

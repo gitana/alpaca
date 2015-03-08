@@ -423,19 +423,27 @@ $("#field9").alpaca({
         "title": "Customer Profile",
         "description": "Customer Contact Information",
         "type": "object",
-        "default": '{"name":"John Matrix","age":40}',
         "properties": {
-            "name": {
-                "title": "Full Name",
-                "description": "Enter Your Full Name",
-                "type": "string"
-            },
-            "age": {
-                "title": "Age",
-                "type": "number"
+            "user": {
+                "type": "object",
+                "title": "Customer Details",
+                "default": '{"name":"John Matrix","age":40}',
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "Full Name",
+                        "description": "Enter Your Full Name",
+                        "type": "string"
+                    },
+                    "age": {
+                        "title": "Age",
+                        "type": "number"
+                    }
+                }
             }
-        },
-        "required": ["name"]
+        }
     }
 });
 </script>
