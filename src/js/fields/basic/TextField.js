@@ -673,6 +673,11 @@
                         "title": "Data attributes for the underlying DOM input control",
                         "description": "Allows you to specify a key/value map of data attributes that will be added as DOM attribuets for the underlying input control.  The data attributes will be added as data-{name}='{value}'.",
                         "type": "object"
+                    },
+                    "autocomplete": {
+                        "title": "HTML autocomplete attribute for the underlying DOM input control",
+                        "description": "Allows you to specify the autocomplete attribute for the underlying input control whether or not field should have autocomplete enabled.",
+                        "type": "string"
                     }
                 }
             });
