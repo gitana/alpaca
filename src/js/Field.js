@@ -424,7 +424,7 @@
 
                     if (lastSegment)
                     {
-                        this.name = this.parent.name + "_" + lastSegment;
+                        this.name = this.parent.name + "[" + lastSegment + "]";
                         this.nameCalculated = true;
                     }
                 }
