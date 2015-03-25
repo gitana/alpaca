@@ -105,15 +105,25 @@
         },
 
         /**
-         * Gets message for the given id.
+         * Gets message for the given id
          *
-         * @param {String} messageId Message id.
+         * @param {String} messageId Message id
+         * @param {String} locale locale
          *
          * @returns {String} Message mapped to the given id.
          */
-        getMessage : function (messageId) {
-            var messageForLocale = this.getViewParam(["messages",Alpaca.defaultLocale,messageId]);
-            return Alpaca.isEmpty(messageForLocale) ? this.getViewParam(["messages",messageId]): messageForLocale;
+        getMessage : function (messageId, locale)
+        {
+            if (!locale) {
+                locale = Alpaca.defaultLocale;
+            }
+
+            var messageForLocale = this.getViewParam(["messages", locale, messageId]);
+            if (Alpaca.isEmpty(messageForLocale)) {
+                messageForLocale = this.getViewParam(["messages", messageId]);
+            }
+
+            return messageForLocale;
         },
 
         /**

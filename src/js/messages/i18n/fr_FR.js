@@ -1,5 +1,7 @@
 (function($) {
 
+	// french - france
+
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({

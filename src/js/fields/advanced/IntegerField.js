@@ -87,7 +87,7 @@
 
             var status = this._validateInteger();
             valInfo["stringNotANumber"] = {
-                "message": status ? "" : this.view.getMessage("stringNotAnInteger"),
+                "message": status ? "" : this.getMessage("stringNotAnInteger"),
                 "status": status
             };
 

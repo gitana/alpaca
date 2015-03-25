@@ -307,7 +307,7 @@
 
             var status = this._validateEnum();
             valInfo["invalidValueOfEnum"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("invalidValueOfEnum"), [this.schema["enum"].join(', '), this.data]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("invalidValueOfEnum"), [this.schema["enum"].join(', '), this.data]),
                 "status": status
             };
 

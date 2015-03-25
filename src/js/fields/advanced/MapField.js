@@ -88,13 +88,13 @@
 
             var isValidMapKeysNotEmpty = this._validateMapKeysNotEmpty();
             valInfo["keyMissing"] = {
-                "message": isValidMapKeysNotEmpty ? "" : this.view.getMessage("keyMissing"),
+                "message": isValidMapKeysNotEmpty ? "" : this.getMessage("keyMissing"),
                 "status": isValidMapKeysNotEmpty
             };
 
             var isValidMapKeysUnique = this._validateMapKeysUnique();
             valInfo["keyNotUnique"] = {
-                "message": isValidMapKeysUnique ? "" : this.view.getMessage("keyNotUnique"),
+                "message": isValidMapKeysUnique ? "" : this.getMessage("keyNotUnique"),
                 "status": isValidMapKeysUnique
             };
 

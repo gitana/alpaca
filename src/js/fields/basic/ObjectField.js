@@ -423,6 +423,12 @@
 
                     control.containerItemEl = containerItemEl;
 
+                    // TODO: verify, as per: https://github.com/emircal/alpaca/commit/4061c33787bd7a2b86fb613317374d365d9acc92
+                    // Reset hideInitValidationError after render
+                    Alpaca.fieldApplyFieldAndChildren(control, function(_control) {
+                        _control.hideInitValidationError = false;
+                    });
+
                     if (postRenderCallback)
                     {
                         postRenderCallback(control);
@@ -573,13 +579,13 @@
 
             var status = this._validateMaxProperties();
             valInfo["tooManyProperties"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("tooManyProperties"), [this.schema.maxProperties]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyProperties"), [this.schema.maxProperties]),
                 "status": status
             };
 
             status = this._validateMinProperties();
             valInfo["tooFewProperties"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("tooManyItems"), [this.schema.items.minProperties]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.items.minProperties]),
                 "status": status
             };
 

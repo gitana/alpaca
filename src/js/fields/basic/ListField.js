@@ -64,14 +64,14 @@
 
             this.base(function(model) {
 
-                model.noneLabel = "None";
-                if (typeof(self.options.noneLabel) != "undefined")
+                model.noneLabel = self.getMessage("noneLabel");
+                if (typeof(self.options.noneLabel) !== "undefined")
                 {
                     model.noneLabel = self.options.noneLabel;
                 }
 
                 model.hideNone = self.isRequired();
-                if (typeof(self.options.removeDefaultNone) != "undefined")
+                if (typeof(self.options.removeDefaultNone) !== "undefined")
                 {
                     model.hideNone = self.options.removeDefaultNone;
                 }
@@ -381,4 +381,10 @@
 
         /* end_builder_helpers */
     });
+
+    // Registers additional messages
+    Alpaca.registerMessages({
+        "noneLabel": "None"
+    });
+
 })(jQuery);

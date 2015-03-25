@@ -319,13 +319,13 @@
 
             var status = this._validateMaxItems();
             valInfo["tooManyItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("tooManyItems"), [this.schema.items.maxItems]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.items.maxItems]),
                 "status": status
             };
 
             status = this._validateMinItems();
             valInfo["notEnoughItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("notEnoughItems"), [this.schema.items.minItems]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("notEnoughItems"), [this.schema.items.minItems]),
                 "status": status
             };
 

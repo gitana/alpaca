@@ -53,7 +53,7 @@
 
             var status = this._validateJSON();
             valInfo["stringNotAJSON"] = {
-                "message": status.status ? "" : this.view.getMessage("stringNotAJSON") +" "+ status.message,
+                "message": status.status ? "" : this.getMessage("stringNotAJSON") +" "+ status.message,
                 "status": status.status
             };
 

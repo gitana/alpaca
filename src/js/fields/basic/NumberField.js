@@ -53,13 +53,13 @@
 
             var status = this._validateNumber();
             valInfo["stringNotANumber"] = {
-                "message": status ? "" : this.view.getMessage("stringNotANumber"),
+                "message": status ? "" : this.getMessage("stringNotANumber"),
                 "status": status
             };
 
             status = this._validateDivisibleBy();
             valInfo["stringDivisibleBy"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("stringDivisibleBy"), [this.schema.divisibleBy]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("stringDivisibleBy"), [this.schema.divisibleBy]),
                 "status": status
             };
 
@@ -70,9 +70,9 @@
             };
             if (!status) {
                 if (this.schema.exclusiveMaximum) {
-                    valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueTooLargeExclusive"), [this.schema.maximum]);
+                    valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(this.getMessage("stringValueTooLargeExclusive"), [this.schema.maximum]);
                 } else {
-                    valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueTooLarge"), [this.schema.maximum]);
+                    valInfo["stringValueTooLarge"]["message"] = Alpaca.substituteTokens(this.getMessage("stringValueTooLarge"), [this.schema.maximum]);
                 }
             }
 
@@ -83,9 +83,9 @@
             };
             if (!status) {
                 if (this.schema.exclusiveMinimum) {
-                    valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueTooSmallExclusive"), [this.schema.minimum]);
+                    valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(this.getMessage("stringValueTooSmallExclusive"), [this.schema.minimum]);
                 } else {
-                    valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueTooSmall"), [this.schema.minimum]);
+                    valInfo["stringValueTooSmall"]["message"] = Alpaca.substituteTokens(this.getMessage("stringValueTooSmall"), [this.schema.minimum]);
                 }
             }
 
@@ -96,7 +96,7 @@
             };
             if (!status)
             {
-                valInfo["stringValueNotMultipleOf"]["message"] = Alpaca.substituteTokens(this.view.getMessage("stringValueNotMultipleOf"), [this.schema.multipleOf]);
+                valInfo["stringValueNotMultipleOf"]["message"] = Alpaca.substituteTokens(this.getMessage("stringValueNotMultipleOf"), [this.schema.multipleOf]);
             }
 
             // hand back a true/false

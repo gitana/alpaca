@@ -164,7 +164,7 @@
 
             var status = this._validateDateFormat();
             valInfo["invalidDate"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("invalidDate"), [this.options.dateFormat]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("invalidDate"), [this.options.dateFormat]),
                 "status": status
             };
 

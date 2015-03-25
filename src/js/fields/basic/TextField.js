@@ -57,13 +57,21 @@
             }
 
             // DOM "autocomplete"
-            if (this.options.autocomplete)
+            if (this.options.autocomplete && typeof(this.options.autocomplete) === "string")
             {
                 if (this.options.autocomplete.toLowerCase() === "on")
                 {
                     this.options.autocomplete = true;
                 }
-                else if (this.options.autocomplete.toLowerCase() === "off")
+                else if (this.options.autocomplete.toLowerCase() === "true")
+                {
+                    this.options.autocomplete = true;
+                }
+                else if (this.options.autocomplete.toLowerCase() === "yes")
+                {
+                    this.options.autocomplete = true;
+                }
+                else
                 {
                     this.options.autocomplete = false;
                 }
@@ -428,19 +436,19 @@
 
             var status =  this._validatePattern();
             valInfo["invalidPattern"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("invalidPattern"), [this.schema.pattern]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("invalidPattern"), [this.schema.pattern]),
                 "status": status
             };
 
             status = this._validateMaxLength();
             valInfo["stringTooLong"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("stringTooLong"), [this.schema.maxLength]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("stringTooLong"), [this.schema.maxLength]),
                 "status": status
             };
 
             status = this._validateMinLength();
             valInfo["stringTooShort"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("stringTooShort"), [this.schema.minLength]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("stringTooShort"), [this.schema.minLength]),
                 "status": status
             };
 

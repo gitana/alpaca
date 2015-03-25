@@ -195,6 +195,7 @@ called life.
 + [@paierh](https://github.com/paierh)
 + [@darmar](https://github.com/darmar)
 + [@arthurportas](https://github.com/arthurportas)
++ [@emircal](https://github.com/emircal)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org), the [Alpaca Forums](http://www.cloudcms.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!

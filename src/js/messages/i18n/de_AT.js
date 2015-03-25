@@ -1,5 +1,7 @@
 (function($) {
 
+	// german - austria
+
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({
@@ -39,7 +41,6 @@
 				"invalidPattern": "&#27492;&#22495;&#39035;&#26377;&#26684;&#24335; {0}",
 				"stringTooShort": "&#27492;&#22495;&#33267;&#23569;&#38271;&#24230; {0}",
 				"stringTooLong": "&#27492;&#22495;&#26368;&#22810;&#38271;&#24230; {0}"
-			
 			}
         }
     });

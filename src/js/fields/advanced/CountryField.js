@@ -28,7 +28,7 @@
             this.schema["enum"] = [];
             this.options.optionLabels = [];
 
-            var countriesMap = this.view.getMessage("countries");
+            var countriesMap = this.getMessage("countries");
             if (countriesMap)
             {
                 for (var countryKey in countriesMap)

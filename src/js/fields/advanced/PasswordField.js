@@ -37,7 +37,7 @@
             var valInfo = this.validation;
 
             if (!valInfo["invalidPattern"]["status"]) {
-                valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidPassword");
+                valInfo["invalidPattern"]["message"] = this.getMessage("invalidPassword");
             }
 
             return baseStatus;

@@ -109,6 +109,7 @@ var paths = {
             "src/js/messages/i18n/es_ES.js",
             "src/js/messages/i18n/fr_FR.js",
             "src/js/messages/i18n/hr_HR.js",
+            "src/js/messages/i18n/it_IT.js",
             "src/js/messages/i18n/ja_JP.js",
             "src/js/messages/i18n/pl_PL.js",
             "src/js/messages/i18n/pt_BR.js",

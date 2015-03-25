@@ -1,5 +1,7 @@
 (function($) {
 
+    // chinese - china
+
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({

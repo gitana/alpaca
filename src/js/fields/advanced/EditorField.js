@@ -249,13 +249,13 @@
 
             var wordCountStatus =  this._validateWordCount();
             valInfo["wordLimitExceeded"] = {
-                "message": wordCountStatus ? "" : Alpaca.substituteTokens(this.view.getMessage("wordLimitExceeded"), [this.options.wordlimit]),
+                "message": wordCountStatus ? "" : Alpaca.substituteTokens(this.getMessage("wordLimitExceeded"), [this.options.wordlimit]),
                 "status": wordCountStatus
             };
 
             var editorAnnotationsStatus = this._validateEditorAnnotations();
             valInfo["editorAnnotationsExist"] = {
-                "message": editorAnnotationsStatus ? "" : this.view.getMessage("editorAnnotationsExist"),
+                "message": editorAnnotationsStatus ? "" : this.getMessage("editorAnnotationsExist"),
                 "status": editorAnnotationsStatus
             };
 

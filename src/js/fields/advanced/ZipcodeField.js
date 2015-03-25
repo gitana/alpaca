@@ -64,11 +64,11 @@
 
                 if (this.options.format === "nine")
                 {
-                    valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidZipcodeFormatNine");
+                    valInfo["invalidPattern"]["message"] = this.getMessage("invalidZipcodeFormatNine");
                 }
                 else if (this.options.format === "five")
                 {
-                    valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidZipcodeFormatFive");
+                    valInfo["invalidPattern"]["message"] = this.getMessage("invalidZipcodeFormatFive");
                 }
             }
 

@@ -1,5 +1,7 @@
 (function($) {
 
+	// spanish - spain
+
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({
@@ -29,7 +31,7 @@
 				"stringNotAnInteger": "Este valor no es un número entero.",
 				"invalidIPv4": "Dirección inválida IPv4, ex: 192.168.0.1",
 				"stringValueTooSmall": "El valor mínimo para este campo es {0}",
-				"stringValueTooLarge": "El valor míximo para este campo es {0}",
+				"stringValueTooLarge": "El valor máximo para este campo es {0}",
 				"stringValueTooSmallExclusive": "El valor de este campo debe ser mayor que {0}",
 				"stringValueTooLargeExclusive": "El valor de este campo debe ser menos que {0}",
 				"stringDivisibleBy": "El valor debe ser divisible cerca {0}",
@@ -38,7 +40,13 @@
 				"invalidPhone": "Número de teléfono inválido, ex: (123) 456-9999",
 				"invalidPattern": "Este campo debe tener patrón {0}",
 				"stringTooShort": "Este campo debe contener por lo menos {0} números o caracteres",
-				"stringTooLong": "Este campo debe contener a lo más {0} números o caracteres"
+				"stringTooLong": "Este campo debe contener a lo más {0} números o caracteres",
+				"noneLabel": "Ninguno",
+				"addItemButtonLabel": "Añadir",
+				"addButtonLabel": "Añadir",
+				"removeButtonLabel": "Quitar",
+				"upButtonLabel": "Arriba",
+				"downButtonLabel": "Abajo"
 			}
         }
 	});

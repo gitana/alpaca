@@ -38,7 +38,7 @@
 
             if (!valInfo["invalidPattern"]["status"])
             {
-                valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidIPv4");
+                valInfo["invalidPattern"]["message"] = this.getMessage("invalidIPv4");
             }
 
             return baseStatus;

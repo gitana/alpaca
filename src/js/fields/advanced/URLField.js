@@ -38,7 +38,7 @@
 
             if (!valInfo["invalidPattern"]["status"]) {
 
-                valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidURLFormat");
+                valInfo["invalidPattern"]["message"] = this.getMessage("invalidURLFormat");
             }
 
             return baseStatus;

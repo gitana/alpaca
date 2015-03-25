@@ -114,6 +114,9 @@
                 // whether the view is readonly
                 setScalar(this, element, "displayReadonly");
 
+                // locale
+                setScalar(this, element, "locale");
+
                 // functions
                 setFunction(this, element, "render");
                 setFunction(this, element, "postRender");
@@ -139,7 +142,7 @@
                 // horizontal
                 setScalar(this, element, "horizontal");
 
-                // TODO: remove some of these
+                // TODO: remove some of these?
                 setScalar(this, element, "collapsible");
                 setScalar(this, element, "legendStyle");
                 setScalar(this, element, "toolbarStyle");
@@ -147,7 +150,7 @@
                 setScalar(this, element, "toolbarSticky");
                 setScalar(this, element, "globalTemplate");
 
-                // TODO: remove wizard
+                // TODO: remove wizard?
                 mergeMap(this, element, "wizard");
             }
 

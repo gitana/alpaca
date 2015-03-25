@@ -40,7 +40,7 @@
             var valInfo = this.validation;
 
             if (!valInfo["invalidPattern"]["status"]) {
-                valInfo["invalidPattern"]["message"] = this.view.getMessage("invalidEmail");
+                valInfo["invalidPattern"]["message"] = this.getMessage("invalidEmail");
             }
 
             return baseStatus;

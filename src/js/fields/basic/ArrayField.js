@@ -138,7 +138,9 @@
                     actions.push(action);
                 }
                 for (var k in actionConfig) {
-                    action[k] = actionConfig[k];
+                    if (!action[k]) {
+                        action[k] = actionConfig[k];
+                    }
                 }
             };
             var cleanupActions = function(actions, showLabels) {
@@ -190,7 +192,7 @@
                 self.toolbar.actions = [];
             }
             applyAction(self.toolbar.actions, "add", {
-                "label": "Add New Item",
+                "label": self.getMessage("addItemButtonLabel"),
                 "action": "add",
                 "iconClass": self.view.getStyle("addIcon"),
                 "click": function(key, action)
@@ -220,7 +222,7 @@
                 self.actionbar.actions = [];
             }
             applyAction(self.actionbar.actions, "add", {
-                "label": "Add",
+                "label": self.getMessage("addButtonLabel"),
                 "action": "add",
                 "iconClass": self.view.getStyle("addIcon"),
                 "click": function(key, action, itemIndex) {
@@ -235,7 +237,7 @@
                 }
             });
             applyAction(self.actionbar.actions, "remove", {
-                "label": "Remove",
+                "label": self.getMessage("removeButtonLabel"),
                 "action": "remove",
                 "iconClass": self.view.getStyle("removeIcon"),
                 "click": function(key, action, itemIndex) {
@@ -247,7 +249,7 @@
                 }
             });
             applyAction(self.actionbar.actions, "up", {
-                "label": "Up",
+                "label": self.getMessage("upButtonLabel"),
                 "action": "up",
                 "iconClass": self.view.getStyle("upIcon"),
                 "click": function(key, action, itemIndex) {
@@ -259,7 +261,7 @@
                 }
             });
             applyAction(self.actionbar.actions, "down", {
-                "label": "Down",
+                "label": self.getMessage("downButtonLabel"),
                 "action": "down",
                 "iconClass": self.view.getStyle("downIcon"),
                 "click": function(key, action, itemIndex) {
@@ -532,6 +534,12 @@
 
                         control.containerItemEl = containerItemEl;
 
+                        // TODO: verify, as per: https://github.com/emircal/alpaca/commit/4061c33787bd7a2b86fb613317374d365d9acc92
+                        // Reset hideInitValidationError after render
+                        Alpaca.fieldApplyFieldAndChildren(control, function(_control) {
+                            _control.hideInitValidationError = false;
+                        });
+
                         // PR: https://github.com/gitana/alpaca/pull/124
                         if (Alpaca.isFunction(self.options.items.postRender))
                         {
@@ -652,19 +660,19 @@
 
             var status = this._validateUniqueItems();
             valInfo["valueNotUnique"] = {
-                "message": status ? "" : this.view.getMessage("valueNotUnique"),
+                "message": status ? "" : this.getMessage("valueNotUnique"),
                 "status": status
             };
 
             status = this._validateMaxItems();
             valInfo["tooManyItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("tooManyItems"), [this.schema.items.maxItems]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.items.maxItems]),
                 "status": status
             };
 
             status = this._validateMinItems();
             valInfo["notEnoughItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("notEnoughItems"), [this.schema.items.minItems]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("notEnoughItems"), [this.schema.items.minItems]),
                 "status": status
             };
 
@@ -1570,5 +1578,13 @@
     });
     Alpaca.registerFieldClass("array", Alpaca.Fields.ArrayField);
     Alpaca.registerDefaultSchemaFieldMapping("array", "array");
+
+    Alpaca.registerMessages({
+        "addItemButtonLabel": "Add New Item",
+        "addButtonLabel": "Add",
+        "removeButtonLabel": "Remove",
+        "upButtonLabel": "Up",
+        "downButtonLabel": "Down"
+    });
 
 })(jQuery);

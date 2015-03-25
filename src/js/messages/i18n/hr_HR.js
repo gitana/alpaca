@@ -1,5 +1,7 @@
 (function($) {
 
+	// croatian - croatia
+
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({

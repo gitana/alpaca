@@ -1208,6 +1208,16 @@
         },
 
         /**
+         * View and locale friendly retrieval of messages.
+         *
+         * @param key
+         */
+        getMessage: function(key)
+        {
+            return this.view.getMessage(key, this.view.locale);
+        },
+
+        /**
          * Validates this field and returns whether it is in a valid state.
          *
          * @param [Boolean] validateChildren whether to child controls.
@@ -1268,13 +1278,13 @@
 
             var status = this._validateOptional();
             valInfo["notOptional"] = {
-                "message": status ? "" : this.view.getMessage("notOptional"),
+                "message": status ? "" : this.getMessage("notOptional"),
                 "status": status
             };
 
             status = this._validateDisallow();
             valInfo["disallowValue"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("disallowValue"), [this.schema["disallow"].join(', ')]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("disallowValue"), [this.schema["disallow"].join(', ')]),
                 "status": status
             };
 

@@ -42,7 +42,7 @@
 
             var status =  this._validateWordCount();
             valInfo["wordLimitExceeded"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.view.getMessage("wordLimitExceeded"), [this.options.wordlimit]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("wordLimitExceeded"), [this.options.wordlimit]),
                 "status": status
             };
 
