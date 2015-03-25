@@ -732,17 +732,6 @@
                     self.fireCallback("disabled");
                 }
 
-                // autocomplete
-                if (this.options.autocomplete)
-                {
-                    $(this.field).addClass("alpaca-autocomplete");
-
-                    $(':input', this.field).attr('autocomplete', this.options.autocomplete);
-
-                    // CALLBACK: "autocomplete"
-                    self.fireCallback("autocomplete");
-                }
-
                 // allow single or multiple field classes to be specified via the "fieldClass"
                 // or "fieldClasses" options
                 var applyFieldClass = function(el, thing)

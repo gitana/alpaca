@@ -190,6 +190,11 @@
             }
         }
     };
+    // fired after a text field is deemed to be autocomplete-able
+    callbacks["autocomplete"] = function()
+    {
+    };
+
 
     var styles = {};
     styles["button"] = "";

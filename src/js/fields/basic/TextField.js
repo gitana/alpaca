@@ -51,9 +51,27 @@
                 this.options.attributes = {};
             }
 
-            if (typeof(this.options.allowOptionalEmpty) == "undefined")
+            if (typeof(this.options.allowOptionalEmpty) === "undefined")
             {
                 this.options.allowOptionalEmpty = true;
+            }
+
+            // DOM "autocomplete"
+            if (this.options.autocomplete)
+            {
+                if (this.options.autocomplete.toLowerCase() === "on")
+                {
+                    this.options.autocomplete = true;
+                }
+                else if (this.options.autocomplete.toLowerCase() === "off")
+                {
+                    this.options.autocomplete = false;
+                }
+            }
+
+            if (typeof(this.options.autocomplete) === "undefined")
+            {
+                this.options.autocomplete = false;
             }
         },
 
@@ -82,6 +100,9 @@
 
                 if (self.control)
                 {
+                    // autocomplete
+                    self.applyAutocomplete();
+
                     // mask
                     self.applyMask();
 
@@ -94,6 +115,21 @@
 
                 callback();
             });
+        },
+
+        applyAutocomplete: function()
+        {
+            var self = this;
+
+            // autocomplete
+            if (self.options.autocomplete)
+            {
+                $(self.field).addClass("alpaca-autocomplete");
+                $(self.control).attr("autocomplete", (self.options.autocomplete ? "on" : "off"));
+
+                // CALLBACK: "autocomplete"
+                self.fireCallback("autocomplete");
+            }
         },
 
         applyMask: function()

@@ -353,3 +353,22 @@ $("#field12").alpaca({
 </script>
 {% endraw %}
 
+## Example 13
+A text field with autocomplete.
+
+<div id="field13"></div>
+{% raw %}
+<script type="text/javascript" id="field13-script">
+$("#field13").alpaca({
+    "data": "Mickey Mantle",
+    "schema": {
+        "type": "string"
+    },
+    "options": {
+        "label": "Name",
+        "autocomplete": true
+    }
+});
+</script>
+{% endraw %}
+
