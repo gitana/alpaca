@@ -2735,7 +2735,7 @@
      */
     Alpaca.resolveReference = function(schema, options, referenceId)
     {
-        if (schema.id == referenceId) // jshint ignore:line
+        if ((schema.id === referenceId) || (("#" + schema.id) === referenceId)) // jshint ignore:line
         {
             var result = {};
             if (schema) {

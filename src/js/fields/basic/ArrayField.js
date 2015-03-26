@@ -186,7 +186,7 @@
                 }
             }
             if (typeof(self.toolbar.showLabels) === "undefined") {
-                self.toolbar.showLabels = false;
+                self.toolbar.showLabels = true;
             }
             if (!self.toolbar.actions) {
                 self.toolbar.actions = [];
@@ -1469,7 +1469,7 @@
                         "properties": {
                             "showLabels": {
                                 "type": "boolean",
-                                "default": false,
+                                "default": true,
                                 "title": "Whether to show labels next to actions"
                             },
                             "actions": {
