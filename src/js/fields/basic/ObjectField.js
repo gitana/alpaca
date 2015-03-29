@@ -369,7 +369,7 @@
                 {
                     self.destroy();
 
-                    self.errorCallback.call(_this, err);
+                    self.errorCallback.call(self, err);
                 },
                 "notTopLevel":true,
                 "render" : function(fieldControl, cb) {

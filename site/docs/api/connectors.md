@@ -49,7 +49,7 @@ $("#field1").alpaca({
     "schemaSource": "/data/connector-custom-schema.json",
     "optionsSource": "/data/connector-custom-options.json",
     "viewSource": "/data/connector-custom-view.json"
-})
+});
 </script>
 {% endraw %}
 
@@ -98,7 +98,7 @@ $("#field2").alpaca({
             }
         }
     }
-})
+});
 </script>
 {% endraw %}
 

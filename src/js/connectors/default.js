@@ -153,19 +153,19 @@
                 var viewSource = resources.viewSource;
 
                 // we allow "schema" to contain a URI as well (backwards-compatibility)
-                if (!schemaSource)
+                if (!schemaSource && typeof(resources.schema) === "string")
                 {
                     schemaSource = resources.schema;
                 }
 
                 // we allow "options" to contain a URI as well (backwards-compatibility)
-                if (!optionsSource)
+                if (!optionsSource && typeof(resources.options) === "string")
                 {
                     optionsSource = resources.options;
                 }
 
                 // we allow "view" to contain a URI as well (backwards-compatibility)
-                if (!viewSource)
+                if (!viewSource && typeof(resources.view) === "string")
                 {
                     viewSource = resources.view;
                 }
