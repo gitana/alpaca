@@ -898,8 +898,7 @@
                     if (Alpaca.isArray(conditionalData)) {
 
                         // check array value
-                        //if (conditionalDependencies[dependentOnPropertyId] && $.inArray(dependentOnData, conditionalDependencies[dependentOnPropertyId]) == -1)
-                        if (Alpaca.anyEquality(dependentOnData, conditionalData))
+                        if (!Alpaca.anyEquality(dependentOnData, conditionalData))
                         {
                             valid = false;
                         }
