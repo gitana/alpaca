@@ -262,3 +262,55 @@ $("#field3").alpaca({
 });
 </script>
 {% endraw %}
+
+
+## Arrays of Values
+
+Conditional dependencies can also leverage arrays of possible values.
+
+<div id="field4"> </div>
+{% raw %}
+<script type="text/javascript" id="field4-script">
+$("#field4").alpaca({
+    "schema": {
+        "title": "Survey",
+        "type": "object",
+        "properties": {
+            "fan": {
+                "title": "Are you an Ice Cream fanatic?",
+                "type": "string",
+                "enum": ["Yes", "No", "Maybe"]
+            },
+            "icecream": {
+                "title": "I see... so what is your favorite flavor?",
+                "type": "String",
+                "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
+                "dependencies": "fan"
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "fan": {
+                "removeDefaultNone": true,
+            },
+            "icecream": {
+                "dependencies": {
+                    "fan": ["Yes", "Maybe"]
+                }
+            }
+        },
+        "form": {
+            "buttons": {
+                "submit": {
+                    "title": "Show Results",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue()));
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
