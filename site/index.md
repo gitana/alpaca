@@ -254,9 +254,10 @@ Yes, Alpaca is supported if you <a href="support.html">sign up for a support con
 We have engineers who offer consulting services, technical support and training.
 
 <a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> sponsors Alpaca and is ready to work with you to support your live engagements.
-
 <a href="support.html">Let us know how we can help</a>!
 
+If you don't want production support, the project is open source and has an active community.  Check out our
+<a href="contribute.html">contribution</a> page to learn how you can <a href="contribute.html">get involved</a>
 
 ## How do I get started?
 
@@ -264,6 +265,13 @@ You can drop Alpaca into your new or existing web or mobile projects.  Alpaca is
 you can plug in wherever you'd like.  You can <a href="download.html">install or download Alpaca</a> using conventional
 tools like Bower or NPM.  Or you can <a href="download.html">grab a release</a> from our
  <a href="download.html">download page</a>.
+
+
+## How do I contribute to Alpaca?
+
+Alpaca is truly a community project; we welcome your involvement!
+<br/>
+Learn how you can <a href="contribute.html">contribute to Alpaca</a>.
 
 <script>
 $("TABLE.stack").dataTable({

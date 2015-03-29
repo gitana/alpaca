@@ -162,13 +162,13 @@ var setup = function()
                     // cover every control with an interaction layer
                     form.getFieldEl().find(".alpaca-container-item").each(function() {
 
-                        var alpacaFieldId = $(this).attr("data-alpaca-field-id");
+                        var alpacaFieldId = $(this).children().first().attr("data-alpaca-field-id");
 
                         //iCount++;
                         $(this).attr("icount", iCount);
 
                         var width = $(this).outerWidth() - 22;
-                        var height = $(this).outerHeight() + 10;
+                        var height = $(this).outerHeight() + 25;
 
                         // cover div
                         var cover = $("<div></div>");
@@ -215,7 +215,7 @@ var setup = function()
                         $(interaction).attr("icount-ref", iCount);
                         $(this).append(interaction);
                         $(buttonGroup).css({
-                            "margin-top": 2 + (($(interaction).height() / 2) - ($(buttonGroup).height() / 2)),
+                            "margin-top": 5 + (($(interaction).height() / 2) - ($(buttonGroup).height() / 2)),
                             "margin-right": "16px"
                         });
                         $(schemaButton).off().click(function(e) {
@@ -298,7 +298,7 @@ var setup = function()
                                 var previousItemContainer = $(event.target).prev();
                                 if (previousItemContainer)
                                 {
-                                    var previousAlpacaId = $(previousItemContainer).attr("data-alpaca-field-id");
+                                    var previousAlpacaId = $(previousItemContainer).children().first().attr("data-alpaca-field-id");
                                     previousField = Alpaca.fieldInstances[previousAlpacaId];
 
                                     previousFieldKey = $(previousItemContainer).attr("data-alpaca-container-item-name");
@@ -310,7 +310,7 @@ var setup = function()
                                 var nextItemContainer = $(event.target).next();
                                 if (nextItemContainer)
                                 {
-                                    var nextAlpacaId = $(nextItemContainer).attr("data-alpaca-field-id");
+                                    var nextAlpacaId = $(nextItemContainer).children().first().attr("data-alpaca-field-id");
                                     nextField = Alpaca.fieldInstances[nextAlpacaId];
 
                                     nextFieldKey = $(nextItemContainer).attr("data-alpaca-container-item-name");
@@ -330,7 +330,7 @@ var setup = function()
                                 // next
                                 var nextItemContainer = $(event.target).next();
                                 var nextItemContainerIndex = $(nextItemContainer).attr("data-alpaca-container-item-index");
-                                var nextItemAlpacaId = $(nextItemContainer).attr("data-alpaca-field-id");
+                                var nextItemAlpacaId = $(nextItemContainer).children().first().attr("data-alpaca-field-id");
                                 var nextField = Alpaca.fieldInstances[nextItemAlpacaId];
 
                                 form.moveItem(draggedIndex, nextItemContainerIndex, false, function() {
@@ -893,7 +893,7 @@ var setup = function()
         // copy any properties from this field's schema into our schema object
         for (var k in field.schema)
         {
-            if (field.schema.hasOwnProperty(k) && typeof(field.schema[k]) != "function")
+            if (field.schema.hasOwnProperty(k) && typeof(field.schema[k]) !== "function")
             {
                 schema[k] = field.schema[k];
             }
@@ -902,13 +902,13 @@ var setup = function()
         schema.type = field.getType();
         // reset properties, we handle that one at a time
         delete schema.properties;
+        schema.properties = {};
         if (field.children)
         {
-            schema.properties = {};
             for (var i = 0; i < field.children.length; i++)
             {
                 var childField = field.children[i];
-                var propertyId = childField.name;
+                var propertyId = childField.propertyId;
 
                 schema.properties[propertyId] = {};
                 assembleSchema(childField, schema.properties[propertyId]);
@@ -921,7 +921,7 @@ var setup = function()
         // copy any properties from this field's options into our options object
         for (var k in field.options)
         {
-            if (field.options.hasOwnProperty(k) && typeof(field.options[k]) != "function")
+            if (field.options.hasOwnProperty(k) && typeof(field.options[k]) !== "function")
             {
                 options[k] = field.options[k];
             }
@@ -930,13 +930,13 @@ var setup = function()
         options.type = field.getFieldType();
         // reset fields, we handle that one at a time
         delete options.fields;
+        options.fields = {};
         if (field.children)
         {
-            options.fields = {};
             for (var i = 0; i < field.children.length; i++)
             {
                 var childField = field.children[i];
-                var propertyId = childField.name;
+                var propertyId = childField.propertyId;
 
                 options.fields[propertyId] = {};
                 assembleOptions(childField, options.fields[propertyId]);

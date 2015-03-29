@@ -11,8 +11,6 @@ Our engineering team offers production support, development, consulting services
 as you support Alpaca forms within your own applications.  We offer a service-level agreement, rapid issue turnaround
 and an opportunity to drive the technology roadmap.
 
-Alpaca Production Support starts at $50 / month.
-
 <br/>
 
 <div class="container-fluid">
@@ -30,9 +28,12 @@ Alpaca Production Support starts at $50 / month.
                     <div class="media-body">
                         <h4 class="media-heading">Production Support</h4>
                         <p>
-                            Cloud CMS offers production support around a service-level agreement that is catered to
+                            Cloud CMS offers production support with a service-level agreement that is catered to
                             the needs of your team and your project.  Production support includes bug fixes,
-                            feature prioritization and roadmap visibility as we press ahead with Alpaca!
+                            feature prioritization and roadmap visibility as we plan out each release of Alpaca.
+                        </p>
+                        <p>
+                            Alpaca Production Support starts at $50 / month.
                         </p>
                     </div>
                 </li>

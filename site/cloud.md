@@ -58,7 +58,7 @@ Template processors allow you to massage data into any format you'd like so as t
 <div class="row">
     <div class="col-md-12">
         <div class="cloud-image">
-            <img src="/images/cloud/json.png" style="max-width: 600px">
+            <img src="/images/cloud/json.png" style="max-width: 800px">
         </div>
     </div>
 </div>
