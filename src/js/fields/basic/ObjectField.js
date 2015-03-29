@@ -307,7 +307,7 @@
                             // or the schema is optional
                             if (circular)
                             {
-                                return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + schema, _this.errorCallback);
+                                return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(schema), _this.errorCallback);
                             }
 
                             if (!schema)
@@ -488,9 +488,16 @@
                     var refCount = 0;
                     for (var i = 0; i < fieldChain.length; i++)
                     {
-                        if (fieldChain[i].schema && fieldChain[i].schema.id === referenceId)
+                        if (fieldChain[i].schema)
                         {
-                            refCount++;
+                            if ( (fieldChain[i].schema.id === referenceId) || (fieldChain[i].schema.id === "#" + referenceId))
+                            {
+                                refCount++;
+                            }
+                            else if ( (fieldChain[i].schema["$ref"] === referenceId))
+                            {
+                                refCount++;
+                            }
                         }
                     }
 

@@ -561,26 +561,34 @@ gulp.task('watch', function() {
     // scripts
     watch(paths.scripts.core, function(files, cb) {
         runSequence("build-scripts", "update-site-alpaca", function() {
-            cb();
+            if (cb) {
+                cb();
+            }
         });
     });
     watch(paths.scripts.all_views, function(files, cb) {
         runSequence("build-scripts", "update-site-alpaca", function() {
-            cb();
+            if (cb) {
+                cb();
+            }
         });
     });
 
     // templates
     watch(paths.templates.all, function(files, cb) {
         runSequence("build-templates", "build-scripts", "update-site-alpaca", function() {
-            cb();
+            if (cb) {
+                cb();
+            }
         });
     });
 
     // styles
     watch(paths.styles.all, function(files, cb) {
         runSequence("build-styles", "update-site-alpaca", function() {
-            cb();
+            if (cb) {
+                cb();
+            }
         });
     });
 
@@ -614,7 +622,9 @@ gulp.task("default", function(cb) {
         "build-templates",
         ["build-scripts", "build-styles", "package"],
         function() {
-            cb();
+            if (cb) {
+                cb();
+            }
         }
     );
 });
@@ -624,7 +634,9 @@ gulp.task("site", function(cb) {
         "build-site",
         "update-site-full",
         function() {
-            cb();
+            if (cb) {
+                cb();
+            }
         }
     );
 });
@@ -652,7 +664,9 @@ gulp.task("web", function(cb) {
         "site",
         "server",
         function() {
-            cb();
+            if (cb) {
+                cb();
+            }
         }
     );
 });
