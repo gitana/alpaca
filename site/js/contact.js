@@ -19,13 +19,15 @@ $(document).ready(function() {
                     "type": "string",
                     "required": true
                 },
-                "company": {
+                "interest": {
                     "type": "string",
-                    "required": true
-                },
-                "phone": {
-                    "type": "string",
-                    "required": true
+                    "required": true,
+                    "enum": [
+                        "support",
+                        "implementation",
+                        "advisory",
+                        "training"
+                    ]
                 },
                 "comments": {
                     "type": "string",
@@ -54,15 +56,20 @@ $(document).ready(function() {
                     "label": "Your Name"
                 },
                 "email": {
-                    "label": "Email Address",
+                    "label": "Your Email Address",
                     "type": "email"
                 },
-                "company": {
-                    "label": "Company Name"
-                },
-                "phone": {
-                    "label": "Phone Number",
-                    "type": "text"
+                "interest": {
+                    "type": "select",
+                    "label": "What do you need help with?",
+                    "required": true,
+                    "removeDefaultNone": false,
+                    "optionLabels": [
+                        "Production Support",
+                        "Development Services",
+                        "Advisory Consulting",
+                        "Training"
+                    ]
                 },
                 "comments": {
                     "label": "Tell us about your Project",

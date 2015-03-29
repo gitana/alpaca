@@ -587,7 +587,9 @@ gulp.task('watch', function() {
     // web
     watch(["site/*/**", "site/*", "site/*.*"], function(files, cb) {
         runSequence("build-site", "update-site-full", function() {
-            cb();
+            if (cb) {
+                cb();
+            }
         });
     });
 });

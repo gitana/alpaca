@@ -7,9 +7,11 @@ sitemap:
 ---
 {% include JB/setup %}
 
-Our engineering team offers production support, feature implementation, consulting services and migration advice
+Our engineering team offers production support, development, consulting services and migration advice
 as you support Alpaca forms within your own applications.  We offer a service-level agreement, rapid issue turnaround
 and an opportunity to drive the technology roadmap.
+
+Alpaca Production Support starts at $50 / month.
 
 <br/>
 
@@ -35,13 +37,13 @@ and an opportunity to drive the technology roadmap.
                     </div>
                 </li>
 
-                <!-- Implementation Services -->
+                <!-- Development -->
                 <li class="media">
                     <a class="pull-left" href="#">
-                        <img class="media-object" src="/images/icons/consulting-64.png" alt="Implementation Services">
+                        <img class="media-object" src="/images/icons/consulting-64.png" alt="Development">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading">Implementation Services</h4>
+                        <h4 class="media-heading">Development</h4>
                         <p>
                             Cloud CMS assists companies with the development and deployment for forms for a variety of
                             web and mobile applications.  Our consultants are experts at Alpaca as well as many other
