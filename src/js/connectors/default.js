@@ -2,6 +2,8 @@
 
     var Alpaca = $.alpaca;
 
+    var ONE_HOUR = 3600000;
+
     Alpaca.Connector = Base.extend(
     /**
      * @lends Alpaca.Connector.prototype
@@ -11,11 +13,13 @@
          * @constructs
          * @class Connects Alpaca to remote data stores.
 
-         * @param {String} id Connector ID.
+         * @param {String} id Connector ID
+         * @param {Object} config Connector Config
          */
-        constructor: function(id)
+        constructor: function(id, config)
         {
             this.id = id;
+            this.config = config;
 
             // helper function to determine if a resource is a uri
             this.isUri = function(resource)
@@ -23,7 +27,6 @@
                 return !Alpaca.isEmpty(resource) && Alpaca.isUri(resource);
             };
 
-            var ONE_HOUR = 3600000;
             this.cache = new AjaxCache('URL', true, ONE_HOUR);
         },
 
@@ -35,10 +38,7 @@
          */
         connect: function (onSuccess, onError)
         {
-            if (onSuccess && Alpaca.isFunction(onSuccess))
-            {
-                onSuccess();
-            }
+            onSuccess();
         },
 
         /**
@@ -143,110 +143,149 @@
          */
         loadAll: function (resources, onSuccess, onError)
         {
-            var dataSource = resources.dataSource;
-            var schemaSource = resources.schemaSource;
-            var optionsSource = resources.optionsSource;
-            var viewSource = resources.viewSource;
+            var self = this;
 
-            // we allow "schema" to contain a URI as well (backwards-compatibility)
-            if (!schemaSource)
-            {
-                schemaSource = resources.schema;
-            }
+            var onConnectSuccess = function() {
 
-            // we allow "options" to contain a URI as well (backwards-compatibility)
-            if (!optionsSource)
-            {
-                optionsSource = resources.options;
-            }
+                var dataSource = resources.dataSource;
+                var schemaSource = resources.schemaSource;
+                var optionsSource = resources.optionsSource;
+                var viewSource = resources.viewSource;
 
-            // we allow "view" to contain a URI as well (backwards-compatibility)
-            if (!viewSource)
-            {
-                viewSource = resources.view;
-            }
-
-            var loaded = {};
-
-            var loadCounter = 0;
-            var invocationCount = 0;
-
-            var successCallback = function()
-            {
-                if (loadCounter === invocationCount)
+                // we allow "schema" to contain a URI as well (backwards-compatibility)
+                if (!schemaSource)
                 {
-                    if (onSuccess && Alpaca.isFunction(onSuccess))
+                    schemaSource = resources.schema;
+                }
+
+                // we allow "options" to contain a URI as well (backwards-compatibility)
+                if (!optionsSource)
+                {
+                    optionsSource = resources.options;
+                }
+
+                // we allow "view" to contain a URI as well (backwards-compatibility)
+                if (!viewSource)
+                {
+                    viewSource = resources.view;
+                }
+
+                var loaded = {};
+
+                var loadCounter = 0;
+                var invocationCount = 0;
+
+                var successCallback = function()
+                {
+                    if (loadCounter === invocationCount)
                     {
-                        onSuccess(loaded.data, loaded.options, loaded.schema, loaded.view);
+                        if (onSuccess && Alpaca.isFunction(onSuccess))
+                        {
+                            onSuccess(loaded.data, loaded.options, loaded.schema, loaded.view);
+                        }
                     }
-                }
-            };
+                };
 
-            var errorCallback = function (loadError)
-            {
-                if (onError && Alpaca.isFunction(onError))
+                var errorCallback = function (loadError)
                 {
-                    onError(loadError);
+                    if (onError && Alpaca.isFunction(onError))
+                    {
+                        onError(loadError);
+                    }
+                };
+
+                // count out the total # of invokes we're going to fire off
+                if (dataSource)
+                {
+                    invocationCount++;
+                }
+                if (schemaSource)
+                {
+                    invocationCount++;
+                }
+                if (optionsSource)
+                {
+                    invocationCount++;
+                }
+                if (viewSource)
+                {
+                    invocationCount++;
+                }
+                if (invocationCount === 0)
+                {
+                    // nothing to invoke, so just hand back
+                    successCallback();
+                    return;
+                }
+
+                var doMerge = function(p, v1, v2)
+                {
+                    loaded[p] = v1;
+
+                    if (v2)
+                    {
+                        if ((typeof(loaded[p]) === "object") && (typeof(v2) === "object"))
+                        {
+                            Alpaca.mergeObject(loaded[p], v2);
+                        }
+                        else
+                        {
+                            loaded[p] = v2;
+                        }
+                    }
+                };
+
+                // fire off all of the invokes
+                if (dataSource)
+                {
+                    self.loadData(dataSource, function(data) {
+
+                        doMerge("data", resources.data, data);
+
+                        loadCounter++;
+                        successCallback();
+                    }, errorCallback);
+                }
+                if (schemaSource)
+                {
+                    self.loadSchema(schemaSource, function(schema) {
+
+                        doMerge("schema", resources.schema, schema);
+
+                        loadCounter++;
+                        successCallback();
+                    }, errorCallback);
+                }
+                if (optionsSource)
+                {
+                    self.loadOptions(optionsSource, function(options) {
+
+                        doMerge("options", resources.options, options);
+
+                        loadCounter++;
+                        successCallback();
+                    }, errorCallback);
+                }
+                if (viewSource)
+                {
+                    self.loadView(viewSource, function(view) {
+
+                        doMerge("view", resources.view, view);
+
+                        loadCounter++;
+                        successCallback();
+                    }, errorCallback);
+                }
+
+            };
+
+            var onConnectError  = function(err) {
+                if (onError && Alpaca.isFunction(onError)) {
+                    onError(err);
                 }
             };
 
-            // count out the total # of invokes we're going to fire off
-            if (dataSource)
-            {
-                invocationCount++;
-            }
-            if (schemaSource)
-            {
-                invocationCount++;
-            }
-            if (optionsSource)
-            {
-                invocationCount++;
-            }
-            if (viewSource)
-            {
-                invocationCount++;
-            }
-            if (invocationCount === 0)
-            {
-                // nothing to invoke, so just hand back
-                successCallback();
-                return;
-            }
-
-            // fire off all of the invokes
-            if (dataSource)
-            {
-                this.loadData(dataSource, function(data) {
-                    loaded.data = data;
-                    loadCounter++;
-                    successCallback();
-                }, errorCallback);
-            }
-            if (schemaSource)
-            {
-                this.loadSchema(schemaSource, function(schema) {
-                    loaded.schema = schema;
-                    loadCounter++;
-                    successCallback();
-                }, errorCallback);
-            }
-            if (optionsSource)
-            {
-                this.loadOptions(optionsSource, function(options) {
-                    loaded.options = options;
-                    loadCounter++;
-                    successCallback();
-                }, errorCallback);
-            }
-            if (viewSource)
-            {
-                this.loadView(viewSource, function(view) {
-                    loaded.view = view;
-                    loadCounter++;
-                    successCallback();
-                }, errorCallback);
-            }
+            self.connect(onConnectSuccess, onConnectError);
         },
 
         /**
@@ -259,6 +298,29 @@
         loadJson : function(uri, onSuccess, onError) {
             this.loadUri(uri, true, onSuccess, onError);
         } ,
+
+        /**
+         * Extension point.  Set up default ajax configuration for URL retrieval.
+         *
+         * @param uri
+         * @param isJson
+         * @returns {{url: *, type: string}}
+         */
+        buildAjaxConfig: function(uri, isJson)
+        {
+            var ajaxConfig = {
+                "url": uri,
+                "type": "get"
+            };
+
+            if (isJson) {
+                ajaxConfig.dataType = "json";
+            } else {
+                ajaxConfig.dataType = "text";
+            }
+
+            return ajaxConfig;
+        },
 
         /**
          * Loads a general document through Ajax call.
@@ -275,44 +337,36 @@
 
             var self = this;
 
-            var ajaxConfigs = {
-                "url": uri,
-                "type": "get",
-                "success": function(jsonDocument) {
+            var ajaxConfig = self.buildAjaxConfig(uri, isJson);
 
-                    self.cache.put(uri, jsonDocument);
+            ajaxConfig["success"] = function(jsonDocument) {
 
-                    if (onSuccess && Alpaca.isFunction(onSuccess)) {
-                        onSuccess(jsonDocument);
-                    }
-                },
-                "error": function(jqXHR, textStatus, errorThrown) {
-                    if (onError && Alpaca.isFunction(onError)) {
-                        onError({
-                            "message":"Unable to load data from uri : " + uri,
-                            "stage": "DATA_LOADING_ERROR",
-                            "details": {
-                                "jqXHR" : jqXHR,
-                                "textStatus" : textStatus,
-                                "errorThrown" : errorThrown
-                            }
-                        });
-                    }
+                self.cache.put(uri, jsonDocument);
+
+                if (onSuccess && Alpaca.isFunction(onSuccess)) {
+                    onSuccess(jsonDocument);
                 }
             };
-
-            if (isJson) {
-                ajaxConfigs.dataType = "json";
-            } else {
-                ajaxConfigs.dataType = "text";
-            }
+            ajaxConfig["error"] = function(jqXHR, textStatus, errorThrown) {
+                if (onError && Alpaca.isFunction(onError)) {
+                    onError({
+                        "message":"Unable to load data from uri : " + uri,
+                        "stage": "DATA_LOADING_ERROR",
+                        "details": {
+                            "jqXHR" : jqXHR,
+                            "textStatus" : textStatus,
+                            "errorThrown" : errorThrown
+                        }
+                    });
+                }
+            };
 
             var cachedDocument = self.cache.get(uri);
 
             if (cachedDocument !== false && onSuccess && Alpaca.isFunction(onSuccess)) {
                 onSuccess(cachedDocument);
             } else {
-                $.ajax(ajaxConfigs);
+                $.ajax(ajaxConfig);
             }
         },
 

@@ -100,6 +100,7 @@ We've provided chapters here on a variety of interesting API-related topics.
     <div class="col-md-12">
         <ul>
             <li><a href="{{ BASE_PATH }}/docs/api/callbacks.html">Callbacks</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/api/connectors.html">Connectors</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/cookbook.html">Cookbook</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/conditional-dependencies.html">Conditional Dependencies</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/custom-fields.html">Custom Fields</a></li>

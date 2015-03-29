@@ -52,8 +52,11 @@ var paths = {
             "src/js/Field.js",
             "src/js/ControlField.js",
             "src/js/ContainerField.js",
-            "src/js/Connector.js",
             "src/js/Form.js",
+
+            // connectors
+            "src/js/connectors/default.js",
+            "src/js/connectors/cloudcms.js",
 
             // fields
             "src/js/fields/basic/TextField.js",
