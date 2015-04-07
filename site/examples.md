@@ -63,5 +63,5 @@ And you can also load it via AMD or right within a browser.
 * <a href="{{ BASE_PATH }}/demos/form-builder/form-builder.html">Form Builder</a> - a sample form builder that demonstrates visual drag-and-drop assembly
 of a form with UI components.
 
-### Videos and Presentations
-* <a href="http://blog.productivist.com/2012/07/03/alfraca-alfresco-meets-alpaca/" target="_blank">Alfraca - Alfresco with Alpaca Forms</a>
+### Videos / Presentations
+* <a href="http://blog.productivist.com/alfraca-alfresco-meets-alpaca/" target="_blank">Alfraca - Alfresco with Alpaca Forms</a>
