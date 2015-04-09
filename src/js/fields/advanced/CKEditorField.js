@@ -65,6 +65,33 @@
             });
         },
 
+        setValue: function(value)
+        {
+            var self = this;
+
+            // be sure to call into base method
+            this.base(value);
+
+            if (self.editor)
+            {
+                self.editor.setData(value);
+            }
+        },
+
+        getValue: function()
+        {
+            var self = this;
+
+            var value = this.base();
+
+            if (self.editor)
+            {
+                value = self.editor.getData();
+            }
+
+            return value;
+        },
+
         /**
          * @see Alpaca.Field#destroy
          */
