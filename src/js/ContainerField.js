@@ -627,9 +627,10 @@
 
         /**
          * Focus an element in the container.  Find the first invalid element or if no invalid elements, pick
-         * the first child.
+         * the first child.  If a callback is provided, the callback is fired and passed the control element
+         * that received the focus.
          */
-        focus: function()
+        focus: function(onFocusCallback)
         {
             this.base();
 
@@ -651,6 +652,11 @@
             if (index > -1)
             {
                 this.children[index].focus();
+
+                if (onFocusCallback)
+                {
+                    onFocusCallback(this.children[index]);
+                }
             }
         },
 

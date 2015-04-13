@@ -67,9 +67,14 @@
         /**
          * @see Alpaca.Field#focus
          */
-        focus: function()
+        focus: function(onFocusCallback)
         {
             this.control.focus();
+
+            if (onFocusCallback)
+            {
+                onFocusCallback(this);
+            }
         },
 
         /**

@@ -115,17 +115,17 @@
                 });
             }
 
-            if (typeof(self.options.multiple) == "undefined")
+            if (typeof(self.options.multiple) === "undefined")
             {
                 self.options.multiple = false;
             }
 
-            if (typeof(self.options.showUploadPreview) == "undefined")
+            if (typeof(self.options.showUploadPreview) === "undefined")
             {
                 self.options.showUploadPreview = true;
             }
 
-            if (typeof(self.options.showHeaders) == "undefined")
+            if (typeof(self.options.showHeaders) === "undefined")
             {
                 self.options.showHeaders = true;
             }
@@ -134,7 +134,123 @@
             {
                 self.data = [];
             }
+
+            // upload
+            if (!self.options.upload)
+            {
+                self.options.upload = {};
+            }
+
+            // max number of files
+            if (typeof(self.options.maxNumberOfFiles) === "undefined")
+            {
+                if (self.options.upload.maxNumberOfFiles)
+                {
+                    self.options.maxNumberOfFiles = self.options.upload.maxNumberOfFiles;
+                    if (self.options.maxNumberOfFiles === 1)
+                    {
+                        self.options.multiple = false;
+                    }
+                    else if (self.options.maxNumberOfFiles > 1)
+                    {
+                        self.options.multiple = true;
+                    }
+                }
+                else
+                {
+                    self.options.maxNumberOfFiles = 1;
+                    if (typeof(self.options.multiple) === "boolean" && self.options.multiple)
+                    {
+                        self.options.maxNumberOfFiles = -1;
+                    }
+                }
+
+                // copy setting into upload
+                if (self.options.maxNumberOfFiles)
+                {
+                    self.options.upload.maxNumberOfFiles = self.options.maxNumberOfFiles;
+                }
+
+            }
+
+            // max file size
+            if (typeof(self.options.maxFileSize) === "undefined")
+            {
+                if (self.options.upload.maxFileSize)
+                {
+                    self.options.maxFileSize = self.options.upload.maxFileSize;
+                }
+                else
+                {
+                    self.options.maxFileSize = -1; // no limit
+                }
+
+                // copy setting into upload
+                if (self.options.maxFileSize)
+                {
+                    self.options.upload.maxFileSize = self.options.maxFileSize;
+                }
+            }
+
+            // file types
+            if (typeof(self.options.fileTypes) === "undefined")
+            {
+                if (self.options.upload.acceptFileTypes)
+                {
+                    self.options.fileTypes = self.options.upload.acceptFileTypes;
+                }
+                else
+                {
+                    self.options.fileTypes = null; // no restrictions
+                }
+
+                // copy setting into upload
+                if (self.options.fileTypes)
+                {
+                    self.options.upload.acceptFileTypes = self.options.fileTypes;
+                }
+            }
+
+            // error handler
+            if (!self.options.errorHandler)
+            {
+                self.options.errorHandler = function(messages)
+                {
+                    alert(messages.join("\n"));
+                };
+            }
         },
+
+        prepareControlModel: function(callback)
+        {
+            var self = this;
+
+            self.base(function(model) {
+
+                model.chooseButtonLabel = self.options.chooseButtonLabel;
+                if (!model.chooseButtonLabel)
+                {
+                    model.chooseButtonLabel = self.getMessage("chooseFiles");
+                    if (self.options.maxNumberOfFiles === 1)
+                    {
+                        model.chooseButtonLabel = self.getMessage("chooseFile");
+                    }
+                }
+
+                model.dropZoneMessage = self.options.dropZoneMessage;
+                if (!model.dropZoneMessage)
+                {
+                    model.dropZoneMessage = self.getMessage("dropZoneSingle");
+                    if (model.maxNumberOfFiles === 1)
+                    {
+                        model.dropZoneMessage = self.getMessage("dropZoneMultiple");
+                    }
+                }
+
+                callback(model);
+            });
+        },
+
 
         afterRenderControl: function(model, callback)
         {
@@ -229,6 +345,48 @@
                 }
             };
 
+            // some limit checks
+            fileUploadConfig["add"] = function(e, data) {
+
+                var uploadErrors = [];
+
+                for (var i = 0; i < data.originalFiles.length; i++)
+                {
+                    // file types
+                    if (self.options.fileTypes)
+                    {
+                        var re = self.options.fileTypes;
+                        if (typeof(self.options.fileTypes) === "string")
+                        {
+                            re = new RegExp(self.options.fileTypes);
+                        }
+
+                        if (!re.test(data.originalFiles[i]["type"]))
+                        {
+                            uploadErrors.push('Not an accepted file type: ' + data.originalFiles[i]["type"]);
+                        }
+                    }
+
+                    // size
+                    if (self.options.maxFileSize)
+                    {
+                        if (data.originalFiles[i].size > self.options.maxFileSize) {
+                            uploadErrors.push('Filesize is too big: ' + data.originalFiles[i].size);
+                        }
+                    }
+
+                }
+
+                if (uploadErrors.length > 0)
+                {
+                    self.options.errorHandler(uploadErrors);
+                }
+                else
+                {
+                    data.submit();
+                }
+            };
+
             // allow for extension
             self.applyConfiguration(fileUploadConfig);
 
@@ -318,9 +476,8 @@
 
                 var f = function(i)
                 {
-                    if (i == data.files.length) // jshint ignore:line
+                    if (i === data.files.length) // jshint ignore:line
                     {
-                        // done
                         self.setValue(array);
                         return;
                     }
@@ -334,6 +491,13 @@
                     });
                 };
                 f(0);
+            });
+
+            /**
+             * Whether success or fail, we handle the results.
+             */
+            fileUpload.bind("fileuploadalways", function(e, data) {
+                self.refreshUIState();
             });
 
             // allow for extension
@@ -642,6 +806,9 @@
                         }
                     });
 
+                    // refresh validation state
+                    self.refreshValidationState();
+
                     callback();
 
                     return;
@@ -672,11 +839,7 @@
             var fileUpload = self.plugin();
             if (fileUpload)
             {
-                var maxNumberOfFiles = 99999;
-                if (self.options.upload && typeof(self.options.upload.maxNumberOfFiles) != "undefined")
-                {
-                    maxNumberOfFiles = self.options.upload.maxNumberOfFiles;
-                }
+                var maxNumberOfFiles = self.options.maxNumberOfFiles;
 
                 if (fileUpload.options.getNumberOfFiles && fileUpload.options.getNumberOfFiles() >= maxNumberOfFiles)
                 {
@@ -724,12 +887,65 @@
          */
         getType: function() {
             return "array";
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.TextField#getSchemaOfSchema
+         */
+        getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "maxNumberOfFiles": {
+                        "title": "Maximum Number of Files",
+                        "description": "The maximum number of files to allow to be uploaded.  If greater than zero, the maximum number will be constrained.  If -1, then no limit is imposed.",
+                        "type": "number",
+                        "default": 1
+                    },
+                    "maxFileSize": {
+                        "title": "Maximum File Size (in bytes)",
+                        "description": "The maximum file size allowed per upload.  If greater than zero, the maximum file size will be limited to the given size in bytes.  If -1, then no limit is imposed.",
+                        "type": "number",
+                        "default": -1
+                    },
+                    "fileTypes": {
+                        "title": "File Types",
+                        "description": "A regular expression limiting the file types that can be uploaded based on filename",
+                        "type": "string"
+                    },
+                    "multiple": {
+                        "title": "Multiple",
+                        "description": "Whether to allow multiple file uploads.  If maxNumberOfFiles is not specified, multiple will toggle between 1 and unlimited.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "showUploadPreview": {
+                        "title": "Show Upload Preview",
+                        "description": "Whether to show thumbnails for uploaded assets (requires preview support)",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "errorHandler": {
+                        "title": "Error Handler",
+                        "description": "A function handler to be called when there is an error uploading a file",
+                        "type": "function"
+                    }
+                }
+            });
         }
 
         /* end_builder_helpers */
     });
 
     Alpaca.registerFieldClass("upload", Alpaca.Fields.UploadField);
+
+    Alpaca.registerMessages({
+        "chooseFile": "Choose file...",
+        "chooseFiles": "Choose files...",
+        "dropZoneSingle": "Click the Choose button or Drag and Drop a file here to upload...",
+        "dropZoneMultiple": "Click the Choose button or Drag and Drop files here to upload..."
+    });
+
 
     // https://github.com/private-face/jquery.bind-first/blob/master/dev/jquery.bind-first.js
     // jquery.bind-first.js

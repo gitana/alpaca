@@ -7,7 +7,7 @@
                     <div class="btn-group">
                         <span class="{{view.styles.button}} fileinput-button">
                             <i class="glyphicon glyphicon-upload"></i>
-                            <span class="fileupload-add-button">Choose files...</span>
+                            <span class="fileupload-add-button">{{chooseButtonLabel}}</span>
                             <input class="alpaca-fileupload-input" type="file" name="{{name}}_files">
                             <input class="alpaca-fileupload-input-hidden" type="hidden" name="{{name}}_files_hidden">
                         </span>
@@ -35,7 +35,7 @@
                         <tbody class="files">
                         </tbody>
                     </table>
-                    <p align="center" class="dropzone-message">Click the Choose button or Drag and Drop files here to start...</p>
+                    <p align="center" class="dropzone-message">{{dropZoneMessage}}</p>
                 </div>
             </div>
             <div class="row">

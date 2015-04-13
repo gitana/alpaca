@@ -1384,9 +1384,17 @@
 
         /**
          * Focuses on the field.
+         *
+         * If a callback is provided, the callback receives the control focused upon.
          */
-        focus: function() {
+        focus: function(onFocusCallback) {
             // OVERRIDE
+
+            if (onFocusCallback)
+            {
+                onFocusCallback(this);
+            }
+
         },
 
         /**

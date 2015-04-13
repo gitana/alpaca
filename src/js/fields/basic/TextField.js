@@ -537,7 +537,7 @@
         /**
          * @see Alpaca.Field#focus
          */
-        focus: function()
+        focus: function(onFocusCallback)
         {
             if (this.control && this.control.length > 0)
             {
@@ -555,6 +555,12 @@
                 }
 
                 el.focus();
+
+                if (onFocusCallback)
+                {
+                    onFocusCallback(this);
+                }
+
             }
         },
 

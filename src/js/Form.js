@@ -373,6 +373,15 @@
          */
         onSubmit: function(e, form)
         {
+            if (!this.isFormValid())
+            {
+                e.stopPropagation();
+
+                this.refreshValidationState(true);
+
+                return false;
+            }
+
             if (this.submitHandler)
             {
                 e.stopPropagation();
@@ -429,10 +438,14 @@
 
         /**
          * Focuses on this form.
+         *
+         * If a callback is provided, the callback receives the focused control.
          */
-        focus: function()
+        focus: function(onFocusCallback)
         {
-            this.topControl.focus();
+            this.topControl.focus(function(controlWithFocus) {
+                onFocusCallback(controlWithFocus);
+            });
         },
 
         /**
