@@ -393,7 +393,7 @@
             // instantiate the control
             var fileUpload = self.fileUpload = $(el).find('.alpaca-fileupload-input').fileupload(fileUploadConfig);
 
-            // When file upload of a file competes, we offer the chance to adjust the data ahead of FileUpload
+            // When file upload of a file completes, we offer the chance to adjust the data ahead of FileUpload
             // getting it.  This is useful for cases where you can't change the server side JSON but could do
             // a little bit of magic in the client.
             fileUpload.bindFirst("fileuploaddone", function(e, data) {
@@ -751,6 +751,10 @@
 
         afterPreload: function(fileUpload, el, files, callback)
         {
+            var self = this;
+
+            self.refreshUIState();
+
             callback();
         },
 
@@ -843,22 +847,34 @@
 
                 if (fileUpload.options.getNumberOfFiles && fileUpload.options.getNumberOfFiles() >= maxNumberOfFiles)
                 {
-                    // disable select files button
-                    $(self.control).find("span.btn.fileinput-button").prop("disabled", true);
-                    $(self.control).find("span.btn.fileinput-button").attr("disabled", "disabled");
-
-                    // hide dropzone message
-                    $(self.control).find(".fileupload-active-zone p.dropzone-message").css("display", "none");
+                    self.refreshButtons(false);
                 }
                 else
                 {
-                    // enabled
-                    $(self.control).find("span.btn.fileinput-button").prop("disabled", false);
-                    $(self.control).find("span.btn.fileinput-button").attr("disabled", null);
-
-                    // show dropzone message
-                    $(self.control).find(".fileupload-active-zone p.dropzone-message").css("display", "block");
+                    self.refreshButtons(true);
                 }
+            }
+        },
+
+        refreshButtons: function(enabled)
+        {
+            var self = this;
+
+            // disable select files button
+            $(self.control).find(".btn.fileinput-button").prop("disabled", true);
+            $(self.control).find(".btn.fileinput-button").attr("disabled", "disabled");
+
+            // hide dropzone message
+            $(self.control).find(".fileupload-active-zone p.dropzone-message").css("display", "none");
+
+            if (enabled)
+            {
+                // enable select files button
+                $(self.control).find(".btn.fileinput-button").prop("disabled", false);
+                $(self.control).find(".btn.fileinput-button").attr("disabled", null);
+
+                // show dropzone message
+                $(self.control).find(".fileupload-active-zone p.dropzone-message").css("display", "block");
             }
         },
 

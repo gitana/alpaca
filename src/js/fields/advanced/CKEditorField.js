@@ -46,7 +46,7 @@
 
                         self.editor = CKEDITOR.replace($(self.control)[0], self.options.ckeditor);
 
-                    }, 250);
+                    }, 500);
                 }
 
                 // if the ckeditor's dom element gets destroyed, make sure we clean up the editor instance
