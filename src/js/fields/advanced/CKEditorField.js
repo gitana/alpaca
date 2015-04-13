@@ -46,6 +46,11 @@
 
                         self.editor = CKEDITOR.replace($(self.control)[0], self.options.ckeditor);
 
+                        // change event
+                        self.editor.on("change", function() {
+                            self.onChange();
+                        });
+
                     }, 500);
                 }
 
