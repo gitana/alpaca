@@ -368,7 +368,7 @@
                     }
 
                     // size
-                    if (self.options.maxFileSize)
+                    if (self.options.maxFileSize > -1)
                     {
                         if (data.originalFiles[i].size > self.options.maxFileSize) {
                             uploadErrors.push('Filesize is too big: ' + data.originalFiles[i].size);
