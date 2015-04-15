@@ -372,3 +372,23 @@ $("#field13").alpaca({
 </script>
 {% endraw %}
 
+## Example 14
+A text with field with <code>disallowEmptySpaces</code> set to <code>true</code>.  This prevents the entry of spaces.
+This is useful for things like username entry fields, as configured below.
+
+<div id="field14"></div>
+{% raw %}
+<script type="text/javascript" id="field14-script">
+$("#field14").alpaca({
+    "schema": {
+        "type": "string"
+    },
+    "options": {
+        "type": "lowercase",
+        "label": "User Name",
+        "disallowEmptySpaces": true
+    }
+});
+</script>
+{% endraw %}
+

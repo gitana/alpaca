@@ -351,32 +351,52 @@
             control.focus(function(e) {
                 if (!self.suspendBlurFocus)
                 {
-                    self.onFocus.call(self, e);
-                    self.trigger("focus", e);
+                    var x = self.onFocus.call(self, e);
+                    if (x !== false) {
+                        x = self.trigger("focus", e);
+                    }
+
+                    return x;
                 }
             });
 
             control.blur(function(e) {
                 if (!self.suspendBlurFocus)
                 {
-                    self.onBlur.call(self, e);
-                    self.trigger("blur", e);
+                    var x = self.onBlur.call(self, e);
+                    if (x !== false) {
+                        x = self.trigger("blur", e);
+                    }
+
+                    return x;
                 }
             });
 
             control.keypress(function(e) {
-                self.onKeyPress.call(self, e);
-                self.trigger("keypress", e);
+                var x = self.onKeyPress.call(self, e);
+                if (x !== false) {
+                    x = self.trigger("keypress", e);
+                }
+
+                return x;
             });
 
             control.keyup(function(e) {
-                self.onKeyUp.call(self, e);
-                self.trigger("keyup", e);
+                var x = self.onKeyUp.call(self, e);
+                if (x !== false) {
+                    x = self.trigger("keyup", e);
+                }
+
+                return x;
             });
 
             control.keydown(function(e) {
-                self.onKeyDown.call(self, e);
-                self.trigger("keydown", e);
+                var x = self.onKeyDown.call(self, e);
+                if (x !== false) {
+                    x = self.trigger("keydown", e);
+                }
+
+                return x;
             });
         },
 

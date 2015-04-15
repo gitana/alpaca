@@ -81,6 +81,11 @@
             {
                 this.options.autocomplete = false;
             }
+
+            if (typeof(this.options.disallowEmptySpaces) === "undefined")
+            {
+                this.options.disallowEmptySpaces = false;
+            }
         },
 
         /**
@@ -604,6 +609,16 @@
                     }
                 }
             }
+
+            if (e.keyCode === 32) // space
+            {
+                if (self.options.disallowEmptySpaces)
+                {
+                    // kill event
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                }
+            }
         },
 
         onKeyUp: function(e)
@@ -728,6 +743,12 @@
                         "title": "HTML autocomplete attribute for the underlying DOM input control",
                         "description": "Allows you to specify the autocomplete attribute for the underlying input control whether or not field should have autocomplete enabled.",
                         "type": "string"
+                    },
+                    "disallowEmptySpaces": {
+                        "title": "Disallow Empty Spaces",
+                        "description": "Whether to disallow the entry of empty spaces in the text",
+                        "type": "boolean",
+                        "default": false
                     }
                 }
             });
