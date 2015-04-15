@@ -73,10 +73,10 @@
                         // this event gets fired when the AJAX has been handled to delete the remote resource
                         $(this).find("button.delete").on("destroyed", function() {
                             setTimeout(function() {
-                                self.refreshUIState();
                                 self.onFileDelete(row);
                                 self.triggerWithPropagation("change");
-                            }, 250);
+                                self.refreshUIState();
+                            }, 400);
                         });
 
                     });

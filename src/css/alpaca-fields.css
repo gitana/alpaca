@@ -144,6 +144,14 @@
 
 
 
+/** ************************************** **/
+/** CK EDITOR                             **/
+/** ************************************** **/
+
+.alpaca-field-ckeditor.alpaca-invalid > .cke
+{
+    border-color: #f04124;
+}
 
 .has-error .multiselect
 {

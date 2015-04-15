@@ -19,58 +19,138 @@
              */
             setup: function()
             {
-                var self=this;
+                var self = this;
 
-                if (!this.data)  {
+                if (!this.data)
+                {
                     this.data = "";
                 }
 
-                var standardToolbar="insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image";
-                if (!self.options.toolbar) {
-                    self.options.toolbar = standardToolbar;
+                if (!self.options.toolbar)
+                {
+                    self.options.toolbar = "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image";
                 }
 
                 this.base();
+            },
+
+            setValue: function(value)
+            {
+                var self = this;
+
+                // be sure to call into base method
+                this.base(value);
+
+                if (self.editor)
+                {
+                    self.editor.setContent(value);
+                }
             },
 
             getValue:function()
             {
                 var self = this;
 
-                var rteFieldID = self.control[0].id;
-                var rteRef = tinymce.get(rteFieldID);
-                var returnVal = "";
+                var returnVal = null;
 
-                //when page intially loads and tinyMCE not yet initialized, this check prevents an error
-                if (!rteRef)
+                if (self.editor)
                 {
-                    returnVal = rteRef.getContent()
+                    returnVal = self.editor.getContent()
                 }
 
                 return returnVal;
             },
 
+            initControlEvents: function()
+            {
+                var self = this;
+
+                setTimeout(function() {
+
+                    // click event
+                    self.editor.on("click", function (e) {
+                        self.onClick.call(self, e);
+                        self.trigger("click", e);
+                    });
+
+                    // change event
+                    self.editor.on("change", function (e) {
+                        self.onChange();
+                        self.triggerWithPropagation("change", e);
+                    });
+
+                    // blur event
+                    self.editor.on('blur', function (e) {
+                        self.onBlur();
+                        self.trigger("blur", e);
+                    });
+
+                    // focus event
+                    self.editor.on("focus", function (e) {
+                        self.onFocus.call(self, e);
+                        self.trigger("focus", e);
+                    });
+
+                    // keypress event
+                    self.editor.on("keypress", function (e) {
+                        self.onKeyPress.call(self, e);
+                        self.trigger("keypress", e);
+                    });
+
+                    // keyup event
+                    self.editor.on("keyup", function (e) {
+                        self.onKeyUp.call(self, e);
+                        self.trigger("keyup", e);
+                    });
+
+                    // keydown event
+                    self.editor.on("keydown", function(e) {
+                        self.onKeyDown.call(self, e);
+                        self.trigger("keydown", e);
+                    });
+                }, 525);
+            },
+
             afterRenderControl: function(model, callback)
             {
-                //"insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                 var self = this;
                 this.base(model, function() {
 
-                    if (!this.data) {
-                        if (!self.isDisplayOnly() && self.control) {
-                            var rteFieldID = self.control[0].id;
+                    if (!self.isDisplayOnly() && self.control)
+                    {
+                        var rteFieldID = self.control[0].id;
 
-                            setTimeout(function () {
-                                tinyMCE.init({
-                                    selector: "#" + rteFieldID,
-                                    toolbar: self.options.toolbar
-                                });
-                            }, 250); //There may be a better/more proper way to wait to be able to call tinymce, but calling it in a setTimeout seems to be reliable
-                        }
+                        setTimeout(function () {
+
+                            tinyMCE.init({
+                                init_instance_callback: function(editor) {
+                                    self.editor = editor;
+
+                                    callback();
+                                },
+                                selector: "#" + rteFieldID,
+                                toolbar: self.options.toolbar
+                            });
+
+                        }, 500);
                     }
-
-                    callback();
                 });
+            },
+
+            /**
+             * @see Alpaca.Field#destroy
+             */
+            destroy: function()
+            {
+                // destroy the plugin instance
+                if (this.editor)
+                {
+                    this.editor.remove();
+                    this.editor = null;
+                }
+
+                // call up to base method
+                this.base();
             },
 
 
