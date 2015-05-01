@@ -244,7 +244,7 @@
          */
         createItems: function(callback)
         {
-            var _this = this;
+            var self = this;
 
             var items = [];
 
@@ -255,13 +255,13 @@
             //
             // this is primarily maintained for debugging purposes, so as to inform the developer of mismatches
             var extraDataProperties = {};
-            for (var dataKey in _this.data) {
+            for (var dataKey in self.data) {
                 extraDataProperties[dataKey] = dataKey;
             }
 
-            var properties = _this.data;
-            if (_this.schema && _this.schema.properties) {
-                properties = _this.schema.properties;
+            var properties = self.data;
+            if (self.schema && self.schema.properties) {
+                properties = self.schema.properties;
             }
 
             var cf = function()
@@ -291,9 +291,9 @@
             for (var propertyId in properties)
             {
                 var itemData = null;
-                if (_this.data)
+                if (self.data)
                 {
-                    itemData = _this.data[propertyId];
+                    itemData = self.data[propertyId];
                 }
 
                 var pf = (function(propertyId, itemData, extraDataProperties)
@@ -301,21 +301,19 @@
                     return function(callback)
                     {
                         // only allow this if we have data, otherwise we end up with circular reference
-                        _this.resolvePropertySchemaOptions(propertyId, function(schema, options, circular) {
+                        self.resolvePropertySchemaOptions(propertyId, function (schema, options, circular) {
 
                             // we only allow addition if the resolved schema isn't circularly referenced
                             // or the schema is optional
-                            if (circular)
-                            {
+                            if (circular) {
                                 return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(schema), _this.errorCallback);
                             }
 
-                            if (!schema)
-                            {
+                            if (!schema) {
                                 Alpaca.logDebug("Unable to resolve schema for property: " + propertyId);
                             }
 
-                            _this.createItem(propertyId, schema, options, itemData, null, function(addedItemControl) {
+                            self.createItem(propertyId, schema, options, itemData, null, function (addedItemControl) {
 
                                 items.push(addedItemControl);
 
@@ -325,7 +323,7 @@
                                 // by the time we get here, we may have constructed a very large child chain of
                                 // sub-dependencies and so we use nextTick() instead of a straight callback so as to
                                 // avoid blowing out the stack size
-                                Alpaca.nextTick(function() {
+                                Alpaca.nextTick(function () {
                                     callback();
                                 });
                             });

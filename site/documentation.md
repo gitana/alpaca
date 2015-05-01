@@ -112,6 +112,7 @@ We've provided chapters here on a variety of interesting API-related topics.
             <li><a href="{{ BASE_PATH }}/docs/api/layouts.html">Layouts</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/observables.html">Observables</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/references.html">References</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/api/recursive-references.html">Recursive References</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/serialization.html">Serialization</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/templates.html">Templates</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/usage.html">Usage</a></li>
