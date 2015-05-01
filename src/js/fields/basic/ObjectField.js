@@ -315,7 +315,17 @@
 
                             self.createItem(propertyId, schema, options, itemData, null, function (addedItemControl) {
 
-                                items.push(addedItemControl);
+                                if (options.hasOwnProperty("order")) {
+                                    order = parseInt(options.order, 10);
+                                    if (order === order) {
+                                        // order is not NaN
+                                        items.splice(order, 0, addedItemControl);
+                                    } else {
+                                        items.push(addedItemControl);
+                                    }
+                                } else {
+                                    items.push(addedItemControl);
+                                }
 
                                 // remove from extraDataProperties helper
                                 delete extraDataProperties[propertyId];
