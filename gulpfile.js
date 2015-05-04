@@ -21,8 +21,9 @@ var notify      = require("gulp-notify");
 var runSequence = require("run-sequence");
 var nodemon     = require("gulp-nodemon");
 var watch       = require("gulp-watch");
+var wrap        = require('gulp-wrap');
 var bump        = require('gulp-bump');
-var wrap        = require("gulp-wrap-umd");
+var wrapUmd     = require("gulp-wrap-umd");
 var awspublish  = require('gulp-awspublish');
 
 // custom builder_helper stripper to remove builder helper functions
@@ -241,6 +242,7 @@ gulp.task("build-templates", function(cb)
         // web
         gulp.src(paths.templates["web"])
             .pipe(handlebars())
+            .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
                 processName: processName
@@ -374,7 +376,7 @@ gulp.task("build-scripts", function(cb) {
             // web
             gulp.src(paths.scripts.web)
                 .pipe(concat('alpaca.js'))
-                .pipe(wrap(web_wrap))
+                .pipe(wrapUmd(web_wrap))
                 .pipe(gulp.dest('build/alpaca/web'))
                 .pipe(concat('alpaca.min.js'))
                 .pipe(uglify())
@@ -390,7 +392,7 @@ gulp.task("build-scripts", function(cb) {
             // bootstrap
             gulp.src(paths.scripts.bootstrap)
                 .pipe(concat('alpaca.js'))
-                .pipe(wrap(bootstrap_wrap))
+                .pipe(wrapUmd(bootstrap_wrap))
                 .pipe(gulp.dest('build/alpaca/bootstrap'))
                 .pipe(concat('alpaca.min.js'))
                 .pipe(uglify())
@@ -399,7 +401,7 @@ gulp.task("build-scripts", function(cb) {
             // jqueryui
             gulp.src(paths.scripts.jqueryui)
                 .pipe(concat('alpaca.js'))
-                .pipe(wrap(jqueryui_warp))
+                .pipe(wrapUmd(jqueryui_warp))
                 .pipe(gulp.dest('build/alpaca/jqueryui'))
                 .pipe(concat('alpaca.min.js'))
                 .pipe(uglify())
@@ -408,7 +410,7 @@ gulp.task("build-scripts", function(cb) {
             // jquerymobile
             gulp.src(paths.scripts.jquerymobile)
                 .pipe(concat('alpaca.js'))
-                .pipe(wrap(jquerymobile_wrap))
+                .pipe(wrapUmd(jquerymobile_wrap))
                 .pipe(gulp.dest('build/alpaca/jquerymobile'))
                 .pipe(concat('alpaca.min.js'))
                 .pipe(uglify())
