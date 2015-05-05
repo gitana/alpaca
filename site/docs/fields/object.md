@@ -448,3 +448,44 @@ $("#field9").alpaca({
 });
 </script>
 {% endraw %}
+
+
+## Example 10
+Object that utilizes field-level <code>order</code> property to apply an order to child fields.
+<div id="field10"> </div>
+{% raw %}
+<script type="text/javascript" id="field10-script">
+$("#field10").alpaca({
+    "schema": {
+        "type": "object",
+        "properties": {
+            "lastName": {
+                "type": "string",
+                "title": "Last Name"
+            },
+            "age": {
+                "type": "number",
+                "title": "Age"
+            },
+            "firstName": {
+                "type": "string",
+                "title": "First Name"
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "lastName": {
+                "order": 1
+            },
+            "age": {
+                "order": 2
+            },
+            "firstName": {
+                "order": 0
+            }
+        }
+    }
+});
+</script>
+{% endraw %}

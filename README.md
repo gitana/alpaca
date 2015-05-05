@@ -197,6 +197,7 @@ called life.
 + [@arthurportas](https://github.com/arthurportas)
 + [@emircal](https://github.com/emircal)
 + [@xaviergonz](https://github.com/xaviergonz)
++ [@musicist288](https://github.com/musicist288)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org), the [Alpaca Forums](http://www.cloudcms.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!

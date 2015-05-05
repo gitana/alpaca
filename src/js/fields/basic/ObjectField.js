@@ -1897,6 +1897,11 @@
         getSchemaOfOptions: function() {
             var schemaOfOptions = Alpaca.merge(this.base(), {
                 "properties": {
+                },
+                "order": {
+                    "type": "number",
+                    "title": "Order",
+                    "description": "Allows for optional specification of the index of this field in the properties array."
                 }
             });
 
