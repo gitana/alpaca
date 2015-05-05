@@ -245,7 +245,8 @@ gulp.task("build-templates", function(cb)
             .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
-                processName: processName
+                processName: processName,
+                noRedeclare: true
             }))
             .pipe(concat('templates-web.js'))
             .pipe(gulp.dest('build/tmp/')),
@@ -253,9 +254,11 @@ gulp.task("build-templates", function(cb)
         // bootstrap
         gulp.src(paths.templates["bootstrap"])
             .pipe(handlebars())
+            .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
-                processName: processName
+                processName: processName,
+                noRedeclare: true
             }))
             .pipe(concat('templates-bootstrap.js'))
             .pipe(gulp.dest('build/tmp/')),
@@ -263,9 +266,11 @@ gulp.task("build-templates", function(cb)
         // jqueryui
         gulp.src(paths.templates["jqueryui"])
             .pipe(handlebars())
+            .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
-                processName: processName
+                processName: processName,
+                noRedeclare: true
             }))
             .pipe(concat('templates-jqueryui.js'))
             .pipe(gulp.dest('build/tmp/')),
@@ -273,9 +278,11 @@ gulp.task("build-templates", function(cb)
         // jquerymobile
         gulp.src(paths.templates["jquerymobile"])
             .pipe(handlebars())
+            .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
-                processName: processName
+                processName: processName,
+                noRedeclare: true
             }))
             .pipe(concat('templates-jquerymobile.js'))
             .pipe(gulp.dest('build/tmp/'))

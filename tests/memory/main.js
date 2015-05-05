@@ -11,7 +11,7 @@ require.config({
         },
         {
             "name": "handlebars",
-            "main": "../../lib/handlebars/handlebars-v1.3.0"
+            "main": "../../lib/handlebars/handlebars.amd"
         },
         {
             "name": "alpaca",

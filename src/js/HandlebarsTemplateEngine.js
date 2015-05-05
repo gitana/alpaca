@@ -287,6 +287,9 @@
                 var functionString = Handlebars.precompile(html);
                 template = eval("(" + functionString + ")"); // jshint ignore:line
 
+                // convert to function - fn(model)
+                template = Handlebars.template(template);
+
                 // CACHE: write
                 COMPILED_TEMPLATES[cacheKey] = template;
             }
@@ -315,7 +318,7 @@
             var html = null;
             try
             {
-                html = Handlebars.template(templateFunction)(model);
+                html = templateFunction(model);
             }
             catch (e)
             {

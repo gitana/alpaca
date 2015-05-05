@@ -48,7 +48,7 @@
         "datatables-plugins": "https://github.com/DataTables/Plugins.git",
         "eonasdan-bootstrap-datetimepicker": "4.0.0",
         "google-code-prettify": "1.0.3",
-        "handlebars": "1.3.0",
+        "handlebars": "3.0.3",
         "handsontable": "0.11.4",
         "jquery": "1.11.1",
         "jquery-file-upload": "9.8.0",

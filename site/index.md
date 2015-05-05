@@ -47,7 +47,7 @@ Alpaca is open-source and provided to you under the Apache 2.0 license.  It is s
 <pre class="prettyprint linenums">
 &lt;!-- dependencies (jquery, handlebars and bootstrap) --&gt;
 &lt;script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"&gt;&lt;/script&gt;
 &lt;link type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"/&gt;
 &lt;script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"&gt;&lt;/script&gt;
 
