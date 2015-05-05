@@ -349,6 +349,9 @@
             });
 
             control.focus(function(e) {
+
+                self.wasFocused = true;
+
                 if (!self.suspendBlurFocus)
                 {
                     var x = self.onFocus.call(self, e);
@@ -361,6 +364,9 @@
             });
 
             control.blur(function(e) {
+
+                self.wasBlurred = true;
+
                 if (!self.suspendBlurFocus)
                 {
                     var x = self.onBlur.call(self, e);
@@ -409,14 +415,32 @@
         {
             var self = this;
 
-            // if the field is currently invalid, then we provide early feedback to the user as to when they enter
-            // if the field was valid, we don't render invalidation feedback until they blur the field
+            var refresh = false;
 
-            // was the control valid previously?
-            var wasValid = this.isValid();
-            if (!wasValid)
+            // if we're in edit mode
+            if (self.view.type && self.view.type === 'edit')
             {
-                //
+                // if the field is currently invalid, then we provide early feedback to the user as to when they enter
+                // if the field was valid, we don't render invalidation feedback until they blur the field
+
+                // was the control valid previously?
+                var wasValid = this.isValid();
+                if (!wasValid)
+                {
+                    refresh = true;
+                }
+            }
+            else if (self.view.type && self.view.type === 'create')
+            {
+                var wasValid = this.isValid();
+                if (!wasValid && self.wasBlurred)
+                {
+                    refresh = true;
+                }
+            }
+
+            if (refresh)
+            {
                 // we use a timeout because at this exact moment, the value of the control is still the old value
                 // jQuery raises the keypress event ahead of the input receiving the new data which would incorporate
                 // the key that was pressed
@@ -424,7 +448,7 @@
                 // this timeout provides the browser with enough time to plug the value into the input control
                 // which the validation logic uses to determine whether the control is now in a valid state
                 //
-                window.setTimeout(function() {
+                window.setTimeout(function () {
                     self.refreshValidationState();
                 }, 50);
             }
