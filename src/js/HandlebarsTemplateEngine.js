@@ -315,7 +315,7 @@
             var html = null;
             try
             {
-                html = Handlebars.template(templateFunction)(model);
+                html = templateFunction(model);
             }
             catch (e)
             {
