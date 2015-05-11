@@ -482,16 +482,31 @@
                         return;
                     }
 
-                    self.convertFileToDescriptor(data.files[i], function(err, descriptor) {
+                    self.convertFileToDescriptor(data.files[i], function (err, descriptor) {
+
                         if (descriptor)
                         {
                             array.push(descriptor);
                         }
-                        f(i+1);
+
+                        f(i + 1);
                     });
+
                 };
                 f(0);
             });
+
+            /**
+             * When file uploads fail, alert...
+             */
+            fileUpload.bind("fileuploadfail", function(e, data) {
+
+                if (data.errorThrown)
+                {
+                    self.onUploadFail(data);
+                }
+            });
+
 
             /**
              * Whether success or fail, we handle the results.
@@ -880,6 +895,14 @@
 
         onFileDelete: function(domEl)
         {
+        },
+
+        onUploadFail: function(data)
+        {
+            for (var i = 0; i < data.files.length; i++)
+            {
+                data.files[i].error = data.errorThrown;
+            }
         },
 
         /* builder_helpers */
