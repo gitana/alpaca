@@ -245,11 +245,15 @@
             // if we have a CSRF token, apply it to the headers
             if (csrfToken)
             {
-                if (!self.options.headers) {
-                    self.options.headers = {};
+                if (!self.options.upload) {
+                    self.options.upload = {};
                 }
 
-                self.options.headers[Alpaca.CSRF_HEADER_NAME] = csrfToken;
+                if (!self.options.upload.headers) {
+                    self.options.upload.headers = {};
+                }
+
+                self.options.upload.headers[Alpaca.CSRF_HEADER_NAME] = csrfToken;
             }
 
         },
