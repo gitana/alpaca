@@ -219,6 +219,39 @@
                     alert(messages.join("\n"));
                 };
             }
+
+            // if Alpaca is configured for CSRF support and a CSRF cookie or token is available,
+            // then apply it to the headers that are sent over the wire via the underlying ajax
+            // for the file upload control
+
+            // is there a direct token specified?
+            var csrfToken = Alpaca.CSRF_TOKEN;
+            if (!csrfToken)
+            {
+                // is there a cookie that we can pull the value from?
+                for (var t = 0; t < Alpaca.CSRF_COOKIE_NAMES.length; t++)
+                {
+                    var cookieName = Alpaca.CSRF_COOKIE_NAMES[t];
+
+                    var cookieValue = Alpaca.readCookie(cookieName);
+                    if (cookieValue)
+                    {
+                        csrfToken = cookieValue;
+                        break;
+                    }
+                }
+            }
+
+            // if we have a CSRF token, apply it to the headers
+            if (csrfToken)
+            {
+                if (!self.options.headers) {
+                    self.options.headers = {};
+                }
+
+                self.options.headers[Alpaca.CSRF_HEADER_NAME] = csrfToken;
+            }
+
         },
 
         prepareControlModel: function(callback)

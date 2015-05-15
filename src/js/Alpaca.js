@@ -4643,4 +4643,47 @@
         _swap(source, target, duration, callback);
     };
 
+    Alpaca.readCookie = function(name)
+    {
+        function _readCookie(name)
+        {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++)
+            {
+                var c = ca[i];
+                while (c.charAt(0)==' ')
+                {
+                    c = c.substring(1,c.length);
+                }
+
+                if (c.indexOf(nameEQ) == 0)
+                {
+                    return c.substring(nameEQ.length,c.length);
+                }
+            }
+            return null;
+        }
+
+        var value = null;
+
+        if (typeof(document) !== "undefined")
+        {
+            value = _readCookie(name);
+        }
+
+        return value;
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // CSRF Support
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Alpaca.CSRF_TOKEN = null;
+    Alpaca.CSRF_COOKIE_NAMES = ["CSRF-TOKEN", "XSRF-TOKEN"];
+    Alpaca.CSRF_HEADER_NAME = "X-CSRF-TOKEN";
+
+
 })(jQuery);
