@@ -224,6 +224,25 @@
             // then apply it to the headers that are sent over the wire via the underlying ajax
             // for the file upload control
 
+            // if we have a CSRF token, apply it to the headers
+            var csrfToken = self.determineCsrfToken();
+            if (csrfToken)
+            {
+                if (!self.options.upload) {
+                    self.options.upload = {};
+                }
+
+                if (!self.options.upload.headers) {
+                    self.options.upload.headers = {};
+                }
+
+                self.options.upload.headers[Alpaca.CSRF_HEADER_NAME] = csrfToken;
+            }
+
+        },
+
+        determineCsrfToken: function()
+        {
             // is there a direct token specified?
             var csrfToken = Alpaca.CSRF_TOKEN;
             if (!csrfToken)
@@ -242,20 +261,7 @@
                 }
             }
 
-            // if we have a CSRF token, apply it to the headers
-            if (csrfToken)
-            {
-                if (!self.options.upload) {
-                    self.options.upload = {};
-                }
-
-                if (!self.options.upload.headers) {
-                    self.options.upload.headers = {};
-                }
-
-                self.options.upload.headers[Alpaca.CSRF_HEADER_NAME] = csrfToken;
-            }
-
+            return csrfToken;
         },
 
         prepareControlModel: function(callback)
