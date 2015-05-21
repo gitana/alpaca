@@ -145,6 +145,25 @@ legend.alpaca-container-label
 .alpaca-field.alpaca-field-upload .template-download TD.error
 {
     color: red;
+    word-break: break-all;
+}
+.alpaca-field.alpaca-field-upload .template-download TD.error .label
+{
+    color: red;
+    font-size: 16px;
+    text-align: left;
+}
+
+.alpaca-field.alpaca-field-upload .template-upload TD.error
+{
+    color: red;
+    word-break: break-all;
+}
+.alpaca-field.alpaca-field-upload .template-upload TD.error .label
+{
+    color: red;
+    font-size: 16px;
+    text-align: left;
 }
 
 .alpaca-field.alpaca-field-address .alpaca-field-address-mapcanvas

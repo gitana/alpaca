@@ -936,9 +936,16 @@
 
         onUploadFail: function(data)
         {
+            var self = this;
+
             for (var i = 0; i < data.files.length; i++)
             {
                 data.files[i].error = data.errorThrown;
+            }
+
+            if (self.options.uploadFailHandler)
+            {
+                self.options.uploadFailHandler.call(self, data);
             }
         },
 
@@ -1003,7 +1010,12 @@
                     },
                     "errorHandler": {
                         "title": "Error Handler",
-                        "description": "A function handler to be called when there is an error uploading a file",
+                        "description": "Optional function handler to be called when there is an error uploading one or more files.  This handler is typically used to instantiate a modal or other UI element to inform the end user.",
+                        "type": "function"
+                    },
+                    "uploadFailHandler": {
+                        "title": "Upload Fail Handler",
+                        "description": "Optional function handler to be called when one or more files fails to upload.  This function is responsible for parsing the underlying xHR request and populating the error message state.",
                         "type": "function"
                     }
                 }
