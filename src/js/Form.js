@@ -92,6 +92,10 @@
                     {
                         this.options.buttons[k].type = "button";
                     }
+                    if (this.attributes.id)
+                    {
+                        this.options.buttons[k].id = this.options.buttons[k].id;
+                    }
                 }
             }
 
