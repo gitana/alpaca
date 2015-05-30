@@ -846,6 +846,41 @@
         },
 
         /**
+         * Makes a best guess at the options field type if none provided.
+         *
+         * @param schema
+         * @returns {string} the field type
+         */
+        guessOptionsType: function(schema)
+        {
+            var type = null;
+
+            if (schema && schema["enum"])
+            {
+                if (schema["enum"].length > 3)
+                {
+                    type = "select";
+                }
+                else
+                {
+                    type = "radio";
+                }
+            }
+            else
+            {
+                type = Alpaca.defaultSchemaFieldMapping[schema.type];
+            }
+
+            // check if it has format defined
+            if (schema.format && Alpaca.defaultFormatFieldMapping[schema.format])
+            {
+                type = Alpaca.defaultFormatFieldMapping[schema.format];
+            }
+
+            return type;
+        },
+
+        /**
          * Alpaca Views.
          */
         views: {},
@@ -1853,6 +1888,7 @@
          * @returns {Alpaca.Field} New field instance.
          */
         createFieldInstance : function(el, data, options, schema, view, connector, errorCallback) {
+
             // make sure options and schema are not empty
             if (Alpaca.isValEmpty(options)) {
                 options = {};
@@ -1860,13 +1896,15 @@
             if (Alpaca.isValEmpty(schema)) {
                 schema = {};
             }
+
             // options can be a string that identifies the kind of field to construct (i.e. "text")
             if (options && Alpaca.isString(options)) {
                 var fieldType = options;
                 options = {};
                 options.type = fieldType;
             }
-            if (!options.type) {
+            if (!options.type)
+            {
                 // if nothing passed in, we can try to make a guess based on the type of data
                 if (!schema.type) {
                     schema.type = Alpaca.getSchemaType(data);
@@ -1879,19 +1917,9 @@
                         schema.type = "object"; // fallback
                     }
                 }
-                if (schema && schema["enum"]) {
-                    if (schema["enum"].length > 3) {
-                        options.type = "select";
-                    } else {
-                        options.type = "radio";
-                    }
-                } else {
-                    options.type = Alpaca.defaultSchemaFieldMapping[schema.type];
-                }
-                // check if it has format defined
-                if (schema.format && Alpaca.defaultFormatFieldMapping[schema.format]) {
-                    options.type = Alpaca.defaultFormatFieldMapping[schema.format];
-                }
+
+                // using what we now about schema, try to guess the type
+                options.type = Alpaca.guessOptionsType(schema);
             }
             // find the field class registered for this field type
             var FieldClass = Alpaca.getFieldClass(options.type);
