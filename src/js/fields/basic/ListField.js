@@ -247,7 +247,7 @@
                             "error": function(jqXHR, textStatus, errorThrown) {
 
                                 self.errorCallback({
-                                    "message":"Unable to load data from uri : " + _this.options.dataSource,
+                                    "message":"Unable to load data from uri : " + self.options.dataSource,
                                     "stage": "DATASOURCE_LOADING_ERROR",
                                     "details": {
                                         "jqXHR" : jqXHR,
