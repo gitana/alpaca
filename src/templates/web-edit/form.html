@@ -7,7 +7,7 @@
         <div class="alpaca-form-buttons-container">
             {{#if options.buttons}}
                 {{#each options.buttons}}
-                    <button data-key="{{@key}}" type="{{type}}" class="alpaca-form-button alpaca-form-button-{{@key}} {{../../view.styles.button}}" {{#each value}}{{@key}}="{{value}}"{{/each}}>{{{value}}}</button>
+                    <button data-key="{{@key}}" type="{{type}}" class="alpaca-form-button alpaca-form-button-{{@key}} {{styles}}" {{#each value}}{{@key}}="{{value}}"{{/each}}>{{{value}}}</button>
                 {{/each}}
             {{/if}}
         </div>

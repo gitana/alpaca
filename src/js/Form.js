@@ -116,6 +116,15 @@
 
             // set a runtime view
             this.view = new Alpaca.RuntimeView(viewId, this);
+
+            // for each button, make sure that classes is set minimally to view.styles.button
+            for (var k in this.options.buttons)
+            {
+                if (!this.options.buttons[k].styles) {
+                    this.options.buttons[k].styles = this.view.styles.button;
+                }
+            }
+
         },
 
         /**
@@ -540,18 +549,62 @@
         /**
          * Fires the submit in the background and hands back the jQuery promise.
          *
+         * An optional config can be passed in to control the underlying jQuery ajax XHR.
+         *
          * @returns {*}
          */
-        ajaxSubmit: function()
+        ajaxSubmit: function(config)
         {
             var self = this;
 
-            return $.ajax({
-                data: this.getValue(),
-                url: self.options.attributes.action,
-                type: self.options.attributes.method,
-                dataType: "json"
-            });
+            if (!config) {
+                config = {};
+            }
+
+            config.url = self.options.attributes.action;
+            config.type = self.options.attributes.method;
+
+            if (!config.data) {
+                config.data = this.getValue();
+            }
+
+            if (!config.dataType) {
+                config.dataType = "json";
+            }
+            if (!config.headers) {
+                config.headers = {};
+            }
+
+            // support CSRF here
+            var csrfToken = self.determineCsrfToken();
+            if (csrfToken) {
+                config.headers[Alpaca.CSRF_HEADER_NAME] = csrfToken;
+            }
+
+            return $.ajax(config);
+        },
+
+        determineCsrfToken: function()
+        {
+            // is there a direct token specified?
+            var csrfToken = Alpaca.CSRF_TOKEN;
+            if (!csrfToken)
+            {
+                // is there a cookie that we can pull the value from?
+                for (var t = 0; t < Alpaca.CSRF_COOKIE_NAMES.length; t++)
+                {
+                    var cookieName = Alpaca.CSRF_COOKIE_NAMES[t];
+
+                    var cookieValue = Alpaca.readCookie(cookieName);
+                    if (cookieValue)
+                    {
+                        csrfToken = cookieValue;
+                        break;
+                    }
+                }
+            }
+
+            return csrfToken;
         }
 
     });

@@ -259,6 +259,10 @@ Here is a form that includes custom buttons.  We declare one button inline withi
 form's JSON).  And we declare the other button as a "noop" (engineering term for no-operation).  It's a button that
 does nothing.  However, in the postRender callback, we look it up and register a click handler.
 
+In addition, for the "noop" button, we use the <code>styles</code> attribute to lay down some additional CSS classes
+to specify exact styling of the button.  If not specified, this will take on the value of the view's default style
+for buttons (view.styles.buttons).
+
 <div id="field5"> </div>
 {% raw %}
 <script type="text/javascript" id="field5-script">
@@ -292,7 +296,8 @@ $("#field5").alpaca({
             "buttons": {
                 "noop": {
                     "type": "button",
-                    "value": "Do Nothing"
+                    "value": "Do Nothing",
+                    "styles": "btn btn-primary"
                 },
                 "validate": {
                     "title": "Validate and view JSON!",

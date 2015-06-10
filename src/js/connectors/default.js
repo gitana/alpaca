@@ -89,11 +89,12 @@
         /**
          * Loads JSON data.
          *
-         * @param {Object|String} resource Resource to be loaded.
+         * @param {Object|String} resource Resource to be loaded
+         * @param {Object} resources Map of resources
          * @param {Function} onSuccess onSuccess callback
          * @param {Function} onError onError callback
          */
-        loadData: function (resource, successCallback, errorCallback)
+        loadData: function (resource, resources, successCallback, errorCallback)
         {
             return this._handleLoadJsonResource(resource, successCallback, errorCallback);
         },
@@ -101,11 +102,12 @@
         /**
          * Loads JSON schema.
          *
-         * @param {Object|String} resource Resource to be loaded.
-         * @param {Function} onSuccess onSuccess callback.
-         * @param {Function} onError onError callback.
+         * @param {Object|String} resource Resource to be loaded
+         * @param {Object} resources Map of resources
+         * @param {Function} onSuccess onSuccess callback
+         * @param {Function} onError onError callback
          */
-        loadSchema: function (resource, successCallback, errorCallback)
+        loadSchema: function (resource, resources, successCallback, errorCallback)
         {
             return this._handleLoadJsonResource(resource, successCallback, errorCallback);
         },
@@ -113,11 +115,12 @@
         /**
          * Loads JSON options.
          *
-         * @param {Object|String} resource Resource to be loaded.
-         * @param {Function} onSuccess onSuccess callback.
-         * @param {Function} onError onError callback.
+         * @param {Object|String} resource Resource to be loaded
+         * @param {Object} resources Map of resources
+         * @param {Function} onSuccess onSuccess callback
+         * @param {Function} onError onError callback
          */
-        loadOptions: function (resource, successCallback, errorCallback)
+        loadOptions: function (resource, resources, successCallback, errorCallback)
         {
             return this._handleLoadJsonResource(resource, successCallback, errorCallback);
         },
@@ -125,11 +128,12 @@
         /**
          * Loads JSON view.
          *
-         * @param {Object|String} resource Resource to be loaded.
-         * @param {Function} onSuccess onSuccess callback.
-         * @param {Function} onError onError callback.
+         * @param {Object|String} resource Resource to be loaded
+         * @param {Object} resources Map of resources
+         * @param {Function} onSuccess onSuccess callback
+         * @param {Function} onError onError callback
          */
-        loadView: function (resource, successCallback, errorCallback)
+        loadView: function (resource, resources, successCallback, errorCallback)
         {
             return this._handleLoadJsonResource(resource, successCallback, errorCallback);
         },
@@ -238,7 +242,7 @@
                 // fire off all of the invokes
                 if (dataSource)
                 {
-                    self.loadData(dataSource, function(data) {
+                    self.loadData(dataSource, resources, function(data) {
 
                         doMerge("data", resources.data, data);
 
@@ -248,7 +252,7 @@
                 }
                 if (schemaSource)
                 {
-                    self.loadSchema(schemaSource, function(schema) {
+                    self.loadSchema(schemaSource, resources, function(schema) {
 
                         doMerge("schema", resources.schema, schema);
 
@@ -258,7 +262,7 @@
                 }
                 if (optionsSource)
                 {
-                    self.loadOptions(optionsSource, function(options) {
+                    self.loadOptions(optionsSource, resources, function(options) {
 
                         doMerge("options", resources.options, options);
 
@@ -268,7 +272,7 @@
                 }
                 if (viewSource)
                 {
-                    self.loadView(viewSource, function(view) {
+                    self.loadView(viewSource, resources, function(view) {
 
                         doMerge("view", resources.view, view);
 
