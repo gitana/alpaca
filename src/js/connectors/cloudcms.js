@@ -207,7 +207,7 @@
                                 form.topControl.trigger("formSubmitSuccess");
                             });
                             promise.fail(function () {
-                                form.topControltrigger("formSubmitFail");
+                                form.topControl.trigger("formSubmitFail");
                             });
                         }
                     }
