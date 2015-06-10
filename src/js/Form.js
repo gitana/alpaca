@@ -258,14 +258,12 @@
                 this.form.attr("data-alpaca-form-id", this.getId());
             }
 
-            var $parentEl = $(parentEl);
-
             // the form field
-            $parentEl.find("form").attr(this.attributes);
+            $(parentEl).find("form").attr(this.attributes);
 
             // populate the buttons as well
             this.buttons = {};
-            $parentEl.find(".alpaca-form-button").each(function() {
+            $(parentEl).find(".alpaca-form-button").each(function() {
 
                 $(this).click(function(e) {
                     $(this).attr("button-pushed", true);
