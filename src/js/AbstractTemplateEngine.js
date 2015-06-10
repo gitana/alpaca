@@ -51,7 +51,7 @@
             if (Alpaca.isString(template))
             {
                 var lc = template.toLowerCase();
-                if (lc.indexOf("http://") === 0 || lc.indexOf("https://") === 0 || lc.indexOf("./") === 0 || lc.indexOf("/") === 0 || lc.indexOf("../") === 0)
+                if (Alpaca.isUri(lc))
                 {
                     type = "uri";
                 }
