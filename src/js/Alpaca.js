@@ -2053,7 +2053,7 @@
                 if (template && typeof(template) === "string")
                 {
                     var x = template.toLowerCase();
-                    if (x.indexOf("http://") === 0 || x.indexOf("https://") === 0 || x.indexOf("/") === 0 || x.indexOf("./") === 0)
+                    if (Alpaca.isUri(x))
                     {
                         // we assume this is a URL and let the template engine deal with it
                     }
