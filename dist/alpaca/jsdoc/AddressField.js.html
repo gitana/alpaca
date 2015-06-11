@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Alpaca Forms Source: fields/advanced/AddressField.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top ">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Alpaca Forms</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Implementations..html">Namespace for all Alpaca Connector Class Implementations.</a>
+						</li>
+						
+						<li>
+							<a href="Implementations._.html">Namespace for all Alpaca Field Class Implementations.</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Alpaca.Connector.html">Alpaca.Connector</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Field.html">Alpaca.Field</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Fields.CurrencyField.html">Alpaca.Fields.CurrencyField</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Fields.UploadField.html">Alpaca.Fields.UploadField</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Form.html">Alpaca.Form</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.NormalizedView.html">Alpaca.NormalizedView</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.RuntimeView.html">Alpaca.RuntimeView</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="global.html#compile">compile</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doCompile">doCompile</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doExecute">doExecute</a>
+						</li>
+						
+						<li>
+							<a href="global.html#execute">execute</a>
+						</li>
+						
+						<li>
+							<a href="global.html#fileExtension">fileExtension</a>
+						</li>
+						
+						<li>
+							<a href="global.html#findCacheKeys">findCacheKeys</a>
+						</li>
+						
+						<li>
+							<a href="global.html#isCached">isCached</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDependencyChange">onDependencyChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#subscribe">subscribe</a>
+						</li>
+						
+						<li>
+							<a href="global.html#supportedMimetypes">supportedMimetypes</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: fields/advanced/AddressField.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">(function($) {
+
+    var Alpaca = $.alpaca;
+
+    Alpaca.Fields.AddressField = Alpaca.Fields.ObjectField.extend(
+    /**
+     * @lends Alpaca.Fields.AddressField.prototype
+     */
+    {
+        /**
+         * @see Alpaca.Fields.ObjectField#getFieldType
+         */
+        getFieldType: function() {
+            return "address";
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.ObjectField#setup
+         */
+        setup: function()
+        {
+            this.base();
+
+            if (this.data === undefined) {
+                this.data = {
+                    street: ['', '']
+                };
+            }
+
+            this.schema = {
+                "title": "Home Address",
+                "type": "object",
+                "properties": {
+                    "street": {
+                        "title": "Street",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "maxLength": 30,
+                            "minItems": 0,
+                            "maxItems": 3
+                        }
+                    },
+                    "city": {
+                        "title": "City",
+                        "type": "string"
+                    },
+                    "state": {
+                        "title": "State",
+                        "type": "string",
+                        "enum": ["AL", "AK", "AS", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FM", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MH", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", "OR", "PW", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VI", "VA", "WA", "WV", "WI", "WY"]
+                    },
+                    "zip": {
+                        "title": "Zip Code",
+                        "type": "string",
+                        "pattern": /^(\d{5}(-\d{4})?)?$/
+                    }
+                }
+            };
+            Alpaca.merge(this.options, {
+                "fields": {
+                    "zip": {
+                        "maskString": "99999",
+                        "size": 5
+                    },
+                    "state": {
+                        "optionLabels": ["ALABAMA", "ALASKA", "AMERICANSAMOA", "ARIZONA", "ARKANSAS", "CALIFORNIA", "COLORADO", "CONNECTICUT", "DELAWARE", "DISTRICTOFCOLUMBIA", "FEDERATEDSTATESOFMICRONESIA", "FLORIDA", "GEORGIA", "GUAM", "HAWAII", "IDAHO", "ILLINOIS", "INDIANA", "IOWA", "KANSAS", "KENTUCKY", "LOUISIANA", "MAINE", "MARSHALLISLANDS", "MARYLAND", "MASSACHUSETTS", "MICHIGAN", "MINNESOTA", "MISSISSIPPI", "MISSOURI", "MONTANA", "NEBRASKA", "NEVADA", "NEWHAMPSHIRE", "NEWJERSEY", "NEWMEXICO", "NEWYORK", "NORTHCAROLINA", "NORTHDAKOTA", "NORTHERNMARIANAISLANDS", "OHIO", "OKLAHOMA", "OREGON", "PALAU", "PENNSYLVANIA", "PUERTORICO", "RHODEISLAND", "SOUTHCAROLINA", "SOUTHDAKOTA", "TENNESSEE", "TEXAS", "UTAH", "VERMONT", "VIRGINISLANDS", "VIRGINIA", "WASHINGTON", "WESTVIRGINIA", "WISCONSIN", "WYOMING"]
+                    }
+                }
+            });
+
+            if (Alpaca.isEmpty(this.options.addressValidation))
+            {
+                this.options.addressValidation = true;
+            }
+        },
+
+        /**
+         * @see Alpaca.Field#isContainer
+         */
+        isContainer: function()
+        {
+            return false;
+        },
+
+        /**
+         * Returns address in a single line string.
+         *
+         * @returns {String} Address as a single line string.
+         */
+        getAddress: function()
+        {
+            var value = this.getValue();
+            if (this.view.type === "view")
+            {
+                value = this.data;
+            }
+            var address = "";
+            if (value)
+            {
+                if (value.street)
+                {
+                    $.each(value.street, function(index, value) {
+                        address += value + " ";
+                    });
+                }
+                if (value.city)
+                {
+                    address += value.city + " ";
+                }
+                if (value.state)
+                {
+                    address += value.state + " ";
+                }
+                if (value.zip)
+                {
+                    address += value.zip;
+                }
+            }
+
+            return address;
+        },
+
+        /**
+         * @see Alpaca.Field#afterRenderContainer
+         */
+        afterRenderContainer: function(model, callback) {
+
+            var self = this;
+
+            this.base(model, function() {
+                var container = self.getContainerEl();
+
+                // apply additional css
+                $(container).addClass("alpaca-addressfield");
+
+                if (self.options.addressValidation &amp;&amp; !self.isDisplayOnly())
+                {
+                    $('&lt;div style="clear:both;">&lt;/div>').appendTo(container);
+                    var mapButton = $('&lt;div class="alpaca-form-button">Show Google Map&lt;/div>').appendTo(container);
+                    if (mapButton.button)
+                    {
+                        mapButton.button({
+                            text: true
+                        });
+                    }
+                    mapButton.click(function() {
+
+                        if (google &amp;&amp; google.maps)
+                        {
+                            var geocoder = new google.maps.Geocoder();
+                            var address = self.getAddress();
+                            if (geocoder)
+                            {
+                                geocoder.geocode({
+                                    'address': address
+                                }, function(results, status)
+                                {
+                                    if (status === google.maps.GeocoderStatus.OK)
+                                    {
+                                        var mapCanvasId = self.getId() + "-map-canvas";
+                                        if ($('#' + mapCanvasId).length === 0)
+                                        {
+                                            $("&lt;div id='" + mapCanvasId + "' class='alpaca-field-address-mapcanvas'>&lt;/div>").appendTo(self.getFieldEl());
+                                        }
+
+                                        var map = new google.maps.Map(document.getElementById(self.getId() + "-map-canvas"), {
+                                            "zoom": 10,
+                                            "center": results[0].geometry.location,
+                                            "mapTypeId": google.maps.MapTypeId.ROADMAP
+                                        });
+
+                                        var marker = new google.maps.Marker({
+                                            map: map,
+                                            position: results[0].geometry.location
+                                        });
+
+                                    }
+                                    else
+                                    {
+                                        self.displayMessage("Geocoding failed: " + status);
+                                    }
+                                });
+                            }
+
+                        }
+                        else
+                        {
+                            self.displayMessage("Google Map API is not installed.");
+                        }
+                    }).wrap('&lt;small/>');
+
+                    if (self.options.showMapOnLoad)
+                    {
+                        mapButton.click();
+                    }
+                }
+
+                callback();
+
+            });
+        },
+
+        /**
+         * @see Alpaca.Fields.ObjectField#getType
+         */
+        getType: function() {
+            return "any";
+        }
+
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Fields.ObjectField#getTitle
+         */
+        getTitle: function() {
+            return "Address";
+        },
+
+        /**
+         * @see Alpaca.Fields.ObjectField#getDescription
+         */
+        getDescription: function() {
+            return "Standard US Address with Street, City, State and Zip. Also comes with support for Google map.";
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.ObjectField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "validateAddress": {
+                        "title": "Address Validation",
+                        "description": "Enable address validation if true",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "showMapOnLoad": {
+                        "title": "Whether to show the map when first loaded",
+                        "type": "boolean"
+                    }
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.ObjectField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "validateAddress": {
+                        "helper": "Address validation if checked",
+                        "rightLabel": "Enable Google Map for address validation?",
+                        "type": "checkbox"
+                    }
+                }
+            });
+        }
+
+        /* end_builder_helpers */
+    });
+
+    Alpaca.registerFieldClass("address", Alpaca.Fields.AddressField);
+
+})(jQuery);
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Copyright © 2014 Gitana Software, Inc.
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a>
+		on Sat Mar 7th 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>

@@ -1,0 +1,456 @@
+/** Added to outer field elements to hide them **/
+.alpaca-hidden
+{
+    display: none;
+}
+
+/** Added to every field outer element **/
+.alpaca-field
+{
+
+}
+
+/** Added to every container outer field element **/
+.alpaca-container
+{
+
+}
+
+/** Added to the optional label (or legend) accompanying any container **/
+.alpaca-container-label
+{
+
+}
+
+/** Added to every container item field within a container **/
+.alpaca-container-item
+{
+
+}
+
+/** Added to the first container item field within a container **/
+.alpaca-container-item-first
+{
+
+}
+
+/** Added to the last container item field within a container **/
+.alpaca-container-item-last
+{
+
+}
+
+/** Added to a container to indicate it is empty **/
+.alpaca-container-empty
+{
+
+}
+
+/** Added to the dom element holding the toolbar for an array **/
+.alpaca-array-toolbar
+{
+
+}
+
+/** Added to a button in the array toolbar that triggers an action **/
+.alpaca-array-toolbar-action
+{
+
+}
+
+/** Added to the dom element holding the actionbar for each array item **/
+.alpaca-array-actionbar
+{
+
+}
+
+/** Added to a button in an array item actionbar that triggers an action **/
+.alpaca-array-actionbar-action
+{
+
+}
+
+/** Added to every control outer field element **/
+.alpaca-control
+{
+
+}
+
+/** Added to the optional label accompanying any control **/
+.alpaca-control-label
+{
+
+}
+
+/** ******************************************************** **/
+/**                        STATE LABELS                      **/
+/** ******************************************************** **/
+
+/** Added to top-most control when rendering in display mode **/
+.alpaca-display
+{
+
+}
+
+/** Added to top-most control when rendering in create mode **/
+.alpaca-create
+{
+
+}
+
+/** Added to top-most control when rendering in edit mode **/
+.alpaca-edit
+{
+
+}
+
+/** Added to any field that is optional **/
+.alpaca-required
+{
+
+}
+
+/** Added to any field that is required **/
+.alpaca-optional
+{
+
+}
+
+/** Added to any field that is readonly **/
+.alpaca-readonly
+{
+
+}
+
+/** Added to any field that is disabled **/
+.alpaca-disabled
+{
+
+}
+
+/** Added to the container that holds Alpaca field helper text **/
+.alpaca-helper
+{
+
+}
+
+/** Added to form containers that are rendering in horizontal mode **/
+.alpaca-horizontal
+{
+
+}
+
+/** Added to form containers that are rendering in vertical mode **/
+.alpaca-vertical
+{
+
+}
+
+/** Added to the top most container element **/
+.alpaca-top
+{
+
+}
+
+/** Added to fields that are valid **/
+.alpaca-valid
+{
+
+}
+
+/** Added to fields that have run through validation and are invalid **/
+.alpaca-invalid
+{
+
+}
+
+/** Added to fields that have run through validation and are invalid but are currently hiding invalidation errors **/
+.alpaca-invalid-hidden
+{
+
+}
+
+/* Added to additional DOM elements to mark validation messages */
+.alpaca-message
+{
+
+}
+
+/** Added to messages that are for invalidation states that are current hidden (hideInitValidationError) **/
+.alpaca-message-hidden
+{
+
+}
+
+/** Added to buttons that are marked disabled */
+.alpaca-button-disabled
+{
+
+}
+
+
+
+/** ******************************************************** **/
+/**                           ICONS                          **/
+/** ******************************************************** **/
+
+.alpaca-icon-helper
+{
+
+}
+
+.alpaca-icon-required
+{
+
+}
+
+
+/** ******************************************************** **/
+/**                           OTHER                          **/
+/** ******************************************************** **/
+
+.alpaca-autocomplete
+{
+}
+
+
+
+/** Added to indicate hover state **/
+.alpaca-hover
+{
+}
+
+/** General purpose HTML clear **/
+.alpaca-clear
+{
+    clear: both;
+}
+
+.alpaca-float-right
+{
+    float: right;
+}
+
+
+/** ************************************** **/
+/** TWITTER TYPEAHEAD                      **/
+/** ************************************** **/
+
+.twitter-typeahead .tt-dropdown-menu
+{
+    background-color: white;
+    border: 1px #ccc solid;
+    padding: 10px;
+    color: #999;
+    width: 100%;
+    padding-bottom: 0px;
+}
+
+.twitter-typeahead .tt-dropdown-menu P
+{
+    font-size: 1em;
+}
+
+.tt-suggestion.tt-is-under-cursor
+{
+    background-color: #ccc;
+    color: #333;
+}
+
+.tt-dropdown-menu
+{
+    background-color: white;
+    border: 1px solid rgb(204, 204, 204);
+    width: 100%;
+}
+
+
+
+
+/** ************************************** **/
+/** EDITOR FIELD                           **/
+/** ************************************** **/
+
+.alpaca-controlfield-editor
+{
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border: 1px #ccc solid;
+}
+
+.alpaca-controlfield-editor .control-field-editor-el
+{
+    position:absolute;
+    top:0;
+    bottom:0;
+    left: 0;
+    right:0
+}
+
+
+
+/** ************************************** **/
+/** DATEPICKER (jQueryUI)                  **/
+/** ************************************** **/
+
+#ui-datepicker-div
+{
+    display: none;
+    background-color:white;
+    z-index: 9999999 !important;
+    width: 22em !important;
+}
+
+/* Fix for Chrome issue with Button text */
+.ui-button .ui-button-text {
+    white-space: nowrap;
+}
+
+.ui-datepicker
+{
+    z-index: 100;
+}
+
+
+
+
+
+
+
+
+/** ************************************** **/
+/** FILE UPLOAD (jQueryUI)                 **/
+/** ************************************** **/
+
+.alpaca-fileupload-container
+{
+    border: 1px #ccc solid;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.alpaca-fileupload-container .row
+{
+    margin-bottom: 10px;
+}
+
+.alpaca-fileupload-well
+{
+    /*border: 1px #ccc solid;*/
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 100px;
+}
+
+.alpaca-fileupload-container table
+{
+    border: 1px #ccc solid;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.alpaca-fileupload-well p
+{
+    padding-top: 20px;
+    color: #888;
+}
+
+.alpaca-fileupload-well table tbody.files tr td.name
+{
+    word-wrap: break-word;
+}
+
+
+
+
+
+
+
+/** ************************************** **/
+/** ACE EDITOR                             **/
+/** ************************************** **/
+
+.ace_editor
+{
+    border: 1px solid rgb(204, 204, 204);
+}
+
+
+
+/** ************************************** **/
+/** CK EDITOR                             **/
+/** ************************************** **/
+
+.alpaca-field-ckeditor.alpaca-invalid > .cke
+{
+    border-color: #f04124;
+}
+
+.has-error .multiselect
+{
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+
+
+.alpaca-field-tablerow label.control-label
+{
+    display: none;
+}
+
+.alpaca-field-table .actionbar
+{
+    white-space: nowrap;
+    text-align: center;
+}
+
+.alpaca-field-table table tr td .alpaca-field
+{
+    width: 100%;
+}
+
+.alpaca-field-table table tr td .alpaca-field .form-control
+{
+    width: 100%;
+}
+
+.alpaca-field-table .form-group
+{
+    margin-bottom: 0px;
+}
+
+.alpaca-field-table .form-group.alpaca-field-checkbox
+{
+    text-align: center;
+}
+
+.alpaca-field-table .alpaca-control.checkbox
+{
+    /*
+    margin: 0px;
+    padding: 0px;
+    */
+    padding-top: 6px;
+}
+
+/*
+.alpaca-field-table .alpaca-control.checkbox input[type='checkbox']
+{
+    margin-left: -16px;
+    margin-top: -3px;
+}
+*/
+
+.alpaca-field-table table tr td.actionbar .alpaca-array-actionbar
+{
+    padding-bottom: 0px;
+}
+
+.alpaca-field-table .actionbar .alpaca-array-actionbar.btn-group
+{
+    width: auto;
+}
+

@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Alpaca Forms Source: Form.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top ">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Alpaca Forms</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Implementations..html">Namespace for all Alpaca Connector Class Implementations.</a>
+						</li>
+						
+						<li>
+							<a href="Implementations._.html">Namespace for all Alpaca Field Class Implementations.</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Alpaca.Connector.html">Alpaca.Connector</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Field.html">Alpaca.Field</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Fields.CurrencyField.html">Alpaca.Fields.CurrencyField</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Fields.UploadField.html">Alpaca.Fields.UploadField</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Form.html">Alpaca.Form</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.NormalizedView.html">Alpaca.NormalizedView</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.RuntimeView.html">Alpaca.RuntimeView</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="global.html#compile">compile</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doCompile">doCompile</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doExecute">doExecute</a>
+						</li>
+						
+						<li>
+							<a href="global.html#execute">execute</a>
+						</li>
+						
+						<li>
+							<a href="global.html#fileExtension">fileExtension</a>
+						</li>
+						
+						<li>
+							<a href="global.html#findCacheKeys">findCacheKeys</a>
+						</li>
+						
+						<li>
+							<a href="global.html#isCached">isCached</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDependencyChange">onDependencyChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#subscribe">subscribe</a>
+						</li>
+						
+						<li>
+							<a href="global.html#supportedMimetypes">supportedMimetypes</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: Form.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">(function($) {
+
+    var Alpaca = $.alpaca;
+
+    Alpaca.Form = Base.extend(
+    /**
+     * @lends Alpaca.Form.prototype
+     */
+    {
+        /**
+         * @constructs
+         *
+         * @class This class is for managing HTML form control.
+         *
+         * @param {Object} container Field container.
+         * @param {Object} options Field options.
+         * @param {Object|String} view Field view.
+         * @param {Alpaca.Connector} connector Field connector.
+         * @param {Function} errorCallback Error callback.
+         */
+        constructor: function(domEl, options, viewId, connector, errorCallback) {
+
+            // container
+            this.domEl = domEl;
+
+            // parent
+            this.parent = null;
+
+            this.connector = connector;
+            this.errorCallback = errorCallback;
+
+            // options
+            this.options = options;
+
+            if (this.options.attributes)
+            {
+                this.attributes = this.options.attributes;
+            }
+            else
+            {
+                this.attributes = {};
+            }
+
+            if (this.options.buttons)
+            {
+                if (this.options.buttons.submit)
+                {
+                    if (!this.options.buttons.submit.type)
+                    {
+                        this.options.buttons.submit.type = 'submit';
+                    }
+
+                    if (!this.options.buttons.submit.name)
+                    {
+                        this.options.buttons.submit.name = 'submit';
+                    }
+
+                    if (!this.options.buttons.submit.value)
+                    {
+                        this.options.buttons.submit.value = 'Submit';
+                    }
+                }
+
+                if (this.options.buttons.reset)
+                {
+                    if (!this.options.buttons.reset.type)
+                    {
+                        this.options.buttons.reset.type = 'reset';
+                    }
+                    if (!this.options.buttons.reset.name)
+                    {
+                        this.options.buttons.reset.name = 'reset';
+                    }
+                    if (!this.options.buttons.reset.value)
+                    {
+                        this.options.buttons.reset.value = 'Reset';
+                    }
+                }
+
+                // some general correction
+                for (var k in this.options.buttons)
+                {
+                    if (this.options.buttons[k].label)
+                    {
+                        this.options.buttons[k].value = this.options.buttons[k].label;
+                    }
+                    if (this.options.buttons[k].title)
+                    {
+                        this.options.buttons[k].value = this.options.buttons[k].title;
+                    }
+                    if (!this.options.buttons[k].type)
+                    {
+                        this.options.buttons[k].type = "button";
+                    }
+                }
+            }
+
+            if (this.attributes.id)
+            {
+                this.id = this.attributes.id;
+            }
+            else
+            {
+                this.id = Alpaca.generateId();
+                this.attributes.id = this.id;
+            }
+
+            // if we have a submit button specified, and toggleSubmitValidState isn't defined, set to true by default
+            // don't allow the form to submit unless valid
+            if (this.options.buttons &amp;&amp; this.options.buttons.submit &amp;&amp; Alpaca.isUndefined(this.options.toggleSubmitValidState))
+            {
+                this.options.toggleSubmitValidState = true;
+            }
+
+            this.viewType = options.viewType;
+
+            // set a runtime view
+            this.view = new Alpaca.RuntimeView(viewId, this);
+        },
+
+        /**
+         * Renders this form into the container.
+         *
+         * @param {Function} callback
+         */
+        render: function(callback)
+        {
+            var self = this;
+
+            // remove the previous form element if it exists
+            if (this.form)
+            {
+                this.form.remove();
+            }
+
+            // load the appropriate template and render it
+            this.processRender(this.domEl, function() {
+
+                // bind our field dom element into the container
+                self.form.appendTo(self.container);
+
+                // add default class
+                self.form.addClass("alpaca-form");
+
+                // CALLBACK: "form"
+                self.fireCallback("form");
+
+                // execute callback
+                callback(self);
+            });
+        },
+
+        /**
+         * Determines whether the top control is entirely valid.
+         *
+         * @return {*}
+         */
+        isFormValid: function()
+        {
+            // re-compute validation for the full control set
+            this.topControl.validate(true);
+
+            var valid = this.topControl.isValid(true);
+            //this.refreshValidationState(true);
+
+            return valid;
+        },
+
+        isValid: function()
+        {
+            return this.isFormValid();
+        },
+
+        validate: function(children)
+        {
+            return this.topControl.validate(children);
+        },
+
+        enableSubmitButton: function()
+        {
+            $(".alpaca-form-button-submit").attrProp("disabled", false);
+
+            if ($.mobile)
+            {
+                try { $(".alpaca-form-button-submit").button('refresh'); } catch (e) { }
+            }
+        },
+
+        disableSubmitButton: function()
+        {
+            $(".alpaca-form-button-submit").attrProp("disabled", true);
+
+            if ($.mobile)
+            {
+                try { $(".alpaca-form-button-submit").button('refresh'); } catch (e) { }
+            }
+        },
+
+        adjustSubmitButtonState: function()
+        {
+            this.disableSubmitButton();
+
+            if (this.isFormValid())
+            {
+                this.enableSubmitButton();
+            }
+        },
+
+        /**
+         * Responsible for fetching any templates needed so as to render the
+         * current mode for this field.
+         *
+         * Once completed, the onSuccess method is called.
+         *
+         * @param {Object} parentEl Field container.
+         * @param {Function} callback
+         */
+        processRender: function(parentEl, callback)
+        {
+            var self = this;
+
+            // lookup the template we should use to render
+            this.formDescriptor = this.view.getTemplateDescriptor("form");
+            if (!this.formDescriptor)
+            {
+                return Alpaca.throwErrorWithCallback("Could not find template descriptor: form");
+            }
+
+            var renderedDomElement = Alpaca.tmpl(this.formDescriptor, {
+                id: this.getId(),
+                options: this.options,
+                view: this.view
+            });
+            renderedDomElement.appendTo(parentEl);
+
+            this.form = renderedDomElement;
+
+            // find our insertion point
+            // this is marked by the handlebars helper
+            this.formFieldsContainer = $(this.form).find("." + Alpaca.MARKER_CLASS_FORM_ITEMS_FIELD);
+            this.formFieldsContainer.removeClass(Alpaca.MARKER_CLASS_FORM_ITEMS_FIELD);
+
+            if (Alpaca.isEmpty(this.form.attr("id")))
+            {
+                this.form.attr("id", this.getId() + "-form-outer");
+            }
+            if (Alpaca.isEmpty(this.form.attr("data-alpaca-form-id")))
+            {
+                this.form.attr("data-alpaca-form-id", this.getId());
+            }
+
+            // the form field
+            parentEl.find("form").attr(this.attributes);
+
+            // populate the buttons as well
+            this.buttons = {};
+            $(parentEl).find(".alpaca-form-button").each(function() {
+
+                $(this).click(function(e) {
+                    $(this).attr("button-pushed", true);
+                });
+
+                // custom click handler?
+                var key = $(this).attr("data-key");
+                if (key)
+                {
+                    var buttonConfig = self.options.buttons[key];
+                    if (buttonConfig)
+                    {
+                        if (buttonConfig.click)
+                        {
+                            $(this).click(function(form, handler) {
+                                return function(e) {
+                                    e.preventDefault();
+                                    handler.call(form, e);
+                                }
+                            }(self, buttonConfig.click));
+                        }
+                    }
+                }
+            });
+
+            callback();
+        },
+
+        /**
+         * Returns the id of the form.
+         *
+         * @returns {String} Form id
+         */
+        getId: function()
+        {
+            return this.id;
+        },
+
+        /**
+         * Returns form type.
+         *
+         * @returns {String} Form type.
+         */
+        getType: function()
+        {
+            return this.type;
+        },
+
+        /**
+         * Returns this form's parent.
+         *
+         * @returns {Object} Form parent.
+         */
+        getParent: function()
+        {
+            return this.parent;
+        },
+
+        /**
+         * Returns the value of the JSON rendered by this form.
+         *
+         * @returns {Any} Value of the JSON rendered by this form.
+         */
+        getValue: function()
+        {
+            return this.topControl.getValue();
+        },
+
+        /**
+         * Sets the value of the JSON to be rendered by this form.
+         *
+         * @param {Any} value Value to be set.
+         */
+        setValue: function(value)
+        {
+            this.topControl.setValue(value);
+        },
+
+        /**
+         * Initializes events handling (Form Submission) for this form.
+         */
+        initEvents: function()
+        {
+            var _this = this;
+
+            var formTag = $(this.domEl).find("form");
+
+            var v = this.getValue();
+            $(formTag).submit(v, function(e) {
+                return _this.onSubmit(e, _this);
+            });
+
+            // listen for fieldupdates and determine whether the form is valid.
+            // if so, enable the submit button...
+            // otherwise, disable it
+            if (this.options.toggleSubmitValidState)
+            {
+                $(_this.topControl.getFieldEl()).bind("fieldupdate", function() {
+                    _this.adjustSubmitButtonState();
+                });
+
+                this.adjustSubmitButtonState();
+            }
+        },
+
+        getButtonEl: function(buttonId)
+        {
+            return $(this.domEl).find(".alpaca-form-button-" + buttonId);
+        },
+
+        /**
+         * Handles form submit events.
+         *
+         * @param {Object} e Submit event.
+         * @param {Object} form the form
+         */
+        onSubmit: function(e, form)
+        {
+            if (this.submitHandler)
+            {
+                e.stopPropagation();
+
+                var v = this.submitHandler(e, form);
+                if (Alpaca.isUndefined(v)) {
+                    v = false;
+                }
+
+                return v;
+            }
+        },
+
+        /**
+         * Registers a custom submit handler.
+         *
+         * @param {Object} func Submit handler to be registered.
+         */
+        registerSubmitHandler: function (func)
+        {
+            if (Alpaca.isFunction(func))
+            {
+                this.submitHandler = func;
+            }
+        },
+
+        /**
+         * Displays validation information of all fields of this form.
+         *
+         * @param {Boolean} children whether to render validation state for child fields
+         *
+         * @returns {Object} Form validation state.
+         */
+        refreshValidationState: function(children, callback)
+        {
+            this.topControl.refreshValidationState(children, callback);
+        },
+
+        /**
+         * Disables this form.
+         */
+        disable: function()
+        {
+            this.topControl.disable();
+        },
+
+        /**
+         * Enables this form.
+         */
+        enable: function()
+        {
+            this.topControl.enable();
+        },
+
+        /**
+         * Focuses on this form.
+         */
+        focus: function()
+        {
+            this.topControl.focus();
+        },
+
+        /**
+         * Purge any event listeners and remove the form from the DOM.
+         *
+         * @param [Boolean] skipParent when true, the form cleans up without traversing through parent child controls
+         */
+        destroy: function(skipParent)
+        {
+            this.getFormEl().remove();
+
+            // we allow form.destroy() which tells parent control to destroy
+            // if skipParent == true, then we do not call up (invoked from container)
+            if (!skipParent &amp;&amp; this.parent)
+            {
+                this.parent.destroy();
+            }
+        },
+
+        /**
+         * Shows the form.
+         */
+        show: function()
+        {
+            this.getFormEl().css({
+                "display": ""
+            });
+        },
+
+        /**
+         * Hides the form.
+         */
+        hide: function()
+        {
+            this.getFormEl().css({
+                "display": "none"
+            });
+        },
+
+        /**
+         * Clears the form and resets values of its fields.
+         *
+         * @param stopUpdateTrigger If false, triggers the update event of this event.
+         */
+        clear: function(stopUpdateTrigger)
+        {
+            this.topControl.clear(stopUpdateTrigger);
+        },
+
+        /**
+         * Checks if form is empty.
+         *
+         * @returns {Boolean} True if the form is empty, false otherwise.
+         */
+        isEmpty: function()
+        {
+            return this.topControl.isEmpty();
+        },
+
+        /**
+         * Fires a view callback for the current form.
+         *
+         * @param id
+         * @param arg1
+         * @param arg2
+         * @param arg3
+         * @param arg4
+         * @param arg5
+         */
+        fireCallback: function(id, arg1, arg2, arg3, arg4, arg5)
+        {
+            this.view.fireCallback(this, id, arg1, arg2, arg3, arg4, arg5);
+        },
+
+        /**
+         * Retrieves the form element.
+         *
+         * @returns {Object} The rendered DOM element.
+         */
+        getFormEl: function() {
+            return this.form;
+        },
+
+        /**
+         * Performs a regular old submit.
+         */
+        submit: function()
+        {
+            this.form.submit();
+        },
+
+        /**
+         * Fires the submit in the background and hands back the jQuery promise.
+         *
+         * @returns {*}
+         */
+        ajaxSubmit: function()
+        {
+            var self = this;
+
+            return $.ajax({
+                data: this.getValue(),
+                url: self.options.attributes.action,
+                type: self.options.attributes.method,
+                dataType: "json"
+            });
+        }
+
+    });
+
+})(jQuery);
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Copyright © 2014 Gitana Software, Inc.
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a>
+		on Sat Mar 7th 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>

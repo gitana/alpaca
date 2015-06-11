@@ -1,0 +1,30 @@
+/**
+ * Mongolian - Монгол хэлний орчуулга
+ *  @name Mongolian
+ *  @anchor Mongolian
+ *  @author <a href="http://www.Batmandakh.com/">Batmandakh Erdenebileg</a>
+ */
+
+{
+	"sEmptyTable":     "Хүснэгтэд ямар ч мэдээлэл алга",
+        "sInfo":           "Нийт _TOTAL_ бичлэгийн _START_ - _END_ харуулж байна",
+        "sInfoEmpty":      "Нийт 0 бичлэгийн 0 - 0 харуулж байна",
+        "sInfoFiltered":   "(нийт _MAX_ бичлэгээс шүүв)",
+        "sInfoPostFix":    "",
+        "sInfoThousands":  ",",
+        "sLengthMenu":     "Дэлгэцэд _MENU_ бичлэг харуулна",
+        "sLoadingRecords": "Ачаалж байна...",
+        "sProcessing":     "Боловсруулж байна...",
+        "sSearch":         "Хайлт:",
+        "sZeroRecords":    "Тохирох бичлэг олдсонгүй",
+        "oPaginate": {
+        	"sFirst":    "Эхнийх",
+                "sLast":     "Сүүлийнх",
+                "sNext":     "Өмнөх",
+                "sPrevious": "Дараах"
+        },
+        "oAria": {
+                "sSortAscending":  ": цагаан толгойн дарааллаар эрэмбэлэх",
+                "sSortDescending": ": цагаан толгойн эсрэг дарааллаар эрэмбэлэх"
+        }
+}
