@@ -1043,6 +1043,13 @@
             // remove any alpaca messages for this field
             $(this.getFieldEl()).children(".alpaca-message").remove();
 
+            // maxMessage
+            if (messages && messages.length > 0) {
+                if(this.options.maxMessages && Alpaca.isNumber(this.options.maxMessages) && this.options.maxMessages > -1) {
+                    messages = messages.slice(0,this.options.maxMessages);
+                }
+            }
+
             // CALLBACK: "removeMessages"
             self.fireCallback("removeMessages");
 
@@ -1327,6 +1334,7 @@
 
             return true;
         },
+
 
         /**
          * Checks whether the field value is allowed or not.
