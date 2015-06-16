@@ -419,7 +419,15 @@
                 }
                 else
                 {
-                    this.control.val(value);
+                    this.control.options.disallowOnlyEmptySpaces = !!this.control.options.disallowOnlyEmptySpaces;
+                    if (this.control.options.disallowOnlyEmptySpaces && Alpaca.testRegex(Alpaca.regexps.whitespace, value))
+                    {
+                        this.control.val("");
+                    }
+                    else
+                    {
+                        this.control.val(value);
+                    }
                 }
             }
 
@@ -693,7 +701,7 @@
                     },
                     "pattern": {
                         "type": "text"
-                    }
+                    }                    
                 }
             });
         },
