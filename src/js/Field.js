@@ -1332,6 +1332,10 @@
                 return false;
             }
 
+            if (this.options.disallowOnlyEmptySpaces && Alpaca.testRegex(Alpaca.regexps.whitespace, this.getValue())) {
+                return false;
+            }
+
             return true;
         },
 

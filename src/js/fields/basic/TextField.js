@@ -424,14 +424,7 @@
                 }
                 else
                 {
-                    if (this.options.disallowOnlyEmptySpaces && Alpaca.testRegex(Alpaca.regexps.whitespace, value))
-                    {
-                        this.control.val("");
-                    }
-                    else
-                    {
-                        this.control.val(value);
-                    }
+                    this.control.val(value);
                 }
             }
 
