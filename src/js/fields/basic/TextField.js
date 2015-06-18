@@ -86,6 +86,11 @@
             {
                 this.options.disallowEmptySpaces = false;
             }
+
+            if (typeof(this.options.disallowOnlyEmptySpaces) === "undefined")
+            {
+                this.options.disallowEmptySpaces = false;
+            }
         },
 
         /**
@@ -419,8 +424,7 @@
                 }
                 else
                 {
-                    this.control.options.disallowOnlyEmptySpaces = !!this.control.options.disallowOnlyEmptySpaces;
-                    if (this.control.options.disallowOnlyEmptySpaces && Alpaca.testRegex(Alpaca.regexps.whitespace, value))
+                    if (this.options.disallowOnlyEmptySpaces && Alpaca.testRegex(Alpaca.regexps.whitespace, value))
                     {
                         this.control.val("");
                     }
@@ -755,6 +759,12 @@
                     "disallowEmptySpaces": {
                         "title": "Disallow Empty Spaces",
                         "description": "Whether to disallow the entry of empty spaces in the text",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "disallowOnlyEmptySpaces": {
+                        "title": "Disallow Only Empty Spaces",
+                        "description": "Whether to disallow the entry of only empty spaces in the text",
                         "type": "boolean",
                         "default": false
                     }
