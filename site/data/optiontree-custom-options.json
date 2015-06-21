@@ -1,0 +1,71 @@
+{
+    "type": "optiontree",
+    "tree": {
+        "selectors": {
+            "sport": {
+                "schema": {
+                    "type": "string"
+                },
+                "options": {
+                    "type": "select",
+                    "noneLabel": "Pick a Sport..."
+                }
+            },
+            "team": {
+                "schema": {
+                    "type": "string"
+                },
+                "options": {
+                    "type": "select",
+                    "noneLabel": "Pick a Team..."
+                }
+            },
+            "player": {
+                "schema": {
+                    "type": "string"
+                },
+                "options": {
+                    "type": "select",
+                    "noneLabel": "Pick a Player..."
+                }
+            }
+        },
+        "order": ["sport", "team", "player"],
+        "data": [{
+            "value": 23,
+            "attributes": {
+                "sport": "Basketball",
+                "team": "Chicago Bulls",
+                "player": "Michael Jordan"
+            }
+        }, {
+            "value": 33,
+            "attributes": {
+                "sport": "Basketball",
+                "team": "Chicago Bulls",
+                "player": "Scotty Pippen"
+            }
+        }, {
+            "value": 4,
+            "attributes": {
+                "sport": "Football",
+                "team": "Green Bay Packers",
+                "player": "Brett Favre"
+            }
+        }, {
+            "value": 19,
+            "attributes": {
+                "sport": "Baseball",
+                "team": "Milwaukee Brewers",
+                "player": "Robin Yount"
+            }
+        }, {
+            "value": 99,
+            "attributes": {
+                "sport": "Hockey",
+                "player": "Wayne Gretzky"
+            }
+        }],
+        "horizontal": true
+    }
+}

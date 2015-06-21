@@ -125,3 +125,27 @@ $("#field1").alpaca({
 </script>
 {% endraw %}
 
+## Example 2
+This example produces the same form but uses a connector to load the schema and options.  The options JSON is loaded and
+merged with some inline options that provide to override a submit click handler.
+<div id="field2"> </div>
+{% raw %}
+<script type="text/javascript" id="field2-script">
+$("#field2").alpaca({
+    "schemaSource": "../../data/optiontree-custom-schema.json",
+    "optionsSource": "../../data/optiontree-custom-options.json",
+    "options": {
+        "form": {
+            "buttons": {
+                "submit": {
+                    "click": function() {
+                        alert("Value is: " + this.getValue());
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
+
