@@ -53,6 +53,7 @@
                         model.size = formatFileSize(model.size);
                         model.buttons = self.options.buttons;
                         model.view = self.view;
+                        model.fileIndex = i;
 
                         var row = Alpaca.tmpl(self.view.getTemplateDescriptor(templateId), model, self);
 
@@ -70,13 +71,24 @@
 
                         self.handleWrapRow(this, options);
 
-                        // this event gets fired when the AJAX has been handled to delete the remote resource
-                        $(this).find("button.delete").on("destroyed", function() {
+                        var row = $(this);
+
+                        // this event gets fired when fileimpl has cleaned up the DOM element
+                        // we handle Ajax related stuff on our own here
+                        //$(this).find("button.delete").on("destroyed", function() {
+                        $(this).find("button.delete").on("click", function() {
+
+                            var button = $(row).find("button.delete");
+
+                            var fileIndex = $(button).attr("data-file-index");
+                            var file = files[fileIndex];
+
+                            self.onFileDelete.call(self, row, button, file);
+
+                            self.triggerWithPropagation("change");
                             setTimeout(function() {
-                                self.onFileDelete(row);
-                                self.triggerWithPropagation("change");
                                 self.refreshUIState();
-                            }, 400);
+                            }, 200);
                         });
 
                     });
@@ -936,8 +948,26 @@
             }
         },
 
-        onFileDelete: function(domEl)
+        onFileDelete: function(rowEl, buttonEl, file)
         {
+            var self = this;
+
+            var deleteUrl = file.deleteUrl;
+            var deleteMethod = file.deleteType;
+
+            var c = {
+                "method": deleteMethod,
+                "url": deleteUrl,
+                "headers": {}
+            };
+
+            var csrfToken = self.determineCsrfToken();
+            if (csrfToken)
+            {
+                c.headers[Alpaca.CSRF_HEADER_NAME] = csrfToken;
+            }
+
+            $.ajax(c);
         },
 
         onUploadFail: function(data)
@@ -953,6 +983,31 @@
             {
                 self.options.uploadFailHandler.call(self, data);
             }
+        },
+
+        /**
+         * @see Alpaca.Field#disable
+         */
+        disable: function()
+        {
+            // disable select button
+            $(this.field).find(".fileinput-button").prop("disabled", true);
+            $(this.field).find(".fileinput-button").attr("disabled", "disabled");
+
+            // hide the upload well
+            $(this.field).find(".alpaca-fileupload-well").css("visibility", "hidden");
+        },
+
+        /**
+         * @see Alpaca.Field#enable
+         */
+        enable: function()
+        {
+            $(this.field).find(".fileinput-button").prop("disabled", false);
+            $(this.field).find(".fileinput-button").removeAttr("disabled");
+
+            // show the upload well
+            $(this.field).find(".alpaca-fileupload-well").css("visibility", "visible");
         },
 
         /* builder_helpers */

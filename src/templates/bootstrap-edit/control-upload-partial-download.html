@@ -31,11 +31,11 @@
             {{#if buttons}}
                 {{#each buttons}}
                     {{#if isDelete}}
-                        <button class="delete btn btn-danger" data-type="{{file.deleteType}}" data-file-id="{{file.id}}" data-url="{{file.deleteUrl}}" {{#if file.deleteWithCredentials}}data-xhr-fields="{\"withCredentials\":true}" {{/if}}>
+                        <button class="delete btn btn-danger" data-file-index="{{../../../fileIndex}}" data-button-key="{{../key}}">
                             <i class="glyphicon glyphicon-trash glyphicon-white"></i>
                         </button>
                     {{else}}
-                        <button class="{{key}} btn {{buttonClass}}" data-file-id="{{../../file.id}}">
+                        <button class="{{key}} btn {{buttonClass}}" data-file-index="{{../../../fileIndex}}" data-button-key="{{../key}}">
                             {{#if iconClass}}
                                 <i class="{{iconClass}}"></i>
                             {{/if}}
