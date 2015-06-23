@@ -392,3 +392,49 @@ $("#field14").alpaca({
 </script>
 {% endraw %}
 
+## Example 15
+A simple example of using Alpaca with nothing more than a string of text.  Alpaca looks at your data and determines that it
+is a string.  It then looks for a suitable candidate for representing a string and it decides to use the ```text``` field.
+
+<div id="field15"> </div>
+{% raw %}
+<script type="text/javascript" id="field15-script">
+$("#field15").alpaca({
+    "schema": {
+        "type": "object",
+        "properties": {
+            "username": {
+                "type": "string"
+            },
+            "password": {
+                "type": "string"
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "username": {
+                "type": "text",
+                "label": "Username",
+                "buttons": {
+                    "check": {
+                        "value": "Check Availability",
+                        "click": function() {
+
+                            // do something here...!
+                            alert("This is available!");
+                        }
+                    }
+                }
+            },
+            "password": {
+                "type": "password",
+                "label": "Password"
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
+
+
