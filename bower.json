@@ -46,7 +46,7 @@
         "ckeditor": "4.4.1",
         "datatables": "1.10.5",
         "datatables-plugins": "https://github.com/DataTables/Plugins.git",
-        "eonasdan-bootstrap-datetimepicker": "4.0.0",
+        "eonasdan-bootstrap-datetimepicker": "4.14.30",
         "google-code-prettify": "1.0.3",
         "handlebars": "3.0.3",
         "handsontable": "0.11.4",
@@ -60,7 +60,7 @@
         "jqueryui-timepicker-addon": "1.5.0",
         "js-beautify": "1.5.4",
         "json3": "3.3.2",
-        "moment": "2.8.3",
+        "moment": "2.9.0",
         "respond": "1.4.2",
         "tinymce": "4.1.7",
         "typeahead.js": "0.10.5"

@@ -44,6 +44,9 @@ formatting options.  In this example, we switch to using a simplified European d
 Here we also skip the <code>schema.format</code> method and specifically spell out that we'd like a <code>date</code>
 field control.  The format is passed to the underlying DateTimePicker control directly via the <code>picker</code>
 option.
+
+In addition, the <code>manualEntry</code> option is set to false to prevent manual entry of date values into the
+text field.  The picker is therefore required to enter the date.
 <div id="field2"> </div>
 {% raw %}
 <script type="text/javascript" id="field2-script">
@@ -53,7 +56,8 @@ $("#field2").alpaca({
         "type": "date",
         "picker": {
             "format": "DD/MM/YY"
-        }
+        },
+        "manualEntry": true
     }
 });
 </script>
