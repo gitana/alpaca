@@ -86,6 +86,11 @@
             {
                 this.options.disallowEmptySpaces = false;
             }
+
+            if (typeof(this.options.disallowOnlyEmptySpaces) === "undefined")
+            {
+                this.options.disallowEmptySpaces = false;
+            }
         },
 
         /**
@@ -693,7 +698,7 @@
                     },
                     "pattern": {
                         "type": "text"
-                    }
+                    }                    
                 }
             });
         },
@@ -747,6 +752,12 @@
                     "disallowEmptySpaces": {
                         "title": "Disallow Empty Spaces",
                         "description": "Whether to disallow the entry of empty spaces in the text",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "disallowOnlyEmptySpaces": {
+                        "title": "Disallow Only Empty Spaces",
+                        "description": "Whether to disallow the entry of only empty spaces in the text",
                         "type": "boolean",
                         "default": false
                     }

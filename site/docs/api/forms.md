@@ -328,3 +328,66 @@ $("#field5").alpaca({
 });
 </script>
 {% endraw %}
+
+
+## Form with Auto Focus on Invalid Field
+
+Here is a form that takes focus back to an invalid field when submitted.  Click on submit to have the form auto-focus
+on the invalid <code>age</code> field.
+
+<div id="field6"> </div>
+{% raw %}
+<script type="text/javascript" id="field6-script">
+$("#field6").alpaca({
+    "data": {
+        "firstName": "Tre",
+        "lastName": "Styles",
+        "age": true
+    },
+    "schema": {
+        "title": "Your Information",
+        "type": "object",
+        "properties": {
+            "firstName": {
+                "title": "First Name",
+                "type": "string"
+            },
+            "lastName": {
+                "title": "Last Name",
+                "type": "string"
+            },
+            "age": {
+                "title": "Age",
+                "type": "integer",
+                "minValue": 0,
+                "maxValue": 100
+            }
+        }
+    },
+    "options": {
+        "form": {
+            "attributes":{
+                "action": "http://httpbin.org/post",
+                "method": "post"
+            },
+            "buttons": {
+                "submit": {
+                    "click": function() {
+                        this.refreshValidationState(true);
+                        if (!this.isValid(true))
+                        {
+                            this.focus();
+                            return;
+                        }
+
+                        this.ajaxSubmit();
+                    }
+                }
+            }
+        },
+        "hideInitValidationError": true,
+        "focus": "firstName"
+    }
+});
+</script>
+{% endraw %}

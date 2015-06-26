@@ -58,12 +58,25 @@
                 self.options.picker.format = self.options.dateFormat;
             }
 
+            if (!self.options.picker.locale) {
+                self.options.picker.locale = "en_US";
+            }
+
+            if (!self.options.picker.dayViewHeaderFormat) {
+                self.options.picker.dayViewHeaderFormat = "MMMM YYYY";
+            }
+
             // extra formats
             if (!self.options.picker.extraFormats) {
                 var extraFormats = self.getDefaultExtraFormats();
                 if (extraFormats) {
                     self.options.picker.extraFormats = extraFormats;
                 }
+            }
+
+            if (typeof(self.options.manualEntry) === "undefined")
+            {
+                self.options.manualEntry = true;
             }
         },
 
@@ -90,6 +103,13 @@
                         if (self.picker)
                         {
                             self.options.dateFormat = self.picker.format();
+                        }
+
+                        if (!self.options.manualEntry)
+                        {
+                            self.on("keypress", function (e) {
+                                return false;
+                            });
                         }
                     }
                 }

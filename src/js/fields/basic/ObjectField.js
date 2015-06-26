@@ -315,17 +315,7 @@
 
                             self.createItem(propertyId, schema, options, itemData, null, function (addedItemControl) {
 
-                                if (options.hasOwnProperty("order")) {
-                                    order = parseInt(options.order, 10);
-                                    if (order === order) {
-                                        // order is not NaN
-                                        items.splice(order, 0, addedItemControl);
-                                    } else {
-                                        items.push(addedItemControl);
-                                    }
-                                } else {
-                                    items.push(addedItemControl);
-                                }
+                                items.push(addedItemControl);
 
                                 // remove from extraDataProperties helper
                                 delete extraDataProperties[propertyId];
@@ -346,6 +336,22 @@
             }
 
             Alpaca.series(propertyFunctions, function(err) {
+
+                // sort by order
+                items.sort(function(a, b) {
+
+                    var orderA = a.options.order;
+                    if (!orderA) {
+                        orderA = 0;
+                    }
+                    var orderB = b.options.order;
+                    if (!orderB) {
+                        orderB = 0;
+                    }
+
+                    return (orderA - orderB);
+                });
+
                 cf();
             });
         },

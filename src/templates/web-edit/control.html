@@ -8,6 +8,14 @@
 
         {{#control}}{{/control}}
 
+        {{#if options.buttons}}
+        <div class="alpaca-control-buttons-container">
+            {{#each options.buttons}}
+            <button data-key="{{@key}}" type="{{type}}" class="alpaca-control-button alpaca-control-button-{{@key}} {{styles}}" {{#each value}}{{@key}}="{{value}}" {{/each}}>{{{value}}}</button>
+            {{/each}}
+        </div>
+        {{/if}}
+
         {{#if options.helper}}
         <p class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
             <i class="info-sign"></i>
