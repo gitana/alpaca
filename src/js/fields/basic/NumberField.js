@@ -19,6 +19,12 @@
             // @see http://stackoverflow.com/questions/16420828/jquery-val-refuses-to-return-non-numeric-input-from-a-number-field-under-chrome
 
             this.base();
+
+            if (typeof(this.options.numericEntry) === "undefined")
+            {
+                this.options.numericEntry = false;
+            }
+
         },
 
         /**
@@ -26,6 +32,35 @@
          */
         getFieldType: function() {
             return "number";
+        },
+
+        /**
+         * @see Alpaca.ControlField#postRender
+         */
+        postRender: function(callback) {
+
+            var self = this;
+
+            this.base(function() {
+
+                if (self.control)
+                {
+                    self.on("keypress", function(e) {
+
+                        var key = e.charCode || e.keyCode || 0;
+
+                        var valid = true;
+
+                        if (self.options.numericEntry) {
+                            valid = valid && (key >= 48 && key <= 57);
+                        }
+
+                        return valid;
+                    });
+                }
+
+                callback();
+            });
         },
 
         /**
@@ -293,6 +328,23 @@
                         "rightLabel": "Exclusive Maximum ?",
                         "helper": "Field value must be less than but not equal to this number if checked",
                         "type": "checkbox"
+                    }
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.NumberField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "numericEntry": {
+                        "title": "Numeric Entry",
+                        "description": "Whether to constrain data entry key presses to numeric values (0-9)",
+                        "type": "boolean",
+                        "default": false
                     }
                 }
             });

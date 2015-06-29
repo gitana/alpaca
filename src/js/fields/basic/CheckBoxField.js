@@ -248,6 +248,7 @@
                 }
 
                 // walk through values and assign into appropriate inputs
+                Alpaca.checked($(self.getFieldEl()).find("input[data-checkbox-value]"), false);
                 for (var j = 0; j < values.length; j++)
                 {
                     var input = $(self.getFieldEl()).find("input[data-checkbox-value=\"" + values[j] + "\"]");
