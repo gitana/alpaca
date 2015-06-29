@@ -76,7 +76,7 @@
 
             if (typeof(self.options.manualEntry) === "undefined")
             {
-                self.options.manualEntry = true;
+                self.options.manualEntry = false;
             }
         },
 
@@ -105,18 +105,30 @@
                             self.options.dateFormat = self.picker.format();
                         }
 
-                        if (!self.options.manualEntry)
-                        {
-                            self.on("keypress", function (e) {
+                        // optionally block manual entry
+                        self.on("keypress", function (e) {
+                            if (!self.options.manualEntry)
+                            {
                                 return false;
-                            });
-                        }
+                            }
+                        });
+
                     }
                 }
 
                 callback();
 
             });
+        },
+
+        /**
+         * Allows manual entry mode to be toggled on and off.
+         *
+         * @param manualEntry
+         */
+        setManualEntry: function(manualEntry)
+        {
+            this.options.manualEntry = manualEntry;
         },
 
         /**
