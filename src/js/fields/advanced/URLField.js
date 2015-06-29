@@ -42,7 +42,13 @@
             }
 
             return baseStatus;
+        },
+
+        getValue: function() {
+            return this.base();
         }
+
+
 
         /* builder_helpers */
         ,

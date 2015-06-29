@@ -84,6 +84,20 @@
             }
             */
 
+            // legacy support: options.helper -> convert to options.helpers
+            if (!this.options.helpers) {
+                this.options.helpers = [];
+            }
+            if (this.options.helper) {
+                if (!Alpaca.isArray(this.options.helper)) {
+                    this.options.helpers.push(this.options.helper);
+                } else {
+                    for (var i = 0; i < this.options.helper.length; i++) {
+                        this.options.helpers.push(this.options.helper[i]);
+                    }
+                }
+            }
+
             if (Alpaca.isEmpty(this.options.readonly) && !Alpaca.isEmpty(this.schema.readonly)) {
                 this.options.readonly = this.schema.readonly;
             }
@@ -658,6 +672,12 @@
             // all fields get field id data attribute
             this.field.attr("data-alpaca-field-id", this.getId());
 
+            // all fields get their path
+            this.field.attr("data-alpaca-field-path", this.getPath());
+
+            // all fields get their name
+            this.field.attr("data-alpaca-field-name", this.getName());
+
             // try to avoid adding unnecessary injections for display view.
             if (this.view.type !== 'view') {
 
@@ -946,10 +966,6 @@
             return this.id;
         },
 
-        /*        getType: function() {
-         return this.type;
-         },*/
-
         /**
          * Returns this field's parent.
          *
@@ -957,6 +973,24 @@
          */
         getParent: function() {
             return this.parent;
+        },
+
+        /**
+         * Retrieves the path to this element in the graph of JSON data.
+         *
+         * @returns {string} the path to this element
+         */
+        getPath: function() {
+            return this.path;
+        },
+
+        /**
+         * Retrieves the name of this element at the current level of JSON data.
+         *
+         * @returns {*}
+         */
+        getName: function() {
+            return this.name;
         },
 
         /**
@@ -2119,6 +2153,14 @@
                         "description": "Field help message.",
                         "type": "string"
                     },
+                    "helpers": {
+                        "title": "Helpers",
+                        "description": "An array of field help messages.  Each message will be displayed on it's own line.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                     "fieldClass": {
                         "title": "CSS class",
                         "description": "Specifies one or more CSS classes that should be applied to the dom element for this field once it is rendered.  Supports a single value, comma-delimited values, space-delimited values or values passed in as an array.",
@@ -2176,12 +2218,12 @@
                                     "enum":["post","get"],
                                     "type": "string"
                                 },
-				"rubyrails": {
-				    "title": "Ruby On Rails",
-				    "description": "Ruby on Rails Name Standard",
-				    "enum": ["true", "false"],
-				    "type": "string"
-				},
+                                "rubyrails": {
+                                    "title": "Ruby On Rails",
+                                    "description": "Ruby on Rails Name Standard",
+                                    "enum": ["true", "false"],
+                                    "type": "string"
+                                },
                                 "name": {
                                     "title": "Name",
                                     "description": "Form name",
@@ -2265,6 +2307,12 @@
                     },
                     "helper": {
                         "type": "textarea"
+                    },
+                    "helpers": {
+                        "type": "array",
+                        "items": {
+                            "type": "textarea"
+                        }
                     },
                     "fieldClass": {
                         "type": "text"

@@ -293,7 +293,10 @@
                 var itemData = null;
                 if (self.data)
                 {
-                    itemData = self.data[propertyId];
+                    if (self.data.hasOwnProperty(propertyId))
+                    {
+                        itemData = self.data[propertyId];
+                    }
                 }
 
                 var pf = (function(propertyId, itemData, extraDataProperties)

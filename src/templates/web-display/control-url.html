@@ -1,11 +1,13 @@
 <script type="text/x-handlebars-template">
 
-    <a href="{{data}}" {{#if options.anchorTarget}}target="{{options.anchorTarget}}"{{/if}} title="{{#if options.anchorTitle}}{{options.anchorTitle}}{{else}}{{data}}{{/if}}">
+    <div class="alpaca-control-url-anchor-wrapper">
+        <a href="{{data}}" {{#if options.anchorTarget}}target="{{options.anchorTarget}}"{{/if}} title="{{#if options.anchorTitle}}{{options.anchorTitle}}{{else}}{{data}}{{/if}}">
         {{#if options.anchorTitle}}
             {{options.anchorTitle}}
         {{else}}
             {{data}}
         {{/if}}
-    </a>
+        </a>
+    </div>
 
 </script>

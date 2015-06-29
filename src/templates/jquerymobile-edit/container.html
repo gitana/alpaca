@@ -9,11 +9,13 @@
 
             {{#container}}{{/container}}
 
-            {{#if options.helper}}
+            {{#if options.helpers}}
+            {{#each options.helpers}}
             <input type="image" data-icon="icon-info">
             <small class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-                {{{options.helper}}}
+                {{{.}}}
             </small>
+            {{/each}}
             {{/if}}
 
         </div>

@@ -8,11 +8,13 @@
 
         {{#control}}{{/control}}
 
-        {{#if options.helper}}
+        {{#if options.helpers}}
+        {{#each options.helpers}}
         <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
             <i class="glyphicon glyphicon-info-sign"></i>
-            {{{options.helper}}}
+            {{{.}}}
         </p>
+        {{/each}}
         {{/if}}
 
     </div>

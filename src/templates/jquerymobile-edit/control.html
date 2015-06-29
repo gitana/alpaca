@@ -8,10 +8,12 @@
 
         {{#control}}{{/control}}
 
-        {{#if options.helper}}
+        {{#if options.helpers}}
+        {{#each options.helpers}}
         <small class="alpaca-helper {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-            {{{options.helper}}}
+            {{{.}}}
         </small>
+        {{/each}}
         {{/if}}
 
     </div>

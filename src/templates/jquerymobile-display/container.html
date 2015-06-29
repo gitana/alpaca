@@ -6,8 +6,12 @@
         <legend for="{{id}}" class="{{#if options.labelClass}}{{options.labelClass}}{{/if}}">{{{options.label}}}</legend>
         {{/if}}
 
-        {{#if options.helper}}
-        <h3 class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">{{{options.helper}}}</h3>
+        {{#if options.helpers}}
+        {{#each options.helpers}}
+        <h3 class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+            {{{.}}}
+        </h3>
+        {{/each}}
         {{/if}}
 
         <div data-role="controlgroup" class="alpaca-fieldset-items-container">
