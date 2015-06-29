@@ -588,6 +588,11 @@
         {
             var self = this;
 
+            // ignore arrow keys
+            if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40 ) {
+                return;
+            }
+
             if (e.keyCode === 8) // backspace
             {
                 if (!Alpaca.isEmpty(self.schema.minLength) && (self.options.constrainLengths || self.options.constrainMinLength))
@@ -701,7 +706,7 @@
                     },
                     "pattern": {
                         "type": "text"
-                    }                    
+                    }
                 }
             });
         },
