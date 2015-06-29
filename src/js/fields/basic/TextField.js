@@ -588,8 +588,8 @@
         {
             var self = this;
 
-            // ignore arrow keys
-            if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40 ) {
+            // ignore tab and arrow keys
+            if (e.keyCode === 9 || e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40 ) {
                 return;
             }
 
