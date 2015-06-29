@@ -159,6 +159,19 @@
             });
         },
 
+        afterInitialize: function()
+        {
+            var self = this;
+
+            if (self.options.toggleSubmitValidState) {
+
+                // adjust submit button state
+                self.adjustSubmitButtonState();
+
+            }
+
+        },
+
         /**
          * Determines whether the top control is entirely valid.
          *
@@ -365,7 +378,14 @@
                     _this.adjustSubmitButtonState();
                 });
 
-                this.adjustSubmitButtonState();
+                $(_this.topControl.getFieldEl()).bind("fieldkeyup", function() {
+                    _this.adjustSubmitButtonState();
+                });
+
+                $(_this.topControl.getFieldEl()).bind("fieldblur", function() {
+                    _this.adjustSubmitButtonState();
+                });
+
             }
         },
 
@@ -453,7 +473,10 @@
         focus: function(onFocusCallback)
         {
             this.topControl.focus(function(controlWithFocus) {
-                onFocusCallback(controlWithFocus);
+                if (onFocusCallback)
+                {
+                    onFocusCallback(controlWithFocus);
+                }
             });
         },
 

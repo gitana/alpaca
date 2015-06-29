@@ -140,7 +140,7 @@
             var self = this;
 
             // autocomplete
-            if (self.options.autocomplete)
+            if (typeof(self.options.autocomplete) !== "undefined")
             {
                 $(self.field).addClass("alpaca-autocomplete");
                 $(self.control).attr("autocomplete", (self.options.autocomplete ? "on" : "off"));
@@ -632,6 +632,9 @@
 
             // if applicable, update the max length indicator
             self.updateMaxLengthIndicator();
+
+            // trigger "fieldkeyup"
+            $(this.field).trigger("fieldkeyup");
         }
 
 

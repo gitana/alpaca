@@ -821,6 +821,12 @@
             // finished initializing
             this.initializing = false;
 
+            // allow for form to do some late updates
+            if (self.form)
+            {
+                self.form.afterInitialize();
+            }
+
             var defaultHideInitValidationError = (this.view.type === 'create') && !this.refreshed;
             this.hideInitValidationError = Alpaca.isValEmpty(this.options.hideInitValidationError) ? defaultHideInitValidationError : this.options.hideInitValidationError;
 
@@ -1673,6 +1679,9 @@
             {
                 this.refreshValidationState();
             }
+
+            // trigger "fieldblur"
+            $(this.field).trigger("fieldblur");
         },
 
         /**
