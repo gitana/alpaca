@@ -346,3 +346,116 @@ $("#field6").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 7
+
+Mix table with interesting control types for inline editing.  Here, we maintain a <code>rank</code> property that
+auto-updates as fields move around.  The "Show JSON" button in the form lets us see the resulting JSON for the table.
+<div id="field7"> </div>
+{% raw %}
+<script type="text/javascript" id="field7-script">
+$("#field7").alpaca({
+    "data": [{
+        "rank": 1,
+        "name": "Michael Jordan",
+        "sport": "basketball",
+        "active": false,
+        "number": 23
+    }, {
+        "rank": 2,
+        "name": "Pele",
+        "sport": "soccer",
+        "active": false,
+        "number": 10
+    }, {
+        "rank": 3,
+        "name": "Wayne Gretzky",
+        "sport": "hockey",
+        "valid": false,
+        "number": 99
+    }],
+    "schema": {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "rank": {
+                    "type": "number",
+                    "title": "Rank",
+                    "readonly": true
+                },
+                "name": {
+                    "type": "string",
+                    "title": "Name"
+                },
+                "sport": {
+                    "type": "string",
+                    "title": "Sport",
+                    "enum": [
+                        "basketball",
+                        "baseball",
+                        "hockey",
+                        "soccer",
+                        "football"
+                    ]
+                },
+                "active": {
+                    "type": "boolean",
+                    "title": "Active",
+                    "enum": [true, false]
+                },
+                "number": {
+                    "type": "number",
+                    "title": "Number"
+                }
+            }
+        }
+    },
+    "options": {
+        "type": "table",
+        "items": {
+            "fields": {
+                "name": {
+                    "type": "personalname"
+                },
+                "sport": {
+                    "type": "select",
+                    "optionLabels": [
+                        "Basketball",
+                        "Baseball",
+                        "Hockey",
+                        "Soccer",
+                        "Football"
+                    ]
+                },
+                "active": {
+                    "type": "select",
+                    "optionLabels": ["Yep", "Nope"]
+                },
+                "number": {
+                    "type": "integer"
+                }
+            }
+        },
+        "toolbarSticky": true,
+        "form": {
+            "buttons": {
+                "submit": {
+                    "title": "Show JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        }
+    },
+    "postRender": function(control) {
+        control.on("move", function() {
+            for (var i = 0; i < control.children.length; i++) {
+                control.children[i].childrenByPropertyId["rank"].setValue(i + 1);
+            }
+        });
+    }
+});
+</script>
+{% endraw %}

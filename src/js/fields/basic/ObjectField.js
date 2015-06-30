@@ -1823,6 +1823,9 @@
                 // trigger update
                 self.triggerUpdate();
 
+                // dispatch event: move
+                self.trigger("move");
+
                 if (callback)
                 {
                     callback();
