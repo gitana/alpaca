@@ -437,6 +437,9 @@ $("#field7").alpaca({
                 }
             }
         },
+        "datatables": {
+            "searching": true
+        },
         "toolbarSticky": true,
         "form": {
             "buttons": {

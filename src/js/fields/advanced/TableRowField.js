@@ -26,11 +26,11 @@
 
             this.base(model, function() {
 
-                // apply "data-search" to the TD elements
+                // apply data-type="alpaca" to each TD
                 var tds = $(this.container).find("td");
                 for (var i = 0; i < self.children.length; i++)
                 {
-                    $(tds[i]).attr("data-filter", "abc");//self.children[i].getValue());
+                    $(tds[i]).attr("data-type", "alpaca");
                 }
 
                 callback();

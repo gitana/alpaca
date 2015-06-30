@@ -26,6 +26,12 @@
                 self.options.animate = false;
             }
 
+            // assume toolbar sticky if not otherwise specified
+            if (typeof(this.options.toolbarSticky) === "undefined")
+            {
+                this.options.toolbarSticky = true;
+            }
+
             this.base();
 
             if (!this.options.items.type)
@@ -65,6 +71,74 @@
                     this.options.showActionsColumn = false;
                 }
             }
+
+            // data tables columns
+            this.options.datatables.columns = [];
+
+            // initialize data tables to detect alpaca field types and perform alpaca field sorting and filtering
+            if ($.fn.dataTableExt && !$.fn.DataTable.ext.type.search["alpaca"])
+            {
+                $.fn.DataTable.ext.order["alpaca"] = function (settings, col) {
+
+                    return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
+                        var alpacaId = $(td).children().attr("data-alpaca-field-id");
+                        return Alpaca.fieldInstances[alpacaId].getValue();
+                    } );
+
+                };
+
+                // this is a kind of hacky function at the moment, trying to do filtering that takes into account
+                // alpaca field values
+                //
+                // according to data tables authors, need to wait for next release for refactoring of filtering
+                // logic in data tables to really take control of this and do it right
+                // this "sort of" works for now
+                //
+                $.fn.dataTableExt.afnFiltering.push(function(settings, fields, fieldIndex, data, dataIndex) {
+
+                    var text = $(settings.nTableWrapper).find(".dataTables_filter input[type='search']").val();
+
+                    if (!text) {
+                        return true;
+                    }
+
+                    text = "" + text;
+
+                    text = $.trim(text);
+                    text = text.toLowerCase();
+
+                    var match = false;
+
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        var dataValue = data[i];
+                        if (dataValue)
+                        {
+                            var z = dataValue.indexOf("data-alpaca-field-id=");
+                            if (z > -1)
+                            {
+                                var alpacaId = $(dataValue).attr("data-alpaca-field-id");
+
+                                var alpacaValue = Alpaca.fieldInstances[alpacaId].getValue();
+                                if (alpacaValue)
+                                {
+                                    alpacaValue = "" + alpacaValue;
+                                    alpacaValue = alpacaValue.toLowerCase();
+
+                                    if (alpacaValue.indexOf(text) > -1)
+                                    {
+                                        match = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    return match;
+                });
+
+            }
         },
 
         /**
@@ -101,6 +175,24 @@
                 {
                     if ($.fn.DataTable)
                     {
+                        // mix in fields from the items
+                        for (var k in self.schema.items.properties)
+                        {
+                            self.options.datatables.columns.push({
+                                "orderable": true,
+                                "orderDataType": "alpaca"
+                            });
+                        }
+
+                        // if we have an actions column enabled, then turn off sorting for the actions column (assumed to be last)
+                        if (self.options.showActionsColumn)
+                        {
+                            self.options.datatables.columns.push({
+                                "orderable": false,
+                                "name": "actions"
+                            });
+                        }
+
                         $(this.container).find("table").DataTable(self.options.datatables);
                     }
                 }

@@ -1003,6 +1003,22 @@
         },
 
         /**
+         * Walks up the parent chain and returns the top most control.  If no parents, then current control is top control.
+         *
+         * @returns {Control} top most control
+         */
+        top: function()
+        {
+            var top = this;
+
+            while (top.parent) {
+                top = top.parent;
+            }
+
+            return top;
+        },
+
+        /**
          * Returns the value of this field.
          *
          * @returns {Any} value Field value.
@@ -1757,27 +1773,44 @@
          * @returns {Alpaca.Field} Field control mapped to the path.
          */
         getControlByPath: function(path) {
-            var parentControl = this;
-            if (path) {
+
+            var result = null;
+
+            if (path)
+            {
+                // strip off the leading "/" if it is there
+                if (path.indexOf("/") === 0) {
+                    path = path.substring(1);
+                }
+
+                // strip off the trailing "/" if it is there
+                if (Alpaca.endsWith(path, "/")) {
+                    path = path.substring(0, path.length - 1);
+                }
+
+                var current = this;
+
                 var pathArray = path.split('/');
-                for (var i = 0; i < pathArray.length; i++) {
-                    if (!Alpaca.isValEmpty(pathArray[i])) {
-                        if (parentControl && parentControl.childrenByPropertyId) {
-                            //check to see if we need to add the properties field
-                            if (parentControl.childrenByPropertyId[pathArray[i]]) {
-                                parentControl = parentControl.childrenByPropertyId[pathArray[i]];
-                            } else {
-                                return null;
-                            }
-                        } else {
-                            return null;
-                        }
-                    } else {
-                        return null;
+                for (var i = 0; i < pathArray.length; i++)
+                {
+                    var pathElement = pathArray[i];
+
+                    if (pathElement.indexOf("[") === 0)
+                    {
+                        // index into an array
+                        var index = parseInt(pathElement.substring(1, pathElement.length - 1), 10);
+                        current = current.children[index];
+                    }
+                    else
+                    {
+                        current = current.childrenByPropertyId[pathElement];
                     }
                 }
-                return parentControl;
+
+                result = current;
             }
+
+            return result;
         },
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
