@@ -89,7 +89,7 @@
 
             if (typeof(this.options.disallowOnlyEmptySpaces) === "undefined")
             {
-                this.options.disallowEmptySpaces = false;
+                this.options.disallowOnlyEmptySpaces = false;
             }
         },
 
