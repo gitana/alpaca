@@ -57,7 +57,7 @@ var f = function(viewId)
                         "Borussia-Dortmund",
                         "Chelsea",
                         "Eintracht-Frankfurt",
-						"FC-Porto",
+                        "FC-Porto",
                         "FC-Twente",
                         "Juventus",
                         "Malaga",
