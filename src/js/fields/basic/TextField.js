@@ -191,7 +191,13 @@
                 {
                     var bloodHoundConfig = {
                         datumTokenizer: function(d) {
-                            return Bloodhound.tokenizers.whitespace(d.value);
+                            var tokens = "";
+                            for (var k in d) {
+                                if (d.hasOwnProperty(k) || d[k]) {
+                                    tokens += " " + d[k];
+                                }
+                            }
+                            return Bloodhound.tokenizers.whitespace(tokens);
                         },
                         queryTokenizer: Bloodhound.tokenizers.whitespace
                     };
