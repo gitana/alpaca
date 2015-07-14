@@ -15,6 +15,7 @@ Note that we use four spaces per indentation stop.
 
 For more thoughts on code style, see https://github.com/rwldrn/idiomatic.js/.
 
+
 # Best Practices
 
 As a best practice, leave space in your code so as to make things more human-readable.  The goal with any code
@@ -28,6 +29,7 @@ When fixing bugs and adding features, when appropriate please also:
 - Updated related doc comments (we use JSDoc 3)
 - Add/update any related unit tests (if applicable)
 - Add/update any documentation pages
+
 
 # Getting Started
 

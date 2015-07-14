@@ -79,6 +79,13 @@ git push origin $VERSION
 
 
 
+#
+# STEP 5: NPM
+#
+
+npm publish
+
+
 
 #
 # TEARDOWN
