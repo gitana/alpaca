@@ -51,7 +51,7 @@
             <div class="pull-left">
                 {{#each buttons}}
                     {{#compare align "left"}}
-                        <button type="{{type}}" class="{{../../view.styles.button}}" data-alpaca-wizard-button-key="{{@key}}">{{{title}}}</button>
+                        <button type="{{type}}" {{#if id}}id="{{id}}"{{/if}} class="{{../../view.styles.button}}" data-alpaca-wizard-button-key="{{@key}}" {{#each attributes}} {{@key}}="{{this}}"{{/each}}>{{{title}}}</button>
                     {{/compare}}
                 {{/each}}
             </div>
@@ -59,7 +59,7 @@
             <div class="pull-right">
                 {{#each buttons}}
                     {{#compare align "right"}}
-                        <button type="{{type}}" class="{{../../view.styles.button}}" data-alpaca-wizard-button-key="{{@key}}">{{{title}}}</button>
+                        <button type="{{type}}" {{#if id}}id="{{id}}"{{/if}} class="{{../../view.styles.button}}" data-alpaca-wizard-button-key="{{@key}}" {{#each attributes}} {{@key}}="{{this}}"{{/each}}>{{{title}}}</button>
                     {{/compare}}
                 {{/each}}
             </div>

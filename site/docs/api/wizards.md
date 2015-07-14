@@ -236,6 +236,9 @@ You can also customize buttons and set up custom validation functions for each t
 handler for the submit button.  If no click handler is supplied and the wizard is inside of a form, the form will
 be submitted.
 
+The submit button here also has an <code>id</code> setting on it which sets the DOM ID for the button element.  It
+uses the <code>attributes</code> setting to specify custom DOM attributes - in this case, <code>data-test='123'</code>.
+
 Custom buttons are also possible as shown with the "start over" button below.  Use the <code>align</code> property
 to indicate placement of the button.
 
@@ -344,6 +347,10 @@ $("#field5").alpaca({
                     },
                     "click": function(e) {
                         alert(JSON.stringify(this.getValue(), null, "  "));
+                    },
+                    "id": "mySubmit",
+                    "attributes": {
+                        "data-test": "123"
                     }
                 }
             }

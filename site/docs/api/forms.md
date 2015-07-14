@@ -263,6 +263,9 @@ In addition, for the "noop" button, we use the <code>styles</code> attribute to 
 to specify exact styling of the button.  If not specified, this will take on the value of the view's default style
 for buttons (view.styles.buttons).
 
+For giggles, we shimmy up the <code>submit</code> button and give it a DOM ID of <code>mySubmit</code>.  We also
+plug in a custom DOM attribute called <code>data-test</code> with value <code>123</code>.
+
 <div id="field5"> </div>
 {% raw %}
 <script type="text/javascript" id="field5-script">
@@ -314,6 +317,10 @@ $("#field5").alpaca({
                         this.ajaxSubmit().always(function() {
                             alert("Form submitted!");
                         });
+                    },
+                    "id": "mySubmit",
+                    "attributes": {
+                        "data-test": "123"
                     }
                 }
             }
