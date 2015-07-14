@@ -201,6 +201,7 @@ called life.
 + [@mschnee](https://github.com/mschnee)
 + [@Uxio0](https://github.com/Uxio0)
 + [@mll5](https://github.com/mll5)
++ [@PoltoS](https://github.com/PoltoS)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org), the [Alpaca Forums](http://www.cloudcms.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!
