@@ -78,9 +78,10 @@
                     }
                 }
             }
-        },
+        }
 
         /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.Fields.TextField#getTitle
