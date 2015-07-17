@@ -317,7 +317,12 @@
         on: function(name, fn)
         {
             Alpaca.logDebug("Adding listener for event: " + name);
-            this._events[name] = fn;
+
+            if (!this._events[name]) {
+                this._events[name] = [];
+            }
+
+            this._events[name].push(fn);
             return this;
         },
 
@@ -347,27 +352,33 @@
          *
          * @returns {null}
          */
-        trigger: function(name, event)
+        trigger: function(name, event, arg1, arg2, arg3)
         {
             // NOTE: this == control
 
-            var handler = this._events[name];
-
-            var ret = null;
-            if (typeof(handler) === "function")
+            var handlers = this._events[name];
+            if (handlers)
             {
-                Alpaca.logDebug("Firing event: " + name);
-                try
+                for (var i = 0; i < handlers.length; i++)
                 {
-                    ret = handler.call(this, event);
-                }
-                catch (e)
-                {
-                    Alpaca.logDebug("The event handler caught an exception: " + name);
+                    var handler = handlers[i];
+
+                    var ret = null;
+                    if (typeof(handler) === "function")
+                    {
+                        Alpaca.logDebug("Firing event: " + name);
+                        try
+                        {
+                            ret = handler.call(this, event, arg1, arg2, arg3);
+                        }
+                        catch (e)
+                        {
+                            Alpaca.logDebug("The event handler caught an exception: " + name);
+                            Alpaca.logDebug(e);
+                        }
+                    }
                 }
             }
-
-            return ret;
         },
 
         /**

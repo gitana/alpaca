@@ -1511,6 +1511,15 @@
 
                                     refreshSteps();
                                 }
+                                else
+                                {
+                                    // allow focus to settle on invalid field
+                                    window.setTimeout(function() {
+                                        self.focus(function(field) {
+                                            // done
+                                        });
+                                    }, 250);
+                                }
                             });
                         }
                     });
@@ -1540,6 +1549,15 @@
                                             }
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    // allow focus to settle on invalid field
+                                    window.setTimeout(function() {
+                                        self.focus(function(field) {
+                                            // done
+                                        });
+                                    }, 250);
                                 }
                             });
                         }

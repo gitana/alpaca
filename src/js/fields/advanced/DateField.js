@@ -109,6 +109,9 @@
                         self.on("keypress", function (e) {
                             if (!self.options.manualEntry)
                             {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+
                                 return false;
                             }
                         });

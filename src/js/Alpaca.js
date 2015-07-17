@@ -309,6 +309,7 @@
                                 // pick first element in form
                                 if (field.children && field.children.length > 0)
                                 {
+                                    /*
                                     for (var z = 0; z < field.children.length; z++)
                                     {
                                         if (field.children[z].isControlField)
@@ -320,6 +321,9 @@
                                             }
                                         }
                                     }
+                                    */
+
+                                    doFocus(field);
                                 }
                             }
                             else if (typeof(options.focus) === "string")

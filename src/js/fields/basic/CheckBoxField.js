@@ -127,6 +127,8 @@
                 //
                 $(self.getFieldEl()).find("input:checkbox").change(function(evt) {
                     self.triggerWithPropagation("change");
+                    //evt.preventDefault();
+                    //evt.stopImmediatePropagation();
                 });
 
                 // for multiple mode, mark values
