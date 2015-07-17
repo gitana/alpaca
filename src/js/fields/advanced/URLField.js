@@ -24,7 +24,19 @@
 
             this.base();
 
-            this.schema.pattern = Alpaca.regexps.url;
+            if (typeof(this.options.allowIntranet) === "undefined")
+            {
+                this.options.allowIntranet = false;
+            }
+
+            if (this.options.allowIntranet)
+            {
+                this.schema.pattern = Alpaca.regexps["intranet-url"];
+            }
+            else
+            {
+                this.schema.pattern = Alpaca.regexps.url;
+            }
             this.schema.format = "uri";
         },
 
@@ -52,6 +64,37 @@
 
         /* builder_helpers */
         ,
+
+        /**
+         * @private
+         * @see Alpaca.Fields.TextField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "allowIntranet": {
+                        "title": "Allow intranet",
+                        "description": "Allows URLs with unqualified hostnames"
+                    }
+                }
+            });
+
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.TextField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "allowIntranet": {
+                        "type": "checkbox"
+                    }
+                }
+            });
+        },
 
         /**
          * @see Alpaca.Fields.TextField#getTitle
