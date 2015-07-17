@@ -177,6 +177,14 @@
         }
     };
 
+    // table
+    callbacks["tableHeaderRequired"] = function(schema, options, domEl)
+    {
+        // required fields get a little star in their label
+        $('<span class="alpaca-icon-required glyphicon glyphicon-star"></span>').prependTo(domEl);
+
+    };
+
     Alpaca.registerView({
         "id": "bootstrap-display",
         "parent": "web-display",

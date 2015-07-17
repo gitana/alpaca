@@ -26,6 +26,8 @@ $("#field1").alpaca({
 
 ## Example 2
 Array field with options for sticky toolbar, min items, max items etc.
+Here we use the <code>hideToolbarWithChildren</code> option to keep the top-most button available to add new items
+to the list.  We also hide the <code>add</code> button in the action bar for each row.
 <div id="field2"> </div>
 {% raw %}
 <script type="text/javascript" id="field2-script">
@@ -40,6 +42,13 @@ $("#field2").alpaca({
             "item" : {
                 "size" : 20
             }
+        },
+        "hideToolbarWithChildren": false,
+        "actionbar": {
+            "actions": [{
+                "action": "add",
+                "enabled": false
+            }]
         }
     },
     "schema": {

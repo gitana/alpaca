@@ -10,7 +10,7 @@
             <thead>
                 <tr>
                     {{#eachProperty schema.items.properties}}
-                    <th>{{value.title}}</th>
+                    <th data-header-id="{{key}}">{{{value.title}}}</th>
                     {{/eachProperty}}
 
                     {{#if options.showActionsColumn}}

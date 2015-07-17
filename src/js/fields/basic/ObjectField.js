@@ -1036,6 +1036,9 @@
                 // refresh validation state
                 self.refreshValidationState(true, function() {
 
+                    // dispatch event: add
+                    self.trigger("add", child);
+
                     // trigger update
                     self.triggerUpdate();
 
@@ -1073,6 +1076,9 @@
             childField.destroy();
 
             this.refreshValidationState(true, function() {
+
+                // dispatch event: remove
+                self.trigger("remove", childField);
 
                 // trigger update handler
                 self.triggerUpdate();

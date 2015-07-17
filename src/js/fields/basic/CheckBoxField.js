@@ -338,6 +338,7 @@
         {
             $(this.control).find("input").each(function() {
                 $(this).disabled = true;
+                $(this).prop("disabled", true);
             });
 
         },
@@ -349,6 +350,7 @@
         {
             $(this.control).find("input").each(function() {
                 $(this).disabled = false;
+                $(this).prop("disabled", false);
             });
 
         },

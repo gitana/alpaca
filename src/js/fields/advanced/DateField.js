@@ -113,6 +113,16 @@
                             }
                         });
 
+                        // with date-time picker, trigger change using plugin
+                        self.getFieldEl().on("dp.change", function(e) {
+
+                            // we use a timeout here because we want this to run AFTER control click handlers
+                            setTimeout(function() {
+                                self.onChange.call(self, e);
+                                self.triggerWithPropagation("change", e);
+                            }, 250);
+
+                        });
                     }
                 }
 

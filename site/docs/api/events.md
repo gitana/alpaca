@@ -198,6 +198,60 @@ All event handlers are synchronous in nature (similar to actual DOM event handle
         </td>
     </tr>
 
+    <!-- "move" -->
+    <tr>
+        <td>
+            move
+        </td>
+        <td>
+            ContainerField
+        </td>
+        <td>
+            <ul>
+                <li>event</li>
+            </ul>
+        </td>
+        <td>
+            A child item was moved.
+        </td>
+    </tr>
+
+    <!-- "add" -->
+    <tr>
+        <td>
+            add
+        </td>
+        <td>
+            ContainerField
+        </td>
+        <td>
+            <ul>
+                <li>event</li>
+            </ul>
+        </td>
+        <td>
+            A child item was added.
+        </td>
+    </tr>
+
+    <!-- "remove" -->
+    <tr>
+        <td>
+            remove
+        </td>
+        <td>
+            ContainerField
+        </td>
+        <td>
+            <ul>
+                <li>event</li>
+            </ul>
+        </td>
+        <td>
+            A child item was removed.
+        </td>
+    </tr>
+
 </table>
 
 

@@ -137,7 +137,6 @@
 
                     return match;
                 });
-
             }
         },
 
@@ -146,6 +145,30 @@
          */
         getFieldType: function() {
             return "table";
+        },
+
+        prepareContainerModel: function(callback)
+        {
+            var self = this;
+
+            // copy options.fields[k].label to schema.properties[k].title
+            if (self.schema.items && self.schema.items.properties)
+            {
+                for (var k in self.schema.items.properties)
+                {
+                    if (!self.schema.items.properties[k].title)
+                    {
+                        if (self.options.items && self.options.items.fields && self.options.items.fields[k])
+                        {
+                            self.schema.items.properties[k].title = self.options.items.fields[k].label;
+                        }
+                    }
+                }
+            }
+
+            self.base(function(model) {
+                callback(model);
+            });
         },
 
         /**
@@ -196,6 +219,19 @@
                         $(this.container).find("table").DataTable(self.options.datatables);
                     }
                 }
+
+                // walk through headers and allow for callback-based config
+                $(table).find("thead > tr > th[data-header-id]").each(function() {
+
+                    var key = $(this).attr("data-header-id");
+
+                    var schema = self.schema.items.properties[key];
+                    var options = self.options.items.fields[key];
+
+                    // CALLBACK: "tableHeaderRequired"
+                    self.fireCallback("tableHeaderRequired", schema, options, this);
+
+                });
 
                 callback();
 

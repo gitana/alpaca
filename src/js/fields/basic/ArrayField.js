@@ -46,23 +46,30 @@
                 this.options.actionbarStyle = "top";
             }
 
-            // legacy - uniqueItems, maxItems, minItems
-            if (this.schema.items)
+            if (!this.schema.items)
             {
-                if (this.schema.items.maxItems) {
-                    this.schema.maxItems = this.schema.items.maxItems;
-                    delete this.schema.items.maxItems;
-                }
+                this.schema.items = {};
+            }
 
-                if (this.schema.items.minItems) {
-                    this.schema.minItems = this.schema.items.minItems;
-                    delete this.schema.items.minItems;
-                }
+            if (!this.options.items)
+            {
+                this.options.items = {};
+            }
 
-                if (this.schema.items.uniqueItems) {
-                    this.schema.uniqueItems = this.schema.items.uniqueItems;
-                    delete this.schema.items.uniqueItems;
-                }
+            // legacy - uniqueItems, maxItems, minItems
+            if (this.schema.items.maxItems) {
+                this.schema.maxItems = this.schema.items.maxItems;
+                delete this.schema.items.maxItems;
+            }
+
+            if (this.schema.items.minItems) {
+                this.schema.minItems = this.schema.items.minItems;
+                delete this.schema.items.minItems;
+            }
+
+            if (this.schema.items.uniqueItems) {
+                this.schema.uniqueItems = this.schema.items.uniqueItems;
+                delete this.schema.items.uniqueItems;
             }
 
             // determine whether we are using "ruby on rails" compatibility mode
@@ -73,11 +80,6 @@
                 {
                     this.options.rubyrails = true;
                 }
-            }
-
-            if (!this.options.items)
-            {
-                this.options.items = {};
             }
 
             var toolbarSticky = undefined;
@@ -93,6 +95,12 @@
             }
 
             this.options.toolbarSticky = toolbarSticky;
+
+            // by default, hide toolbar when children.count > 0
+            if (typeof(self.options.hideToolbarWithChildren) === "undefined")
+            {
+                self.options.hideToolbarWithChildren = true;
+            }
 
             // Enable forceRevalidation option so that any change in children will trigger parent's revalidation.
             if (this.schema.items && this.schema.uniqueItems)
@@ -225,8 +233,11 @@
                             return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
                         }
 
+                        // how many children do we have currently?
+                        var insertionPoint = self.children.length;
+
                         var itemData = Alpaca.createEmptyDataInstance(itemSchema);
-                        self.addItem(0, itemSchema, itemOptions, itemData, function() {
+                        self.addItem(insertionPoint, itemSchema, itemOptions, itemData, function() {
                             // all done
                         });
                     });
@@ -1006,7 +1017,7 @@
             //
 
             var toolbarEl = $(this.getFieldEl()).find(".alpaca-array-toolbar[data-alpaca-array-toolbar-field-id='" + self.getId() + "']");
-            if (this.children.length > 0)
+            if (this.children.length > 0 && self.options.hideToolbarWithChildren)
             {
                 // hide toolbar
                 $(toolbarEl).hide();
@@ -1096,6 +1107,11 @@
                 // if we're at max capacity, disable "add" buttons
                 if (self._validateEqualMaxItems())
                 {
+                    $(this).find("[data-alpaca-array-toolbar-action='add']").each(function(index) {
+                        $(this).removeClass('alpaca-button-disabled');
+                        self.fireCallback("enableButton", this);
+                    });
+
                     $(this).find("[data-alpaca-array-actionbar-action='add']").each(function(index) {
                         $(this).removeClass('alpaca-button-disabled');
                         self.fireCallback("enableButton", this);
@@ -1103,6 +1119,11 @@
                 }
                 else
                 {
+                    $(this).find("[data-alpaca-array-toolbar-action='add']").each(function(index) {
+                        $(this).addClass('alpaca-button-disabled');
+                        self.fireCallback("disableButton", this);
+                    });
+
                     $(this).find("[data-alpaca-array-actionbar-action='add']").each(function(index) {
                         $(this).addClass('alpaca-button-disabled');
                         self.fireCallback("disableButton", this);
@@ -1218,6 +1239,9 @@
                     // refresh validation state
                     self.refreshValidationState();
 
+                    // dispatch event: add
+                    self.trigger("add", item);
+
                     // trigger update
                     self.triggerUpdate();
 
@@ -1267,6 +1291,9 @@
 
                 // refresh validation state
                 self.refreshValidationState();
+
+                // dispatch event: remove
+                self.trigger("remove", childIndex);
 
                 // trigger update
                 self.triggerUpdate();
@@ -1599,6 +1626,12 @@
                                 }
                             }
                         }
+                    },
+                    "hideToolbarWithChildren": {
+                        "type": "boolean",
+                        "title": "Hide Toolbar with Children",
+                        "description": "Indicates whether to hide the top toolbar when child elements are available.",
+                        "default": true
                     }
                 }
             };
