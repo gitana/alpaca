@@ -222,24 +222,10 @@
                 "label": self.getMessage("addItemButtonLabel"),
                 "action": "add",
                 "iconClass": self.view.getStyle("addIcon"),
-                "click": function(key, action)
-                {
-                    self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+                "click": function(key, action) {
 
-                        // we only allow addition if the resolved schema isn't circularly referenced
-                        // or the schema is optional
-                        if (circular)
-                        {
-                            return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
-                        }
-
-                        // how many children do we have currently?
-                        var insertionPoint = self.children.length;
-
-                        var itemData = Alpaca.createEmptyDataInstance(itemSchema);
-                        self.addItem(insertionPoint, itemSchema, itemOptions, itemData, function() {
-                            // all done
-                        });
+                    self.handleToolBarAddItemClick(function(item) {
+                        // done
                     });
                 }
             });
@@ -265,21 +251,9 @@
                 "iconClass": self.view.getStyle("addIcon"),
                 "click": function(key, action, itemIndex) {
 
-                    self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
-
-                        // we only allow addition if the resolved schema isn't circularly referenced
-                        // or the schema is optional
-                        if (circular)
-                        {
-                            return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
-                        }
-
-                        var itemData = Alpaca.createEmptyDataInstance(itemSchema);
-                        self.addItem(itemIndex + 1, itemSchema, itemOptions, itemData, function() {
-                            // all done
-                        });
+                    self.handleActionBarAddItemClick(itemIndex, function(item) {
+                        // done
                     });
-
                 }
             });
             applyAction(self.actionbar.actions, "remove", {
@@ -288,10 +262,9 @@
                 "iconClass": self.view.getStyle("removeIcon"),
                 "click": function(key, action, itemIndex) {
 
-                    self.removeItem(itemIndex, function() {
-                        // all done
+                    self.handleActionBarRemoveItemClick(itemIndex, function(item) {
+                        // done
                     });
-
                 }
             });
             applyAction(self.actionbar.actions, "up", {
@@ -300,10 +273,9 @@
                 "iconClass": self.view.getStyle("upIcon"),
                 "click": function(key, action, itemIndex) {
 
-                    self.moveItem(itemIndex, itemIndex - 1, self.options.animate, function() {
-                        // all done
+                    self.handleActionBarMoveItemUpClick(itemIndex, function() {
+                        // done
                     });
-
                 }
             });
             applyAction(self.actionbar.actions, "down", {
@@ -312,10 +284,9 @@
                 "iconClass": self.view.getStyle("downIcon"),
                 "click": function(key, action, itemIndex) {
 
-                    self.moveItem(itemIndex, itemIndex + 1, self.options.animate, function() {
-                        // all done
+                    self.handleActionBarMoveItemDownClick(itemIndex, function() {
+                        // done
                     });
-
                 }
             });
             cleanupActions(self.actionbar.actions, self.actionbar.showLabels);
@@ -1173,6 +1144,86 @@
             return $(self.container);
         },
 
+        handleToolBarAddItemClick: function(callback)
+        {
+            var self = this;
+
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+
+                // we only allow addition if the resolved schema isn't circularly referenced
+                // or the schema is optional
+                if (circular)
+                {
+                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                }
+
+                // how many children do we have currently?
+                var insertionPoint = self.children.length;
+
+                var itemData = Alpaca.createEmptyDataInstance(itemSchema);
+                self.addItem(insertionPoint, itemSchema, itemOptions, itemData, function(item) {
+                    if (callback) {
+                        callback(item);
+                    }
+                });
+            });
+        },
+
+        handleActionBarAddItemClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+
+                // we only allow addition if the resolved schema isn't circularly referenced
+                // or the schema is optional
+                if (circular)
+                {
+                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                }
+
+                var itemData = Alpaca.createEmptyDataInstance(itemSchema);
+                self.addItem(itemIndex + 1, itemSchema, itemOptions, itemData, function(item) {
+                    if (callback) {
+                        callback(item);
+                    }
+                });
+            });
+        },
+
+        handleActionBarRemoveItemClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.removeItem(itemIndex, function() {
+                if (callback) {
+                    callback();
+                }
+            });
+        },
+
+        handleActionBarMoveItemUpClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.moveItem(itemIndex, itemIndex - 1, self.options.animate, function() {
+                if (callback) {
+                    callback();
+                }
+            });
+        },
+
+        handleActionBarMoveItemDownClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.moveItem(itemIndex, itemIndex + 1, self.options.animate, function() {
+                if (callback) {
+                    callback();
+                }
+            });
+        },
+
         doAddItem: function(index, item)
         {
             var self = this;
@@ -1247,7 +1298,7 @@
 
                     if (callback)
                     {
-                        callback();
+                        callback(item);
                     }
                 });
             }
