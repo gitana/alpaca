@@ -126,7 +126,9 @@
                     return (existing ? true : false);
                 }
                 else if ("destroy" === specialFunctionName) {
-                    existing.destroy();
+                    if (existing) {
+                        existing.destroy();
+                    }
                     return;
                 }
 

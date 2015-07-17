@@ -1048,10 +1048,10 @@
             //
 
             // if we're not using the "sticky" toolbar, then show and hide the item action buttons when hovered
-            if (typeof(this.options.toolbarSticky) === "undefined")
+            if (typeof(this.options.toolbarSticky) === "undefined" || this.options.toolbarSticky === null)
             {
                 // find each item
-                var items = this.getFieldEl().find(".alpaca-container-item");
+                var items = this.getFieldEl().find(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + self.getId() +  "']");
                 $(items).each(function(itemIndex) {
 
                     // find the actionbar for this item
@@ -1409,8 +1409,8 @@
                 self.updateChildDOMElements();
 
                 // update the action bar bindings
-                $(sourceContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + sourceIndex + "']").attr("data-alpaca-array-actionbar-item-index", targetIndex);
-                $(targetContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + targetIndex + "']").attr("data-alpaca-array-actionbar-item-index", sourceIndex);
+                $(sourceContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + sourceIndex + "'][data-alpaca-container-item-parent-field-id='" + self.getId() +  "']").attr("data-alpaca-array-actionbar-item-index", targetIndex);
+                $(targetContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + targetIndex + "'][data-alpaca-container-item-parent-field-id='" + self.getId() +  "']").attr("data-alpaca-array-actionbar-item-index", sourceIndex);
 
                 // update the array item toolbar state
                 self.updateToolbars();
