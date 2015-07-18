@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Alpaca Forms Source: fields/advanced/JSONField.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top ">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Alpaca Forms</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Namespace%2520for%2520all%2520Alpaca%2520Connector%2520Class%2520Implementations..html">Namespace for all Alpaca Connector Class Implementations.</a>
+						</li>
+						
+						<li>
+							<a href="Namespace%2520for%2520all%2520Alpaca%2520Field%2520Class%2520Implementations..html">Namespace for all Alpaca Field Class Implementations.</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Alpaca.Connector.html">Alpaca.Connector</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Field.html">Alpaca.Field</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Fields.CurrencyField.html">Alpaca.Fields.CurrencyField</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Fields.UploadField.html">Alpaca.Fields.UploadField</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Form.html">Alpaca.Form</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.NormalizedView.html">Alpaca.NormalizedView</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.RuntimeView.html">Alpaca.RuntimeView</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="global.html#compile">compile</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doCompile">doCompile</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doExecute">doExecute</a>
+						</li>
+						
+						<li>
+							<a href="global.html#execute">execute</a>
+						</li>
+						
+						<li>
+							<a href="global.html#fileExtension">fileExtension</a>
+						</li>
+						
+						<li>
+							<a href="global.html#findCacheKeys">findCacheKeys</a>
+						</li>
+						
+						<li>
+							<a href="global.html#isCached">isCached</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDependencyChange">onDependencyChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#subscribe">subscribe</a>
+						</li>
+						
+						<li>
+							<a href="global.html#supportedMimetypes">supportedMimetypes</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: fields/advanced/JSONField.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">(function($) {
+
+    var Alpaca = $.alpaca;
+
+    Alpaca.Fields.JSONField = Alpaca.Fields.TextAreaField.extend(
+    /**
+     * @lends Alpaca.Fields.JSONField.prototype
+     */
+    {
+        /**
+         * @see Alpaca.Fields.TextAreaField#getFieldType
+         */
+        getFieldType: function() {
+            return "json";
+        },
+
+        /**
+         * @see Alpaca.ContainerField#getValue
+         */
+        setValue: function(value)
+        {
+            if (Alpaca.isObject(value) || typeof(value) === "object")
+            {
+                value = JSON.stringify(value, null, 3);
+            }
+
+            this.base(value);
+        },
+
+        /**
+         * @see Alpaca.Fields.ControlField#getControlValue
+         */
+        getControlValue: function()
+        {
+            var val = this.base();
+
+            if (val &amp;&amp; Alpaca.isString(val))
+            {
+                val = JSON.parse(val);
+            }
+
+            return val;
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#handleValidate
+         */
+        handleValidate: function()
+        {
+            var baseStatus = this.base();
+
+            var valInfo = this.validation;
+
+            var status = this._validateJSON();
+            valInfo["stringNotAJSON"] = {
+                "message": status.status ? "" : this.getMessage("stringNotAJSON") +" "+ status.message,
+                "status": status.status
+            };
+
+            return baseStatus &amp;&amp; valInfo["stringNotAJSON"]["status"] ;
+        },
+
+        /**
+         * Validates if it is a valid JSON object.
+         * @returns {Boolean} true if it is a valid JSON object
+         */
+        _validateJSON: function()
+        {
+            var textValue = this.control.val();
+
+            // allow null
+            if (Alpaca.isValEmpty(textValue))
+            {
+                return {
+                    "status" : true
+                };
+            }
+
+            // parse the string
+            try
+            {
+                var obj = JSON.parse(textValue);
+
+                // format the string as well
+                this.setValue(JSON.stringify(obj, null, 3));
+                return {
+                    "status" : true
+                };
+            }
+            catch(e)
+            {
+                return {
+                    "status" : false,
+                    "message" : e.message
+                };
+            }
+        },
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#postRender
+         */
+        afterRenderControl: function(model, callback)
+        {
+            var self = this;
+
+            this.base(model, function() {
+
+                if (self.control)
+                {
+                    // Some auto-formatting capabilities
+                    self.control.bind('keypress', function(e) {
+
+                        var code = e.keyCode || e.wich;
+
+                        if (code === 34) {
+                            self.control.insertAtCaret('"');
+                        }
+                        if (code === 123) {
+                            self.control.insertAtCaret('}');
+                        }
+                        if (code === 91) {
+                            self.control.insertAtCaret(']');
+                        }
+                    });
+
+                    self.control.bind('keypress', 'Ctrl+l', function() {
+                        self.getFieldEl().removeClass("alpaca-field-focused");
+
+                        // set class from state
+                        self.refreshValidationState();
+                    });
+
+                    self.control.attr('title','Type Ctrl+L to format and validate the JSON string.');
+                }
+
+                callback();
+
+            });
+
+        }
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#getTitle
+         */
+        getTitle: function() {
+            return "JSON Editor";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#getDescription
+         */
+        getDescription: function() {
+            return "Editor for JSON objects with basic validation and formatting.";
+        }
+
+        /* end_builder_helpers */
+    });
+
+    // Additional Registrations
+    Alpaca.registerMessages({
+        "stringNotAJSON": "This value is not a valid JSON string."
+    });
+
+    Alpaca.registerFieldClass("json", Alpaca.Fields.JSONField);
+
+    $.fn.insertAtCaret = function (myValue) {
+
+        return this.each(function() {
+
+            //IE support
+            if (document.selection) {
+
+                this.focus();
+                sel = document.selection.createRange();
+                sel.text = myValue;
+                this.focus();
+
+            } else if (this.selectionStart || this.selectionStart == '0') { // jshint ignore:line
+
+                //MOZILLA / NETSCAPE support
+                var startPos = this.selectionStart;
+                var endPos = this.selectionEnd;
+                var scrollTop = this.scrollTop;
+                this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos, this.value.length);
+                this.focus();
+                this.selectionStart = startPos /*+ myValue.length*/;
+                this.selectionEnd = startPos /*+ myValue.length*/;
+                this.scrollTop = scrollTop;
+
+            } else {
+
+                this.value += myValue;
+                this.focus();
+            }
+        });
+    };
+
+    /*
+     * jQuery Hotkeys Plugin
+     * Copyright 2010, John Resig
+     * Dual licensed under the MIT or GPL Version 2 licenses.
+     *
+     * Based upon the plugin by Tzury Bar Yochay:
+     * http://github.com/tzuryby/hotkeys
+     *
+     * Original idea by:
+     * Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
+    */
+    jQuery.hotkeys = {
+        version: "0.8",
+
+        specialKeys: {
+            8: "backspace", 9: "tab", 13: "return", 16: "shift", 17: "ctrl", 18: "alt", 19: "pause",
+            20: "capslock", 27: "esc", 32: "space", 33: "pageup", 34: "pagedown", 35: "end", 36: "home",
+            37: "left", 38: "up", 39: "right", 40: "down", 45: "insert", 46: "del",
+            96: "0", 97: "1", 98: "2", 99: "3", 100: "4", 101: "5", 102: "6", 103: "7",
+            104: "8", 105: "9", 106: "*", 107: "+", 109: "-", 110: ".", 111 : "/",
+            112: "f1", 113: "f2", 114: "f3", 115: "f4", 116: "f5", 117: "f6", 118: "f7", 119: "f8",
+            120: "f9", 121: "f10", 122: "f11", 123: "f12", 144: "numlock", 145: "scroll", 191: "/", 224: "meta"
+        },
+
+        shiftNums: {
+            "`": "~", "1": "!", "2": "@", "3": "#", "4": "$", "5": "%", "6": "^", "7": "&amp;",
+            "8": "*", "9": "(", "0": ")", "-": "_", "=": "+", ";": ": ", "'": "\"", ",": "&lt;",
+            ".": ">",  "/": "?",  "\\": "|"
+        }
+    };
+
+    function keyHandler( handleObj ) {
+        // Only care when a possible input has been specified
+        if ( typeof handleObj.data !== "string" ) {
+            return;
+        }
+
+        var origHandler = handleObj.handler,
+            keys = handleObj.data.toLowerCase().split(" ");
+
+        handleObj.handler = function( event ) {
+            // Don't fire in text-accepting inputs that we didn't directly bind to
+            if ( this !== event.target &amp;&amp; (/textarea|select/i.test( event.target.nodeName ) ||
+                 event.target.type === "text") ) {
+                return;
+            }
+
+            // Keypress represents characters, not special keys
+            var special = event.type !== "keypress" &amp;&amp; jQuery.hotkeys.specialKeys[ event.which ],
+                character = String.fromCharCode( event.which ).toLowerCase(),
+                key, modif = "", possible = {};
+
+            // check combinations (alt|ctrl|shift+anything)
+            if ( event.altKey &amp;&amp; special !== "alt" ) {
+                modif += "alt+";
+            }
+
+            if ( event.ctrlKey &amp;&amp; special !== "ctrl" ) {
+                modif += "ctrl+";
+            }
+
+            // TODO: Need to make sure this works consistently across platforms
+            if ( event.metaKey &amp;&amp; !event.ctrlKey &amp;&amp; special !== "meta" ) {
+                modif += "meta+";
+            }
+
+            if ( event.shiftKey &amp;&amp; special !== "shift" ) {
+                modif += "shift+";
+            }
+
+            if ( special ) {
+                possible[ modif + special ] = true;
+
+            } else {
+                possible[ modif + character ] = true;
+                possible[ modif + jQuery.hotkeys.shiftNums[ character ] ] = true;
+
+                // "$" can be triggered as "Shift+4" or "Shift+$" or just "$"
+                if ( modif === "shift+" ) {
+                    possible[ jQuery.hotkeys.shiftNums[ character ] ] = true;
+                }
+            }
+
+            for ( var i = 0, l = keys.length; i &lt; l; i++ ) {
+                if ( possible[ keys[i] ] ) {
+                    return origHandler.apply( this, arguments );
+                }
+            }
+        };
+    }
+
+    jQuery.each([ "keydown", "keyup", "keypress" ], function() {
+        jQuery.event.special[ this ] = { add: keyHandler };
+    });
+
+})(jQuery);
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Copyright © 2014 Gitana Software, Inc.
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a>
+		on Fri Jul 17th 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>
