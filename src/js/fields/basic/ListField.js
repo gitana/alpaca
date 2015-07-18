@@ -278,6 +278,18 @@
 
                         completionFunction();
                     }
+                    else if (Alpaca.isObject(self.options.dataSource))
+                    {
+                        for (var k in self.options.dataSource)
+                        {
+                            self.selectOptions.push({
+                                "text": self.options.dataSource[k],
+                                "value": k
+                            });
+                        }
+
+                        completionFunction();
+                    }
                     else
                     {
                         callback();
