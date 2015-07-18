@@ -51,9 +51,9 @@
         },
 
         /**
-         * @see Alpaca.ContainerField#getValue
+         * @see Alpaca.ContainerField#getContainerValue
          */
-        getValue: function()
+        getContainerValue: function()
         {
             // if we don't have any children and we're not required, hand back undefined
             if (this.children.length === 0 && !this.isRequired())

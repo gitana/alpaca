@@ -97,9 +97,10 @@
         /**
          * @see Alpaca.Field#getValue
          */
-        getValue: function(val)
+        convertValue: function(val)
         {
             var _this = this;
+
             if (Alpaca.isArray(val))
             {
                 $.each(val, function(index, itemVal) {

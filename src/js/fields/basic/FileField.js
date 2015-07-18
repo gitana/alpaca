@@ -29,7 +29,10 @@
             this.triggerUpdate();
         },
 
-        getValue: function()
+        /**
+         * @see Alpaca.Fields.ControlField#getControlValue
+         */
+        getControlValue: function()
         {
             return this.data;
         },

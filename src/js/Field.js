@@ -518,6 +518,15 @@
                         // allow any post-rendering facilities to kick in
                         self.postRender(function() {
 
+                            // finished initializing
+                            self.initializing = false;
+
+                            // allow for form to do some late updates
+                            if (self.form)
+                            {
+                                self.form.afterInitialize();
+                            }
+
                             // callback
                             if (callback && Alpaca.isFunction(callback))
                             {
@@ -538,6 +547,9 @@
 
                     // allow any post-rendering facilities to kick in
                     self.postRender(function() {
+
+                        // finished initializing
+                        self.initializing = false;
 
                         // callback
                         if (callback && Alpaca.isFunction(callback))
@@ -847,15 +859,6 @@
             if (this.options.hidden)
             {
                 this.field.hide();
-            }
-
-            // finished initializing
-            this.initializing = false;
-
-            // allow for form to do some late updates
-            if (self.form)
-            {
-                self.form.afterInitialize();
             }
 
             var defaultHideInitValidationError = (this.view.type === 'create') && !this.refreshed;

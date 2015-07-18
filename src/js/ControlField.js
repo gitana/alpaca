@@ -329,6 +329,36 @@
         },
 
         /**
+         * Returns the value of this field.
+         *
+         * @returns {Any} value Field value.
+         */
+        getValue: function()
+        {
+            var self = this;
+
+            var value = this.base();
+
+            if (!this.isDisplayOnly())
+            {
+                value = self.getControlValue();
+            }
+
+            // some correction for type
+            value = self.ensureProperType(value);
+
+            return value;
+        },
+
+        /**
+         * Extension point
+         */
+        getControlValue: function()
+        {
+            return this._getControlVal(true);
+        },
+
+        /**
          * Validate against enum property.
          *
          * @returns {Boolean} True if the element value is part of the enum list, false otherwise.

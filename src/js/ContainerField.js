@@ -709,6 +709,36 @@
             {
                 this.children[i].enable();
             }
+        },
+
+        /**
+         * Returns the value of this field.
+         *
+         * @returns {Any} value Field value.
+         */
+        getValue: function()
+        {
+            var self = this;
+
+            var value = self.getContainerValue();
+
+            if (self.isDisplayOnly())
+            {
+                if (value)
+                {
+                    value = JSON.stringify(value, null, "  ");
+                }
+            }
+
+            return value;
+        },
+
+        /**
+         * Extension point
+         */
+        getContainerValue: function()
+        {
+            return null;
         }
 
         /* builder_helpers */

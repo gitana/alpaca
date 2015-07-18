@@ -17,7 +17,7 @@
         /**
          * @see Alpaca.Fields.NumberField#getValue
          */
-        getValue: function()
+        getControlValue: function()
         {
             var val = this.base();
 

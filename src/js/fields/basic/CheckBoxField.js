@@ -163,7 +163,7 @@
         /**
          * @see Alpaca.Field#getValue
          */
-        getValue: function()
+        getControlValue: function()
         {
             var self = this;
 

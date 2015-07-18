@@ -832,11 +832,9 @@
         },
 
         /**
-         * @override
-         *
-         * Retrieves an array of descriptors.
+         * @see Alpaca.Fields.ControlField#getControlValue
          */
-        getValue: function()
+        getControlValue: function()
         {
             return this.data;
         },

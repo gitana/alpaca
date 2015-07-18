@@ -271,14 +271,6 @@
             }
         },
 
-        /**
-         * @see Alpaca.Fields.TextField#getValue
-         */
-        getValue: function()
-        {
-            return this.base();
-        },
-
         destroy: function()
         {
             this.base();

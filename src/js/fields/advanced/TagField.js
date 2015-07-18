@@ -30,7 +30,7 @@
         /**
          * @see Alpaca.Fields.TextField#getValue
          */
-        getValue: function()
+        getControlValue: function()
         {
             var val = this.base();
 
