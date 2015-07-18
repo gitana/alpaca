@@ -53,6 +53,10 @@
             this.controlDescriptor = this.view.getTemplateDescriptor("control-" + controlTemplateType, self);
 
             // buttons
+            if (typeof(this.options.renderButtons) === "undefined")
+            {
+                this.options.renderButtons = true;
+            }
             if (this.options.buttons)
             {
                 for (var k in this.options.buttons)

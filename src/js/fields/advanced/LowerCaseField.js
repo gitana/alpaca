@@ -15,6 +15,20 @@
         },
 
         /**
+         * @see Alpaca.Fields.TextField#setup
+         */
+        setup: function()
+        {
+            var self = this;
+
+            this.base();
+
+            if (this.data) {
+                this.data = this.data.toLowerCase();
+            }
+        },
+
+        /**
          * @see Alpaca.Fields.TextField#setValue
          */
         setValue: function(val)

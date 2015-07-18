@@ -114,6 +114,9 @@
 
             this.base();
 
+            // disable bottom control buttons (we have a conflict over the 'buttons' namespace)
+            self.options.renderButtons = false;
+
             if (!self.options.buttons)
             {
                 self.options.buttons = [];
