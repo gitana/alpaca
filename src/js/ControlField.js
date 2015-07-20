@@ -358,8 +358,13 @@
             var valInfo = this.validation;
 
             var status = this._validateEnum();
+            var values = this.schema["enum"];
+            if (typeof(this.options["optionLabels"]) === "object" && values.length &&
+                this.options["optionLabels"].length >= values.length) {
+                values = this.options["optionLabels"].slice(0, values.length);
+            }
             valInfo["invalidValueOfEnum"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("invalidValueOfEnum"), [this.schema["enum"].join(', '), this.data]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("invalidValueOfEnum"), [values.join(', '), this.data]),
                 "status": status
             };
 
