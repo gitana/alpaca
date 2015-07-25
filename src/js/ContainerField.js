@@ -548,9 +548,11 @@
          * This method gets invoked after items are dynamically added, removed or moved around in the child chain.
          * It adjusts classes on child DOM elements to make sure they're correct.
          */
-        updateChildDOMElements: function()
+        updateDOMElement: function()
         {
             var self = this;
+
+            this.base();
 
             var layoutBindings = null;
             if (self.view.getLayout()) {
@@ -597,6 +599,8 @@
                     $(child.containerItemEl).attr("data-alpaca-container-item-index", i);
                     $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
                     $(child.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
+
+                    child.updateDOMElement();
                 }
             }
         },

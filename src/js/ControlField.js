@@ -321,6 +321,17 @@
         },
 
         /**
+         * Ensures that the "name" property on the control is kept in sync.
+         */
+        updateDOMElement: function()
+        {
+            this.base();
+
+            // update the name field
+            this.control.attr("name", this.getName());
+        },
+
+        /**
          * @see Alpaca.Field#setDefault
          */
         setDefault: function() {

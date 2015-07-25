@@ -1255,6 +1255,22 @@
 
         },
 
+        handleRepositionDOMRefresh: function()
+        {
+            var self = this;
+
+            if (self.getParent())
+            {
+                // call update dom markers for parent which will trickle down to to cover this field and our siblings
+                self.parent().updateDOMElement();
+            }
+            else
+            {
+                // just ourselves
+                self.updateDOMElement();
+            }
+        },
+
         /**
          * Adds an item to the array.
          *
@@ -1281,8 +1297,8 @@
                     // insert into dom
                     self.doAddItem(index, item);
 
-                    // updates child dom marker elements
-                    self.updateChildDOMElements();
+                    // updates dom markers for this element and any siblings
+                    self.handleRepositionDOMRefresh();
 
                     // update the array item toolbar state
                     self.updateToolbars();
@@ -1334,8 +1350,8 @@
                 // remove itemContainerEl from DOM
                 self.doRemoveItem(childIndex);
 
-                // updates child dom marker elements
-                self.updateChildDOMElements();
+                // updates dom markers for this element and any siblings
+                self.handleRepositionDOMRefresh();
 
                 // update the array item toolbar state
                 self.updateToolbars();
@@ -1456,8 +1472,8 @@
                 tempSourceMarker.replaceWith(targetContainer);
                 tempTargetMarker.replaceWith(sourceContainer);
 
-                // updates child dom marker elements
-                self.updateChildDOMElements();
+                // updates dom markers for this element and any siblings
+                self.handleRepositionDOMRefresh();
 
                 // update the action bar bindings
                 $(sourceContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + sourceIndex + "'][data-alpaca-container-item-parent-field-id='" + self.getId() +  "']").attr("data-alpaca-array-actionbar-item-index", targetIndex);

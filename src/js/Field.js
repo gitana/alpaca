@@ -679,6 +679,22 @@
         },
 
         /**
+         * This gets called typically once per render.  If a DOM element is moved within a container and it's indexing
+         * changes, this will get called against to ensure that DOM properties are kept in sync.
+         */
+        updateDOMElement: function()
+        {
+            // all fields get their path
+            this.field.attr("data-alpaca-field-path", this.getPath());
+
+            // all fields get their name
+            this.field.attr("data-alpaca-field-name", this.getName());
+
+            // name should not appear on field
+            this.field.removeAttr("name");
+        },
+
+        /**
          * This method will be called after the field rendition is complete. It is served as a way to make final
          * modifications to the dom elements that were produced.
          */
@@ -695,11 +711,7 @@
             // all fields get field id data attribute
             this.field.attr("data-alpaca-field-id", this.getId());
 
-            // all fields get their path
-            this.field.attr("data-alpaca-field-path", this.getPath());
-
-            // all fields get their name
-            this.field.attr("data-alpaca-field-name", this.getName());
+            this.updateDOMElement();
 
             // try to avoid adding unnecessary injections for display view.
             if (this.view.type !== 'view') {
