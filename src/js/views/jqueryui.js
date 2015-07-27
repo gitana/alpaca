@@ -26,6 +26,7 @@
     callbacks["field"] = function()
     {
         this.getFieldEl().addClass("ui-widget");
+        $('i.info-sign', this.getFieldEl()).addClass('ui-icon ui-icon-info alpaca-icon-helper');
     };
     callbacks["required"] = function()
     {
