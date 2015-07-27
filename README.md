@@ -61,6 +61,13 @@ Once you have Node.js installed, you essentially need to do this:
     npm install gulp -g
     npm install bower -g
 
+Alpaca requires python 2.7.x to build some of it's node_module dependencies.  Make sure you have this installed.
+If you're currently using Python 3.x, you will need to tell the build to use 2.7.x:
+
+    npm install --python=python2.7
+    (or)
+    npm config set python python2.7
+
 
 ### Building Alpaca
 
