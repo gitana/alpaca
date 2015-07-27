@@ -386,32 +386,23 @@
         },
 
         /**
-         * @see Alpaca.Field#getValue
+         * @see Alpaca.Fields.ControlField#getControlValue
          */
-        getValue: function()
+        getControlValue: function()
         {
             var self = this;
 
-            var value = null;
+            var value = this._getControlVal(true);
 
-            if (!this.isDisplayOnly() && this.control && this.control.length > 0)
+            if (self.control.mask && self.options.maskString)
             {
-                value = this._getControlVal(true);
-
-                if (self.control.mask && self.options.maskString)
+                // get unmasked value
+                var fn = $(this.control).data($.mask.dataName);
+                if (fn)
                 {
-                    // get unmasked value
-                    var fn = $(this.control).data($.mask.dataName);
-                    if (fn)
-                    {
-                        value = fn();
-                        value = self.ensureProperType(value);
-                    }
+                    value = fn();
+                    value = self.ensureProperType(value);
                 }
-            }
-            else
-            {
-                value = this.base();
             }
 
             return value;

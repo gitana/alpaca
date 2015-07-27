@@ -114,6 +114,9 @@
 
             this.base();
 
+            // disable bottom control buttons (we have a conflict over the 'buttons' namespace)
+            self.options.renderButtons = false;
+
             if (!self.options.buttons)
             {
                 self.options.buttons = [];
@@ -829,11 +832,9 @@
         },
 
         /**
-         * @override
-         *
-         * Retrieves an array of descriptors.
+         * @see Alpaca.Fields.ControlField#getControlValue
          */
-        getValue: function()
+        getControlValue: function()
         {
             return this.data;
         },

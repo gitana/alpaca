@@ -222,24 +222,10 @@
                 "label": self.getMessage("addItemButtonLabel"),
                 "action": "add",
                 "iconClass": self.view.getStyle("addIcon"),
-                "click": function(key, action)
-                {
-                    self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+                "click": function(key, action) {
 
-                        // we only allow addition if the resolved schema isn't circularly referenced
-                        // or the schema is optional
-                        if (circular)
-                        {
-                            return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
-                        }
-
-                        // how many children do we have currently?
-                        var insertionPoint = self.children.length;
-
-                        var itemData = Alpaca.createEmptyDataInstance(itemSchema);
-                        self.addItem(insertionPoint, itemSchema, itemOptions, itemData, function() {
-                            // all done
-                        });
+                    self.handleToolBarAddItemClick(function(item) {
+                        // done
                     });
                 }
             });
@@ -265,21 +251,9 @@
                 "iconClass": self.view.getStyle("addIcon"),
                 "click": function(key, action, itemIndex) {
 
-                    self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
-
-                        // we only allow addition if the resolved schema isn't circularly referenced
-                        // or the schema is optional
-                        if (circular)
-                        {
-                            return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
-                        }
-
-                        var itemData = Alpaca.createEmptyDataInstance(itemSchema);
-                        self.addItem(itemIndex + 1, itemSchema, itemOptions, itemData, function() {
-                            // all done
-                        });
+                    self.handleActionBarAddItemClick(itemIndex, function(item) {
+                        // done
                     });
-
                 }
             });
             applyAction(self.actionbar.actions, "remove", {
@@ -288,10 +262,9 @@
                 "iconClass": self.view.getStyle("removeIcon"),
                 "click": function(key, action, itemIndex) {
 
-                    self.removeItem(itemIndex, function() {
-                        // all done
+                    self.handleActionBarRemoveItemClick(itemIndex, function(item) {
+                        // done
                     });
-
                 }
             });
             applyAction(self.actionbar.actions, "up", {
@@ -300,10 +273,9 @@
                 "iconClass": self.view.getStyle("upIcon"),
                 "click": function(key, action, itemIndex) {
 
-                    self.moveItem(itemIndex, itemIndex - 1, self.options.animate, function() {
-                        // all done
+                    self.handleActionBarMoveItemUpClick(itemIndex, function() {
+                        // done
                     });
-
                 }
             });
             applyAction(self.actionbar.actions, "down", {
@@ -312,10 +284,9 @@
                 "iconClass": self.view.getStyle("downIcon"),
                 "click": function(key, action, itemIndex) {
 
-                    self.moveItem(itemIndex, itemIndex + 1, self.options.animate, function() {
-                        // all done
+                    self.handleActionBarMoveItemDownClick(itemIndex, function() {
+                        // done
                     });
-
                 }
             });
             cleanupActions(self.actionbar.actions, self.actionbar.showLabels);
@@ -415,9 +386,9 @@
         },
 
         /**
-         * @see Alpaca.ContainerField#getValue
+         * @see Alpaca.ContainerField#getContainerValue
          */
-        getValue: function()
+        getContainerValue: function()
         {
             // if we're empty and we're also not required, then we hand back undefined
             if (this.children.length === 0 && !this.isRequired())
@@ -1048,10 +1019,10 @@
             //
 
             // if we're not using the "sticky" toolbar, then show and hide the item action buttons when hovered
-            if (typeof(this.options.toolbarSticky) === "undefined")
+            if (typeof(this.options.toolbarSticky) === "undefined" || this.options.toolbarSticky === null)
             {
                 // find each item
-                var items = this.getFieldEl().find(".alpaca-container-item");
+                var items = this.getFieldEl().find(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + self.getId() +  "']");
                 $(items).each(function(itemIndex) {
 
                     // find the actionbar for this item
@@ -1173,6 +1144,86 @@
             return $(self.container);
         },
 
+        handleToolBarAddItemClick: function(callback)
+        {
+            var self = this;
+
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+
+                // we only allow addition if the resolved schema isn't circularly referenced
+                // or the schema is optional
+                if (circular)
+                {
+                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                }
+
+                // how many children do we have currently?
+                var insertionPoint = self.children.length;
+
+                var itemData = Alpaca.createEmptyDataInstance(itemSchema);
+                self.addItem(insertionPoint, itemSchema, itemOptions, itemData, function(item) {
+                    if (callback) {
+                        callback(item);
+                    }
+                });
+            });
+        },
+
+        handleActionBarAddItemClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+
+                // we only allow addition if the resolved schema isn't circularly referenced
+                // or the schema is optional
+                if (circular)
+                {
+                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                }
+
+                var itemData = Alpaca.createEmptyDataInstance(itemSchema);
+                self.addItem(itemIndex + 1, itemSchema, itemOptions, itemData, function(item) {
+                    if (callback) {
+                        callback(item);
+                    }
+                });
+            });
+        },
+
+        handleActionBarRemoveItemClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.removeItem(itemIndex, function() {
+                if (callback) {
+                    callback();
+                }
+            });
+        },
+
+        handleActionBarMoveItemUpClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.moveItem(itemIndex, itemIndex - 1, self.options.animate, function() {
+                if (callback) {
+                    callback();
+                }
+            });
+        },
+
+        handleActionBarMoveItemDownClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.moveItem(itemIndex, itemIndex + 1, self.options.animate, function() {
+                if (callback) {
+                    callback();
+                }
+            });
+        },
+
         doAddItem: function(index, item)
         {
             var self = this;
@@ -1204,6 +1255,22 @@
 
         },
 
+        handleRepositionDOMRefresh: function()
+        {
+            var self = this;
+
+            if (self.getParent())
+            {
+                // call update dom markers for parent which will trickle down to to cover this field and our siblings
+                self.parent().updateDOMElement();
+            }
+            else
+            {
+                // just ourselves
+                self.updateDOMElement();
+            }
+        },
+
         /**
          * Adds an item to the array.
          *
@@ -1230,8 +1297,8 @@
                     // insert into dom
                     self.doAddItem(index, item);
 
-                    // updates child dom marker elements
-                    self.updateChildDOMElements();
+                    // updates dom markers for this element and any siblings
+                    self.handleRepositionDOMRefresh();
 
                     // update the array item toolbar state
                     self.updateToolbars();
@@ -1247,7 +1314,7 @@
 
                     if (callback)
                     {
-                        callback();
+                        callback(item);
                     }
                 });
             }
@@ -1283,8 +1350,8 @@
                 // remove itemContainerEl from DOM
                 self.doRemoveItem(childIndex);
 
-                // updates child dom marker elements
-                self.updateChildDOMElements();
+                // updates dom markers for this element and any siblings
+                self.handleRepositionDOMRefresh();
 
                 // update the array item toolbar state
                 self.updateToolbars();
@@ -1405,12 +1472,12 @@
                 tempSourceMarker.replaceWith(targetContainer);
                 tempTargetMarker.replaceWith(sourceContainer);
 
-                // updates child dom marker elements
-                self.updateChildDOMElements();
+                // updates dom markers for this element and any siblings
+                self.handleRepositionDOMRefresh();
 
                 // update the action bar bindings
-                $(sourceContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + sourceIndex + "']").attr("data-alpaca-array-actionbar-item-index", targetIndex);
-                $(targetContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + targetIndex + "']").attr("data-alpaca-array-actionbar-item-index", sourceIndex);
+                $(sourceContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + sourceIndex + "'][data-alpaca-container-item-parent-field-id='" + self.getId() +  "']").attr("data-alpaca-array-actionbar-item-index", targetIndex);
+                $(targetContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + targetIndex + "'][data-alpaca-container-item-parent-field-id='" + self.getId() +  "']").attr("data-alpaca-array-actionbar-item-index", sourceIndex);
 
                 // update the array item toolbar state
                 self.updateToolbars();

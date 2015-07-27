@@ -151,3 +151,62 @@ $("#field4").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 5
+Upload a file and track via a progress bar.  A lot of folks ask about how to upload an asset and track it via
+a progress bar.  There are many ways to do this.  Here we show one way to do it by using a form and tracking when
+the submit button is clicked.
+Select an image file to see it with instant thumbnail preview
+<div class="progress progress-striped active">
+    <div id="example5_progressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+        <span class="sr-only">0% Complete</span>
+    </div>
+</div>
+<div id="field5"> </div>
+{% raw %}
+<script type="text/javascript" id="field5-script">
+$("#field5").alpaca({
+    "schema": {
+        "type": "string",
+        "format": "uri"
+    },
+    "options": {
+        "type": "file",
+        "label": "Select a file",
+        "form": {
+            "attributes": {
+                "method": "POST",
+                "action": "http://www.httpbin.org/post"
+            },
+            "buttons": {
+                "submit": {
+                    "title": "Upload File",
+                    "click": function() {
+                        // set up the XHR object manually so we can track progress and update our progress bar
+                        var config = {};
+                        config.xhr = function() {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.addEventListener("progress", function(evt){
+                                if (evt.lengthComputable) {
+                                    var percentComplete = evt.loaded / evt.total;
+                                    var percentCompleteString = "" + (percentComplete * 100);
+                                    var progressBar = $("#example5_progressbar");
+                                    $(progressBar).attr("aria-valuenow", percentCompleteString);
+                                    $(progressBar).css("width", "" + percentCompleteString + "%");
+                                    $(progressBar).find("span").html(percentCompleteString + "% Complete");
+                                }
+                            }, false);
+                            return xhr;
+                        };
+                        // submit the form using ajax so that the browser doesn't leave the page
+                        // we track the XHR and write to the progress bar using the event listener above
+                        this.ajaxSubmit(config);
+                    }
+                }
+            }
+        }
+
+    }
+});
+</script>
+{% endraw %}

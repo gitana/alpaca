@@ -62,7 +62,7 @@ an HTML5 File API compatible browser.  Which, as you might expect, doesn't inclu
 
 ## Example 1
 Single related file upload.
-An example of a single file upload control.  Uploads are posted to /upload.php.
+An example of a single file upload control.  Uploads are posted to <code>http://www.httpbin.org</code>.
 We've wired this up using a postRender callback so you can see the generated JSON by clicking 'view'.
 <div id="field1"> </div>
 {% raw %}
@@ -70,14 +70,14 @@ We've wired this up using a postRender callback so you can see the generated JSO
 $("#field1").alpaca({
     "view": "bootstrap-create",
     "schema": {
-        "type": "string",
+        "type": "array",
     },
     "options": {
         "type": "upload",
         "label": "Upload File",
         "upload": {
-            "url": "upload.php",
-            "autoUpload": true,
+            "url": "http://www.httpbin.org/post",
+            "autoUpload": true
         }
     },
     "postRender": function(control) {
@@ -96,7 +96,9 @@ $("#field1").alpaca({
 
 ## Example 2
 Content creation form with support for multiple uploads as attachments.  Note that the file uploads post right away
-to /upload.php.  The form is not submitted until the user clicks submit at which time the form posts to form.php.
+to <code>http://www.httpbin.org</code>.
+
+The form is not submitted until the user clicks submit at which time the form posts to form.php.
 
 In addition, we specify the <code>maxFileSize</code>, <code>maxNumberOfFiles</code>, <code>multiple</code> and
 <code>fileTypes</code> settings to adjust the behavior of the control.
@@ -115,7 +117,7 @@ $("#field2").alpaca({
                 "required": true
             },
             "files": {
-                "type": "string",
+                "type": "array",
                 "title": "Files",
                 "required": true
             }
@@ -130,7 +132,7 @@ $("#field2").alpaca({
                 "maxNumberOfFiles": 3,
                 "fileTypes": "/(\.|\/)(gif|jpe?g|png)$/i",
                 "upload": {
-                    "url": "upload.php"
+                    "url": "http://www.httpbin.org/post"
                 }
             }
         },
@@ -205,7 +207,7 @@ $("#field3").alpaca({
                 "required": true
             },
             "files": {
-                "type": "string",
+                "type": "array",
                 "title": "Files",
                 "required": true
             }
@@ -227,7 +229,7 @@ $("#field3").alpaca({
         "form": {
             "attributes": {
                 "method": "POST",
-                "action": "form.php",
+                "action": "http://www.httpbin.org/post",
                 "enctype": "multipart/form-data"
             },
             "buttons": {
@@ -260,7 +262,7 @@ $("#field4").alpaca({
         "type": "object",
         "properties": {
             "files": {
-                "type": "string",
+                "type": "array",
                 "title": "Files",
                 "required": true
             }
@@ -274,7 +276,7 @@ $("#field4").alpaca({
                 "fileTypes": "/(\.|\/)(blahblah)$/i",
                 "maxNumberOfFiles": 3,
                 "upload": {
-                    "url": "upload.php"
+                    "url": "http://www.httpbin.org/post"
                 },
                 "errorHandler": function(messages) {
                     $("#errorModal").find(".modal-body").append("<p>" + messages.join("<br/>") + "</p>");
@@ -286,7 +288,7 @@ $("#field4").alpaca({
         "form": {
             "attributes": {
                 "method": "POST",
-                "action": "form.php",
+                "action": "http://www.httpbin.org/post",
                 "enctype": "multipart/form-data"
             },
             "buttons": {

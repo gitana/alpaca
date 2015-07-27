@@ -217,6 +217,17 @@
         return message;
     });
 
+    Handlebars.registerHelper("disguise", function(text, character) {
+
+        var replaced = "";
+        for (var i = 0; i < text.length; i++) {
+            replaced += character;
+        }
+
+        return replaced;
+
+    });
+
 
 
     //Handlebars.registerHelper("each", helpers["each"]);

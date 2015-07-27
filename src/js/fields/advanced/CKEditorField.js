@@ -132,11 +132,14 @@
             }
         },
 
-        getValue: function()
+        /**
+         * @see Alpaca.Fields.ControlField#getControlValue
+         */
+        getControlValue: function()
         {
             var self = this;
 
-            var value = this.base();
+            var value = null;
 
             if (self.editor)
             {

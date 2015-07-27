@@ -548,9 +548,11 @@
          * This method gets invoked after items are dynamically added, removed or moved around in the child chain.
          * It adjusts classes on child DOM elements to make sure they're correct.
          */
-        updateChildDOMElements: function()
+        updateDOMElement: function()
         {
             var self = this;
+
+            this.base();
 
             var layoutBindings = null;
             if (self.view.getLayout()) {
@@ -597,6 +599,8 @@
                     $(child.containerItemEl).attr("data-alpaca-container-item-index", i);
                     $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
                     $(child.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
+
+                    child.updateDOMElement();
                 }
             }
         },
@@ -632,30 +636,55 @@
          */
         focus: function(onFocusCallback)
         {
+            var self = this;
+
             this.base();
 
-            var index = -1;
+            var invalidIndex = -1;
 
-            for (var i = 0; i < this.children.length; i++)
+            // use the dom to create an array that orders things as they are laid out on the page
+            var pageOrderedChildren = new Array(this.children.length);
+            var el = this.getContainerEl();
+            if (this.form) {
+                el = this.form.getFormEl();
+            }
+            var pageOrder = 0;
+            $(el).find(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + this.getId() + "']").each(function() {
+                var childIndex = $(this).attr("data-alpaca-container-item-index");
+                pageOrderedChildren[pageOrder] = self.children[childIndex];
+                pageOrder++;
+            });
+
+            // walk the ordered children and find first invalid
+            for (var i = 0; i < pageOrderedChildren.length; i++)
             {
-                if (!this.children[i].isValid(true))
+                if (pageOrderedChildren[i])
                 {
-                    index = i;
-                    break;
+                    if (!pageOrderedChildren[i].isValid(true) &&
+                        pageOrderedChildren[i].isControlField &&
+                        pageOrderedChildren[i].isAutoFocusable() &&
+                        !pageOrderedChildren[i].options.readonly)
+                    {
+                        invalidIndex = i;
+                        break;
+                    }
                 }
             }
-            if (index === -1 && this.children.length > 0)
+
+            // if we didn't find anything invalid, just focus on first item
+            if (invalidIndex === -1 && pageOrderedChildren.length > 0)
             {
-                index = 0;
+                invalidIndex = 0;
             }
 
-            if (index > -1)
+            // do the focus if we found something
+            if (invalidIndex > -1)
             {
-                this.children[index].focus();
+                pageOrderedChildren[invalidIndex].focus();
 
                 if (onFocusCallback)
                 {
-                    onFocusCallback(this.children[index]);
+                    onFocusCallback(pageOrderedChildren[invalidIndex]);
                 }
             }
         },
@@ -684,6 +713,36 @@
             {
                 this.children[i].enable();
             }
+        },
+
+        /**
+         * Returns the value of this field.
+         *
+         * @returns {Any} value Field value.
+         */
+        getValue: function()
+        {
+            var self = this;
+
+            var value = self.getContainerValue();
+
+            if (self.isDisplayOnly())
+            {
+                if (value)
+                {
+                    value = JSON.stringify(value, null, "  ");
+                }
+            }
+
+            return value;
+        },
+
+        /**
+         * Extension point
+         */
+        getContainerValue: function()
+        {
+            return null;
         }
 
         /* builder_helpers */

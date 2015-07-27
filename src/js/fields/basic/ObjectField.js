@@ -136,9 +136,9 @@
         /**
          * Reconstructs the data object from the child fields.
          *
-         * @see Alpaca.Field#getValue
+         * @see Alpaca.ContainerField#getContainerValue
          */
-        getValue: function()
+        getContainerValue: function()
         {
             // if we don't have any children and we're not required, hand back empty object
             if (this.children.length === 0 && !this.isRequired())
@@ -1511,6 +1511,15 @@
 
                                     refreshSteps();
                                 }
+                                else
+                                {
+                                    // allow focus to settle on invalid field
+                                    window.setTimeout(function() {
+                                        self.focus(function(field) {
+                                            // done
+                                        });
+                                    }, 250);
+                                }
                             });
                         }
                     });
@@ -1540,6 +1549,15 @@
                                             }
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    // allow focus to settle on invalid field
+                                    window.setTimeout(function() {
+                                        self.focus(function(field) {
+                                            // done
+                                        });
+                                    }, 250);
                                 }
                             });
                         }

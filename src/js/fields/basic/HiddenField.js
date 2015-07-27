@@ -24,9 +24,9 @@
         },
 
         /**
-         * @see Alpaca.Field#getValue
+         * @see Alpaca.Fields.ControlField#getControlValue
          */
-        getValue: function()
+        getControlValue: function()
         {
             return this._getControlVal(true);
         },

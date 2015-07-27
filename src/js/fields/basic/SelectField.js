@@ -24,20 +24,17 @@
         },
 
         /**
-         * @see Alpaca.Field#getValue
+         * @see Alpaca.ControlField#getControlValue
          */
-        getValue: function()
+        getControlValue: function()
         {
-            if (this.control && this.control.length > 0)
+            var val = this._getControlVal(true);
+            if (typeof(val) === "undefined")
             {
-                var val = this._getControlVal(true);
-                if (typeof(val) === "undefined")
-                {
-                    val = this.data;
-                }
-
-                return this.base(val);
+                val = this.data;
             }
+
+            return this.convertValue(val);
         },
 
         /**
