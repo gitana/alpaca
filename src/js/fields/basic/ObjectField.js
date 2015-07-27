@@ -997,10 +997,10 @@
                         existingElement.after(child.getFieldEl());
                     }
                 }
-
-                // updates child dom marker elements
-                self.updateChildDOMElements();
-
+                
+                // updates dom markers for this element and any siblings
+                self.handleRepositionDOMRefresh();
+                
                 // update the array item toolbar state
                 //self.updateToolbars();
 
@@ -1781,8 +1781,8 @@
                 tempSourceMarker.replaceWith(targetContainer);
                 tempTargetMarker.replaceWith(sourceContainer);
 
-                // updates child dom marker elements
-                self.updateChildDOMElements();
+                // updates dom markers for this element and any siblings
+                self.handleRepositionDOMRefresh();
 
                 // update the action bar bindings
                 $(sourceContainer).find("[data-alpaca-array-actionbar-item-index='" + sourceIndex + "']").attr("data-alpaca-array-actionbar-item-index", targetIndex);
