@@ -1262,7 +1262,7 @@
             if (self.getParent())
             {
                 // call update dom markers for parent which will trickle down to to cover this field and our siblings
-                self.parent().updateDOMElement();
+                self.getParent().updateDOMElement();
             }
             else
             {
