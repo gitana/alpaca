@@ -407,14 +407,6 @@
 
         },
 
-        setValue: function(v) {
-            this.base(v);
-        },
-
-        getValue: function() {
-            return this.base();
-        },
-
         /**
          * @see Alpaca.Fields.ObjectField#getType
          */

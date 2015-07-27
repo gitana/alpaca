@@ -28,9 +28,9 @@
         },
 
         /**
-         * @see Alpaca.ContainerField#getValue
+         * @see Alpaca.Fields.ControlField#getControlValue
          */
-        getValue: function()
+        getControlValue: function()
         {
             var val = this.base();
 

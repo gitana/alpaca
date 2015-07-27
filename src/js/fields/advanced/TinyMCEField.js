@@ -47,18 +47,21 @@
                 }
             },
 
-            getValue:function()
+            /**
+             * @see Alpaca.Fields.ControlField#getControlValue
+             */
+            getControlValue:function()
             {
                 var self = this;
 
-                var returnVal = null;
+                var value = null;
 
                 if (self.editor)
                 {
-                    returnVal = self.editor.getContent()
+                    value = self.editor.getContent()
                 }
 
-                return returnVal;
+                return value;
             },
 
             initControlEvents: function()

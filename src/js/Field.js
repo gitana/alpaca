@@ -317,7 +317,12 @@
         on: function(name, fn)
         {
             Alpaca.logDebug("Adding listener for event: " + name);
-            this._events[name] = fn;
+
+            if (!this._events[name]) {
+                this._events[name] = [];
+            }
+
+            this._events[name].push(fn);
             return this;
         },
 
@@ -347,27 +352,33 @@
          *
          * @returns {null}
          */
-        trigger: function(name, event)
+        trigger: function(name, event, arg1, arg2, arg3)
         {
             // NOTE: this == control
 
-            var handler = this._events[name];
-
-            var ret = null;
-            if (typeof(handler) === "function")
+            var handlers = this._events[name];
+            if (handlers)
             {
-                Alpaca.logDebug("Firing event: " + name);
-                try
+                for (var i = 0; i < handlers.length; i++)
                 {
-                    ret = handler.call(this, event);
-                }
-                catch (e)
-                {
-                    Alpaca.logDebug("The event handler caught an exception: " + name);
+                    var handler = handlers[i];
+
+                    var ret = null;
+                    if (typeof(handler) === "function")
+                    {
+                        Alpaca.logDebug("Firing event: " + name);
+                        try
+                        {
+                            ret = handler.call(this, event, arg1, arg2, arg3);
+                        }
+                        catch (e)
+                        {
+                            Alpaca.logDebug("The event handler caught an exception: " + name);
+                            Alpaca.logDebug(e);
+                        }
+                    }
                 }
             }
-
-            return ret;
         },
 
         /**
@@ -507,6 +518,15 @@
                         // allow any post-rendering facilities to kick in
                         self.postRender(function() {
 
+                            // finished initializing
+                            self.initializing = false;
+
+                            // allow for form to do some late updates
+                            if (self.form)
+                            {
+                                self.form.afterInitialize();
+                            }
+
                             // callback
                             if (callback && Alpaca.isFunction(callback))
                             {
@@ -527,6 +547,9 @@
 
                     // allow any post-rendering facilities to kick in
                     self.postRender(function() {
+
+                        // finished initializing
+                        self.initializing = false;
 
                         // callback
                         if (callback && Alpaca.isFunction(callback))
@@ -656,6 +679,22 @@
         },
 
         /**
+         * This gets called typically once per render.  If a DOM element is moved within a container and it's indexing
+         * changes, this will get called against to ensure that DOM properties are kept in sync.
+         */
+        updateDOMElement: function()
+        {
+            // all fields get their path
+            this.field.attr("data-alpaca-field-path", this.getPath());
+
+            // all fields get their name
+            this.field.attr("data-alpaca-field-name", this.getName());
+
+            // name should not appear on field
+            this.field.removeAttr("name");
+        },
+
+        /**
          * This method will be called after the field rendition is complete. It is served as a way to make final
          * modifications to the dom elements that were produced.
          */
@@ -672,11 +711,7 @@
             // all fields get field id data attribute
             this.field.attr("data-alpaca-field-id", this.getId());
 
-            // all fields get their path
-            this.field.attr("data-alpaca-field-path", this.getPath());
-
-            // all fields get their name
-            this.field.attr("data-alpaca-field-name", this.getName());
+            this.updateDOMElement();
 
             // try to avoid adding unnecessary injections for display view.
             if (this.view.type !== 'view') {
@@ -836,15 +871,6 @@
             if (this.options.hidden)
             {
                 this.field.hide();
-            }
-
-            // finished initializing
-            this.initializing = false;
-
-            // allow for form to do some late updates
-            if (self.form)
-            {
-                self.form.afterInitialize();
             }
 
             var defaultHideInitValidationError = (this.view.type === 'create') && !this.refreshed;
@@ -1045,6 +1071,12 @@
             this.updateObservable();
 
             this.triggerUpdate();
+
+            // special case - if we're in a display mode and not first render, then do a refresh here
+            if (this.isDisplayOnly() && !this.initializing)
+            {
+                this.refresh();
+            }
         },
 
         /**

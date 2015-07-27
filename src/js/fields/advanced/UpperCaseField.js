@@ -7,11 +7,26 @@
      * @lends Alpaca.Fields.UpperCaseField.prototype
      */
     {
+
         /**
          * @see Alpaca.Fields.TextField#getFieldType
          */
         getFieldType: function() {
             return "uppercase";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#setup
+         */
+        setup: function()
+        {
+            var self = this;
+
+            this.base();
+
+            if (this.data) {
+                this.data = this.data.toUpperCase();
+            }
         },
 
         /**

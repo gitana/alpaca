@@ -336,9 +336,9 @@
         },
 
         /**
-         * @see Alpaca.Fields.TextField#getValue
+         * @see Alpaca.Fields.ControlField#getControlValue
          */
-        getValue: function()
+        getControlValue: function()
         {
             var value = null;
 

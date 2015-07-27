@@ -45,9 +45,9 @@
         },
 
         /**
-         * @see Alpaca.Field#getValue
+         * @see Alpaca.Fields.ControlField#getControlValue
          */
-        getValue: function()
+        getControlValue: function()
         {
             var self = this;
 
@@ -168,25 +168,23 @@
          */
         onClick: function(e)
         {
+            var self = this;
+            var currentValue = self.getValue();
+
             this.base(e);
 
-            var self = this;
-
             var val = $(e.currentTarget).find("input").val();
-            if (typeof(val) != "undefined")
+            if (typeof(val) !== "undefined")
             {
                 self.setValue(val);
                 self.refreshValidationState();
+
+                // manually trigger change event
+                if (currentValue !== val) {
+
+                    self.trigger("change");
+                }
             }
-
-            /*
-            Alpaca.later(25, this, function(){
-                var v = self.getValue();
-                self.setValue(v);
-                self.refreshValidationState();
-            });
-            */
-
         }
 
         /* builder_helpers */

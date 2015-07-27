@@ -53,6 +53,10 @@
             this.controlDescriptor = this.view.getTemplateDescriptor("control-" + controlTemplateType, self);
 
             // buttons
+            if (typeof(this.options.renderButtons) === "undefined")
+            {
+                this.options.renderButtons = true;
+            }
             if (this.options.buttons)
             {
                 for (var k in this.options.buttons)
@@ -317,11 +321,52 @@
         },
 
         /**
+         * Ensures that the "name" property on the control is kept in sync.
+         */
+        updateDOMElement: function()
+        {
+            this.base();
+
+            // update the name field
+            this.control.attr("name", this.getName());
+        },
+
+        /**
          * @see Alpaca.Field#setDefault
          */
         setDefault: function() {
             var defaultData = Alpaca.isEmpty(this.schema['default']) ? "" : this.schema['default'];
             this.setValue(defaultData);
+        },
+
+        /**
+         * Returns the value of this field.
+         *
+         * @returns {Any} value Field value.
+         */
+        getValue: function()
+        {
+            var self = this;
+
+            var value = this.base();
+
+            if (!this.isDisplayOnly())
+            {
+                value = self.getControlValue();
+            }
+
+            // some correction for type
+            value = self.ensureProperType(value);
+
+            return value;
+        },
+
+        /**
+         * Extension point
+         */
+        getControlValue: function()
+        {
+            return this._getControlVal(true);
         },
 
         /**

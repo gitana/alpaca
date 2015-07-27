@@ -29,7 +29,10 @@
             this.triggerUpdate();
         },
 
-        getValue: function()
+        /**
+         * @see Alpaca.Fields.ControlField#getControlValue
+         */
+        getControlValue: function()
         {
             return this.data;
         },
@@ -78,9 +81,10 @@
                     }
                 }
             }
-        },
+        }
 
         /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.Fields.TextField#getTitle

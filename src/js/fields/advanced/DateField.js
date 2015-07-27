@@ -109,6 +109,9 @@
                         self.on("keypress", function (e) {
                             if (!self.options.manualEntry)
                             {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+
                                 return false;
                             }
                         });
@@ -266,14 +269,6 @@
                     this.picker.date(value);
                 }
             }
-        },
-
-        /**
-         * @see Alpaca.Fields.TextField#getValue
-         */
-        getValue: function()
-        {
-            return this.base();
         },
 
         destroy: function()

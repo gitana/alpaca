@@ -38,8 +38,8 @@ $("#field1").alpaca({
             "age": {
                 "title": "Age",
                 "type": "integer",
-                "minValue": 0,
-                "maxValue": 100
+                "minimum": 0,
+                "maximum": 100
             },
             "preferences": {
                 "title": "Preferences",
@@ -99,8 +99,8 @@ $("#field2").alpaca({
             "age": {
                 "title": "Age",
                 "type": "integer",
-                "minValue": 0,
-                "maxValue": 100
+                "minimum": 0,
+                "maximum": 100
             }
         }
     },
@@ -148,8 +148,8 @@ $("#field3").alpaca({
             "age": {
                 "title": "Age",
                 "type": "integer",
-                "minValue": 0,
-                "maxValue": 100
+                "minimum": 0,
+                "maximum": 100
             }
         }
     },
@@ -285,8 +285,8 @@ $("#field5").alpaca({
             "age": {
                 "title": "Age",
                 "type": "integer",
-                "minValue": 0,
-                "maxValue": 100
+                "minimum": 0,
+                "maximum": 100
             }
         }
     },
@@ -366,8 +366,8 @@ $("#field6").alpaca({
             "age": {
                 "title": "Age",
                 "type": "integer",
-                "minValue": 0,
-                "maxValue": 100
+                "minimum": 0,
+                "maximum": 100
             }
         }
     },

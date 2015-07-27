@@ -226,7 +226,10 @@
                     var key = $(this).attr("data-header-id");
 
                     var schema = self.schema.items.properties[key];
-                    var options = self.options.items.fields[key];
+                    var options = null;
+                    if (self.options.items.fields && self.options.items.fields[key]) {
+                        options = self.options.items.fields[key];
+                    }
 
                     // CALLBACK: "tableHeaderRequired"
                     self.fireCallback("tableHeaderRequired", schema, options, this);

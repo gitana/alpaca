@@ -97,9 +97,10 @@
         /**
          * @see Alpaca.Field#getValue
          */
-        getValue: function(val)
+        convertValue: function(val)
         {
             var _this = this;
+
             if (Alpaca.isArray(val))
             {
                 $.each(val, function(index, itemVal) {
@@ -273,6 +274,18 @@
                             {
                                 self.selectOptions.push(self.options.dataSource[i]);
                             }
+                        }
+
+                        completionFunction();
+                    }
+                    else if (Alpaca.isObject(self.options.dataSource))
+                    {
+                        for (var k in self.options.dataSource)
+                        {
+                            self.selectOptions.push({
+                                "text": self.options.dataSource[k],
+                                "value": k
+                            });
                         }
 
                         completionFunction();

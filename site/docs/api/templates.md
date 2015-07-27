@@ -79,14 +79,14 @@ $("#field1").alpaca({
             "age": {
                 "title": "Age",
                 "type": "integer",
-                "minValue": 0,
-                "maxValue": 100
+                "minimum": 0,
+                "maximum": 100
             }
         }
     },
     "view": {
         "templates": {
-            "message": "<div style='text-align:center'><h3 style='color: red;'>Yo! {{{message}}}</h3></div>"
+            "message": "<div style='text-align:center'><h3 style='color: red;'>Yippee kai yay!</h3><img src='/images/john-mcclaine.jpg'><p style='color: red;'>{{{message}}}</p></div>"
         }
     }
 });
@@ -126,8 +126,8 @@ $("#field2").alpaca({
             "age": {
                 "title": "Age",
                 "type": "integer",
-                "minValue": 0,
-                "maxValue": 100
+                "minimum": 0,
+                "maxiumum": 100
             }
         }
     },
@@ -282,8 +282,8 @@ $("#field4").alpaca({
             },
             "age": {
                 "type": "integer",
-                "minValue": 0,
-                "maxValue": 100
+                "minimum": 0,
+                "maximum": 100
             }
         }
     },
@@ -336,8 +336,8 @@ $(document).ready(function() {
                 },
                 "age": {
                     "type": "integer",
-                    "minValue": 0,
-                    "maxValue": 100
+                    "minimum": 0,
+                    "maximum": 100
                 }
             }
         },

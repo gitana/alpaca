@@ -90,6 +90,7 @@ $("#field4").alpaca({
 
 ## Example 5
 Checkbox Field used for multiple values provided as a comma-delimited string.
+We also hook up some form buttons to get at the JSON.  Click the "View JSON" button to see it.
 <div id="field5"> </div>
 {% raw %}
 <script type="text/javascript" id="field5-script">
@@ -112,7 +113,17 @@ $("#field5").alpaca({
             "Potato Chips",
             "A Cookie",
             "Soft Drink"
-        ]
+        ],
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        }
     }
 });
 </script>
