@@ -576,8 +576,19 @@
                 {
                     var child = self.children[i];
 
-                    // reset path and name
-                    child.path = self.path + "[" + i + "]";
+                    // set path if not set
+                    if (!child.path)
+                    {
+                        if (child.schema.type === "array")
+                        {
+                            child.path = self.path + "[" + i + "]";
+                        }
+                        else
+                        {
+                            child.path = self.path + "/" + child.propertyId;
+                        }
+                    }
+
                     child.calculateName();
 
                     $(child.containerItemEl).removeClass("alpaca-container-item-first");

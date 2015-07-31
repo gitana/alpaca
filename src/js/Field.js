@@ -455,6 +455,7 @@
                 }
                 else
                 {
+                    // generate name from the path
                     if (this.path)
                     {
                         this.name = this.path.replace(/\//g,"").replace(/\[/g,"_").replace(/\]/g,"");

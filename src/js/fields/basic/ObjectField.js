@@ -1027,8 +1027,8 @@
                     }
                 }
 
-                // updates child dom marker elements
-                self.updateChildDOMElements();
+                // updates dom markers for this element and any siblings
+                self.handleRepositionDOMRefresh();
 
                 // update the array item toolbar state
                 //self.updateToolbars();
@@ -1076,6 +1076,9 @@
             childField.destroy();
 
             this.refreshValidationState(true, function() {
+
+                // updates dom markers for this element and any siblings
+                self.handleRepositionDOMRefresh();
 
                 // dispatch event: remove
                 self.trigger("remove", childField);
@@ -1834,8 +1837,8 @@
                 tempSourceMarker.replaceWith(targetContainer);
                 tempTargetMarker.replaceWith(sourceContainer);
 
-                // updates child dom marker elements
-                self.updateChildDOMElements();
+                // updates dom markers for this element and any siblings
+                self.handleRepositionDOMRefresh();
 
                 // update the action bar bindings
                 $(sourceContainer).find("[data-alpaca-array-actionbar-item-index='" + sourceIndex + "']").attr("data-alpaca-array-actionbar-item-index", targetIndex);

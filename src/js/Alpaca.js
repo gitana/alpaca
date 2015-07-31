@@ -4616,6 +4616,26 @@
      */
     Alpaca.createEmptyDataInstance = function(schema)
     {
+        if (!schema) {
+            return "";
+        }
+
+        if (schema.type === "object") {
+            return {};
+        }
+
+        if (schema.type === "array") {
+            return [];
+        }
+
+        if (schema.type === "number") {
+            return -1;
+        }
+
+        if (schema.type === "boolean") {
+            return false;
+        }
+
         return "";
     };
 
