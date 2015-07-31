@@ -15,6 +15,16 @@
 
                 model.options.showActionsColumn = self.parent.options.showActionsColumn;
 
+                // walk all items and mark hiddens so that the template can easily pick this up
+                // hiddens are applied the "alpaca-table-column-hidden" css class so that they can be hidden
+                for (var i = 0; i < model.items.length; i++)
+                {
+                    if (model.items[i].options.type === "hidden")
+                    {
+                        model.items[i].hidden = true;
+                    }
+                }
+
                 callback(model);
             });
         },

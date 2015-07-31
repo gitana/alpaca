@@ -135,7 +135,9 @@
          */
         getViewParam: function (configId, topLevelOnly) {
 
-            // Try the fields
+            var self = this;
+
+            // look for exact match
             var fieldPath = this.field.path;
             if (this.fields && this.fields[fieldPath]) {
                 var configVal = this._getConfigVal(this.fields[fieldPath], configId);
@@ -144,11 +146,22 @@
                 }
             }
 
-            // array related field path
+            // array related field path (using [*] syntax)  i.e.  /a/b[*]/c/d[*]/e
             if (fieldPath && fieldPath.indexOf('[') !== -1 && fieldPath.indexOf(']') !== -1) {
-                fieldPath = fieldPath.replace(/\[\d+\]/g,"[*]");
-                if (this.fields && this.fields[fieldPath]) {
-                    var configVal = this._getConfigVal(this.fields[fieldPath], configId);
+                var newFieldPath = fieldPath.replace(/\[\d+\]/g,"[*]");
+                if (this.fields && this.fields[newFieldPath]) {
+                    var configVal = this._getConfigVal(this.fields[newFieldPath], configId);
+                    if (!Alpaca.isEmpty(configVal)) {
+                        return configVal;
+                    }
+                }
+            }
+
+            // array related field path (using pure path syntax)   i.e. /a/b/c/d/e
+            if (fieldPath && fieldPath.indexOf('[') !== -1 && fieldPath.indexOf(']') !== -1) {
+                var newFieldPath = fieldPath.replace(/\[\d+\]/g,"");
+                if (this.fields && this.fields[newFieldPath]) {
+                    var configVal = this._getConfigVal(this.fields[newFieldPath], configId);
                     if (!Alpaca.isEmpty(configVal)) {
                         return configVal;
                     }

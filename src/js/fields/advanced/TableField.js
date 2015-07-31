@@ -151,22 +151,35 @@
         {
             var self = this;
 
-            // copy options.fields[k].label to schema.properties[k].title
-            if (self.schema.items && self.schema.items.properties)
-            {
-                for (var k in self.schema.items.properties)
+            self.base(function(model) {
+
+                // build a separate "items" array that we'll use to build out the table header
+                model.headers = [];
+                if (self.schema.items && self.schema.items.properties)
                 {
-                    if (!self.schema.items.properties[k].title)
+                    for (var k in self.schema.items.properties)
                     {
+                        var header = {};
+                        header.id = k;
+                        header.title = self.schema.items.properties[k].title;
+                        header.hidden = false;
                         if (self.options.items && self.options.items.fields && self.options.items.fields[k])
                         {
-                            self.schema.items.properties[k].title = self.options.items.fields[k].label;
+                            if (self.options.items.fields[k].label)
+                            {
+                                header.title = self.options.items.fields[k].label;
+                            }
+
+                            if (self.options.items.fields[k].type === "hidden")
+                            {
+                                header.hidden = true;
+                            }
                         }
+
+                        model.headers.push(header);
                     }
                 }
-            }
 
-            self.base(function(model) {
                 callback(model);
             });
         },
@@ -231,8 +244,17 @@
                         options = self.options.items.fields[key];
                     }
 
-                    // CALLBACK: "tableHeaderRequired"
-                    self.fireCallback("tableHeaderRequired", schema, options, this);
+                    // CALLBACK: "tableHeaderRequired" or "tableHeaderOptional"
+                    if (schema.required || (options && options.required))
+                    {
+                        // CALLBACK: "tableHeaderRequired"
+                        self.fireCallback("tableHeaderRequired", schema, options, this);
+                    }
+                    else
+                    {
+                        // CALLBACK: "tableHeaderOptional"
+                        self.fireCallback("tableHeaderOptional", schema, options, this);
+                    }
 
                 });
 

@@ -9,9 +9,9 @@
             <!-- table headers -->
             <thead>
                 <tr>
-                    {{#eachProperty schema.items.properties}}
-                    <th data-header-id="{{key}}">{{{value.title}}}</th>
-                    {{/eachProperty}}
+                    {{#each headers}}
+                    <th data-header-id="{{id}}" {{#if hidden}}class="alpaca-table-column-hidden"{{/if}}>{{{title}}}</th>
+                    {{/each}}
 
                     {{#if options.showActionsColumn}}
                         <th>Actions</th>

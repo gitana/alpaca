@@ -96,6 +96,9 @@
                         this.options.helpers.push(this.options.helper[i]);
                     }
                 }
+
+                // remove legacy value
+                delete this.options.helper;
             }
 
             if (Alpaca.isEmpty(this.options.readonly) && !Alpaca.isEmpty(this.schema.readonly)) {

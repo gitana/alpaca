@@ -3,7 +3,10 @@
     <div class="alpaca-merge-up">
 
         {{#each items}}
-            {{#item}}{{/item}}
+            {{#if hidden}}
+            {{else}}
+                {{#item}}{{/item}}
+            {{/if}}
         {{/each}}
 
         <!-- actions cell -->

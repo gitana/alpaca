@@ -259,3 +259,8 @@
 {
     width: auto;
 }
+
+.alpaca-table-column-hidden
+{
+    display: none;
+}
