@@ -111,6 +111,7 @@ We've provided chapters here on a variety of interesting API-related topics.
             <li><a href="{{ BASE_PATH }}/docs/api/forms.html">Forms</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/i18n.html">Internationalization</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/layouts.html">Layouts</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/api/lookups.html">Lookups</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/observables.html">Observables</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/references.html">References</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/recursive-references.html">Recursive References</a></li>
