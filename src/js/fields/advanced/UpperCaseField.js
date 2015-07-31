@@ -34,7 +34,10 @@
          */
         setValue: function(val)
         {
-            var upperValue = val.toUpperCase();
+            var upperValue = null;
+            if (val && Alpaca.isString(val)) {
+                upperValue = val.toUpperCase();
+            }
 
             if (upperValue != this.getValue()) // jshint ignore:line
             {

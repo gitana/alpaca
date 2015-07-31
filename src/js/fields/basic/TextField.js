@@ -581,7 +581,7 @@
         /**
          * @see Alpaca.ControlField#onKeyPress
          */
-        onKeyDown: function(e)
+        onKeyPress: function(e)
         {
             var self = this;
 

@@ -79,6 +79,34 @@
                 self.options.manualEntry = false;
             }
         },
+        
+        onKeyPress: function(e)
+        {
+            if (this.options.manualEntry)
+            {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+            }
+            else
+            {
+                this.base(e);
+                return;
+            }
+        },
+        
+        onKeyDown: function(e)
+        {
+            if (this.options.manualEntry)
+            {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+            }
+            else
+            {
+                this.base(e);
+                return;
+            }
+        },
 
         /**
          * @see Alpaca.Fields.TextField#afterRenderControl
@@ -104,17 +132,6 @@
                         {
                             self.options.dateFormat = self.picker.format();
                         }
-
-                        // optionally block manual entry
-                        self.on("keypress", function (e) {
-                            if (!self.options.manualEntry)
-                            {
-                                e.preventDefault();
-                                e.stopImmediatePropagation();
-
-                                return false;
-                            }
-                        });
 
                         // with date-time picker, trigger change using plugin
                         self.getFieldEl().on("dp.change", function(e) {
