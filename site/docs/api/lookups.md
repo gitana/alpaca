@@ -15,7 +15,7 @@ Every field that renders fundamentally receives an <code>ID</code>.  The ID is a
 significance other than that it is unique.  Typically, it is something like <code>alpaca123</code>.  Each field or
 element that Alpaca renders will utilize this ID to ensure a unique method of look up.
 
-In addition to this ID, every field maintains a <code>name<code> and a <code>path</code>.  The name is either a
+In addition to this ID, every field maintains a <code>name</code> and a <code>path</code>.  The name is either a
 JSON schema property ID (the key for a property) or a JSON array index (for items).  The path is a human readable
 path into a JSON data element.
 
@@ -51,6 +51,7 @@ You can look up fields in the rendered Alpaca form using either the ID, the name
 this is done within a <code>postRender</code> callback:
 
 Here is a pseudo-example that uses a quick and dirty schema for our whack-daddy example from above:
+
 ````
 $(domEl).alpaca({
     schema: {
@@ -96,22 +97,26 @@ the top-level field is an object.  Objects and Arrays are Containers in Alpaca a
 following:
 
 1.  Get the author's first name field using the Alpaca ID
+
 ````
 var authorFirstNameField = field.childrenById["alpaca123"]
 ````
 
 2.  Get the author's first name field by walking property IDs:
+
 ````
 var authorFirstNameField = field.childrenByPropertyId["author"].childrenByPropertyId["firstName"]
 ````
 
 3.  Get the author's first name field using the path:
+
 ````
 var authorFirstNameField = field.getControlByPath("author/firstName");
 ````
 
 If you have a reference to a field that isn't the top-most field, you can get to the top-most field by using the
 <code>top()</code> function like this:
+
 ````
 var authorFirstNameField = grantsArrayField.top().getControlByPath("author/firstName");
 ````
