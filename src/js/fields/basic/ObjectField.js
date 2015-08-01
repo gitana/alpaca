@@ -1739,11 +1739,12 @@
                 col = [];
                 for (var propertyId in stepBindings)
                 {
-                    if (stepBindings[propertyId] == step)
+                    if (stepBindings[propertyId] === step)
                     {
                         if (this.childrenByPropertyId && this.childrenByPropertyId[propertyId])
                         {
-                            col.push(this.childrenByPropertyId[propertyId].field);
+                            //col.push(this.childrenByPropertyId[propertyId].field);
+                            col.push(this.childrenByPropertyId[propertyId].containerItemEl);
                         }
                     }
                 }
@@ -1774,6 +1775,11 @@
 
             // now run the normal wizard
             this.wizard();
+
+            // if the container element doesn't have any children left, hide it
+            if ($(this.container).children().length === 0) {
+                $(this.container).css("display", "none");
+            }
         },
 
         /**
