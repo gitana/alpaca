@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Alpaca Forms Source: fields/advanced/DateField.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top ">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Alpaca Forms</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Namespace%2520for%2520all%2520Alpaca%2520Connector%2520Class%2520Implementations..html">Namespace for all Alpaca Connector Class Implementations.</a>
+						</li>
+						
+						<li>
+							<a href="Namespace%2520for%2520all%2520Alpaca%2520Field%2520Class%2520Implementations..html">Namespace for all Alpaca Field Class Implementations.</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Alpaca.Connector.html">Alpaca.Connector</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Field.html">Alpaca.Field</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Fields.CurrencyField.html">Alpaca.Fields.CurrencyField</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Fields.UploadField.html">Alpaca.Fields.UploadField</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Form.html">Alpaca.Form</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.NormalizedView.html">Alpaca.NormalizedView</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.RuntimeView.html">Alpaca.RuntimeView</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="global.html#compile">compile</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doCompile">doCompile</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doExecute">doExecute</a>
+						</li>
+						
+						<li>
+							<a href="global.html#execute">execute</a>
+						</li>
+						
+						<li>
+							<a href="global.html#fileExtension">fileExtension</a>
+						</li>
+						
+						<li>
+							<a href="global.html#findCacheKeys">findCacheKeys</a>
+						</li>
+						
+						<li>
+							<a href="global.html#isCached">isCached</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDependencyChange">onDependencyChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#subscribe">subscribe</a>
+						</li>
+						
+						<li>
+							<a href="global.html#supportedMimetypes">supportedMimetypes</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: fields/advanced/DateField.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">(function($) {
+
+    // NOTE: this requires bootstrap-datetimepicker.js
+    // NOTE: this requires moment.js
+
+    var Alpaca = $.alpaca;
+
+    Alpaca.Fields.DateField = Alpaca.Fields.TextField.extend(
+    /**
+     * @lends Alpaca.Fields.DateField.prototype
+     */
+    {
+        /**
+         * @see Alpaca.Fields.TextField#getFieldType
+         */
+        getFieldType: function() {
+            return "date";
+        },
+
+        getDefaultFormat: function() {
+            return "MM/DD/YYYY";
+        },
+
+        getDefaultExtraFormats: function() {
+            return [];
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#setup
+         */
+        setup: function()
+        {
+            var self = this;
+
+            // default html5 input type = "date";
+            //this.inputType = "date";
+
+            this.base();
+
+            if (!self.options.picker)
+            {
+                self.options.picker = {};
+            }
+
+            if (typeof(self.options.picker.useCurrent) === "undefined") {
+                self.options.picker.useCurrent = false;
+            }
+
+            // date format
+
+            if (self.options.picker.format) {
+                self.options.dateFormat = self.options.picker.format;
+            }
+            if (!self.options.dateFormat) {
+                self.options.dateFormat = self.getDefaultFormat();
+            }
+            if (!self.options.picker.format) {
+                self.options.picker.format = self.options.dateFormat;
+            }
+
+            if (!self.options.picker.locale) {
+                self.options.picker.locale = "en_US";
+            }
+
+            if (!self.options.picker.dayViewHeaderFormat) {
+                self.options.picker.dayViewHeaderFormat = "MMMM YYYY";
+            }
+
+            // extra formats
+            if (!self.options.picker.extraFormats) {
+                var extraFormats = self.getDefaultExtraFormats();
+                if (extraFormats) {
+                    self.options.picker.extraFormats = extraFormats;
+                }
+            }
+
+            if (typeof(self.options.manualEntry) === "undefined")
+            {
+                self.options.manualEntry = false;
+            }
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#afterRenderControl
+         */
+        afterRenderControl: function(model, callback) {
+
+            var self = this;
+
+            this.base(model, function() {
+
+                if (self.view.type !== "display")
+                {
+                    if ($.fn.datetimepicker)
+                    {
+                        self.getControlEl().datetimepicker(self.options.picker);
+
+                        self.picker = self.getControlEl().data("DateTimePicker");
+                        if (self.picker &amp;&amp; self.options.dateFormat)
+                        {
+                            self.picker.format(self.options.dateFormat);
+                        }
+                        if (self.picker)
+                        {
+                            self.options.dateFormat = self.picker.format();
+                        }
+
+                        // optionally block manual entry
+                        self.on("keypress", function (e) {
+                            if (!self.options.manualEntry)
+                            {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+
+                                return false;
+                            }
+                        });
+
+                        // with date-time picker, trigger change using plugin
+                        self.getFieldEl().on("dp.change", function(e) {
+
+                            // we use a timeout here because we want this to run AFTER control click handlers
+                            setTimeout(function() {
+                                self.onChange.call(self, e);
+                                self.triggerWithPropagation("change", e);
+                            }, 250);
+
+                        });
+                    }
+                }
+
+                callback();
+
+            });
+        },
+
+        /**
+         * Allows manual entry mode to be toggled on and off.
+         *
+         * @param manualEntry
+         */
+        setManualEntry: function(manualEntry)
+        {
+            this.options.manualEntry = manualEntry;
+        },
+
+        /**
+         * Returns field value as a JavaScript Date.
+         *
+         * @returns {Date} Field value.
+         */
+        getDate: function()
+        {
+            var self = this;
+
+            var date = null;
+            try
+            {
+                if (self.picker)
+                {
+                    date = (self.picker.date() ? self.picker.date()._d: null);
+                }
+                else
+                {
+                    date = new Date(this.getValue());
+                }
+            }
+            catch (e)
+            {
+                console.error(e);
+            }
+
+            return date;
+        },
+
+        /**
+         * Returns field value as a JavaScript Date.
+         *
+         * @returns {Date} Field value.
+         */
+        date: function()
+        {
+            return this.getDate();
+        },
+
+        /**
+         * @see Alpaca.Field#onChange
+         */
+        onChange: function(e)
+        {
+            this.base();
+
+            this.refreshValidationState();
+        },
+
+        isAutoFocusable: function()
+        {
+            return false;
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#handleValidate
+         */
+        handleValidate: function()
+        {
+            var baseStatus = this.base();
+
+            var valInfo = this.validation;
+
+            var status = this._validateDateFormat();
+            valInfo["invalidDate"] = {
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("invalidDate"), [this.options.dateFormat]),
+                "status": status
+            };
+
+            return baseStatus &amp;&amp; valInfo["invalidDate"]["status"];
+        },
+
+        /**
+         * Validates date format.
+         *
+         * @returns {Boolean} True if it is a valid date, false otherwise.
+         */
+        _validateDateFormat: function()
+        {
+            var self = this;
+
+            var isValid = true;
+
+            if (self.options.dateFormat)
+            {
+                var value = self.getValue();
+                if (value || self.isRequired())
+                {
+                    // collect all formats
+                    var dateFormats = [];
+                    dateFormats.push(self.options.dateFormat);
+                    if (self.options.picker &amp;&amp; self.options.picker.extraFormats)
+                    {
+                        for (var i = 0; i &lt; self.options.picker.extraFormats.length; i++)
+                        {
+                            dateFormats.push(self.options.picker.extraFormats[i]);
+                        }
+                    }
+
+                    for (var i = 0; i &lt; dateFormats.length; i++)
+                    {
+                        isValid = isValid || moment(value, self.options.dateFormat, true).isValid();
+                    }
+                }
+            }
+
+            return isValid;
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#setValue
+         */
+        setValue: function(value)
+        {
+            var self = this;
+
+            this.base(value);
+
+            if (this.picker)
+            {
+                if (moment(value, self.options.dateFormat, true).isValid())
+                {
+                    this.picker.date(value);
+                }
+            }
+        },
+
+        destroy: function()
+        {
+            this.base();
+
+            this.picker = null;
+        }
+
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Fields.TextField#getTitle
+         */
+        getTitle: function() {
+            return "Date Field";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#getDescription
+         */
+        getDescription: function() {
+            return "Date Field";
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.TextField#getSchemaOfSchema
+         */
+        getSchemaOfSchema: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "format": {
+                        "title": "Format",
+                        "description": "Property data format",
+                        "type": "string",
+                        "default":"date",
+                        "enum" : ["date"],
+                        "readonly":true
+                    }
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.TextField#getOptionsForSchema
+         */
+        getOptionsForSchema: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "format": {
+                        "type": "text"
+                    }
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.TextField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "properties": {
+                    "dateFormat": {
+                        "title": "Date Format",
+                        "description": "Date format (using moment.js format)",
+                        "type": "string"
+                    },
+                    "picker": {
+                        "title": "DatetimePicker options",
+                        "description": "Options that are supported by the &lt;a href='http://eonasdan.github.io/bootstrap-datetimepicker/'>Bootstrap DateTime Picker&lt;/a>.",
+                        "type": "any"
+                    }
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @see Alpaca.Fields.TextField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "dateFormat": {
+                        "type": "text"
+                    },
+                    "picker": {
+                        "type": "any"
+                    }
+                }
+            });
+        }
+
+        /* end_builder_helpers */
+    });
+
+    Alpaca.registerMessages({
+        "invalidDate": "Invalid date for format {0}"
+    });
+    Alpaca.registerFieldClass("date", Alpaca.Fields.DateField);
+    Alpaca.registerDefaultFormatFieldMapping("date", "date");
+
+})(jQuery);
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Copyright © 2014 Gitana Software, Inc.
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a>
+		on Fri Jul 17th 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>

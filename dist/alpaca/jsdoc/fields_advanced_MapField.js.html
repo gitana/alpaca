@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Alpaca Forms Source: fields/advanced/MapField.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top ">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Alpaca Forms</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Namespace%2520for%2520all%2520Alpaca%2520Connector%2520Class%2520Implementations..html">Namespace for all Alpaca Connector Class Implementations.</a>
+						</li>
+						
+						<li>
+							<a href="Namespace%2520for%2520all%2520Alpaca%2520Field%2520Class%2520Implementations..html">Namespace for all Alpaca Field Class Implementations.</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Alpaca.Connector.html">Alpaca.Connector</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Field.html">Alpaca.Field</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Fields.CurrencyField.html">Alpaca.Fields.CurrencyField</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Fields.UploadField.html">Alpaca.Fields.UploadField</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.Form.html">Alpaca.Form</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.NormalizedView.html">Alpaca.NormalizedView</a>
+						</li>
+						
+						<li>
+							<a href="Alpaca.RuntimeView.html">Alpaca.RuntimeView</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="global.html#compile">compile</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doCompile">doCompile</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doExecute">doExecute</a>
+						</li>
+						
+						<li>
+							<a href="global.html#execute">execute</a>
+						</li>
+						
+						<li>
+							<a href="global.html#fileExtension">fileExtension</a>
+						</li>
+						
+						<li>
+							<a href="global.html#findCacheKeys">findCacheKeys</a>
+						</li>
+						
+						<li>
+							<a href="global.html#isCached">isCached</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDependencyChange">onDependencyChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#subscribe">subscribe</a>
+						</li>
+						
+						<li>
+							<a href="global.html#supportedMimetypes">supportedMimetypes</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: fields/advanced/MapField.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">(function($) {
+
+    var Alpaca = $.alpaca;
+
+    Alpaca.Fields.MapField = Alpaca.Fields.ArrayField.extend(
+    /**
+     * @lends Alpaca.Fields.MapField.prototype
+     */
+    {
+        /**
+         * @see Alpaca.Fields.TextAreaField#getFieldType
+         */
+        getFieldType: function() {
+            return "map";
+        },
+
+        getType: function()
+        {
+            return "object"
+        },
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#setup
+         */
+        setup: function()
+        {
+            // special handling - data can come in as an object, we convert to array
+            if (this.data &amp;&amp; Alpaca.isObject(this.data))
+            {
+                var newData = [];
+
+                $.each(this.data, function(key, value) {
+                    var newValue = Alpaca.copyOf(value);
+                    newValue["_key"] = key;
+                    newData.push(newValue);
+                });
+
+                this.data = newData;
+            }
+
+            this.base();
+
+            Alpaca.mergeObject(this.options, {
+                "forceRevalidation" : true
+            });
+
+            if (Alpaca.isEmpty(this.data))
+            {
+                return;
+            }
+        },
+
+        /**
+         * @see Alpaca.ContainerField#getContainerValue
+         */
+        getContainerValue: function()
+        {
+            // if we don't have any children and we're not required, hand back undefined
+            if (this.children.length === 0 &amp;&amp; !this.isRequired())
+            {
+                return;
+            }
+
+            // special handling, convert back to object
+            var o = {};
+            for (var i = 0; i &lt; this.children.length; i++)
+            {
+                var v = this.children[i].getValue();
+                var key = v["_key"];
+                if (key)
+                {
+                    delete v["_key"];
+                    o[key] = v;
+                }
+            }
+
+            return o;
+        },
+
+        /**
+         * @see Alpaca.Fields.TextField#handleValidate
+         */
+        handleValidate: function()
+        {
+            var baseStatus = this.base();
+
+            var valInfo = this.validation;
+
+            var isValidMapKeysNotEmpty = this._validateMapKeysNotEmpty();
+            valInfo["keyMissing"] = {
+                "message": isValidMapKeysNotEmpty ? "" : this.getMessage("keyMissing"),
+                "status": isValidMapKeysNotEmpty
+            };
+
+            var isValidMapKeysUnique = this._validateMapKeysUnique();
+            valInfo["keyNotUnique"] = {
+                "message": isValidMapKeysUnique ? "" : this.getMessage("keyNotUnique"),
+                "status": isValidMapKeysUnique
+            };
+
+            return baseStatus &amp;&amp; valInfo["keyMissing"]["status"] &amp;&amp; valInfo["keyNotUnique"]["status"];
+        },
+
+        /**
+         * Validates that key fields are not empty.
+         *
+         * @returns {Boolean} true if keys are not empty
+         */
+        _validateMapKeysNotEmpty: function()
+        {
+            var isValid = true;
+
+            for (var i = 0; i &lt; this.children.length; i++)
+            {
+                var v = this.children[i].getValue();
+                var key = v["_key"];
+
+                if (!key)
+                {
+                    isValid = false;
+                    break;
+                }
+            }
+
+            return isValid;
+        },
+
+        /**
+         * Validates if key fields are unique.
+         *
+         * @returns {Boolean} true if keys are unique
+         */
+        _validateMapKeysUnique: function()
+        {
+            var isValid = true;
+
+            var keys = {};
+            for (var i = 0; i &lt; this.children.length; i++)
+            {
+                var v = this.children[i].getValue();
+                var key = v["_key"];
+
+                if (keys[key])
+                {
+                    isValid = false;
+                }
+
+                keys[key] = key;
+            }
+
+            return isValid;
+        }
+
+        /* builder_helpers */
+        ,
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#getTitle
+         */
+        getTitle: function() {
+            return "Map Field";
+        },
+
+        /**
+         * @see Alpaca.Fields.TextAreaField#getDescription
+         */
+        getDescription: function() {
+            return "Field for objects with key/value pairs that share the same schema for values.";
+        }
+
+        /* end_builder_helpers */
+    });
+
+    Alpaca.registerFieldClass("map", Alpaca.Fields.MapField);
+
+    // Additional Registrations
+    Alpaca.registerMessages({
+        "keyNotUnique": "Keys of map field are not unique.",
+        "keyMissing": "Map contains an empty key."
+    });
+
+})(jQuery);
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Copyright © 2014 Gitana Software, Inc.
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a>
+		on Fri Jul 17th 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>

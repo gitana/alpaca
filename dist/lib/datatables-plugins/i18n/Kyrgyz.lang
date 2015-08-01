@@ -1,0 +1,29 @@
+/**
+ *  @name Kyrgyz
+ *  @anchor Kyrgyz
+ *  @author <a href="https://github.com/nursultan92/">Nursultan Turdaliev</a>
+ */
+
+{
+	"sEmptyTable":     "Таблицада эч кандай берилиш жок",
+	"sInfo":           "Жалпы _TOTAL_ дан _START_ дан _END_ га чейинки сапты көрсөтүүдө",
+	"sInfoEmpty":      "Жалпы 0 дөн 0 дөн 0 гө чейинки саптар",
+	"sInfoFiltered":   "( Жалпысынан _MAX_ фильтрленди)",
+	"sInfoPostFix":    "",
+	"sInfoThousands":  ",",
+	"sLengthMenu":     "Саптан _MENU_ көрсөт",
+	"sLoadingRecords": "Жүктөлүүдө...",
+	"sProcessing":     "Иштеп жатат...",
+	"sSearch":         "Издөө:",
+	"sZeroRecords":    "Туура келген бир да сап жок",
+	"oPaginate": {
+		"sFirst":    "Биринчи",
+		"sLast":     "Акыркы",
+		"sNext":     "Кийинки",
+		"sPrevious": "Мукдакы"
+	},
+	"oAria": {
+		"sSortAscending":  ": Чоңойуу ирээти боюнча тизмеле",
+		"sSortDescending": ": Кемүү ирээти боюнча тизмеле"
+	}
+}
