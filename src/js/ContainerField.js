@@ -617,6 +617,26 @@
         },
 
         /**
+         * Gets called whenever an item is dynamically added or removed from a container.  This allows all of the
+         * container markers to refresh on the DOM.
+         */
+        handleRepositionDOMRefresh: function()
+        {
+            var self = this;
+
+            if (self.getParent())
+            {
+                // call update dom markers for parent which will trickle down to to cover this field and our siblings
+                self.getParent().updateDOMElement();
+            }
+            else
+            {
+                // just ourselves
+                self.updateDOMElement();
+            }
+        },
+
+        /**
          * Propagates signal down to all children.
          * @override
          */
@@ -754,6 +774,26 @@
         getContainerValue: function()
         {
             return null;
+        },
+
+        firstChild: function() {
+            var child = null;
+
+            if (this.children.length > 0) {
+                child = this.children[0];
+            }
+
+            return child;
+        },
+
+        lastChild: function() {
+            var child = null;
+
+            if (this.children.length > 0) {
+                child = this.children[this.children.length - 1];
+            }
+
+            return child;
         }
 
         /* builder_helpers */

@@ -398,3 +398,80 @@ $("#field6").alpaca({
 });
 </script>
 {% endraw %}
+
+
+## Form with Add Item button
+
+This form offers an Add Item button that lets you add a new field dynamically.
+
+<div id="field7"> </div>
+{% raw %}
+<script type="text/javascript" id="field7-script">
+$("#field7").alpaca({
+    "schema": {
+        "title": "Your Information",
+        "type": "object",
+        "properties": {
+            "firstName": {
+                "title": "First Name",
+                "type": "string"
+            },
+            "lastName": {
+                "title": "Last Name",
+                "type": "string"
+            },
+            "age": {
+                "title": "Age",
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+            },
+            "preferences": {
+                "title": "Preferences",
+                "type": "string",
+                "enum": ["Non-Smoking", "Vegetarian", "Wheelchair Accessible", "Child Friendly"]
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "preferences": {
+                "type": "checkbox"
+            }
+        },
+        "form": {
+            "buttons": {
+                "add": {
+                    "title": "Add",
+                    "click": function() {
+                        var itemId = "field-" + new Date().getTime();
+                        var itemSchema = {
+                            "type": "string"
+                        };
+                        var itemOptions = {
+                            "label": itemId
+                        };
+                        var itemData = "Hello World";
+                        var insertAfterId = "preferences";
+                        this.topControl.addItem(itemId, itemSchema, itemOptions, itemData, insertAfterId, function(item) {
+                            alert("added!");
+                        });
+                    }
+                },
+                "remove": {
+                    "title": "Remove Last",
+                    "click": function() {
+                        var lastChild = this.topControl.lastChild();
+                        if (lastChild) {
+                            this.topControl.removeItem(lastChild.propertyId, function() {
+                                alert("removed!");
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+{% endraw %}

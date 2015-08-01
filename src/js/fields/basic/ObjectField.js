@@ -1011,21 +1011,7 @@
                 self.registerChild(child, ((index != null) ? index + 1 : null));
 
                 // insert into dom
-                if (!index)
-                {
-                    // insert first into container
-                    $(self.container).append(child.getFieldEl());
-                }
-                else
-                {
-                    // insert at a specific index
-                    var existingElement = self.getContainerEl().children("[data-alpaca-container-item-index='" + index + "']");
-                    if (existingElement && existingElement.length > 0)
-                    {
-                        // insert after
-                        existingElement.after(child.getFieldEl());
-                    }
-                }
+                self.doAddItem(index, child);
 
                 // updates dom markers for this element and any siblings
                 self.handleRepositionDOMRefresh();
@@ -1051,6 +1037,42 @@
             });
         },
 
+        doAddItem: function(index, item)
+        {
+            var self = this;
+
+            // insert into dom
+            if (!index)
+            {
+                // insert first into container
+                $(self.container).append(item.containerItemEl);
+            }
+            else
+            {
+                // insert at a specific index
+                var existingElement = self.getContainerEl().children("[data-alpaca-container-item-index='" + index + "']");
+                if (existingElement && existingElement.length > 0)
+                {
+                    // insert after
+                    existingElement.after(item.containerItemEl);
+                }
+            }
+
+            self.doAfterAddItem(item);
+        },
+
+        doAfterAddItem: function(item)
+        {
+
+        },
+
+        doResolveItemContainer: function()
+        {
+            var self = this;
+
+            return $(self.container);
+        },
+
         /**
          * Removes an item from the object.
          *
@@ -1061,39 +1083,53 @@
         {
             var self = this;
 
-            this.children = $.grep(this.children, function(val, index) {
-                return (val.getId() != propertyId);
-            });
-
-            var childField = this.childrenById[propertyId];
-
-            delete this.childrenById[propertyId];
-            if (childField.propertyId)
+            var childField = this.childrenByPropertyId[propertyId];
+            if (childField)
             {
-                delete this.childrenByPropertyId[childField.propertyId];
+                this.children = $.grep(this.children, function (val, index) {
+                    return (val.propertyId !== propertyId);
+                });
+
+                delete this.childrenByPropertyId[propertyId];
+                delete this.childrenById[childField.getId()];
+
+                // remove itemContainerEl from DOM
+                self.doRemoveItem(childField);
+
+                this.refreshValidationState(true, function () {
+
+                    // updates dom markers for this element and any siblings
+                    self.handleRepositionDOMRefresh();
+
+                    // dispatch event: remove
+                    self.trigger("remove", childField);
+
+                    // trigger update handler
+                    self.triggerUpdate();
+
+                    if (callback)
+                    {
+                        callback();
+                    }
+                });
             }
-
-            childField.destroy();
-
-            this.refreshValidationState(true, function() {
-
-                // updates dom markers for this element and any siblings
-                self.handleRepositionDOMRefresh();
-
-                // dispatch event: remove
-                self.trigger("remove", childField);
-
-                // trigger update handler
-                self.triggerUpdate();
-
-                if (callback)
-                {
-                    callback();
-                }
-            });
+            else
+            {
+                callback();
+            }
         },
 
+        doRemoveItem: function(item)
+        {
+            var self = this;
 
+            var removeItemContainer = self.doResolveItemContainer();
+
+            removeItemContainer.children(".alpaca-container-item[data-alpaca-container-item-name='" + item.name + "']").remove();
+
+            // destroy child field itself
+            item.destroy();
+        },
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         //

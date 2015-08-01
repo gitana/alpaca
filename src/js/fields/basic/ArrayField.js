@@ -1255,22 +1255,6 @@
 
         },
 
-        handleRepositionDOMRefresh: function()
-        {
-            var self = this;
-
-            if (self.getParent())
-            {
-                // call update dom markers for parent which will trickle down to to cover this field and our siblings
-                self.getParent().updateDOMElement();
-            }
-            else
-            {
-                // just ourselves
-                self.updateDOMElement();
-            }
-        },
-
         /**
          * Adds an item to the array.
          *
