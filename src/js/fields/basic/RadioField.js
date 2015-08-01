@@ -185,6 +185,28 @@
                     self.trigger("change");
                 }
             }
+        },
+
+        /**
+         * @see Alpaca.Field#disable
+         */
+        disable: function()
+        {
+            this.base();
+
+            // for radio buttons, we also mark the outer DIV as disabled to prevent label clicks
+            // and apply some CSS styling
+            this.getFieldEl().addClass("disabled");
+        },
+
+        /**
+         * @see Alpaca.Field#enable
+         */
+        enable: function()
+        {
+            this.base();
+
+            this.getFieldEl().removeClass("disabled");
         }
 
         /* builder_helpers */

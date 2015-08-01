@@ -264,3 +264,13 @@
 {
     display: none;
 }
+
+.alpaca-field-radio.disabled .alpaca-control.radio
+{
+    color: grey;
+}
+
+.alpaca-field-radio.disabled .alpaca-control.radio label
+{
+    cursor: inherit;
+}

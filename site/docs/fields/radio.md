@@ -131,3 +131,29 @@ $("#field5").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 6
+A radio field with disabled values.
+<div id="field6"> </div>
+{% raw %}
+<script type="text/javascript" id="field6-script">
+$("#field6").alpaca({
+    "data": "Jimi Hendrix",
+    "schema": {
+        "enum": [
+            "Jimi Hendrix",
+            "Mark Knopfler",
+            "Joe Satriani",
+            "Eddie Van Halen",
+            "Orianthi"
+        ]
+    },
+    "options": {
+        "type": "radio",
+        "label": "Who is your favorite guitarist?",
+        "vertical": true,
+        "disabled": true
+    }
+});
+</script>
+{% endraw %}
