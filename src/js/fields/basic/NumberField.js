@@ -140,27 +140,6 @@
                 valInfo["stringValueNotMultipleOf"]["message"] = Alpaca.substituteTokens(this.getMessage("stringValueNotMultipleOf"), [this.schema.multipleOf]);
             }
 
-            // TODO: is this necessary?  isn't this handled by TextField parent method (via this.base())?
-            /*
-            var status =  this._validatePattern();
-            valInfo["invalidPattern"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("invalidPattern"), [this.schema.pattern]),
-                "status": status
-            };
-
-            status = this._validateMaxLength();
-            valInfo["stringTooLong"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("stringTooLong"), [this.schema.maxLength]),
-                "status": status
-            };
-
-            status = this._validateMinLength();
-            valInfo["stringTooShort"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("stringTooShort"), [this.schema.minLength]),
-                "status": status
-            };
-            */
-
             // hand back a true/false
             return baseStatus && valInfo["stringNotANumber"]["status"] && valInfo["stringDivisibleBy"]["status"] && valInfo["stringValueTooLarge"]["status"] && valInfo["stringValueTooSmall"]["status"] && valInfo["stringValueNotMultipleOf"]["status"] && valInfo["invalidPattern"]["status"] && valInfo["stringTooLong"]["status"] && valInfo["stringTooShort"]["status"];
         },
@@ -274,94 +253,6 @@
                 }
             }
 
-            return true;
-        },
-
-        /**
-         * Validates against the schema pattern property.
-         *
-         * @returns {Boolean} True if it matches the pattern, false otherwise.
-         */
-        _validatePattern: function()
-        {
-            if (this.schema.pattern)
-            {
-                var val = this.getValue();
-                if(Alpaca.isNumber(val)) {
-                    val = val.toString();
-                }
-                if (val === "" && this.options.allowOptionalEmpty && !this.isRequired())
-                {
-                    return true;
-                }
-                if (Alpaca.isEmpty(val))
-                {
-                    val = "";
-                }
-                if (!val.match(this.schema.pattern))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        },
-
-        /**
-         * Validates against the schema minLength property.
-         *
-         * @returns {Boolean} True if its size is greater than minLength, false otherwise.
-         */
-        _validateMinLength: function()
-        {
-            if (!Alpaca.isEmpty(this.schema.minLength))
-            {
-                var val = this.getValue();
-                if(Alpaca.isNumber(val)) {
-                    val = val.toString();
-                }
-                if (val === "" && this.options.allowOptionalEmpty && !this.isRequired())
-                {
-                    return true;
-                }
-                if (Alpaca.isEmpty(val))
-                {
-                    val = "";
-                }
-                if (val.length < this.schema.minLength)
-                {
-                    return false;
-                }
-            }
-            return true;
-        },
-
-        /**
-         * Validates against the schema maxLength property.
-         *
-         * @returns {Boolean} True if its size is less than maxLength , false otherwise.
-         */
-        _validateMaxLength: function()
-        {
-            if (!Alpaca.isEmpty(this.schema.maxLength))
-            {
-                var val = this.getValue();
-                if(Alpaca.isNumber(val)) {
-                    val = val.toString();
-                }
-                if (val === "" && this.options.allowOptionalEmpty && !this.isRequired())
-                {
-                    return true;
-                }
-                if (Alpaca.isEmpty(val))
-                {
-                    val = "";
-                }
-                if (val.length > this.schema.maxLength)
-                {
-                    return false;
-                }
-            }
             return true;
         },
 
