@@ -54,6 +54,12 @@
                         if (self.options.numericEntry) {
                             valid = valid && (key >= 48 && key <= 57);
                         }
+                        
+                        if(!valid) {
+                            // don't even allow entry of invalid characters
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                        }
 
                         return valid;
                     });
