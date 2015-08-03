@@ -507,7 +507,7 @@
                 {
                     val = "";
                 }
-                if (val.length < this.schema.minLength)
+                if ((""+val).length < this.schema.minLength)
                 {
                     return false;
                 }
