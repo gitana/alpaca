@@ -533,7 +533,7 @@
                 {
                     val = "";
                 }
-                if (val.length > this.schema.maxLength)
+                if ((""+val).length > this.schema.maxLength)
                 {
                     return false;
                 }
