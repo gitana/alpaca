@@ -507,7 +507,7 @@
                 {
                     val = "";
                 }
-                if (val.length < this.schema.minLength)
+                if ((""+val).length < this.schema.minLength)
                 {
                     return false;
                 }
@@ -533,7 +533,7 @@
                 {
                     val = "";
                 }
-                if (val.length > this.schema.maxLength)
+                if ((""+val).length > this.schema.maxLength)
                 {
                     return false;
                 }
