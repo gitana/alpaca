@@ -2807,7 +2807,7 @@
         }
         else
         {
-            if (schema && schema.properties)
+            if (schema.properties)
             {
                 for (var propertyId in schema.properties)
                 {
@@ -2823,6 +2823,21 @@
                     {
                         return x;
                     }
+                }
+            }
+            else if (schema.items)
+            {
+                var subSchema = schema.items;
+                var subOptions = null;
+                if (options && options.items)
+                {
+                    subOptions = options.items;
+                }
+
+                var x = Alpaca.resolveReference(subSchema, subOptions, referenceId);
+                if (x)
+                {
+                    return x;
                 }
             }
         }

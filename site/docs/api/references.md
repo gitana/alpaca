@@ -71,18 +71,21 @@ $("#field2").alpaca({
         }]
     }],
     "schema": {
-        "id": "#leaf",
         "type": "array",
         "items": {
             "type": "object",
+            "id": "#leaf",
             "properties": {
                 "title": {
                     "type": "string",
-                    "title": "Name",
-                    "required": true
+                    "required": true,
+                    "title": "Title"
                 },
                 "children": {
-                    "$ref": "#leaf"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#leaf"
+                    }
                 }
             }
         }

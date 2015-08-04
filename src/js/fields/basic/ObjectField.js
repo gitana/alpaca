@@ -309,7 +309,7 @@
                             // we only allow addition if the resolved schema isn't circularly referenced
                             // or the schema is optional
                             if (circular) {
-                                return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(schema), _this.errorCallback);
+                                return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(schema), self.errorCallback);
                             }
 
                             if (!schema) {
@@ -340,20 +340,34 @@
 
             Alpaca.series(propertyFunctions, function(err) {
 
-                // sort by order
-                items.sort(function(a, b) {
-
-                    var orderA = a.options.order;
-                    if (!orderA) {
-                        orderA = 0;
+                // is there any order information in the items?
+                var hasOrderInformation = false;
+                for (var i = 0; i < items.length; i++) {
+                    if (typeof(items[i].options.order) !== "undefined") {
+                        hasOrderInformation = true;
+                        break;
                     }
-                    var orderB = b.options.order;
-                    if (!orderB) {
-                        orderB = 0;
-                    }
+                }
 
-                    return (orderA - orderB);
-                });
+                if (hasOrderInformation)
+                {
+                    // sort by order?
+                    items.sort(function (a, b) {
+
+                        var orderA = a.options.order;
+                        if (!orderA)
+                        {
+                            orderA = 0;
+                        }
+                        var orderB = b.options.order;
+                        if (!orderB)
+                        {
+                            orderB = 0;
+                        }
+
+                        return (orderA - orderB);
+                    });
+                }
 
                 cf();
             });
