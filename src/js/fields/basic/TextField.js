@@ -499,6 +499,9 @@
             if (!Alpaca.isEmpty(this.schema.minLength))
             {
                 var val = this.getValue();
+                if(isNaN(val)) {
+                    val = "";
+                }
                 if (val === "" && this.options.allowOptionalEmpty && !this.isRequired())
                 {
                     return true;
