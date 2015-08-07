@@ -309,7 +309,6 @@
             });
         },
 
-
         afterRenderControl: function(model, callback)
         {
             var self = this;
@@ -317,6 +316,16 @@
             this.base(model, function() {
 
                 self.handlePostRender(function() {
+
+                    // if we're in display-only mode, we hide a bunch of things
+                    if (self.isDisplayOnly())
+                    {
+                        $(self.control).find("button").hide();
+                        $(self.control).find(".btn").hide();
+                        $(self.control).find(".alpaca-fileupload-chooserow").hide();
+                        $(self.control).find(".dropzone-message").hide();
+                    }
+
                     callback();
                 });
 
@@ -408,32 +417,51 @@
 
                 var uploadErrors = [];
 
-                for (var i = 0; i < data.originalFiles.length; i++)
+                var i = 0;
+                do
                 {
-                    // file types
-                    if (self.options.fileTypes)
+                    var bad = false;
+
+                    if (i < data.originalFiles.length)
                     {
-                        var re = self.options.fileTypes;
-                        if (typeof(self.options.fileTypes) === "string")
+                        // file types
+                        if (self.options.fileTypes)
                         {
-                            re = new RegExp(self.options.fileTypes);
+                            var re = self.options.fileTypes;
+                            if (typeof(self.options.fileTypes) === "string")
+                            {
+                                re = new RegExp(self.options.fileTypes);
+                            }
+
+                            if (!re.test(data.originalFiles[i]["type"]))
+                            {
+                                uploadErrors.push('Not an accepted file type: ' + data.originalFiles[i]["type"]);
+                                bad = true;
+                            }
                         }
 
-                        if (!re.test(data.originalFiles[i]["type"]))
+                        // size
+                        if (self.options.maxFileSize > -1)
                         {
-                            uploadErrors.push('Not an accepted file type: ' + data.originalFiles[i]["type"]);
+                            if (data.originalFiles[i].size > self.options.maxFileSize) {
+                                uploadErrors.push('Filesize is too big: ' + data.originalFiles[i].size);
+                                bad = true;
+                            }
                         }
                     }
 
-                    // size
-                    if (self.options.maxFileSize > -1)
+                    if (bad)
                     {
-                        if (data.originalFiles[i].size > self.options.maxFileSize) {
-                            uploadErrors.push('Filesize is too big: ' + data.originalFiles[i].size);
-                        }
+                        //data.originalFiles.splice(i, 1);
+                        //data.files.splice(i, 1);
+                        i++;
                     }
-
+                    else
+                    {
+                        i++;
+                    }
                 }
+                while (i < data.originalFiles.length);
 
                 if (uploadErrors.length > 0)
                 {

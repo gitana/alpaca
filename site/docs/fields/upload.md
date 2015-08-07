@@ -279,7 +279,7 @@ $("#field4").alpaca({
                     "url": "http://www.httpbin.org/post"
                 },
                 "errorHandler": function(messages) {
-                    $("#errorModal").find(".modal-body").append("<p>" + messages.join("<br/>") + "</p>");
+                    $("#errorModal").find(".modal-body").empty().append("<p>" + messages.join("<br/>") + "</p>");
                     $("#errorModal").modal("show");
                 }
             }
@@ -317,6 +317,58 @@ $("#field4").alpaca({
     </div>
 </div>
 
+## Example 5
+Here is the upload control rendered in display only mode.
+
+<div id="field5"> </div>
+{% raw %}
+<script type="text/javascript" id="field5-script">
+$("#field5").alpaca({
+    "view": "bootstrap-display",
+    "data": {
+        "files": [{
+            "id": "ad"
+        }]
+    },
+    "schema": {
+        "type": "object",
+        "properties": {
+            "files": {
+                "type": "array",
+                "title": "Files",
+                "required": true
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "files": {
+                "type": "upload",
+                "maxFileSize": 1,
+                "fileTypes": "/(\.|\/)(blahblah)$/i",
+                "maxNumberOfFiles": 3,
+                "upload": {
+                    "url": "http://www.httpbin.org/post"
+                }
+            }
+        },
+        "focus": true,
+        "form": {
+            "attributes": {
+                "method": "POST",
+                "action": "http://www.httpbin.org/post",
+                "enctype": "multipart/form-data"
+            },
+            "buttons": {
+                "submit": {
+                    "value": "Submit"
+                }
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
 
 
 

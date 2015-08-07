@@ -1,0 +1,51 @@
+<script type="text/x-handlebars-template">
+
+    <tr class="template-upload">
+
+    {{#if options.showUploadPreview}}
+        <td class="preview">
+            <span class="fade"></span>
+        </td>
+    {{else}}
+        <td></td>
+    {{/if}}
+
+        <td class="name"><span>{{file.name}}</span></td>
+        <td class="size"><span>{{file.size}}</span></td>
+
+    {{#if file.error}}
+        <td class="error" colspan="2"><span class="label label-important">Error</span> {{file.error}}</td>
+    {{else}}
+        {{#if file.valid}}
+            {{#compare @index 0}}
+                <td>
+                    <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="progress-bar" style="width:0%;"></div>
+                    </div>
+                </td>
+            {{/compare}}
+            <td class="start">
+                {{#if options.autoUpload}}
+                {{else}}
+                <button class="btn btn-primary"> \
+                    <i class="glyphicon glyphicon-upload glyphicon-white"></i>
+                    <span>Start</span>
+                </button>
+                {{/if}}
+            </td>
+        {{else}}
+            <td></td>
+            <td class="cancel">
+                {{#compare @index 0}}
+                <button class="btn btn-warning">
+                    <i class="glyphicon glyphicon-ban-circle glyphicon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                {{/compare}}
+            </td>
+        {{/if}}
+    {{/if}}
+        <td></td>
+    </tr>
+
+</script>

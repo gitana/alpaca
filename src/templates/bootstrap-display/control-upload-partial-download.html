@@ -1,0 +1,52 @@
+<script type="text/x-handlebars-template">
+
+    <tr class="template-download">
+    {{#if file.error}}
+        <td></td>
+        <td class="name">
+            <span>{{file.name}}</span>
+        </td>
+        <td class="size">
+            <span>{{file.size}}</span>
+        </td>
+        <td class="error" colspan="2">
+            Error:
+            {{file.error}}
+        </td>
+    {{else}}
+        <td class="preview">
+            {{#if file.thumbnailUrl}}
+            <a href="{{file.url}}" title="{{file.name}}" data-gallery="gallery" download="{{file.name}}">
+                <img src="{{file.thumbnailUrl}}">
+            </a>
+            {{/if}}
+        </td>
+        <td class="name">
+            <a href="{{file.url}}" title="{{file.name}}" data-gallery="{{file.thumbnailUrl}}gallery" download="{{file.name}}">{{file.name}}</a>
+        </td>
+        <td class="size"><span>{{file.size}}</span></td>
+        <td colspan="2"></td>
+    {{/if}}
+        <td>
+            {{#if buttons}}
+                {{#each buttons}}
+                    {{#if isDelete}}
+                        <button class="delete btn btn-danger" data-file-index="{{../../../fileIndex}}" data-button-key="{{../key}}">
+                            <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                        </button>
+                    {{else}}
+                        <button class="{{key}} btn {{buttonClass}}" data-file-index="{{../../../fileIndex}}" data-button-key="{{../key}}">
+                            {{#if iconClass}}
+                                <i class="{{iconClass}}"></i>
+                            {{/if}}
+                            {{#if label}}
+                                {{label}}
+                            {{/if}}
+                        </button>
+                    {{/if}}
+                {{/each}}
+            {{/if}}
+        </td>
+    </tr>
+
+</script>
