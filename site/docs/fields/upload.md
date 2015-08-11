@@ -60,9 +60,14 @@ an HTML5 File API compatible browser.  Which, as you might expect, doesn't inclu
 <!-- INCLUDE_API_DOCS: upload -->
 
 
+<script>
+    //var UPLOAD_ENDPOINT = "http://www.alpacajs.org/fileupload/index.php";
+    var UPLOAD_ENDPOINT = "/fileupload/index.php";
+</script>
+
 ## Example 1
 Single related file upload.
-An example of a single file upload control.  Uploads are posted to <code>http://www.httpbin.org</code>.
+An example of a single file upload control.  Uploads are posted to <code>/fileupload/index.php</code>.
 We've wired this up using a postRender callback so you can see the generated JSON by clicking 'view'.
 <div id="field1"> </div>
 {% raw %}
@@ -76,7 +81,7 @@ $("#field1").alpaca({
         "type": "upload",
         "label": "Upload File",
         "upload": {
-            "url": "http://www.httpbin.org/post",
+            "url": UPLOAD_ENDPOINT,
             "autoUpload": true
         }
     },
@@ -96,7 +101,7 @@ $("#field1").alpaca({
 
 ## Example 2
 Content creation form with support for multiple uploads as attachments.  Note that the file uploads post right away
-to <code>http://www.httpbin.org</code>.
+to <code>/fileupload/index.php</code>.
 
 The form is not submitted until the user clicks submit at which time the form posts to form.php.
 
@@ -132,7 +137,7 @@ $("#field2").alpaca({
                 "maxNumberOfFiles": 3,
                 "fileTypes": "/(\.|\/)(gif|jpe?g|png)$/i",
                 "upload": {
-                    "url": "http://www.httpbin.org/post"
+                    "url": UPLOAD_ENDPOINT
                 }
             }
         },
@@ -221,7 +226,7 @@ $("#field3").alpaca({
                     "formData": {
                         "path": "/folder1/folder2/{filename}"
                     },
-                    "url": "upload.php"
+                    "url": UPLOAD_ENDPOINT
                 }
             }
         },
@@ -276,7 +281,7 @@ $("#field4").alpaca({
                 "fileTypes": "/(\.|\/)(blahblah)$/i",
                 "maxNumberOfFiles": 3,
                 "upload": {
-                    "url": "http://www.httpbin.org/post"
+                    "url": UPLOAD_ENDPOINT
                 },
                 "errorHandler": function(messages) {
                     $("#errorModal").find(".modal-body").empty().append("<p>" + messages.join("<br/>") + "</p>");
@@ -348,7 +353,7 @@ $("#field5").alpaca({
                 "fileTypes": "/(\.|\/)(blahblah)$/i",
                 "maxNumberOfFiles": 3,
                 "upload": {
-                    "url": "http://www.httpbin.org/post"
+                    "url": UPLOAD_ENDPOINT
                 }
             }
         },

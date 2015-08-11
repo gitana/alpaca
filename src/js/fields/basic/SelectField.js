@@ -327,6 +327,25 @@
             };
 
             return baseStatus && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"];
+        },
+
+        /**
+         * @see Alpaca.Field#focus
+         */
+        focus: function(onFocusCallback)
+        {
+            if (this.control && this.control.length > 0)
+            {
+                // set focus onto the select
+                var el = $(this.control).get(0);
+
+                el.focus();
+
+                if (onFocusCallback)
+                {
+                    onFocusCallback(this);
+                }
+            }
         }
 
         /* builder_helpers */

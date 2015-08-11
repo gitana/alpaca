@@ -445,7 +445,8 @@
                         }
                         if (holder.length > 0)
                         {
-                            $(item.containerItemEl).appendTo(holder);
+                            //$(item.containerItemEl).appendTo(holder);
+                            $(holder).replaceWith(item.containerItemEl);
 
                             // reset domEl to allow for refresh
                             item.domEl = holder;
@@ -554,65 +555,57 @@
 
             this.base();
 
-            var layoutBindings = null;
-            if (self.view.getLayout()) {
-                layoutBindings = self.view.getLayout().bindings;
+            if (self.children.length > 0)
+            {
+                $(self.getContainerEl()).addClass("alpaca-container-has-items");
+                $(self.getContainerEl()).attr("data-alpaca-container-item-count", self.children.length);
+            }
+            else
+            {
+                $(self.getContainerEl()).removeClass("alpaca-container-has-items");
+                $(self.getContainerEl()).removeAttr("data-alpaca-container-item-count");
             }
 
-            if (!layoutBindings)
+            for (var i = 0; i < self.children.length; i++)
             {
-                if (self.children.length > 0)
+                var child = self.children[i];
+
+                // set path if not set
+                if (!child.path)
                 {
-                    $(self.getContainerEl()).addClass("alpaca-container-has-items");
-                    $(self.getContainerEl()).attr("data-alpaca-container-item-count", self.children.length);
+                    if (child.schema.type === "array")
+                    {
+                        child.path = self.path + "[" + i + "]";
+                    }
+                    else
+                    {
+                        child.path = self.path + "/" + child.propertyId;
+                    }
                 }
-                else
+
+                child.calculateName();
+
+                $(child.containerItemEl).removeClass("alpaca-container-item-first");
+                $(child.containerItemEl).removeClass("alpaca-container-item-last");
+                $(child.containerItemEl).removeClass("alpaca-container-item-index");
+                $(child.containerItemEl).removeClass("alpaca-container-item-key");
+
+                $(child.containerItemEl).addClass("alpaca-container-item");
+
+                if (i === 0)
                 {
-                    $(self.getContainerEl()).removeClass("alpaca-container-has-items");
-                    $(self.getContainerEl()).removeAttr("data-alpaca-container-item-count");
+                    $(child.containerItemEl).addClass("alpaca-container-item-first");
                 }
-
-                for (var i = 0; i < self.children.length; i++)
+                if (i + 1 === self.children.length)
                 {
-                    var child = self.children[i];
-
-                    // set path if not set
-                    if (!child.path)
-                    {
-                        if (child.schema.type === "array")
-                        {
-                            child.path = self.path + "[" + i + "]";
-                        }
-                        else
-                        {
-                            child.path = self.path + "/" + child.propertyId;
-                        }
-                    }
-
-                    child.calculateName();
-
-                    $(child.containerItemEl).removeClass("alpaca-container-item-first");
-                    $(child.containerItemEl).removeClass("alpaca-container-item-last");
-                    $(child.containerItemEl).removeClass("alpaca-container-item-index");
-                    $(child.containerItemEl).removeClass("alpaca-container-item-key");
-
-                    $(child.containerItemEl).addClass("alpaca-container-item");
-
-                    if (i === 0)
-                    {
-                        $(child.containerItemEl).addClass("alpaca-container-item-first");
-                    }
-                    if (i + 1 === self.children.length)
-                    {
-                        $(child.containerItemEl).addClass("alpaca-container-item-last");
-                    }
-
-                    $(child.containerItemEl).attr("data-alpaca-container-item-index", i);
-                    $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
-                    $(child.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
-
-                    child.updateDOMElement();
+                    $(child.containerItemEl).addClass("alpaca-container-item-last");
                 }
+
+                $(child.containerItemEl).attr("data-alpaca-container-item-index", i);
+                $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
+                $(child.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
+
+                child.updateDOMElement();
             }
         },
 
