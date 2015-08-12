@@ -445,8 +445,8 @@
                         }
                         if (holder.length > 0)
                         {
-                            //$(item.containerItemEl).appendTo(holder);
-                            $(holder).replaceWith(item.containerItemEl);
+                            // appending into a layout binding holder
+                            $(item.containerItemEl).appendTo(holder);
 
                             // reset domEl to allow for refresh
                             item.domEl = holder;
