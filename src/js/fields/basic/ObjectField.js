@@ -1746,11 +1746,11 @@
             }
 
             var step = 1;
-            var col = [];
+            var stepFields = [];
             do
             {
                 // collect fields in this step
-                col = [];
+                stepFields = [];
                 for (var propertyId in stepBindings)
                 {
                     if (stepBindings[propertyId] === step)
@@ -1758,12 +1758,13 @@
                         if (this.childrenByPropertyId && this.childrenByPropertyId[propertyId])
                         {
                             //col.push(this.childrenByPropertyId[propertyId].field);
-                            col.push(this.childrenByPropertyId[propertyId].containerItemEl);
+                            //col.push(this.childrenByPropertyId[propertyId].containerItemEl);
+                            stepFields.push(this.childrenByPropertyId[propertyId]);
                         }
                     }
                 }
 
-                if (col.length > 0)
+                if (stepFields.length > 0)
                 {
                     var stepEl = null;
                     if (createSteps)
@@ -1776,16 +1777,45 @@
                         stepEl = $($(this.field).find("[data-alpaca-wizard-role='step']")[step-1]);
                     }
 
-                    // move elements in
-                    for (var i = 0; i < col.length; i++)
+                    // is there any order information in the items?
+                    var hasOrderInformation = false;
+                    for (var i = 0; i < stepFields.length; i++) {
+                        if (typeof(stepFields[i].options.order) !== "undefined") {
+                            hasOrderInformation = true;
+                            break;
+                        }
+                    }
+
+                    if (hasOrderInformation)
                     {
-                        $(stepEl).append(col[i]);
+                        // sort by order?
+                        stepFields.sort(function (a, b) {
+
+                            var orderA = a.options.order;
+                            if (!orderA)
+                            {
+                                orderA = 0;
+                            }
+                            var orderB = b.options.order;
+                            if (!orderB)
+                            {
+                                orderB = 0;
+                            }
+
+                            return (orderA - orderB);
+                        });
+                    }
+
+                    // move elements in
+                    for (var i = 0; i < stepFields.length; i++)
+                    {
+                        $(stepEl).append(stepFields[i].containerItemEl);
                     }
 
                     step++;
                 }
             }
-            while (col.length > 0);
+            while (stepFields.length > 0);
 
             // now run the normal wizard
             this.wizard();

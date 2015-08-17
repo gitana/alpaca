@@ -360,3 +360,131 @@ $("#field5").alpaca({
 {% endraw %}
 
 
+## Wizard Field Ordering
+
+When using bindings to bind fields into wizard steps, you can further specify the order of fields using the
+<code>order</code> option for the fields.  This is in the same manner as field orderings as specified within
+objects.  The wizard layout engine will take this into consideration and order your fields as specified.
+
+Here is a very simple example to demonstrate field ordering.  It builds on the previous examples but is stripped down
+so as to show how fields can be ordered in reverse per page.
+
+<div id="field6"></div>
+{% raw %}
+<script type="text/javascript" id="field6-script">
+$("#field6").alpaca({
+    "schema": {
+        "type": "object",
+        "properties":{
+            "name":{
+                "title": "Name",
+                "type": "string"
+            },
+            "age":{
+                "title": "Age",
+                "type": "number"
+            },
+            "gender":{
+                "title": "Gender",
+                "type": "string",
+                "enum":[
+                    "Male",
+                    "Female"
+                ]
+            },
+            "photo":{
+                "title": "Photo",
+                "type": "string",
+                "format": "uri"
+            },
+            "member":{
+                "title": "Member",
+                "type": "boolean"
+            },
+            "icecream":{
+                "title": "Favorite",
+                "type": "string",
+                "enum":[
+                    "Vanilla",
+                    "Chocolate",
+                    "Coffee",
+                    "Strawberry",
+                    "Mint"
+                ]
+            },
+            "phone":{
+                "title": "Home Phone",
+                "type": "string",
+    			"format": "phone"
+            },
+            "address":{
+                "title": "Home Address",
+                "type": "any"
+            }
+        }
+    },
+    "optionsSource": {
+        "fields":{
+            "name": {
+                "order": 4
+            },
+            "age": {
+                "order": 3
+            },
+            "gender": {
+                "order": 2
+            },
+            "photo": {
+                "order": 1,
+                "type": "file",
+                "styled": true
+            },
+            "member":{
+                "rightLabel": "Alpaca Club Member",
+                "order": 2
+            },
+            "phone": {
+                "order": 1
+            },
+            "icecream": {
+                "order": 2
+            },
+            "address":{
+                "type": "address",
+                "addressValidation": true,
+                "order": 1
+            }
+        }
+    },
+    "view": {
+        "parent": "bootstrap-edit-horizontal",
+        "wizard": {
+            "bindings": {
+                "name": 1,
+                "age": 1,
+                "gender": 1,
+                "photo": 1,
+                "member": 2,
+                "phone": 2,
+                "icecream": 3,
+                "address": 3
+            },
+            "steps": [{
+                "title": "Getting Started",
+                "description": "Basic Information"
+            }, {
+                "title": "Details",
+                "description": "Personal Information"
+            }, {
+                "title": "Preferences",
+                "description": "Customize your Profile"
+            }],
+            "showSteps": true,
+            "showProgressBar": false,
+            "validation": true
+        }
+    }
+});</script>
+{% endraw %}
+
+
