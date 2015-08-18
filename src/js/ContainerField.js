@@ -662,6 +662,14 @@
         {
             var self = this;
 
+            if (this.isDisplayOnly())
+            {
+                if (onFocusCallback) {
+                    onFocusCallback();
+                }
+                return;
+            }
+
             this.base();
 
             var invalidIndex = -1;

@@ -717,6 +717,49 @@
         },
 
         /**
+         * Helper function for resolving dependencies for a child property.
+         * This takes into account JSON Schema v4 and also provides for legacy v3 support.
+         *
+         * @param propertyId
+         */
+        getChildDependencies: function(propertyId)
+        {
+            // first, check for dependencies declared within the object (container)
+            var itemDependencies = null;
+            if (this.schema.dependencies)
+            {
+                itemDependencies = this.schema.dependencies[propertyId];
+            }
+            if (!itemDependencies)
+            {
+                // second, check for dependencies declared on the item itself
+                // this is to support legacy v3 json schema
+                var item = this.childrenByPropertyId[propertyId];
+                if (item)
+                {
+                    itemDependencies = item.schema.dependencies;
+                }
+            }
+
+            return itemDependencies;
+        },
+
+        getChildConditionalDependencies: function(propertyId)
+        {
+            var itemConditionalDependencies = null;
+
+            // second, check for conditional dependencies declared on the item itself
+            // this is to support legacy v3 json options
+            var item = this.childrenByPropertyId[propertyId];
+            if (item)
+            {
+                itemConditionalDependencies = item.options.dependencies;
+            }
+
+            return itemConditionalDependencies;
+        },
+
+        /**
          * Determines whether the dependencies for a property pass.
          *
          * @param propertyId
@@ -731,7 +774,8 @@
                 return Alpaca.throwErrorWithCallback("Missing property: " + propertyId, self.errorCallback);
             }
 
-            var itemDependencies = item.schema.dependencies;
+            // first check for dependencies declared within the object (container)
+            var itemDependencies = self.getChildDependencies(propertyId);;
             if (!itemDependencies)
             {
                 // no dependencies, so yes, we pass
@@ -768,7 +812,7 @@
                 return Alpaca.throwErrorWithCallback("Missing property: " + propertyId, self.errorCallback);
             }
 
-            var itemDependencies = item.schema.dependencies;
+            var itemDependencies = self.getChildDependencies(propertyId);
             if (!itemDependencies)
             {
                 // no dependencies, so simple return
@@ -824,7 +868,7 @@
                 return Alpaca.throwErrorWithCallback("Missing property: " + propertyId, self.errorCallback);
             }
 
-            var itemDependencies = propertyField.schema.dependencies;
+            var itemDependencies = self.getChildDependencies(propertyId);
             if (!itemDependencies)
             {
                 // no dependencies, so simple return
@@ -886,7 +930,7 @@
             var valid = false;
 
             // go one of two directions depending on whether we have conditional dependencies or not
-            var conditionalDependencies = this.childrenByPropertyId[propertyId].options.dependencies;
+            var conditionalDependencies = this.getChildConditionalDependencies(propertyId);
             if (!conditionalDependencies || conditionalDependencies.length === 0)
             {
                 //

@@ -10,8 +10,46 @@ tags: field
 JSON Schema provides support for dependencies as a means for describing dependencies between fields.  Using
 dependencies, you can establish that <code>property2</code> should be supplied when <code>property1</code> is supplied.
 
-Each property in your JSON Schema can have an option <code>dependencies</code> property which is either a string
-identifying a single property on which to depend or an array of multiple properties on which to depend.
+Alpaca supports both JSON Schema v3 and v4 syntax for declaring dependencies.  We recommend using JSON Schema v4 syntax.
+
+In JSON Schema v4, a single <code>dependencies</code> block within the container object stores key/values which consist
+of the ID of the property (key) and an array of property IDs that must be in provided in order to be shown (value).
+
+Here is an example with two properties (<code>a</code> and <code>b</code>).  Property B should only be shown when
+Property A has been supplied.
+
+````
+    ...,
+    "properties": {
+        "a": {
+            "type": "string"
+        },
+        "b": {
+            "type": "string"
+        }
+    },
+    "dependencies": {
+        "b": ["a"]
+    }
+````
+
+In JSON Schema v3, each property has it's own dependencies array.  This simply identifies the sibling properties that
+must be included for this property to be shown.  Here is the same example with this legacy V3 structure.
+
+````
+    ...,
+    "properties": {
+        "a": {
+            "type": "string"
+        },
+        "b": {
+            "type": "string",
+            "dependencies": ["a"]
+        }
+    }
+````
+
+All of the examples below use the V4 syntax.  We recommend this for everything that you do!
 
 If you're interested in more powerful dependency management, take a look at
 <a href="conditional-dependencies.html">Conditional Dependencies</a> which offer an Alpaca extension on top of
@@ -45,9 +83,11 @@ $("#field1").alpaca({
             "icecream": {
                 "title": "What is your Favorite Ice Cream?",
                 "type": "String",
-                "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
-                "dependencies": "fan"
+                "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
             }
+        },
+        "dependencies": {
+            "icecream": "fan"
         }
     },
     "options": {
@@ -95,14 +135,52 @@ $("#field2").alpaca({
             "icecream": {
                 "title": "I see... so what is your favorite flavor?",
                 "type": "String",
-                "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
-                "dependencies": "fan"
+                "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
             },
             "topping": {
                 "title": "Ah... and what is your favorite topping?",
                 "type": "String",
-                "enum": ["Marshmellow", "Chocolate Chip", "Caramel", "Cookie Dough"],
-                "dependencies": ["icecream"]
+                "enum": ["Marshmellow", "Chocolate Chip", "Caramel", "Cookie Dough"]
+            }
+        },
+        "dependencies": {
+            "icecream": ["fan"],
+            "topping": ["icecream"]
+        }
+    },
+    "options": {
+        "fields": {
+            "fan": {
+                "rightLabel": "Why yes, I am..."
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
+
+## An Example of V3 syntax
+
+Here is an example using the V3 syntax.  It's provided here for legacy purposes.
+
+<div id="field3"> </div>
+{% raw %}
+<script type="text/javascript" id="field3-script">
+$("#field3").alpaca({
+    "schema": {
+        "title": "Survey",
+        "description": "Please participate in our survey",
+        "type": "object",
+        "properties": {
+            "fan": {
+                "title": "Are you an Ice Cream fanatic?",
+                "type": "boolean"
+            },
+            "icecream": {
+                "title": "What is your Favorite Ice Cream?",
+                "type": "String",
+                "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
+                "dependencies": ["fan"]
             }
         }
     },
@@ -110,6 +188,15 @@ $("#field2").alpaca({
         "fields": {
             "fan": {
                 "rightLabel": "Why yes, I am..."
+            }
+        },
+        "form": {
+            "buttons": {
+                "submit": {
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
             }
         }
     }

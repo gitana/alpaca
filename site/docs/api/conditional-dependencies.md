@@ -39,15 +39,17 @@ $("#field1").alpaca({
             "flavour": {
                 "title": "Pick a Flavour",
                 "type": "string",
-                "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
-                "dependencies": "choice"
+                "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
             },
             "topping": {
                 "title": "Pick a Topping",
                 "type": "string",
-                "enum": ["Marshmellow", "Chocolate Chip", "Caramel", "Cookie Dough"],
-                "dependencies": "choice"
+                "enum": ["Marshmellow", "Chocolate Chip", "Caramel", "Cookie Dough"]
             }
+        },
+        "dependencies": {
+            "flavour": ["choice"],
+            "topping": ["choice"]
         }
     },
     "options": {
@@ -109,6 +111,9 @@ $("#field2").alpaca({
                 },
                 "dependencies": "ownmeals"
             }
+        },
+        "dependencies": {
+            "mealplans": ["ownmeals"]
         }
     },
     "options": {
@@ -177,13 +182,11 @@ $("#field3").alpaca({
             },
             "DependentFieldA": {
                 "type": "string",
-                "title": "Dependent Field A",
-                "dependencies": "ConditionalField"
+                "title": "Dependent Field A"
             },
             "DependentFieldB": {
                 "type": "string",
-                "title": "Dependent Field B",
-                "dependencies": "ConditionalField"
+                "title": "Dependent Field B"
             },
             "ArrayOfFields": {
                 "type": "array",
@@ -202,17 +205,23 @@ $("#field3").alpaca({
                         },
                         "DependentFieldInArrayA": {
                             "type": "string",
-                            "title": "Dependent Field In Array A",
-                            "dependencies": "ConditionalFieldInArray"
+                            "title": "Dependent Field In Array A"
                         },
                         "DependentFieldInArrayB": {
                             "type": "string",
-                            "title": "Dependent Field In Array B",
-                            "dependencies": "ConditionalFieldInArray"
+                            "title": "Dependent Field In Array B"
                         }
+                    },
+                    "dependencies": {
+                        "DependentFieldInArrayA": ["ConditionalFieldInArray"],
+                        "DependentFieldInArrayB": ["ConditionalFieldInArray"],
                     }
                 }
             }
+        },
+        "dependencies": {
+            "DependentFieldA": ["ConditionalField"],
+            "DependentFieldB": ["ConditionalField"]
         }
     },
     "options": {
@@ -284,9 +293,11 @@ $("#field4").alpaca({
             "icecream": {
                 "title": "I see... so what is your favorite flavor?",
                 "type": "String",
-                "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"],
-                "dependencies": "fan"
+                "enum": ["Vanilla", "Chocolate", "Coffee", "Strawberry", "Mint"]
             }
+        },
+        "dependencies": {
+            "icecream": ["fan"]
         }
     },
     "options": {
