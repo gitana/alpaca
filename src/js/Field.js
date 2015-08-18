@@ -739,7 +739,7 @@
                 var doDisableField = function()
                 {
                     // mark "disabled" attribute onto underlying element
-                    Alpaca.disabled($(':input', self.field), true);
+                    Alpaca.disabled($('input', self.field), true);
                     Alpaca.disabled($('select', self.field), true);
                     Alpaca.disabled($(':radio', self.field), true);
                     Alpaca.disabled($(':checkbox', self.field), true);
@@ -757,7 +757,7 @@
                     });
 
                     // special case (input field)
-                    $(":input", self.field).off().click(function(e) {
+                    $("input", self.field).off().click(function(e) {
                         e.preventDefault();
                         e.stopImmediatePropagation();
                         return false;
@@ -770,7 +770,7 @@
                 {
                     $(this.field).addClass("alpaca-readonly");
 
-                    $(':input', this.field).attr('readonly', 'readonly');
+                    $('input', this.field).attr('readonly', 'readonly');
 
                     // disable the field
                     doDisableField();
