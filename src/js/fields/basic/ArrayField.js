@@ -396,11 +396,15 @@
                 return [];
             }
 
-            // otherwise, construct an array and had it back
+            // otherwise, construct an array and hand it back
             var o = [];
             for (var i = 0; i < this.children.length; i++)
             {
                 var v = this.children[i].getValue();
+
+                if(isNaN(v)) {
+                    v = undefined;
+                }
 
                 if (typeof(v) !== "undefined")
                 {
