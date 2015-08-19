@@ -161,7 +161,8 @@
                 var propertyId = this.children[i].propertyId;
                 var fieldValue = this.children[i].getValue();
 
-                if(isNaN(fieldValue)) {
+                if(fieldValue !== fieldValue) {
+                    // NaN
                     fieldValue = undefined;
                 }
 

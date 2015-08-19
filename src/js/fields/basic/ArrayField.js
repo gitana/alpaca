@@ -402,7 +402,8 @@
             {
                 var v = this.children[i].getValue();
 
-                if(isNaN(v)) {
+                if(v !== v) {
+                    // NaN
                     v = undefined;
                 }
 
