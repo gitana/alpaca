@@ -55,7 +55,9 @@
                     if (self.editor)
                     {
                         self.editor.removeAllListeners();
-                        self.editor.destroy(false);
+                        // catch here because CKEditor has an issue if DOM element deletes before CKEditor cleans up
+                        // see: https://github.com/lemonde/angular-ckeditor/issues/7
+                        try { self.editor.destroy(false); } catch (e) { }
                         self.editor = null;
                     }
 
@@ -71,50 +73,53 @@
 
             setTimeout(function() {
 
-                // click event
-                self.editor.on("click", function(e) {
-                    self.onClick.call(self, e);
-                    self.trigger("click", e);
-                });
+                if (self.editor)
+                {
+                    // click event
+                    self.editor.on("click", function (e) {
+                        self.onClick.call(self, e);
+                        self.trigger("click", e);
+                    });
 
-                // change event
-                self.editor.on("change", function(e) {
-                    self.onChange();
-                    self.triggerWithPropagation("change", e);
-                });
+                    // change event
+                    self.editor.on("change", function (e) {
+                        self.onChange();
+                        self.triggerWithPropagation("change", e);
+                    });
 
-                // blur event
-                self.editor.on('blur', function(e) {
-                    self.onBlur();
-                    self.trigger("blur", e);
-                });
+                    // blur event
+                    self.editor.on('blur', function (e) {
+                        self.onBlur();
+                        self.trigger("blur", e);
+                    });
 
-                // focus event
-                self.editor.on("focus", function(e) {
-                    self.onFocus.call(self, e);
-                    self.trigger("focus", e);
-                });
+                    // focus event
+                    self.editor.on("focus", function (e) {
+                        self.onFocus.call(self, e);
+                        self.trigger("focus", e);
+                    });
 
-                // keypress event
-                self.editor.on("key", function(e) {
-                    self.onKeyPress.call(self, e);
-                    self.trigger("keypress", e);
-                });
+                    // keypress event
+                    self.editor.on("key", function (e) {
+                        self.onKeyPress.call(self, e);
+                        self.trigger("keypress", e);
+                    });
 
-                // NOTE: these do not seem to work with CKEditor?
-                /*
-                // keyup event
-                self.editor.on("keyup", function(e) {
-                    self.onKeyUp.call(self, e);
-                    self.trigger("keyup", e);
-                });
+                    // NOTE: these do not seem to work with CKEditor?
+                    /*
+                     // keyup event
+                     self.editor.on("keyup", function(e) {
+                     self.onKeyUp.call(self, e);
+                     self.trigger("keyup", e);
+                     });
 
-                // keydown event
-                self.editor.on("keydown", function(e) {
-                    self.onKeyDown.call(self, e);
-                    self.trigger("keydown", e);
-                });
-                */
+                     // keydown event
+                     self.editor.on("keydown", function(e) {
+                     self.onKeyDown.call(self, e);
+                     self.trigger("keydown", e);
+                     });
+                     */
+                }
 
             }, 525); // NOTE: odd timing dependencies
         },
@@ -154,11 +159,13 @@
          */
         destroy: function()
         {
+            var self = this;
+
             // destroy the plugin instance
-            if (this.editor)
+            if (self.editor)
             {
-                this.editor.destroy();
-                this.editor = null;
+                self.editor.destroy();
+                self.editor = null;
             }
 
             // call up to base method
