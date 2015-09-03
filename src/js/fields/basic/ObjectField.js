@@ -161,6 +161,11 @@
                 var propertyId = this.children[i].propertyId;
                 var fieldValue = this.children[i].getValue();
 
+                if(fieldValue !== fieldValue) {
+                    // NaN
+                    fieldValue = undefined;
+                }
+
                 if (typeof(fieldValue) !== "undefined")
                 {
                     if (this.determineAllDependenciesValid(propertyId))

@@ -83,7 +83,7 @@
 
             var field = this.getControlEl();
 
-            var val = $(field).is('input') ? field.val() : field.hmtl();
+            var val = $(field).is('input') ? field.val() : field.html();
             if (this.options.unmask || this.options.round !== "none") {
                 var unmasked = function() {
                     var result = '';
