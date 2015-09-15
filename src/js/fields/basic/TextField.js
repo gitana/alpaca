@@ -472,17 +472,23 @@
             if (this.schema.pattern)
             {
                 var val = this.getValue();
+
                 if (val === "" && this.options.allowOptionalEmpty && !this.isRequired())
                 {
                     return true;
                 }
+
                 if (Alpaca.isEmpty(val))
                 {
                     val = "";
                 }
-                if (!val.match(this.schema.pattern))
+
+                if (typeof(val) === "string")
                 {
-                    return false;
+                    if (!val.match(this.schema.pattern))
+                    {
+                        return false;
+                    }
                 }
             }
 
