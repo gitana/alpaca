@@ -274,3 +274,17 @@
 {
     cursor: inherit;
 }
+
+
+.alpaca-control.radio
+{
+    min-height: inherit;
+    height: inherit;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.alpaca-control.radio label
+{
+    line-height: 20px;
+}
