@@ -213,6 +213,8 @@
          */
         beforeRenderControl: function(model, callback)
         {
+            var self = this;
+
             callback();
         },
 
@@ -603,6 +605,86 @@
             {
                 $(this.control).prop("disabled", false);
             }
+        },
+
+        /**
+         * Sorts the schema.enum and options.optionLabels into a display order that is described by sortSelectableOptions().
+         * This ensures that drop down values are in some sensible display order (alphabetical / numeric) for the end user.
+         */
+        sortEnum: function()
+        {
+            var self = this;
+
+            if (self.schema.enum && self.schema.enum.length > 0)
+            {
+                var selectableOptions = [];
+
+                for (var i = 0; i < self.schema.enum.length; i++)
+                {
+                    var value = self.schema.enum[i];
+                    var text = self.schema.enum[i];
+
+                    if (self.options && self.options.optionLabels && self.options.optionLabels.length >= i + 1)
+                    {
+                        text = self.options.optionLabels[i];
+                    }
+
+                    selectableOptions.push({
+                        "value": value,
+                        "text": text
+                    });
+                }
+
+                // sort it
+                self.sortSelectableOptions(selectableOptions);
+
+                // now set back
+                self.schema.enum = [];
+                self.options.optionLabels = [];
+                for (var i = 0; i < selectableOptions.length; i++)
+                {
+                    self.schema.enum.push(selectableOptions[i].value);
+                    self.options.optionLabels.push(selectableOptions[i].text);
+                }
+            }
+        },
+
+        /**
+         * Sorts a select options array by order of displayable text.
+         *
+         * If you're looking to provide a custom sort order, you may wish to override this function.
+         * Alternatively, you can provide an options.sort function - fn(a, b).
+         *
+         * @param selectableOptions
+         */
+        sortSelectableOptions: function(selectableOptions)
+        {
+            var self = this;
+
+            var defaultSort = function(a, b) {
+
+                if (a.text > b.text) {
+                    return 1;
+                }
+                else if (a.text < b.text) {
+                    return -1;
+                }
+
+                return 0;
+            };
+
+            // assume a default sort function
+            var sortFn = defaultSort;
+
+            // is there a custom sort function defined?
+            if (self.options.sort) {
+                if (typeof(self.options.sort) === "function") {
+                    sortFn = self.options.sort;
+                }
+            }
+
+            // sort it
+            selectableOptions.sort(sortFn);
         }
 
 
@@ -652,6 +734,11 @@
                         "title": "Field Name",
                         "description": "Field Name.",
                         "type": "string"
+                    },
+                    "sort": {
+                        "title": "Sort Function",
+                        "description": "Defines an f(a,b) sort function for the array of enumerated values [{text, value}].  This is used to sort enum and optionLabels as well as results that come back from any data sources (for select and radio controls).",
+                        "type": "function"
                     }
                 }
             });

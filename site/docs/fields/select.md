@@ -13,18 +13,19 @@ The ```select``` field.
 
 
 ## Example 1
-Select field with data, options and schema parameters. As default, select field will be rendered if schema enum property has more than 3 options.
+Select field with data, options and schema parameters. As default, a select field will be rendered if schema enum property has more than 3 options.
+The sort order for enumerated values and their text are assumed to be alphanumeric.
 <div id="field1"> </div>
 {% raw %}
 <script type="text/javascript" id="field1-script">
 $("#field1").alpaca({
     "data": "coffee",
+    "schema": {
+        "enum": ["vanilla", "chocolate", "coffee", "strawberry", "mint"]
+    },    
     "options": {
         "label": "Ice cream",
         "helper": "What flavor of ice cream do you prefer?"
-    },
-    "schema": {
-        "enum": ["vanilla", "chocolate", "coffee", "strawberry", "mint"]
     }
 });
 </script>
@@ -34,19 +35,32 @@ $("#field1").alpaca({
 ## Example 2
 Here is the same select field but labels in French.  The important thing to note is that the schema stays the same.
 The options change, letting you customize forms into different languages.
+
+In addition, we apply a custom sort here using the <code>options.sort</code> override.  This lets us plug in a custom sort function.
+Here we reverse the order.
 <div id="field2"> </div>
 {% raw %}
 <script type="text/javascript" id="field2-script">
 $("#field2").alpaca({
     "data": "coffee",
+    "schema": {
+        "enum": ["vanilla", "chocolate", "coffee", "strawberry", "mint"]
+    },
     "options": {
         "label": "Crème Glacée",
         "helper": "Quelle saveur de crème glacée préférez-vous?",
-        "optionLabels": ["Vanille", "Chocolat", "Café", "Fraise", "Comme"]
-    },
-    "schema": {
-        "enum": ["vanilla", "chocolate", "coffee", "strawberry", "mint"]
-    }
+        "optionLabels": ["Vanille", "Chocolat", "Café", "Fraise", "Comme"],
+        "sort": function(a, b) {
+        
+            if (a.text > b.text) {
+                return -1;
+            }
+            else if (a.text < b.text) {
+                return 1;
+            }
+            return 0;            
+        }
+    }    
 });
 </script>
 {% endraw %}

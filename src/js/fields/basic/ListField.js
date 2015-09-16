@@ -12,30 +12,33 @@
          */
         setup: function()
         {
-            var _this = this;
+            var self = this;
 
-            _this.base();
+            self.base();
 
-            _this.selectOptions = [];
+            self.selectOptions = [];
 
-            if (_this.getEnum())
+            if (self.getEnum())
             {
-                $.each(_this.getEnum(), function(index, value)
+                // sort the enumerated values
+                self.sortEnum();
+
+                $.each(self.getEnum(), function(index, value)
                 {
                     var text = value;
-                    if (_this.options.optionLabels)
+                    if (self.options.optionLabels)
                     {
-                        if (!Alpaca.isEmpty(_this.options.optionLabels[index]))
+                        if (!Alpaca.isEmpty(self.options.optionLabels[index]))
                         {
-                            text = _this.options.optionLabels[index];
+                            text = self.options.optionLabels[index];
                         }
-                        else if (!Alpaca.isEmpty(_this.options.optionLabels[value]))
+                        else if (!Alpaca.isEmpty(self.options.optionLabels[value]))
                         {
-                            text = _this.options.optionLabels[value];
+                            text = self.options.optionLabels[value];
                         }
                     }
 
-                    _this.selectOptions.push({
+                    self.selectOptions.push({
                         "value": value,
                         "text": text
                     });
@@ -45,14 +48,14 @@
             /**
              * Auto assign data if we have data and the field is required and removeDefaultNone is either unspecified or true
              */
-            if (_this.isRequired() && !_this.data)
+            if (self.isRequired() && !self.data)
             {
-                //if ((typeof(_this.options.removeDefaultNone) == "undefined") || _this.options.removeDefaultNone === true)
-                if ((_this.options.removeDefaultNone === true))
+                //if ((typeof(self.options.removeDefaultNone) == "undefined") || self.options.removeDefaultNone === true)
+                if ((self.options.removeDefaultNone === true))
                 {
-                    if (_this.schema.enum && _this.schema.enum.length > 0)
+                    if (self.schema.enum && self.schema.enum.length > 0)
                     {
-                        _this.data = _this.schema.enum[0];
+                        self.data = self.schema.enum[0];
                     }
                 }
             }
@@ -143,9 +146,12 @@
 
                     var completionFunction = function()
                     {
+                        // apply sorting to whatever we produce
+                        self.sortSelectableOptions(self.selectOptions);
+
+                        // now build out the enum and optionLabels
                         self.schema.enum = [];
                         self.options.optionLabels = [];
-
                         for (var i = 0; i < self.selectOptions.length; i++)
                         {
                             self.schema.enum.push(self.selectOptions[i].value);
