@@ -240,13 +240,8 @@ With any luck, Alpaca will improve your life.  Save you time.  And let you play 
 Alpaca is supported by the community and several active contributors who have supplied pull requests with new features,
 ideas and technical wonder.  The project started at Cloud CMS where we used Alpaca as our forms engine of choice.
 
-If you have a question or think that you've found a bug, please visit our
-<a href="https://github.com/gitana/alpaca" target="_blank">GitHub Issues page</a> and let the community know.
- Chances are that someone has run into something similar and can help out.
-
 You can freely <a href="https://github.com/gitana/alpaca" target="_blank">fork Alpaca</a> by visiting the
 <a href="https://github.com/gitana/alpaca" target="_blank">Alpaca project at GitHub</a>.
-
 
 ## Is Alpaca supported?
 
@@ -266,12 +261,53 @@ you can plug in wherever you'd like.  You can <a href="download.html">install or
 tools like Bower or NPM.  Or you can <a href="download.html">grab a release</a> from our
  <a href="download.html">download page</a>.
 
+## How do I get help from the community?
+
+If you have a question, we recommend asking away on <a href="http://stackoverflow.com/questions/tagged/alpacajs" target="_blank">Stack Overflow</a>
+or within your developer community of choice.  We recommend Stack Overflow based on the quality of developers who respond.
+Chances are that someone has run into something similar and can help out.
+
+## Join a Meetup
+
+<table style="width: 100%">
+  <tr>
+    <td style="text-align: center">
+      <a href="http://www.meetup.com/Sydney-AlpacaJS-Meetup" target="_blank">
+        <img src="/images/meetups/AlpacaAUS.png" style="width: 256px">
+      </a>
+    </td>
+    <td style="text-align: center">
+      <a href="http://www.meetup.com/Cleveland-JavaScript-Meetup" target="_blank">
+        <img src="/images/meetups/AlpacaCLE.jpeg" style="width: 200px">
+      </a>
+    </td>
+    <td style="text-align: center">
+      <a href="http://www.meetup.com/boston_JS" target="_blank">
+        <img src="http://photos3.meetupstatic.com/photos/event/7/5/d/6/600_431910166.jpeg" style="width: 256px">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center"><a href="http://www.meetup.com/Sydney-AlpacaJS-Meetup" target="_blank">Sydney, Australia</a></td>
+    <td style="text-align: center"><a href="http://www.meetup.com/Cleveland-JavaScript-Meetup" target="_blank">Cleveland, OH USA</a></td>
+    <td style="text-align: center"><a href="http://www.meetup.com/boston_JS" target="_blank">Boston, MA USA</a></td>
+</table>
+
+<br/>
+
+If you're interested in presenting Alpaca at a local meetup, <a href="support.html">contact us</a> and we'll work with you.
 
 ## How do I contribute to Alpaca?
 
 Alpaca is truly a community project; we welcome your involvement!
-<br/>
-Learn how you can <a href="contribute.html">contribute to Alpaca</a>.
+
+If you've found a bug in Alpaca, we ask you to visit our <a href="https://github.com/gitana/alpaca/issues" target="_blank">GitHub Issues page</a>
+and let the team know.  We can then prioritize our development tasks, merge fixes and get things sorted for upcoming releases.
+ 
+If you've fixed something, we ask that you <a href="https://github.com/gitana/alpaca" target="_blank">submit a pull request</a>.  And then
+pat yourself on the back.  You've made the world a better place!
+
+Learn more about how you can <a href="contribute.html">contribute to Alpaca</a>.
 
 <script>
 $("TABLE.stack").dataTable({

@@ -213,6 +213,7 @@ called life.
 + [@billbarsch](https://github.com/billbarsch)
 + [@vittala](https://github.com/vittala)
 + [@robustified](https://github.com/robustified)
++ [@cniesen](https://github.com/cniesen)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org), the [Alpaca Forums](http://www.cloudcms.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!
