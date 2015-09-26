@@ -821,5 +821,6 @@
     });
     Alpaca.registerFieldClass("text", Alpaca.Fields.TextField);
     Alpaca.registerDefaultSchemaFieldMapping("string", "text");
+    Alpaca.registerDefaultSchemaFieldMapping("function", "text");
 
 })(jQuery);
