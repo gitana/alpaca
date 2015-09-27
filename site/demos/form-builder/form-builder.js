@@ -983,7 +983,7 @@ var setup = function()
         var field = Alpaca.fieldInstances[alpacaId];
 
         var parentField = field.parent;
-        parentField.removeItem(alpacaId, function() {
+        parentField.removeItem(field.propertyId, function() {
             var top = findTop(field);
             regenerate(top);
         });
