@@ -410,6 +410,30 @@
             {
                 successCallback(resource);
             }
+        },
+
+        /**
+         * Loads data source (value/text) pairs from a remote source.
+         * This default implementation allows for config to be a string identifying a URL.
+         *
+         * @param config
+         * @param successCallback
+         * @param errorCallback
+         * @returns {*}
+         */
+        loadDataSource: function (config, successCallback, errorCallback)
+        {
+            return this._handleLoadDataSource(config, successCallback, errorCallback);
+        },
+
+        _handleLoadDataSource: function(config, successCallback, errorCallback)
+        {
+            var url = config;
+            if (Alpaca.isObject(url)) {
+                url = config.url;
+            }
+
+            return this._handleLoadJsonResource(url, successCallback, errorCallback);
         }
 
     });

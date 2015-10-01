@@ -17,6 +17,40 @@
         {
             var self = this;
 
+            var cfn = function(err, branch)
+            {
+                if (err)
+                {
+                    onError(err);
+                    return;
+                }
+
+                self.branch = Chain(branch);
+
+                self.bindHelperFunctions(self.branch);
+
+                // also store a reference on Alpaca for global use
+                Alpaca.branch = self.branch;
+
+                onSuccess();
+            };
+
+            if (Alpaca.globalContext && Alpaca.globalContext.branch)
+            {
+                cfn(null, Alpaca.globalContext.branch);
+            }
+            else
+            {
+                self.doConnect(function(err, branch) {
+                    cfn(err, branch);
+                });
+            }
+        },
+
+        doConnect: function(callback)
+        {
+            var self = this;
+
             Gitana.connect(this.config, function(err) {
 
                 if (err) {
@@ -24,18 +58,8 @@
                     return;
                 }
 
-                self.gitana = this;
-
-                self.gitana.datastore("content").readBranch("master").then(function() {
-
-                    self.branch = this;
-
-                    self.bindHelperFunctions(self.branch);
-
-                    // also store a reference on Alpaca for global use
-                    Alpaca.branch = self.branch;
-
-                    onSuccess();
+                this.datastore("content").readBranch("master").then(function() {
+                    callback(null, this);
                 });
             });
         },
@@ -96,6 +120,28 @@
                     });
                 };
             }
+
+            if (!branch.loadAlpacaDataSource)
+            {
+                branch.loadAlpacaDataSource = function(config, pagination, callback)
+                {
+                    var params = {};
+                    if (pagination)
+                    {
+                        Alpaca.copyInto(params, pagination);
+                    }
+
+                    var uriFunction = function()
+                    {
+                        return branch.getUri() + "/alpaca/datasource";
+                    };
+
+                    return this.chainPostResponse(this, uriFunction, params, config).then(function(response) {
+                        callback.call(this, null, response.datasource);
+                    });
+                };
+            }
+
         },
 
         /**
@@ -251,6 +297,31 @@
             var self = this;
 
             return self.loadOptions(optionsIdentifier, successCallback, errorCallback);
+        },
+
+        /**
+         * Loads data source elements based on a content query to Cloud CMS.
+         *
+         * @param config
+         * @param successCallback
+         * @param errorCallback
+         * @returns {*}
+         */
+        loadDataSource: function (config, successCallback, errorCallback)
+        {
+            var self = this;
+
+            var pagination = config.pagination;
+            delete config.pagination;
+
+            return Alpaca.branch.loadAlpacaDataSource(config, pagination, function(err, array) {
+                if (err) {
+                    errorCallback(err);
+                    return;
+                }
+
+                successCallback(array);
+            });
         }
 
     });

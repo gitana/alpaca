@@ -59,6 +59,12 @@
                     }
                 }
             }
+
+            // if they provided "datasource", we copy to "dataSource"
+            if (self.options.datasource && !self.options.dataSource) {
+                self.options.dataSource = self.options.datasource;
+                delete self.options.datasource;
+            }
         },
 
         prepareControlModel: function(callback)
@@ -286,15 +292,62 @@
                     }
                     else if (Alpaca.isObject(self.options.dataSource))
                     {
-                        for (var k in self.options.dataSource)
+                        if (self.options.dataSource.connector)
                         {
-                            self.selectOptions.push({
-                                "text": self.options.dataSource[k],
-                                "value": k
+                            var connector = self.connector;
+
+                            if (Alpaca.isObject(self.options.dataSource.connector))
+                            {
+                                var connectorId = self.options.dataSource.connector.id;
+                                var connectorConfig = self.options.dataSource.connector.config;
+                                if (!connectorConfig) {
+                                    connectorConfig = {};
+                                }
+
+                                var ConnectorClass = Alpaca.getConnectorClass(connectorId);
+                                connector = new ConnectorClass(connectorId, connectorConfig);
+                            }
+
+                            var config = self.options.dataSource.config;
+                            if (!config) {
+                                config = {};
+                            }
+
+                            // load using connector
+                            connector.loadDataSource(config, function(array) {
+
+                                for (var i = 0; i < array.length; i++)
+                                {
+                                    if (typeof(array[i]) === "string")
+                                    {
+                                        self.selectOptions.push({
+                                            "text": array[i],
+                                            "value": array[i]
+                                        });
+                                    }
+                                    else if (Alpaca.isObject(array[i]))
+                                    {
+                                        self.selectOptions.push(array[i]);
+                                    }
+                                }
+
+                                completionFunction();
                             });
                         }
+                        else
+                        {
+                            // load from standard object
+                            for (var k in self.options.dataSource)
+                            {
+                                self.selectOptions.push({
+                                    "text": self.options.dataSource[k],
+                                    "value": k
+                                });
+                            }
 
-                        completionFunction();
+                            completionFunction();
+                        }
+
                     }
                     else
                     {

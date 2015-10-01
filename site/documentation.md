@@ -105,6 +105,7 @@ We've provided chapters here on a variety of interesting API-related topics.
             <li><a href="{{ BASE_PATH }}/docs/api/cookbook.html">Cookbook</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/conditional-dependencies.html">Conditional Dependencies</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/custom-fields.html">Custom Fields</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/api/datasources.html">Data Sources</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/dependencies.html">Dependencies</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/events.html">Events</a></li>
             <li><a href="{{ BASE_PATH }}/docs/api/functions.html">Functions</a></li>
