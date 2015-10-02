@@ -58,7 +58,7 @@
             Gitana.connect(this.config, function(err) {
 
                 if (err) {
-                    onError(err);
+                    callback(err);
                     return;
                 }
 
