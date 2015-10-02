@@ -51,6 +51,10 @@
         {
             var self = this;
 
+            if (!this.config.key) {
+                this.config.key = "default";
+            }
+
             Gitana.connect(this.config, function(err) {
 
                 if (err) {
