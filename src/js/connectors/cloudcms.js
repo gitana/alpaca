@@ -25,12 +25,12 @@
                     return;
                 }
 
-                self.branch = Chain(branch);
+                if (branch)
+                {
+                    self.branch = Chain(branch);
 
-                self.bindHelperFunctions(self.branch);
-
-                // also store a reference on Alpaca for global use
-                Alpaca.branch = self.branch;
+                    self.bindHelperFunctions(self.branch);
+                }
 
                 onSuccess();
             };
@@ -41,7 +41,9 @@
             }
             else
             {
-                self.doConnect(function(err, branch) {
+                self.branch = null;
+
+                self.doConnect(function (err, branch) {
                     cfn(err, branch);
                 });
             }
@@ -62,9 +64,16 @@
                     return;
                 }
 
-                this.datastore("content").readBranch("master").then(function() {
-                    callback(null, this);
-                });
+                if (this.getDriver().getOriginalConfiguration().loadAppHelper)
+                {
+                    this.datastore("content").readBranch("master").then(function() {
+                        callback(null, this);
+                    });
+                }
+                else
+                {
+                    callback();
+                }
             });
         },
 
@@ -160,6 +169,13 @@
         {
             var self = this;
 
+            // if we didn't connect to a branch, then use the default method
+            if (!self.branch)
+            {
+                return this.base(nodeId, resources, successCallback, errorCallback);
+            }
+
+            // load from cloud cms
             self.branch.loadAlpacaData(nodeId, resources, function(err, data) {
 
                 if (err)
@@ -191,6 +207,13 @@
         {
             var self = this;
 
+            // if we didn't connect to a branch, then use the default method
+            if (!self.branch)
+            {
+                return this.base(schemaIdentifier, resources, successCallback, errorCallback);
+            }
+
+            // load from cloud cms
             self.branch.loadAlpacaSchema(schemaIdentifier, resources, function(err, schema) {
 
                 if (err)
@@ -217,6 +240,13 @@
         {
             var self = this;
 
+            // if we didn't connect to a branch, then use the default method
+            if (!self.branch)
+            {
+                return this.base(optionsIdentifier, resources, successCallback, errorCallback);
+            }
+
+            // load from cloud cms
             self.branch.loadAlpacaOptions(optionsIdentifier, resources, function(err, options) {
 
                 if (err)
@@ -315,10 +345,16 @@
         {
             var self = this;
 
+            // if we didn't connect to a branch, then use the default method
+            if (!self.branch)
+            {
+                return this.base(config, successCallback, errorCallback);
+            }
+
             var pagination = config.pagination;
             delete config.pagination;
 
-            return Alpaca.branch.loadAlpacaDataSource(config, pagination, function(err, array) {
+            return self.branch.loadAlpacaDataSource(config, pagination, function(err, array) {
                 if (err) {
                     errorCallback(err);
                     return;
