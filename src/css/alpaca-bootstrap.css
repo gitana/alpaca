@@ -33,6 +33,11 @@ legend.alpaca-container-label
     width: 100%;
 }
 
+.alpaca-array-actionbar
+{
+    overflow: hidden;
+}
+
 .alpaca-field-object
 {
     border: 1px #eee solid;
