@@ -111,6 +111,7 @@ var paths = {
 
             // i18n
             "src/js/messages/i18n/de_AT.js",
+            "src/js/messages/i18n/de_DE.js",
             "src/js/messages/i18n/es_ES.js",
             "src/js/messages/i18n/fr_FR.js",
             "src/js/messages/i18n/hr_HR.js",
