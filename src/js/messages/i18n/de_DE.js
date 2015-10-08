@@ -1,15 +1,15 @@
 (function($) {
 
-	// german - austria
+	// german - germany
 
 	var Alpaca = $.alpaca;
 
 	Alpaca.registerView ({
 		"id": "base",
 		"messages": {
-            "de_AT": {
+            "de_DE": {
                 required: "Eingabe erforderlich",
-                invalid: "Eingabe invalid",
+                invalid: "Eingabe ungültig",
                 months: ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
                 timeUnits: {
                     SECOND: "Sekunden",
@@ -27,17 +27,17 @@
                 "valueNotUnique": "Diese Werte sind nicht eindeutig",
                 "notAnArray": "Keine Liste von Werten",
                 "invalidDate": "Falsches Datumsformat: {0}",
-                "invalidEmail": "Ungültige e-Mail Adresse, z.B.: info@cloudcms.com",
-                "stringNotAnInteger": "Eingabe ist keine Ganz Zahl.",
-                "invalidIPv4": "Ungültige IPv4 Adresse, z.B.: 192.168.0.1",
+                "invalidEmail": "Keine gültige E-Mail Adresse",
+                "stringNotAnInteger": "Keine Ganze Zahl",
+                "invalidIPv4": "Ungültige IPv4 Adresse",
                 "stringValueTooSmall": "Die Mindestanzahl von Zeichen ist {0}",
                 "stringValueTooLarge": "Die Maximalanzahl von Zeichen ist {0}",
                 "stringValueTooSmallExclusive": "Die Anzahl der Zeichen muss größer sein als {0}",
                 "stringValueTooLargeExclusive": "Die Anzahl der Zeichen muss kleiner sein als {0}",
                 "stringDivisibleBy": "Der Wert muss durch {0} dividierbar sein",
                 "stringNotANumber": "Die Eingabe ist keine Zahl",
-                "invalidPassword": "Ungültiges Passwort.",
-                "invalidPhone": "Ungültige Telefonnummer, z.B.: (123) 456-9999",
+                "invalidPassword": "Ungültiges Passwort",
+                "invalidPhone": "Ungültige Telefonnummer",
                 "invalidPattern": "Diese Feld stimmt nicht mit folgender Vorgabe überein {0}",
                 "stringTooShort": "Dieses Feld sollte mindestens {0} Zeichen enthalten",
                 "stringTooLong": "Dieses Feld sollte höchstens {0} Zeichen enthalten"
