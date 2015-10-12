@@ -3160,8 +3160,7 @@
         {
             if (!chain || chain.length === 0)
             {
-                done();
-                return;
+                return done();
             }
 
             var current = chain[0];
