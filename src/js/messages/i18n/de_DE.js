@@ -1,4 +1,4 @@
-(function($) {
+﻿(function($) {
 
 	// german - germany
 
@@ -10,7 +10,7 @@
             "de_DE": {
                 required: "Eingabe erforderlich",
                 invalid: "Eingabe ungültig",
-                months: ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+                months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
                 timeUnits: {
                     SECOND: "Sekunden",
                     MINUTE: "Minuten",
