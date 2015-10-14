@@ -1,0 +1,35 @@
+<script type="text/x-handlebars-template">
+
+    <div class="table-responsive">
+
+        {{#arrayToolbar}}{{/arrayToolbar}}
+
+        <table>
+
+            <!-- table headers -->
+            <thead>
+                <tr>
+                    {{#each headers}}
+                    <th data-header-id="{{id}}" {{#if hidden}}class="alpaca-table-column-hidden"{{/if}}>{{{title}}}</th>
+                    {{/each}}
+
+                    {{#if options.showActionsColumn}}
+                        <th>Actions</th>
+                    {{/if}}
+                </tr>
+            </thead>
+
+            <!-- table body -->
+            <tbody>
+            {{#each items}}
+
+                {{#item "tr"}}{{/item}}
+
+            {{/each}}
+            </tbody>
+
+        </table>
+
+    </div>
+
+</script>
