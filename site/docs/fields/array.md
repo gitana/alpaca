@@ -465,3 +465,58 @@ $("#field13").alpaca({
    }
 });</script>
 {% endraw %}
+
+
+## Example 14
+An array field with unique items enforced.
+<div id="field14"> </div>
+{% raw %}
+<script type="text/javascript" id="field14-script">
+$("#field14").alpaca({
+    "schema": {
+        "title": "Product",
+        "type": "object",
+        "properties": {
+            "id": {
+                "title": "Product Identifier",
+                "type": "integer"
+            },
+            "name": {
+                "title": "Product Name",
+                "type": "string"
+            },
+            "price": {
+                "title": "Product Price",
+                "type": "number",
+                "minimum": 0,
+                "exclusiveMinimum": true
+            },
+            "tags": {
+                "title": "Product Tags",
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "minItems": 1,
+                "uniqueItems": true
+            }
+        },
+        "required": ["id", "name", "price"]
+    },
+    "options": {
+        "fields": {
+            "tags": {
+                "toolbarSticky": true
+            }
+        }
+    }
+});</script>
+{% endraw %}
+
+
+
+
+
+
+
+
