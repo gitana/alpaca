@@ -1812,34 +1812,27 @@
 
             var result = null;
 
-            if (path)
+            if (typeof path==='string')
             {
-                // strip off the leading "/" if it is there
-                if (path.indexOf("/") === 0) {
-                    path = path.substring(1);
-                }
-
-                // strip off the trailing "/" if it is there
-                if (Alpaca.endsWith(path, "/")) {
-                    path = path.substring(0, path.length - 1);
-                }
-
                 var current = this;
 
-                var pathArray = path.split('/');
+                var pathArray = path.split(/([[\]/])/);
                 for (var i = 0; i < pathArray.length; i++)
                 {
                     var pathElement = pathArray[i];
-
-                    if (pathElement.indexOf("[") === 0)
-                    {
-                        // index into an array
-                        var index = parseInt(pathElement.substring(1, pathElement.length - 1), 10);
-                        current = current.children[index];
-                    }
-                    else
-                    {
-                        current = current.childrenByPropertyId[pathElement];
+                    if('/[]'.indexOf(pathElement) < 0){
+                        //process non separators
+                        var lastElement = pathArray[i -1];
+                        if (lastElement === '[')
+                        {
+                            // index into an array
+                            current = current.children[pathElement];
+                        }
+                        else if (!lastElement || lastElement === '/')
+                        {
+                            //access property
+                            current = current.childrenByPropertyId[pathElement];
+                        }
                     }
                 }
 

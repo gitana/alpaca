@@ -1515,10 +1515,10 @@
 
                         var currentStepEl = $($(wizardSteps).find("[data-alpaca-wizard-role='step']")[currentIndex]);
                         $(currentStepEl).find(".alpaca-field").each(function() {
-                            var fieldId = $(this).attr("data-alpaca-field-id");
+                            var fieldId = $(this).attr("data-alpaca-field-path");
                             if (fieldId)
                             {
-                                var field = self.childrenById[fieldId];
+                                var field = self.getControlByPath(fieldId);
                                 if (field)
                                 {
                                     fields.push(field);
