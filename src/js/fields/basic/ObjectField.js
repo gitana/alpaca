@@ -1514,7 +1514,7 @@
                         var fields = [];
 
                         var currentStepEl = $($(wizardSteps).find("[data-alpaca-wizard-role='step']")[currentIndex]);
-                        $(currentStepEl).find(".alpaca-field").each(function() {
+                        $(currentStepEl).find(".alpaca-field:not([data-alpaca-wizard-role='step'] .alpaca-field .alpaca-field)").each(function() {
                             var fieldId = $(this).attr("data-alpaca-field-path");
                             if (fieldId)
                             {
