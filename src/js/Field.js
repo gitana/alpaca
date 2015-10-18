@@ -1812,7 +1812,7 @@
 
             var result = null;
 
-            if (typeof path==='string')
+            if (typeof path === 'string')
             {
                 var current = this;
 
