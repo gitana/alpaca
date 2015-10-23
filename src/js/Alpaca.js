@@ -208,21 +208,25 @@
             errorCallback = Alpaca.defaultErrorCallback;
         }
 
-        var connectorId = "default";
-        var connectorConfig = {};
-        if (Alpaca.isString(connector)) {
-            connectorId = connector;
-        }
-        else if (Alpaca.isObject(connector) && connector.id) {
-            connectorId = connector.id;
-            if (connector.config) {
-                connectorConfig = connector.config;
+        // instantiate the connector (if not already instantiated)
+        // if config is passed in (as object), we instantiate
+        if (!connector || !connector.connect)
+        {
+            var connectorId = "default";
+            var connectorConfig = {};
+            if (Alpaca.isString(connector)) {
+                connectorId = connector;
             }
-        }
+            else if (Alpaca.isObject(connector) && connector.id) {
+                connectorId = connector.id;
+                if (connector.config) {
+                    connectorConfig = connector.config;
+                }
+            }
 
-        // instantiate the connector
-        var ConnectorClass = Alpaca.getConnectorClass(connectorId);
-        connector = new ConnectorClass(connectorId, connectorConfig);
+            var ConnectorClass = Alpaca.getConnectorClass(connectorId);
+            connector = new ConnectorClass(connectorId, connectorConfig);
+        }
 
         // For second or deeper level of fields, default loader should be the one to do loadAll
         // since schema, data, options and view should have already been loaded.
