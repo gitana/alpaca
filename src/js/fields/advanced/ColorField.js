@@ -49,6 +49,10 @@
             {
                 this.options.spectrum.preferredFormat = "hex3";
             }
+            if (typeof(this.options.spectrum.clickoutFiresChange) === "undefined")
+            {
+                this.options.spectrum.clickoutFiresChange = true;
+            }
             this.options.spectrum.color = this.data;
         },
 
@@ -78,6 +82,10 @@
                     setTimeout(function() {
                         $((self.control)[0]).spectrum(self.options.spectrum);
                     }, 100);
+
+                    $(self.control).on('change.spectrum', function(e, tinycolor) {
+                        self.setValue(tinycolor.toHexString());
+                    });
                 }
 
                 callback();
