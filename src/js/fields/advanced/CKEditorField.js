@@ -41,12 +41,15 @@
                 // see if we can render CK Editor
                 if (!self.isDisplayOnly() && self.control && typeof(CKEDITOR) !== "undefined")
                 {
-                    // use a timeout because CKEditor has some odd timing dependencies
-                    setTimeout(function() {
+                    // wait for Alpaca to declare the DOM swapped and ready before we attempt to do anything with CKEditor
+                    self.on("ready", function() {
+                        if (!self.editor)
+                        {
+                            self.editor = CKEDITOR.replace($(self.control)[0], self.options.ckeditor);
 
-                        self.editor = CKEDITOR.replace($(self.control)[0], self.options.ckeditor);
-
-                    }, 500);
+                            self.initCKEditorEvents();
+                        }
+                    });
                 }
 
                 // if the ckeditor's dom element gets destroyed, make sure we clean up the editor instance
@@ -67,61 +70,57 @@
             });
         },
 
-        initControlEvents: function()
+        initCKEditorEvents: function()
         {
             var self = this;
 
-            setTimeout(function() {
+            if (self.editor)
+            {
+                // click event
+                self.editor.on("click", function (e) {
+                    self.onClick.call(self, e);
+                    self.trigger("click", e);
+                });
 
-                if (self.editor)
-                {
-                    // click event
-                    self.editor.on("click", function (e) {
-                        self.onClick.call(self, e);
-                        self.trigger("click", e);
-                    });
+                // change event
+                self.editor.on("change", function (e) {
+                    self.onChange();
+                    self.triggerWithPropagation("change", e);
+                });
 
-                    // change event
-                    self.editor.on("change", function (e) {
-                        self.onChange();
-                        self.triggerWithPropagation("change", e);
-                    });
+                // blur event
+                self.editor.on('blur', function (e) {
+                    self.onBlur();
+                    self.trigger("blur", e);
+                });
 
-                    // blur event
-                    self.editor.on('blur', function (e) {
-                        self.onBlur();
-                        self.trigger("blur", e);
-                    });
+                // focus event
+                self.editor.on("focus", function (e) {
+                    self.onFocus.call(self, e);
+                    self.trigger("focus", e);
+                });
 
-                    // focus event
-                    self.editor.on("focus", function (e) {
-                        self.onFocus.call(self, e);
-                        self.trigger("focus", e);
-                    });
+                // keypress event
+                self.editor.on("key", function (e) {
+                    self.onKeyPress.call(self, e);
+                    self.trigger("keypress", e);
+                });
 
-                    // keypress event
-                    self.editor.on("key", function (e) {
-                        self.onKeyPress.call(self, e);
-                        self.trigger("keypress", e);
-                    });
+                // NOTE: these do not seem to work with CKEditor?
+                /*
+                 // keyup event
+                 self.editor.on("keyup", function(e) {
+                 self.onKeyUp.call(self, e);
+                 self.trigger("keyup", e);
+                 });
 
-                    // NOTE: these do not seem to work with CKEditor?
-                    /*
-                     // keyup event
-                     self.editor.on("keyup", function(e) {
-                     self.onKeyUp.call(self, e);
-                     self.trigger("keyup", e);
-                     });
-
-                     // keydown event
-                     self.editor.on("keydown", function(e) {
-                     self.onKeyDown.call(self, e);
-                     self.trigger("keydown", e);
-                     });
-                     */
-                }
-
-            }, 525); // NOTE: odd timing dependencies
+                 // keydown event
+                 self.editor.on("keydown", function(e) {
+                 self.onKeyDown.call(self, e);
+                 self.trigger("keydown", e);
+                 });
+                 */
+            }
         },
 
         setValue: function(value)

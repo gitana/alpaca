@@ -1873,6 +1873,12 @@
                         }
                         */
 
+                        if (!field.parent)
+                        {
+                            // trigger event: ready
+                            field.triggerWithPropagation.call(field, "ready", "down");
+                        }
+
                         // TEST - swap code
                         // swap placeholder -> el
                         //$(tempHolder).before(el);
