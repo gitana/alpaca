@@ -1091,6 +1091,9 @@
                     // trigger update
                     self.triggerUpdate();
 
+                    // trigger "ready"
+                    child.triggerWithPropagation.call(child, "ready", "down");
+
                     if (callback)
                     {
                         callback();

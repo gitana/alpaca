@@ -1305,6 +1305,9 @@
                     // trigger update
                     self.triggerUpdate();
 
+                    // trigger "ready"
+                    item.triggerWithPropagation.call(item, "ready", "down");
+
                     if (callback)
                     {
                         callback(item);
