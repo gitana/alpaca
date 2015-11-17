@@ -78,6 +78,11 @@
             {
                 self.options.manualEntry = false;
             }
+
+            if (self.data)
+            {
+                self.options.picker.defaultDate = self.data;
+            }
         },
         
         onKeyPress: function(e)
