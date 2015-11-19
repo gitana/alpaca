@@ -113,6 +113,13 @@
             }
         },
 
+        beforeRenderControl: function(model, callback)
+        {
+            this.field.css("position", "relative");
+
+            callback();
+        },
+
         /**
          * @see Alpaca.Fields.TextField#afterRenderControl
          */
