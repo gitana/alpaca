@@ -917,7 +917,7 @@ var applyFieldAnnotationsToFile = function(filePath, Alpaca)
 
 var applyFieldAnnotations = function(basePath, callback)
 {
-    var env = require('jsdom').env;
+    var jsdom = require("jsdom");
     var html = '<html><body><div id="form"></div></html>';
 
     var jQuerySrc = fs.readFileSync("./lib/jquery/dist/jquery.js", "utf-8");
@@ -926,9 +926,12 @@ var applyFieldAnnotations = function(basePath, callback)
 
     var wrench = require("wrench");
 
+    var virtualConsole = jsdom.createVirtualConsole().sendTo(console);
+
     // first argument can be html string, filename, or url
-    env(html, {
-        src: [jQuerySrc, handlebarsSrc, alpacaSrc]
+    jsdom.env(html, {
+        src: [jQuerySrc, handlebarsSrc, alpacaSrc],
+        virtualConsole: virtualConsole
     }, function (errors, window) {
 
         global.$ = window.$;

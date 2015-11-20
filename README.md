@@ -215,6 +215,8 @@ called life.
 + [@robustified](https://github.com/robustified)
 + [@cniesen](https://github.com/cniesen)
 + [@degenhard](https://github.com/degenhard)
++ [@robsiera](https://github.com/robsiera)
++ [@cheeweep](https://github.com/cheeweep)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org), the [Alpaca Forums](http://www.cloudcms.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!

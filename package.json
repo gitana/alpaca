@@ -5,9 +5,15 @@
     "postupdate": "./node_modules/.bin/bower update",
     "start": "./node_modules/.bin/gulp clean default"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gitana/alpaca.git"
+  },
+  "license": "Apache-2.0",
   "version": "1.5.14",
   "devDependencies": {
-    "bower": "1.3.*",
+    "bower": "*",
+    "stream-browserify": "*",
     "cucumber": "~0.3.3",
     "event-stream": "*",
     "express": "3.5.1",
@@ -35,10 +41,11 @@
     "gulp-wrap": "^0.11.0",
     "gulp-wrap-umd": "^0.2.0",
     "jquery": "*",
-    "jsdom": "3.1.2",
-    "jshint-stylish": "0.1.5",
+    "jsdom": "*",
+    "jshint": "*",
+    "jshint-stylish": "*",
     "lodash": "",
-    "node-gyp": "0.11.0",
+    "node-gyp": "*",
     "node-static": "*",
     "phantom": "0.6.3",
     "q": "^1.0.1",

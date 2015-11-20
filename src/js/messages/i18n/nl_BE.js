@@ -7,7 +7,7 @@
 	Alpaca.registerView ({
 		"id": "base",
 		"messages": {
-			"nl_BE: {
+			"nl_BE": {
 				required: "Dit veld is verplicht",
 				invalid: "Dit veld is ongeldig",
 				months: ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "July", "Augustus", "September", "Oktober", "November", "December"],

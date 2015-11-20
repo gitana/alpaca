@@ -225,6 +225,9 @@
             }
 
             var ConnectorClass = Alpaca.getConnectorClass(connectorId);
+            if (!ConnectorClass) {
+                ConnectorClass = Alpaca.getConnectorClass("default");
+            }
             connector = new ConnectorClass(connectorId, connectorConfig);
         }
 
@@ -4780,6 +4783,27 @@
 
         return value;
     };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Moment.js static
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Alpaca.moment = function() {
+
+        if (!Alpaca._moment) {
+            if (window.moment) {
+                Alpaca._moment = window.moment;
+            }
+        }
+
+        if (!Alpaca._moment) {
+            throw new Error("The moment.js library has not been included, cannot produce moment object");
+        }
+
+        return Alpaca._moment.call(this, arguments);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
