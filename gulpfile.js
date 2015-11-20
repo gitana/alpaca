@@ -101,6 +101,7 @@ var paths = {
             "src/js/fields/advanced/TagField.js",
             "src/js/fields/advanced/TimeField.js",
             "src/js/fields/advanced/TinyMCEField.js",
+            "src/js/fields/advanced/TokenField.js",
             "src/js/fields/advanced/UploadField.js",
             "src/js/fields/advanced/UpperCaseField.js",
             "src/js/fields/advanced/URLField.js",

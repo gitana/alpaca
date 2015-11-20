@@ -43,6 +43,7 @@
     "blueimp-tmpl": "2.5.4",
     "bootstrap": "3.3.2",
     "bootstrap-multiselect": "0.9.9",
+    "bootstrap-tokenfield": "0.12.1",
     "ckeditor": "4.4.1",
     "datatables": "1.10.5",
     "datatables-plugins": "https://github.com/DataTables/Plugins.git",

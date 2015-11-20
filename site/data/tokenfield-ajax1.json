@@ -1,0 +1,62 @@
+[
+    {
+        "value": "spring",
+        "label": "Spring"
+    },
+    {
+        "value": "summer",
+        "label": "Summer"
+    },
+    {
+        "value": "fall",
+        "label": "Fall"
+    },
+    {
+        "value": "winter",
+        "label": "Winter"
+    },
+    {
+        "value": "christmas",
+        "label": "Christmas"
+    },
+    {
+        "value": "easter",
+        "label": "Easter"
+    },
+    {
+        "value": "thanksgiving",
+        "label": "Thanksgiving"
+    },
+    {
+        "value": "halloween",
+        "label": "Halloween"
+    },
+    {
+        "value": "july4th",
+        "label": "4th Of July"
+    },
+    {
+        "value": "boys",
+        "label": "Boys"
+    },
+    {
+        "value": "girls",
+        "label": "Girls"
+    },
+    {
+        "value": "mens",
+        "label": "Mens"
+    },
+    {
+        "value": "womens",
+        "label": "Womens"
+    },
+    {
+        "value": "infants",
+        "label": "Infants"
+    },
+    {
+        "value": "toddlers",
+        "label": "Toddlers"
+    }
+]
