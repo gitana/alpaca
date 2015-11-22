@@ -108,6 +108,13 @@
             }
         },
 
+        beforeRenderControl: function(model, callback)
+        {
+            this.field.css("position", "relative");
+
+            callback();
+        },
+
         /**
          * @see Alpaca.Fields.TextField#afterRenderControl
          */
@@ -143,6 +150,11 @@
                             }, 250);
 
                         });
+
+                        // set value if provided
+                        if (self.data) {
+                            self.picker.date(self.data);
+                        }
                     }
                 }
 
@@ -262,7 +274,7 @@
 
                     for (var i = 0; i < dateFormats.length; i++)
                     {
-                        isValid = isValid || moment(value, self.options.dateFormat, true).isValid();
+                        isValid = isValid || Alpaca.moment(value, self.options.dateFormat, true).isValid();
                     }
                 }
             }
@@ -281,7 +293,7 @@
 
             if (this.picker)
             {
-                if (moment(value, self.options.dateFormat, true).isValid())
+                if (Alpaca.moment(value, self.options.dateFormat, true).isValid())
                 {
                     this.picker.date(value);
                 }

@@ -77,7 +77,7 @@ $("#field1").alpaca({
         var city = control.childrenByPropertyId["city"];
         var team = control.childrenByPropertyId["team"];
         team.subscribe(city, function(val) {
-            this.schema.enum = teams[val];
+            this.schema.enum = this.options.optionLabels = teams[val];
             this.refresh();
         });
     }

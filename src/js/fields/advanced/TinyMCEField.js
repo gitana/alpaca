@@ -64,83 +64,86 @@
                 return value;
             },
 
-            initControlEvents: function()
+            initTinyMCEEvents: function()
             {
                 var self = this;
 
-                setTimeout(function() {
+                if (self.editor) {
 
-                    if (self.editor) {
+                    // click event
+                    self.editor.on("click", function (e) {
+                        self.onClick.call(self, e);
+                        self.trigger("click", e);
+                    });
 
-                        // click event
-                        self.editor.on("click", function (e) {
-                            self.onClick.call(self, e);
-                            self.trigger("click", e);
-                        });
+                    // change event
+                    self.editor.on("change", function (e) {
+                        self.onChange();
+                        self.triggerWithPropagation("change", e);
+                    });
 
-                        // change event
-                        self.editor.on("change", function (e) {
-                            self.onChange();
-                            self.triggerWithPropagation("change", e);
-                        });
+                    // blur event
+                    self.editor.on('blur', function (e) {
+                        self.onBlur();
+                        self.trigger("blur", e);
+                    });
 
-                        // blur event
-                        self.editor.on('blur', function (e) {
-                            self.onBlur();
-                            self.trigger("blur", e);
-                        });
+                    // focus event
+                    self.editor.on("focus", function (e) {
+                        self.onFocus.call(self, e);
+                        self.trigger("focus", e);
+                    });
 
-                        // focus event
-                        self.editor.on("focus", function (e) {
-                            self.onFocus.call(self, e);
-                            self.trigger("focus", e);
-                        });
+                    // keypress event
+                    self.editor.on("keypress", function (e) {
+                        self.onKeyPress.call(self, e);
+                        self.trigger("keypress", e);
+                    });
 
-                        // keypress event
-                        self.editor.on("keypress", function (e) {
-                            self.onKeyPress.call(self, e);
-                            self.trigger("keypress", e);
-                        });
+                    // keyup event
+                    self.editor.on("keyup", function (e) {
+                        self.onKeyUp.call(self, e);
+                        self.trigger("keyup", e);
+                    });
 
-                        // keyup event
-                        self.editor.on("keyup", function (e) {
-                            self.onKeyUp.call(self, e);
-                            self.trigger("keyup", e);
-                        });
-
-                        // keydown event
-                        self.editor.on("keydown", function (e) {
-                            self.onKeyDown.call(self, e);
-                            self.trigger("keydown", e);
-                        });
-                    }
-
-                }, 525);
+                    // keydown event
+                    self.editor.on("keydown", function (e) {
+                        self.onKeyDown.call(self, e);
+                        self.trigger("keydown", e);
+                    });
+                }
             },
 
             afterRenderControl: function(model, callback)
             {
                 var self = this;
+
                 this.base(model, function() {
 
                     if (!self.isDisplayOnly() && self.control && typeof(tinyMCE) !== "undefined")
                     {
-                        var rteFieldID = self.control[0].id;
+                        // wait for Alpaca to declare the DOM swapped and ready before we attempt to do anything with CKEditor
+                        self.on("ready", function() {
 
-                        setTimeout(function () {
+                            if (!self.editor)
+                            {
+                                var rteFieldID = $(self.control)[0].id;
 
-                            tinyMCE.init({
-                                init_instance_callback: function(editor) {
-                                    self.editor = editor;
+                                tinyMCE.init({
+                                    init_instance_callback: function(editor) {
+                                        self.editor = editor;
 
-                                    callback();
-                                },
-                                selector: "#" + rteFieldID,
-                                toolbar: self.options.toolbar
-                            });
+                                        self.initTinyMCEEvents();
+                                    },
+                                    selector: "#" + rteFieldID,
+                                    toolbar: self.options.toolbar
+                                });
 
-                        }, 500);
+                            }
+                        });
                     }
+
+                    callback();
                 });
             },
 

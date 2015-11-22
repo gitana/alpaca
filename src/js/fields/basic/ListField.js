@@ -305,7 +305,9 @@
                                 }
 
                                 var ConnectorClass = Alpaca.getConnectorClass(connectorId);
-                                connector = new ConnectorClass(connectorId, connectorConfig);
+                                if (ConnectorClass) {
+                                    connector = new ConnectorClass(connectorId, connectorConfig);
+                                }
                             }
 
                             var config = self.options.dataSource.config;

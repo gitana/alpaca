@@ -628,7 +628,7 @@
 
             status = this._validateMinProperties();
             valInfo["tooFewProperties"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.items.minProperties]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.minProperties]),
                 "status": status
             };
 
@@ -1090,6 +1090,9 @@
 
                     // trigger update
                     self.triggerUpdate();
+
+                    // trigger "ready"
+                    child.triggerWithPropagation.call(child, "ready", "down");
 
                     if (callback)
                     {
