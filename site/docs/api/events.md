@@ -277,8 +277,8 @@ All event handlers are synchronous in nature (similar to actual DOM event handle
 
 For any field, you can specify an ```events``` sub-object that declares handlers by event name.
 
-Here is an example where we register a handler for the ```change``` event on the ```title``` field using a
-configuration-driven approach.
+Here is an example where we register a whole set of event handlers for different kinds of events.  These all dump out
+to console.  Open up your dev tools to look at the console output.
 
 <div id="field1"> </div>
 {% raw %}
@@ -298,8 +298,35 @@ $("#field1").alpaca({
                 "type": "text",
                 "label": "Title",
                 "events": {
+                    "mouseover": function() {
+                        console.log(this.name + ": mouseover");
+                    },
+                    "mouseout": function() {
+                        console.log(this.name + ": mouseout");
+                    },
                     "change": function() {
-                        alert("The value was changed to: " + this.getValue());
+                        console.log(this.name + ": change to -> " + this.getValue());
+                    },
+                    "focus": function() {
+                        console.log(this.name + ": focus");
+                    },
+                    "blur": function() {
+                        console.log(this.name + ": blur");
+                    },
+                    "keypress": function(e) {
+                        console.log(this.name + ": keypress -> " + e.keyCode);
+                    },
+                    "keydown": function(e) {
+                        console.log(this.name + ": keydown -> " + e.keyCode);
+                    },
+                    "keyup": function(e) {
+                        console.log(this.name + ": keyup -> " + e.keyCode);
+                    },
+                    "click": function(e) {
+                        console.log(this.name + ": click");
+                    },
+                    "ready": function() {
+                        console.log(this.name + ": ready");
                     }
                 }
             }
@@ -308,6 +335,8 @@ $("#field1").alpaca({
 });
 </script>
 {% endraw %}
+
+<span></span>
 
 
 ## Using the ```postRender``` callback

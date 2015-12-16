@@ -326,3 +326,50 @@ $("#field13").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 14
+A multi-select field with numeric selects.
+
+<div id="field14"> </div>
+{% raw %}
+<script type="text/javascript" id="field14-script">
+$("#field14").alpaca({
+    "schema": {
+        "type": "object",
+        "properties": {
+            "intList": {
+                "required": true,
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                    "type": "integer"
+                },
+                "enum": [1, 2, 3]
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "intList": {
+                "multiselect": {
+                    "enableFiltering": true,
+                    "includeSelectAllOption": true
+                },
+                "label": "Int List",
+                "type": "select",
+                "multiple": true,
+                "hideInitValidationError": true
+            }
+        },
+        "form": {
+            "buttons": {
+                "submit": {
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        }
+    }
+});</script>
+{% endraw %}
