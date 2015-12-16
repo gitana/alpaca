@@ -380,7 +380,11 @@
                 event = null;
             }
 
-            if (!direction || direction === "up")
+            if (!direction) {
+                direction = "up";
+            }
+
+            if (direction === "up")
             {
                 // we trigger ourselves first
                 this.trigger.call(this, name, event);
@@ -1032,9 +1036,6 @@
                 {
                     $(self._oldFieldEl).remove();
                 }
-
-                // trigger event: ready
-                self.triggerWithPropagation("ready", "down");
 
                 if (callback)
                 {

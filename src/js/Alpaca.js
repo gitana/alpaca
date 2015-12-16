@@ -293,9 +293,9 @@
                     {
                         fireReady(_field.children[g]);
                     }
-
-                    _field.trigger("ready");
                 }
+
+                _field.trigger("ready");
             };
             fireReady(field);
 
@@ -1891,12 +1891,6 @@
                             }
                         }
                         */
-
-                        if (!field.parent)
-                        {
-                            // trigger event: ready
-                            field.triggerWithPropagation.call(field, "ready", "down");
-                        }
 
                         // TEST - swap code
                         // swap placeholder -> el

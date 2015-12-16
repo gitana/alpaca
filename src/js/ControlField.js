@@ -454,7 +454,7 @@
                 setTimeout(function() {
                     self.onChange.call(self, e);
                     self.triggerWithPropagation("change", e);
-                }, 150);
+                }, 200);
             });
 
             control.focus(function(e) {
