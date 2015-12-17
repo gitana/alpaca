@@ -68,7 +68,7 @@
     "spectrum": "~1.7.1"
   },
   "resolutions": {
-    "bootstrap": "3.2.0",
+    "bootstrap": "3.3.2",
     "jquery": "1.11.1"
   }
 }
