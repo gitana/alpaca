@@ -283,6 +283,7 @@
                 field.observableScope = Alpaca.generateId();
             }
 
+            // if we are the top-most control
             // fire "ready" event on every control
             // go down depth first and fire to lowest controls before trickling back up
             var fireReady = function(_field)
@@ -297,7 +298,12 @@
 
                 _field.trigger("ready");
             };
-            fireReady(field);
+            if (!field.parent)
+            {
+                fireReady(field);
+
+                // field.triggerWithPropagation.call(field, "ready", "down");
+            }
 
             // if top level and focus has not been specified, then auto-set
             if (Alpaca.isUndefined(options.focus) && !field.parent) {
