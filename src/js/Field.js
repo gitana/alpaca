@@ -1020,6 +1020,9 @@
             // reset domEl so that we're rendering into the right place
             //self.domEl = self.field.parent();
 
+            // mark that we are initializing
+            this.initializing = true;
+
             // re-setup the field
             self.setup();
 
