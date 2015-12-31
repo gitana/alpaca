@@ -67,41 +67,74 @@
         var optionsSource = null;
         var viewSource = null;
 
-        // hands back the field instance that is bound directly under the element el
-        var findExistingAlpacaBinding = function()
+        /**
+         * Finds the Alpaca field instance bound to the dom element.
+         *
+         * First considers the immediate dom element and then looks 1 level deep to children and then up to parent.
+         *
+         * @returns {*}
+         */
+        var findExistingAlpacaBinding = function(domElement, skipPivot)
         {
             var existing = null;
 
-            var topElements = $(el).find(":first");
-            if (topElements.length > 0)
+            // look at "data-alpaca-field-id"
+            var alpacaFieldId = $(domElement).attr("data-alpaca-field-id");
+            if (alpacaFieldId)
             {
-                // does a field binding exist?
-                var fieldId = $(topElements[0]).attr("data-alpaca-field-id");
-                if (fieldId)
+                var alpacaField = Alpaca.fieldInstances[alpacaFieldId];
+                if (alpacaField)
                 {
-                    var _existing = Alpaca.fieldInstances[fieldId];
-                    if (_existing) {
-                        existing = _existing;
-                    }
+                    existing = alpacaField;
                 }
-                else
+            }
+
+            // if not found, look at "data-alpaca-form-id"
+            if (!existing)
+            {
+                var formId = $(domElement).attr("data-alpaca-form-id");
+                if (formId)
                 {
-                    // does a form binding exist?
-                    var formId = $(topElements[0]).attr("data-alpaca-form-id");
-                    if (formId)
+                    var subElements = $(domElement).find(":first");
+                    if (subElements.length > 0)
                     {
-                        var subElements = $(topElements[0]).find(":first");
-                        if (subElements.length > 0)
+                        var subFieldId = $(subElements[0]).attr("data-alpaca-field-id");
+                        if (subFieldId)
                         {
-                            var subFieldId = $(subElements[0]).attr("data-alpaca-field-id");
-                            if (subFieldId)
+                            var subField = Alpaca.fieldInstances[subFieldId];
+                            if (subField)
                             {
-                                var _existing = Alpaca.fieldInstances[subFieldId];
-                                if (_existing) {
-                                    existing = _existing;
-                                }
+                                existing = subField;
                             }
                         }
+                    }
+                }
+            }
+
+            // if not found, check for children 0th element
+            if (!existing && !skipPivot)
+            {
+                var childDomElements = $(el).find(":first");
+                if (childDomElements.length > 0)
+                {
+                    var childField = findExistingAlpacaBinding(childDomElements[0], true);
+                    if (childField)
+                    {
+                        existing = childField;
+                    }
+                }
+            }
+
+            // if not found, check parent
+            if (!existing && !skipPivot)
+            {
+                var parentEl = $(el).parent();
+                if (parentEl)
+                {
+                    var parentField = findExistingAlpacaBinding(parentEl, true);
+                    if (parentField)
+                    {
+                        existing = parentField;
                     }
                 }
             }
@@ -112,7 +145,7 @@
         var specialFunctionNames = ["get", "exists", "destroy"];
         var isSpecialFunction = (args.length > 1 && Alpaca.isString(args[1]) && (specialFunctionNames.indexOf(args[1]) > -1));
 
-        var existing = findExistingAlpacaBinding();
+        var existing = findExistingAlpacaBinding(el);
         if (existing || isSpecialFunction)
         {
             if (isSpecialFunction)
