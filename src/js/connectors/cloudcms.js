@@ -295,7 +295,7 @@
 
                 if (typeof(options.focus) === "undefined")
                 {
-                    options.focus = true;
+                    options.focus = Alpaca.defaultFocus;
                 }
 
                 // adjust the action handler relative to baseURL
