@@ -65,6 +65,12 @@
                 self.options.dataSource = self.options.datasource;
                 delete self.options.datasource;
             }
+
+            // we optionally allow the data source return values to override the schema and options
+            if (typeof(self.options.useDataSourceAsEnum) === "undefined")
+            {
+                self.options.useDataSourceAsEnum = true;
+            }
         },
 
         prepareControlModel: function(callback)
@@ -153,23 +159,27 @@
                     var completionFunction = function()
                     {
                         var self = this;
-                        
+
                         // apply sorting to whatever we produce
                         self.sortSelectableOptions(self.selectOptions);
 
-                        // now build out the enum and optionLabels
-                        self.schema.enum = [];
-                        self.options.optionLabels = [];
-                        for (var i = 0; i < self.selectOptions.length; i++)
+                        if (self.options.useDataSourceAsEnum)
                         {
-                            self.schema.enum.push(self.selectOptions[i].value);
-                            self.options.optionLabels.push(self.selectOptions[i].text);
+                            // now build out the enum and optionLabels
+                            self.schema.enum = [];
+                            self.options.optionLabels = [];
+                            for (var i = 0; i < self.selectOptions.length; i++)
+                            {
+                                self.schema.enum.push(self.selectOptions[i].value);
+                                self.options.optionLabels.push(self.selectOptions[i].text);
+                            }
                         }
 
                         // push back to model
                         model.selectOptions = self.selectOptions;
 
                         callback();
+
                     }.bind(self);
 
                     if (Alpaca.isFunction(self.options.dataSource))
@@ -421,6 +431,12 @@
                         "description": "Whether to hide the None option from a list (select, radio or otherwise).  This will be true if the field is required and false otherwise.",
                         "type": "boolean",
                         "default": false
+                    },
+                    "useDataSourceAsEnum": {
+                        "title": "Use Data Source as Enumerated Values",
+                        "description": "Whether to constrain the field's schema enum property to the values that come back from the data source.",
+                        "type": "boolean",
+                        "default": true
                     }
                 }
             });
