@@ -152,6 +152,8 @@
 
                     var completionFunction = function()
                     {
+                        var self = this;
+                        
                         // apply sorting to whatever we produce
                         self.sortSelectableOptions(self.selectOptions);
 
@@ -168,7 +170,7 @@
                         model.selectOptions = self.selectOptions;
 
                         callback();
-                    };
+                    }.bind(self);
 
                     if (Alpaca.isFunction(self.options.dataSource))
                     {

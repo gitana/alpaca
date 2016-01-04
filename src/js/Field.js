@@ -1942,15 +1942,28 @@
                 {
                     var pathElement = pathArray[i];
 
-                    if (pathElement.indexOf("[") === 0)
+                    var _name = pathElement;
+                    var _index = -1;
+
+                    var z1 = pathElement.indexOf("[");
+                    if (z1 >= 0)
                     {
-                        // index into an array
-                        var index = parseInt(pathElement.substring(1, pathElement.length - 1), 10);
-                        current = current.children[index];
+                        var z2 = pathElement.indexOf("]", z1 + 1);
+                        if (z2 >= 0)
+                        {
+                            _index = parseInt(pathElement.substring(z1 + 1, z2));
+                            _name = pathElement.substring(0, z1);
+                        }
                     }
-                    else
+
+                    if (_name)
                     {
-                        current = current.childrenByPropertyId[pathElement];
+                        current = current.childrenByPropertyId[_name];
+
+                        if (_index > -1)
+                        {
+                            current = current.children[_index];
+                        }
                     }
                 }
 
