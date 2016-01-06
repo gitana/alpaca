@@ -64,3 +64,41 @@ $(el).alpaca({
     "connector": {Alpaca.Connector} connector for retrieving or storing data, schema, options, view and templates. (optional)
 });
 ````
+
+## Static Overrides
+
+With Alpaca, you can always set field-level options to configure the behavior of individual fields.  However, in some
+cases, you may prefer to set global behaviors so that you can avoid doing this on a per-field basis.
+
+The following static variables can be set and will be picked up by field implementations:
+
+- ```Alpaca.defaultLocale``` - the locale to use for an I18N message lookups.  This is offered as an alternative to specifying this within the view.
+- ```Alpaca.defaultFocus``` - the focus to set for any rendered forms.  This is an alternative to specifying the focus on the options of a field or form.
+- ```Alpaca.defaultSort``` - the sort settings to use for any fields with enumerated values.  This is an alternative fo specifying the sort on the options for a field.
+- ```Alpaca.defaultSchemaFieldMapping``` - describes which field type to use for a given JSON schema type.  For example, you might map ```string``` to a ```Custom.TextFieldEx``` implementation class.  By doing so, whenever Alpaca encounters a ```string``` schema type and doesn't otherwise know what field type to use, it will use your custom field type.
+- ```Alpaca.defaultFormatFieldMapping``` - describes which field type to use for a given JSON schema format.
+- ```Alpaca.defaultDateFormat``` - the default format string for dates (defaults to "MM/DD/YYYY")  See moment.js documentation for more information.
+- ```Alpaca.defaultTimeFormat``` - the default format string for times (defaults to "HH:SS").  See moment.js documentation for more information.
+- ```Alpaca.defaultView``` - the default view to use for any Alpaca invocations where view isn't specified
+- ```Alpaca.defaultToolbarSticky``` - the default options.toolbarSticky value to use for arrays.
+- ```Alpaca.defaultUI``` - if view is omitted, Alpaca makes a best effort to determine which view to use.  Valid values are ```bootstrap```, ```jquerymobile``` or ```jqueryui```.  If not provided, defaults to a web view.
+
+## Static Error Handler
+
+Error handling can be configured on a per-form or per-field basis but can also be specified globally:
+
+- ```Alpaca.defaultErrorCallback```
+
+Alpaca tries to find the most relevant (closest proximity) error handler.  If nothing can be found, it will fallback
+to using the defaultErrorCallback.  You can override like this:
+
+````
+Alpaca.defaultErrorCallback = function(err) {
+
+    // log it for our own purposes
+    console.log("Behold!  An Alpaca error: " + JSON.stringify(err));
+    
+    // and throw a proper JS error
+    throw new Error("Alpaca caught an error with the default error handler: " + JSON.stringify(error));
+};
+````
