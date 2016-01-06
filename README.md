@@ -1,6 +1,8 @@
-# Alpaca - Easy Forms for jQuery and Bootstrap
+# Alpaca - JSON Forms for jQuery and Bootstrap
 
-Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices. It runs simply as HTML5 or more elaborately using Bootstrap, jQuery Mobile or jQuery UI. Alpaca uses Handlebars to process JSON schema and provide developers with an extensible framework for implementing controls, wizards, layouts, I18N support and an custom data persistence.
+Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices. 
+It runs simply as HTML5 or more elaborately using Bootstrap, jQuery Mobile or jQuery UI. 
+Alpaca uses Handlebars to process JSON schema and provide developers with an extensible framework for implementing controls, wizards, layouts, I18N support and an custom data persistence.
 
 The goal of Alpaca is to provide the open source community with a fantastic forms engine that rivals or beats what most
 proprietary vendors offer.  Using Alpaca, you can host really nice forms for your back end services, whether they
@@ -16,30 +18,82 @@ Here is a sample registration form written once and rendered using four differen
 - [jQuery UI](http://www.alpacajs.org/demos/browser/registration)
 - [With AMD and RequireJS](http://www.alpacajs.org/demos/amd/registration)
 
-Alpaca is an open-source project licensed under Apache 2.0.  It is actively developed and maintained by
-<a href="https://www.cloudcms.com">Cloud CMS</a>.
-<a href="https://www.alpacajs.org/contact.html">Enterprise support is available</a> for your production deployments.
+Alpaca is an open-source project licensed under Apache 2.0.  It was started in 2010 and has been growing steadily
+since thanks to a really awesome community of customers, consultants and technology champions world-wide.
 
 
-## Project Home Page
+## Web Site, Documentation and CDN
 
-For information, demos and documentation regarding Alpaca, please visit the
-<a href="http://www.alpacajs.org">the Alpaca Forms home page</a>.
+For information, demos and documentation regarding Alpaca, please visit the 
+<a href="http://www.alpacajs.org">the Alpaca Forms web site</a>.
+
+All of the Alpaca distribution assets are available via CDN at http://code.cloudcms.com.
+For more information, visit the <a href="http://www.alpacajs.org">Alpaca Forms web site</a>.
 
 
+## Sponsors
+
+Cloud CMS is actively developed and maintained by <a href="https://www.cloudcms.com">Cloud CMS</a>.
+
+Cloud CMS is an API-First, JSON-friendly Content Management Platform for mobile and web applications.  It provides the
+ideal backend for Alpaca forms design, capture and reporting.  Stop by our web site to 
+<a href="https://www.cloudcms.com">learn more about Cloud CMS</a>.
+
+The project also has a large number of customers who use Alpaca, contribute code and receive support, some of whom are 
+listed on our <a href="https://www.alpacajs.org">web site</a>.
+
+
+## Official Support
+
+We offer paid support for your technical development and production environments.  Paid support includes a service
+level agreement for priority response and bug fixes.  
+
+If you are interested in sponsoring or are interested in consulting services, please [Contact Us](http://www.alpacajs.org/support.html).
+ 
+
+## Community
+
+We have an awesome community.  Everything is straight up out in the open and anyone can build or contribute.  We keep
+everything under an Apache 2.0 license so that you're free to do whatever you please with Alpaca.
+
+There are several ways to interact with the Alpaca community.
+
+- [Browse the documentation](http://www.alpacajs.org/documentation.html) and try out the interactive examples.  On each page, you'll find a Disqus forum that you can use to ask questions specific to that page.  As others browse the documentation, they'll find your question and will have the context at hand to answer it.
+- [Visit the Alpaca.js web site](http://www.alpacajs.org) and ask your question to the broader Alpaca community.  Be sure to include code samples, URLs or http://jsfiddle.net/ links so that others can reproduce your scenario quickly.  It's always best to empower others to help you.
+- [Add a GitHub Issue](https://github.com/gitana/alpaca/issues) if you've found an actual bug or have a feature request that you'd like to get prioritized into the roadmap.
+- [Submit a Pull Request](https://github.com/gitana/alpaca) if you've fixed a bug and want to contribute code back to the Alpaca project.  This is the most powerful and effective way to influence the product.  Pull requests give you a way to write your own additions or adjustments to the code base and make it very easy for us to merge your changes into the product.
+- [Get Developer Assistance](http://www.alpacajs.org/support.html) if you have an urgent issue and would like priority paid support.  Cloud CMS and/or its partners provide fast and reliable developer assistance for your projects.
+
+
+## Extensibility
+
+Alpaca is designed to be very extensible, allowing you to plug in new field implementations, DOM layouts, callbacks, CSS classes,
+I18N bundles and much more.  It also integrates naturally to HTTP service backends using a connector layer.
+
+Alpaca is ideal for consultants or organizations that wish to have a solid JavaScript form engine that provides a platform
+that they can grow into for current and future project needs.
+
+
+## Can I fork Alpaca and use it my own projects?
+
+Yes, absolutely.  That's the whole idea.  Fork it, use it in your projects, make money from it, live a better life, spend more time with
+your kids.  We hope that Alpaca is useful to you.
+
+If you come up with something good (like a bug fix or a new feature), consider submitting a Pull Request back to the project so that
+others may benefit.  And so that they too might, in turn, get more sleep, enjoy your work, be happier and get more out of this adventure
+called life.
+ 
+ 
 ## Compatibility
 
-Alpaca is compatible with jQuery 1.9.1 and up.
-
-
-## Issues and Discussions
-
-If you have a question about Alpaca, please visit the [Alpaca Forums](http://www.cloudcms.org/forums/categories/alpaca).
-This is a place where we encourage the community and developer community to get together to support one another in their Alpaca-related
-projects.
-
-If you find an issue with Alpaca, please <a href="https://github.com/gitana/alpaca/issues">add a new issue ticket</a>.
-
+The latest release of Alpaca is compatible with jQuery 1.9.1 and up.  For a full breakdown of dependencies, check the 
+bower.json and/or ```/lib``` directory for third-party vendor libraries and versions that are used.
+ 
+In general, we aspire to support the latest versions of our third-party dependencies.  Some folks may want Alpaca to be
+backward-compatible with earlier versions of dependencies and in general, it is our desire to have it be so.  But in
+cases where that is not possible, we will opt for the latest.  In those cases, we recommend folks fall back to an 
+earlier version of Alpaca.
+ 
 
 ## How to Build Alpaca
 
@@ -142,41 +196,14 @@ need to perform individual steps:
 - To run a local Alpaca web server, ```gulp default server```
 
 
-## CDN
-
-All of the Alpaca distribution assets are available via CDN at http://cdn.alpacajs.org.
-
-
-## Connecting to Cloud CMS
-
-Alpaca works with any backend HTTP service.  There is a connector layer and you can plug in your own persistence for forms, schema, options and layout.
-
-Alpaca works out-of-the-box with [Cloud CMS](http://www.cloudcms.com).  Cloud CMS is a cost-effective backend content management system for mobile and web applications.  If you're looking for a quick way to capture and report on forms, please consider checking it out.
-
-
-## Questions, Getting Involved and Contributing
-
-There are several ways to interact with the Alpaca community.
-
-- [Browse the documentation](http://www.alpacajs.org/documentation.html) and try out the interactive examples.  On each page, you'll find a Disqus forum that you can use to ask questions specific to that page.  As others browse the documentation, they'll find your question and will have the context at hand to answer it.
-- [Visit the Alpaca.js forums](http://www.cloudcms.org) and ask your question to the broader Cloud CMS community.  Be sure to include code samples, URLs or http://jsfiddle.net/ links so that others can reproduce your scenario quickly.  It's always best to empower others to help you.
-- [Add a GitHub Issue](https://github.com/gitana/alpaca/issues) if you've found an actual bug or have a feature request that you'd like to get prioritized into the roadmap.
-- [Submit a Pull Request](https://github.com/gitana/alpaca) if you've fixed a bug and want to contribute code back to the Alpaca project.  This is the most powerful and effective way to influence the product.  Pull requests give you a way to write your own additions or adjustments to the code base and make it very easy for us to merge your changes into the product.
-- [Contact Cloud CMS](https://www.cloudcms.com) if you have an urgent issue, a high priority deliverable or need technical support for Alpaca in production.  Cloud CMS sponsors the Alpaca project and can put engineers on your project to get things done quickly.
-
-## Can I fork Alpaca and use it my own projects?
-
-Yes, absolutely.  That's the whole idea.  Fork it, use it in your projects, make money from it, live a better life, spend more time with
-your kids.  We hope that Alpaca proves useful to you.
-
-If you come up with something good (like a bug fix or a new feature), consider submitting a Pull Request back to the project so that
-others may benefit.  And so that they too might, in turn, get more sleep, enjoy your work, be happier and get more out of this adventure
-called life.
-
 ## Contributors
+
+Here is a long list of our project's Brothers in Arms.  These folks have made numerous contributions to Alpaca
+over the years:
 
 + [@cloudcms](http://github.com/cloudcms)
 + [@uzquiano](http://github.com/uzquiano)
++ [@harrymoore](https://github.com/harrymoore)
 + [@yaworsw](http://github.com/yaworsw)
 + [@drq](http://github.com/drq)
 + [@Maethorin](http://github.com/Maethorin)
@@ -208,7 +235,6 @@ called life.
 + [@mschnee](https://github.com/mschnee)
 + [@Uxio0](https://github.com/Uxio0)
 + [@mll5](https://github.com/mll5)
-+ [@harrymoore](https://github.com/harrymoore)
 + [@PoltoS](https://github.com/PoltoS)
 + [@billbarsch](https://github.com/billbarsch)
 + [@vittala](https://github.com/vittala)
@@ -217,6 +243,7 @@ called life.
 + [@degenhard](https://github.com/degenhard)
 + [@robsiera](https://github.com/robsiera)
 + [@cheeweep](https://github.com/cheeweep)
++ [@j123b567](https://github.com/j123b567)
 
-...and many others via the [Alpaca Web Site](http://www.alpacajs.org), the [Alpaca Forums](http://www.cloudcms.org) and
+...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!
