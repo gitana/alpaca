@@ -111,6 +111,7 @@ var paths = {
             "src/js/views/base.js",
 
             // i18n
+            "src/js/messages/i18n/cs_CZ.js",
             "src/js/messages/i18n/de_AT.js",
             "src/js/messages/i18n/de_DE.js",
             "src/js/messages/i18n/es_ES.js",
