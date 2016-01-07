@@ -23,10 +23,6 @@
 
             self.base();
 
-            if (!this.options.rightLabel) {
-                this.options.rightLabel = "";
-            }
-
             if (typeof(self.options.multiple) == "undefined")
             {
                 if (self.schema.type === "array")
@@ -39,32 +35,39 @@
                 }
             }
 
-            self.checkboxOptions = [];
             if (self.options.multiple)
             {
-                // sort the enumerated values
-                self.sortEnum();
+                // multiple mode
 
-                $.each(self.getEnum(), function(index, value) {
+                self.checkboxOptions = [];
 
-                    var text = value;
-                    if (self.options.optionLabels)
-                    {
-                        if (!Alpaca.isEmpty(self.options.optionLabels[index]))
+                // if we have enum values, copy them into checkbox options
+                if (self.getEnum())
+                {
+                    // sort the enumerated values
+                    self.sortEnum();
+
+                    $.each(self.getEnum(), function (index, value) {
+
+                        var text = value;
+                        if (self.options.optionLabels)
                         {
-                            text = self.options.optionLabels[index];
+                            if (!Alpaca.isEmpty(self.options.optionLabels[index]))
+                            {
+                                text = self.options.optionLabels[index];
+                            }
+                            else if (!Alpaca.isEmpty(self.options.optionLabels[value]))
+                            {
+                                text = self.options.optionLabels[value];
+                            }
                         }
-                        else if (!Alpaca.isEmpty(self.options.optionLabels[value]))
-                        {
-                            text = self.options.optionLabels[value];
-                        }
-                    }
 
-                    self.checkboxOptions.push({
-                        "value": value,
-                        "text": text
+                        self.checkboxOptions.push({
+                            "value": value,
+                            "text": text
+                        });
                     });
-                });
+                }
 
                 // if they provided "datasource", we copy to "dataSource"
                 if (self.options.datasource && !self.options.dataSource) {
@@ -78,6 +81,14 @@
                     self.options.useDataSourceAsEnum = true;
                 }
             }
+            else
+            {
+                // single mode
+
+                if (!this.options.rightLabel) {
+                    this.options.rightLabel = "";
+                }
+            }
         },
 
         prepareControlModel: function(callback)
@@ -86,8 +97,10 @@
 
             this.base(function(model) {
 
-                // store on model
-                model.checkboxOptions = self.checkboxOptions;
+                if (self.checkboxOptions)
+                {
+                    model.checkboxOptions = self.checkboxOptions;
+                }
 
                 callback(model);
             });
@@ -131,7 +144,27 @@
 
                 if (self.options.dataSource)
                 {
+                    // switch to multiple mode
+                    self.options.multiple = true;
+
+                    if (!self.checkboxOptions) {
+                        model.checkboxOptions = self.checkboxOptions = [];
+                    }
+
                     self.invokeDataSource(self.checkboxOptions, function(err) {
+
+                        if (self.options.useDataSourceAsEnum)
+                        {
+                            // now build out the enum and optionLabels
+                            self.schema.enum = [];
+                            self.options.optionLabels = [];
+                            for (var i = 0; i < self.checkboxOptions.length; i++)
+                            {
+                                self.schema.enum.push(self.checkboxOptions[i].value);
+                                self.options.optionLabels.push(self.checkboxOptions[i].text);
+                            }
+                        }
+
                         callback();
                     });
                 }
@@ -159,15 +192,6 @@
                     self.setValue(self.data);
                 }
 
-                // whenever the state of one of our input:checkbox controls is changed (either via a click or programmatically),
-                // we signal to the top-level field to fire up a change
-                //
-                // this allows the dependency system to recalculate and such
-                //
-                $(self.getFieldEl()).find("input:checkbox").change(function(evt) {
-                    self.triggerWithPropagation("change");
-                });
-
                 // for multiple mode, mark values
                 if (self.options.multiple)
                 {
@@ -192,6 +216,17 @@
                         }
                     }
                 }
+
+                // single mode
+
+                // whenever the state of one of our input:checkbox controls is changed (either via a click or programmatically),
+                // we signal to the top-level field to fire up a change
+                //
+                // this allows the dependency system to recalculate and such
+                //
+                $(self.getFieldEl()).find("input:checkbox").change(function(evt) {
+                    self.triggerWithPropagation("change");
+                });
 
                 callback();
             });
@@ -379,7 +414,6 @@
                 $(this).disabled = true;
                 $(this).prop("disabled", true);
             });
-
         },
 
         /**
@@ -391,7 +425,6 @@
                 $(this).disabled = false;
                 $(this).prop("disabled", false);
             });
-
         },
 
         /**
@@ -436,9 +469,15 @@
                         "type": "boolean"
                     },
                     "dataSource": {
-                        "title": "Option Datasource",
-                        "description": "Datasource for generating list of options.  This can be a string or a function.  If a string, it is considered to be a URI to a service that produces a object containing key/value pairs or an array of elements of structure {'text': '', 'value': ''}.  This can also be a function that is called to produce the same list.",
+                        "title": "Option DataSource",
+                        "description": "Data source for generating list of options.  This can be a string or a function.  If a string, it is considered to be a URI to a service that produces a object containing key/value pairs or an array of elements of structure {'text': '', 'value': ''}.  This can also be a function that is called to produce the same list.",
                         "type": "string"
+                    },
+                    "useDataSourceAsEnum": {
+                        "title": "Use Data Source as Enumerated Values",
+                        "description": "Whether to constrain the field's schema enum property to the values that come back from the data source.",
+                        "type": "boolean",
+                        "default": true
                     }
                 }
             });

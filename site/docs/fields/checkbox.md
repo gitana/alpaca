@@ -131,7 +131,7 @@ $("#field5").alpaca({
 
 
 ## Example 6
-Checkbox Field used for multiple values with it's value set loaded from a data source.
+Checkbox Field for multiple values with it's selection options loaded from a data source.
 <div id="field6"> </div>
 {% raw %}
 <script type="text/javascript" id="field6-script">

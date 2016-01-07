@@ -410,8 +410,7 @@
             // error message. If there are optionLabels, use them in
             // preference to the raw enum values.
             var values = this.schema["enum"];
-            if (typeof(this.options["optionLabels"]) === "object" && values.length &&
-                this.options["optionLabels"].length >= values.length) {
+            if (typeof(this.options["optionLabels"]) === "object" && values.length && this.options["optionLabels"].length >= values.length) {
                 values = this.options["optionLabels"].slice(0, values.length);
             }
 
