@@ -1,10 +1,10 @@
 <script type="text/x-handlebars-template">
 
     <fieldset data-role="controlgroup">
-        {{#if hideNone}}
+        {{#if options.hideNone}}
         {{else}}
         <input type="radio" name="{{name}}" id="{{name}}-none" value="" checked="checked" {{#if options.readonly}}readonly="readonly"{{/if}}>
-        <label for="{{name}}-none">{{{noneLabel}}}</label>
+        <label for="{{name}}-none">{{{options.noneLabel}}}</label>
         {{/if}}
 
         {{#each selectOptions}}

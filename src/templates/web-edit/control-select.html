@@ -4,9 +4,9 @@
 
     {{#if options.multiple}}
 
-        {{#if hideNone}}
+        {{#if options.hideNone}}
         {{else}}
-        <option value="">{{{noneLabel}}}</option>
+        <option value="">{{{options.noneLabel}}}</option>
         {{/if}}
 
         {{#each selectOptions}}
@@ -15,9 +15,9 @@
 
     {{else}}
 
-        {{#if hideNone}}
+        {{#if options.hideNone}}
         {{else}}
-        <option value="">{{{noneLabel}}}</option>
+        <option value="">{{{options.noneLabel}}}</option>
         {{/if}}
 
         {{#each selectOptions}}

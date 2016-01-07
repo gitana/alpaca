@@ -689,6 +689,219 @@
 
             // sort it
             selectableOptions.sort(sortFn);
+        },
+
+        /**
+         * Helper function that invokes a datasource configured for this control.  The results are written into the
+         * given array and the onFinish method is then called with (err, array).
+         *
+         * @param array
+         * @param onFinish
+         */
+        invokeDataSource: function(array, onFinish)
+        {
+            var self = this;
+
+            var completionFunction = function(err)
+            {
+                var self = this;
+
+                if (err) {
+                    return onFinish(err);
+                }
+
+                // apply sorting to whatever we produce
+                self.sortSelectableOptions(array);
+
+                onFinish(null, array);
+
+            }.bind(self);
+
+            if (Alpaca.isFunction(self.options.dataSource))
+            {
+                self.options.dataSource.call(self, function(values) {
+
+                    if (Alpaca.isArray(values))
+                    {
+                        for (var i = 0; i < values.length; i++)
+                        {
+                            if (typeof(values[i]) === "string")
+                            {
+                                array.push({
+                                    "text": values[i],
+                                    "value": values[i]
+                                });
+                            }
+                            else if (Alpaca.isObject(values[i]))
+                            {
+                                array.push(values[i]);
+                            }
+                        }
+
+                        completionFunction();
+                    }
+                    else if (Alpaca.isObject(values))
+                    {
+                        for (var k in values)
+                        {
+                            array.push({
+                                "text": k,
+                                "value": values[k]
+                            });
+                        }
+
+                        completionFunction();
+                    }
+                    else
+                    {
+                        completionFunction();
+                    }
+                });
+            }
+            else if (Alpaca.isUri(self.options.dataSource))
+            {
+                $.ajax({
+                    url: self.options.dataSource,
+                    type: "get",
+                    dataType: "json",
+                    success: function(jsonDocument) {
+
+                        var ds = jsonDocument;
+                        if (self.options.dsTransformer && Alpaca.isFunction(self.options.dsTransformer))
+                        {
+                            ds = self.options.dsTransformer(ds);
+                        }
+
+                        if (ds)
+                        {
+                            if (Alpaca.isObject(ds))
+                            {
+                                // for objects, we walk through one key at a time
+                                // the insertion order is the order of the keys from the map
+                                // to preserve order, consider using an array as below
+                                $.each(ds, function(key, value) {
+                                    array.push({
+                                        "value": key,
+                                        "text": value
+                                    });
+                                });
+
+                                completionFunction();
+                            }
+                            else if (Alpaca.isArray(ds))
+                            {
+                                // for arrays, we walk through one index at a time
+                                // the insertion order is dictated by the order of the indices into the array
+                                // this preserves order
+                                $.each(ds, function(index, value) {
+                                    array.push({
+                                        "value": value.value,
+                                        "text": value.text
+                                    });
+                                });
+
+                                completionFunction();
+                            }
+                        }
+                    },
+                    "error": function(jqXHR, textStatus, errorThrown) {
+
+                        self.errorCallback({
+                            "message":"Unable to load data from uri : " + self.options.dataSource,
+                            "stage": "DATASOURCE_LOADING_ERROR",
+                            "details": {
+                                "jqXHR" : jqXHR,
+                                "textStatus" : textStatus,
+                                "errorThrown" : errorThrown
+                            }
+                        });
+                    }
+                });
+            }
+            else if (Alpaca.isArray(self.options.dataSource))
+            {
+                for (var i = 0; i < self.options.dataSource.length; i++)
+                {
+                    if (typeof(self.options.dataSource[i]) === "string")
+                    {
+                        array.push({
+                            "text": self.options.dataSource[i],
+                            "value": self.options.dataSource[i]
+                        });
+                    }
+                    else if (Alpaca.isObject(self.options.dataSource[i]))
+                    {
+                        array.push(self.options.dataSource[i]);
+                    }
+                }
+
+                completionFunction();
+            }
+            else if (Alpaca.isObject(self.options.dataSource))
+            {
+                if (self.options.dataSource.connector)
+                {
+                    var connector = self.connector;
+
+                    if (Alpaca.isObject(self.options.dataSource.connector))
+                    {
+                        var connectorId = self.options.dataSource.connector.id;
+                        var connectorConfig = self.options.dataSource.connector.config;
+                        if (!connectorConfig) {
+                            connectorConfig = {};
+                        }
+
+                        var ConnectorClass = Alpaca.getConnectorClass(connectorId);
+                        if (ConnectorClass) {
+                            connector = new ConnectorClass(connectorId, connectorConfig);
+                        }
+                    }
+
+                    var config = self.options.dataSource.config;
+                    if (!config) {
+                        config = {};
+                    }
+
+                    // load using connector
+                    connector.loadDataSource(config, function(array) {
+
+                        for (var i = 0; i < array.length; i++)
+                        {
+                            if (typeof(array[i]) === "string")
+                            {
+                                array.push({
+                                    "text": array[i],
+                                    "value": array[i]
+                                });
+                            }
+                            else if (Alpaca.isObject(array[i]))
+                            {
+                                array.push(array[i]);
+                            }
+                        }
+
+                        completionFunction();
+                    });
+                }
+                else
+                {
+                    // load from standard object
+                    for (var k in self.options.dataSource)
+                    {
+                        array.push({
+                            "text": self.options.dataSource[k],
+                            "value": k
+                        });
+                    }
+
+                    completionFunction();
+                }
+
+            }
+            else
+            {
+                onFinish();
+            }
         }
 
 

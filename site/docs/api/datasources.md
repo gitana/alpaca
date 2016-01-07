@@ -8,7 +8,7 @@ tags: field
 {% include JB/setup %}
 
 Alpaca supports lazy loading of data from remote locations via data sources.  Data sources are supported by a limited
-number of field types - including <code>select</code> and <code>radio</code> fields.
+number of field types - including <code>select</code>, <code>radio</code> and <code>checkbox</code> fields.
 
 To use a data source, specify the <code>dataSource</code> option for your field.
 

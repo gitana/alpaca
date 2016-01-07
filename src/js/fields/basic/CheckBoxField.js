@@ -19,51 +19,78 @@
          */
         setup: function() {
 
-            var _this = this;
+            var self = this;
 
-            _this.base();
+            self.base();
 
             if (!this.options.rightLabel) {
                 this.options.rightLabel = "";
             }
 
-            if (typeof(_this.options.multiple) == "undefined")
+            if (typeof(self.options.multiple) == "undefined")
             {
-                if (_this.schema.type === "array")
+                if (self.schema.type === "array")
                 {
-                    _this.options.multiple = true;
+                    self.options.multiple = true;
                 }
-                else if (typeof(_this.schema["enum"]) != "undefined")
+                else if (typeof(self.schema["enum"]) !== "undefined")
                 {
-                    _this.options.multiple = true;
+                    self.options.multiple = true;
                 }
             }
 
-            _this.checkboxOptions = [];
-            if (_this.options.multiple)
+            self.checkboxOptions = [];
+            if (self.options.multiple)
             {
-                $.each(_this.getEnum(), function(index, value) {
+                // sort the enumerated values
+                self.sortEnum();
+
+                $.each(self.getEnum(), function(index, value) {
 
                     var text = value;
-
-                    if (_this.options.optionLabels)
+                    if (self.options.optionLabels)
                     {
-                        if (!Alpaca.isEmpty(_this.options.optionLabels[index]))
+                        if (!Alpaca.isEmpty(self.options.optionLabels[index]))
                         {
-                            text = _this.options.optionLabels[index];
+                            text = self.options.optionLabels[index];
                         }
-                        else if (!Alpaca.isEmpty(_this.options.optionLabels[value]))
+                        else if (!Alpaca.isEmpty(self.options.optionLabels[value]))
                         {
-                            text = _this.options.optionLabels[value];
+                            text = self.options.optionLabels[value];
                         }
                     }
 
-                    _this.checkboxOptions.push({
+                    self.checkboxOptions.push({
                         "value": value,
                         "text": text
                     });
                 });
+
+                // if they provided "datasource", we copy to "dataSource"
+                if (self.options.datasource && !self.options.dataSource) {
+                    self.options.dataSource = self.options.datasource;
+                    delete self.options.datasource;
+                }
+
+                // we optionally allow the data source return values to override the schema and options
+                if (typeof(self.options.useDataSourceAsEnum) === "undefined")
+                {
+                    self.options.useDataSourceAsEnum = true;
+                }
             }
+        },
+
+        prepareControlModel: function(callback)
+        {
+            var self = this;
+
+            this.base(function(model) {
+
+                // store on model
+                model.checkboxOptions = self.checkboxOptions;
+
+                callback(model);
+            });
         },
 
         /**
@@ -93,14 +120,26 @@
             this.refreshValidationState();
         },
 
-        prepareControlModel: function(callback)
+        /**
+         * @see Alpaca.ControlField#beforeRenderControl
+         */
+        beforeRenderControl: function(model, callback)
         {
             var self = this;
 
-            this.base(function(model) {
-                model.checkboxOptions = self.checkboxOptions;
+            this.base(model, function() {
 
-                callback(model);
+                if (self.options.dataSource)
+                {
+                    self.invokeDataSource(self.checkboxOptions, function(err) {
+                        callback();
+                    });
+                }
+                else
+                {
+                    callback();
+                }
+
             });
         },
 
@@ -127,8 +166,6 @@
                 //
                 $(self.getFieldEl()).find("input:checkbox").change(function(evt) {
                     self.triggerWithPropagation("change");
-                    //evt.preventDefault();
-                    //evt.stopImmediatePropagation();
                 });
 
                 // for multiple mode, mark values
@@ -397,6 +434,11 @@
                         "title": "Multiple",
                         "description": "Whether to render multiple checkboxes for multi-valued type (such as an array or a comma-delimited string)",
                         "type": "boolean"
+                    },
+                    "dataSource": {
+                        "title": "Option Datasource",
+                        "description": "Datasource for generating list of options.  This can be a string or a function.  If a string, it is considered to be a URI to a service that produces a object containing key/value pairs or an array of elements of structure {'text': '', 'value': ''}.  This can also be a function that is called to produce the same list.",
+                        "type": "string"
                     }
                 }
             });
@@ -414,6 +456,9 @@
                     },
                     "multiple": {
                         "type": "checkbox"
+                    },
+                    "dataSource": {
+                        "type": "text"
                     }
                 }
             });

@@ -1,10 +1,10 @@
 <script type="text/x-handlebars-template">
 
-    {{#if hideNone}}
+    {{#if options.hideNone}}
     {{else}}
     <div class="radio">
         <label>
-            <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value=""/>{{{noneLabel}}}
+            <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value=""/>{{{options.noneLabel}}}
         </label>
     </div>
     {{/if}}

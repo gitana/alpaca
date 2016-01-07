@@ -128,3 +128,21 @@ $("#field5").alpaca({
 });
 </script>
 {% endraw %}
+
+
+## Example 6
+Checkbox Field used for multiple values with it's value set loaded from a data source.
+<div id="field6"> </div>
+{% raw %}
+<script type="text/javascript" id="field6-script">
+$("#field6").alpaca({
+    "data": ["Vanilla", "Chocolate"],    
+    "options": {
+        "label": "Ice cream",
+        "type": "checkbox",
+        "multiple": true,
+        "dataSource": "/data/icecream-list.json"
+    }
+});
+</script>
+{% endraw %}
