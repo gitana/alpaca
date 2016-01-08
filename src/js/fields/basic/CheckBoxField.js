@@ -151,6 +151,9 @@
                         model.checkboxOptions = self.checkboxOptions = [];
                     }
 
+                    // clear the array
+                    self.checkboxOptions.length = 0;
+
                     self.invokeDataSource(self.checkboxOptions, function(err) {
 
                         if (self.options.useDataSourceAsEnum)

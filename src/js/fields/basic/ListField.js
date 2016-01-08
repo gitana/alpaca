@@ -158,6 +158,9 @@
 
                 if (self.options.dataSource)
                 {
+                    // clear the array
+                    self.selectOptions.length = 0;
+
                     self.invokeDataSource(self.selectOptions, function() {
 
                         if (self.options.useDataSourceAsEnum)
