@@ -154,7 +154,7 @@
                     // clear the array
                     self.checkboxOptions.length = 0;
 
-                    self.invokeDataSource(self.checkboxOptions, function(err) {
+                    self.invokeDataSource(self.checkboxOptions, model, function(err) {
 
                         if (self.options.useDataSourceAsEnum)
                         {
@@ -178,6 +178,7 @@
 
             });
         },
+
 
         /**
          * @see Alpaca.ControlField#postRender

@@ -161,7 +161,7 @@
                     // clear the array
                     self.selectOptions.length = 0;
 
-                    self.invokeDataSource(self.selectOptions, function() {
+                    self.invokeDataSource(self.selectOptions, model, function() {
 
                         if (self.options.useDataSourceAsEnum)
                         {

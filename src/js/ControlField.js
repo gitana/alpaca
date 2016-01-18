@@ -697,7 +697,7 @@
          * @param array
          * @param onFinish
          */
-        invokeDataSource: function(array, onFinish)
+        invokeDataSource: function(array, model, onFinish)
         {
             var self = this;
 
@@ -709,10 +709,18 @@
                     return onFinish(err);
                 }
 
-                // apply sorting to whatever we produce
-                self.sortSelectableOptions(array);
+                self.afterLoadDataSourceOptions(array, model, function(err, array) {
 
-                onFinish(null, array);
+                    if (err) {
+                        return onFinish(err);
+                    }
+
+                    // apply sorting to whatever we produce
+                    self.sortSelectableOptions(array);
+
+                    onFinish(null, array);
+
+                });
 
             }.bind(self);
 
@@ -901,8 +909,12 @@
             {
                 onFinish();
             }
-        }
+        },
 
+        afterLoadDataSourceOptions: function(array, model, callback)
+        {
+            callback(null, array);
+        }
 
 
         /* builder_helpers */
