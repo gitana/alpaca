@@ -862,20 +862,20 @@
                     }
 
                     // load using connector
-                    connector.loadDataSource(config, function(array) {
+                    connector.loadDataSource(config, function(values) {
 
-                        for (var i = 0; i < array.length; i++)
+                        for (var i = 0; i < values.length; i++)
                         {
-                            if (typeof(array[i]) === "string")
+                            if (typeof(values[i]) === "string")
                             {
                                 array.push({
-                                    "text": array[i],
-                                    "value": array[i]
+                                    "text": values[i],
+                                    "value": values[i]
                                 });
                             }
-                            else if (Alpaca.isObject(array[i]))
+                            else if (Alpaca.isObject(values[i]))
                             {
-                                array.push(array[i]);
+                                array.push(values[i]);
                             }
                         }
 
