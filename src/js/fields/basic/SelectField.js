@@ -246,6 +246,11 @@
                 }
                 else
                 {
+                    // in case we're an array modeled on a single select, just use the 0th element
+                    if (Alpaca.isArray(val)) {
+                        val = val[0];
+                    }
+
                     return ($.inArray(val, this.schema["enum"]) > -1);
                 }
             }
