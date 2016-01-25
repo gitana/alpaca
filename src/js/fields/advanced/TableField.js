@@ -54,6 +54,22 @@
                     "searching": false,
                     "ordering": true
                 };
+
+                // draggable reorder of rows
+                if (typeof(this.options.dragRows) == "undefined")
+                {
+                    this.options.dragRows = false;
+                }
+
+                if (this.options.readonly)
+                {
+                    this.options.dragRows = false;
+                }
+
+                if (this.isDisplayOnly())
+                {
+                    this.options.dragRows = false;
+                }
             }
 
             // assume actions column to be shown
@@ -211,6 +227,21 @@
                 {
                     if ($.fn.DataTable)
                     {
+                        // if we're setting up for dragging rows, then add that column
+                        if (self.options.dragRows)
+                        {
+                            self.options.datatables.columns.push({
+                                "orderable": false,
+                                "name": "dragRowsIndex",
+                                "hidden": true
+                            });
+
+                            self.options.datatables.columns.push({
+                                "orderable": false,
+                                "name": "dragRowsDraggable"
+                            });
+                        }
+
                         // mix in fields from the items
                         for (var k in self.schema.items.properties)
                         {
@@ -229,7 +260,50 @@
                             });
                         }
 
-                        $(this.container).find("table").DataTable(self.options.datatables);
+                        if (self.options.dragRows)
+                        {
+                            self.options.datatables["rowReorder"] = {
+                                "selector": "tr",
+                                "dataSrc": 0,
+                                "snapX": true,
+                                "update": false
+                            };
+
+                        }
+
+                        // listen for the "ready" event and when it fires, init data tables
+                        // this ensures that the DOM and anything wrapping our table field instance is ready to rock
+                        // before we proceed
+                        self.on("ready", function() {
+
+                            // data table reference
+                            var _dt = self._dt = $(self.container).find("table").DataTable(self.options.datatables);
+
+                            // listen for the "row-reorder" event
+                            _dt.on("row-reorder", function(e, diff, edit) {
+
+                                // update our data structure to reflect the shift in positions
+                                if (diff.length > 0)
+                                {
+                                    if (diff[0].oldPosition !== diff[0].newPosition)
+                                    {
+                                        self.moveItem(diff[0].oldPosition, diff[0].newPosition, false, function() {
+                                            // done
+                                        }, true);
+                                    }
+                                }
+                            });
+
+                            /*
+                            // listen for the "row-reordered" event
+                            _dt.on("row-reordered", function ( e, diff, edit ) {
+                                for ( var i=0, ien=diff.length ; i<ien ; i++ ) {
+                                    $(diff[i].node).addClass("reordered");
+                                }
+                            });
+                            */
+
+                        });
                     }
                 }
 
@@ -327,6 +401,40 @@
                 });
             }
 
+            // find the alpaca-table-reorder-draggable-cell and slip a TD around it
+            var alpacaTableReorderDraggableCells = this.getFieldEl().find(".alpaca-table-reorder-draggable-cell");
+            if (alpacaTableReorderDraggableCells.length > 0)
+            {
+                alpacaTableReorderDraggableCells.each(function() {
+                    var td = $("<td class='alpaca-table-reorder-draggable-cell'></td>");
+                    $(this).before(td);
+                    $(td).append($(this).children());
+                    $(this).remove();
+                });
+            }
+
+            // find the alpaca-table-reorder-index-cell, slip a TD around it and insert value
+            var alpacaTableReorderIndexCells = this.getFieldEl().find(".alpaca-table-reorder-index-cell");
+            if (alpacaTableReorderIndexCells.length > 0)
+            {
+                alpacaTableReorderIndexCells.each(function(i) {
+                    var td = $("<td class='alpaca-table-reorder-index-cell'>" + i + "</td>");
+                    $(this).before(td);
+                    $(this).remove();
+                });
+            }
+
+            /*
+            // ensure there are IDs on the rows
+            var rows = this.getFieldEl().find("tr");
+            if (rows.length > 0)
+            {
+                rows.each(function(i) {
+                    $(this).attr("id", "alpaca-table-row-" + i);
+                });
+            }
+            */
+
             // find anything else with .alpaca-merge-up and merge up
             this.getFieldEl().find(".alpaca-merge-up").each(function() {
                 mergeElementUp(this);
@@ -396,6 +504,12 @@
                         "default": true,
                         "description": "Whether to show or hide the actions column.",
                         "type": "boolean"
+                    },
+                    "dragRows": {
+                        "title": "Drag Rows",
+                        "default": false,
+                        "description": "Whether to enable the dragging of rows via a draggable column.  This requires DataTables and the DataTables Row Reorder Plugin.",
+                        "type": "boolean"
                     }
                 }
             });
@@ -412,6 +526,9 @@
                         "type": "object"
                     },
                     "showActionsColumn": {
+                        "type": "checkbox"
+                    },
+                    "dragRows": {
                         "type": "checkbox"
                     }
                 }

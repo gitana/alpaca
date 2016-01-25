@@ -14,6 +14,7 @@
             this.base(function(model) {
 
                 model.options.showActionsColumn = self.parent.options.showActionsColumn;
+                model.options.dragRows = self.parent.options.dragRows;
 
                 // walk all items and mark hiddens so that the template can easily pick this up
                 // hiddens are applied the "alpaca-table-column-hidden" css class so that they can be hidden
@@ -28,26 +29,6 @@
                 callback(model);
             });
         },
-
-        /*
-        afterRenderContainer: function(model, callback)
-        {
-            var self = this;
-
-            this.base(model, function() {
-
-                // apply data-type="alpaca" to each TD
-                var tds = $(this.container).find("td");
-                for (var i = 0; i < self.children.length; i++)
-                {
-                    $(tds[i]).attr("data-type", "alpaca");
-                }
-
-                callback();
-
-            }.bind(self));
-        },
-        */
 
         /**
          * @see Alpaca.ControlField#getFieldType

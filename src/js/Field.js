@@ -1676,7 +1676,7 @@
         },
 
         isShown: function() {
-            return this.isVisible();
+            return !this.isHidden();
         },
 
         isVisible: function() {

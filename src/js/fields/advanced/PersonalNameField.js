@@ -19,15 +19,21 @@
          */
         setValue: function(val)
         {
+            if (!val)
+            {
+                return this.base(val);
+            }
+
+            // convert to upper-case
             var upperValue = "";
 
-            for ( var i = 0; i < val.length; i++ )
+            for (var i = 0; i < val.length; i++)
             {
-                if ( i === 0 )
+                if (i === 0)
                 {
                     upperValue += val.charAt(i).toUpperCase();
                 }
-                else if (val.charAt(i-1) === ' ' ||  val.charAt(i-1) === '-' || val.charAt(i-1) === "'")
+                else if (val.charAt(i - 1) === ' ' || val.charAt(i - 1) === '-' || val.charAt(i - 1) === "'")
                 {
                     upperValue += val.charAt(i).toUpperCase();
                 }

@@ -371,7 +371,7 @@ $("#field7").alpaca({
         "rank": 3,
         "name": "Wayne Gretzky",
         "sport": "hockey",
-        "valid": false,
+        "active": false,
         "number": 99
     }],
     "schema": {
@@ -462,3 +462,222 @@ $("#field7").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 8
+
+Adding and removing rows dynamically using setValue.
+<div id="field8"> </div>
+{% raw %}
+<script type="text/javascript" id="field8-script">
+var dtConfig8 = {
+    "searching": true
+};
+$("#field8").alpaca({
+    "data": [{
+        "name": "Michael Jordan",
+        "sport": "basketball",
+        "number": 23
+    }, {
+        "name": "Pele",
+        "sport": "soccer",
+        "number": 10
+    }, {
+        "name": "Wayne Gretzky",
+        "sport": "hockey",
+        "number": 99
+    }],
+    "schema": {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "title": "Name"
+                },
+                "sport": {
+                    "type": "string",
+                    "title": "Sport",
+                    "enum": [
+                        "basketball",
+                        "baseball",
+                        "hockey",
+                        "soccer",
+                        "football"
+                    ]
+                },
+                "number": {
+                    "type": "number",
+                    "title": "Number"
+                }
+            }
+        }
+    },
+    "options": {
+        "type": "table",
+        "items": {
+            "fields": {
+                "name": {
+                    "type": "personalname"
+                },
+                "sport": {
+                    "type": "select",
+                    "optionLabels": [
+                        "Basketball",
+                        "Baseball",
+                        "Hockey",
+                        "Soccer",
+                        "Football"
+                    ]
+                },
+                "number": {
+                    "type": "integer"
+                }
+            }
+        },
+        "datatables": dtConfig8,
+        "toolbarSticky": true,
+        "form": {
+            "buttons": {
+                "addRow": {
+                    "title": "Add Row",
+                    "click": function() {
+                        var value = this.getValue();
+                        value.push({
+                            "name": "New Athlete",
+                            "sport": "basketball",
+                            "number": 99
+                        });
+                        this.setValue(value);
+                    }
+                },
+                "removeRow": {
+                    "title": "Remove Row",
+                    "click": function() {
+                        var value = this.getValue();
+                        if (value.length > 0) {
+                            value.pop();
+                            this.setValue(value);
+                        }                        
+                    }
+                },
+                "submit": {
+                    "title": "Show JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }                          
+            }
+        }        
+    }
+});
+</script>
+{% endraw %}
+
+## Example 9
+
+Drag-and-drop support for draggable table row re-ordering using the <code>dragRow</code> option.
+This requires the <code>datatables.net-rowreorder</code> plugin as well as the core <code>datatables.net</code> library.
+
+<a href="https://datatables.net/extensions/rowreorder/" target="_blank">DataTables RowReorder Plugin</a>
+
+If you run into problems with the placement of the draggable overlay, you may need to force absolute positioning of the
+overlay like this:
+
+````
+.table.dt-rowReorder-float
+{
+    position: absolute !important;
+}
+````
+
+<div id="field9"> </div>
+{% raw %}
+<script type="text/javascript" id="field9-script">
+$("#field9").alpaca({
+    "data": [{
+        "name": "Michael Jordan",
+        "sport": "basketball",
+        "number": 23
+    }, {
+        "name": "Pele",
+        "sport": "soccer",
+        "number": 10
+    }, {
+        "name": "Wayne Gretzky",
+        "sport": "hockey",
+        "number": 99
+    }],
+    "schema": {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "title": "Name"
+                },
+                "sport": {
+                    "type": "string",
+                    "title": "Sport",
+                    "enum": [
+                        "basketball",
+                        "baseball",
+                        "hockey",
+                        "soccer",
+                        "football"
+                    ]
+                },
+                "number": {
+                    "type": "number",
+                    "title": "Number"
+                }
+            }
+        }
+    },
+    "options": {
+        "type": "table",
+        "items": {
+            "fields": {
+                "name": {
+                    "type": "personalname"
+                },
+                "sport": {
+                    "type": "select",
+                    "optionLabels": [
+                        "Basketball",
+                        "Baseball",
+                        "Hockey",
+                        "Soccer",
+                        "Football"
+                    ]
+                },
+                "number": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dragRows": true,
+        "form": {
+            "buttons": {
+                "submit": {
+                    "title": "Show JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }                          
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
+
+<style>
+/** we override this here since the DataTables row-reorder plugin seems to miscalculate the DOM position and height on our samples page **/
+.table.dt-rowReorder-float
+{
+    position: absolute !important;
+}
+</style>
+

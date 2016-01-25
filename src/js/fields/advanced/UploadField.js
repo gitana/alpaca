@@ -874,14 +874,14 @@
          *
          * @param data
          */
-        setValue: function(data)
+        setValue: function(val)
         {
-            if (!data)
+            if (!val)
             {
-                data = [];
+                val = [];
             }
 
-            this.data = data;
+            this.data = val;
 
             this.updateObservable();
 

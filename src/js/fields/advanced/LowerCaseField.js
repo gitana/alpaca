@@ -33,6 +33,11 @@
          */
         setValue: function(val)
         {
+            if (!val)
+            {
+                return this.base(val);
+            }
+
             var lowerValue = val.toLowerCase();
 
             if (lowerValue != this.getValue()) // jshint ignore:line

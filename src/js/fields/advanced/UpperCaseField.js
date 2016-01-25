@@ -34,6 +34,10 @@
          */
         setValue: function(val)
         {
+            if (!val) {
+                return this.base(val);
+            }
+
             var upperValue = null;
             if (val && Alpaca.isString(val)) {
                 upperValue = val.toUpperCase();

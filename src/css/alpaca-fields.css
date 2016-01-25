@@ -194,69 +194,103 @@
 
 
 
+/** ************************************** **/
+/** TABLE                                  **/
+/** ************************************** **/
 
-.alpaca-field-tablerow label.control-label
+.alpaca-field-table .alpaca-field-tablerow label.control-label,
+table.dt-rowReorder-float .alpaca-field-tablerow label.control-label
 {
     display: none;
 }
 
-.alpaca-field-table .actionbar
+.alpaca-field-table .actionbar, .table .actionbar,
+table.dt-rowReorder-float .actionbar, .table .actionbar
 {
     white-space: nowrap;
     text-align: center;
 }
 
-.alpaca-field-table table tr td .alpaca-field
+.alpaca-field-table table tr td .alpaca-field,
+table.dt-rowReorder-float tr td .alpaca-field
 {
     width: 100%;
 }
 
-.alpaca-field-table table tr td .alpaca-field .form-control
+.alpaca-field-table table tr td .alpaca-field .form-control,
+table.dt-rowReorder-float tr td .alpaca-field .form-control
 {
     width: 100%;
 }
 
-.alpaca-field-table .form-group
+.alpaca-field-table .form-group,
+table.dt-rowReorder-float .form-group
 {
     margin-bottom: 0px;
 }
 
-.alpaca-field-table .form-group.alpaca-field-checkbox
+.alpaca-field-table .form-group.alpaca-field-checkbox,
+table.dt-rowReorder-float .form-group.alpaca-field-checkbox
 {
     text-align: center;
 }
 
-.alpaca-field-table .alpaca-control.checkbox
+.alpaca-field-table .alpaca-control.checkbox,
+table.dt-rowReorder-float .alpaca-control.checkbox
 {
-    /*
-    margin: 0px;
-    padding: 0px;
-    */
     padding-top: 6px;
 }
 
-/*
-.alpaca-field-table .alpaca-control.checkbox input[type='checkbox']
-{
-    margin-left: -16px;
-    margin-top: -3px;
-}
-*/
-
-.alpaca-field-table table tr td.actionbar .alpaca-array-actionbar
+.alpaca-field-table table tr td.actionbar .alpaca-array-actionbar,
+table.dt-rowReorder-float tr td.actionbar .alpaca-array-actionbar
 {
     padding-bottom: 0px;
 }
 
-.alpaca-field-table .actionbar .alpaca-array-actionbar.btn-group
+.alpaca-field-table .actionbar .alpaca-array-actionbar.btn-group,
+table.dt-rowReorder-float .actionbar .alpaca-array-actionbar.btn-group
 {
     width: auto;
 }
 
-.alpaca-table-column-hidden
+.alpaca-field-table .alpaca-table-column-hidden,
+table.dt-rowReorder-float .alpaca-table-column-hidden
 {
     display: none;
 }
+
+.alpaca-field-table .alpaca-table-reorder-index-header,
+table.dt-rowReorder-float .alpaca-table-reorder-index-header
+{
+    display: none;
+}
+
+.alpaca-field-table .alpaca-table-reorder-index-cell,
+table.dt-rowReorder-float .alpaca-table-reorder-index-cell
+{
+    display: none;
+}
+
+.alpaca-field-table .alpaca-table-reorder-draggable-header,
+table.dt-rowReorder-float .alpaca-table-reorder-draggable-header
+{
+
+}
+
+.alpaca-field-table .alpaca-table-reorder-draggable-cell,
+table.dt-rowReorder-float .alpaca-table-reorder-draggable-cell
+{
+    color: #bbb;
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 11px;
+}
+
+
+
+
+
 
 .alpaca-field-radio.disabled .alpaca-control.radio
 {

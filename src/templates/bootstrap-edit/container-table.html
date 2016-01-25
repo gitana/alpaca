@@ -9,6 +9,14 @@
             <!-- table headers -->
             <thead>
                 <tr>
+
+                    {{#if options.dragRows}}
+                    <!-- hidden column storing sort order -->
+                    <th class="alpaca-table-reorder-index-header"></th>
+                    <!-- draggable -->
+                    <th class="alpaca-table-reorder-draggable-header"></th>
+                    {{/if}}
+
                     {{#each headers}}
                     <th data-header-id="{{id}}" {{#if hidden}}class="alpaca-table-column-hidden"{{/if}}>{{{title}}}</th>
                     {{/each}}

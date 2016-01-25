@@ -1375,8 +1375,9 @@
          * @param {Number} targetIndex the index to be moved to
          * @param {Boolean} animate whether to animate the movement
          * @param [Function] callback called after the child is added
+         * @param [boolean] noSwapDom internal for indicating that dom should not swap (it is handled elsewhere)
          */
-        moveItem: function(sourceIndex, targetIndex, animate, callback)
+        moveItem: function(sourceIndex, targetIndex, animate, callback, noSwapDom)
         {
             var self = this;
 
@@ -1443,7 +1444,7 @@
             var tempTargetMarker = $("<div class='tempMarker2'></div>");
             targetContainer.before(tempTargetMarker);
 
-            var onComplete = function()
+            var onComplete = function(noSwapDom)
             {
                 // swap order in children
                 var tempChildren = [];
@@ -1465,8 +1466,11 @@
                 self.children = tempChildren;
 
                 // swap order in DOM
-                tempSourceMarker.replaceWith(targetContainer);
-                tempTargetMarker.replaceWith(sourceContainer);
+                if (!noSwapDom)
+                {
+                    tempSourceMarker.replaceWith(targetContainer);
+                    tempTargetMarker.replaceWith(sourceContainer);
+                }
 
                 // updates dom markers for this element and any siblings
                 self.handleRepositionDOMRefresh();
@@ -1499,10 +1503,17 @@
                 duration = 500;
             }
 
-            // swap divs visually
-            Alpaca.animatedSwap(sourceContainer, targetContainer, duration, function() {
-                onComplete();
-            });
+            if (duration > 0)
+            {
+                // swap divs visually
+                Alpaca.animatedSwap(sourceContainer, targetContainer, duration, function () {
+                    onComplete(noSwapDom);
+                });
+            }
+            else
+            {
+                onComplete(noSwapDom);
+            }
         },
 
         /**

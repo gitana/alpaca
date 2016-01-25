@@ -53,8 +53,7 @@
 
             if (!val)
             {
-                this.base("");
-                return;
+                return this.base("");
             }
 
             this.base(val.join(this.options.separator));
