@@ -176,7 +176,7 @@
             }
 
             // destroy any child controls
-            Alpaca.each(this.children, function() {
+            Alpaca.each(this.children, function () {
                 this.destroy();
             });
 

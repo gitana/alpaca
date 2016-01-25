@@ -319,23 +319,9 @@
             // if we are the top-most control
             // fire "ready" event on every control
             // go down depth first and fire to lowest controls before trickling back up
-            var fireReady = function(_field)
-            {
-                if (_field.children && _field.children.length > 0)
-                {
-                    for (var g = 0; g < _field.children.length; g++)
-                    {
-                        fireReady(_field.children[g]);
-                    }
-                }
-
-                _field.trigger("ready");
-            };
             if (!field.parent)
             {
-                fireReady(field);
-
-                // field.triggerWithPropagation.call(field, "ready", "down");
+                Alpaca.fireReady(field);
             }
 
             // if top level and focus has not been specified, then auto-set
@@ -4760,7 +4746,7 @@
             duration = 500;
         }
 
-        var _swap = function(a, b, duration, callback)
+        var _animate = function(a, b, duration, callback)
         {
             var from = $(a),
                 dest = $(b),
@@ -4813,7 +4799,94 @@
             }, duration + 1);
         };
 
-        _swap(source, target, duration, callback);
+        _animate(source, target, duration, callback);
+    };
+
+    /**
+     * Animates the movement of a div visually and then fires callback.
+     *
+     * @param source
+     * @param target
+     * @param duration
+     * @param callback
+     */
+    Alpaca.animatedMove = function(source, target, duration, callback)
+    {
+        if (typeof(duration) === "function") {
+            callback = duration;
+            duration = 500;
+        }
+
+        var _animate = function(a, b, duration, callback)
+        {
+            var from = $(a),
+                dest = $(b),
+                from_pos = from.offset(),
+                dest_pos = dest.offset(),
+                from_clone = from.clone(),
+                //dest_clone = dest.clone(),
+                total_route_vertical   = dest_pos.top + dest.height() - from_pos.top,
+                route_from_vertical    = 0,
+                route_dest_vertical    = 0,
+                total_route_horizontal = dest_pos.left + dest.width() - from_pos.left,
+                route_from_horizontal  = 0,
+                route_dest_horizontal  = 0;
+
+            from.css("opacity", 0);
+            dest.css("opacity", 0);
+
+            from_clone.insertAfter(from).css({position: "absolute", width: from.outerWidth(), height: from.outerHeight()}).offset(from_pos).css("z-index", "999");
+            //dest_clone.insertAfter(dest).css({position: "absolute", width: dest.outerWidth(), height: dest.outerHeight()}).offset(dest_pos).css("z-index", "999");
+
+            if(from_pos.top !== dest_pos.top) {
+                route_from_vertical = total_route_vertical - from.height();
+            }
+            route_dest_vertical = total_route_vertical - dest.height();
+            if(from_pos.left !== dest_pos.left) {
+                route_from_horizontal = total_route_horizontal - from.width();
+            }
+            route_dest_horizontal = total_route_horizontal - dest.width();
+
+            from_clone.animate({
+                top: "+=" + route_from_vertical + "px",
+                left: "+=" + route_from_horizontal + "px"
+            }, duration, function(){
+                dest.css("opacity", 1);
+                $(this).remove();
+            });
+
+            /*
+            dest_clone.animate({
+                top: "-=" + route_dest_vertical + "px",
+                left: "-=" + route_dest_horizontal + "px"
+            }, duration, function(){
+                from.css("opacity", 1);
+                $(this).remove();
+            });
+            */
+
+            window.setTimeout(function() {
+                from_clone.remove();
+                //dest_clone.remove();
+                callback();
+            }, duration + 1);
+        };
+
+        _animate(source, target, duration, callback);
+    };
+
+
+    Alpaca.fireReady = function(_field)
+    {
+        if (_field.children && _field.children.length > 0)
+        {
+            for (var g = 0; g < _field.children.length; g++)
+            {
+                Alpaca.fireReady(_field.children[g]);
+            }
+        }
+
+        _field.trigger("ready");
     };
 
     Alpaca.readCookie = function(name)

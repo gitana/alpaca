@@ -576,10 +576,12 @@ $("#field8").alpaca({
 
 ## Example 9
 
-Drag-and-drop support for draggable table row re-ordering using the <code>dragRow</code> option.
-This requires the <code>datatables.net-rowreorder</code> plugin as well as the core <code>datatables.net</code> library.
+Drag-and-drop support for draggable table row re-ordering using the <code>dragRows</code> option.
+Set <code>dragRows</code> to <code>true</code> to enable draggable rows within your table.
+ 
+NOTE: This feature currently requires the <code>datatables.net-rowreorder</code> plugin as well as the core <code>datatables.net</code> library.
 
-<a href="https://datatables.net/extensions/rowreorder/" target="_blank">DataTables RowReorder Plugin</a>
+See the <a href="https://datatables.net/extensions/rowreorder/" target="_blank">DataTables RowReorder Plugin</a> for more information.
 
 If you run into problems with the placement of the draggable overlay, you may need to force absolute positioning of the
 overlay like this:
@@ -590,6 +592,10 @@ overlay like this:
     position: absolute !important;
 }
 ````
+
+NOTE: This feature is experimental and may change in the future.  We're not altogether that happy with the 
+DataTables RowReorder Plugin and may seek to implement differently.  However, the <code>dragRows</code> option will
+continue to work as it does currently and will be supported in the future.
 
 <div id="field9"> </div>
 {% raw %}

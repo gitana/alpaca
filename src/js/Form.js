@@ -12,7 +12,7 @@
          *
          * @class This class is for managing HTML form control.
          *
-         * @param {Object} container Field container.
+         * @param {Object} domEl Field container.
          * @param {Object} options Field options.
          * @param {Object|String} view Field view.
          * @param {Alpaca.Connector} connector Field connector.
@@ -136,17 +136,11 @@
         {
             var self = this;
 
-            // remove the previous form element if it exists
-            if (this.form)
-            {
-                this.form.remove();
-            }
-
             // load the appropriate template and render it
             this.processRender(this.domEl, function() {
 
-                // bind our field dom element into the container
-                self.form.appendTo(self.container);
+                // bind our field dom element into the domEl
+                self.form.appendTo(self.domEl);
 
                 // add default class
                 self.form.addClass("alpaca-form");

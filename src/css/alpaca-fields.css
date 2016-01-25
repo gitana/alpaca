@@ -245,6 +245,7 @@ table.dt-rowReorder-float .alpaca-control.checkbox
 table.dt-rowReorder-float tr td.actionbar .alpaca-array-actionbar
 {
     padding-bottom: 0px;
+    display: inline-block;
 }
 
 .alpaca-field-table .actionbar .alpaca-array-actionbar.btn-group,
@@ -285,6 +286,7 @@ table.dt-rowReorder-float .alpaca-table-reorder-draggable-cell
     text-align: center;
     vertical-align: middle;
     padding-top: 11px;
+    cursor: pointer;
 }
 
 

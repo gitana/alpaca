@@ -263,24 +263,33 @@
                         if (self.options.dragRows)
                         {
                             self.options.datatables["rowReorder"] = {
-                                "selector": "tr",
+                                "selector": "tr td.alpaca-table-reorder-draggable-cell",
                                 "dataSrc": 0,
                                 "snapX": true,
-                                "update": false
+                                "update": true
                             };
-
                         }
 
                         // listen for the "ready" event and when it fires, init data tables
                         // this ensures that the DOM and anything wrapping our table field instance is ready to rock
                         // before we proceed
+                        self.off("ready");
                         self.on("ready", function() {
 
+                            // tear down old data tables data if it is still around
+                            if (self._dt) {
+                                self._dt.destroy();
+                                self._dt = undefined;
+                            }
+
+                            // table dom element
+                            var table = $(self.container).find("table");
+
                             // data table reference
-                            var _dt = self._dt = $(self.container).find("table").DataTable(self.options.datatables);
+                            self._dt = $(table).DataTable(self.options.datatables);
 
                             // listen for the "row-reorder" event
-                            _dt.on("row-reorder", function(e, diff, edit) {
+                            self._dt.on("row-reorder", function(e, diff, edit) {
 
                                 // update our data structure to reflect the shift in positions
                                 if (diff.length > 0)
@@ -288,20 +297,20 @@
                                     if (diff[0].oldPosition !== diff[0].newPosition)
                                     {
                                         self.moveItem(diff[0].oldPosition, diff[0].newPosition, false, function() {
-                                            // done
-                                        }, true);
+                                            // all done
+                                        });
                                     }
                                 }
                             });
 
-                            /*
-                            // listen for the "row-reordered" event
-                            _dt.on("row-reordered", function ( e, diff, edit ) {
-                                for ( var i=0, ien=diff.length ; i<ien ; i++ ) {
-                                    $(diff[i].node).addClass("reordered");
+                            // listen for the underlying table DOM element being destroyed
+                            // tear down the datatables implementation in this case
+                            $(self.container).bind('destroyed', function() {
+                                if (self._dt) {
+                                    self._dt.destroy();
+                                    self._dt = undefined;
                                 }
                             });
-                            */
 
                         });
                     }
@@ -424,17 +433,6 @@
                 });
             }
 
-            /*
-            // ensure there are IDs on the rows
-            var rows = this.getFieldEl().find("tr");
-            if (rows.length > 0)
-            {
-                rows.each(function(i) {
-                    $(this).attr("id", "alpaca-table-row-" + i);
-                });
-            }
-            */
-
             // find anything else with .alpaca-merge-up and merge up
             this.getFieldEl().find(".alpaca-merge-up").each(function() {
                 mergeElementUp(this);
@@ -448,18 +446,50 @@
             return $(self.container).find("table tbody");
         },
 
-        doAfterAddItem: function(item)
+        doAfterAddItem: function(item, callback)
         {
             var self = this;
 
             self.cleanupDomInjections();
+
+            // if we're using dragRows support, we have no choice here except to completely reboot the table in order
+            // to get DataTables to bind things correctly for drag-drop support
+            // TODO: change dragRows to use our own drag/drop tooling and get rid of DataTables Row Reorder Plugin
+
+            if (self.options.dragRows)
+            {
+                // copy data back and refresh
+                self.data = self.getValue();
+                self.refresh(function() {
+                    callback();
+                });
+            }
+            else
+            {
+                callback();
+            }
         },
 
-        doAfterRemoveItem: function(item)
+        doAfterRemoveItem: function(childIndex, callback)
         {
             var self = this;
 
             self.cleanupDomInjections();
+
+            // TODO: see above
+
+            if (self.options.dragRows)
+            {
+                // copy data back and refresh
+                self.data = self.getValue();
+                self.refresh(function () {
+                    callback();
+                });
+            }
+            else
+            {
+                callback();
+            }
         },
 
         /**

@@ -521,12 +521,14 @@
                         //fieldControl.nameCalculated = true;
                         fieldControl.render(null, function() {
 
-                            // remember the control
-                            self.refreshValidationState();
+                            // calculate the path and name
                             self.updatePathAndName();
 
                             // trigger update on the parent array
                             self.triggerUpdate();
+
+                            // TODO: refresh validation state?
+                            //self.refreshValidationState();
 
                             if (cb)
                             {
@@ -1052,7 +1054,7 @@
             else if (this.options.toolbarSticky)
             {
                 // always show the actionbars
-                $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() +  "']").show();
+                $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() +  "']").css("display", "inline-block");
             }
             else if (!this.options.toolbarSticky)
             {
@@ -1215,7 +1217,7 @@
         {
             var self = this;
 
-            self.moveItem(itemIndex, itemIndex - 1, self.options.animate, function() {
+            self.swapItem(itemIndex, itemIndex - 1, self.options.animate, function() {
                 if (callback) {
                     callback();
                 }
@@ -1226,14 +1228,14 @@
         {
             var self = this;
 
-            self.moveItem(itemIndex, itemIndex + 1, self.options.animate, function() {
+            self.swapItem(itemIndex, itemIndex + 1, self.options.animate, function() {
                 if (callback) {
                     callback();
                 }
             });
         },
 
-        doAddItem: function(index, item)
+        doAddItem: function(index, item, callback)
         {
             var self = this;
 
@@ -1256,12 +1258,14 @@
                 }
             }
 
-            self.doAfterAddItem(item);
+            self.doAfterAddItem(item, function(err) {
+                callback(err);
+            });
         },
 
-        doAfterAddItem: function(item)
+        doAfterAddItem: function(item, callback)
         {
-
+            callback();
         },
 
         /**
@@ -1288,41 +1292,49 @@
                     self.registerChild(item, index);
 
                     // insert into dom
-                    self.doAddItem(index, item);
+                    self.doAddItem(index, item, function() {
 
-                    // updates dom markers for this element and any siblings
-                    self.handleRepositionDOMRefresh();
+                        // updates dom markers for this element and any siblings
+                        self.handleRepositionDOMRefresh();
 
-                    // update the array item toolbar state
-                    self.updateToolbars();
+                        // update the array item toolbar state
+                        self.updateToolbars();
 
-                    // refresh validation state
-                    self.refreshValidationState();
+                        // refresh validation state
+                        self.refreshValidationState();
 
-                    // dispatch event: add
-                    self.trigger("add", item);
+                        // dispatch event: add
+                        self.trigger("add", item);
 
-                    // trigger update
-                    self.triggerUpdate();
+                        // trigger update
+                        self.triggerUpdate();
 
-                    // trigger "ready"
-                    item.triggerWithPropagation.call(item, "ready", "down");
+                        if (callback)
+                        {
+                            callback(item);
+                        }
 
-                    if (callback)
-                    {
-                        callback(item);
-                    }
+                    });
                 });
             }
         },
 
-        doRemoveItem: function(childIndex)
+        doRemoveItem: function(childIndex, callback)
         {
             var self = this;
 
             var removeItemContainer = self.doResolveItemContainer();
 
             removeItemContainer.children(".alpaca-container-item[data-alpaca-container-item-index='" + childIndex + "']").remove();
+
+            self.doAfterRemoveItem(childIndex, function(err) {
+                callback(err);
+            });
+        },
+
+        doAfterRemoveItem: function(childIndex, callback)
+        {
+            callback();
         },
 
         /**
@@ -1344,40 +1356,41 @@
                 self.unregisterChild(childIndex);
 
                 // remove itemContainerEl from DOM
-                self.doRemoveItem(childIndex);
+                self.doRemoveItem(childIndex, function() {
 
-                // updates dom markers for this element and any siblings
-                self.handleRepositionDOMRefresh();
+                    // updates dom markers for this element and any siblings
+                    self.handleRepositionDOMRefresh();
 
-                // update the array item toolbar state
-                self.updateToolbars();
+                    // update the array item toolbar state
+                    self.updateToolbars();
 
-                // refresh validation state
-                self.refreshValidationState();
+                    // refresh validation state
+                    self.refreshValidationState();
 
-                // dispatch event: remove
-                self.trigger("remove", childIndex);
+                    // dispatch event: remove
+                    self.trigger("remove", childIndex);
 
-                // trigger update
-                self.triggerUpdate();
+                    // trigger update
+                    self.triggerUpdate();
 
-                if (callback)
-                {
-                    callback();
-                }
+                    if (callback)
+                    {
+                        callback();
+                    }
+
+                });
             }
         },
 
         /**
-         * Dynamically moves a child to a new index in the array.
+         * Workhorse method for moving an item in the array to a new index.
          *
          * @param {Number} sourceIndex the index of the child to be moved
          * @param {Number} targetIndex the index to be moved to
-         * @param {Boolean} animate whether to animate the movement
-         * @param [Function] callback called after the child is added
-         * @param [boolean] noSwapDom internal for indicating that dom should not swap (it is handled elsewhere)
+         * @param [Boolean] animate whether to animate
+         * @param [Function] callback called after the child is added and refresh occurs
          */
-        moveItem: function(sourceIndex, targetIndex, animate, callback, noSwapDom)
+        moveItem: function(sourceIndex, targetIndex, animate, callback)
         {
             var self = this;
 
@@ -1413,7 +1426,7 @@
 
             if (targetIndex === -1)
             {
-                // nothing to swap with
+                // no target index
                 return;
             }
 
@@ -1423,8 +1436,6 @@
                 return;
             }
 
-            //console.log("Source: " + sourceIndex + ", Target: " + targetIndex);
-
             var targetChild = self.children[targetIndex];
             if (!targetChild)
             {
@@ -1432,69 +1443,36 @@
                 return;
             }
 
-            var parentFieldId = self.getId();
-
-            // the source and target DOM elements
-            var sourceContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + sourceIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
-            var targetContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + targetIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
-
-            // create two temp elements as markers for switch
-            var tempSourceMarker = $("<div class='tempMarker1'></div>");
-            sourceContainer.before(tempSourceMarker);
-            var tempTargetMarker = $("<div class='tempMarker2'></div>");
-            targetContainer.before(tempTargetMarker);
-
-            var onComplete = function(noSwapDom)
+            var onComplete = function()
             {
-                // swap order in children
-                var tempChildren = [];
-                for (var i = 0; i < self.children.length; i++)
-                {
-                    if (i === sourceIndex)
-                    {
-                        tempChildren[i] = self.children[targetIndex];
-                    }
-                    else if (i === targetIndex)
-                    {
-                        tempChildren[i] = self.children[sourceIndex];
-                    }
-                    else
-                    {
-                        tempChildren[i] = self.children[i];
-                    }
-                }
-                self.children = tempChildren;
-
-                // swap order in DOM
-                if (!noSwapDom)
-                {
-                    tempSourceMarker.replaceWith(targetContainer);
-                    tempTargetMarker.replaceWith(sourceContainer);
+                var adjustedTargetIndex = targetIndex;
+                if (sourceIndex < targetIndex) {
+                    adjustedTargetIndex--;
                 }
 
-                // updates dom markers for this element and any siblings
-                self.handleRepositionDOMRefresh();
+                // splice out child
+                var child = self.children.splice(sourceIndex, 1)[0];
+                self.children.splice(adjustedTargetIndex, 0, child);
 
-                // update the action bar bindings
-                $(sourceContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + sourceIndex + "'][data-alpaca-container-item-parent-field-id='" + self.getId() +  "']").attr("data-alpaca-array-actionbar-item-index", targetIndex);
-                $(targetContainer).find(".alpaca-container-item[data-alpaca-array-actionbar-item-index='" + targetIndex + "'][data-alpaca-container-item-parent-field-id='" + self.getId() +  "']").attr("data-alpaca-array-actionbar-item-index", sourceIndex);
+                // set data and refresh
+                self.data = self.getValue();
+                self.refresh(function() {
 
-                // update the array item toolbar state
-                self.updateToolbars();
+                    // refresh validation state
+                    self.refreshValidationState();
 
-                // refresh validation state
-                self.refreshValidationState();
+                    // trigger update
+                    self.triggerUpdate();
 
-                // trigger update
-                self.triggerUpdate();
+                    // dispatch event: move
+                    self.trigger("move");
 
-                // dispatch event: move
-                self.trigger("move");
+                    if (callback)
+                    {
+                        callback();
+                    }
 
-                if (callback)
-                {
-                    callback();
-                }
+                });
             };
 
             var duration = 0;
@@ -1505,14 +1483,147 @@
 
             if (duration > 0)
             {
-                // swap divs visually
-                Alpaca.animatedSwap(sourceContainer, targetContainer, duration, function () {
-                    onComplete(noSwapDom);
+                var parentFieldId = self.getId();
+
+                // the source and target DOM elements
+                var sourceContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + sourceIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
+                var targetContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + targetIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
+
+                // create two temp elements as markers for switch
+                var tempSourceMarker = $("<div class='tempMarker1'></div>");
+                sourceContainer.before(tempSourceMarker);
+                var tempTargetMarker = $("<div class='tempMarker2'></div>");
+                targetContainer.before(tempTargetMarker);
+
+                // moves div visually
+                Alpaca.animatedMove(sourceContainer, targetContainer, duration, function () {
+                    onComplete();
                 });
             }
             else
             {
-                onComplete(noSwapDom);
+                onComplete();
+            }
+        },
+
+        /**
+         * Workhorse method for swapping an item from one index in the array to another.
+         *
+         * @param {Number} sourceIndex the index of the child to be moved
+         * @param {Number} targetIndex the index to be moved to
+         * @param [Boolean] animate whether to animate
+         * @param [Function] callback called after the child is added and refresh occurs
+         */
+        swapItem: function(sourceIndex, targetIndex, animate, callback)
+        {
+            var self = this;
+
+            if (typeof(animate) == "function")
+            {
+                callback = animate;
+                animate = self.options.animate;
+            }
+
+            if (typeof(animate) == "undefined")
+            {
+                animate = self.options.animate ? self.options.animate : true;
+            }
+
+            if (typeof(sourceIndex) === "string")
+            {
+                sourceIndex = parseInt(sourceIndex, 10);
+            }
+
+            if (typeof(targetIndex) === "string")
+            {
+                targetIndex = parseInt(targetIndex, 10);
+            }
+
+            if (targetIndex < 0)
+            {
+                targetIndex = 0;
+            }
+            if (targetIndex >= self.children.length)
+            {
+                targetIndex = self.children.length - 1;
+            }
+
+            if (targetIndex === -1)
+            {
+                // no target index
+                return;
+            }
+
+            if (sourceIndex === targetIndex)
+            {
+                // nothing to do
+                return;
+            }
+
+            var targetChild = self.children[targetIndex];
+            if (!targetChild)
+            {
+                // target child not found
+                return;
+            }
+
+            var onComplete = function()
+            {
+                var sourceChild = self.children[sourceIndex];
+                var targetChild = self.children[targetIndex];
+
+                self.children[sourceIndex] = targetChild;
+                self.children[targetIndex] = sourceChild;
+
+                // copy back data and refresh
+                self.data = self.getValue();
+                self.refresh(function() {
+
+                    // refresh validation state
+                    self.refreshValidationState();
+
+                    // trigger update
+                    self.triggerUpdate();
+
+                    // dispatch event: move
+                    self.trigger("move");
+
+                    if (callback)
+                    {
+                        callback();
+                    }
+
+                });
+            };
+
+            var duration = 0;
+            if (animate)
+            {
+                duration = 500;
+            }
+
+            if (duration > 0)
+            {
+                var parentFieldId = self.getId();
+
+                // the source and target DOM elements
+                var sourceContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + sourceIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
+                var targetContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + targetIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
+
+                // create two temp elements as markers for switch
+                var tempSourceMarker = $("<div class='tempMarker1'></div>");
+                sourceContainer.before(tempSourceMarker);
+                var tempTargetMarker = $("<div class='tempMarker2'></div>");
+                targetContainer.before(tempTargetMarker);
+
+                // swap divs visually
+                Alpaca.animatedSwap(sourceContainer, targetContainer, duration, function () {
+                    onComplete();
+                });
+            }
+            else
+            {
+                onComplete();
             }
         },
 

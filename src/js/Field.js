@@ -360,6 +360,18 @@
         },
 
         /**
+         * Unregisters all listeners for an event.
+         *
+         * @param name
+         */
+        off: function(name)
+        {
+            if (this._events[name]) {
+                this._events[name].length = 0;
+            }
+        },
+
+        /**
          * Triggers an event and propagates the event.
          *
          * By default, the behavior is to propagate up to the parent chain (bubble up).
@@ -576,14 +588,6 @@
         {
             var self = this;
 
-            /*
-            // remove the previous "field" element if it exists
-            if (self.field)
-            {
-                $(self.field).remove();
-            }
-            */
-
             // check if it needs to be wrapped in a form
             if (self.options.form && Alpaca.isObject(self.options.form))
             {
@@ -594,8 +598,9 @@
                 {
                     form = new Alpaca.Form(self.domEl, this.options.form, self.view.id, self.connector, self.errorCallback);
                 }
-
                 form.render(function(form) {
+
+                    // NOTE: form is the form instance (not the jquery element)
 
                     var tempFieldHolder = $("<div></div>");
 
@@ -624,10 +629,12 @@
                             self.initializing = false;
 
                             // allow for form to do some late updates
-                            if (self.form)
-                            {
-                                self.form.afterInitialize();
-                            }
+                            self.form.afterInitialize();
+
+                            // when the field removes, remove the form as well
+                            $(self.field).bind('destroyed', function (e) {
+                                self.form.destroy();
+                            });
 
                             // callback
                             if (callback && Alpaca.isFunction(callback))
@@ -757,9 +764,6 @@
                     renderedDomElement = single;
                 }
             }
-
-            // remove the previous "field" element if it exists
-            self._oldFieldEl = self.field;
 
             this.field = renderedDomElement;
             this.field.appendTo(parentEl);
@@ -1008,17 +1012,29 @@
         {
             var self = this;
 
-            self.refreshed = true;
+            // remember this stuff
+            var oldDomEl = self.domEl;
+            var oldField = self.field;
+            var oldControl = self.control;
+            var oldContainer = self.container;
+            var oldForm = self.form;
 
-            // insert element before current field to mark where we'll render
+            // insert marker element before current field to mark where we'll render
             var markerEl = $("<div></div>");
-            $(self.field).before(markerEl);
+            $(oldDomEl).before(markerEl);
 
             // temp domEl
-            self.domEl = $("<div></div>");
+            self.domEl = $("<div style='display: none'></div>");
+            // clear this stuff out
+            self.field = undefined;
+            self.control = undefined;
+            self.container = undefined;
+            self.form = undefined;
 
-            // reset domEl so that we're rendering into the right place
-            //self.domEl = self.field.parent();
+            // disable all buttons on our current field
+            // we do this because repeated clicks could cause trouble while the field is in some half-state
+            // during refresh
+            $(oldDomEl).find("button").prop("disabled", true);
 
             // mark that we are initializing
             this.initializing = true;
@@ -1026,24 +1042,52 @@
             // re-setup the field
             self.setup();
 
+            // render
             self._render(function() {
 
                 // move ahead of marker
-                $(markerEl).before(self.domEl.children());
+                $(markerEl).before(self.domEl);
+
+                // hide our old element
+                $(oldDomEl).hide();
+
+                // show our new element
+                $(self.domEl).show();
 
                 // remove marker
                 $(markerEl).remove();
 
-                // clean up old field element if exists
-                if (self._oldFieldEl)
-                {
-                    $(self._oldFieldEl).remove();
-                }
+                // mark that we're refreshed
+                self.refreshed = true;
+
+                // fire the "ready" event
+                Alpaca.fireReady(self);
 
                 if (callback)
                 {
                     callback();
                 }
+
+                // afterwards...
+
+                // now clean up old field elements
+                // the trick here is that we want to make sure we don't trigger the bound "destroyed" event handler
+                // for the old dom el.
+                //
+                // the reason is that we have oldForm -> Field (with oldDomEl)
+                //                        and form -> Field (with domEl)
+                //
+                // cleaning up "oldDomEl" causes "Field" to cleanup which causes "oldForm" to cleanup
+                // which causes "Field" to cleanup which causes "domEl" to clean up (and also "form")
+                //
+                // here we just want to remove the dom elements for "oldDomEl" and "oldForm" without triggering
+                // the special destroyer event
+                //
+                // appears that we can do this with a second argument...?
+                //
+                $(oldDomEl).remove(undefined, {
+                    "nodestroy": true
+                });
 
             });
         },
@@ -1290,6 +1334,8 @@
          */
         refreshValidationState: function(validateChildren, cb)
         {
+            console.log("Call refreshValidationState: " + this.path);
+
             var self = this;
 
             // run validation context compilation for ourselves and optionally any children
