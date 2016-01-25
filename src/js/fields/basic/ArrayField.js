@@ -370,7 +370,7 @@
 
                                 });
                             };
-                        })(i, data[i]);
+                        })(i, data);
 
                         funcs.push(f);
 
