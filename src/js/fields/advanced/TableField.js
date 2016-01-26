@@ -270,6 +270,8 @@
                             };
                         }
 
+                        // EVENT HANDLERS
+
                         // listen for the "ready" event and when it fires, init data tables
                         // this ensures that the DOM and anything wrapping our table field instance is ready to rock
                         // before we proceed
@@ -291,11 +293,16 @@
                             // listen for the "row-reorder" event
                             self._dt.on("row-reorder", function(e, diff, edit) {
 
+                                if (self._dt._disableAlpacaHandlers) {
+                                    return;
+                                }
+
                                 // update our data structure to reflect the shift in positions
                                 if (diff.length > 0)
                                 {
                                     if (diff[0].oldPosition !== diff[0].newPosition)
                                     {
+                                        self._dt._disableAlpacaHandlers = true;
                                         self.moveItem(diff[0].oldPosition, diff[0].newPosition, false, function() {
                                             // all done
                                         });
@@ -304,12 +311,41 @@
                             });
 
                             // listen for the underlying table DOM element being destroyed
-                            // tear down the datatables implementation in this case
+                            // when that happens, tear down the datatables implementation as well
                             $(self.container).bind('destroyed', function() {
                                 if (self._dt) {
                                     self._dt.destroy();
                                     self._dt = undefined;
                                 }
+                            });
+
+                            // listen for the sorting event
+                            // change the order of children and refresh
+                            self._dt.on('order', function ( e, ctx, sorting, columns ) {
+
+                                if (self._dt._disableAlpacaHandlers) {
+                                    return;
+                                }
+
+                                // if we don't have an original copy of the children, make one
+                                // we're about to re-order the children and datatable assumes we know the original order
+                                if (!self._dt._originalChildren) {
+                                    self._dt._originalChildren = [];
+                                    for (var k = 0; k < self.children.length; k++) {
+                                        self._dt._originalChildren.push(self.children[k]);
+                                    }
+                                }
+
+                                // re-order based on the order that datatables believes is right
+                                var newChildren = [];
+                                for (var z = 0; z < ctx.aiDisplay.length; z++)
+                                {
+                                    var index = ctx.aiDisplay[z];
+                                    newChildren.push(self._dt._originalChildren[index]);
+                                }
+                                self.children = newChildren;
+
+                                self._dt._disableAlpacaHandlers = false;
                             });
 
                         });
@@ -463,6 +499,8 @@
                 self.refresh(function() {
                     callback();
                 });
+
+                callback();
             }
             else
             {
@@ -485,6 +523,8 @@
                 self.refresh(function () {
                     callback();
                 });
+
+                callback();
             }
             else
             {

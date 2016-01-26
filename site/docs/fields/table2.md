@@ -99,6 +99,28 @@ $("#field9").alpaca({
         "dragRows": true,
         "form": {
             "buttons": {
+                "addRow": {
+                    "title": "Add Row",
+                    "click": function() {
+                        var value = this.getValue();
+                        value.push({
+                            "name": "New Athlete",
+                            "sport": "basketball",
+                            "number": 99
+                        });
+                        this.setValue(value);
+                    }
+                },
+                "removeRow": {
+                    "title": "Remove Row",
+                    "click": function() {
+                        var value = this.getValue();
+                        if (value.length > 0) {
+                            value.pop();
+                            this.setValue(value);
+                        }                        
+                    }
+                },            
                 "submit": {
                     "title": "Show JSON",
                     "click": function() {

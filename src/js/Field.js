@@ -1334,7 +1334,7 @@
          */
         refreshValidationState: function(validateChildren, cb)
         {
-            console.log("Call refreshValidationState: " + this.path);
+            // console.log("Call refreshValidationState: " + this.path);
 
             var self = this;
 
