@@ -489,3 +489,73 @@ $("#field10").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 11
+Here is an example of an object field where we use a top-level layout and a nested override of the view to force the
+email address into display mode only.
+<div id="field11"> </div>
+{% raw %}
+<script type="text/javascript" id="field11-script">
+$("#field11").alpaca({
+    "data": {
+        name: "John Matrix",
+        email: "commando@usaf.gov",
+        age: 40,
+        status: "retired"
+    },
+    "schema": {
+        "title": "Customer Profile",
+        "type": "object",
+        "properties": {
+            "name": {
+                "title": "Full Name",
+                "type": "string"
+            },
+            "email": {
+                "title": "Email",
+                "type": "string"
+            },
+            "age": {
+                "title": "Age",
+                "type": "number"
+            },
+            "status": {
+                "title": "Full Name",
+                "type": "string",
+                "enum": [
+                    "retired", 
+                    "active"
+                ]
+            }            
+        }
+    },
+    "options": {
+        "fields": {
+            "email": {
+                "view": "bootstrap-display-horizontal"
+            },
+            "status": {
+                "type": "select",
+                "optionLabels": [
+                    "Retired",
+                    "Back in Action!"
+                ],
+                "hideNone": true
+            }
+        }
+    },
+    "view": {
+        "parent": "bootstrap-edit-horizontal",
+        "layout": {
+            "bindings": {
+                "name": ".section2",
+                "email": ".section1",
+                "age": ".section2",
+                "status": ".section2"
+            },
+            "template": "<div class='well'><div class='section1'></div><div class='section2'></div></div>"
+        }
+    }
+});
+</script>
+{% endraw %}
