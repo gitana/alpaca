@@ -486,16 +486,18 @@
         {
             var self = this;
 
+            self.data = self.getValue();
+
             self.cleanupDomInjections();
 
             // if we're using dragRows support, we have no choice here except to completely reboot the table in order
             // to get DataTables to bind things correctly for drag-drop support
             // TODO: change dragRows to use our own drag/drop tooling and get rid of DataTables Row Reorder Plugin
-
-            if (self.options.dragRows)
+            // we also have do this if we've added the first row to get DataTables to redraw
+            var usingDataTables = self.options.datatables && $.fn.DataTable;
+            if (self.options.dragRows || (usingDataTables && self.data.length === 1))
             {
-                // copy data back and refresh
-                self.data = self.getValue();
+                // refresh
                 self.refresh(function() {
                     callback();
                 });
@@ -512,14 +514,16 @@
         {
             var self = this;
 
+            self.data = self.getValue();
+
             self.cleanupDomInjections();
 
             // TODO: see above
 
-            if (self.options.dragRows)
+            var usingDataTables = self.options.datatables && $.fn.DataTable;
+            if (self.options.dragRows || (usingDataTables && self.data.length === 0))
             {
-                // copy data back and refresh
-                self.data = self.getValue();
+                // refresh
                 self.refresh(function () {
                     callback();
                 });
