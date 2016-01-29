@@ -1224,7 +1224,14 @@
             // special case - if we're in a display mode and not first render, then do a refresh here
             if (this.isDisplayOnly() && !this.initializing)
             {
-                this.refresh();
+                if (this.top && this.top() && this.top().initializing)
+                {
+                    // if we're rendering under a top most control that isn't finished initializing, then don't refresh
+                }
+                else
+                {
+                    this.refresh();
+                }
             }
         },
 

@@ -445,11 +445,12 @@
                         }
                         if (holder.length > 0)
                         {
-                            // appending into a layout binding holder
-                            $(item.containerItemEl).appendTo(holder);
-
-                            // reset domEl to allow for refresh
-                            item.domEl = holder;
+                            // create a wrapper (which will serve as the domEl)
+                            item.domEl = $("<div></div>");
+                            $(item.domEl).addClass("alpaca-layout-binding-holder");
+                            $(item.domEl).attr("alpaca-layout-binding-field-name", item.name);
+                            holder.append(item.domEl);
+                            item.domEl.append(item.containerItemEl);
                         }
                     }
 
