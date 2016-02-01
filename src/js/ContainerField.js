@@ -757,6 +757,7 @@
 
             var value = self.getContainerValue();
 
+            /*
             if (self.isDisplayOnly())
             {
                 if (value)
@@ -764,6 +765,7 @@
                     value = JSON.stringify(value, null, "  ");
                 }
             }
+            */
 
             return value;
         },
