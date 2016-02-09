@@ -29,7 +29,7 @@
                 {
                     self.options.multiple = true;
                 }
-                else if (typeof(self.schema["enum"]) !== "undefined")
+                else if (typeof(self.getEnum()) !== "undefined")
                 {
                     self.options.multiple = true;
                 }
@@ -104,23 +104,6 @@
 
                 callback(model);
             });
-        },
-
-        /**
-         * Gets schema enum property.
-         *
-         * @returns {Array|String} Field schema enum property.
-         */
-        getEnum: function()
-        {
-            var array = [];
-
-            if (this.schema && this.schema["enum"])
-            {
-                array = this.schema["enum"];
-            }
-
-            return array;
         },
 
         /**
@@ -406,7 +389,7 @@
                 val = val.split(",");
             }
 
-            return Alpaca.anyEquality(val, self.schema["enum"]);
+            return Alpaca.anyEquality(val, self.getEnum());
         },
 
         /**
