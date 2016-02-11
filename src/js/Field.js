@@ -1574,7 +1574,7 @@
          */
         _validateOptional: function() {
 
-            if (this.isRequired() && this.isEmpty()) {
+            if (this.isRequired() && (this.data === null || this.isEmpty())) {
                 return false;
             }
 
