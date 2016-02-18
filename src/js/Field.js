@@ -1012,6 +1012,9 @@
         {
             var self = this;
 
+            // store back data
+            self.data = self.getValue();
+
             // remember this stuff
             var oldDomEl = self.domEl;
             var oldField = self.field;
@@ -1021,7 +1024,7 @@
 
             // insert marker element before current field to mark where we'll render
             var markerEl = $("<div></div>");
-            $(oldDomEl).before(markerEl);
+            $(oldField).before(markerEl);
 
             // temp domEl
             self.domEl = $("<div style='display: none'></div>");
@@ -1034,7 +1037,7 @@
             // disable all buttons on our current field
             // we do this because repeated clicks could cause trouble while the field is in some half-state
             // during refresh
-            $(oldDomEl).find("button").prop("disabled", true);
+            $(oldField).find("button").prop("disabled", true);
 
             // mark that we are initializing
             this.initializing = true;
@@ -1046,13 +1049,13 @@
             self._render(function() {
 
                 // move ahead of marker
-                $(markerEl).before(self.domEl);
+                $(markerEl).before(self.field);
 
-                // hide our old element
-                $(oldDomEl).hide();
+                // reset the domEl
+                self.domEl = oldDomEl;
 
-                // show our new element
-                $(self.domEl).show();
+                // hide the old field
+                $(oldField).hide();
 
                 // remove marker
                 $(markerEl).remove();
@@ -1085,7 +1088,7 @@
                 //
                 // appears that we can do this with a second argument...?
                 //
-                $(oldDomEl).remove(undefined, {
+                $(oldField).remove(undefined, {
                     "nodestroy": true
                 });
 

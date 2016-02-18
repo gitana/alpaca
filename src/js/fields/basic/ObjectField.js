@@ -1124,12 +1124,18 @@
                 }
             }
 
-            self.doAfterAddItem(item);
+            self.doAfterAddItem(item, function() {
+
+                // trigger ready
+                Alpaca.fireReady(item);
+
+            });
+
         },
 
-        doAfterAddItem: function(item)
+        doAfterAddItem: function(item, callback)
         {
-
+            callback();
         },
 
         doResolveItemContainer: function()

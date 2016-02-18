@@ -606,8 +606,21 @@
                 $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
                 $(child.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
 
+                self.updateChildDOMWrapperElement(i, child);
+
                 child.updateDOMElement();
             }
+        },
+
+        /**
+         * EXTENSION POINT that allows containers to update any custom wrapper elements for child controls.
+         *
+         * @param i
+         * @param child
+         */
+        updateChildDOMWrapperElement: function(i, child)
+        {
+
         },
 
         /**

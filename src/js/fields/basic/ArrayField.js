@@ -1259,6 +1259,10 @@
             }
 
             self.doAfterAddItem(item, function(err) {
+
+                // trigger ready
+                Alpaca.fireReady(item);
+
                 callback(err);
             });
         },
