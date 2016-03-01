@@ -53,7 +53,6 @@
             {
                 this.options.spectrum.clickoutFiresChange = true;
             }
-            this.options.spectrum.color = this.data;
         },
 
         /**
@@ -80,7 +79,9 @@
                 if (self.spectrumAvailable && self.control)
                 {
                     setTimeout(function() {
-                        $((self.control)[0]).spectrum(self.options.spectrum);
+                        $((self.control)[0]).spectrum(
+                          $.extend({ color: self.data }, self.options.spectrum)
+                        );
                     }, 100);
 
                     $(self.control).on('change.spectrum', function(e, tinycolor) {
