@@ -22274,7 +22274,7 @@ this["HandlebarsPrecompiled"]["web-edit"]["wizard"] = Handlebars.template({"1":f
                 {
                     setTimeout(function() {
                         $((self.control)[0]).spectrum(
-                          $.extend({ color: this.data }, self.options.spectrum)
+                          $.extend({ color: self.data }, self.options.spectrum)
                         );
                     }, 100);
 
