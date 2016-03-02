@@ -251,7 +251,7 @@ gulp.task("build-templates", function(cb)
 
         // web
         gulp.src(paths.templates["web"])
-            .pipe(handlebars())
+            .pipe(handlebars({ handlebars: require('handlebars') }))
             .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
@@ -263,7 +263,7 @@ gulp.task("build-templates", function(cb)
 
         // bootstrap
         gulp.src(paths.templates["bootstrap"])
-            .pipe(handlebars())
+            .pipe(handlebars({ handlebars: require('handlebars') }))
             .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
@@ -275,7 +275,7 @@ gulp.task("build-templates", function(cb)
 
         // jqueryui
         gulp.src(paths.templates["jqueryui"])
-            .pipe(handlebars())
+            .pipe(handlebars({ handlebars: require('handlebars') }))
             .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
@@ -287,7 +287,7 @@ gulp.task("build-templates", function(cb)
 
         // jquerymobile
         gulp.src(paths.templates["jquerymobile"])
-            .pipe(handlebars())
+            .pipe(handlebars({ handlebars: require('handlebars') }))
             .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',

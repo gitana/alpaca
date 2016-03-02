@@ -52,6 +52,7 @@
     "run-sequence": "*",
     "through2": "*",
     "wd": "",
-    "wrench": "*"
+    "wrench": "*",
+    "handlebars": "4.0.5"
   }
 }
