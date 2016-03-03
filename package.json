@@ -35,6 +35,7 @@
     "gulp-notify": "*",
     "gulp-order": "*",
     "gulp-rename": "*",
+    "gulp-template": "^3.1.0",
     "gulp-uglify": "*",
     "gulp-util": "*",
     "gulp-watch": "*",
@@ -53,5 +54,7 @@
     "through2": "*",
     "wd": "",
     "wrench": "*"
+  },
+  "dependencies": {
   }
 }
