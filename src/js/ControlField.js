@@ -205,6 +205,40 @@
         },
 
         /**
+         * Gets schema enum property.
+         *
+         * @returns {Array|String} Field schema enum property.
+         */
+        getEnum: function()
+        {
+            if (this.schema && this.schema.enum)
+            {
+                return this.schema.enum;
+            }
+            else if (this.schema && this.schema.items && this.schema.items.enum)
+            {
+                return this.schema.items.enum;
+            }
+        },
+
+        /**
+         * Updates the schema enum property.
+         *
+         * @returns {Array|String} Field schema enum property.
+         */
+        updateEnum: function(newEnum)
+        {
+            if (this.schema && this.schema.enum)
+            {
+                this.schema.enum = newEnum;
+            }
+            else if (this.schema && this.schema.items && this.schema.items.enum)
+            {
+                this.schema.items.enum = newEnum;
+            }
+        },
+
+        /**
          * Called before the control is rendered.
          *
          * @extension-point
@@ -378,14 +412,14 @@
          */
         _validateEnum: function()
         {
-            if (this.schema["enum"]) {
+            if (this.getEnum()) {
                 var val = this.data;
                 val = this.getValue();
                 /*this.getValue();*/
                 if (!this.isRequired() && Alpaca.isValEmpty(val)) {
                     return true;
                 }
-                if ($.inArray(val, this.schema["enum"]) > -1) {
+                if ($.inArray(val, this.getEnum()) > -1) {
                     return true;
                 } else {
                     return false;
@@ -409,7 +443,7 @@
             // Use the values presented to the user in the validation
             // error message. If there are optionLabels, use them in
             // preference to the raw enum values.
-            var values = this.schema["enum"];
+            var values = this.getEnum();
             if (typeof(this.options["optionLabels"]) === "object" && values.length && this.options["optionLabels"].length >= values.length) {
                 values = this.options["optionLabels"].slice(0, values.length);
             }
@@ -623,15 +657,16 @@
         sortEnum: function()
         {
             var self = this;
+            var schemaEnum = self.getEnum();
 
-            if (self.schema.enum && self.schema.enum.length > 0)
+            if (schemaEnum && schemaEnum.length > 0)
             {
                 var selectableOptions = [];
 
-                for (var i = 0; i < self.schema.enum.length; i++)
+                for (var i = 0; i < schemaEnum.length; i++)
                 {
-                    var value = self.schema.enum[i];
-                    var text = self.schema.enum[i];
+                    var value = schemaEnum[i];
+                    var text = schemaEnum[i];
 
                     if (self.options && self.options.optionLabels && self.options.optionLabels.length >= i + 1)
                     {
@@ -648,13 +683,14 @@
                 self.sortSelectableOptions(selectableOptions);
 
                 // now set back
-                self.schema.enum = [];
+                schemaEnum = [];
                 self.options.optionLabels = [];
                 for (var i = 0; i < selectableOptions.length; i++)
                 {
-                    self.schema.enum.push(selectableOptions[i].value);
+                    schemaEnum.push(selectableOptions[i].value);
                     self.options.optionLabels.push(selectableOptions[i].text);
                 }
+                self.updateEnum(schemaEnum);
             }
         },
 
