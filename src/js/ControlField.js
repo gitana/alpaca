@@ -378,7 +378,7 @@
              */
             _validateEnum: function()
             {
-                if (!this.schema.enum) {
+                if (!this.getEnum()) {
                     return true;
                 }
 
@@ -388,7 +388,7 @@
                     return true;
                 }
 
-                return ($.inArray(val, this.schema.enum) > -1);
+                return ($.inArray(val, this.getEnum()) > -1);
             },
 
             /**
@@ -405,13 +405,15 @@
                 // Use the values presented to the user in the validation
                 // error message. If there are optionLabels, use them in
                 // preference to the raw enum values.
-                var valueLabels = this.schema.enum;
-                if (this.options.optionLabels) {
-                    valueLabels = this.options.optionLabels;
+                var messageValues = this.getEnum();
+                // use option labels if those are available
+                var optionLabels = this.getOptionLabels();
+                if (optionLabels && optionLabels.length > 0) {
+                    messageValues = optionLabels;
                 }
 
                 valInfo["invalidValueOfEnum"] = {
-                    "message": status ? "" : Alpaca.substituteTokens(this.getMessage("invalidValueOfEnum"), [valueLabels.join(', '), this.getValue()]),
+                    "message": status ? "" : Alpaca.substituteTokens(this.getMessage("invalidValueOfEnum"), [messageValues.join(', '), this.getValue()]),
                     "status": status
                 };
 
