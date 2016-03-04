@@ -17,6 +17,7 @@
     "cucumber": "~0.3.3",
     "event-stream": "*",
     "express": "3.5.1",
+    "handlebars": "4.0.5",
     "grunt": "*",
     "grunt-aws-s3": "^0.9.4",
     "grunt-cloudfront": "^0.2.0",
