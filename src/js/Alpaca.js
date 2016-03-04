@@ -4921,6 +4921,23 @@
         return value;
     };
 
+    Alpaca.safeSetObjectArray = function(baseObject, propertyName, values) {
+
+        if (typeof(baseObject[propertyName]) === "undefined" || baseObject[propertyName] === null)
+        {
+            baseObject[propertyName] = [];
+        }
+        else
+        {
+            baseObject[propertyName].length = 0;
+        }
+
+        for (var i = 0; i < values.length; i++)
+        {
+            baseObject[propertyName].push(values[i]);
+        }
+    };
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
     // Moment.js static

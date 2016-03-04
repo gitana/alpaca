@@ -23,18 +23,20 @@
                 // sort the enumerated values
                 self.sortEnum();
 
+                var optionLabels = self.getOptionLabels();
+
                 $.each(self.getEnum(), function(index, value)
                 {
                     var text = value;
-                    if (self.options.optionLabels)
+                    if (optionLabels)
                     {
-                        if (!Alpaca.isEmpty(self.options.optionLabels[index]))
+                        if (!Alpaca.isEmpty(optionLabels[index]))
                         {
-                            text = self.options.optionLabels[index];
+                            text = optionLabels[index];
                         }
-                        else if (!Alpaca.isEmpty(self.options.optionLabels[value]))
+                        else if (!Alpaca.isEmpty(optionLabels[value]))
                         {
-                            text = self.options.optionLabels[value];
+                            text = optionLabels[value];
                         }
                     }
 
@@ -52,9 +54,10 @@
             {
                 if ((self.options.removeDefaultNone === true))
                 {
-                    if (self.schema.enum && self.schema.enum.length > 0)
+                    var enumValues = self.getEnum();
+                    if (enumValues && enumValues.length > 0)
                     {
-                        self.data = self.schema.enum[0];
+                        self.data = enumValues[0];
                     }
                 }
             }
@@ -97,20 +100,6 @@
 
                 callback(model);
             });
-        },
-
-
-        /**
-         * Gets schema enum property.
-         *
-         * @returns {Array|String} Field schema enum property.
-         */
-        getEnum: function()
-        {
-            if (this.schema && this.schema["enum"])
-            {
-                return this.schema["enum"];
-            }
         },
 
         /**
@@ -166,13 +155,16 @@
                         if (self.options.useDataSourceAsEnum)
                         {
                             // now build out the enum and optionLabels
-                            self.schema.enum = [];
-                            self.options.optionLabels = [];
+                            var _enum = [];
+                            var _optionLabels = [];
                             for (var i = 0; i < self.selectOptions.length; i++)
                             {
-                                self.schema.enum.push(self.selectOptions[i].value);
-                                self.options.optionLabels.push(self.selectOptions[i].text);
+                                _enum.push(self.selectOptions[i].value);
+                                _optionLabels.push(self.selectOptions[i].text);
                             }
+
+                            self.setEnum(_enum);
+                            self.setOptionLabels(_optionLabels);
                         }
 
                         callback();
