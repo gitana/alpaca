@@ -1071,7 +1071,7 @@
                 }
 
                 // register the child
-                self.registerChild(child, ((index != null) ? index + 1 : null));
+                self.registerChild(child, ((index != null) ? index + 1 : 0));
 
                 // insert into dom
                 self.doAddItem(index, child);
@@ -1111,7 +1111,7 @@
             if (!index)
             {
                 // insert first into container
-                $(self.container).append(item.containerItemEl);
+                $(self.container).prepend(item.containerItemEl);
             }
             else
             {

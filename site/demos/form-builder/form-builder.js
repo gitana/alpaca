@@ -267,9 +267,7 @@ var setup = function()
                         var containerEl = this;
 
                         // first insertion point
-                        $(containerEl).children(".alpaca-container-item").first().each(function() {
-                            $(this).before("<div class='dropzone'></div>");
-                        });
+                        $(this).prepend("<div class='dropzone'></div>");
 
                         // all others
                         $(containerEl).children(".alpaca-container-item").each(function() {
@@ -1017,7 +1015,7 @@ var setup = function()
         var field = Alpaca.fieldInstances[alpacaId];
 
         var parentField = field.parent;
-        parentField.removeItem(alpacaId, function() {
+        parentField.removeItem(field.propertyId, function() {
             var top = findTop(field);
             regenerate(top);
         });
