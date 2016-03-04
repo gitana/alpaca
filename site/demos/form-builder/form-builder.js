@@ -396,24 +396,57 @@ var setup = function()
         }
     };
 
+    var removeFunctionFields = function(schema, options)
+    {
+        if (schema)
+        {
+            if (schema.properties)
+            {
+                var badKeys = [];
+
+                for (var k in schema.properties)
+                {
+                    if (schema.properties[k].type === "function")
+                    {
+                        badKeys.push(k);
+                    }
+                    else
+                    {
+                        removeFunctionFields(schema.properties[k], (options && options.fields ? options.fields[k] : null));
+                    }
+                }
+
+                for (var i = 0; i < badKeys.length; i++)
+                {
+                    delete schema.properties[badKeys[i]];
+
+                    if (options && options.fields) {
+                        delete options.fields[badKeys[i]];
+                    }
+                }
+            }
+        }
+    };
+
     var editSchema = function(alpacaFieldId, callback)
     {
         var field = Alpaca.fieldInstances[alpacaFieldId];
 
-        var fieldSchema = field.getSchemaOfSchema();
+        var fieldSchemaSchema = field.getSchemaOfSchema();
         var fieldSchemaOptions = field.getOptionsForSchema();
+        removeFunctionFields(fieldSchemaSchema, fieldSchemaOptions);
         var fieldData = field.schema;
 
-        delete fieldSchema.title;
-        delete fieldSchema.description;
-        if (fieldSchema.properties)
+        delete fieldSchemaSchema.title;
+        delete fieldSchemaSchema.description;
+        if (fieldSchemaSchema.properties)
         {
-            delete fieldSchema.properties.title;
-            delete fieldSchema.properties.description;
-            delete fieldSchema.properties.dependencies;
+            delete fieldSchemaSchema.properties.title;
+            delete fieldSchemaSchema.properties.description;
+            delete fieldSchemaSchema.properties.dependencies;
         }
         var fieldConfig = {
-            schema: fieldSchema
+            schema: fieldSchemaSchema
         };
         if (fieldSchemaOptions)
         {
@@ -468,6 +501,7 @@ var setup = function()
 
         var fieldOptionsSchema = field.getSchemaOfOptions();
         var fieldOptionsOptions = field.getOptionsForOptions();
+        removeFunctionFields(fieldOptionsSchema, fieldOptionsOptions);
         var fieldOptionsData = field.options;
 
         delete fieldOptionsSchema.title;

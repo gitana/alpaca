@@ -244,6 +244,10 @@ over the years:
 + [@robsiera](https://github.com/robsiera)
 + [@cheeweep](https://github.com/cheeweep)
 + [@j123b567](https://github.com/j123b567)
++ [@scadams](https://github.com/scadams)
++ [@ryanmark](https://github.com/ryanmark)
++ [@techbrew-mc](https://github.com/techbrew-mc)
++ [@st3v](https://github.com/st3v)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!
