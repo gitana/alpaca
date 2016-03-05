@@ -499,10 +499,9 @@
             {
                 // refresh
                 self.refresh(function() {
+
                     callback();
                 });
-
-                callback();
             }
             else
             {

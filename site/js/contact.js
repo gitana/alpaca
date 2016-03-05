@@ -19,6 +19,10 @@ $(document).ready(function() {
                     "type": "string",
                     "required": true
                 },
+                "phone": {
+                    "type": "string",
+                    "required": true
+                },
                 "interest": {
                     "type": "string",
                     "required": true,
@@ -59,6 +63,10 @@ $(document).ready(function() {
                     "label": "Your Email Address",
                     "type": "email"
                 },
+                "phone": {
+                    "label": "Your Phone Number",
+                    "type": "text"
+                },
                 "interest": {
                     "type": "select",
                     "label": "What do you need help with?",
@@ -66,8 +74,8 @@ $(document).ready(function() {
                     "removeDefaultNone": false,
                     "optionLabels": [
                         "Production Support",
-                        "Development Services",
-                        "Advisory Consulting",
+                        "Development",
+                        "Consulting Services",
                         "Training"
                     ]
                 },

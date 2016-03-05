@@ -1013,14 +1013,14 @@
             var self = this;
 
             // store back data
-            self.data = self.getValue();
+            var _data = self.data = self.getValue();
 
             // remember this stuff
             var oldDomEl = self.domEl;
             var oldField = self.field;
-            var oldControl = self.control;
-            var oldContainer = self.container;
-            var oldForm = self.form;
+            //var oldControl = self.control;
+            //var oldContainer = self.container;
+            //var oldForm = self.form;
 
             // insert marker element before current field to mark where we'll render
             var markerEl = $("<div></div>");
@@ -1054,6 +1054,16 @@
                 // reset the domEl
                 self.domEl = oldDomEl;
 
+                // copy classes from oldField onto field
+                var oldClasses = $(oldField).attr("class");
+                if (oldClasses) {
+                    $.each(oldClasses.split(" "), function(i, v) {
+                        if (v && !v.indexOf("alpaca-") === 0) {
+                            $(self.field).addClass(v);
+                        }
+                    });
+                }
+
                 // hide the old field
                 $(oldField).hide();
 
@@ -1062,6 +1072,10 @@
 
                 // mark that we're refreshed
                 self.refreshed = true;
+
+                if (typeof(_data) !== "undefined") {
+                    self.setValue(_data);
+                }
 
                 // fire the "ready" event
                 Alpaca.fireReady(self);
