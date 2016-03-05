@@ -112,8 +112,8 @@ check out this writeup - http://travismaynard.com/writing/getting-started-with-g
 
 Once you have Node.js installed, you essentially need to do this:
 
-    npm install gulp -g
-    npm install bower -g
+    npm install -g gulp
+    npm install -g bower
 
 Alpaca requires python 2.7.x to build some of it's node_module dependencies.  Make sure you have this installed.
 If you're currently using Python 3.x, you will need to tell the build to use 2.7.x:
