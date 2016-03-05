@@ -306,7 +306,7 @@
 
                 var pf = (function(propertyId, itemData, extraDataProperties)
                 {
-                    return function(callback)
+                    return function(_done)
                     {
                         // only allow this if we have data, otherwise we end up with circular reference
                         self.resolvePropertySchemaOptions(propertyId, function (schema, options, circular) {
@@ -331,9 +331,11 @@
                                 // by the time we get here, we may have constructed a very large child chain of
                                 // sub-dependencies and so we use nextTick() instead of a straight callback so as to
                                 // avoid blowing out the stack size
-                                Alpaca.nextTick(function () {
-                                    callback();
-                                });
+                                //Alpaca.nextTick(function () {
+                                //    callback();
+                                //});
+
+                                _done();
                             });
                         });
                     };
@@ -343,38 +345,43 @@
                 propertyFunctions.push(pf);
             }
 
-            Alpaca.series(propertyFunctions, function(err) {
+            // run on the next tick
+            Alpaca.nextTick(function() {
 
-                // is there any order information in the items?
-                var hasOrderInformation = false;
-                for (var i = 0; i < items.length; i++) {
-                    if (typeof(items[i].options.order) !== "undefined") {
-                        hasOrderInformation = true;
-                        break;
+                Alpaca.series(propertyFunctions, function(err) {
+
+                    // is there any order information in the items?
+                    var hasOrderInformation = false;
+                    for (var i = 0; i < items.length; i++) {
+                        if (typeof(items[i].options.order) !== "undefined") {
+                            hasOrderInformation = true;
+                            break;
+                        }
                     }
-                }
 
-                if (hasOrderInformation)
-                {
-                    // sort by order?
-                    items.sort(function (a, b) {
+                    if (hasOrderInformation)
+                    {
+                        // sort by order?
+                        items.sort(function (a, b) {
 
-                        var orderA = a.options.order;
-                        if (!orderA)
-                        {
-                            orderA = 0;
-                        }
-                        var orderB = b.options.order;
-                        if (!orderB)
-                        {
-                            orderB = 0;
-                        }
+                            var orderA = a.options.order;
+                            if (!orderA)
+                            {
+                                orderA = 0;
+                            }
+                            var orderB = b.options.order;
+                            if (!orderB)
+                            {
+                                orderB = 0;
+                            }
 
-                        return (orderA - orderB);
-                    });
-                }
+                            return (orderA - orderB);
+                        });
+                    }
 
-                cf();
+                    cf();
+                });
+
             });
         },
 

@@ -1357,9 +1357,12 @@
             {
                 return function(callback)
                 {
-                    Alpaca.compileValidationContext(field, function(context) {
-                        contexts.push(context);
-                        callback();
+                    // run on the next tick
+                    Alpaca.nextTick(function() {
+                        Alpaca.compileValidationContext(field, function(context) {
+                            contexts.push(context);
+                            callback();
+                        });
                     });
                 };
             };

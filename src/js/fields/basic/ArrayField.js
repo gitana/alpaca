@@ -449,7 +449,7 @@
 
                         var pf = (function(index, value)
                         {
-                            return function(callback)
+                            return function(_done)
                             {
                                 self.createItem(index, itemSchema, itemOptions, value, function(item) {
 
@@ -458,10 +458,11 @@
                                     // by the time we get here, we may have constructed a very large child chain of
                                     // sub-dependencies and so we use nextTick() instead of a straight callback so as to
                                     // avoid blowing out the stack size
-                                    Alpaca.nextTick(function() {
-                                        callback();
-                                    });
+                                    //Alpaca.nextTick(function() {
+                                    //    callback();
+                                    //});
 
+                                    _done();
                                 });
                             };
 
@@ -470,8 +471,11 @@
                         funcs.push(pf);
                     }
 
-                    Alpaca.series(funcs, function(err) {
-                        callback(items);
+                    // run on the next-tick
+                    Alpaca.nextTick(function() {
+                        Alpaca.series(funcs, function(err) {
+                            callback(items);
+                        });
                     });
 
                 });
