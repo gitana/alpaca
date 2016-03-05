@@ -209,7 +209,7 @@
             if (self.options.toolbar)
             {
                 for (var k in self.options.toolbar) {
-                    self.toolbar[k] = self.options.toolbar[k];
+                    self.toolbar[k] = Alpaca.copyOf(self.options.toolbar[k]);
                 }
             }
             if (typeof(self.toolbar.showLabels) === "undefined") {
@@ -236,7 +236,7 @@
             if (self.options.actionbar)
             {
                 for (var k2 in self.options.actionbar) {
-                    self.actionbar[k2] = self.options.actionbar[k2];
+                    self.actionbar[k2] = Alpaca.copyOf(self.options.actionbar[k2]);
                 }
             }
             if (typeof(self.actionbar.showLabels) === "undefined") {
@@ -832,7 +832,7 @@
             var action = null;
 
             $.each(actionsArray, function(i, v) {
-                if (v.action == actionKey) // jshint ignore:line
+                if (v.action === actionKey) // jshint ignore:line
                 {
                     action = v;
                 }
@@ -1067,6 +1067,7 @@
             }
 
             // CLICK: actionbar buttons
+            // NOTE: actionbarEls size should be 0 or 1
             var actionbarEls = $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() + "']");
             $(actionbarEls).each(function() {
 
@@ -1077,7 +1078,7 @@
                 }
 
                 // bind button click handlers
-                $(this).find("[data-alpaca-array-actionbar-action]").each(function() {
+                $(this).children("[data-alpaca-array-actionbar-action]").each(function() {
 
                     var actionKey = $(this).attr("data-alpaca-array-actionbar-action");
                     var action = self.findAction(self.actionbar.actions, actionKey);
@@ -1093,24 +1094,24 @@
                 // if we're at max capacity, disable "add" buttons
                 if (self._validateEqualMaxItems())
                 {
-                    $(this).find("[data-alpaca-array-toolbar-action='add']").each(function(index) {
+                    $(this).children("[data-alpaca-array-toolbar-action='add']").each(function(index) {
                         $(this).removeClass('alpaca-button-disabled');
                         self.fireCallback("enableButton", this);
                     });
 
-                    $(this).find("[data-alpaca-array-actionbar-action='add']").each(function(index) {
+                    $(this).children("[data-alpaca-array-actionbar-action='add']").each(function(index) {
                         $(this).removeClass('alpaca-button-disabled');
                         self.fireCallback("enableButton", this);
                     });
                 }
                 else
                 {
-                    $(this).find("[data-alpaca-array-toolbar-action='add']").each(function(index) {
+                    $(this).children("[data-alpaca-array-toolbar-action='add']").each(function(index) {
                         $(this).addClass('alpaca-button-disabled');
                         self.fireCallback("disableButton", this);
                     });
 
-                    $(this).find("[data-alpaca-array-actionbar-action='add']").each(function(index) {
+                    $(this).children("[data-alpaca-array-actionbar-action='add']").each(function(index) {
                         $(this).addClass('alpaca-button-disabled');
                         self.fireCallback("disableButton", this);
                     });
@@ -1119,26 +1120,26 @@
                 // if we're at min capacity, disable "remove" buttons
                 if (self._validateEqualMinItems())
                 {
-                    $(this).find("[data-alpaca-array-actionbar-action='remove']").each(function(index) {
+                    $(this).children("[data-alpaca-array-actionbar-action='remove']").each(function(index) {
                         $(this).removeClass('alpaca-button-disabled');
                         self.fireCallback("enableButton", this);
                     });
                 }
                 else
                 {
-                    $(this).find("[data-alpaca-array-actionbar-action='remove']").each(function(index) {
+                    $(this).children("[data-alpaca-array-actionbar-action='remove']").each(function(index) {
                         $(this).addClass('alpaca-button-disabled');
                         self.fireCallback("disableButton", this);
                     });
                 }
             });
             // first actionbar has its "move up" button disabled
-            $(actionbarEls).first().find("[data-alpaca-array-actionbar-action='up']").each(function() {
+            $(actionbarEls).first().children("[data-alpaca-array-actionbar-action='up']").each(function() {
                 $(this).addClass('alpaca-button-disabled');
                 self.fireCallback("disableButton", this);
             });
             // last actionbar has its "move down" button disabled
-            $(actionbarEls).last().find("[data-alpaca-array-actionbar-action='down']").each(function() {
+            $(actionbarEls).last().children("[data-alpaca-array-actionbar-action='down']").each(function() {
                 $(this).addClass('alpaca-button-disabled');
                 self.fireCallback("disableButton", this);
             });
