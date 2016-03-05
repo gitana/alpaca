@@ -2662,7 +2662,7 @@
                     "optionLabels": {
                         "type": "array",
                         "items": {
-                            "type": "string"
+                            "type": "text"
                         }
                     },
                     "view": {

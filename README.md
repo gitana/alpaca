@@ -248,6 +248,10 @@ over the years:
 + [@ryanmark](https://github.com/ryanmark)
 + [@techbrew-mc](https://github.com/techbrew-mc)
 + [@st3v](https://github.com/st3v)
++ [@basvandenheuvel](https://github.com/basvandenheuvel)
++ [@simonemedasfedro](https://github.com/simonemedasfedro)
++ [@78Gills](https://github.com/78Gills)
++ [@PirateSteve](https://github.com/PirateSteve)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!

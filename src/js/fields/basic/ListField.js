@@ -207,11 +207,6 @@
         getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(), {
                 "properties": {
-                    "optionLabels": {
-                        "title": "Option Labels",
-                        "description": "Labels for options. It can either be a map object or an array field that maps labels to items defined by enum schema property one by one.",
-                        "type": "array"
-                    },
                     "dataSource": {
                         "title": "Option Datasource",
                         "description": "Datasource for generating list of options.  This can be a string or a function.  If a string, it is considered to be a URI to a service that produces a object containing key/value pairs or an array of elements of structure {'text': '', 'value': ''}.  This can also be a function that is called to produce the same list.",
@@ -252,10 +247,6 @@
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
                 "fields": {
-                    "optionLabels": {
-                        "itemLabel":"Label",
-                        "type": "array"
-                    },
                     "dataSource": {
                         "type": "text"
                     },
