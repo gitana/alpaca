@@ -1661,6 +1661,23 @@
         },
 
         /**
+         * @returns {boolean} whether the field is disabled
+         */
+        isDisabled: function()
+        {
+            // OVERRIDE
+            return false;
+        },
+
+        /**
+         * @returns {boolean} whether the field is enabled
+         */
+        isEnabled: function()
+        {
+            return !this.isDisabled();
+        },
+
+        /**
          * Focuses on the field.
          *
          * If a callback is provided, the callback receives the control focused upon.

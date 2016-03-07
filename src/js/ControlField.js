@@ -615,6 +615,14 @@
             },
 
             /**
+             * @see Alpaca.Field#isDisabled
+             */
+            isDisabled: function()
+            {
+                return $(this.control).prop("disabled");
+            },
+
+            /**
              * @returns {array} the enum value to use for this field
              */
             getEnum: function()
