@@ -1036,3 +1036,9 @@ gulp.task("update-release-txt", function() {
         .pipe(gulp.dest("."));
 
 });
+
+gulp.task("full", function(cb) {
+    runSequence("default", "site", "server", function () {
+        cb();
+    });
+});

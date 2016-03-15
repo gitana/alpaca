@@ -499,12 +499,19 @@
             {
                 // refresh
                 self.refresh(function() {
-
                     callback();
                 });
             }
             else
             {
+                // inform data tables that we've added a row
+                // we do this by finding the TR and then adding that way
+                if (self._dt)
+                {
+                    var tr = self.field.find("[data-alpaca-field-path='" + item.path + "']");
+                    self._dt.row.add(tr);//.draw(false);
+                }
+
                 callback();
             }
         },
@@ -526,11 +533,15 @@
                 self.refresh(function () {
                     callback();
                 });
-
-                callback();
             }
             else
             {
+                // inform data tables that we've removed a row
+                if (self._dt)
+                {
+                    self._dt.rows(childIndex).remove();//.draw(false);
+                }
+
                 callback();
             }
         },
