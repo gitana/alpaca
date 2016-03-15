@@ -117,8 +117,8 @@ To get started on your own projects, take a look at the
 
 ## Who uses Alpaca?
 
-Lots of people.  Alpaca is an open-source project and has been around for almost 3 years.  We've had a great time
-building it and have enjoyed the pull requests and adoption within some really great companies worldwide.  Here
+Lots of people.  Alpaca is an open-source project and has been under active development for 5 years!  We've had a great 
+time building it and have enjoyed the pull requests and adoption within some really great companies worldwide.  Here
 are a few notable ones:
 
 <div class="community">
