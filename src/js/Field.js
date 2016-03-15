@@ -1073,8 +1073,13 @@
                 // mark that we're refreshed
                 self.refreshed = true;
 
-                if (typeof(_data) !== "undefined") {
-                    self.setValue(_data);
+                // this is apparently needed for objects and arrays
+                if (typeof(_data) !== "undefined")
+                {
+                    if (Alpaca.isObject(_data) || Alpaca.isArray(_data))
+                    {
+                        self.setValue(_data);
+                    }
                 }
 
                 // fire the "ready" event
