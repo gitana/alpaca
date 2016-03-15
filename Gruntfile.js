@@ -32,7 +32,7 @@ module.exports = function(grunt) {
                 ],
                 "options": {
                     "destination": "./build/alpaca/jsdoc",
-                    "template": "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template",
+                    "template": "node_modules/ink-docstrap/template",
                     "configure": "jsdoc.conf.json"
                 }
             }
