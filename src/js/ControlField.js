@@ -593,6 +593,10 @@
              */
             disable: function()
             {
+                if (this.options.readonly) {
+                    return;
+                }
+
                 this.base();
 
                 if (this.control && this.control.length > 0)
@@ -606,6 +610,10 @@
              */
             enable: function()
             {
+                if (this.options.readonly) {
+                    return;
+                }
+
                 this.base();
 
                 if (this.control && this.control.length > 0)

@@ -739,6 +739,10 @@
          */
         disable: function()
         {
+            if (this.options.readonly) {
+                return;
+            }
+
             this.base();
 
             for (var i = 0; i < this.children.length; i++)
@@ -752,6 +756,10 @@
          */
         enable: function()
         {
+            if (this.options.readonly) {
+                return;
+            }
+
             this.base();
 
             for (var i = 0; i < this.children.length; i++)
