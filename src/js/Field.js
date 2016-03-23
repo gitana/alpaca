@@ -1018,6 +1018,8 @@
             // remember this stuff
             var oldDomEl = self.domEl;
             var oldField = self.field;
+            // preserve the dependency update
+            var oldUpdateFns = $._data(self.field[0], 'events').fieldupdate;
             //var oldControl = self.control;
             //var oldContainer = self.container;
             //var oldForm = self.form;
@@ -1069,6 +1071,11 @@
 
                 // remove marker
                 $(markerEl).remove();
+
+                // add back the bound event for dependency update
+                oldUpdateFns.forEach(function(updateFn) {
+                    self.field.bind('fieldupdate', updateFn);
+                });
 
                 // mark that we're refreshed
                 self.refreshed = true;
