@@ -77,6 +77,7 @@ var paths = {
             "src/js/fields/advanced/AddressField.js",
             "src/js/fields/advanced/CKEditorField.js",
             "src/js/fields/advanced/ColorField.js",
+            "src/js/fields/advanced/ColorPickerField.js",
             "src/js/fields/advanced/CountryField.js",
             "src/js/fields/advanced/CurrencyField.js",
             "src/js/fields/advanced/DateField.js",
