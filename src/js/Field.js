@@ -1073,9 +1073,11 @@
                 $(markerEl).remove();
 
                 // add back the bound event for dependency update
-                oldUpdateFns.forEach(function(updateFn) {
-                    self.field.bind('fieldupdate', updateFn);
-                });
+                if (oldUpdateFns) {
+                    oldUpdateFns.forEach(function(updateFn) {
+                        self.field.bind('fieldupdate', updateFn);
+                    });
+                }
 
                 // mark that we're refreshed
                 self.refreshed = true;
