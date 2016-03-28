@@ -12,12 +12,12 @@
                 invalid: "Värdet är felaktigt",
                 months: ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"],
                 timeUnits: {
-                    SECOND: "Sekunder",
-                    MINUTE: "Minuter",
-                    HOUR: "Timmar",
-                    DAY: "Dagar",
-                    MONTH: "Månader",
-                    YEAR: "År"
+                    SECOND: "sekunder",
+                    MINUTE: "minuter",
+                    HOUR: "timmar",
+                    DAY: "dagar",
+                    MONTH: "månader",
+                    YEAR: "år"
                 },
                 "notOptional": "Detta fält är obligatoriskt",
                 "disallowValue": "Dessa värden är inte tillåtna: {0}",
