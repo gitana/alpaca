@@ -282,9 +282,9 @@
          */
         _validateMinItems: function()
         {
-            if (this.schema.items && this.schema.items.minItems)
+            if (this.schema.minItems && this.schema.minItems >= 0)
             {
-                if ($(":selected",this.control).length < this.schema.items.minItems)
+                if ($(":selected",this.control).length < this.schema.minItems)
                 {
                     return false;
                 }
@@ -299,9 +299,9 @@
          */
         _validateMaxItems: function()
         {
-            if (this.schema.items && this.schema.items.maxItems)
+            if (this.schema.maxItems && this.schema.maxItems >= 0)
             {
-                if ($(":selected",this.control).length > this.schema.items.maxItems)
+                if ($(":selected",this.control).length > this.schema.maxItems)
                 {
                     return false;
                 }
@@ -321,13 +321,13 @@
 
             var status = this._validateMaxItems();
             valInfo["tooManyItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.items.maxItems]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.maxItems]),
                 "status": status
             };
 
             status = this._validateMinItems();
             valInfo["notEnoughItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("notEnoughItems"), [this.schema.items.minItems]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("notEnoughItems"), [this.schema.minItems]),
                 "status": status
             };
 
