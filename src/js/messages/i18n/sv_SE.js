@@ -33,7 +33,7 @@
                 "stringValueTooSmall": "Det minsta tillåtna värdet är {0}",
                 "stringValueTooLarge": "Det största tillåtna värdet är {0}",
                 "stringValueTooSmallExclusive": "Värdet måste vara större än {0}",
-                "stringValueTooLargeExclusive": "Värdet tecken måste vara mindre än {0}",
+                "stringValueTooLargeExclusive": "Värdet måste vara mindre än {0}",
                 "stringDivisibleBy": "Talet måste vara delbart med {0}",
                 "stringNotANumber": "Värdet är inte ett tal",
                 "invalidPassword": "Ogiltigt lösenord",
