@@ -1104,6 +1104,12 @@
 
             this.views[viewId].templates[templateId] = template;
 
+            // if normalized views have already been computed, then wipe them down
+            // this allows them to be re-computed on the next render and allows this template to participate
+            if (Alpaca.countProperties(Alpaca.normalizedViews) > 0)
+            {
+                Alpaca.normalizedViews = {};
+            }
         },
 
         /**
