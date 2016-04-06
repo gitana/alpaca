@@ -114,6 +114,9 @@
         {
             $(fieldEl).find("label.alpaca-control-label").addClass("col-sm-3");
 
+            //align help text with input.
+            $(fieldEl).find(".help-block").addClass("col-sm-offset-3 col-sm-9");
+
             var wrapper = $("<div></div>");
             wrapper.addClass("col-sm-9");
 
