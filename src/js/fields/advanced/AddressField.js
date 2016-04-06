@@ -37,10 +37,10 @@
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "maxLength": 30,
-                            "minItems": 0,
-                            "maxItems": 3
-                        }
+                            "maxLength": 30
+                        },
+                        "minItems": 0,
+                        "maxItems": 3
                     },
                     "city": {
                         "title": "City",

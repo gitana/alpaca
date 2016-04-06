@@ -58,10 +58,10 @@ $("#field2").alpaca({
             "title": "Ice Cream",
             "type": "string",
             "minLength": 3,
-            "maxLength": 8,
-            "minItems": 2,
-            "maxItems": 5
-        }
+            "maxLength": 8
+        },
+        "minItems": 2,
+        "maxItems": 5        
     }
 });
 </script>
@@ -82,10 +82,10 @@ $("#field3").alpaca({
             "title": "Ice Cream",
             "type": "string",
             "minLength": 3,
-            "maxLength": 8,
-            "minItems": 2,
-            "maxItems": 5
-        }
+            "maxLength": 8
+        },
+        "minItems": 2,
+        "maxItems": 5        
     }
 });
 </script>

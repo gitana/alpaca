@@ -430,9 +430,9 @@
         "flow": {
             "id": "#flow",
             "type": "array",
+            "minItems": 0,
+            "maxItems": 1,
             "items": {
-                "minItems": 0,
-                "maxItems": 1,
                 "type": "object",
                 "properties": {
                     "type": {

@@ -20,7 +20,36 @@
          */
         setup: function()
         {
+            var self = this;
+
             this.base();
+
+            if (self.schema["type"] && self.schema["type"] === "array")
+            {
+                self.options.multiple = true;
+            }
+
+            // automatically turn on "hideNone" if we're in multiselect mode and have the multiselect plugin
+            if (self.options.multiple && $.fn.multiselect)
+            {
+                if (typeof(self.options.hideNone) === "undefined")
+                {
+                    self.options.hideNone = true;
+                }
+            }
+
+            // offer some backward compability here as older version of Alpaca used to incorrectly look for
+            // maxItems and minItems on the schema.items subobject.
+            // if not defined properly, we offer some automatic forward migration of these properties
+            if (this.schema.items && this.schema.items.maxItems && typeof(this.schema.maxItems) === "undefined") {
+                this.schema.maxItems = this.schema.items.maxItems;
+                delete this.schema.items.maxItems;
+            }
+            if (this.schema.items && this.schema.items.minItems && typeof(this.schema.minItems) === "undefined") {
+                this.schema.minItems = this.schema.items.minItems;
+                delete this.schema.items.minItems;
+            }
+
         },
 
         /**
@@ -126,11 +155,6 @@
 
             this.base(model, function() {
 
-                if (self.schema["type"] && self.schema["type"] === "array")
-                {
-                    self.options.multiple = true;
-                }
-
                 callback();
 
             });
@@ -186,10 +210,6 @@
                         {
                             settings.nonSelectedText = self.options.noneLabel;
                         }
-                    }
-                    if (self.options.hideNone)
-                    {
-                        delete settings.nonSelectedText;
                     }
 
                     $(self.getControlEl()).multiselect(settings);

@@ -131,7 +131,8 @@ $("#field5").alpaca({
 
 
 ## Example 6
-Multiple select field for array data.
+Multiple select field for array data.  Note that when using multiple select mode, the `hideNone` option will default
+to true.
 <div id="field6"> </div>
 {% raw %}
 <script type="text/javascript" id="field6-script">
@@ -142,16 +143,17 @@ $("#field6").alpaca({
         "items": {
             "title": "Ice Cream",
             "type": "string",
-            "enum" : ["Vanilla", "Chocolate", "Strawberry", "Mint"],
-            "minItems": 2,
-            "maxItems": 3
-        }
+            "enum" : ["Vanilla", "Chocolate", "Strawberry", "Mint"]
+        },
+        "minItems": 2,
+        "maxItems": 3        
     },
     "options": {
         "label": "Ice cream",
         "helper": "Guess my favorite ice cream?",
         "type": "select",
-        "size": 5
+        "size": 5,
+        "noneLabel": "Pick a flavour of Ice Cream!"        
     }
 });
 </script>

@@ -56,18 +56,18 @@
                 this.options.items = {};
             }
 
-            // legacy - uniqueItems, maxItems, minItems
-            if (this.schema.items.maxItems) {
+            // offer some backward compability here as older version of Alpaca used to incorrectly look for
+            // maxItems, minItems and uniqueItems on the schema.items subobject.
+            // if not defined properly, we offer some automatic forward migration of these properties
+            if (this.schema.items && this.schema.items.maxItems && typeof(this.schema.maxItems) === "undefined") {
                 this.schema.maxItems = this.schema.items.maxItems;
                 delete this.schema.items.maxItems;
             }
-
-            if (this.schema.items.minItems) {
+            if (this.schema.items && this.schema.items.minItems && typeof(this.schema.minItems) === "undefined") {
                 this.schema.minItems = this.schema.items.minItems;
                 delete this.schema.items.minItems;
             }
-
-            if (this.schema.items.uniqueItems) {
+            if (this.schema.items && this.schema.items.uniqueItems && typeof(this.schema.uniqueItems) === "undefined") {
                 this.schema.uniqueItems = this.schema.items.uniqueItems;
                 delete this.schema.items.uniqueItems;
             }
