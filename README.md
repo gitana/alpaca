@@ -253,6 +253,8 @@ These folks have made numerous contributions to Alpaca over the years:
 + [@78Gills](https://github.com/78Gills)
 + [@PirateSteve](https://github.com/PirateSteve)
 + [@dthompsonza](https://github.com/dthompsonza)
++ [@ousou](https://github.com/ousou)
++ [@azahid](https://github.com/azahid)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!
