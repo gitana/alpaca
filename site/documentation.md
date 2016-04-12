@@ -76,13 +76,14 @@ whereas the extension types depend on various third-party libraries.
             <li><a href="{{ BASE_PATH }}/docs/fields/password.html">Password</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/personalname.html">Personal Name</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/phone.html">Phone</a></li>
-            <li><a href="{{ BASE_PATH }}/docs/fields/search.html">Search</a></li>                        
+            <li><a href="{{ BASE_PATH }}/docs/fields/pickacolor.html">Pick A Color</a></li>                                    
         </ul>
     </div>
     <div class="col-md-4">
         <ul>                        
-            <li><a href="{{ BASE_PATH }}/docs/fields/simplecolorpicker.html">Simple Color Picker</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/search.html">Search</a></li>        
             <li><a href="{{ BASE_PATH }}/docs/fields/state.html">State</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/summernote.html">Summernote Editor</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/table.html">Table</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/tag.html">Tag</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/token.html">Token</a></li>
