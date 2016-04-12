@@ -85,6 +85,13 @@
 
                             self.onFileDelete.call(self, row, button, file);
 
+                            // remove from files
+                            var array = self.getValue();
+                            if (array && array.length > 0) {
+                                array.splice(fileIndex, 1);
+                                self.setValue(array);
+                            }
+
                             self.triggerWithPropagation("change");
                             setTimeout(function() {
                                 self.refreshUIState();

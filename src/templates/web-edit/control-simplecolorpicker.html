@@ -1,0 +1,14 @@
+<script type="text/x-handlebars-template">
+
+    <div>
+        <select name="colorpicker">
+            {{#each options.colors}}
+            <option value="{{value}}">{{label}}</option>
+            {{/each}}
+        </select>
+        <span class="colorpicker-title">
+            {{#if options.selectedColor}}{{options.selectedColor.label}}{{/if}}
+        </span>
+    </div>
+
+</script>

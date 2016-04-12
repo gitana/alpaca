@@ -97,6 +97,7 @@ var paths = {
             "src/js/fields/advanced/PersonalNameField.js",
             "src/js/fields/advanced/PhoneField.js",
             "src/js/fields/advanced/SearchField.js",
+            "src/js/fields/advanced/SimpleColorPickerField.js",
             "src/js/fields/advanced/StateField.js",
             "src/js/fields/advanced/TableField.js",
             "src/js/fields/advanced/TableRowField.js",

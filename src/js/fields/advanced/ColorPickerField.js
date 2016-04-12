@@ -17,14 +17,14 @@
         {
             var self = this;
 
-            this.colorPickerAvailable = false;
+            this.simpleColorPickerAvailable = false;
             if (!self.isDisplayOnly() && typeof($.fn.colorpicker) !== "undefined")
             {
-                this.colorPickerAvailable = true;
+                this.simpleColorPickerAvailable = true;
             }
 
             // default html5 input type = "color";
-            if (typeof(this.options.colorpicker) === "undefined" && !self.colorPickerAvailable)
+            if (typeof(this.options.colorpicker) === "undefined" && !self.simpleColorPickerAvailable)
             {
                 this.inputType = "color";
             }
@@ -64,7 +64,7 @@
             this.base(model, function() {
 
                 // if we can render the spectrum plugin...
-                if (self.colorPickerAvailable && self.control)
+                if (self.simpleColorPickerAvailable && self.control)
                 {
                     setTimeout(function() {
                         $((self.control)[0]).colorpicker(self.options.colorpicker);
