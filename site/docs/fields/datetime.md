@@ -65,8 +65,8 @@ $("#field2").alpaca({
     "options" : {
         "form":{
             "attributes":{
-                "action":"../../endpoints/echo.php",
-                "method":"post"
+                "action": "http://www.alpacajs.org/endpoints/echo.php",
+                "method": "post"
             },
             "buttons":{
                 "submit":{},

@@ -2,16 +2,16 @@
 
     var Alpaca = $.alpaca;
 
-    Alpaca.Fields.UploadField = Alpaca.Fields.TextField.extend(
+    Alpaca.Fields.UploadField = Alpaca.ControlField.extend(
     /**
      * @lends Alpaca.Fields.UploadField.prototype
      */
     {
         /**
          * @constructs
-         * @augments Alpaca.Fields.TextField
+         * @augments Alpaca.Fields.ControlField
          *
-         * @class File control with nice custom styles.
+         * @class File upload control that can be mounted on top of "object" or "array" types.
          *
          * @param {Object} container Field container.
          * @param {Any} data Field data.
@@ -25,6 +25,14 @@
             var self = this;
 
             this.base(container, data, options, schema, view, connector);
+
+            this.isArrayType = function() {
+                return self.schema.type === "array";
+            };
+
+            this.isObjectType = function() {
+                return self.schema.type === "object";
+            };
 
             // wraps an existing template descriptor into a method that looks like fn(model)
             // this is compatible with the requirements of fileinput
@@ -86,10 +94,15 @@
                             self.onFileDelete.call(self, row, button, file);
 
                             // remove from files
-                            var array = self.getValue();
-                            if (array && array.length > 0) {
+                            if (self.isArrayType())
+                            {
+                                var array = self.getValueAsArray();
                                 array.splice(fileIndex, 1);
-                                self.setValue(array);
+                                self.setValueAsArray(array);
+                            }
+                            else if (self.isObjectType())
+                            {
+                                self.setValueAsArray([]);
                             }
 
                             self.triggerWithPropagation("change");
@@ -137,11 +150,6 @@
                 });
             }
 
-            if (typeof(self.options.multiple) === "undefined")
-            {
-                self.options.multiple = false;
-            }
-
             if (typeof(self.options.showUploadPreview) === "undefined")
             {
                 self.options.showUploadPreview = true;
@@ -163,36 +171,45 @@
                 self.options.upload = {};
             }
 
-            // max number of files
+            // support copying back the maxNumberOfFiles from the upload plugin's settings
             if (typeof(self.options.maxNumberOfFiles) === "undefined")
             {
-                if (self.options.upload.maxNumberOfFiles)
+                if (typeof(self.options.upload.maxNumberOfFiles) !== "undefined")
                 {
                     self.options.maxNumberOfFiles = self.options.upload.maxNumberOfFiles;
-                    if (self.options.maxNumberOfFiles === 1)
-                    {
-                        self.options.multiple = false;
-                    }
-                    else if (self.options.maxNumberOfFiles > 1)
-                    {
-                        self.options.multiple = true;
-                    }
                 }
-                else
-                {
-                    self.options.maxNumberOfFiles = 1;
-                    if (typeof(self.options.multiple) === "boolean" && self.options.multiple)
-                    {
-                        self.options.maxNumberOfFiles = -1;
-                    }
-                }
+            }
 
-                // copy setting into upload
-                if (self.options.maxNumberOfFiles)
+            // figure out reasonable maxNumberOfFiles
+            if (typeof(self.options.maxNumberOfFiles) === "undefined")
+            {
+                self.options.maxNumberOfFiles = 1;
+                if (self.isArrayType())
                 {
-                    self.options.upload.maxNumberOfFiles = self.options.maxNumberOfFiles;
+                    self.options.maxNumberOfFiles = -1;
                 }
+            }
 
+            // safe guard
+            if (self.isObjectType()) {
+                self.options.maxNumberOfFiles = 1;
+            }
+
+            if (self.options.multiple === false)
+            {
+                self.options.maxNumberOfFiles = 1;
+            }
+
+            if (self.options.maxNumberOfFiles > 1 || self.options.maxNumberOfFiles === -1)
+            {
+                self.options.multiple = true;
+            }
+
+            // copy setting into upload plugin config
+            self.options.upload.maxNumberOfFiles = 9999;
+            if (self.options.maxNumberOfFiles > 0)
+            {
+                self.options.upload.maxNumberOfFiles = self.options.maxNumberOfFiles;
             }
 
             // max file size
@@ -260,7 +277,6 @@
 
                 self.options.upload.headers[Alpaca.CSRF_HEADER_NAME] = csrfToken;
             }
-
         },
 
         determineCsrfToken: function()
@@ -305,10 +321,20 @@
                 model.dropZoneMessage = self.options.dropZoneMessage;
                 if (!model.dropZoneMessage)
                 {
-                    model.dropZoneMessage = self.getMessage("dropZoneSingle");
-                    if (model.maxNumberOfFiles === 1)
+                    model.dropZoneMessage = self.getMessage("dropZoneMultiple");
+                    if (model.options.maxNumberOfFiles === 1)
                     {
-                        model.dropZoneMessage = self.getMessage("dropZoneMultiple");
+                        model.dropZoneMessage = self.getMessage("dropZoneSingle");
+                    }
+                }
+
+                model.selectFromExistingMessage = self.options.selectFromExistingMessage;
+                if (!model.selectFromExistingMessage)
+                {
+                    model.selectFromExistingMessage = self.getMessage("selectFromExistingMultiple");
+                    if (model.options.maxNumberOfFiles === 1)
+                    {
+                        model.selectFromExistingMessage = self.getMessage("selectFromExistingSingle");
                     }
                 }
 
@@ -385,7 +411,12 @@
             if (self.options.multiple)
             {
                 $(el).find(".alpaca-fileupload-input").attr("multiple", true);
-                $(el).find(".alpaca-fileupload-input").attr("name", self.name + "_files[]");
+                //$(el).find(".alpaca-fileupload-input").attr("name", self.name + "_files[]");
+            }
+
+            if (self.options.name)
+            {
+                $(el).find(".alpaca-fileupload-input").attr("name", self.options.name);
             }
 
             // hide the progress bar at first
@@ -429,7 +460,7 @@
                 {
                     var bad = false;
 
-                    if (i < data.originalFiles.length)
+                    if (i < data.files.length)
                     {
                         // file types
                         if (self.options.fileTypes)
@@ -440,9 +471,9 @@
                                 re = new RegExp(self.options.fileTypes);
                             }
 
-                            if (!re.test(data.originalFiles[i]["type"]))
+                            if (!re.test(data.files[i]["type"]))
                             {
-                                uploadErrors.push('Not an accepted file type: ' + data.originalFiles[i]["type"]);
+                                uploadErrors.push('Not an accepted file type: ' + data.files[i]["type"]);
                                 bad = true;
                             }
                         }
@@ -450,8 +481,8 @@
                         // size
                         if (self.options.maxFileSize > -1)
                         {
-                            if (data.originalFiles[i].size > self.options.maxFileSize) {
-                                uploadErrors.push('Filesize is too big: ' + data.originalFiles[i].size);
+                            if (data.files[i].size > self.options.maxFileSize) {
+                                uploadErrors.push('Filesize is too big: ' + data.files[i].size);
                                 bad = true;
                             }
                         }
@@ -459,8 +490,6 @@
 
                     if (bad)
                     {
-                        //data.originalFiles.splice(i, 1);
-                        //data.files.splice(i, 1);
                         i++;
                     }
                     else
@@ -468,7 +497,7 @@
                         i++;
                     }
                 }
-                while (i < data.originalFiles.length);
+                while (i < data.files.length);
 
                 if (uploadErrors.length > 0)
                 {
@@ -565,13 +594,13 @@
             fileUpload.bind("fileuploaddone", function(e, data) {
 
                 // existing
-                var array = self.getValue();
+                var array = self.getValueAsArray();
 
                 var f = function(i)
                 {
                     if (i === data.files.length) // jshint ignore:line
                     {
-                        self.setValue(array);
+                        self.setValueAsArray(array);
                         return;
                     }
 
@@ -685,28 +714,6 @@
         },
 
         /**
-         * Removes a descriptor with the given id from the value set.
-         *
-         * @param id
-         */
-        removeValue: function(id)
-        {
-            var self = this;
-
-            var array = self.getValue();
-            for (var i = 0; i < array.length; i++)
-            {
-                if (array[i].id == id) // jshint ignore:line
-                {
-                    array.splice(i, 1);
-                    break;
-                }
-            }
-
-            self.setValue(array);
-        },
-
-        /**
          * Extension point for adding properties and callbacks to the file upload config.
          *
          * @param fileUploadconfig
@@ -815,7 +822,7 @@
          *    }]
          *
          * @param fileUploadConfig
-         * @param row
+         * @param data
          */
         enhanceFiles: function(fileUploadConfig, data)
         {
@@ -835,15 +842,14 @@
             var files = [];
 
             // now preload with files based on property value
-            var descriptors = self.getValue();
+            var descriptors = self.getValueAsArray();
 
             var f = function(i)
             {
                 if (i == descriptors.length) // jshint ignore:line
                 {
                     // all done
-                    callback(files);
-                    return;
+                    return callback(files);
                 }
 
                 self.convertDescriptorToFile(descriptors[i], function(err, file) {
@@ -875,31 +881,85 @@
         },
 
         /**
-         * @override
+         * Hands back the value as either an object or array, depending on the schema type.
          *
-         * Sets an array of descriptors.
-         *
-         * @param data
+         * @returns {*}
          */
-        setValue: function(val)
+        getValue: function()
         {
-            if (!val)
+            var value = this.data;
+
+            if (this.isObjectType())
             {
-                val = [];
+                if (this.data && this.data.length > 0)
+                {
+                    value = this.data[0];
+                }
             }
 
-            this.data = val;
+            return value;
+        },
+
+        setValue: function(value)
+        {
+            if (!value)
+            {
+                this.data = [];
+            }
+            else
+            {
+                if (Alpaca.isArray(value))
+                {
+                    this.data = value;
+                }
+                else if (Alpaca.isObject(value))
+                {
+                    this.data = [value];
+                }
+            }
 
             this.updateObservable();
 
             this.triggerUpdate();
         },
 
+        /**
+         * @returns {Array} the value as an array
+         */
+        getValueAsArray: function()
+        {
+            return this.data;
+        },
+
+        /**
+         * Sets the value as an array.
+         *
+         * @param array
+         */
+        setValueAsArray: function(array)
+        {
+            var self = this;
+
+            if (self.isArrayType())
+            {
+                self.setValue(array);
+            }
+            else if (self.isObjectType())
+            {
+                var val = null;
+                if (array && array.length > 0) {
+                    val = array[0];
+                }
+
+                self.setValue(val);
+            }
+        },
+
         reload: function(callback)
         {
             var self = this;
 
-            var descriptors = this.getValue();
+            var descriptors = this.getValueAsArray();
 
             var files = [];
 
@@ -919,9 +979,7 @@
                     // refresh validation state
                     self.refreshValidationState();
 
-                    callback();
-
-                    return;
+                    return callback();
                 }
 
                 self.convertDescriptorToFile(descriptors[i], function(err, file) {
@@ -951,13 +1009,20 @@
             {
                 var maxNumberOfFiles = self.options.maxNumberOfFiles;
 
-                if (fileUpload.options.getNumberOfFiles && fileUpload.options.getNumberOfFiles() >= maxNumberOfFiles)
+                if (maxNumberOfFiles === -1)
                 {
-                    self.refreshButtons(false);
+                    self.refreshButtons(true);
                 }
                 else
                 {
-                    self.refreshButtons(true);
+                    if (fileUpload.options.getNumberOfFiles && fileUpload.options.getNumberOfFiles() >= maxNumberOfFiles)
+                    {
+                        self.refreshButtons(false);
+                    }
+                    else
+                    {
+                        self.refreshButtons(true);
+                    }
                 }
             }
         },
@@ -1015,9 +1080,9 @@
                 data.files[i].error = data.errorThrown;
             }
 
-            if (self.options.uploadFailHandler)
+            if (self.options.errorHandler)
             {
-                self.options.uploadFailHandler.call(self, data);
+                self.options.errorHandler.call(self, data);
             }
         },
 
@@ -1107,11 +1172,6 @@
                     },
                     "errorHandler": {
                         "title": "Error Handler",
-                        "description": "Optional function handler to be called when there is an error uploading one or more files.  This handler is typically used to instantiate a modal or other UI element to inform the end user.",
-                        "type": "function"
-                    },
-                    "uploadFailHandler": {
-                        "title": "Upload Fail Handler",
                         "description": "Optional function handler to be called when one or more files fails to upload.  This function is responsible for parsing the underlying xHR request and populating the error message state.",
                         "type": "function"
                     }
@@ -1125,12 +1185,11 @@
     Alpaca.registerFieldClass("upload", Alpaca.Fields.UploadField);
 
     Alpaca.registerMessages({
-        "chooseFile": "Choose file...",
-        "chooseFiles": "Choose files...",
+        "chooseFile": "Choose File...",
+        "chooseFiles": "Choose Files...",
         "dropZoneSingle": "Click the Choose button or Drag and Drop a file here to upload...",
         "dropZoneMultiple": "Click the Choose button or Drag and Drop files here to upload..."
     });
-
 
     // https://github.com/private-face/jquery.bind-first/blob/master/dev/jquery.bind-first.js
     // jquery.bind-first.js

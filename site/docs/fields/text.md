@@ -280,7 +280,7 @@ $("#field9").alpaca({
         "typeahead": {
             "datasets": {
                 "type": "remote",
-                "source": "/docs/endpoints/typeahead-sample.php?q=%QUERY",
+                "source": "http://www.alpacajs.org/endpoints/typeahead-sample.php?q=%QUERY",
                 "templates": {
                     "empty": "Nothing found...",
                     "header": "<h4>List of companies</h4><br/><br/>",
