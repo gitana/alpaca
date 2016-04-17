@@ -534,6 +534,7 @@
                 data.files = data.result.files;
 
                 setTimeout(function() {
+                    self.refreshValidationState(true);
                     self.refreshUIState();
                 }, 250);
 
@@ -1075,14 +1076,14 @@
         {
             var self = this;
 
-            for (var i = 0; i < data.files.length; i++)
-            {
-                data.files[i].error = data.errorThrown;
-            }
-
             if (self.options.errorHandler)
             {
                 self.options.errorHandler.call(self, data);
+            }
+
+            for (var i = 0; i < data.files.length; i++)
+            {
+                data.files[i].error = data.errorThrown;
             }
         },
 
