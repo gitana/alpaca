@@ -486,6 +486,7 @@
             }
 
             self.triggerUpdate();
+
             callback();
         },
 

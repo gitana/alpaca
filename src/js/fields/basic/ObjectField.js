@@ -427,7 +427,9 @@
                         fieldControl.path = self.path + propertyId;
                     }
                     fieldControl.render(null, function() {
-                        cb();
+                        if (cb) {
+                            cb();
+                        }
                     });
                 },
                 "postRender": function(control) {

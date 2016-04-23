@@ -524,18 +524,7 @@
                         fieldControl.path = self.path + "[" + index + "]";
                         //fieldControl.nameCalculated = true;
                         fieldControl.render(null, function() {
-
-                            // calculate the path and name
-                            self.updatePathAndName();
-
-                            // trigger update on the parent array
-                            self.triggerUpdate();
-
-                            // TODO: refresh validation state?
-                            //self.refreshValidationState();
-
-                            if (cb)
-                            {
+                            if (cb) {
                                 cb();
                             }
                         });
@@ -875,6 +864,18 @@
         },
 
         /**
+         * @OVERRIDE
+         *
+         * Adjust the path and name ahead of refreshing the DOM.
+         */
+        updateDOMElement: function()
+        {
+            this.updatePathAndName();
+
+            this.base();
+        },
+
+        /**
          * This method gets invoked after items are dynamically added, removed or moved around in the child chain.
          * It adjusts classes on child DOM elements to make sure they're correct.
          */
@@ -888,10 +889,10 @@
                 {
                     $.each(parent.children, function(i, v) {
 
-                        if (parent.prePath && Alpaca.startsWith(v.path,parent.prePath))
+                        if (parent.prePath && Alpaca.startsWith(v.path, parent.prePath))
                         {
                             v.prePath = v.path;
-                            v.path = v.path.replace(parent.prePath,parent.path);
+                            v.path = v.path.replace(parent.prePath, parent.path);
                         }
 
                         // re-calculate name
@@ -901,7 +902,7 @@
                             v.name = v.name.replace(parent.preName, parent.name);
                             if (v.field)
                             {
-                                $(v.field).attr('name', v.name);
+                                $(v.field).attr("name", v.name);
                             }
                         }
 
@@ -946,11 +947,11 @@
 
                         if (this.parent.options.rubyrails )
                         {
-                            $(v.field).attr('name', v.parent.name);
+                            $(v.field).attr("name", v.parent.name);
                         }
                         else
                         {
-                            $(v.field).attr('name', v.name);
+                            $(v.field).attr("name", v.name);
                         }
 
                     }
@@ -1198,8 +1199,16 @@
                     return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
                 }
 
+                var arrayValues = self.getValue();
+
                 var itemData = Alpaca.createEmptyDataInstance(itemSchema);
                 self.addItem(itemIndex + 1, itemSchema, itemOptions, itemData, function(item) {
+
+                    // this is necessary because some underlying fields require their data to be reset
+                    // in order for the display to work out properly (radio fields)
+                    arrayValues.splice(itemIndex + 1, 0, item.getValue());
+                    self.setValue(arrayValues);
+
                     if (callback) {
                         callback(item);
                     }
