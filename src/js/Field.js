@@ -621,6 +621,7 @@
                         }
 
                         self.form = form;
+                        var me = self;
 
                         // allow any post-rendering facilities to kick in
                         self.postRender(function() {

@@ -165,6 +165,11 @@
                 self.data = [];
             }
 
+            // convert to array if not array already
+            if (self.data && Alpaca.isObject(self.data)) {
+                self.data = [self.data];
+            }
+
             // upload
             if (!self.options.upload)
             {
