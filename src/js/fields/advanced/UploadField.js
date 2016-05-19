@@ -901,6 +901,10 @@
                 {
                     value = this.data[0];
                 }
+                else
+                {
+                    value = undefined;
+                }
             }
 
             return value;
