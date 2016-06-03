@@ -1,6 +1,6 @@
 {
   "name": "alpaca",
-  "description": "Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices. It runs simply as HTML5 or more elaborately using Bootstrap, jQuery Mobile or jQuery UI. Alpaca uses Handlebars to process JSON schema and provide developers with an extensible framework for implementing controls, wizards, layouts, I18N support and an custom data persistence.",
+  "description": "Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices.",
   "version": "1.5.17",
   "main": "dist/alpaca/bootstrap/alpaca.js",
   "license": "Apache-2.0",
@@ -74,7 +74,7 @@
     "tinycolor": "1.3.0"
   },
   "resolutions": {
-    "bootstrap": "3.2.0",
-    "jquery": "1.11.1"
+    "bootstrap": "~3.1.1",
+    "jquery": "~1.10.0"
   }
 }
