@@ -264,6 +264,19 @@
                         }
                     }
 
+                    // include any additional dataset config params in the Bloodhound config
+                    $.each(tDatasets, function( index, value ) {
+                        if (index !== 'type' 
+                            && index !== 'source' 
+                            && index !== 'filter' 
+                            && index !== 'replace' 
+                            && index !== 'local' 
+                            && index !== 'templates')
+                        {
+                            bloodHoundConfig[index] = value;
+                        }
+                    });
+
                     var engine = new Bloodhound(bloodHoundConfig);
                     engine.initialize();
                     tDatasets.source = engine.ttAdapter();
