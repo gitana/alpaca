@@ -837,14 +837,20 @@
                 else if (Alpaca.isUri(self.options.dataSource))
                 {
                     var locale = self.view.locale;
+                    /*
                     if (!locale) {
                         locale = Alpaca.defaultLocale;
                     }
+                    */
 
                     var url = "" + self.options.dataSource;
 
-                    url += ((url.indexOf("?") === -1) ? "?" : "&");
-                    url += "locale=" + locale;
+                    if (locale)
+                    {
+                        url += ((url.indexOf("?") === -1) ? "?" : "&");
+                        url += "locale=" + locale;
+                    }
+
 
                     $.ajax({
                         url: url,
