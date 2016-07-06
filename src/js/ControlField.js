@@ -837,11 +837,6 @@
                 else if (Alpaca.isUri(self.options.dataSource))
                 {
                     var locale = self.view.locale;
-                    /*
-                    if (!locale) {
-                        locale = Alpaca.defaultLocale;
-                    }
-                    */
 
                     var url = "" + self.options.dataSource;
 
