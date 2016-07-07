@@ -13,7 +13,7 @@ var concat      = require("gulp-concat");
 var uglify      = require("gulp-uglify");
 var handlebars  = require("gulp-handlebars");
 var jshint      = require("gulp-jshint");
-var minifyCss   = require("gulp-minify-css");
+var cleanCSS = require('gulp-clean-css');
 var rename      = require("gulp-rename");
 var clean       = require("gulp-clean");
 var declare     = require("gulp-declare");
@@ -458,7 +458,7 @@ gulp.task("build-styles", function(cb) {
                 .pipe(concat('alpaca.css'))
                 .pipe(gulp.dest('build/alpaca/web'))
                 .pipe(rename({suffix: ".min"}))
-                .pipe(minifyCss())
+                .pipe(cleanCSS())
                 .pipe(gulp.dest('build/alpaca/web')),
             gulp.src("src/css/images/**")
                 .pipe(gulp.dest('./build/alpaca/web/images')),
@@ -468,7 +468,7 @@ gulp.task("build-styles", function(cb) {
                 .pipe(concat('alpaca.css'))
                 .pipe(gulp.dest('build/alpaca/bootstrap'))
                 .pipe(rename({suffix: ".min"}))
-                .pipe(minifyCss())
+                .pipe(cleanCSS())
                 .pipe(gulp.dest('build/alpaca/bootstrap')),
             gulp.src("src/css/images/**")
                 .pipe(gulp.dest('./build/alpaca/bootstrap/images')),
@@ -478,7 +478,7 @@ gulp.task("build-styles", function(cb) {
                 .pipe(concat('alpaca.css'))
                 .pipe(gulp.dest('build/alpaca/jqueryui'))
                 .pipe(rename({suffix: ".min"}))
-                .pipe(minifyCss())
+                .pipe(cleanCSS())
                 .pipe(gulp.dest('build/alpaca/jqueryui')),
             gulp.src("src/css/images/**")
                 .pipe(gulp.dest('./build/alpaca/jqueryui/images')),
@@ -488,7 +488,7 @@ gulp.task("build-styles", function(cb) {
                 .pipe(concat('alpaca.css'))
                 .pipe(gulp.dest('build/alpaca/jquerymobile'))
                 .pipe(rename({suffix: ".min"}))
-                .pipe(minifyCss())
+                .pipe(cleanCSS())
                 .pipe(gulp.dest('build/alpaca/jquerymobile')),
             gulp.src("src/css/images/**")
                 .pipe(gulp.dest('./build/alpaca/jquerymobile/images'))
