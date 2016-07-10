@@ -18,7 +18,7 @@
     "event-stream": "*",
     "express": "3.5.1",
     "handlebars": "4.0.5",
-    "grunt": "0.4.2",
+    "grunt": "~0.4.x",
     "grunt-aws-s3": "^0.9.4",
     "grunt-cloudfront": "^0.2.0",
     "grunt-invalidate-cloudfront": "^0.1.5",
