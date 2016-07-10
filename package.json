@@ -1,7 +1,7 @@
 {
   "name": "alpaca",
   "scripts": {
-    "postinstall": "./node_modules/.bin/bower install",
+    "postinstall": "./node_modules/.bin/bower install --force",
     "postupdate": "./node_modules/.bin/bower update",
     "start": "./node_modules/.bin/gulp clean default"
   },
