@@ -22,7 +22,7 @@
         {
             this.base();
 
-            if (this.data === undefined) {
+            if (!this.data || !this.data.street) {
                 this.data = {
                     street: ['', '']
                 };
