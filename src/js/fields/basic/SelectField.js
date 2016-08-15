@@ -283,7 +283,8 @@
 
                     $.each(val, function(i,v) {
 
-                        if ($.inArray(v, _this.schema["enum"]) <= -1)
+                        var inArray = _this.isValueInEnumeratedArray(v, _this.schema["enum"]);
+                        if (!inArray)
                         {
                             isValid = false;
                             return false;
@@ -300,7 +301,7 @@
                         val = val[0];
                     }
 
-                    return ($.inArray(val, this.schema["enum"]) > -1);
+                    return _this.isValueInEnumeratedArray(val, this.schema["enum"]);
                 }
             }
             else

@@ -85,12 +85,18 @@
                     }, 100);
 
                     $(self.control).on('change.spectrum', function(e, tinycolor) {
-                        self.setValue(tinycolor.toHexString());
+                        var val = self.convertTinyColor(tinycolor);
+                        self.setValue(val);
                     });
                 }
 
                 callback();
             });
+        },
+
+        convertTinyColor: function(tinycolor)
+        {
+            return tinycolor.toHexString();
         },
 
         /* builder_helpers */

@@ -388,7 +388,12 @@
                     return true;
                 }
 
-                return ($.inArray(val, this.getEnum()) > -1);
+                return this.isValueInEnumeratedArray(val, this.getEnum());
+            },
+
+            isValueInEnumeratedArray: function(val, array)
+            {
+                return ($.inArray(val, array) > -1);
             },
 
             /**
@@ -907,18 +912,20 @@
                 }
                 else if (Alpaca.isArray(self.options.dataSource))
                 {
-                    for (var i = 0; i < self.options.dataSource.length; i++)
+                    var ds = self.options.dataSource;
+
+                    for (var i = 0; i < ds.length; i++)
                     {
-                        if (typeof(self.options.dataSource[i]) === "string")
+                        if (typeof(ds[i]) === "string")
                         {
                             array.push({
-                                "text": self.options.dataSource[i],
-                                "value": self.options.dataSource[i]
+                                "text": ds[i],
+                                "value": ds[i]
                             });
                         }
-                        else if (Alpaca.isObject(self.options.dataSource[i]))
+                        else if (Alpaca.isObject(ds[i]))
                         {
-                            array.push(self.options.dataSource[i]);
+                            array.push(ds[i]);
                         }
                     }
 
