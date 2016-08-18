@@ -201,6 +201,11 @@
             });
         },
 
+        convertDataToValue: function(data)
+        {
+            return data;
+        },
+
         afterRenderControl: function(model, callback)
         {
             var self = this;
@@ -218,7 +223,7 @@
                 // this causes the state of the control
                 if (self.data)
                 {
-                    self.setValue(self.data);
+                    self.setValue(self.convertDataToValue(self.data));
                 }
 
                 // if we are in multiple mode and the bootstrap multiselect plugin is available, bind it in
@@ -283,7 +288,7 @@
 
                     $.each(val, function(i,v) {
 
-                        var inArray = _this.isValueInEnumeratedArray(v, _this.schema["enum"]);
+                        var inArray = Alpaca.inArray(_this.schema["enum"], v);
                         if (!inArray)
                         {
                             isValid = false;
@@ -301,7 +306,7 @@
                         val = val[0];
                     }
 
-                    return _this.isValueInEnumeratedArray(val, this.schema["enum"]);
+                    return Alpaca.inArray(this.schema["enum"], val);
                 }
             }
             else

@@ -79,8 +79,6 @@
 
                         self.handleWrapRow(this, options);
 
-                        var row = $(this);
-
                         // this event gets fired when fileimpl has cleaned up the DOM element
                         // we handle Ajax related stuff on our own here
                         //$(this).find("button.delete").on("destroyed", function() {
@@ -110,7 +108,6 @@
                                 self.refreshUIState();
                             }, 200);
                         });
-
                     });
 
                     return $(rows);
@@ -384,6 +381,16 @@
             return this.wrapTemplate("control-upload-partial-download");
         },
 
+        /**
+         * Extension point for modifying the data ahead of an upload submit.
+         *
+         * @param data
+         */
+        handleBeforeFileUploadSubmit: function(data)
+        {
+
+        },
+
         handlePostRender: function(callback)
         {
             var self = this;
@@ -592,6 +599,14 @@
                         }
                     });
                 }
+
+                self.handleBeforeFileUploadSubmit(data);
+
+                if (self.options.beforeFileUploadSubmitHandler)
+                {
+                    self.options.beforeFileUploadSubmitHandler.call(self, data);
+                }
+
             });
 
             /**
@@ -668,7 +683,7 @@
                 }
             });
 
-            if (typeof(document) != "undefined")
+            if (typeof(document) !== "undefined")
             {
                 $(document).bind('drop dragover', function (e) {
                     e.preventDefault();

@@ -4944,6 +4944,16 @@
         }
     };
 
+    Alpaca.inArray = function(array, val)
+    {
+        return ($.inArray(val, array) > -1);
+    };
+
+    Alpaca.indexOf = function(array, val)
+    {
+        return $.inArray(val, array);
+    };
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
     // Moment.js static
@@ -4963,7 +4973,7 @@
         }
 
         return Alpaca._moment.call(this, arguments);
-    }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //

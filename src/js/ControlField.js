@@ -388,12 +388,7 @@
                     return true;
                 }
 
-                return this.isValueInEnumeratedArray(val, this.getEnum());
-            },
-
-            isValueInEnumeratedArray: function(val, array)
-            {
-                return ($.inArray(val, array) > -1);
+                return Alpaca.inArray(this.getEnum(), val);
             },
 
             /**
