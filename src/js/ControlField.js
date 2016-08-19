@@ -364,6 +364,8 @@
             },
 
             /**
+             * Gets the current value from the control value.
+             *
              * Extension point
              */
             getControlValue: function()

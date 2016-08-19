@@ -10,7 +10,7 @@
         {{/if}}
 
         {{#each selectOptions}}
-        <option value="{{{value}}}" {{#each ../data}}{{#compare value ../../value}}selected="selected"{{/compare}}{{/each}}>{{text}}</option>
+        <option value="{{{value}}}" {{#if selected}}selected="selected"{{/if}}>{{text}}</option>
         {{/each}}
 
     {{else}}
@@ -21,7 +21,7 @@
         {{/if}}
 
         {{#each selectOptions}}
-        <option value="{{{value}}}" {{#compare value ../data}}selected="selected"{{/compare}}>{{text}}</option>
+        <option value="{{{value}}}" {{#if selected}}selected="selected"{{/if}}>{{text}}</option>
         {{/each}}
 
     {{/if}}

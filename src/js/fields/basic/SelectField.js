@@ -49,35 +49,39 @@
                 this.schema.minItems = this.schema.items.minItems;
                 delete this.schema.items.minItems;
             }
-
         },
 
-        /**
-         * @see Alpaca.ControlField#getControlValue
-         */
-        getControlValue: function()
+        getValue: function()
         {
-            var val = this._getControlVal(true);
-            if (typeof(val) === "undefined")
+            var self = this;
+
+            if (self.schema.type === "object")
             {
-                val = this.data;
+                return this.data;
             }
 
-            return this.convertValue(val);
+            return this.base();
         },
+
 
         /**
          * @see Alpaca.Field#setValue
          */
         setValue: function(val)
         {
+            var self = this;
+
+            var newScalarVal = self.convertToScalarValue(val);
+            var currentScalarVal = self.convertToScalarValue(self.getValue());
+
             if (Alpaca.isArray(val))
             {
-                if (!Alpaca.compareArrayContent(val, this.getValue()))
+                // if values are different, then set
+                if (!Alpaca.compareArrayContent(newScalarVal, currentScalarVal))
                 {
-                    if (!Alpaca.isEmpty(val) && this.control)
+                    if (!Alpaca.isEmpty(newScalarVal) && this.control)
                     {
-                        this.control.val(val);
+                        this.control.val(newScalarVal);
                     }
 
                     this.base(val);
@@ -85,17 +89,21 @@
             }
             else
             {
-                if (val !== this.getValue())
+                var apply = false;
+                if (Alpaca.isEmpty(newScalarVal) && Alpaca.isEmpty(currentScalarVal))
                 {
-                    /*
-                    if (!Alpaca.isEmpty(val) && this.control)
+                    apply = true;
+                }
+                else if (newScalarVal !== currentScalarVal)
+                {
+                    apply = true;
+                }
+
+                if (apply)
+                {
+                    if (self.control && typeof(newScalarVal) !== "undefined" && newScalarVal !== null)
                     {
-                        this.control.val(val);
-                    }
-                    */
-                    if (this.control && typeof(val) != "undefined" && val != null)
-                    {
-                        this.control.val(val);
+                        self.control.val(newScalarVal);
                     }
 
                     this.base(val);
@@ -201,11 +209,6 @@
             });
         },
 
-        convertDataToValue: function(data)
-        {
-            return data;
-        },
-
         afterRenderControl: function(model, callback)
         {
             var self = this;
@@ -223,7 +226,7 @@
                 // this causes the state of the control
                 if (self.data)
                 {
-                    self.setValue(self.convertDataToValue(self.data));
+                    self.setValue(self.data);
                 }
 
                 // if we are in multiple mode and the bootstrap multiselect plugin is available, bind it in
@@ -288,11 +291,12 @@
 
                     $.each(val, function(i,v) {
 
-                        var inArray = Alpaca.inArray(_this.schema["enum"], v);
+                        var scalarValue = _this.convertToScalarValue(v);
+
+                        var inArray = Alpaca.inArray(_this.schema["enum"], scalarValue);
                         if (!inArray)
                         {
                             isValid = false;
-                            return false;
                         }
 
                     });
@@ -306,7 +310,9 @@
                         val = val[0];
                     }
 
-                    return Alpaca.inArray(this.schema["enum"], val);
+                    var scalarValue = _this.convertToScalarValue(val);
+
+                    return Alpaca.inArray(this.schema["enum"], scalarValue);
                 }
             }
             else
@@ -318,16 +324,25 @@
         /**
          * @see Alpaca.Field#onChange
          */
-        onChange: function(e)
-        {
-            this.base(e);
+        onChange: function(e) {
 
-            var _this = this;
+            var self = this;
 
-            Alpaca.later(25, this, function() {
-                var v = _this.getValue();
-                _this.setValue(v);
-                _this.refreshValidationState();
+            var scalarValue = self.getControlValue();
+
+            self.convertToDataValue(scalarValue, function(err, data) {
+
+                // store back into data element
+                self.data = data;
+
+                // store scalar value onto control
+                self.control.val(scalarValue);
+
+                // trigger observables and updates
+                self.updateObservable();
+                self.triggerUpdate();
+                self.refreshValidationState();
+
             });
         },
 
@@ -407,6 +422,7 @@
                 }
             }
         }
+
 
         /* builder_helpers */
         ,

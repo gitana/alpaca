@@ -103,45 +103,27 @@
         },
 
         /**
-         * @see Alpaca.Field#getValue
-         */
-        convertValue: function(val)
-        {
-            var _this = this;
-
-            if (Alpaca.isArray(val))
-            {
-                $.each(val, function(index, itemVal) {
-                    $.each(_this.selectOptions, function(index2, selectOption) {
-
-                        if (selectOption.value === itemVal)
-                        {
-                            val[index] = selectOption.value;
-                        }
-
-                    });
-                });
-            }
-            else
-            {
-                $.each(this.selectOptions, function(index, selectOption) {
-
-                    if (selectOption.value === val)
-                    {
-                        val = selectOption.value;
-                    }
-
-                });
-            }
-            return val;
-        },
-
-        /**
          * @see Alpaca.ControlField#beforeRenderControl
          */
         beforeRenderControl: function(model, callback)
         {
             var self = this;
+
+            var completionFn = function()
+            {
+                var scalarValue = self.convertToScalarValue(self.data);
+
+                for (var i = 0; i < self.selectOptions.length; i++)
+                {
+                    if (scalarValue === self.selectOptions[i].value)
+                    {
+                        self.selectOptions[i].selected = true;
+                        break;
+                    }
+                }
+
+                callback();
+            };
 
             this.base(model, function() {
 
@@ -167,16 +149,26 @@
                             self.setOptionLabels(_optionLabels);
                         }
 
-                        callback();
+                        completionFn();
 
                     });
                 }
                 else
                 {
-                    callback();
+                    completionFn();
                 }
 
             });
+        },
+
+        convertToScalarValue: function(data)
+        {
+            return data;
+        },
+
+        convertToDataValue: function(scalarValue, callback)
+        {
+            callback(null, scalarValue);
         }
 
 
