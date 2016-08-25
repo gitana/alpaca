@@ -8,9 +8,14 @@ legend.alpaca-container-label
     margin-top: 0px;
 }
 
-.alpaca-array-toolbar
+.alpaca-array-toolbar.alpaca-array-toolbar-position-top
 {
     margin-bottom: 10px;
+}
+
+.alpaca-array-toolbar.alpaca-array-toolbar-position-bottom
+{
+    margin-top: 10px;
 }
 
 .alpaca-array-actionbar
