@@ -10,7 +10,7 @@
     "url": "git://github.com/gitana/alpaca.git"
   },
   "license": "Apache-2.0",
-  "version": "1.5.17",
+  "version": "1.5.18",
   "devDependencies": {
     "bower": "*",
     "stream-browserify": "*",
