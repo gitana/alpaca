@@ -866,6 +866,11 @@
                         return false;
                     });
 
+                    // fire disable function
+                    if (self.disable) {
+                        self.disable();
+                    }
+
                 };
 
                 // readonly
@@ -1088,7 +1093,7 @@
 
                 if (callback)
                 {
-                    callback();
+                    callback.call(self);
                 }
 
                 // afterwards...

@@ -49,6 +49,16 @@
                 this.schema.minItems = this.schema.items.minItems;
                 delete this.schema.items.minItems;
             }
+
+            if (!self.options.multiselect && $.fn.multiselect)
+            {
+                self.options.multiselect = {};
+            }
+
+            if (self.options.multiselect && typeof(self.options.multiselect.disableIfEmpty) === "undefined")
+            {
+                self.options.multiselect.disableIfEmpty = true;
+            }
         },
 
         getValue: function()
@@ -421,7 +431,39 @@
                     onFocusCallback(this);
                 }
             }
+        },
+
+        /**
+         * @override
+         */
+        disable: function()
+        {
+            var self = this;
+
+            this.base();
+
+            if (self.options.multiselect)
+            {
+                $(self.getControlEl()).multiselect("disable");
+            }
+        },
+
+        /**
+         * @override
+         */
+        enable: function()
+        {
+            var self = this;
+
+            this.base();
+
+            if (self.options.multiselect)
+            {
+                $(self.getControlEl()).multiselect("enable");
+            }
         }
+
+
 
 
         /* builder_helpers */
