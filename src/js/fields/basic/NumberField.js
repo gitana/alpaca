@@ -151,8 +151,12 @@
          */
         _validateOptional: function() {
 
-            if (this.isRequired() && Alpaca.isValEmpty($(this.control).val())) {
-                return false;
+            if (!this.isDisplayOnly())
+            {
+                if (this.isRequired() && Alpaca.isValEmpty($(this.control).val()))
+                {
+                    return false;
+                }
             }
 
             return true;
