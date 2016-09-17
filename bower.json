@@ -75,6 +75,6 @@
   },
   "resolutions": {
     "bootstrap": "3.2.0",
-    "jquery": ">= 1.11.1"
+    "jquery": "1.11.1"
   }
 }
