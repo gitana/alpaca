@@ -24,6 +24,7 @@ git checkout -b $BRANCH
 # build alpaca
 # build web site
 # copy to dist (for bower)
+rm -R build
 gulp default site dist
 
 # build jsdoc
