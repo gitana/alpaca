@@ -40,6 +40,7 @@
     "ace-builds": "1.1.7",
     "mjolnic-bootstrap-colorpicker": "2.3.0",
     "blueimp-canvas-to-blob": "2.1.1",
+    "blueimp-file-upload": "9.12.3",
     "blueimp-load-image": "1.13.0",
     "blueimp-tmpl": "2.5.4",
     "bootstrap": "3.3.2",
@@ -54,8 +55,7 @@
     "google-code-prettify": "1.0.3",
     "handlebars": "4.0.5",
     "handsontable": "0.11.4",
-    "jquery": "1.11.3",
-    "jquery-file-upload": "9.8.0",
+    "jquery": ">= 2.1.0",
     "jquery-hashchange": "https://github.com/gseguin/jquery-hashchange.git",
     "jquery-maskedinput": "1.3.1",
     "jquery-mobile-bower": "1.4.2",
@@ -70,11 +70,12 @@
     "typeahead.js": "0.10.5",
     "spectrum": "~1.7.1",
     "summernote": "0.8.1",
-    "pick-a-color-m": "1.2.2",
+    "pick-a-color-m": "1.2.3",
     "tinycolor": "1.3.0"
   },
   "resolutions": {
     "bootstrap": "3.3.2",
-    "jquery": "~2.1.0"
+    "jquery": "~2.1.0",
+    "tinycolor": "1.3.0"
   }
 }

@@ -4,6 +4,7 @@ ZIP="alpaca-$VERSION.zip"
 
 echo Deploying version $VERSION
 
+rm -r deploy.log
 
 #
 # SETUP
@@ -22,7 +23,7 @@ mkdir -p build
 
 
 #
-# STEP 1: BUILD ALPACA, WEB SITE JSDOCS AND DEPLOY TO CDN
+# STEP 1: BUILD ALPACA, WEB SITE JSDOCS
 #
 
 bower install
@@ -53,27 +54,9 @@ grunt publish
 
 
 
-#
-# STEP 3: PUBLISH WEB SITE
-#
-
-rm -R build/$ZIP
-cd build/web
-zip -r ../$ZIP *
-cd ../..
-scp -i ~/keys/gitana.pem -r build/$ZIP ec2-user@alpacajs.org:/web/code/alpaca
-CMD1="cd /web/code/alpaca; rm /web/code/alpaca/$VERSION; unzip -o /web/code/alpaca/$ZIP -d /web/code/alpaca/$VERSION"
-echo $CMD1
-ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org $CMD1
-CMD2="cd /web/code/alpaca; rm -r /web/code/alpaca/latest; unzip -o /web/code/alpaca/$ZIP -d /web/code/alpaca/latest"
-echo $CMD2
-ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org $CMD2
-
-
-
 
 #
-# STEP 4: TAG REPO FOR BOWER
+# STEP 3: TAG REPO FOR BOWER
 #
 
 # create a tag
@@ -86,8 +69,9 @@ git push origin $VERSION
 
 
 #
-# STEP 5: NPM
+# STEP 4: NPM
 # This copies essentials into a new directory.
+# And then publishes that directory.
 #
 rm -r npm
 mkdir npm
@@ -102,6 +86,28 @@ cp -r thirdparty npm
 cd npm
 npm publish --force
 cd ..
+rm -r npm
+
+
+
+#
+# STEP 5: PUBLISH WEB SITE
+#
+
+rm -R build/$ZIP
+cd build/web
+zip -r ../$ZIP *
+cd ../..
+echo Copying ZIP file to web server
+scp -i ~/keys/gitana.pem -r build/$ZIP ec2-user@alpacajs.org:/web/code/alpaca
+#CMD1="cd /web/code/alpaca; rm /web/code/alpaca/$VERSION; unzip -o /web/code/alpaca/$ZIP -d /web/code/alpaca/$VERSION"
+#echo $CMD1
+#ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org $CMD1 >> deploy.log
+echo Unzipping to latest directory, writing to deploy.log
+CMD2="cd /web/code/alpaca; rm -r /web/code/alpaca/latest; unzip -o /web/code/alpaca/$ZIP -d /web/code/alpaca/latest"
+echo $CMD2
+ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org $CMD2 >> deploy.log
+
 
 
 

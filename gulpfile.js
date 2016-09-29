@@ -548,7 +548,7 @@ gulp.task("build-site", function(cb)
 gulp.task("update-site-full", function(cb) {
 
     //console.log("update-site-full start");
-    return es.concat(
+    es.concat(
 
         // copy site into web
         gulp.src("build/site/**").pipe(gulp.dest("./build/web")),
@@ -562,7 +562,8 @@ gulp.task("update-site-full", function(cb) {
             .pipe(gulp.dest('./build/web/lib/alpaca'))
 
     ).pipe(es.wait(function() {
-        //console.log("update-site-full completed");
+        console.log("update-site-full completed");
+        cb();
     })).pipe(notify({message: "Built Alpaca Web Site"}));
 });
 
@@ -1042,7 +1043,7 @@ gulp.task("update-release-txt", function() {
 
 });
 
-gulp.task("full", function(cb) {
+gulp.task("website", function(cb) {
     runSequence("default", "site", "server", function () {
         cb();
     });
