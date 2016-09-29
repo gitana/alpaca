@@ -6,6 +6,7 @@ build/
 
 /node_modules
 /lib
+/lib2
 !/lib/base.js
 !/lib/validate.js
 
