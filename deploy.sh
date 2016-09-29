@@ -25,6 +25,8 @@ mkdir -p build
 # STEP 1: BUILD ALPACA, WEB SITE JSDOCS AND DEPLOY TO CDN
 #
 
+bower install
+
 # build alpaca
 # build web site
 # copy to dist (for bower)
