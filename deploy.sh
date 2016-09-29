@@ -14,7 +14,11 @@ echo Deploying version $VERSION
 git checkout master
 git checkout -b $BRANCH
 
-
+# initial clean
+rm -r build
+rm -r npm
+rm -r lib
+mkdir -p build
 
 
 #
@@ -24,8 +28,7 @@ git checkout -b $BRANCH
 # build alpaca
 # build web site
 # copy to dist (for bower)
-rm -R build
-gulp default site dist
+gulp _deploy
 
 # build jsdoc
 grunt jsdoc
@@ -52,7 +55,7 @@ grunt publish
 # STEP 3: PUBLISH WEB SITE
 #
 
-rm build/$ZIP
+rm -R build/$ZIP
 cd build/web
 zip -r ../$ZIP *
 cd ../..

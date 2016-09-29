@@ -1047,3 +1047,9 @@ gulp.task("full", function(cb) {
         cb();
     });
 });
+
+gulp.task("_deploy", function(cb) {
+    runSequence("default", "site", "dist", function () {
+        cb();
+    });
+});
