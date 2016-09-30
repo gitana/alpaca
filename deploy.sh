@@ -20,6 +20,7 @@ rm -r build
 rm -r npm
 rm -r lib
 mkdir -p build
+rm -r package.json.npm
 
 
 #
@@ -79,7 +80,7 @@ cp README.md npm
 cp bower.json npm
 cp -r dist npm
 cp license.txt npm
-cp package.json npm
+cp package.json.npm npm/package.json
 cp -r src npm
 cp -r tests npm
 cp -r thirdparty npm
@@ -87,6 +88,7 @@ cd npm
 npm publish --force
 cd ..
 rm -r npm
+rm -r package.json.npm
 
 
 

@@ -1049,8 +1049,19 @@ gulp.task("website", function(cb) {
     });
 });
 
+gulp.task("npmpackage", function(cb) {
+
+    var npmPkg = JSON.parse(JSON.stringify(pkg));
+    delete npmPkg.scripts.postinstall;
+    delete npmPkg.scripts.postupdate;
+
+    fs.writeFileSync("./package.json.npm", JSON.stringify(npmPkg, null, "  "));
+
+    cb();
+});
+
 gulp.task("_deploy", function(cb) {
-    runSequence("default", "site", "dist", function () {
+    runSequence("default", "site", "dist", "npmpackage", function () {
         cb();
     });
 });
