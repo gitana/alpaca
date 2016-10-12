@@ -1,7 +1,7 @@
 {
   "name": "alpaca",
   "description": "Alpaca provides the easiest way to generate web and mobile forms on top of JSON Schema, jQuery, Bootstrap and a variety of frameworks.",
-  "version": "1.5.21",
+  "version": "1.5.22",
   "main": "dist/alpaca/bootstrap/alpaca.js",
   "license": "Apache-2.0",
   "keywords": [

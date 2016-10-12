@@ -54,7 +54,7 @@
 
                 // if summernote's dom element gets destroyed, make sure we clean up the editor instance
                 $(self.control).bind('destroyed', function() {
-                    $(self.control).summernote('destroy');
+                    try { $(self.control).summernote('destroy'); } catch (e) { }
                 });
 
                 callback();
