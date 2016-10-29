@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="google-translate-customization" content="5417d948061b56ad-a958f0a86e9ce3fc-gb8a4f09ff822561e-1e"></meta>
+    <title>Source: fields/advanced/TinyMCEField.js</title>
+    <meta name="description" content="Jaguar.js is a Javascript library that helps to create highly optimized animations and games using HTML 5. Collie runs on both PC and mobile using HTML 5 canvas and CSS 3D. Try out Jaguar.js for fast and easy development, tuned for best performance in various PC and mobile devices." />
+    <meta name="keywords" content="javascript,animation library,HTML5,Canvas,CSS,Mobile,Javascript Game,Web Game,Performance,game engine" />
+    <meta name="keyword" content="javascript,animation library,HTML5,Canvas,CSS,Mobile,Javascript Game,Web Game,Performance,game engine" />
+    <meta property="og:title" content="Jaguar.js - High Performance Animation Library for Javascript"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="http://jindo.dev.naver.com/collie/img/logo/logo_200x200.png"/>
+    <meta property="og:site_name" content="Jaguar.js"/>
+    <meta property="og:url" content="http://davidshimjs.github.io/jaguarjs"/>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery.min.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-34154461-2']);
+      _gaq.push(['_trackPageview']);
+    
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html"></a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Namespace for all Alpaca Connector Class Implementations.">
+            <span class="title">
+                <a href="Namespace%2520for%2520all%2520Alpaca%2520Connector%2520Class%2520Implementations..html">Namespace for all Alpaca Connector Class Implementations.</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Namespace for all Alpaca Field Class Implementations.">
+            <span class="title">
+                <a href="Namespace%2520for%2520all%2520Alpaca%2520Field%2520Class%2520Implementations..html">Namespace for all Alpaca Field Class Implementations.</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.Connector">
+            <span class="title">
+                <a href="Alpaca.Connector.html">Alpaca.Connector</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.Connector#buildAjaxConfig"><a href="Alpaca.Connector.html#buildAjaxConfig">buildAjaxConfig</a></li>
+            
+                <li data-name="Alpaca.Connector#connect"><a href="Alpaca.Connector.html#connect">connect</a></li>
+            
+                <li data-name="Alpaca.Connector#loadAll"><a href="Alpaca.Connector.html#loadAll">loadAll</a></li>
+            
+                <li data-name="Alpaca.Connector#loadData"><a href="Alpaca.Connector.html#loadData">loadData</a></li>
+            
+                <li data-name="Alpaca.Connector#loadDataSource"><a href="Alpaca.Connector.html#loadDataSource">loadDataSource</a></li>
+            
+                <li data-name="Alpaca.Connector#loadJson"><a href="Alpaca.Connector.html#loadJson">loadJson</a></li>
+            
+                <li data-name="Alpaca.Connector#loadOptions"><a href="Alpaca.Connector.html#loadOptions">loadOptions</a></li>
+            
+                <li data-name="Alpaca.Connector#loadReferenceOptions"><a href="Alpaca.Connector.html#loadReferenceOptions">loadReferenceOptions</a></li>
+            
+                <li data-name="Alpaca.Connector#loadReferenceSchema"><a href="Alpaca.Connector.html#loadReferenceSchema">loadReferenceSchema</a></li>
+            
+                <li data-name="Alpaca.Connector#loadSchema"><a href="Alpaca.Connector.html#loadSchema">loadSchema</a></li>
+            
+                <li data-name="Alpaca.Connector#loadTemplate"><a href="Alpaca.Connector.html#loadTemplate">loadTemplate</a></li>
+            
+                <li data-name="Alpaca.Connector#loadUri"><a href="Alpaca.Connector.html#loadUri">loadUri</a></li>
+            
+                <li data-name="Alpaca.Connector#loadView"><a href="Alpaca.Connector.html#loadView">loadView</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.Field">
+            <span class="title">
+                <a href="Alpaca.Field.html">Alpaca.Field</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.Field#_processRender"><a href="Alpaca.Field.html#_processRender">_processRender</a></li>
+            
+                <li data-name="Alpaca.Field#_render"><a href="Alpaca.Field.html#_render">_render</a></li>
+            
+                <li data-name="Alpaca.Field#_validateCustomValidator"><a href="Alpaca.Field.html#_validateCustomValidator">_validateCustomValidator</a></li>
+            
+                <li data-name="Alpaca.Field#_validateDisallow"><a href="Alpaca.Field.html#_validateDisallow">_validateDisallow</a></li>
+            
+                <li data-name="Alpaca.Field#_validateOptional"><a href="Alpaca.Field.html#_validateOptional">_validateOptional</a></li>
+            
+                <li data-name="Alpaca.Field#applyStyle"><a href="Alpaca.Field.html#applyStyle">applyStyle</a></li>
+            
+                <li data-name="Alpaca.Field#bindData"><a href="Alpaca.Field.html#bindData">bindData</a></li>
+            
+                <li data-name="Alpaca.Field#clear"><a href="Alpaca.Field.html#clear">clear</a></li>
+            
+                <li data-name="Alpaca.Field#destroy"><a href="Alpaca.Field.html#destroy">destroy</a></li>
+            
+                <li data-name="Alpaca.Field#disable"><a href="Alpaca.Field.html#disable">disable</a></li>
+            
+                <li data-name="Alpaca.Field#displayMessage"><a href="Alpaca.Field.html#displayMessage">displayMessage</a></li>
+            
+                <li data-name="Alpaca.Field#enable"><a href="Alpaca.Field.html#enable">enable</a></li>
+            
+                <li data-name="Alpaca.Field#fireCallback"><a href="Alpaca.Field.html#fireCallback">fireCallback</a></li>
+            
+                <li data-name="Alpaca.Field#focus"><a href="Alpaca.Field.html#focus">focus</a></li>
+            
+                <li data-name="Alpaca.Field#getBaseFieldType"><a href="Alpaca.Field.html#getBaseFieldType">getBaseFieldType</a></li>
+            
+                <li data-name="Alpaca.Field#getControlByPath"><a href="Alpaca.Field.html#getControlByPath">getControlByPath</a></li>
+            
+                <li data-name="Alpaca.Field#getControlsByFieldType"><a href="Alpaca.Field.html#getControlsByFieldType">getControlsByFieldType</a></li>
+            
+                <li data-name="Alpaca.Field#getControlsBySchemaType"><a href="Alpaca.Field.html#getControlsBySchemaType">getControlsBySchemaType</a></li>
+            
+                <li data-name="Alpaca.Field#getDescription"><a href="Alpaca.Field.html#getDescription">getDescription</a></li>
+            
+                <li data-name="Alpaca.Field#getFieldEl"><a href="Alpaca.Field.html#getFieldEl">getFieldEl</a></li>
+            
+                <li data-name="Alpaca.Field#getFieldType"><a href="Alpaca.Field.html#getFieldType">getFieldType</a></li>
+            
+                <li data-name="Alpaca.Field#getId"><a href="Alpaca.Field.html#getId">getId</a></li>
+            
+                <li data-name="Alpaca.Field#getMessage"><a href="Alpaca.Field.html#getMessage">getMessage</a></li>
+            
+                <li data-name="Alpaca.Field#getName"><a href="Alpaca.Field.html#getName">getName</a></li>
+            
+                <li data-name="Alpaca.Field#getOptionsForOptions"><a href="Alpaca.Field.html#getOptionsForOptions">getOptionsForOptions</a></li>
+            
+                <li data-name="Alpaca.Field#getOptionsForSchema"><a href="Alpaca.Field.html#getOptionsForSchema">getOptionsForSchema</a></li>
+            
+                <li data-name="Alpaca.Field#getParent"><a href="Alpaca.Field.html#getParent">getParent</a></li>
+            
+                <li data-name="Alpaca.Field#getPath"><a href="Alpaca.Field.html#getPath">getPath</a></li>
+            
+                <li data-name="Alpaca.Field#getSchemaOfOptions"><a href="Alpaca.Field.html#getSchemaOfOptions">getSchemaOfOptions</a></li>
+            
+                <li data-name="Alpaca.Field#getSchemaOfSchema"><a href="Alpaca.Field.html#getSchemaOfSchema">getSchemaOfSchema</a></li>
+            
+                <li data-name="Alpaca.Field#getTemplateDescriptor"><a href="Alpaca.Field.html#getTemplateDescriptor">getTemplateDescriptor</a></li>
+            
+                <li data-name="Alpaca.Field#getTemplateDescriptorId"><a href="Alpaca.Field.html#getTemplateDescriptorId">getTemplateDescriptorId</a></li>
+            
+                <li data-name="Alpaca.Field#getTitle"><a href="Alpaca.Field.html#getTitle">getTitle</a></li>
+            
+                <li data-name="Alpaca.Field#getType"><a href="Alpaca.Field.html#getType">getType</a></li>
+            
+                <li data-name="Alpaca.Field#getValue"><a href="Alpaca.Field.html#getValue">getValue</a></li>
+            
+                <li data-name="Alpaca.Field#handleValidate"><a href="Alpaca.Field.html#handleValidate">handleValidate</a></li>
+            
+                <li data-name="Alpaca.Field#hide"><a href="Alpaca.Field.html#hide">hide</a></li>
+            
+                <li data-name="Alpaca.Field#initEvents"><a href="Alpaca.Field.html#initEvents">initEvents</a></li>
+            
+                <li data-name="Alpaca.Field#initTemplateDescriptor"><a href="Alpaca.Field.html#initTemplateDescriptor">initTemplateDescriptor</a></li>
+            
+                <li data-name="Alpaca.Field#isContainer"><a href="Alpaca.Field.html#isContainer">isContainer</a></li>
+            
+                <li data-name="Alpaca.Field#isDisabled"><a href="Alpaca.Field.html#isDisabled">isDisabled</a></li>
+            
+                <li data-name="Alpaca.Field#isEmpty"><a href="Alpaca.Field.html#isEmpty">isEmpty</a></li>
+            
+                <li data-name="Alpaca.Field#isEnabled"><a href="Alpaca.Field.html#isEnabled">isEnabled</a></li>
+            
+                <li data-name="Alpaca.Field#isRequired"><a href="Alpaca.Field.html#isRequired">isRequired</a></li>
+            
+                <li data-name="Alpaca.Field#isTopLevel"><a href="Alpaca.Field.html#isTopLevel">isTopLevel</a></li>
+            
+                <li data-name="Alpaca.Field#isValid"><a href="Alpaca.Field.html#isValid">isValid</a></li>
+            
+                <li data-name="Alpaca.Field#off"><a href="Alpaca.Field.html#off">off</a></li>
+            
+                <li data-name="Alpaca.Field#on"><a href="Alpaca.Field.html#on">on</a></li>
+            
+                <li data-name="Alpaca.Field#onBlur"><a href="Alpaca.Field.html#onBlur">onBlur</a></li>
+            
+                <li data-name="Alpaca.Field#onChange"><a href="Alpaca.Field.html#onChange">onChange</a></li>
+            
+                <li data-name="Alpaca.Field#onDependentConceal"><a href="Alpaca.Field.html#onDependentConceal">onDependentConceal</a></li>
+            
+                <li data-name="Alpaca.Field#onDependentReveal"><a href="Alpaca.Field.html#onDependentReveal">onDependentReveal</a></li>
+            
+                <li data-name="Alpaca.Field#onFocus"><a href="Alpaca.Field.html#onFocus">onFocus</a></li>
+            
+                <li data-name="Alpaca.Field#onMouseOut"><a href="Alpaca.Field.html#onMouseOut">onMouseOut</a></li>
+            
+                <li data-name="Alpaca.Field#onMouseOver"><a href="Alpaca.Field.html#onMouseOver">onMouseOver</a></li>
+            
+                <li data-name="Alpaca.Field#postRender"><a href="Alpaca.Field.html#postRender">postRender</a></li>
+            
+                <li data-name="Alpaca.Field#print"><a href="Alpaca.Field.html#print">print</a></li>
+            
+                <li data-name="Alpaca.Field#refresh"><a href="Alpaca.Field.html#refresh">refresh</a></li>
+            
+                <li data-name="Alpaca.Field#refreshValidationState"><a href="Alpaca.Field.html#refreshValidationState">refreshValidationState</a></li>
+            
+                <li data-name="Alpaca.Field#reload"><a href="Alpaca.Field.html#reload">reload</a></li>
+            
+                <li data-name="Alpaca.Field#render"><a href="Alpaca.Field.html#render">render</a></li>
+            
+                <li data-name="Alpaca.Field#renderField"><a href="Alpaca.Field.html#renderField">renderField</a></li>
+            
+                <li data-name="Alpaca.Field#renderFieldElements"><a href="Alpaca.Field.html#renderFieldElements">renderFieldElements</a></li>
+            
+                <li data-name="Alpaca.Field#setDefault"><a href="Alpaca.Field.html#setDefault">setDefault</a></li>
+            
+                <li data-name="Alpaca.Field#setTemplateDescriptor"><a href="Alpaca.Field.html#setTemplateDescriptor">setTemplateDescriptor</a></li>
+            
+                <li data-name="Alpaca.Field#setup"><a href="Alpaca.Field.html#setup">setup</a></li>
+            
+                <li data-name="Alpaca.Field#setValue"><a href="Alpaca.Field.html#setValue">setValue</a></li>
+            
+                <li data-name="Alpaca.Field#show"><a href="Alpaca.Field.html#show">show</a></li>
+            
+                <li data-name="Alpaca.Field#top"><a href="Alpaca.Field.html#top">top</a></li>
+            
+                <li data-name="Alpaca.Field#trigger"><a href="Alpaca.Field.html#trigger">trigger</a></li>
+            
+                <li data-name="Alpaca.Field#triggerUpdate"><a href="Alpaca.Field.html#triggerUpdate">triggerUpdate</a></li>
+            
+                <li data-name="Alpaca.Field#triggerWithPropagation"><a href="Alpaca.Field.html#triggerWithPropagation">triggerWithPropagation</a></li>
+            
+                <li data-name="Alpaca.Field#updateDOMElement"><a href="Alpaca.Field.html#updateDOMElement">updateDOMElement</a></li>
+            
+                <li data-name="Alpaca.Field#validate"><a href="Alpaca.Field.html#validate">validate</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.Fields.CurrencyField">
+            <span class="title">
+                <a href="Alpaca.Fields.CurrencyField.html">Alpaca.Fields.CurrencyField</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#_validateMaxLength"><a href="Alpaca.Fields.CurrencyField.html#_validateMaxLength">_validateMaxLength</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#_validateMinLength"><a href="Alpaca.Fields.CurrencyField.html#_validateMinLength">_validateMinLength</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#_validatePattern"><a href="Alpaca.Fields.CurrencyField.html#_validatePattern">_validatePattern</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#afterRenderControl"><a href="Alpaca.Fields.CurrencyField.html#afterRenderControl">afterRenderControl</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#destroy"><a href="Alpaca.Fields.CurrencyField.html#destroy">destroy</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#focus"><a href="Alpaca.Fields.CurrencyField.html#focus">focus</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getControlValue"><a href="Alpaca.Fields.CurrencyField.html#getControlValue">getControlValue</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getDescription"><a href="Alpaca.Fields.CurrencyField.html#getDescription">getDescription</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getFieldType"><a href="Alpaca.Fields.CurrencyField.html#getFieldType">getFieldType</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getOptionsForOptions"><a href="Alpaca.Fields.CurrencyField.html#getOptionsForOptions">getOptionsForOptions</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getOptionsForSchema"><a href="Alpaca.Fields.CurrencyField.html#getOptionsForSchema">getOptionsForSchema</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getSchemaOfOptions"><a href="Alpaca.Fields.CurrencyField.html#getSchemaOfOptions">getSchemaOfOptions</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getSchemaOfSchema"><a href="Alpaca.Fields.CurrencyField.html#getSchemaOfSchema">getSchemaOfSchema</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getTitle"><a href="Alpaca.Fields.CurrencyField.html#getTitle">getTitle</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getType"><a href="Alpaca.Fields.CurrencyField.html#getType">getType</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#handleValidate"><a href="Alpaca.Fields.CurrencyField.html#handleValidate">handleValidate</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#onKeyPress"><a href="Alpaca.Fields.CurrencyField.html#onKeyPress">onKeyPress</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#postRender"><a href="Alpaca.Fields.CurrencyField.html#postRender">postRender</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#setup"><a href="Alpaca.Fields.CurrencyField.html#setup">setup</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#setValue"><a href="Alpaca.Fields.CurrencyField.html#setValue">setValue</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.Fields.UploadField">
+            <span class="title">
+                <a href="Alpaca.Fields.UploadField.html">Alpaca.Fields.UploadField</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.Fields.UploadField#applyBindings"><a href="Alpaca.Fields.UploadField.html#applyBindings">applyBindings</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#applyConfiguration"><a href="Alpaca.Fields.UploadField.html#applyConfiguration">applyConfiguration</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#convertDescriptorToFile"><a href="Alpaca.Fields.UploadField.html#convertDescriptorToFile">convertDescriptorToFile</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#convertFileToDescriptor"><a href="Alpaca.Fields.UploadField.html#convertFileToDescriptor">convertFileToDescriptor</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#disable"><a href="Alpaca.Fields.UploadField.html#disable">disable</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#enable"><a href="Alpaca.Fields.UploadField.html#enable">enable</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#enhanceFiles"><a href="Alpaca.Fields.UploadField.html#enhanceFiles">enhanceFiles</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getControlValue"><a href="Alpaca.Fields.UploadField.html#getControlValue">getControlValue</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getDescription"><a href="Alpaca.Fields.UploadField.html#getDescription">getDescription</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getDownloadTemplate"><a href="Alpaca.Fields.UploadField.html#getDownloadTemplate">getDownloadTemplate</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getFieldType"><a href="Alpaca.Fields.UploadField.html#getFieldType">getFieldType</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getSchemaOfOptions"><a href="Alpaca.Fields.UploadField.html#getSchemaOfOptions">getSchemaOfOptions</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getTitle"><a href="Alpaca.Fields.UploadField.html#getTitle">getTitle</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getType"><a href="Alpaca.Fields.UploadField.html#getType">getType</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getUploadTemplate"><a href="Alpaca.Fields.UploadField.html#getUploadTemplate">getUploadTemplate</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getValue"><a href="Alpaca.Fields.UploadField.html#getValue">getValue</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getValueAsArray"><a href="Alpaca.Fields.UploadField.html#getValueAsArray">getValueAsArray</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#handleBeforeFileUploadSubmit"><a href="Alpaca.Fields.UploadField.html#handleBeforeFileUploadSubmit">handleBeforeFileUploadSubmit</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#preload"><a href="Alpaca.Fields.UploadField.html#preload">preload</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#setup"><a href="Alpaca.Fields.UploadField.html#setup">setup</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#setValue"><a href="Alpaca.Fields.UploadField.html#setValue">setValue</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#setValueAsArray"><a href="Alpaca.Fields.UploadField.html#setValueAsArray">setValueAsArray</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.Form">
+            <span class="title">
+                <a href="Alpaca.Form.html">Alpaca.Form</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.Form#ajaxSubmit"><a href="Alpaca.Form.html#ajaxSubmit">ajaxSubmit</a></li>
+            
+                <li data-name="Alpaca.Form#clear"><a href="Alpaca.Form.html#clear">clear</a></li>
+            
+                <li data-name="Alpaca.Form#destroy"><a href="Alpaca.Form.html#destroy">destroy</a></li>
+            
+                <li data-name="Alpaca.Form#disable"><a href="Alpaca.Form.html#disable">disable</a></li>
+            
+                <li data-name="Alpaca.Form#enable"><a href="Alpaca.Form.html#enable">enable</a></li>
+            
+                <li data-name="Alpaca.Form#fireCallback"><a href="Alpaca.Form.html#fireCallback">fireCallback</a></li>
+            
+                <li data-name="Alpaca.Form#focus"><a href="Alpaca.Form.html#focus">focus</a></li>
+            
+                <li data-name="Alpaca.Form#getFormEl"><a href="Alpaca.Form.html#getFormEl">getFormEl</a></li>
+            
+                <li data-name="Alpaca.Form#getId"><a href="Alpaca.Form.html#getId">getId</a></li>
+            
+                <li data-name="Alpaca.Form#getParent"><a href="Alpaca.Form.html#getParent">getParent</a></li>
+            
+                <li data-name="Alpaca.Form#getType"><a href="Alpaca.Form.html#getType">getType</a></li>
+            
+                <li data-name="Alpaca.Form#getValue"><a href="Alpaca.Form.html#getValue">getValue</a></li>
+            
+                <li data-name="Alpaca.Form#hide"><a href="Alpaca.Form.html#hide">hide</a></li>
+            
+                <li data-name="Alpaca.Form#initEvents"><a href="Alpaca.Form.html#initEvents">initEvents</a></li>
+            
+                <li data-name="Alpaca.Form#isEmpty"><a href="Alpaca.Form.html#isEmpty">isEmpty</a></li>
+            
+                <li data-name="Alpaca.Form#isFormValid"><a href="Alpaca.Form.html#isFormValid">isFormValid</a></li>
+            
+                <li data-name="Alpaca.Form#onSubmit"><a href="Alpaca.Form.html#onSubmit">onSubmit</a></li>
+            
+                <li data-name="Alpaca.Form#processRender"><a href="Alpaca.Form.html#processRender">processRender</a></li>
+            
+                <li data-name="Alpaca.Form#refreshValidationState"><a href="Alpaca.Form.html#refreshValidationState">refreshValidationState</a></li>
+            
+                <li data-name="Alpaca.Form#registerSubmitHandler"><a href="Alpaca.Form.html#registerSubmitHandler">registerSubmitHandler</a></li>
+            
+                <li data-name="Alpaca.Form#render"><a href="Alpaca.Form.html#render">render</a></li>
+            
+                <li data-name="Alpaca.Form#setValue"><a href="Alpaca.Form.html#setValue">setValue</a></li>
+            
+                <li data-name="Alpaca.Form#show"><a href="Alpaca.Form.html#show">show</a></li>
+            
+                <li data-name="Alpaca.Form#submit"><a href="Alpaca.Form.html#submit">submit</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.NormalizedView">
+            <span class="title">
+                <a href="Alpaca.NormalizedView.html">Alpaca.NormalizedView</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.NormalizedView#normalize"><a href="Alpaca.NormalizedView.html#normalize">normalize</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.RuntimeView">
+            <span class="title">
+                <a href="Alpaca.RuntimeView.html">Alpaca.RuntimeView</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.RuntimeView#_getConfigVal"><a href="Alpaca.RuntimeView.html#_getConfigVal">_getConfigVal</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getGlobalTemplateDescriptor"><a href="Alpaca.RuntimeView.html#getGlobalTemplateDescriptor">getGlobalTemplateDescriptor</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getLayout"><a href="Alpaca.RuntimeView.html#getLayout">getLayout</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getMessage"><a href="Alpaca.RuntimeView.html#getMessage">getMessage</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getTemplateDescriptor"><a href="Alpaca.RuntimeView.html#getTemplateDescriptor">getTemplateDescriptor</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getViewParam"><a href="Alpaca.RuntimeView.html#getViewParam">getViewParam</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getWizard"><a href="Alpaca.RuntimeView.html#getWizard">getWizard</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#setView"><a href="Alpaca.RuntimeView.html#setView">setView</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="fields_advanced_TinyMCEField.js.html">Source: fields/advanced/TinyMCEField.js</h1>
+        
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>(function($) {
+
+    var Alpaca = $.alpaca;
+
+    Alpaca.Fields.TinyMCEField = Alpaca.Fields.TextAreaField.extend(
+        /**
+         * @lends Alpaca.Fields.tinyMCEField.prototype
+         */
+        {
+            /**
+             * @see Alpaca.Fields.TextAreaField#getFieldType
+             */
+            getFieldType: function() {
+                return "tinymce";
+            },
+
+            /**
+             * @see Alpaca.Fields.TextAreaField#setup
+             */
+            setup: function()
+            {
+                var self = this;
+
+                if (!this.data)
+                {
+                    this.data = "";
+                }
+
+                if (!self.options.toolbar)
+                {
+                    self.options.toolbar = "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image";
+                }
+
+                this.base();
+            },
+
+            setValue: function(value)
+            {
+                var self = this;
+
+                // be sure to call into base method
+                this.base(value);
+
+                if (self.editor)
+                {
+                    self.editor.setContent(value);
+                }
+            },
+
+            /**
+             * @see Alpaca.Fields.ControlField#getControlValue
+             */
+            getControlValue:function()
+            {
+                var self = this;
+
+                var value = null;
+
+                if (self.editor)
+                {
+                    value = self.editor.getContent()
+                }
+
+                return value;
+            },
+
+            initTinyMCEEvents: function()
+            {
+                var self = this;
+
+                if (self.editor) {
+
+                    // click event
+                    self.editor.on("click", function (e) {
+                        self.onClick.call(self, e);
+                        self.trigger("click", e);
+                    });
+
+                    // change event
+                    self.editor.on("change", function (e) {
+                        self.onChange();
+                        self.triggerWithPropagation("change", e);
+                    });
+
+                    // blur event
+                    self.editor.on('blur', function (e) {
+                        self.onBlur();
+                        self.trigger("blur", e);
+                    });
+
+                    // focus event
+                    self.editor.on("focus", function (e) {
+                        self.onFocus.call(self, e);
+                        self.trigger("focus", e);
+                    });
+
+                    // keypress event
+                    self.editor.on("keypress", function (e) {
+                        self.onKeyPress.call(self, e);
+                        self.trigger("keypress", e);
+                    });
+
+                    // keyup event
+                    self.editor.on("keyup", function (e) {
+                        self.onKeyUp.call(self, e);
+                        self.trigger("keyup", e);
+                    });
+
+                    // keydown event
+                    self.editor.on("keydown", function (e) {
+                        self.onKeyDown.call(self, e);
+                        self.trigger("keydown", e);
+                    });
+                }
+            },
+
+            afterRenderControl: function(model, callback)
+            {
+                var self = this;
+
+                this.base(model, function() {
+
+                    if (!self.isDisplayOnly() &amp;&amp; self.control &amp;&amp; typeof(tinyMCE) !== "undefined")
+                    {
+                        // wait for Alpaca to declare the DOM swapped and ready before we attempt to do anything with CKEditor
+                        self.on("ready", function() {
+
+                            if (!self.editor)
+                            {
+                                var rteFieldID = $(self.control)[0].id;
+
+                                tinyMCE.init({
+                                    init_instance_callback: function(editor) {
+                                        self.editor = editor;
+
+                                        self.initTinyMCEEvents();
+                                    },
+                                    selector: "#" + rteFieldID,
+                                    toolbar: self.options.toolbar
+                                });
+
+                            }
+                        });
+                    }
+
+                    callback();
+                });
+            },
+
+            /**
+             * @see Alpaca.Field#destroy
+             */
+            destroy: function()
+            {
+                var self = this;
+
+                // destroy the plugin instance
+                if (self.editor)
+                {
+                    self.editor.remove();
+                    self.editor = null;
+                }
+
+                // call up to base method
+                this.base();
+            },
+
+
+            /* builder_helpers */
+
+            /**
+             * @see Alpaca.Fields.TextAreaField#getTitle
+             */
+            getTitle: function() {
+                return "TinyMCE Editor";
+            },
+
+            /**
+             * @see Alpaca.Fields.TextAreaField#getDescription
+             */
+            getDescription: function() {
+                return "Provides an instance of a TinyMCE control for use in editing HTML.";
+            },
+
+            /**
+             * @private
+             * @see Alpaca.ControlField#getSchemaOfOptions
+             */
+            getSchemaOfOptions: function() {
+                return Alpaca.merge(this.base(), {
+                    "properties": {
+                        "toolbar": {
+                            "title": "TinyMCE toolbar options",
+                            "description": "Toolbar options for TinyMCE plugin.",
+                            "type": "string"
+                        }
+                    }
+                });
+            },
+
+            /**
+             * @private
+             * @see Alpaca.ControlField#getOptionsForOptions
+             */
+            getOptionsForOptions: function() {
+                return Alpaca.merge(this.base(), {
+                    "fields": {
+                        "toolbar": {
+                            "type": "text"
+                        }
+                    }
+                });
+            }
+
+            /* end_builder_helpers */
+        });
+
+    Alpaca.registerFieldClass("tinymce", Alpaca.Fields.TinyMCEField);
+
+})(jQuery);</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+        <!-- disqus code -->
+        <div id="disqus_thread"></div>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        <!-- // disqus code -->
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Sat Oct 29 2016 09:34:50 GMT-0500 (COT)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
