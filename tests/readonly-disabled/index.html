@@ -1,18 +1,18 @@
 <html>
     <head>
-	    <!-- jQuery -->
-	    <script src="https://code.jquery.com/jquery-1.11.3.min.js" integrity="sha256-7LkWEzqTdpEfELxcZZlS6wAx5Ff13zZ83lYO2/ujj7g=" crossorigin="anonymous"></script>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js" integrity="sha256-7LkWEzqTdpEfELxcZZlS6wAx5Ff13zZ83lYO2/ujj7g=" crossorigin="anonymous"></script>
 
-	    <!-- Bootstrap -->
-	    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!-- Bootstrap -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
         <!-- Handlebars -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 
-		<!-- Alpaca -->
-        <link type="text/css" href="../../build/alpaca/bootstrap/alpaca.min.css" rel="stylesheet" />       
-        <script type="text/javascript" src="../../build/alpaca/bootstrap/alpaca.min.js"></script>
+        <!-- Alpaca -->
+        <link type="text/css" href="../../build/alpaca/bootstrap/alpaca.css" rel="stylesheet"/>       
+        <script type="text/javascript" src="../../build/alpaca/bootstrap/alpaca.js"></script>
 
     </head>
     <body>
@@ -21,30 +21,39 @@
             $(document).ready(function() {
                 $("#form").alpaca({
                     "data": {
-                        "readonly": "1234567890",
-                        "readonly-disabled": "1234567890",
-                        "disabled": "1234567890"
+                        "_read": "1234567890",
+                        "_both": "1234567890",
+                        "_disabled": "1234567890"
                     },
                     "schema": {
                         "title":"Attribute Bug Fix",
                         "description":"What do you think about Alpaca?",
                         "type":"object",
                         "properties": {
-                            "readonly": {
+                            "_read": {
                                 "type":"string",
                                 "title":"Read Only",
                                 "readonly": true
                             },
-                            "readonly-disabled": {
+                            "_both": {
                                 "type":"string",
                                 "title":"Read Only Disabled",
-                                "readonly": true,
-                                "disabled": true
+                                "readonly": true
                             },
-                            "disabled": {
+                            "_disabled": {
                                 "type":"string",
                                 "title":"Disabled",
-                                "disabled":true
+                                "disabled": true
+                            }
+                        },
+                        "options":{
+                            "fields":{
+                                "_both":{
+                                    "disabled": true
+                                },
+                                "_disabled": {
+                                    "disabled": true
+                                }
                             }
                         }
                     },
