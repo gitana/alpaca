@@ -21,44 +21,41 @@
             $(document).ready(function() {
                 $("#form").alpaca({
                     "data": {
-                        "_read": "1234567890",
-                        "_both": "1234567890",
-                        "_disabled": "1234567890"
+                        "read": "Read",
+                        "both": "Both",
+                        "disabled": "Disabled"
                     },
                     "schema": {
                         "title":"Attribute Bug Fix",
                         "description":"What do you think about Alpaca?",
                         "type":"object",
                         "properties": {
-                            "_read": {
+                            "read": {
                                 "type":"string",
                                 "title":"Read Only",
                                 "readonly": true
                             },
-                            "_both": {
+                            "both": {
                                 "type":"string",
                                 "title":"Read Only Disabled",
                                 "readonly": true
+                                
                             },
-                            "_disabled": {
+                            "disabled": {
                                 "type":"string",
-                                "title":"Disabled",
-                                "disabled": true
+                                "title":"Disabled"
                             }
                         },
                         "options":{
                             "fields":{
-                                "_both":{
+                                "both":{
                                     "disabled": true
                                 },
-                                "_disabled": {
+                                "disabled": {
                                     "disabled": true
                                 }
-                            }
+                            }              
                         }
-                    },
-                    "options": {
-                        "helper": "Readonly and Disabled Differences"
                     },
                     "view" : "bootstrap-edit"
                 });
