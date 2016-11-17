@@ -21,9 +21,8 @@
             $(document).ready(function() {
                 $("#form").alpaca({
                     "data": {
-                        "read": "Read",
-                        "both": "Both",
-                        "disabled": "Disabled"
+                        "read": "read-only",
+                        "both": "read-only-disabled"
                     },
                     "schema": {
                         "title":"Attribute Bug Fix",
@@ -32,29 +31,15 @@
                         "properties": {
                             "read": {
                                 "type":"string",
-                                "title":"Read Only",
-                                "readonly": true
+                                "title":"Read-only",
+                                "readonly": true,
+                                "disabled": false 
                             },
                             "both": {
                                 "type":"string",
-                                "title":"Read Only Disabled",
-                                "readonly": true
-                                
-                            },
-                            "disabled": {
-                                "type":"string",
-                                "title":"Disabled"
+                                "title":"Read-only and Disabled",
+                                "readonly": true                               
                             }
-                        },
-                        "options":{
-                            "fields":{
-                                "both":{
-                                    "disabled": true
-                                },
-                                "disabled": {
-                                    "disabled": true
-                                }
-                            }              
                         }
                     },
                     "view" : "bootstrap-edit"
