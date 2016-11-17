@@ -947,6 +947,8 @@
                 {
                     this.disable();
 
+                    doDisableField();
+
                     // CALLBACK: "disable"
                     self.fireCallback("disable");
                 }
