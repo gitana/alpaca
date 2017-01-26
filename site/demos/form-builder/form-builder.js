@@ -157,18 +157,17 @@ var setup = function()
 
                 if (buildInteractionLayers)
                 {
-                    var iCount = 0;
-
                     // cover every control with an interaction layer
-                    form.getFieldEl().find(".alpaca-container-item").each(function() {
+                    form.getFieldEl().find(".alpaca-container-item").each(function(iCount) {
 
-                        var alpacaFieldId = $(this).children().first().attr("data-alpaca-field-id");
+                        var $el = $(this);
+                        var alpacaFieldId = $el.children().first().attr("data-alpaca-field-id");
 
                         //iCount++;
-                        $(this).attr("icount", iCount);
+                        $el.attr("icount", iCount);
 
-                        var width = $(this).outerWidth() - 22;
-                        var height = $(this).outerHeight() + 25;
+                        var width = $el.outerWidth() - 22;
+                        var height = $el.outerHeight() + 25;
 
                         // cover div
                         var cover = $("<div></div>");
@@ -185,7 +184,7 @@ var setup = function()
                             "z-index": 900
                         });
                         $(cover).attr("icount-ref", iCount);
-                        $(this).append(cover);
+                        $el.append(cover);
 
                         // interaction div
                         var interaction = $("<div class='interaction'></div>");
@@ -213,7 +212,7 @@ var setup = function()
                             "z-index": 901
                         });
                         $(interaction).attr("icount-ref", iCount);
-                        $(this).append(interaction);
+                        $el.append(interaction);
                         $(buttonGroup).css({
                             "margin-top": 5 + (($(interaction).height() / 2) - ($(buttonGroup).height() / 2)),
                             "margin-right": "16px"
@@ -253,8 +252,6 @@ var setup = function()
                             var iCount = $(interaction).attr("icount-ref");
                             $(".cover[icount-ref='" + iCount + "']").removeClass("ui-hover-state");
                         });
-
-                        iCount++;
                     });
 
                     // add dashed
