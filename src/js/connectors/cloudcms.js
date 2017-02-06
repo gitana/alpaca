@@ -316,7 +316,7 @@
         {
             var self = this;
 
-            return self.loadSchema(schemaIdentifier, successCallback, errorCallback);
+            return self.loadSchema(schemaIdentifier, null, successCallback, errorCallback);
         },
 
         /**
@@ -330,7 +330,7 @@
         {
             var self = this;
 
-            return self.loadOptions(optionsIdentifier, successCallback, errorCallback);
+            return self.loadOptions(optionsIdentifier, null, successCallback, errorCallback);
         },
 
         /**
