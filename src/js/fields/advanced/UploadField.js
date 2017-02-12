@@ -1102,7 +1102,7 @@
 
             if (self.options.errorHandler)
             {
-                self.options.errorHandler.call(self, data);
+                self.options.errorHandler.call(self, [data.errorThrown]);
             }
 
             for (var i = 0; i < data.files.length; i++)
