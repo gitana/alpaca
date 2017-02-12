@@ -390,10 +390,10 @@
          */
         getContainerValue: function()
         {
-            // if we're empty and we're also not required, then we hand back undefined
+            // if we're empty and we're also not required, then we hand back empty set
             if (this.children.length === 0 && !this.isRequired())
             {
-                return undefined;
+                return [];
             }
 
             // otherwise, construct an array and hand it back
