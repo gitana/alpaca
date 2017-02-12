@@ -218,8 +218,7 @@
 
                 if (err)
                 {
-                    errorCallback(err);
-                    return;
+                    return errorCallback(err);
                 }
 
                 // TODO: cleanup schema
@@ -251,8 +250,7 @@
 
                 if (err)
                 {
-                    errorCallback(err);
-                    return;
+                    return errorCallback(err);
                 }
 
                 if (!options) {
@@ -306,7 +304,11 @@
         },
 
         /**
-         * Loads a referenced JSON schema by it's qname from Cloud CMS.
+         * Loads a referenced JSON schema.
+         *
+         * Supports qname://{namespace}/{localName}
+         *
+         * Otherwise, falls back to default implementation.
          *
          * @param {Object|String} schemaIdentifier schema to load
          * @param {Function} onSuccess onSuccess callback.
@@ -316,11 +318,34 @@
         {
             var self = this;
 
-            return self.loadSchema(schemaIdentifier, null, successCallback, errorCallback);
+            // if the reference comes in form "qname://{namespace}/{localName}" (which is the Cloud CMS official format)
+            // then convert to basic QName which we support here within Alpaca Cloud CMS connector
+            if (schemaIdentifier.indexOf("qname://") === 0)
+            {
+                var parts = schemaIdentifier.substring(8).split("/");
+
+                schemaIdentifier = parts[0] + ":" + parts[1];
+            }
+
+            // is it HTTP or HTTPS?
+            if ((schemaIdentifier.toLowerCase().indexOf("http://") === 0) || (schemaIdentifier.toLowerCase().indexOf("https://") === 0))
+            {
+                // load JSON from endpoint
+                return this._handleLoadJsonResource(schemaIdentifier, successCallback, errorCallback);
+            }
+
+            var resources = null;
+
+            // otherwise assume it is a QName
+            return self.loadSchema(schemaIdentifier, resources, successCallback, errorCallback);
         },
 
         /**
-         * Loads referenced JSON options by it's form key from Cloud CMS.
+         * Loads referenced JSON options.
+         *
+         * At present, this ignores QName.
+         *
+         * Otherwise, falls back to default implementation.
          *
          * @param {Object|String} optionsIdentifier form to load.
          * @param {Function} onSuccess onSuccess callback.
@@ -330,7 +355,14 @@
         {
             var self = this;
 
-            return self.loadOptions(optionsIdentifier, null, successCallback, errorCallback);
+            // is it HTTP or HTTPS?
+            if ((optionsIdentifier.toLowerCase().indexOf("http://") === 0) || (optionsIdentifier.toLowerCase().indexOf("https://") === 0))
+            {
+                // load JSON from endpoint
+                return this._handleLoadJsonResource(optionsIdentifier, successCallback, errorCallback);
+            }
+
+            successCallback({});
         },
 
         /**
