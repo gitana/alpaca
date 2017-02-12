@@ -15,14 +15,14 @@
             },
 
             getDefaultFormat: function() {
-                return "MM/DD/YYYY HH:mm:ss";
+                return Alpaca.defaultDateFormat + " " + Alpaca.defaultTimeFormat;
             },
 
             getDefaultExtraFormats: function() {
                 return [
-                    "MM/DD/YYYY hh:mm:ss a",
-                    "MM/DD/YYYY HH:mm",
-                    "MM/DD/YYYY"
+                    Alpaca.defaultDateFormat + " hh:mm:ss a",
+                    Alpaca.defaultDateFormat + " HH:mm",
+                    Alpaca.defaultDateFormat
                 ];
             },
 

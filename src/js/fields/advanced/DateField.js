@@ -18,7 +18,7 @@
         },
 
         getDefaultFormat: function() {
-            return "MM/DD/YYYY";
+            return Alpaca.defaultDateFormat;
         },
 
         getDefaultExtraFormats: function() {
@@ -59,7 +59,7 @@
             }
 
             if (!self.options.picker.locale) {
-                self.options.picker.locale = "en_US";
+                self.options.picker.locale = Alpaca.defaultLocale;
             }
 
             if (!self.options.picker.dayViewHeaderFormat) {

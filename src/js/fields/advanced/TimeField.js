@@ -15,7 +15,7 @@
         },
 
         getDefaultFormat: function() {
-            return "h:mm:ss a";
+            return Alpaca.defaultTimeFormat;
         },
 
         /**
