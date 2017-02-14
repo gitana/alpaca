@@ -1,0 +1,11 @@
+{
+    "label": "Author",
+    "fields": {
+        "firstName": {
+            "type": "personalname"
+        },
+        "lastName": {
+            "type": "personalname"
+        }
+    }
+}
