@@ -343,6 +343,8 @@
         /**
          * Loads referenced JSON options.
          *
+         * // Supports qname://{namespace}/{localName}/{formKey}
+         *
          * At present, this ignores QName.
          *
          * Otherwise, falls back to default implementation.
@@ -362,7 +364,27 @@
                 return this._handleLoadJsonResource(optionsIdentifier, successCallback, errorCallback);
             }
 
-            successCallback({});
+            var resources = null;
+
+            // if the reference comes in form "qname://{namespace}/{localName}/{formKey}" (which is the Cloud CMS official format)
+            // then convert to basic QName which we support here within Alpaca Cloud CMS connector
+            if (optionsIdentifier.indexOf("qname://") === 0)
+            {
+                var parts = optionsIdentifier.substring(8).split("/");
+                if (parts.length > 2)
+                {
+                    // qname
+                    resources = {};
+                    resources.schemaSource = parts[0] + ":" + parts[1];
+
+                    // form id
+                    optionsIdentifier = parts[2];
+
+                    return self.loadOptions(optionsIdentifier, resources, successCallback, errorCallback);
+                }
+            }
+
+            successCallback(null);
         },
 
         /**
