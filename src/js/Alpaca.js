@@ -1175,7 +1175,7 @@
         /**
          * Default time format.
          */
-        defaultTimeFormat: "HH:SS",
+        defaultTimeFormat: "HH:mm:ss",
 
         /**
          * Regular expressions for fields.
