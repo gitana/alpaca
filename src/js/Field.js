@@ -340,6 +340,11 @@
             }
         },
 
+        setupField: function(callback)
+        {
+            callback();
+        },
+
         /**
          * Registers an event listener.
          *
@@ -538,12 +543,16 @@
 
             this.setup();
 
-            this._render(function() {
+            this.setupField(function() {
 
-                // trigger the render event
-                self.trigger("render");
+                self._render(function() {
 
-                callback();
+                    // trigger the render event
+                    self.trigger("render");
+
+                    callback();
+                });
+
             });
         },
 
@@ -1051,72 +1060,75 @@
             // re-setup the field
             self.setup();
 
-            // render
-            self._render(function() {
+            self.setupField(function() {
 
-                // move ahead of marker
-                $(markerEl).before(self.field);
+                // render
+                self._render(function() {
 
-                // reset the domEl
-                self.domEl = oldDomEl;
+                    // move ahead of marker
+                    $(markerEl).before(self.field);
 
-                // copy classes from oldField onto field
-                var oldClasses = $(oldField).attr("class");
-                if (oldClasses) {
-                    $.each(oldClasses.split(" "), function(i, v) {
-                        if (v && !v.indexOf("alpaca-") === 0) {
-                            $(self.field).addClass(v);
-                        }
-                    });
-                }
+                    // reset the domEl
+                    self.domEl = oldDomEl;
 
-                // hide the old field
-                $(oldField).hide();
-
-                // remove marker
-                $(markerEl).remove();
-
-                // mark that we're refreshed
-                self.refreshed = true;
-
-                // this is apparently needed for objects and arrays
-                if (typeof(_data) !== "undefined")
-                {
-                    if (Alpaca.isObject(_data) || Alpaca.isArray(_data))
-                    {
-                        self.setValue(_data);
+                    // copy classes from oldField onto field
+                    var oldClasses = $(oldField).attr("class");
+                    if (oldClasses) {
+                        $.each(oldClasses.split(" "), function(i, v) {
+                            if (v && !v.indexOf("alpaca-") === 0) {
+                                $(self.field).addClass(v);
+                            }
+                        });
                     }
-                }
 
-                // fire the "ready" event
-                Alpaca.fireReady(self);
+                    // hide the old field
+                    $(oldField).hide();
 
-                if (callback)
-                {
-                    callback.call(self);
-                }
+                    // remove marker
+                    $(markerEl).remove();
 
-                // afterwards...
+                    // mark that we're refreshed
+                    self.refreshed = true;
 
-                // now clean up old field elements
-                // the trick here is that we want to make sure we don't trigger the bound "destroyed" event handler
-                // for the old dom el.
-                //
-                // the reason is that we have oldForm -> Field (with oldDomEl)
-                //                        and form -> Field (with domEl)
-                //
-                // cleaning up "oldDomEl" causes "Field" to cleanup which causes "oldForm" to cleanup
-                // which causes "Field" to cleanup which causes "domEl" to clean up (and also "form")
-                //
-                // here we just want to remove the dom elements for "oldDomEl" and "oldForm" without triggering
-                // the special destroyer event
-                //
-                // appears that we can do this with a second argument...?
-                //
-                $(oldField).remove(undefined, {
-                    "nodestroy": true
+                    // this is apparently needed for objects and arrays
+                    if (typeof(_data) !== "undefined")
+                    {
+                        if (Alpaca.isObject(_data) || Alpaca.isArray(_data))
+                        {
+                            self.setValue(_data);
+                        }
+                    }
+
+                    // fire the "ready" event
+                    Alpaca.fireReady(self);
+
+                    if (callback)
+                    {
+                        callback.call(self);
+                    }
+
+                    // afterwards...
+
+                    // now clean up old field elements
+                    // the trick here is that we want to make sure we don't trigger the bound "destroyed" event handler
+                    // for the old dom el.
+                    //
+                    // the reason is that we have oldForm -> Field (with oldDomEl)
+                    //                        and form -> Field (with domEl)
+                    //
+                    // cleaning up "oldDomEl" causes "Field" to cleanup which causes "oldForm" to cleanup
+                    // which causes "Field" to cleanup which causes "domEl" to clean up (and also "form")
+                    //
+                    // here we just want to remove the dom elements for "oldDomEl" and "oldForm" without triggering
+                    // the special destroyer event
+                    //
+                    // appears that we can do this with a second argument...?
+                    //
+                    $(oldField).remove(undefined, {
+                        "nodestroy": true
+                    });
+
                 });
-
             });
         },
 
