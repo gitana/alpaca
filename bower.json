@@ -1,7 +1,7 @@
 {
   "name": "alpaca",
   "description": "Alpaca provides the easiest way to generate web and mobile forms on top of JSON Schema, jQuery, Bootstrap and a variety of frameworks.",
-  "version": "1.5.22",
+  "version": "1.5.24",
   "main": "dist/alpaca/bootstrap/alpaca.js",
   "license": "Apache-2.0",
   "keywords": [
@@ -37,7 +37,7 @@
     "url": "https://github.com/gitana/alpaca.git"
   },
   "dependencies": {
-    "ace-builds": "1.1.7",
+    "ace-builds": "1.2.6",
     "mjolnic-bootstrap-colorpicker": "2.3.0",
     "blueimp-canvas-to-blob": "2.1.1",
     "blueimp-file-upload": "9.12.3",

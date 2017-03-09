@@ -56,6 +56,10 @@ var paths = {
             "src/js/ContainerField.js",
             "src/js/Form.js",
 
+            // cache implementations
+            "src/js/cache/memory.js",
+            "src/js/cache/null.js",
+
             // connectors
             "src/js/connectors/default.js",
             "src/js/connectors/cloudcms.js",

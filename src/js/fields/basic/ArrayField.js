@@ -357,17 +357,10 @@
                     {
                         var f = (function(i, data)
                         {
-                            return function(callback)
+                            return function(_done)
                             {
                                 self.addItem(i, itemSchema, itemOptions, data[i], function() {
-
-                                    // by the time we get here, we may have constructed a very large child chain of
-                                    // sub-dependencies and so we use nextTick() instead of a straight callback so as to
-                                    // avoid blowing out the stack size
-                                    Alpaca.nextTick(function() {
-                                        callback();
-                                    });
-
+                                    _done();
                                 });
                             };
                         })(i, data);
@@ -377,7 +370,7 @@
                         i++;
                     }
 
-                    Alpaca.series(funcs, function() {
+                    Alpaca.parallel(funcs, function() {
                         // nothing
                     });
                 });
@@ -430,6 +423,9 @@
 
             if (self.data && self.data.length > 0)
             {
+                var totalItemCount = self.data.length;
+                var itemsByIndex = {};
+
                 // all items within the array have the same schema and options
                 // so we only need to load this once
                 self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
@@ -453,14 +449,7 @@
                             {
                                 self.createItem(index, itemSchema, itemOptions, value, function(item) {
 
-                                    items.push(item);
-
-                                    // by the time we get here, we may have constructed a very large child chain of
-                                    // sub-dependencies and so we use nextTick() instead of a straight callback so as to
-                                    // avoid blowing out the stack size
-                                    //Alpaca.nextTick(function() {
-                                    //    callback();
-                                    //});
+                                    itemsByIndex[index] = item;
 
                                     _done();
                                 });
@@ -471,11 +460,18 @@
                         funcs.push(pf);
                     }
 
-                    // run on the next-tick
-                    Alpaca.nextTick(function() {
-                        Alpaca.series(funcs, function(err) {
-                            callback(items);
-                        });
+                    Alpaca.parallel(funcs, function(err) {
+
+                        // restore intended order
+                        for (var i = 0; i < totalItemCount; i++)
+                        {
+                            var item = itemsByIndex[i];
+                            if (item) {
+                                items.push(item);
+                            }
+                        }
+
+                        callback(items);
                     });
 
                 });

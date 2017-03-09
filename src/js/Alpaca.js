@@ -1735,7 +1735,7 @@
             }
 
             // compile all of the views and templates
-            this.compile(function(report) {
+            this.compile(connector, function(report) {
 
                 if (report.errors && report.errors.length > 0)
                 {
@@ -2056,9 +2056,11 @@
          * Compiles all of the views, normalizing them for use by Alpaca.
          * Also compiles any templates that the views may reference.
          *
+         * @param connector the connector
          * @param cb the callback that gets fired once compilation has ended
+         * @param errorCallback fired if the compile fails for any reason
          */
-        compile: function(cb, errorCallback)
+        compile: function(connector, cb, errorCallback)
         {
             var self = this;
 
@@ -2233,7 +2235,7 @@
                 }
 
                 // compile the template
-                engine.compile(cacheKey, template, function(err) {
+                engine.compile(cacheKey, template, connector, function(err) {
                     viewCompileCallback(normalizedViews, err, view, cacheKey, totalCalls);
                 });
             };
@@ -2878,7 +2880,7 @@
         fns.push(fn2(topField.options, optionsReferenceId, resolution));
 
         // run loads in parallel
-        Alpaca.series(fns, function() {
+        Alpaca.parallel(fns, function() {
             callback(resolution.schema, resolution.options);
         });
     };
@@ -5094,5 +5096,22 @@
 
     // use this to have invalid messages show up for read-only fields
     Alpaca.showReadOnlyInvalidState = false;
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // CACHE IMPLEMENTATIONS
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Alpaca.caches = {};
+    Alpaca.registerCache = function(id, cacheFn)
+    {
+        Alpaca.caches[id] = cacheFn;
+    };
+    Alpaca.getCache = function(id)
+    {
+        return Alpaca.caches[id];
+    };
 
 })(jQuery);

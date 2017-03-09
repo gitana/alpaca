@@ -1430,8 +1430,8 @@
             // add ourselves in last
             functions.push(functionBuilder(this, contexts));
 
-            // now run all of the functions
-            Alpaca.series(functions, function(err) {
+            // now run all of the functions in parallel
+            Alpaca.parallel(functions, function(err) {
 
                 // contexts now contains all of the validation results
 

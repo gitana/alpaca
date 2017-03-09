@@ -8,6 +8,32 @@
      */
     {
         /**
+         * @constructs
+         * @class Connects Alpaca to Cloud CMS
+
+         * @param {String} id Connector ID
+         * @param {Object} config Connector Config
+         */
+        constructor: function(id, config)
+        {
+            if (!config) {
+                config = {};
+            }
+
+            // if we're not otherwise configured to use a cache, we default to a memory cache with a 5 minute TTL
+            if (!config.cache) {
+                config.cache = {
+                    "type": "memory",
+                    "config": {
+                        "ttl": 1000 * 60 * 5 // five minutes
+                    }
+                };
+            }
+
+            this.base(id, config);
+        },
+
+        /**
          * Makes initial connections to data source.
          *
          * @param {Function} onSuccess onSuccess callback.
@@ -79,10 +105,17 @@
 
         bindHelperFunctions: function(branch)
         {
+            var self = this;
+
             if (!branch.loadAlpacaSchema)
             {
                 branch.loadAlpacaSchema = function(schemaIdentifier, resources, callback)
                 {
+                    var cachedDocument = self.cache(schemaIdentifier);
+                    if (cachedDocument) {
+                        return callback.call(this, null, cachedDocument);
+                    }
+
                     var uriFunction = function()
                     {
                         return branch.getUri() + "/alpaca/schema";
@@ -92,6 +125,7 @@
                     params["id"] = schemaIdentifier;
 
                     return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                        self.cache(schemaIdentifier, response);
                         callback.call(this, null, response);
                     });
                 };
@@ -101,6 +135,11 @@
             {
                 branch.loadAlpacaOptions = function(optionsIdentifier, resources, callback)
                 {
+                    var cachedDocument = self.cache(optionsIdentifier);
+                    if (cachedDocument) {
+                        return callback.call(this, null, cachedDocument);
+                    }
+
                     var uriFunction = function()
                     {
                         return branch.getUri() + "/alpaca/options";
@@ -111,6 +150,7 @@
                     params["id"] = optionsIdentifier;
 
                     return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                        self.cache(optionsIdentifier, response);
                         callback.call(this, null, response);
                     });
                 };

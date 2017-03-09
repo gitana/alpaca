@@ -34,9 +34,10 @@
          *
          * @param cacheKey
          * @param template
+         * @param connector
          * @param callback
          */
-        compile: function(cacheKey, template, callback)
+        compile: function(cacheKey, template, connector, callback)
         {
             var self = this;
 
@@ -81,7 +82,21 @@
                     url += "." + fileExtension;
                 }
 
-                // load the template via ajax
+                // load the template using the connector
+                connector.loadTemplate(url, function(html) {
+
+                    // cleanup html
+                    html = self.cleanup(html);
+
+                    self._compile(cacheKey, html, function(err) {
+                        callback(err);
+                    });
+
+                }, function(err) {
+                    callback(err);
+                });
+
+                /*
                 $.ajax({
                     "url": url,
                     "dataType": "html",
@@ -103,6 +118,7 @@
                         }, null);
                     }
                 });
+                */
             }
             else if (type === "html")
             {
