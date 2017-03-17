@@ -305,8 +305,12 @@
         setValue: function(data)
         {
             var self = this;
+            
+            if (!data) {
+                data = [];
+            }
 
-            if (!data || !Alpaca.isArray(data))
+            if (!Alpaca.isArray(data))
             {
                 return;
             }
