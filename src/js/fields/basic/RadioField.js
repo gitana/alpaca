@@ -162,7 +162,17 @@
 
             });
         },
-        
+
+        /**
+         * Ensures that the "name" property on the control is kept in sync.
+         */
+        updateDOMElement: function()
+        {
+            this.base();
+
+            $(this.control).find("input:radio").attr("name", this.getName());
+        },
+
         /**
          * @see Alpaca.ControlField#onClick
          */

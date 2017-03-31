@@ -18,7 +18,7 @@ render format the input as it's entered.
 The Editor field requires the <a target="_blank" href="http://jquerypriceformat.com/">JQuery Price Format</a> to be loaded
 ahead of its use.
 
-Be sure to load <code>lib/jquery.price_format.2.0/jquery.price_format.2.0.min.js</code> before rendering your forms.  You can
+Be sure to load <code>lib/jquery-price-format2/jquery.price_format.min.js</code> before rendering your forms.  You can
 download JQuery Price Format from <a target="_blank" href="http://jquerypriceformat.com/">jquerypriceformat.com</a>.
 
 JQuery Price Format overwrites the <code>unmask</code> method of the JQuery Masked Input plugin.  If you want to use JQuery Masked Input you should load  the price format plugin before you load the masked input plugin.

@@ -137,3 +137,63 @@ $("#field2").alpaca({
 {% endraw %}
 
 
+## Example: Making HTTP Calls
+
+Here is an example where a custom field might use the `setupField` method to do some custom, long-duration work
+that could cause the rendering order of the nested objects to get out of order since loading of sub-fields in
+done in parallel.
+
+This ensures that the order is preserved.
+
+<div id="field3"> </div>
+{% raw %}
+<script type="text/javascript" id="field3-script">
+$.alpaca.Fields.Custom3Field = $.alpaca.Fields.TextField.extend({
+    getFieldType: function() {
+        return "custom3";
+    },
+    setupField: function(callback) {        
+        // delay up to one second before firing callback
+        var delay = Math.floor(Math.random() * 1000);        
+        setTimeout(function() {
+            callback();
+        }, delay);
+    }
+});
+Alpaca.registerFieldClass("custom3", Alpaca.Fields.Custom3Field);
+$("#field3").alpaca({
+    "schema": {
+        "type": "object",
+        "properties": {
+            "firstName": {
+                "type": "string",
+                "title": "1. First Name"
+            },
+            "middleName": {
+                "type": "string",
+                "title": "2. Middle Name"
+            },
+            "lastName": {
+                "type": "string",
+                "title": "3. Last Name"
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "firstName": {
+                "type": "custom3"
+            },
+            "middleName": {
+                "type": "custom3"
+            },
+            "lastName": {
+                "type": "custom3"
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
+
+

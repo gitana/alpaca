@@ -1,0 +1,14 @@
+<script type="text/x-handlebars-template">
+
+    {{#if options.component}}
+    <div class="input-group">
+    {{/if}}
+
+        <input type="{{inputType}}" id="{{id}}" {{#if options.placeholder}}placeholder="{{options.placeholder}}"{{/if}} {{#if options.size}}size="{{options.size}}"{{/if}} {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{this}}"{{/each}} {{#each options.attributes}}{{@key}}="{{this}}"{{/each}}/>
+
+    {{#if options.component}}
+        <span class="input-group-addon"><i></i></span>
+        </div>
+    {{/if}}
+
+</script>

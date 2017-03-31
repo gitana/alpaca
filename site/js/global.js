@@ -13,6 +13,8 @@ $( document ).ready(function() {
 
     contact_list.mouseleave(function(){ scontacts.slideUp(); });
 
+    // get rid of this discussions stuff, fall back on stack overflow instead
+    /*
     // alpaca discussions
     var DISCUSSIONS_HTML = '<div> \
             <br/> \
@@ -31,6 +33,7 @@ $( document ).ready(function() {
         </div>';
 
     $(".alpaca-discussions").append(DISCUSSIONS_HTML);
+    */
 
     // do some pretty print
     if (window.prettyPrint)

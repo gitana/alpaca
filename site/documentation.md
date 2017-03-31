@@ -53,6 +53,7 @@ whereas the extension types depend on various third-party libraries.
         <ul>
             <li><a href="{{ BASE_PATH }}/docs/fields/address.html">Address</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/color.html">Color</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/colorpicker.html">Color Picker</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/ckeditor.html">CK Editor</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/country.html">Country</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/currency.html">Currency</a></li>
@@ -60,12 +61,12 @@ whereas the extension types depend on various third-party libraries.
             <li><a href="{{ BASE_PATH }}/docs/fields/datetime.html">Date Time</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/editor.html">Editor</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/email.html">Email</a></li>
-            <li><a href="{{ BASE_PATH }}/docs/fields/grid.html">Grid</a></li>
-            <li><a href="{{ BASE_PATH }}/docs/fields/image.html">Image</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/grid.html">Grid</a></li>            
         </ul>
     </div>
     <div class="col-md-4">
         <ul>            
+            <li><a href="{{ BASE_PATH }}/docs/fields/image.html">Image</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/integer.html">Integer</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/ipv4.html">IPV4</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/json.html">JSON</a></li>
@@ -75,12 +76,14 @@ whereas the extension types depend on various third-party libraries.
             <li><a href="{{ BASE_PATH }}/docs/fields/password.html">Password</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/personalname.html">Personal Name</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/phone.html">Phone</a></li>
-            <li><a href="{{ BASE_PATH }}/docs/fields/search.html">Search</a></li>
-            <li><a href="{{ BASE_PATH }}/docs/fields/state.html">State</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/pickacolor.html">Pick A Color</a></li>                                    
         </ul>
     </div>
     <div class="col-md-4">
         <ul>                        
+            <li><a href="{{ BASE_PATH }}/docs/fields/search.html">Search</a></li>        
+            <li><a href="{{ BASE_PATH }}/docs/fields/state.html">State</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/summernote.html">Summernote Editor</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/table.html">Table</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/tag.html">Tag</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/token.html">Token</a></li>

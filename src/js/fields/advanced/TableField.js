@@ -96,11 +96,42 @@
             {
                 $.fn.DataTable.ext.order["alpaca"] = function (settings, col) {
 
+                    // ensure that data property has latest value
+                    self.data = self.getValue();
+
+                    var propertyName = null;
+
+                    // find the property by index
+                    var c = 0;
+                    for (var k in self.schema.items.properties) {
+                        if (c === col) {
+                            propertyName = k;
+                            break;
+                        }
+                        c++;
+                    }
+
+                    // collect values
+                    var values = [];
+                    if (self.data)
+                    {
+                        for (var i = 0; i < self.data.length; i++)
+                        {
+                            values.push(self.data[i][propertyName]);
+                        }
+                    }
+
+                    // sort values
+                    values.sort();
+
+                    return values;
+
+                    /*
                     return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
                         var alpacaId = $(td).children().attr("data-alpaca-field-id");
                         return Alpaca.fieldInstances[alpacaId].getValue();
                     } );
-
+                    */
                 };
 
                 // this is a kind of hacky function at the moment, trying to do filtering that takes into account
@@ -245,10 +276,12 @@
                         // mix in fields from the items
                         for (var k in self.schema.items.properties)
                         {
-                            self.options.datatables.columns.push({
+                            var colConfig = {
                                 "orderable": true,
                                 "orderDataType": "alpaca"
-                            });
+                            };
+
+                            self.options.datatables.columns.push(colConfig);
                         }
 
                         // if we have an actions column enabled, then turn off sorting for the actions column (assumed to be last)
@@ -501,11 +534,17 @@
                 self.refresh(function() {
                     callback();
                 });
-
-                callback();
             }
             else
             {
+                // inform data tables that we've added a row
+                // we do this by finding the TR and then adding that way
+                if (self._dt)
+                {
+                    var tr = self.field.find("[data-alpaca-field-path='" + item.path + "']");
+                    self._dt.row.add(tr);//.draw(false);
+                }
+
                 callback();
             }
         },
@@ -527,11 +566,15 @@
                 self.refresh(function () {
                     callback();
                 });
-
-                callback();
             }
             else
             {
+                // inform data tables that we've removed a row
+                if (self._dt)
+                {
+                    self._dt.rows(childIndex).remove();//.draw(false);
+                }
+
                 callback();
             }
         },

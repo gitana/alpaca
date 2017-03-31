@@ -34,8 +34,8 @@ $("#field1").alpaca({
         "renderForm":true,
         "form":{
             "attributes":{
-                "action":"../../endpoints/echo.php",
-                "method":"post"
+                "action": "http://www.alpacajs.org/endpoints/echo.php",
+                "method": "post"
             },
             "buttons":{
                 "submit":{}

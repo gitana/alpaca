@@ -145,6 +145,24 @@
         },
 
         /**
+         * Validates against required property.
+         *
+         * @returns {Boolean} False if this field value is empty but required, true otherwise.
+         */
+        _validateOptional: function() {
+
+            if (!this.isDisplayOnly())
+            {
+                if (this.isRequired() && Alpaca.isValEmpty($(this.control).val()))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        },
+
+        /**
          * Validates if it is a float number.
          * @returns {Boolean} true if it is a float number
          */

@@ -157,18 +157,17 @@ var setup = function()
 
                 if (buildInteractionLayers)
                 {
-                    var iCount = 0;
-
                     // cover every control with an interaction layer
-                    form.getFieldEl().find(".alpaca-container-item").each(function() {
+                    form.getFieldEl().find(".alpaca-container-item").each(function(iCount) {
 
-                        var alpacaFieldId = $(this).children().first().attr("data-alpaca-field-id");
+                        var $el = $(this);
+                        var alpacaFieldId = $el.children().first().attr("data-alpaca-field-id");
 
                         //iCount++;
-                        $(this).attr("icount", iCount);
+                        $el.attr("icount", iCount);
 
-                        var width = $(this).outerWidth() - 22;
-                        var height = $(this).outerHeight() + 25;
+                        var width = $el.outerWidth() - 22;
+                        var height = $el.outerHeight() + 25;
 
                         // cover div
                         var cover = $("<div></div>");
@@ -185,7 +184,7 @@ var setup = function()
                             "z-index": 900
                         });
                         $(cover).attr("icount-ref", iCount);
-                        $(this).append(cover);
+                        $el.append(cover);
 
                         // interaction div
                         var interaction = $("<div class='interaction'></div>");
@@ -213,7 +212,7 @@ var setup = function()
                             "z-index": 901
                         });
                         $(interaction).attr("icount-ref", iCount);
-                        $(this).append(interaction);
+                        $el.append(interaction);
                         $(buttonGroup).css({
                             "margin-top": 5 + (($(interaction).height() / 2) - ($(buttonGroup).height() / 2)),
                             "margin-right": "16px"
@@ -253,8 +252,6 @@ var setup = function()
                             var iCount = $(interaction).attr("icount-ref");
                             $(".cover[icount-ref='" + iCount + "']").removeClass("ui-hover-state");
                         });
-
-                        iCount++;
                     });
 
                     // add dashed
@@ -267,9 +264,7 @@ var setup = function()
                         var containerEl = this;
 
                         // first insertion point
-                        $(containerEl).children(".alpaca-container-item").first().each(function() {
-                            $(this).before("<div class='dropzone'></div>");
-                        });
+                        $(this).prepend("<div class='dropzone'></div>");
 
                         // all others
                         $(containerEl).children(".alpaca-container-item").each(function() {
@@ -396,24 +391,57 @@ var setup = function()
         }
     };
 
+    var removeFunctionFields = function(schema, options)
+    {
+        if (schema)
+        {
+            if (schema.properties)
+            {
+                var badKeys = [];
+
+                for (var k in schema.properties)
+                {
+                    if (schema.properties[k].type === "function")
+                    {
+                        badKeys.push(k);
+                    }
+                    else
+                    {
+                        removeFunctionFields(schema.properties[k], (options && options.fields ? options.fields[k] : null));
+                    }
+                }
+
+                for (var i = 0; i < badKeys.length; i++)
+                {
+                    delete schema.properties[badKeys[i]];
+
+                    if (options && options.fields) {
+                        delete options.fields[badKeys[i]];
+                    }
+                }
+            }
+        }
+    };
+
     var editSchema = function(alpacaFieldId, callback)
     {
         var field = Alpaca.fieldInstances[alpacaFieldId];
 
-        var fieldSchema = field.getSchemaOfSchema();
+        var fieldSchemaSchema = field.getSchemaOfSchema();
         var fieldSchemaOptions = field.getOptionsForSchema();
+        removeFunctionFields(fieldSchemaSchema, fieldSchemaOptions);
         var fieldData = field.schema;
 
-        delete fieldSchema.title;
-        delete fieldSchema.description;
-        if (fieldSchema.properties)
+        delete fieldSchemaSchema.title;
+        delete fieldSchemaSchema.description;
+        if (fieldSchemaSchema.properties)
         {
-            delete fieldSchema.properties.title;
-            delete fieldSchema.properties.description;
-            delete fieldSchema.properties.dependencies;
+            delete fieldSchemaSchema.properties.title;
+            delete fieldSchemaSchema.properties.description;
+            delete fieldSchemaSchema.properties.dependencies;
         }
         var fieldConfig = {
-            schema: fieldSchema
+            schema: fieldSchemaSchema
         };
         if (fieldSchemaOptions)
         {
@@ -468,6 +496,7 @@ var setup = function()
 
         var fieldOptionsSchema = field.getSchemaOfOptions();
         var fieldOptionsOptions = field.getOptionsForOptions();
+        removeFunctionFields(fieldOptionsSchema, fieldOptionsOptions);
         var fieldOptionsData = field.options;
 
         delete fieldOptionsSchema.title;
@@ -983,7 +1012,7 @@ var setup = function()
         var field = Alpaca.fieldInstances[alpacaId];
 
         var parentField = field.parent;
-        parentField.removeItem(alpacaId, function() {
+        parentField.removeItem(field.propertyId, function() {
             var top = findTop(field);
             regenerate(top);
         });

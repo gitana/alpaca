@@ -71,9 +71,9 @@
                 if (!self.isDisplayOnly() && self.control && typeof($.fn.tokenfield) !== "undefined")
                 {
                     // wait for Alpaca to declare the DOM swapped and ready before we attempt to do anything
-                    self.on("ready", function() {
-                        $(self.control).tokenfield(self.options.tokenfield);
-                    });
+                    self.on("ready", function(self, tokenfield) {
+                        $(self.control).tokenfield(tokenfield);
+                    }(self, self.options.tokenfield));
                 }
 
                 callback();

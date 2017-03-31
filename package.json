@@ -1,7 +1,7 @@
 {
   "name": "alpaca",
   "scripts": {
-    "postinstall": "./node_modules/.bin/bower install",
+    "postinstall": "./node_modules/.bin/bower install --force",
     "postupdate": "./node_modules/.bin/bower update",
     "start": "./node_modules/.bin/gulp clean default"
   },
@@ -10,14 +10,15 @@
     "url": "git://github.com/gitana/alpaca.git"
   },
   "license": "Apache-2.0",
-  "version": "1.5.15",
+  "version": "1.5.24",
   "devDependencies": {
     "bower": "*",
     "stream-browserify": "*",
     "cucumber": "~0.3.3",
     "event-stream": "*",
     "express": "3.5.1",
-    "grunt": "*",
+    "handlebars": "4.0.5",
+    "grunt": "~0.4.x",
     "grunt-aws-s3": "^0.9.4",
     "grunt-cloudfront": "^0.2.0",
     "grunt-invalidate-cloudfront": "^0.1.5",
@@ -35,6 +36,7 @@
     "gulp-notify": "*",
     "gulp-order": "*",
     "gulp-rename": "*",
+    "gulp-template": "^3.1.0",
     "gulp-uglify": "*",
     "gulp-util": "*",
     "gulp-watch": "*",
@@ -44,14 +46,15 @@
     "jsdom": "*",
     "jshint": "*",
     "jshint-stylish": "*",
-    "lodash": "",
+    "lodash": "*",
     "node-gyp": "*",
     "node-static": "*",
     "phantom": "0.6.3",
     "q": "^1.0.1",
     "run-sequence": "*",
     "through2": "*",
-    "wd": "",
+    "wd": "*",
     "wrench": "*"
-  }
+  },
+  "dependencies": {}
 }

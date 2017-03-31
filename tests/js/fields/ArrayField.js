@@ -120,10 +120,10 @@
                     "title": "Ice Cream",
                     "type": "string",
                     "minLength": 3,
-                    "maxLength": 8,
-                    "minItems": 2,
-                    "maxItems": 2
-                }
+                    "maxLength": 8
+                },
+                "minItems": 2,
+                "maxItems": 2
             },
             "postRender": function (renderedField) {
                 expect(22);
@@ -203,10 +203,10 @@
                     "title": "Ice Cream",
                     "type": "string",
                     "minLength": 3,
-                    "maxLength": 8,
-                    "minItems": 2,
-                    "maxItems": 5
-                }
+                    "maxLength": 8
+                },
+                "minItems": 2,
+                "maxItems": 5
             },
             "postRender": function (renderedField) {
                 expect(6);

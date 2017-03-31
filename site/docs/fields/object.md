@@ -100,10 +100,10 @@ $("#field3").alpaca({
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "maxLength": 30,
-                            "minItems": 1,
-                            "maxItems": 3
-                        }
+                            "maxLength": 30
+                        },
+                        "minItems": 1,
+                        "maxItems": 3                        
                     },
                     "city": {
                         "title": "City",
@@ -184,10 +184,10 @@ $("#field4").alpaca({
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "maxLength": 30,
-                            "minItems": 1,
-                            "maxItems": 3
-                        }
+                            "maxLength": 30
+                        },
+                        "minItems": 1,
+                        "maxItems": 3                        
                     },
                     "city": {
                         "title": "City",
@@ -285,10 +285,10 @@ $("#field6").alpaca({
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "maxLength": 30,
-                            "minItems": 1,
-                            "maxItems": 3
-                        }
+                            "maxLength": 30
+                        },
+                        "minItems": 1,
+                        "maxItems": 3                        
                     },
                     "city": {
                         "title": "City",

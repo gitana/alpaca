@@ -187,86 +187,103 @@
                 }
 
                 // support for each datasets (local, remote, prefetch)
-                if (tDatasets.type === "local" || tDatasets.type === "remote" || tDatasets.type === "prefetch")
+                if (!tDatasets.init)
                 {
-                    var bloodHoundConfig = {
-                        datumTokenizer: function(d) {
-                            var tokens = "";
-                            for (var k in d) {
-                                if (d.hasOwnProperty(k) || d[k]) {
-                                    tokens += " " + d[k];
-                                }
-                            }
-                            return Bloodhound.tokenizers.whitespace(tokens);
-                        },
-                        queryTokenizer: Bloodhound.tokenizers.whitespace
-                    };
-
-                    if (tDatasets.type === "local" )
+                    if (tDatasets.type === "local" || tDatasets.type === "remote" || tDatasets.type === "prefetch")
                     {
-                        var local = [];
-
-                        if (typeof(tDatasets.source) === "function")
+                        var bloodHoundConfig = {
+                            datumTokenizer: function(d) {
+                                var tokens = "";
+                                for (var k in d) {
+                                    if (d.hasOwnProperty(k) || d[k]) {
+                                        tokens += " " + d[k];
+                                    }
+                                }
+                                return Bloodhound.tokenizers.whitespace(tokens);
+                            },
+                            queryTokenizer: Bloodhound.tokenizers.whitespace
+                        };
+    
+                        if (tDatasets.type === "local" )
                         {
-                            bloodHoundConfig.local = tDatasets.source;
-                        }
-                        else
-                        {
-                            // array
-                            for (var i = 0; i < tDatasets.source.length; i++)
+                            var local = [];
+    
+                            if (typeof(tDatasets.source) === "function")
                             {
-                                var localElement = tDatasets.source[i];
-                                if (typeof(localElement) === "string")
-                                {
-                                    localElement = {
-                                        "value": localElement
-                                    };
-                                }
-
-                                local.push(localElement);
+                                bloodHoundConfig.local = tDatasets.source;
                             }
-
-                            bloodHoundConfig.local = local;
+                            else
+                            {
+                                // array
+                                for (var i = 0; i < tDatasets.source.length; i++)
+                                {
+                                    var localElement = tDatasets.source[i];
+                                    if (typeof(localElement) === "string")
+                                    {
+                                        localElement = {
+                                            "value": localElement
+                                        };
+                                    }
+    
+                                    local.push(localElement);
+                                }
+    
+                                bloodHoundConfig.local = local;
+                            }
+    
+                            if (tDatasets.local)
+                            {
+                                bloodHoundConfig.local = tDatasets.local;
+                            }
                         }
-
-                        if (tDatasets.local)
+    
+                        if (tDatasets.type === "prefetch")
                         {
-                            bloodHoundConfig.local = tDatasets.local;
+                            bloodHoundConfig.prefetch = {
+                                url: tDatasets.source
+                            };
+    
+                            if (tDatasets.filter)
+                            {
+                                bloodHoundConfig.prefetch.filter = tDatasets.filter;
+                            }
                         }
+    
+                        if (tDatasets.type === "remote")
+                        {
+                            bloodHoundConfig.remote = {
+                                url: tDatasets.source
+                            };
+    
+                            if (tDatasets.filter)
+                            {
+                                bloodHoundConfig.remote.filter = tDatasets.filter;
+                            }
+    
+                            if (tDatasets.replace)
+                            {
+                                bloodHoundConfig.remote.replace = tDatasets.replace;
+                            }
+                        }
+    
+                        // include any additional dataset config params in the Bloodhound config
+                        $.each(tDatasets, function( index, value ) {
+                            if (index !== 'type' 
+                                && index !== 'source' 
+                                && index !== 'filter' 
+                                && index !== 'replace' 
+                                && index !== 'local' 
+                                && index !== 'templates')
+                            {
+                                bloodHoundConfig[index] = value;
+                            }
+                        });
+    
+                        var engine = new Bloodhound(bloodHoundConfig);
+                        engine.initialize();
+                        tDatasets.source = engine.ttAdapter();
+                        tDatasets.init = true;
                     }
-
-                    if (tDatasets.type === "prefetch")
-                    {
-                        bloodHoundConfig.prefetch = {
-                            url: tDatasets.source
-                        };
-
-                        if (tDatasets.filter)
-                        {
-                            bloodHoundConfig.prefetch.filter = tDatasets.filter;
-                        }
-                    }
-
-                    if (tDatasets.type === "remote")
-                    {
-                        bloodHoundConfig.remote = {
-                            url: tDatasets.source
-                        };
-
-                        if (tDatasets.filter)
-                        {
-                            bloodHoundConfig.remote.filter = tDatasets.filter;
-                        }
-
-                        if (tDatasets.replace)
-                        {
-                            bloodHoundConfig.remote.replace = tDatasets.replace;
-                        }
-                    }
-
-                    var engine = new Bloodhound(bloodHoundConfig);
-                    engine.initialize();
-                    tDatasets.source = engine.ttAdapter();
                 }
 
                 // compile templates

@@ -112,8 +112,8 @@ check out this writeup - http://travismaynard.com/writing/getting-started-with-g
 
 Once you have Node.js installed, you essentially need to do this:
 
-    npm install gulp -g
-    npm install bower -g
+    npm install -g gulp
+    npm install -g bower
 
 Alpaca requires python 2.7.x to build some of it's node_module dependencies.  Make sure you have this installed.
 If you're currently using Python 3.x, you will need to tell the build to use 2.7.x:
@@ -198,8 +198,8 @@ need to perform individual steps:
 
 ## Contributors
 
-Here is a long list of our project's Brothers in Arms.  These folks have made numerous contributions to Alpaca
-over the years:
+Here is a long list of our project's brothers and sisters in arms.  
+These folks have made numerous contributions to Alpaca over the years:
 
 + [@cloudcms](http://github.com/cloudcms)
 + [@uzquiano](http://github.com/uzquiano)
@@ -244,6 +244,25 @@ over the years:
 + [@robsiera](https://github.com/robsiera)
 + [@cheeweep](https://github.com/cheeweep)
 + [@j123b567](https://github.com/j123b567)
++ [@scadams](https://github.com/scadams)
++ [@ryanmark](https://github.com/ryanmark)
++ [@techbrew-mc](https://github.com/techbrew-mc)
++ [@st3v](https://github.com/st3v)
++ [@basvandenheuvel](https://github.com/basvandenheuvel)
++ [@simonemedasfedro](https://github.com/simonemedasfedro)
++ [@78Gills](https://github.com/78Gills)
++ [@PirateSteve](https://github.com/PirateSteve)
++ [@dthompsonza](https://github.com/dthompsonza)
++ [@ousou](https://github.com/ousou)
++ [@azahid](https://github.com/azahid)
++ [@neilyoung](https://github.com/neilyoung)
++ [@apanagio](https://github.com/apanagio)
++ [@marcostorto](https://github.com/marcostorto)
++ [@ToreOlavKristiansen](https://github.com/ToreOlavKristiansen)
++ [@sachatrauwaen](https://github.com/sachatrauwaen)
++ [@sfesiura](https://github.com/sfesiura)
++ [@Felttrip](https://github.com/Felttrip)
++ [@gertingold](https://github.com/gertingold)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!

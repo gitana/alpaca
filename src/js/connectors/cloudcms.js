@@ -8,6 +8,32 @@
      */
     {
         /**
+         * @constructs
+         * @class Connects Alpaca to Cloud CMS
+
+         * @param {String} id Connector ID
+         * @param {Object} config Connector Config
+         */
+        constructor: function(id, config)
+        {
+            if (!config) {
+                config = {};
+            }
+
+            // if we're not otherwise configured to use a cache, we default to a memory cache with a 5 minute TTL
+            if (!config.cache) {
+                config.cache = {
+                    "type": "memory",
+                    "config": {
+                        "ttl": 1000 * 60 * 5 // five minutes
+                    }
+                };
+            }
+
+            this.base(id, config);
+        },
+
+        /**
          * Makes initial connections to data source.
          *
          * @param {Function} onSuccess onSuccess callback.
@@ -79,10 +105,17 @@
 
         bindHelperFunctions: function(branch)
         {
+            var self = this;
+
             if (!branch.loadAlpacaSchema)
             {
                 branch.loadAlpacaSchema = function(schemaIdentifier, resources, callback)
                 {
+                    var cachedDocument = self.cache(schemaIdentifier);
+                    if (cachedDocument) {
+                        return callback.call(this, null, cachedDocument);
+                    }
+
                     var uriFunction = function()
                     {
                         return branch.getUri() + "/alpaca/schema";
@@ -92,6 +125,7 @@
                     params["id"] = schemaIdentifier;
 
                     return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                        self.cache(schemaIdentifier, response);
                         callback.call(this, null, response);
                     });
                 };
@@ -101,6 +135,11 @@
             {
                 branch.loadAlpacaOptions = function(optionsIdentifier, resources, callback)
                 {
+                    var cachedDocument = self.cache(optionsIdentifier);
+                    if (cachedDocument) {
+                        return callback.call(this, null, cachedDocument);
+                    }
+
                     var uriFunction = function()
                     {
                         return branch.getUri() + "/alpaca/options";
@@ -111,6 +150,7 @@
                     params["id"] = optionsIdentifier;
 
                     return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                        self.cache(optionsIdentifier, response);
                         callback.call(this, null, response);
                     });
                 };
@@ -218,8 +258,7 @@
 
                 if (err)
                 {
-                    errorCallback(err);
-                    return;
+                    return errorCallback(err);
                 }
 
                 // TODO: cleanup schema
@@ -251,8 +290,7 @@
 
                 if (err)
                 {
-                    errorCallback(err);
-                    return;
+                    return errorCallback(err);
                 }
 
                 if (!options) {
@@ -306,7 +344,11 @@
         },
 
         /**
-         * Loads a referenced JSON schema by it's qname from Cloud CMS.
+         * Loads a referenced JSON schema.
+         *
+         * Supports qname://{namespace}/{localName}
+         *
+         * Otherwise, falls back to default implementation.
          *
          * @param {Object|String} schemaIdentifier schema to load
          * @param {Function} onSuccess onSuccess callback.
@@ -316,11 +358,36 @@
         {
             var self = this;
 
-            return self.loadSchema(schemaIdentifier, successCallback, errorCallback);
+            // if the reference comes in form "qname://{namespace}/{localName}" (which is the Cloud CMS official format)
+            // then convert to basic QName which we support here within Alpaca Cloud CMS connector
+            if (schemaIdentifier.indexOf("qname://") === 0)
+            {
+                var parts = schemaIdentifier.substring(8).split("/");
+
+                schemaIdentifier = parts[0] + ":" + parts[1];
+            }
+
+            // is it HTTP or HTTPS?
+            if ((schemaIdentifier.toLowerCase().indexOf("http://") === 0) || (schemaIdentifier.toLowerCase().indexOf("https://") === 0))
+            {
+                // load JSON from endpoint
+                return this._handleLoadJsonResource(schemaIdentifier, successCallback, errorCallback);
+            }
+
+            var resources = null;
+
+            // otherwise assume it is a QName
+            return self.loadSchema(schemaIdentifier, resources, successCallback, errorCallback);
         },
 
         /**
-         * Loads referenced JSON options by it's form key from Cloud CMS.
+         * Loads referenced JSON options.
+         *
+         * // Supports qname://{namespace}/{localName}/{formKey}
+         *
+         * At present, this ignores QName.
+         *
+         * Otherwise, falls back to default implementation.
          *
          * @param {Object|String} optionsIdentifier form to load.
          * @param {Function} onSuccess onSuccess callback.
@@ -330,7 +397,34 @@
         {
             var self = this;
 
-            return self.loadOptions(optionsIdentifier, successCallback, errorCallback);
+            // is it HTTP or HTTPS?
+            if ((optionsIdentifier.toLowerCase().indexOf("http://") === 0) || (optionsIdentifier.toLowerCase().indexOf("https://") === 0))
+            {
+                // load JSON from endpoint
+                return this._handleLoadJsonResource(optionsIdentifier, successCallback, errorCallback);
+            }
+
+            var resources = null;
+
+            // if the reference comes in form "qname://{namespace}/{localName}/{formKey}" (which is the Cloud CMS official format)
+            // then convert to basic QName which we support here within Alpaca Cloud CMS connector
+            if (optionsIdentifier.indexOf("qname://") === 0)
+            {
+                var parts = optionsIdentifier.substring(8).split("/");
+                if (parts.length > 2)
+                {
+                    // qname
+                    resources = {};
+                    resources.schemaSource = parts[0] + ":" + parts[1];
+
+                    // form id
+                    optionsIdentifier = parts[2];
+
+                    return self.loadOptions(optionsIdentifier, resources, successCallback, errorCallback);
+                }
+            }
+
+            successCallback(null);
         },
 
         /**

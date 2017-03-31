@@ -167,7 +167,11 @@
             }
 
             // set up container to be collapsible
-            $(containerEl).addClass("collapse in");
+            $(containerEl).addClass("collapse");
+            if (!this.options.collapsed)
+            {
+                $(containerEl).addClass("in");
+            }
 
             // set up legend anchor
             if (!$(anchorEl).attr("data-target")) {

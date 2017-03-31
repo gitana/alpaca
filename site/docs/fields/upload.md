@@ -60,11 +60,6 @@ an HTML5 File API compatible browser.  Which, as you might expect, doesn't inclu
 <!-- INCLUDE_API_DOCS: upload -->
 
 
-<script>
-    //var UPLOAD_ENDPOINT = "http://www.alpacajs.org/fileupload/index.php";
-    var UPLOAD_ENDPOINT = "/fileupload/index.php";
-</script>
-
 ## Example 1
 Single related file upload.
 An example of a single file upload control.  Uploads are posted to <code>/fileupload/index.php</code>.
@@ -81,9 +76,10 @@ $("#field1").alpaca({
         "type": "upload",
         "label": "Upload File",
         "upload": {
-            "url": UPLOAD_ENDPOINT,
+            "url": "http://www.alpacajs.org/fileupload/index.php",
             "autoUpload": true
-        }
+        },
+        "name": "files"
     },
     "postRender": function(control) {
         var button = $("<button class='btn btn-default'>View</button>");
@@ -135,17 +131,18 @@ $("#field2").alpaca({
                 "multiple": true,
                 "maxFileSize": 25000000,
                 "maxNumberOfFiles": 3,
-                "fileTypes": "/(\.|\/)(gif|jpe?g|png)$/i",
+                "fileTypes": "(\.|\/)(gif|jpe?g|png)$",
                 "upload": {
-                    "url": UPLOAD_ENDPOINT
-                }
+                    "url": "http://www.alpacajs.org/fileupload/index.php"
+                },
+                "name": "files"
             }
         },
         "focus": true,
         "form": {
             "attributes": {
                 "method": "POST",
-                "action": "form.php",
+                "action": "http://www.alpacajs.org/php/echo.php",
                 "enctype": "multipart/form-data"
             },
             "buttons": {
@@ -226,8 +223,9 @@ $("#field3").alpaca({
                     "formData": {
                         "path": "/folder1/folder2/{filename}"
                     },
-                    "url": UPLOAD_ENDPOINT
-                }
+                    "url": "http://www.alpacajs.org/fileupload/index.php"
+                },
+                "name": "files"
             }
         },
         "focus": true,
@@ -242,7 +240,7 @@ $("#field3").alpaca({
                     "value": "Submit"
                 }
             }
-        }
+        }        
     }
 });
 </script>
@@ -278,15 +276,16 @@ $("#field4").alpaca({
             "files": {
                 "type": "upload",
                 "maxFileSize": 1,
-                "fileTypes": "/(\.|\/)(blahblah)$/i",
+                "fileTypes": "(\.|\/)(blahblah)$",
                 "maxNumberOfFiles": 3,
                 "upload": {
-                    "url": UPLOAD_ENDPOINT
+                    "url": "http://www.alpacajs.org/fileupload/index.php"
                 },
                 "errorHandler": function(messages) {
                     $("#errorModal").find(".modal-body").empty().append("<p>" + messages.join("<br/>") + "</p>");
                     $("#errorModal").modal("show");
-                }
+                },
+                "name": "files"
             }
         },
         "focus": true,
@@ -301,7 +300,7 @@ $("#field4").alpaca({
                     "value": "Submit"
                 }
             }
-        }
+        }        
     }
 });
 </script>
@@ -350,11 +349,12 @@ $("#field5").alpaca({
             "files": {
                 "type": "upload",
                 "maxFileSize": 1,
-                "fileTypes": "/(\.|\/)(blahblah)$/i",
+                "fileTypes": "(\.|\/)(blahblah)$",
                 "maxNumberOfFiles": 3,
                 "upload": {
-                    "url": UPLOAD_ENDPOINT
-                }
+                    "url": "http://www.alpacajs.org/fileupload/index.php"
+                },
+                "name": "files"
             }
         },
         "focus": true,

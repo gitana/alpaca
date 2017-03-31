@@ -1,7 +1,7 @@
 {
   "name": "alpaca",
-  "description": "Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices. It runs simply as HTML5 or more elaborately using Bootstrap, jQuery Mobile or jQuery UI. Alpaca uses Handlebars to process JSON schema and provide developers with an extensible framework for implementing controls, wizards, layouts, I18N support and an custom data persistence.",
-  "version": "1.5.15",
+  "description": "Alpaca provides the easiest way to generate web and mobile forms on top of JSON Schema, jQuery, Bootstrap and a variety of frameworks.",
+  "version": "1.5.24",
   "main": "dist/alpaca/bootstrap/alpaca.js",
   "license": "Apache-2.0",
   "keywords": [
@@ -37,8 +37,10 @@
     "url": "https://github.com/gitana/alpaca.git"
   },
   "dependencies": {
-    "ace-builds": "1.1.7",
+    "ace-builds": "1.2.6",
+    "mjolnic-bootstrap-colorpicker": "2.3.0",
     "blueimp-canvas-to-blob": "2.1.1",
+    "blueimp-file-upload": "9.12.3",
     "blueimp-load-image": "1.13.0",
     "blueimp-tmpl": "2.5.4",
     "bootstrap": "3.3.2",
@@ -51,14 +53,13 @@
     "datatables.net-rowreorder": "1.1.0",
     "eonasdan-bootstrap-datetimepicker": "4.14.30",
     "google-code-prettify": "1.0.3",
-    "handlebars": "3.0.3",
+    "handlebars": "4.0.5",
     "handsontable": "0.11.4",
-    "jquery": "1.11.3",
-    "jquery-file-upload": "9.8.0",
+    "jquery": ">= 2.1.0",
     "jquery-hashchange": "https://github.com/gseguin/jquery-hashchange.git",
     "jquery-maskedinput": "1.3.1",
     "jquery-mobile-bower": "1.4.2",
-    "jquery-price-format": "2.0.0",
+    "jquery-price-format2": ">= 2.0.0",
     "jquery-ui": "1.11.2",
     "jqueryui-timepicker-addon": "1.5.0",
     "js-beautify": "1.5.4",
@@ -67,10 +68,14 @@
     "respond": "1.4.2",
     "tinymce": "4.1.7",
     "typeahead.js": "0.10.5",
-    "spectrum": "~1.7.1"
+    "spectrum": "~1.7.1",
+    "summernote": "0.8.1",
+    "pick-a-color-m": "1.2.3",
+    "tinycolor": "1.3.0"
   },
   "resolutions": {
-    "bootstrap": "3.2.0",
-    "jquery": "1.11.1"
+    "bootstrap": "3.3.2",
+    "jquery": "~2.1.0",
+    "tinycolor": "1.3.0"
   }
 }

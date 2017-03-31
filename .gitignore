@@ -1,18 +1,24 @@
 *.iml
 *.ipr
 *.iws
-.idea/
-build/
+.idea
+/.idea
+/build
 
 /node_modules
 /lib
-!/lib/base.js
-!/lib/validate.js
 
 /site/_site
 /site/lib
 
 notes.md
-dist/
+/dist
 
-customers/
+/customers
+/npm
+
+_old/
+
+deploy.log
+
+package.json.npm

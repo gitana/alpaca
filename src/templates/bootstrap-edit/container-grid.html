@@ -11,9 +11,9 @@
                 {{/compare}}
 
                 {{#compare ../options.toolbarStyle "button"}}
-                <button class="alpaca-array-toolbar-action {{../../view.styles.button}}" data-array-toolbar-action="{{this.action}}">
-                    {{#if this.iconClass}}
-                    <i class="{{this.iconClass}}"></i>
+                <button class="alpaca-array-toolbar-action {{../view.styles.button}}" data-array-toolbar-action="{{action}}">
+                    {{#if iconClass}}
+                    <i class="{{iconClass}}"></i>
                     {{/if}}
                     {{#if label}}{{{label}}}{{/if}}
                 </button>

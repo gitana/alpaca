@@ -7,9 +7,14 @@ sitemap:
 ---
 {% include JB/setup %}
 
-Our engineering team offers production support, development, consulting services and migration advice
+Formal production-quality Alpaca support is provided by <a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a>.
+
+<a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> offers paid production support, development, consulting services and migration advice
 as you support Alpaca forms within your own applications.  We offer a service-level agreement, rapid issue turnaround
 and an opportunity to drive the technology roadmap.
+
+Cloud CMS services are paid services designed to help you achieve your goals.  We will work with your staff and
+developers to design, implement and deliver world-class, interactive forms.
 
 <br/>
 
@@ -22,9 +27,6 @@ and an opportunity to drive the technology roadmap.
 
                 <!-- Production Support -->
                 <li class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="/images/icons/support-64.png" alt="Production Support">
-                    </a>
                     <div class="media-body">
                         <h4 class="media-heading">Production Support</h4>
                         <p>
@@ -40,9 +42,6 @@ and an opportunity to drive the technology roadmap.
 
                 <!-- Development -->
                 <li class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="/images/icons/consulting-64.png" alt="Development">
-                    </a>
                     <div class="media-body">
                         <h4 class="media-heading">Development</h4>
                         <p>
@@ -53,13 +52,10 @@ and an opportunity to drive the technology roadmap.
                     </div>
                 </li>
 
-                <!-- Technical Advisory -->
+                <!-- Consulting Services and Technical Advisory -->
                 <li class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="/images/icons/advisory-64.png" alt="Technical Advisory">
-                    </a>
                     <div class="media-body">
-                        <h4 class="media-heading">Technical Advisory</h4>
+                        <h4 class="media-heading">Consulting Services</h4>
                         <p>
                             Cloud CMS offers technical and architectural guidance to development teams building
                             mobile and web applications on modern stacks.  We will work with your team to advise on
@@ -70,9 +66,6 @@ and an opportunity to drive the technology roadmap.
 
                 <!-- Training -->
                 <li class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="/images/icons/training-64.png" alt="Training">
-                    </a>
                     <div class="media-body">
                         <h4 class="media-heading">Training</h4>
                         <p>

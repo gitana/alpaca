@@ -19,9 +19,9 @@ The layout template file
 has two <code>DIV</code> blocks with IDs <code>leftcolumn</code> and <code>rightcolumn</code>.
 The properties are placed into each column as defined by the <code>bindings</code> block.
 
-This example loads <a href="customer-profile-data.json" target="_source">data</a>,
-<a href="customer-profile-schema.json" target="_source">schema</a> and
-<a href="customer-profile-options.json" target="_source">options</a> parameters through ajax calls.
+This example loads <a href="/data/customer-profile-data.json" target="_source">data</a>,
+<a href="/data/customer-profile-schema.json" target="_source">schema</a> and
+<a href="/data/customer-profile-options.json" target="_source">options</a> parameters through ajax calls.
 
 <div id="field1"></div>
 {% raw %}

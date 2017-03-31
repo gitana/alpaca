@@ -5,15 +5,15 @@
         {{#each actions}}
 
             {{#compare ../toolbarStyle "link"}}
-                <a href="#" class="alpaca-array-toolbar-action" data-alpaca-array-toolbar-action="{{../action}}">{{{../label}}}</a>
+                <a href="#" class="alpaca-array-toolbar-action" data-alpaca-array-toolbar-action="{{action}}">{{{label}}}</a>
             {{/compare}}
 
             {{#compare ../toolbarStyle "button"}}
-                <button class="alpaca-array-toolbar-action {{../../view.styles.smallButton}}" data-alpaca-array-toolbar-action="{{../action}}">
-                    {{#if ../iconClass}}
-                    <i class="{{../iconClass}}"></i>
+                <button class="alpaca-array-toolbar-action {{../view.styles.smallButton}}" data-alpaca-array-toolbar-action="{{action}}">
+                    {{#if iconClass}}
+                    <i class="{{iconClass}}"></i>
                     {{/if}}
-                    {{#if ../label}}{{{../label}}}{{/if}}
+                    {{#if label}}{{{label}}}{{/if}}
                 </button>
             {{/compare}}
 

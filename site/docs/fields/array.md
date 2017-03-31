@@ -58,10 +58,10 @@ $("#field2").alpaca({
             "title": "Ice Cream",
             "type": "string",
             "minLength": 3,
-            "maxLength": 8,
-            "minItems": 2,
-            "maxItems": 5
-        }
+            "maxLength": 8
+        },
+        "minItems": 2,
+        "maxItems": 5        
     }
 });
 </script>
@@ -82,10 +82,10 @@ $("#field3").alpaca({
             "title": "Ice Cream",
             "type": "string",
             "minLength": 3,
-            "maxLength": 8,
-            "minItems": 2,
-            "maxItems": 5
-        }
+            "maxLength": 8
+        },
+        "minItems": 2,
+        "maxItems": 5        
     }
 });
 </script>
@@ -513,10 +513,43 @@ $("#field14").alpaca({
 });</script>
 {% endraw %}
 
-
-
-
-
-
-
-
+## Example 15
+An array field with radio selection embedded.
+<div id="field15"> </div>
+{% raw %}
+<script type="text/javascript" id="field15-script">
+$("#field15").alpaca({
+    "schema": {
+        "type": "array",
+        "title": "Layout",
+        "items": {
+            "type": "string",
+            "title": "Box Size",
+            "enum": ["Small", "Medium", "Large"]
+        }
+    },
+    "options": {
+        "type": "array",
+        "label": "Slots",
+        "items": {
+            "type": "radio",
+            "label": "Box Size",
+            "removeDefaultNone": true,
+            "vertical": false,
+            "emptySelectFirst": true,
+            "optionLabels": ["Small", "Medium", "Large"]
+        },
+        "toolbarSticky": true,
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        }
+    }
+});</script>
+{% endraw %}

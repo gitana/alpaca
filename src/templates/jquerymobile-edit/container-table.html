@@ -7,13 +7,13 @@
         {{#each arrayToolbarActions}}
 
             {{#compare ../options.toolbarStyle "link"}}
-            <a href="#" class="alpaca-array-toolbar-action" data-array-toolbar-action="{{this.action}}">{{{this.label}}}</a>
+            <a href="#" class="alpaca-array-toolbar-action" data-array-toolbar-action="{{action}}">{{{label}}}</a>
             {{/compare}}
 
             {{#compare ../options.toolbarStyle "button"}}
-            <button class="alpaca-array-toolbar-action btn {{../../view.styles.button}}" data-array-toolbar-action="{{this.action}}">
+            <button class="alpaca-array-toolbar-action btn {{../view.styles.button}}" data-array-toolbar-action="{{action}}">
                 {{#if this.iconClass}}
-                <i class="{{this.iconClass}}"></i>
+                <i class="{{iconClass}}"></i>
                 {{/if}}
                 {{#if label}}{{{label}}}{{/if}}
             </button>
@@ -49,8 +49,8 @@
                         <div class="alpaca-array-item-actions btn-group">
                             {{#each ../arrayItemActions}}
                             <button class="alpaca-array-item-action {{../../view.styles.button}}" data-array-item-action="{{action}}">
-                                {{#if this.iconClass}}
-                                <i class="{{this.iconClass}}"></i>
+                                {{#if iconClass}}
+                                <i class="{{iconClass}}"></i>
                                 {{/if}}
                                 {{#if label}}{{{label}}}{{/if}}
                             </button>

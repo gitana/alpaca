@@ -146,6 +146,9 @@
                     self.editor.setShowPrintMargin(false);
 
                     // set data onto editor
+                    if (!self.data) {
+                        self.data = "";
+                    }
                     self.editor.setValue(self.data);
                     self.editor.clearSelection();
 
@@ -325,6 +328,10 @@
                 {
                     // format
                     value = JSON.stringify(value, null, "    ");
+                }
+
+                if (!value) {
+                    value = "";
                 }
 
                 this.editor.setValue(value);

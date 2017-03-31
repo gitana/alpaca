@@ -340,6 +340,11 @@
             }
         },
 
+        setupField: function(callback)
+        {
+            callback();
+        },
+
         /**
          * Registers an event listener.
          *
@@ -538,12 +543,16 @@
 
             this.setup();
 
-            this._render(function() {
+            this.setupField(function() {
 
-                // trigger the render event
-                self.trigger("render");
+                self._render(function() {
 
-                callback();
+                    // trigger the render event
+                    self.trigger("render");
+
+                    callback();
+                });
+
             });
         },
 
@@ -621,6 +630,7 @@
                         }
 
                         self.form = form;
+                        var me = self;
 
                         // allow any post-rendering facilities to kick in
                         self.postRender(function() {
@@ -865,6 +875,11 @@
                         return false;
                     });
 
+                    // fire disable function
+                    if (self.disable) {
+                        self.disable();
+                    }
+
                 };
 
                 // readonly
@@ -1012,16 +1027,19 @@
         {
             var self = this;
 
+            // store back data
+            var _data = self.data = self.getValue();
+
             // remember this stuff
             var oldDomEl = self.domEl;
             var oldField = self.field;
-            var oldControl = self.control;
-            var oldContainer = self.container;
-            var oldForm = self.form;
+            //var oldControl = self.control;
+            //var oldContainer = self.container;
+            //var oldForm = self.form;
 
             // insert marker element before current field to mark where we'll render
             var markerEl = $("<div></div>");
-            $(oldDomEl).before(markerEl);
+            $(oldField).before(markerEl);
 
             // temp domEl
             self.domEl = $("<div style='display: none'></div>");
@@ -1034,7 +1052,7 @@
             // disable all buttons on our current field
             // we do this because repeated clicks could cause trouble while the field is in some half-state
             // during refresh
-            $(oldDomEl).find("button").prop("disabled", true);
+            $(oldField).find("button").prop("disabled", true);
 
             // mark that we are initializing
             this.initializing = true;
@@ -1042,53 +1060,75 @@
             // re-setup the field
             self.setup();
 
-            // render
-            self._render(function() {
+            self.setupField(function() {
 
-                // move ahead of marker
-                $(markerEl).before(self.domEl);
+                // render
+                self._render(function() {
 
-                // hide our old element
-                $(oldDomEl).hide();
+                    // move ahead of marker
+                    $(markerEl).before(self.field);
 
-                // show our new element
-                $(self.domEl).show();
+                    // reset the domEl
+                    self.domEl = oldDomEl;
 
-                // remove marker
-                $(markerEl).remove();
+                    // copy classes from oldField onto field
+                    var oldClasses = $(oldField).attr("class");
+                    if (oldClasses) {
+                        $.each(oldClasses.split(" "), function(i, v) {
+                            if (v && !v.indexOf("alpaca-") === 0) {
+                                $(self.field).addClass(v);
+                            }
+                        });
+                    }
 
-                // mark that we're refreshed
-                self.refreshed = true;
+                    // hide the old field
+                    $(oldField).hide();
 
-                // fire the "ready" event
-                Alpaca.fireReady(self);
+                    // remove marker
+                    $(markerEl).remove();
 
-                if (callback)
-                {
-                    callback();
-                }
+                    // mark that we're refreshed
+                    self.refreshed = true;
 
-                // afterwards...
+                    // this is apparently needed for objects and arrays
+                    if (typeof(_data) !== "undefined")
+                    {
+                        if (Alpaca.isObject(_data) || Alpaca.isArray(_data))
+                        {
+                            self.setValue(_data);
+                        }
+                    }
 
-                // now clean up old field elements
-                // the trick here is that we want to make sure we don't trigger the bound "destroyed" event handler
-                // for the old dom el.
-                //
-                // the reason is that we have oldForm -> Field (with oldDomEl)
-                //                        and form -> Field (with domEl)
-                //
-                // cleaning up "oldDomEl" causes "Field" to cleanup which causes "oldForm" to cleanup
-                // which causes "Field" to cleanup which causes "domEl" to clean up (and also "form")
-                //
-                // here we just want to remove the dom elements for "oldDomEl" and "oldForm" without triggering
-                // the special destroyer event
-                //
-                // appears that we can do this with a second argument...?
-                //
-                $(oldDomEl).remove(undefined, {
-                    "nodestroy": true
+                    // fire the "ready" event
+                    Alpaca.fireReady(self);
+
+                    if (callback)
+                    {
+                        callback.call(self);
+                    }
+
+                    // afterwards...
+
+                    // now clean up old field elements
+                    // the trick here is that we want to make sure we don't trigger the bound "destroyed" event handler
+                    // for the old dom el.
+                    //
+                    // the reason is that we have oldForm -> Field (with oldDomEl)
+                    //                        and form -> Field (with domEl)
+                    //
+                    // cleaning up "oldDomEl" causes "Field" to cleanup which causes "oldForm" to cleanup
+                    // which causes "Field" to cleanup which causes "domEl" to clean up (and also "form")
+                    //
+                    // here we just want to remove the dom elements for "oldDomEl" and "oldForm" without triggering
+                    // the special destroyer event
+                    //
+                    // appears that we can do this with a second argument...?
+                    //
+                    $(oldField).remove(undefined, {
+                        "nodestroy": true
+                    });
+
                 });
-
             });
         },
 
@@ -1354,9 +1394,12 @@
             {
                 return function(callback)
                 {
-                    Alpaca.compileValidationContext(field, function(context) {
-                        contexts.push(context);
-                        callback();
+                    // run on the next tick
+                    Alpaca.nextTick(function() {
+                        Alpaca.compileValidationContext(field, function(context) {
+                            contexts.push(context);
+                            callback();
+                        });
                     });
                 };
             };
@@ -1387,8 +1430,8 @@
             // add ourselves in last
             functions.push(functionBuilder(this, contexts));
 
-            // now run all of the functions
-            Alpaca.series(functions, function(err) {
+            // now run all of the functions in parallel
+            Alpaca.parallel(functions, function(err) {
 
                 // contexts now contains all of the validation results
 
@@ -1638,6 +1681,23 @@
          */
         enable: function() {
             // OVERRIDE
+        },
+
+        /**
+         * @returns {boolean} whether the field is disabled
+         */
+        isDisabled: function()
+        {
+            // OVERRIDE
+            return false;
+        },
+
+        /**
+         * @returns {boolean} whether the field is enabled
+         */
+        isEnabled: function()
+        {
+            return !this.isDisabled();
         },
 
         /**
@@ -2642,7 +2702,7 @@
                     "optionLabels": {
                         "type": "array",
                         "items": {
-                            "type": "string"
+                            "type": "text"
                         }
                     },
                     "view": {

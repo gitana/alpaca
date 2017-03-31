@@ -20,35 +20,78 @@
          */
         setup: function()
         {
-            this.base();
-        },
+            var self = this;
 
-        /**
-         * @see Alpaca.ControlField#getControlValue
-         */
-        getControlValue: function()
-        {
-            var val = this._getControlVal(true);
-            if (typeof(val) === "undefined")
+            this.base();
+
+            if (self.schema["type"] && self.schema["type"] === "array")
             {
-                val = this.data;
+                self.options.multiple = true;
             }
 
-            return this.convertValue(val);
+            // automatically turn on "hideNone" if we're in multiselect mode and have the multiselect plugin
+            if (self.options.multiple && $.fn.multiselect)
+            {
+                if (typeof(self.options.hideNone) === "undefined")
+                {
+                    self.options.hideNone = true;
+                }
+            }
+
+            // offer some backward compability here as older version of Alpaca used to incorrectly look for
+            // maxItems and minItems on the schema.items subobject.
+            // if not defined properly, we offer some automatic forward migration of these properties
+            if (this.schema.items && this.schema.items.maxItems && typeof(this.schema.maxItems) === "undefined") {
+                this.schema.maxItems = this.schema.items.maxItems;
+                delete this.schema.items.maxItems;
+            }
+            if (this.schema.items && this.schema.items.minItems && typeof(this.schema.minItems) === "undefined") {
+                this.schema.minItems = this.schema.items.minItems;
+                delete this.schema.items.minItems;
+            }
+
+            if (!self.options.multiselect && $.fn.multiselect)
+            {
+                self.options.multiselect = {};
+            }
+
+            if (self.options.multiselect && typeof(self.options.multiselect.disableIfEmpty) === "undefined")
+            {
+                self.options.multiselect.disableIfEmpty = true;
+            }
         },
+
+        getValue: function()
+        {
+            var self = this;
+
+            if (self.schema.type === "object")
+            {
+                return this.data;
+            }
+
+            return this.base();
+        },
+
 
         /**
          * @see Alpaca.Field#setValue
          */
         setValue: function(val)
         {
+            var self = this;
+
+            var newScalarVal = self.convertToScalarValue(val);
+            var currentScalarVal = self.convertToScalarValue(self.getValue());
+
             if (Alpaca.isArray(val))
             {
-                if (!Alpaca.compareArrayContent(val, this.getValue()))
+                // if values are different, then set
+                if (!Alpaca.compareArrayContent(newScalarVal, currentScalarVal))
                 {
-                    if (!Alpaca.isEmpty(val) && this.control)
+                    if (!Alpaca.isEmpty(newScalarVal) && this.control)
                     {
-                        this.control.val(val);
+                        this.control.val(newScalarVal);
                     }
 
                     this.base(val);
@@ -56,17 +99,21 @@
             }
             else
             {
-                if (val !== this.getValue())
+                var apply = false;
+                if (Alpaca.isEmpty(newScalarVal) && Alpaca.isEmpty(currentScalarVal))
                 {
-                    /*
-                    if (!Alpaca.isEmpty(val) && this.control)
+                    apply = true;
+                }
+                else if (newScalarVal !== currentScalarVal)
+                {
+                    apply = true;
+                }
+
+                if (apply)
+                {
+                    if (self.control && typeof(newScalarVal) !== "undefined" && newScalarVal !== null)
                     {
-                        this.control.val(val);
-                    }
-                    */
-                    if (this.control && typeof(val) != "undefined" && val != null)
-                    {
-                        this.control.val(val);
+                        self.control.val(newScalarVal);
                     }
 
                     this.base(val);
@@ -120,31 +167,55 @@
             }
         },
 
+        prepareControlModel: function(callback) {
+            var self = this;
+
+            this.base(function (model) {
+
+                model.selectOptions = self.selectOptions;
+
+                callback(model);
+            });
+        },
+
         beforeRenderControl: function(model, callback)
         {
             var self = this;
 
             this.base(model, function() {
 
-                if (self.schema["type"] && self.schema["type"] === "array")
+                // build out "displayableText"
+                var displayableTexts = [];
+                var map = {};
+                for (var i = 0; i < model.selectOptions.length; i++)
                 {
-                    self.options.multiple = true;
+                    map[model.selectOptions[i].value] = model.selectOptions[i].text;
                 }
+
+                if (Alpaca.isArray(model.data))
+                {
+                    for (var i = 0; i < model.data.length; i++)
+                    {
+                        var text = map[model.data[i]];
+                        if (text)
+                        {
+                            displayableTexts.push(text);
+                        }
+                    }
+                }
+                else
+                {
+                    var text = map[model.data];
+                    if (text)
+                    {
+                        displayableTexts.push(text);
+                    }
+                }
+
+                model.displayableText = displayableTexts.join(", ");
 
                 callback();
 
-            });
-        },
-
-        prepareControlModel: function(callback)
-        {
-            var self = this;
-
-            this.base(function(model) {
-
-                model.selectOptions = self.selectOptions;
-
-                callback(model);
             });
         },
 
@@ -169,7 +240,7 @@
                 }
 
                 // if we are in multiple mode and the bootstrap multiselect plugin is available, bind it in
-                if (self.options.multiple && $.fn.multiselect)
+                if (self.options.multiple && $.fn.multiselect && !self.isDisplayOnly())
                 {
                     var settings = null;
                     if (self.options.multiselect) {
@@ -186,10 +257,6 @@
                         {
                             settings.nonSelectedText = self.options.noneLabel;
                         }
-                    }
-                    if (self.options.hideNone)
-                    {
-                        delete settings.nonSelectedText;
                     }
 
                     $(self.getControlEl()).multiselect(settings);
@@ -234,10 +301,12 @@
 
                     $.each(val, function(i,v) {
 
-                        if ($.inArray(v, _this.schema["enum"]) <= -1)
+                        var scalarValue = _this.convertToScalarValue(v);
+
+                        var inArray = Alpaca.inArray(_this.schema["enum"], scalarValue);
+                        if (!inArray)
                         {
                             isValid = false;
-                            return false;
                         }
 
                     });
@@ -251,7 +320,9 @@
                         val = val[0];
                     }
 
-                    return ($.inArray(val, this.schema["enum"]) > -1);
+                    var scalarValue = _this.convertToScalarValue(val);
+
+                    return Alpaca.inArray(this.schema["enum"], scalarValue);
                 }
             }
             else
@@ -263,16 +334,25 @@
         /**
          * @see Alpaca.Field#onChange
          */
-        onChange: function(e)
-        {
-            this.base(e);
+        onChange: function(e) {
 
-            var _this = this;
+            var self = this;
 
-            Alpaca.later(25, this, function() {
-                var v = _this.getValue();
-                _this.setValue(v);
-                _this.refreshValidationState();
+            var scalarValue = self.getControlValue();
+
+            self.convertToDataValue(scalarValue, function(err, data) {
+
+                // store back into data element
+                self.data = data;
+
+                // store scalar value onto control
+                self.control.val(scalarValue);
+
+                // trigger observables and updates
+                self.updateObservable();
+                self.triggerUpdate();
+                self.refreshValidationState();
+
             });
         },
 
@@ -282,9 +362,9 @@
          */
         _validateMinItems: function()
         {
-            if (this.schema.items && this.schema.items.minItems)
+            if (this.schema.minItems && this.schema.minItems >= 0)
             {
-                if ($(":selected",this.control).length < this.schema.items.minItems)
+                if ($(":selected",this.control).length < this.schema.minItems)
                 {
                     return false;
                 }
@@ -299,9 +379,9 @@
          */
         _validateMaxItems: function()
         {
-            if (this.schema.items && this.schema.items.maxItems)
+            if (this.schema.maxItems && this.schema.maxItems >= 0)
             {
-                if ($(":selected",this.control).length > this.schema.items.maxItems)
+                if ($(":selected",this.control).length > this.schema.maxItems)
                 {
                     return false;
                 }
@@ -321,13 +401,13 @@
 
             var status = this._validateMaxItems();
             valInfo["tooManyItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.items.maxItems]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.maxItems]),
                 "status": status
             };
 
             status = this._validateMinItems();
             valInfo["notEnoughItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("notEnoughItems"), [this.schema.items.minItems]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("notEnoughItems"), [this.schema.minItems]),
                 "status": status
             };
 
@@ -351,7 +431,40 @@
                     onFocusCallback(this);
                 }
             }
+        },
+
+        /**
+         * @override
+         */
+        disable: function()
+        {
+            var self = this;
+
+            this.base();
+
+            if (self.options.multiselect)
+            {
+                $(self.getControlEl()).multiselect("disable");
+            }
+        },
+
+        /**
+         * @override
+         */
+        enable: function()
+        {
+            var self = this;
+
+            this.base();
+
+            if (self.options.multiselect)
+            {
+                $(self.getControlEl()).multiselect("enable");
+            }
         }
+
+
+
 
         /* builder_helpers */
         ,

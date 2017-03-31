@@ -23,18 +23,20 @@
                 // sort the enumerated values
                 self.sortEnum();
 
+                var optionLabels = self.getOptionLabels();
+
                 $.each(self.getEnum(), function(index, value)
                 {
                     var text = value;
-                    if (self.options.optionLabels)
+                    if (optionLabels)
                     {
-                        if (!Alpaca.isEmpty(self.options.optionLabels[index]))
+                        if (!Alpaca.isEmpty(optionLabels[index]))
                         {
-                            text = self.options.optionLabels[index];
+                            text = optionLabels[index];
                         }
-                        else if (!Alpaca.isEmpty(self.options.optionLabels[value]))
+                        else if (!Alpaca.isEmpty(optionLabels[value]))
                         {
-                            text = self.options.optionLabels[value];
+                            text = optionLabels[value];
                         }
                     }
 
@@ -52,9 +54,10 @@
             {
                 if ((self.options.removeDefaultNone === true))
                 {
-                    if (self.schema.enum && self.schema.enum.length > 0)
+                    var enumValues = self.getEnum();
+                    if (enumValues && enumValues.length > 0)
                     {
-                        self.data = self.schema.enum[0];
+                        self.data = enumValues[0];
                     }
                 }
             }
@@ -99,60 +102,28 @@
             });
         },
 
-
-        /**
-         * Gets schema enum property.
-         *
-         * @returns {Array|String} Field schema enum property.
-         */
-        getEnum: function()
-        {
-            if (this.schema && this.schema["enum"])
-            {
-                return this.schema["enum"];
-            }
-        },
-
-        /**
-         * @see Alpaca.Field#getValue
-         */
-        convertValue: function(val)
-        {
-            var _this = this;
-
-            if (Alpaca.isArray(val))
-            {
-                $.each(val, function(index, itemVal) {
-                    $.each(_this.selectOptions, function(index2, selectOption) {
-
-                        if (selectOption.value === itemVal)
-                        {
-                            val[index] = selectOption.value;
-                        }
-
-                    });
-                });
-            }
-            else
-            {
-                $.each(this.selectOptions, function(index, selectOption) {
-
-                    if (selectOption.value === val)
-                    {
-                        val = selectOption.value;
-                    }
-
-                });
-            }
-            return val;
-        },
-
         /**
          * @see Alpaca.ControlField#beforeRenderControl
          */
         beforeRenderControl: function(model, callback)
         {
             var self = this;
+
+            var completionFn = function()
+            {
+                var scalarValue = self.convertToScalarValue(self.data);
+
+                for (var i = 0; i < self.selectOptions.length; i++)
+                {
+                    if (scalarValue === self.selectOptions[i].value)
+                    {
+                        self.selectOptions[i].selected = true;
+                        break;
+                    }
+                }
+
+                callback();
+            };
 
             this.base(model, function() {
 
@@ -166,25 +137,38 @@
                         if (self.options.useDataSourceAsEnum)
                         {
                             // now build out the enum and optionLabels
-                            self.schema.enum = [];
-                            self.options.optionLabels = [];
+                            var _enum = [];
+                            var _optionLabels = [];
                             for (var i = 0; i < self.selectOptions.length; i++)
                             {
-                                self.schema.enum.push(self.selectOptions[i].value);
-                                self.options.optionLabels.push(self.selectOptions[i].text);
+                                _enum.push(self.selectOptions[i].value);
+                                _optionLabels.push(self.selectOptions[i].text);
                             }
+
+                            self.setEnum(_enum);
+                            self.setOptionLabels(_optionLabels);
                         }
 
-                        callback();
+                        completionFn();
 
                     });
                 }
                 else
                 {
-                    callback();
+                    completionFn();
                 }
 
             });
+        },
+
+        convertToScalarValue: function(data)
+        {
+            return data;
+        },
+
+        convertToDataValue: function(scalarValue, callback)
+        {
+            callback(null, scalarValue);
         }
 
 
@@ -215,11 +199,6 @@
         getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(), {
                 "properties": {
-                    "optionLabels": {
-                        "title": "Option Labels",
-                        "description": "Labels for options. It can either be a map object or an array field that maps labels to items defined by enum schema property one by one.",
-                        "type": "array"
-                    },
                     "dataSource": {
                         "title": "Option Datasource",
                         "description": "Datasource for generating list of options.  This can be a string or a function.  If a string, it is considered to be a URI to a service that produces a object containing key/value pairs or an array of elements of structure {'text': '', 'value': ''}.  This can also be a function that is called to produce the same list.",
@@ -260,10 +239,6 @@
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
                 "fields": {
-                    "optionLabels": {
-                        "itemLabel":"Label",
-                        "type": "array"
-                    },
                     "dataSource": {
                         "type": "text"
                     },
