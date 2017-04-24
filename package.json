@@ -43,7 +43,7 @@
     "gulp-wrap": "^0.11.0",
     "gulp-wrap-umd": "^0.2.0",
     "jquery": "*",
-    "jsdom": "*",
+    "jsdom": "^9.12.0",
     "jshint": "*",
     "jshint-stylish": "*",
     "lodash": "*",
