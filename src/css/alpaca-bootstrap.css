@@ -314,3 +314,7 @@ legend.alpaca-container-label
     margin-top: 20px;
 }
 
+.alpaca-control.disabled label
+{
+    color: #aaa;
+}

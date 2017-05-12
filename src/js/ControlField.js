@@ -603,6 +603,7 @@
 
                 if (this.control && this.control.length > 0)
                 {
+                    $(this.control).addClass("disabled");
                     $(this.control).prop("disabled", true);
                 }
             },
@@ -620,6 +621,7 @@
 
                 if (this.control && this.control.length > 0)
                 {
+                    $(this.control).removeClass("disabled");
                     $(this.control).prop("disabled", false);
                 }
             },
