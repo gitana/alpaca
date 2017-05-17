@@ -318,9 +318,11 @@
         {
             var self = this;
 
+            value = self.convertToScalarValue(value);
+
             // value can be a boolean, string ("true"), string ("a,b,c") or an array of values
 
-            var applyScalarValue = function(value)
+            var applySingleValue = function(value)
             {
                 if (Alpaca.isString(value)) {
                     value = (value === "true");
@@ -368,12 +370,12 @@
                 // boolean
                 if (typeof(value) === "boolean")
                 {
-                    applyScalarValue(value);
+                    applySingleValue(value);
                     applied = true;
                 }
                 else if (typeof(value) === "string")
                 {
-                    applyScalarValue(value);
+                    applySingleValue(value);
                     applied = true;
                 }
             }
@@ -416,7 +418,10 @@
                 return true;
             }
 
-            var val = self.getValue();
+            var val = self.data;
+
+            val = self.convertToScalarValue(val);
+
             if (!self.isRequired() && Alpaca.isValEmpty(val))
             {
                 return true;
@@ -463,6 +468,42 @@
         getType: function() {
             return "boolean";
         },
+
+        /**
+         * @see Alpaca.Field#onChange
+         */
+        onChange: function(e) {
+
+            var self = this;
+
+            var scalarValue = self.getControlValue();
+
+            self.convertToDataValue(scalarValue, function(err, data) {
+
+                // store back into data element
+                self.data = data;
+
+                // store scalar value onto control
+                self.control.val(scalarValue);
+
+                // trigger observables and updates
+                self.updateObservable();
+                self.triggerUpdate();
+                self.refreshValidationState();
+
+            });
+        },
+
+        convertToScalarValue: function(data)
+        {
+            return data;
+        },
+
+        convertToDataValue: function(scalarValue, callback)
+        {
+            callback(null, scalarValue);
+        },
+
 
 
         /* builder_helpers */
