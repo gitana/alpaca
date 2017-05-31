@@ -46,6 +46,13 @@
                 this.options.actionbarStyle = "top";
             }
 
+            if (!this.options.toolbarPosition) {
+                this.options.toolbarPosition = Alpaca.isEmpty(this.view.toolbarPosition) ? "top" : this.view.toolbarPosition;
+            }
+            if (!this.options.toolbarPosition) {
+                this.options.toolbarPosition = "top";
+            }
+
             if (!this.schema.items)
             {
                 this.schema.items = {};
@@ -535,6 +542,7 @@
                             "name": control.name,
                             "parentFieldId": self.getId(),
                             "actionbarStyle": self.options.actionbarStyle,
+							"toolbarLocation": self.options.toolbarLocation,
                             "view": self.view,
                             "data": itemData
                         });
@@ -1748,6 +1756,12 @@
                         "description": "The kind of top-level toolbar to render for the array field.  Either 'button' or 'link'.",
                         "type": "string",
                         "default": "button"
+                    },
+                    "toolbarPosition": {
+                        "title": "Toolbar Position",
+                        "description": "Location of the top-level toolbar to render for the array field.  Either 'top' or 'bottom'.",
+                        "type": "string",
+                        "default": "top"
                     },
                     "actionbarStyle": {
                         "title": "Actionbar Style",

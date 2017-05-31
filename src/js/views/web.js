@@ -108,8 +108,17 @@
             {
                 var insertionPointEl = $("<div class='" + Alpaca.MARKER_CLASS_ARRAY_TOOLBAR + "' " + Alpaca.MARKER_DATA_ARRAY_TOOLBAR_FIELD_ID + "='" + self.getId() + "'></div>");
 
-                existingToolbar.before(insertionPointEl);
-                existingToolbar.remove();
+				if (self.options.toolbarPosition && self.options.toolbarPosition === "bottom") {
+					var containerLastItem = $(self.getContainerEl()).children(".alpaca-container-item-last");
+					if (containerLastItem.length > 0){
+						containerLastItem.after(insertionPointEl);
+					} else {
+						existingToolbar.before(insertionPointEl);
+					}
+				} else {
+					existingToolbar.before(insertionPointEl);
+				}
+				existingToolbar.remove();
             }
         }
         else
@@ -126,6 +135,7 @@
                         "actions": self.toolbar.actions,
                         "id": self.getId(),
                         "toolbarStyle": self.options.toolbarStyle,
+                        "toolbarPosition": self.options.toolbarPosition,
                         "view": self.view
                     });
 

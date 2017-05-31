@@ -1,15 +1,17 @@
 <script type="text/x-handlebars-template">
 
     <div>
-
+		{{#compare options.toolbarPosition "top"}}
         {{#arrayToolbar}}{{/arrayToolbar}}
+		{{/compare}}
 
         {{#each items}}
-
             {{#item}}{{/item}}
-
         {{/each}}
 
+		{{#compare options.toolbarPosition "bottom"}}
+        {{#arrayToolbar}}{{/arrayToolbar}}
+		{{/compare}}
     </div>
 
 </script>
