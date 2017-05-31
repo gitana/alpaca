@@ -131,6 +131,26 @@ We've provided chapters here on a variety of interesting API-related topics.
     </div>
 </div>
 
+<a name="cookbook"></a>
+<h2>Cookbook - More Examples</h2>
+Here are some more examples of more complex form configurations.
+
+<div class="row">
+    <div class="col-md-4">
+        <ul>
+            <li><a href="{{ BASE_PATH }}/docs/cookbook/nested-tables.html">Nested Tables</a></li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+        </ul>
+    </div>
+</div>
+
 <a name="api"></a>
 <h2>JavaScript Documentation</h2>
 We generate JSDoc for all of the Alpaca source code.

@@ -138,7 +138,15 @@
     };
     helpers["arrayActionbar"] = function(options)
     {
-        return "<div class='" + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR + "' " + Alpaca.MARKER_DATA_ARRAY_ITEM_KEY + "='" + this.name + "' " + Alpaca.MARKER_DATA_ARRAY_ITEM_PARENT_FIELD_ID + "='" + this.parentFieldId + "'></div>";
+        var html = "<div class='" + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR + "' " + Alpaca.MARKER_DATA_ARRAY_ITEM_KEY + "='" + this.name + "'";
+        html += " " + Alpaca.MARKER_DATA_ARRAY_ITEM_FIELD_ID + "='" + this.id + "'";
+        if (this.parentFieldId)
+        {
+            html += " " + Alpaca.MARKER_DATA_ARRAY_ITEM_PARENT_FIELD_ID + "='" + this.parentFieldId + "'"
+        }
+        html += "></div>";
+
+        return html;
     };
     Handlebars.registerHelper("arrayToolbar", helpers["arrayToolbar"]);
     Handlebars.registerHelper("arrayActionbar", helpers["arrayActionbar"]);

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Alpaca Support
+title: Paid Production Support
 #tagline: Easy Forms for jQuery
 sitemap:
   priority: 1.0
@@ -33,9 +33,6 @@ developers to design, implement and deliver world-class, interactive forms.
                             Cloud CMS offers production support with a service-level agreement that is catered to
                             the needs of your team and your project.  Production support includes bug fixes,
                             feature prioritization and roadmap visibility as we plan out each release of Alpaca.
-                        </p>
-                        <p>
-                            Alpaca Production Support starts at $50 / month.
                         </p>
                     </div>
                 </li>

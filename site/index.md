@@ -47,7 +47,7 @@ Alpaca is open-source and provided to you under the Apache 2.0 license.  It is s
 <pre class="prettyprint linenums">
 &lt;!-- dependencies (jquery, handlebars and bootstrap) --&gt;
 &lt;script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"&gt;&lt;/script&gt;
 &lt;link type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"/&gt;
 &lt;script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"&gt;&lt;/script&gt;
 
@@ -301,13 +301,35 @@ If you're interested in presenting Alpaca at a local meetup, <a href="support.ht
 
 Alpaca is truly a community project; we welcome your involvement!
 
-If you've found a bug in Alpaca, we ask you to visit our <a href="https://github.com/gitana/alpaca/issues" target="_blank">GitHub Issues page</a>
-and let the team know.  We can then prioritize our development tasks, merge fixes and get things sorted for upcoming releases.
- 
-If you've fixed something, we ask that you <a href="https://github.com/gitana/alpaca" target="_blank">submit a pull request</a>.  And then
-pat yourself on the back.  You've made the world a better place!
+When contributing, please attempt to match the code style already in the codebase.
+Note that we use four spaces per indentation stop.
 
-Learn more about how you can <a href="contribute.html">contribute to Alpaca</a>.
+For more thoughts on code style, see https://github.com/rwldrn/idiomatic.js/.
+
+### Best Practices
+
+As a best practice, leave space in your code so as to make things more human-readable.  The goal with any code
+contributions is to have them be useful and consumable by others.  A good strategy therefore is to make things as
+easy to understand as possible.  We don't like concise code simply for the sake of being concise.  Keep it nice
+and readable.
+
+When fixing bugs and adding features, when appropriate please also:
+
+- Provide inline comments so that others can understand what your code is doing
+- Updated related doc comments (we use JSDoc 3)
+- Add/update any related unit tests (if applicable)
+- Add/update any documentation pages
+
+### Make it happen, captain
+
+If you're new to the project, check out our
+<a href="https://github.com/gitana/alpaca/labels/good%20first%20contribution" target="_blank">good first contribution</a>
+issues for some places to dip your toe in the water.
+
+If you're new to open source in general, check out
+<a href="https://guides.github.com/activities/contributing-to-open-source/index.html" target="_blank">GitHub's open source intro guide</a>.
+
+Once you're ready, submit a pull request!  The core team will work with you to review your request and merge your feature in.
 
 <script>
 $("TABLE.stack").dataTable({

@@ -167,7 +167,7 @@ $("#field6").alpaca({
 
 
 ## Example 7
-Array field name.
+Array field name.  Here we set the `toolbarPosition` option to `bottom` to position the toolbar below the array.
 <div id="field7"> </div>
 {% raw %}
 <script type="text/javascript" id="field7-script">
@@ -189,6 +189,7 @@ $("#field7").alpaca({
     },
     "options" : {
         "toolbarSticky": true,
+        "toolbarPosition": "bottom",
         "items": {
             "fields": {
                 "type": {

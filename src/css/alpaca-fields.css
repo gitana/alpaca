@@ -334,3 +334,8 @@ table.dt-rowReorder-float .alpaca-table-reorder-draggable-cell
 {
     white-space: normal;
 }
+
+.alpaca-field-table > legend
+{
+    display: none;
+}

@@ -143,6 +143,7 @@
                 //
                 $.fn.dataTableExt.afnFiltering.push(function(settings, fields, fieldIndex, data, dataIndex) {
 
+                    // TODO
                     var text = $(settings.nTableWrapper).find(".dataTables_filter input[type='search']").val();
 
                     if (!text) {
@@ -231,6 +232,13 @@
             });
         },
 
+        getTableEl: function()
+        {
+            var self = this;
+
+            return $($(self.container).find("table")[0]);
+        },
+
         /**
          * The table field uses the "array" container convention to render the DOM.  As such, nested objects are wrapped
          * in "field" elements that result in slightly incorrect table structures.  Part of the reason for this is that
@@ -250,7 +258,7 @@
                 self.cleanupDomInjections();
 
                 // apply styles of underlying "table"
-                var table = $(this.container).find("table");
+                var table = self.getTableEl();
                 self.applyStyle("table", table);
 
                 // if the DataTables plugin is available, use it
@@ -318,7 +326,7 @@
                             }
 
                             // table dom element
-                            var table = $(self.container).find("table");
+                            var table = self.getTableEl();
 
                             // data table reference
                             self._dt = $(table).DataTable(self.options.datatables);
@@ -386,7 +394,7 @@
                 }
 
                 // walk through headers and allow for callback-based config
-                $(table).find("thead > tr > th[data-header-id]").each(function() {
+                $(table).children("thead > tr > th[data-header-id]").each(function() {
 
                     var key = $(this).attr("data-header-id");
 
@@ -417,6 +425,8 @@
 
         cleanupDomInjections: function()
         {
+            var self = this;
+
             /**
              * Takes a DOM element and merges it "up" to the parent element.  Data attributes and some classes are
              * copied from DOM element into the parent element.  The children of the DOM element are added to the
@@ -458,18 +468,20 @@
                 }
             };
 
+            var trElements = self.getTableEl().children("tbody").children("tr");
+
             // find each TR's .alpaca-field and merge up
-            this.getFieldEl().find("tr > .alpaca-field").each(function() {
+            $(trElements).children(".alpaca-field").each(function() {
                 mergeElementUp(this);
             });
 
             // find each TR's .alpaca-container and merge up
-            this.getFieldEl().find("tr > .alpaca-container").each(function() {
+            $(trElements).children(".alpaca-container").each(function() {
                 mergeElementUp(this);
             });
 
-            // find the action bar and slip a TD around it
-            var alpacaArrayActionbar = this.getFieldEl().find("." + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR);
+            // find any action bars for our field and slip a TD around them
+            var alpacaArrayActionbar = this.getFieldEl().find("." + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR + "[" + Alpaca.MARKER_DATA_ARRAY_ITEM_FIELD_ID + "='" + self.getId() + "']");
             if (alpacaArrayActionbar.length > 0)
             {
                 alpacaArrayActionbar.each(function() {
@@ -479,8 +491,8 @@
                 });
             }
 
-            // find the alpaca-table-reorder-draggable-cell and slip a TD around it
-            var alpacaTableReorderDraggableCells = this.getFieldEl().find(".alpaca-table-reorder-draggable-cell");
+            // find any alpaca-table-reorder-draggable-cells and slip a TD around them
+            var alpacaTableReorderDraggableCells = this.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-draggable-cell");
             if (alpacaTableReorderDraggableCells.length > 0)
             {
                 alpacaTableReorderDraggableCells.each(function() {
@@ -491,8 +503,11 @@
                 });
             }
 
-            // find the alpaca-table-reorder-index-cell, slip a TD around it and insert value
-            var alpacaTableReorderIndexCells = this.getFieldEl().find(".alpaca-table-reorder-index-cell");
+            // find any alpaca-table-reorder-draggable-cell elements and slip a TD around them
+            var alpacaTableReorderIndexCells = this.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-draggable-cell");
+
+            // find any alpaca-table-reorder-index-cell elements and slip a TD around them
+            var alpacaTableReorderIndexCells = this.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-index-cell");
             if (alpacaTableReorderIndexCells.length > 0)
             {
                 alpacaTableReorderIndexCells.each(function(i) {
@@ -503,7 +518,7 @@
             }
 
             // find anything else with .alpaca-merge-up and merge up
-            this.getFieldEl().find(".alpaca-merge-up").each(function() {
+            this.getFieldEl().find(".alpaca-merge-up [data-merge-up-field-id='" + self.getId() + "']").each(function() {
                 mergeElementUp(this);
             });
         },
@@ -512,7 +527,7 @@
         {
             var self = this;
 
-            return $(self.container).find("table tbody");
+            return self.getTableEl().children("tbody");
         },
 
         doAfterAddItem: function(item, callback)
@@ -541,6 +556,7 @@
                 // we do this by finding the TR and then adding that way
                 if (self._dt)
                 {
+                    // TODO
                     var tr = self.field.find("[data-alpaca-field-path='" + item.path + "']");
                     self._dt.row.add(tr);//.draw(false);
                 }
