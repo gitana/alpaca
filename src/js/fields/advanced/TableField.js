@@ -40,8 +40,9 @@
             }
 
             // support for either "datatable" or "datatables"
-            if (this.options.datatable) {
-                this.options.datatables = this.options.datatable;
+            if (this.options["datatable"]) {
+                this.options.datatables = this.options["datatable"];
+                delete this.options["datatable"];
             }
 
             // assume empty options for datatables
@@ -125,13 +126,6 @@
                     values.sort();
 
                     return values;
-
-                    /*
-                    return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
-                        var alpacaId = $(td).children().attr("data-alpaca-field-id");
-                        return Alpaca.fieldInstances[alpacaId].getValue();
-                    } );
-                    */
                 };
 
                 // this is a kind of hacky function at the moment, trying to do filtering that takes into account
@@ -420,7 +414,7 @@
 
                 callback();
 
-            }.bind(self));
+            });//.bind(self));
         },
 
         cleanupDomInjections: function()
@@ -440,7 +434,7 @@
                 var mergeElementChildren = $(mergeElement).children();
 
                 // copy merge element classes to parent
-                var classNames =$(mergeElement).attr('class').split(/\s+/);
+                var classNames = $(mergeElement).attr('class').split(/\s+/);
                 $.each( classNames, function(index, className){
                     if (className === "alpaca-merge-up") {
                         // skip
@@ -481,7 +475,7 @@
             });
 
             // find any action bars for our field and slip a TD around them
-            var alpacaArrayActionbar = this.getFieldEl().find("." + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR + "[" + Alpaca.MARKER_DATA_ARRAY_ITEM_FIELD_ID + "='" + self.getId() + "']");
+            var alpacaArrayActionbar = self.getFieldEl().find("." + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR + "[" + Alpaca.MARKER_DATA_ARRAY_ITEM_FIELD_ID + "='" + self.getId() + "']");
             if (alpacaArrayActionbar.length > 0)
             {
                 alpacaArrayActionbar.each(function() {
@@ -492,7 +486,7 @@
             }
 
             // find any alpaca-table-reorder-draggable-cells and slip a TD around them
-            var alpacaTableReorderDraggableCells = this.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-draggable-cell");
+            var alpacaTableReorderDraggableCells = self.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-draggable-cell");
             if (alpacaTableReorderDraggableCells.length > 0)
             {
                 alpacaTableReorderDraggableCells.each(function() {
@@ -504,10 +498,10 @@
             }
 
             // find any alpaca-table-reorder-draggable-cell elements and slip a TD around them
-            var alpacaTableReorderIndexCells = this.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-draggable-cell");
+            var alpacaTableReorderIndexCells = self.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-draggable-cell");
 
             // find any alpaca-table-reorder-index-cell elements and slip a TD around them
-            var alpacaTableReorderIndexCells = this.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-index-cell");
+            var alpacaTableReorderIndexCells = self.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-index-cell");
             if (alpacaTableReorderIndexCells.length > 0)
             {
                 alpacaTableReorderIndexCells.each(function(i) {
