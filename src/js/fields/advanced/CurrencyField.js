@@ -89,7 +89,7 @@
                     var result = '';
                     for (var i in val) {
                         var cur = val[i];
-                        if (!isNaN(cur)) {
+                        if (!isNaN(cur) || cur === "-") {
                             result += cur;
                         } else if (cur === this.options.centsSeparator) {
                             result += '.';
@@ -103,7 +103,7 @@
                         var result = [];
                         var unmaskedString = "" + unmasked;
                         for (var i = 0, u = 0; i < val.length; i++) {
-                            if (!isNaN(val[i])) {
+                            if (!isNaN(val[i]) || val[i] === "-") {
                                 result.push(unmaskedString[u++] || 0);
                             } else {
                                 result.push(val[i]);
