@@ -889,8 +889,11 @@
 
                     $('input', this.field).attr('readonly', 'readonly');
 
-                    // disable the field
-                    doDisableField();
+                    // disable the field only if specified
+                    // Chrome update removes focus from read-only fields which means no field highlighting
+                    if (this.options.disabled){
+                        doDisableField();
+                    }                    
 
                     // CALLBACK: "readonly"
                     self.fireCallback("readonly");
