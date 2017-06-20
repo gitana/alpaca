@@ -2550,7 +2550,7 @@
                         "title": "Focus",
                         "description": "If true, the initial focus for the form will be set to the first child element (usually the first field in the form).  If a field name or path is provided, then the specified child field will receive focus.  For example, you might set focus to 'name' (selecting the 'name' field) or you might set it to 'client/name' which picks the 'name' field on the 'client' object.",
                         "type": "checkbox",
-                        "default": true
+                        "default": false
                     },
                     "optionLabels": {
                         "title": "Enumerated Value Labels",

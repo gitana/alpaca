@@ -263,7 +263,7 @@
                         "type": "text"
                     },
                     "thousandsSeparator": {
-                        "type": "string"
+                        "type": "text"
                     },
                     "unmask": {
                         "type": "checkbox"

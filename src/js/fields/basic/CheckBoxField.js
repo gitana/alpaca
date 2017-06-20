@@ -34,6 +34,10 @@
                     self.options.multiple = true;
                 }
             }
+            self.setupSelectionMode(self);
+        },
+
+        setupSelectionMode: function (self) {
 
             if (self.options.multiple)
             {
@@ -282,6 +286,10 @@
             }
             else
             {
+                if (!self.checkboxOptions)
+                {
+                    self.setupSelectionMode(self);
+                }
                 // multiple values
                 var values = [];
                 for (var i = 0; i < self.checkboxOptions.length; i++)
@@ -466,7 +474,7 @@
          * @see Alpaca.Field#getType
          */
         getType: function() {
-            return "boolean";
+            return this.options.multiple && (this.schema.type === "boolean" || this.schema.type === "string") ? "string" : "boolean";
         },
 
         /**
