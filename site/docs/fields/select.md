@@ -377,12 +377,14 @@ $("#field14").alpaca({
             }
         }
     }
-});</script>
+});
+</script>
 {% endraw %}
 
 ## Example 15
 Here is an example where we explicitly disable sorting.  We do this within the field configuration.  We could also do
 this by globally setting <code>Alpaca.defaultSort</code> to <code>false</code>.
+
 <div id="field15"> </div>
 {% raw %}
 <script type="text/javascript" id="field15-script">
