@@ -71,7 +71,7 @@
                             this.options.tree.selectors[k] = {};
                         }
 
-                        if (!this.options.tree.selectors[k].label)
+                        if (!this.options.tree.selectors[k].options.noneLabel)
                         {
                             this.options.tree.selectors[k].options.noneLabel = "Choose...";
                         }
