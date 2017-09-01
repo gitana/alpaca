@@ -198,6 +198,8 @@
                         self.editor.setReadOnly(true);
                     }
 
+                    self.initAceEvents();
+
                     // if the editor's dom element gets destroyed, make sure we clean up the editor instance
                     // normally, we expect Alpaca fields to be destroyed by the destroy() method but they may also be
                     // cleaned-up via the DOM, thus we check here.
@@ -215,6 +217,26 @@
                 callback();
             });
 
+        },
+
+        initAceEvents: function()
+        {
+            var self = this;
+
+            if (self.editor) {
+
+                // blur event
+                self.editor.on('blur', function (e) {
+                    self.onBlur();
+                    self.trigger("blur", e);
+                });
+
+                // focus event
+                self.editor.on("focus", function (e) {
+                    self.onFocus.call(self, e);
+                    self.trigger("focus", e);
+                });
+            }
         },
 
         /**
