@@ -508,6 +508,9 @@
                     var x = self.onKeyDown.call(self, e);
                     if (x !== false) {
                         x = self.trigger("keydown", e);
+
+                        // propagate up the chain that something moved
+                        self.triggerWithPropagation("nested_change", e);
                     }
 
                     return x;
