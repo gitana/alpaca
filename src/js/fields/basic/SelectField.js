@@ -184,36 +184,6 @@
 
             this.base(model, function() {
 
-                // build out "displayableText"
-                var displayableTexts = [];
-                var map = {};
-                for (var i = 0; i < model.selectOptions.length; i++)
-                {
-                    map[model.selectOptions[i].value] = model.selectOptions[i].text;
-                }
-
-                if (Alpaca.isArray(model.data))
-                {
-                    for (var i = 0; i < model.data.length; i++)
-                    {
-                        var text = map[model.data[i]];
-                        if (text)
-                        {
-                            displayableTexts.push(text);
-                        }
-                    }
-                }
-                else
-                {
-                    var text = map[model.data];
-                    if (text)
-                    {
-                        displayableTexts.push(text);
-                    }
-                }
-
-                model.displayableText = displayableTexts.join(", ");
-
                 callback();
 
             });

@@ -102,6 +102,39 @@
             });
         },
 
+        populateDisplayableText: function(model)
+        {
+            // build out "displayableText"
+            var displayableTexts = [];
+            var map = {};
+            for (var i = 0; i < model.selectOptions.length; i++)
+            {
+                map[model.selectOptions[i].value] = model.selectOptions[i].text;
+            }
+
+            if (Alpaca.isArray(model.data))
+            {
+                for (var i = 0; i < model.data.length; i++)
+                {
+                    var text = map[model.data[i]];
+                    if (text)
+                    {
+                        displayableTexts.push(text);
+                    }
+                }
+            }
+            else
+            {
+                var text = map[model.data];
+                if (text)
+                {
+                    displayableTexts.push(text);
+                }
+            }
+
+            model.displayableText = displayableTexts.join(", ");
+        },
+
         /**
          * @see Alpaca.ControlField#beforeRenderControl
          */
@@ -115,7 +148,17 @@
 
                 for (var i = 0; i < self.selectOptions.length; i++)
                 {
-                    if (scalarValue === self.selectOptions[i].value)
+                    if (Alpaca.isArray(scalarValue))
+                    {
+                        for (var j = 0; j < scalarValue.length; j++)
+                        {
+                            if (scalarValue[j] === self.selectOptions[i].value)
+                            {
+                                self.selectOptions[i].selected = true;
+                            }
+                        }
+                    }
+                    else if (scalarValue === self.selectOptions[i].value)
                     {
                         self.selectOptions[i].selected = true;
                         break;
@@ -126,6 +169,8 @@
             };
 
             this.base(model, function() {
+
+                self.populateDisplayableText(model);
 
                 if (self.options.dataSource)
                 {
@@ -161,11 +206,23 @@
             });
         },
 
+        /**
+         * Used to convert a reference object to an ID.
+         *
+         * @param data
+         * @returns {*}
+         */
         convertToScalarValue: function(data)
         {
             return data;
         },
 
+        /**
+         * Used to convert an ID back to a reference object.
+         *
+         * @param scalarValue
+         * @param callback
+         */
         convertToDataValue: function(scalarValue, callback)
         {
             callback(null, scalarValue);

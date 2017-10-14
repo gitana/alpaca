@@ -86,6 +86,7 @@ var paths = {
             "src/js/fields/advanced/CurrencyField.js",
             "src/js/fields/advanced/DateField.js",
             "src/js/fields/advanced/DatetimeField.js",
+            "src/js/fields/advanced/ChooserField.js",
             "src/js/fields/advanced/EditorField.js",
             "src/js/fields/advanced/EmailField.js",
             "src/js/fields/advanced/GridField.js",

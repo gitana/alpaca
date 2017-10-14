@@ -339,3 +339,62 @@ table.dt-rowReorder-float .alpaca-table-reorder-draggable-cell
 {
     display: none;
 }
+
+/*** CHOOSER **/
+
+.alpaca-field-chooser
+{
+
+}
+
+.alpaca-field-chooser .alpaca-control
+{
+}
+
+.alpaca-field-chooser .alpaca-control .chooser-panel .chooser-panel-header
+{
+    min-height: 34px;
+    margin-bottom: 20px;
+}
+
+.alpaca-field-chooser .alpaca-control .chooser-panel .chooser-panel-items
+{
+    background-color: white;
+    border: 1px #ccc solid;
+    border-radius: 4px;
+    overflow-y: scroll;
+    overflow-y: -moz-scrollbars-vertical;
+}
+
+.alpaca-field-chooser .alpaca-control .chooser-panel .chooser-panel-items .chooser-item
+{
+    min-height: 34px;
+}
+
+.alpaca-field-chooser .alpaca-control .chooser-panel .chooser-panel-items .chooser-item.disabled .chooser-item-text
+{
+    color: #ccc;
+}
+
+.alpaca-field-chooser .alpaca-control .chooser-panel .chooser-panel-items .chooser-item:not(:last-child)
+{
+    border-bottom: 1px #ddd solid;
+}
+
+.alpaca-field-chooser .alpaca-control .chooser-panel .chooser-panel-items .chooser-item .chooser-item-text
+{
+    margin-left: 10px;
+    line-height: 34px;
+    display: inline-block;
+}
+
+.alpaca-field-chooser .alpaca-control .chooser-panel .chooser-panel-items .chooser-item .chooser-item-buttons
+{
+    float: right;
+    margin: 5px;
+}
+
+.alpaca-field-chooser .chooser-item-message
+{
+    color: #aaa;
+}
