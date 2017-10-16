@@ -34,7 +34,17 @@ $("#field2").alpaca({
     "data": true,
     "options": {
         "label": "Question:",
-        "rightLabel": "Do you like Alpaca?"
+        "rightLabel": "Do you like Alpaca?",
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        }
     }
 });
 </script>

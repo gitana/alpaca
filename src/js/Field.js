@@ -311,10 +311,12 @@
          */
         setup: function() {
 
+            /*
             if (!this.initializing)
             {
                 this.data = this.getValue();
             }
+            */
 
             // ensures that we have a template descriptor picked for this field
             this.initTemplateDescriptor();
@@ -1028,7 +1030,7 @@
             var self = this;
 
             // store back data
-            var _data = self.data = self.getValue();
+            var _externalData = self.getValue();
 
             // remember this stuff
             var oldDomEl = self.domEl;
@@ -1091,11 +1093,11 @@
                     self.refreshed = true;
 
                     // this is apparently needed for objects and arrays
-                    if (typeof(_data) !== "undefined")
+                    if (typeof(_externalData) !== "undefined")
                     {
-                        if (Alpaca.isObject(_data) || Alpaca.isArray(_data))
+                        if (Alpaca.isObject(_externalData) || Alpaca.isArray(_externalData))
                         {
-                            self.setValue(_data);
+                            self.setValue(_externalData);
                         }
                     }
 
@@ -2003,7 +2005,7 @@
          */
         onChange: function(e) {
             // store back into data element
-            this.data = this.getValue();
+            //this.data = this.getValue();
             this.updateObservable();
             this.triggerUpdate();
         },

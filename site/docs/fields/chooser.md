@@ -196,7 +196,7 @@ A display version of the control.
 $("#field7").alpaca({
     "schema": {
         "type": "array",
-        "title": "Select your favorite colors",
+        "title": "Your favorite colors",
         "items": {
             "type": "string"
         },

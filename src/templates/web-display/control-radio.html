@@ -1,11 +1,7 @@
 <script type="text/x-handlebars-template">
 
     <div>
-        {{#each selectOptions}}
-            {{#compare value ../data}}
-                {{{text}}}
-            {{/compare}}
-        {{/each}}
+        {{displayableText}}
     </div>
 
 </script>

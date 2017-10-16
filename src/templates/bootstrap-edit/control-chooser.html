@@ -13,7 +13,7 @@
                         {{#each selectOptions}}
                             {{#if filtered}}
                             {{else}}
-                            <div class="chooser-item {{#if selected}}disabled{{/if}}" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{@index}}">
+                            <div class="chooser-item {{#if selected}}disabled{{/if}}" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{unselectedIndex}}">
                                 <div class="chooser-item-text">{{text}}</div>
                                 <div class="chooser-item-buttons">
                                     {{#if selected}}

@@ -2,13 +2,13 @@
 
     {{#if options.multiple}}
 
-        {{#each checkboxOptions}}
+        {{#each selectOptions}}
 
             <div>
 
                 <label>
 
-                    <input type="checkbox" data-checkbox-index="{{@index}}" data-checkbox-value="{{value}}" {{#if ../options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each ../options.data}}data-{{@key}}="{{value}}"{{/each}}/>
+                    <input type="checkbox" data-checkbox-index="{{@index}}" data-checkbox-value="{{value}}" {{#if selected}}checked{{/if}} {{#if ../options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each ../options.data}}data-{{@key}}="{{value}}"{{/each}}/>
                     {{{text}}}
 
                 </label>
@@ -22,9 +22,12 @@
 
             <label>
 
-                <input type="checkbox" {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{value}}"{{/each}}/>
+                <input type="checkbox" {{#if data.length}}checked{{/if}} {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{value}}"{{/each}}/>
 
-                {{{options.rightLabel}}}
+                {{#if options.rightLabel}}
+                    {{{options.rightLabel}}}
+                {{/if}}
+
             </label>
 
         </div>
