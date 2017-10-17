@@ -23,8 +23,10 @@
 
             self.base();
 
-            if (typeof(self.options.multiple) == "undefined")
+            if (typeof(self.options.multiple) === "undefined")
             {
+                self.options.multiple = false;
+
                 if (self.schema.type === "array")
                 {
                     self.options.multiple = true;
@@ -64,21 +66,32 @@
                 {
                     var newData = [];
 
-                    $(self.getFieldEl()).find("input:checkbox").each(function() {
+                    if (self.options.multiple)
+                    {
+                        $(self.getFieldEl()).find("input:checkbox").each(function() {
 
-                        var value = $(inputField).attr("data-checkbox-value");
+                            var value = $(this).attr("data-checkbox-value");
 
-                        if (Alpaca.checked(this))
-                        {
-                            for (var i = 0; i < self.selectOptions.length; i++)
+                            if (Alpaca.checked(this))
                             {
-                                if (self.selectOptions[i].value === value)
+                                for (var i = 0; i < self.selectOptions.length; i++)
                                 {
-                                    newData.push(self.selectOptions[i]);
+                                    if (self.selectOptions[i].value === value)
+                                    {
+                                        newData.push(self.selectOptions[i]);
+                                    }
                                 }
                             }
+                        });
+                    }
+                    else
+                    {
+                        var checkbox = $(self.getFieldEl()).find("input:checkbox");
+                        if (Alpaca.checked(checkbox))
+                        {
+                            newData.push(true);
                         }
-                    });
+                    }
 
                     self.data = newData;
 

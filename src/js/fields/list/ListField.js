@@ -322,11 +322,23 @@
                     });
                 }
             }
+            else if (Alpaca.isNumber(val))
+            {
+                values.push({
+                    "text": "" + val,
+                    "value": val
+                });
+            }
             else if (Alpaca.isArray(val))
             {
                 for (var i = 0; i < val.length; i++)
                 {
                     if (Alpaca.isString(val[i])) {
+                        values.push({
+                            "text": "" + val[i],
+                            "value": val[i]
+                        });
+                    } else if (Alpaca.isNumber(val[i])) {
                         values.push({
                             "text": "" + val[i],
                             "value": val[i]

@@ -439,7 +439,7 @@
                 }
             }
 
-            if (loadedOptions.view)
+            if (loadedOptions.view && !view)
             {
                 loadedView = loadedOptions.view;
             }
