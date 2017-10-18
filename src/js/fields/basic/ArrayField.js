@@ -117,17 +117,7 @@
                 });
             }
 
-            if (typeof(this.data) == "undefined")
-            {
-                this.data = [];
-            }
-
-            if (this.data == null)
-            {
-                this.data = [];
-            }
-
-            if ("" == this.data)
+            if (Alpaca.isEmpty(this.data) || this.data === "")
             {
                 this.data = [];
             }
@@ -156,8 +146,7 @@
 
             if (!Alpaca.isArray(this.data) && !Alpaca.isObject(this.data))
             {
-                Alpaca.logWarn("ArrayField data is not an array: " + JSON.stringify(this.data, null, "  "));
-                return;
+                return Alpaca.logWarn("ArrayField data is not an array: " + JSON.stringify(this.data, null, "  "));
             }
 
             //

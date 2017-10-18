@@ -22,8 +22,6 @@
         {
             this.data = value;
 
-            this.data = value;
-
             this.updateObservable();
 
             this.triggerUpdate();

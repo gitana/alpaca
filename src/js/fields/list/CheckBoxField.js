@@ -51,7 +51,6 @@
             var self = this;
 
             this.base(function(model) {
-
                 callback(model);
             });
         },

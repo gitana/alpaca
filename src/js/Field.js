@@ -140,9 +140,9 @@
             this.updateObservable = function()
             {
                 // update observable
-                if (this.data)
+                if (this.getValue())
                 {
-                    this.observable(this.path).set(this.data);
+                    this.observable(this.path).set(this.getValue());
                 }
                 else
                 {
@@ -1244,11 +1244,7 @@
         {
             var self = this;
 
-            var val = this.data;
-
-            val = self.ensureProperType(val);
-
-            return val;
+            return self.ensureProperType(this.data);
         },
 
         /**
@@ -1855,7 +1851,8 @@
         {
             var newValue = null;
 
-            if (this.data) {
+            if (this.data)
+            {
                 newValue = this.data;
             }
 

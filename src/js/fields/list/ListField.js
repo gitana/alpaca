@@ -357,6 +357,16 @@
         },
 
         /**
+         * Finds if the value of this field is empty.
+         *
+         * @return {Boolean} True if the field value is empty, false otherwise.
+         */
+        isEmpty: function()
+        {
+            return this.data.length === 0;
+        },
+
+        /**
          * Validate against enum property.
          *
          * @returns {Boolean} True if the element value is part of the enum list, false otherwise.

@@ -34,12 +34,7 @@
 
             this.containerItemTemplateDescriptor = self.view.getTemplateDescriptor("container-" + containerItemTemplateType + "-item", self);
 
-            if (Alpaca.isEmpty(this.data))
-            {
-                return;
-            }
-
-            if (this.data === "")
+            if (Alpaca.isEmpty(this.data) || this.data === "")
             {
                 return;
             }
@@ -942,7 +937,7 @@
                 return false;
             }
 
-            var dependentOnData = dependentOnField.data;
+            var dependentOnData = dependentOnField.getValue();
 
             // assume it isn't valid
             var valid = false;

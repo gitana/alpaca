@@ -97,10 +97,6 @@
         "title": "Edit View for jQuery Mobile",
         "callbacks": callbacks,
         "styles": styles,
-        //"legendStyle": "link",
-        //"toolbarStyle": "link",
-        //"buttonType": "link",
-        //"toolbarSticky": true,
         "templates": {},
         "messages": {
             required: "Required Field",
