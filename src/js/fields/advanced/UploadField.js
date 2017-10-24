@@ -664,7 +664,7 @@
             // allow for preloading of documents
             self.preload(fileUpload, el, function(files) {
 
-                if (files)
+                if (files && files.length > 0)
                 {
                     var form = $(self.control).find('.alpaca-fileupload-input');
                     $(form).fileupload('option', 'done').call(form, $.Event('done'), {
