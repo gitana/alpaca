@@ -251,6 +251,13 @@
 
                 val = values;
             }
+            else if (self.schema.type === "object")
+            {
+                if (this.data.length > 0)
+                {
+                    val = self.convertDataInternalToExternal(this.data[0]);
+                }
+            }
 
             return val;
         },
@@ -296,9 +303,11 @@
 
             var values = [];
 
+            var handled = false;
             if (Alpaca.isEmpty(val))
             {
                 // keep empty array
+                handled = true;
             }
             else if (Alpaca.isString(val))
             {
@@ -311,6 +320,8 @@
                         "value": values[i]
                     };
                 }
+
+                handled = true;
             }
             else if (Alpaca.isBoolean(val))
             {
@@ -321,6 +332,8 @@
                         "value": true
                     });
                 }
+
+                handled = true;
             }
             else if (Alpaca.isNumber(val))
             {
@@ -328,6 +341,8 @@
                     "text": "" + val,
                     "value": val
                 });
+
+                handled = true;
             }
             else if (Alpaca.isArray(val))
             {
@@ -347,8 +362,17 @@
                         values.push(self.convertDataExternalToInternal(val[i]));
                     }
                 }
+
+                handled = true;
             }
-            else
+            else if (Alpaca.isObject(val))
+            {
+                values.push(self.convertDataExternalToInternal(val));
+
+                handled = true;
+            }
+
+            if (!handled)
             {
                 throw new Error("could not import data: " + val);
             }
