@@ -1031,6 +1031,7 @@
 
             // store back data
             var _externalData = self.getValue();
+            this.data = self.getValue();
 
             // remember this stuff
             var oldDomEl = self.domEl;
