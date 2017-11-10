@@ -88,11 +88,12 @@
                         var checkbox = $(self.getFieldEl()).find("input:checkbox");
                         if (Alpaca.checked(checkbox))
                         {
-                            newData.push(true);
+                            newData = true;
                         }
                     }
 
-                    self.data = newData;
+                    // set value silently
+                    self.setValue(newData, true);
 
                     self.refreshValidationState();
                     self.triggerWithPropagation("change");
@@ -109,6 +110,32 @@
 
                 callback();
             });
+        },
+
+        afterSetValue: function()
+        {
+            var self = this;
+
+            // uncheck everything
+            Alpaca.checked($(self.getFieldEl()).find("input:checkbox"), false);
+
+            // check those that are selected
+            if (self.options.multiple)
+            {
+                for (var i = 0; i < self.data.length; i++)
+                {
+                    var checkbox = $(self.getFieldEl()).find("input:checkbox[data-checkbox-value='" + self.data[i].value + "']");
+                    Alpaca.checked(checkbox, true);
+                }
+            }
+            else
+            {
+                var checkbox = $(self.getFieldEl()).find("input:checkbox");
+                if (self.data.length > 0)
+                {
+                    Alpaca.checked(checkbox, true);
+                }
+            }
         },
 
         /**

@@ -163,6 +163,9 @@
                     var newData = [];
 
                     var val = $(self.control).val();
+                    if (!val) {
+                        val = [];
+                    }
                     if (Alpaca.isString(val)) {
                         val = [val];
                     }
@@ -178,7 +181,8 @@
                         newData.push(tempMap[val[i]]);
                     }
 
-                    self.data = newData;
+                    // set value silently
+                    self.setValue(newData, true);
 
                     self.refreshValidationState();
                     self.trigger("change");

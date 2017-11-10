@@ -60,7 +60,7 @@
             }
 
             // make sure we convert any incoming data to our expected format
-            self.setValue(this.data);
+            self.setValue(this.data, true);
         },
 
         prepareControlModel: function(callback)
@@ -210,6 +210,11 @@
             };
         },
 
+        // @Override
+        bindData: function()
+        {
+        },
+
         /**
          * Retrieves the value of the control and formats it to the expected output/external format.
          *
@@ -294,10 +299,12 @@
          *          "value": "">
          *      }]
          *
-         * @param data
+         * @param val
+         * @param silent whether to refresh UI controls (defaults to false)
+         *
          * @returns {*}
          */
-        setValue: function(val)
+        setValue: function(val, silent)
         {
             var self = this;
 
@@ -378,6 +385,16 @@
             }
 
             this.data = values;
+
+            if (!silent)
+            {
+                self.afterSetValue();
+            }
+        },
+
+        afterSetValue: function()
+        {
+
         },
 
         /**
