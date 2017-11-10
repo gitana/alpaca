@@ -139,10 +139,11 @@
                         }
                     });
 
-                    self.data = newData;
+                    // set value silently
+                    self.setValue(newData, true);
 
                     self.refreshValidationState();
-                    self.trigger("change");
+                    self.triggerWithPropagation("change");
                 };
 
                 $(self.control).find("input:radio").change(function(e) {
@@ -178,6 +179,25 @@
             this.base();
 
             $(self.control).find("input:radio").attr("name", this.getName());
+        },
+
+        afterSetValue: function()
+        {
+            var self = this;
+
+            Alpaca.checked($(self.control).find("input:radio"), false);
+
+            if (self.data.length > 0)
+            {
+                for (var i = 0; i < self.data.length; i++)
+                {
+                    var radio = $(self.control).find("input:radio[value='" + self.data[i].value + "']");
+                    if (radio.length > 0)
+                    {
+                        Alpaca.checked(radio, true);
+                    }
+                }
+            }
         },
 
         /**

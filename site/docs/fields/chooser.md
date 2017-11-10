@@ -211,3 +211,27 @@ $("#field7").alpaca({
 });
 </script>
 {% endraw %}
+
+
+## Example 8
+An example where we set the value after render.
+<div id="field8"> </div>
+{% raw %}
+<script type="text/javascript" id="field8-script">
+$("#field8").alpaca({
+    "schema": {
+        "type": "string",
+        "title": "Select your favorite colors",
+        "enum": ["red", "orange", "yellow", "green", "blue", "indigo", "violet"]
+    },
+    "options": {
+        "type": "chooser",
+        "optionLabels": ["Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet"],
+        "multiple": true
+    },
+    "postRender": function(control) {
+        control.setValue("red,yellow,green");
+    }
+});
+</script>
+{% endraw %}

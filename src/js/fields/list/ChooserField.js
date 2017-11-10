@@ -269,6 +269,13 @@
             });
         },
 
+        afterSetValue: function()
+        {
+            var self = this;
+
+            self.handleRefresh();
+        },
+
         /**
          * @see Alpaca.Field#focus
          */

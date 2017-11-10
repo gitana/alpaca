@@ -221,3 +221,35 @@ $("#field8").alpaca({
 </script>
 {% endraw %}
 
+
+## Example 9
+Example that sets value after render.
+<div id="field9"> </div>
+{% raw %}
+<script type="text/javascript" id="field9-script">
+$("#field9").alpaca({
+    "schema": {
+        "enum": ["Vanilla", "Chocolate", "Coffee"]
+    },
+    "options": {
+        "label": "Ice cream",
+        "helper": "Guess my favorite ice cream?",
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        }
+    },
+    "postRender": function(control) {
+        control.setValue("Coffee");
+    }
+});
+</script>
+{% endraw %}
+
+
