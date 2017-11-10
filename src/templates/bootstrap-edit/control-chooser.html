@@ -13,7 +13,7 @@
                         {{#each selectOptions}}
                             {{#if filtered}}
                             {{else}}
-                            <div class="chooser-item {{#if selected}}disabled{{/if}}" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{unselectedIndex}}">
+                            <div class="chooser-item {{#if selected}}disabled{{/if}}" data-chooser-item-text="{{{text}}}" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{unselectedIndex}}">
                                 <div class="chooser-item-text">{{text}}</div>
                                 <div class="chooser-item-buttons">
                                     {{#if selected}}
@@ -34,7 +34,7 @@
                             {{#each unselected}}
                                 {{#if filtered}}
                                 {{else}}
-                                    <div class="chooser-item" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{@index}}">
+                                    <div class="chooser-item" data-chooser-item-text="{{{text}}}" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{@index}}">
                                         <div class="chooser-item-text">{{text}}</div>
                                         <div class="chooser-item-buttons">
                                             <button class="btn btn-default btn-xs btn-add">
@@ -58,7 +58,7 @@
 
                     {{#if selected.length}}
                         {{#each selected}}
-                            <div class="chooser-item" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{@index}}">
+                            <div class="chooser-item" data-chooser-item-text="{{{text}}}" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{@index}}">
                                 <div class="chooser-item-text">{{text}}</div>
                                 <div class="chooser-item-buttons">
                                     <button class="btn btn-default btn-xs btn-remove">

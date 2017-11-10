@@ -120,7 +120,7 @@
             $(self.control).find(".chooser-filter input").val(filterText);
 
             $(self.control).find(".chooser-panel-unselected .chooser-item").each(function() {
-                var itemText = $(this).attr("data-chooser-item-value");
+                var itemText = $(this).attr("data-chooser-item-text");
 
                 // assume it shows
                 $(this).show();

@@ -1093,14 +1093,16 @@
                     // mark that we're refreshed
                     self.refreshed = true;
 
+                    /*
                     // this is apparently needed for objects and arrays
                     if (typeof(_externalData) !== "undefined")
                     {
                         if (Alpaca.isObject(_externalData) || Alpaca.isArray(_externalData))
                         {
-                            self.setValue(_externalData);
+                            self.setValue(_externalData, true);
                         }
                     }
+                    */
 
                     // fire the "ready" event
                     Alpaca.fireReady(self);
