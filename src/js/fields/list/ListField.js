@@ -224,6 +224,11 @@
         {
             var self = this;
 
+            // for legacy support, in case data was set to null, set back to []
+            if (this.data === null || typeof(this.data) === "undefined") {
+                this.data = [];
+            }
+
             var val = null;
 
             if (!self.schema.type || self.schema.type === "string")
