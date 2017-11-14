@@ -122,3 +122,17 @@ $("#field5").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 6
+An example that uses `multipleOf`.
+<div id="field6"> </div>
+{% raw %}
+<script type="text/javascript" id="field6-script">
+$("#field6").alpaca({
+    "schema": {
+        "type": "number",
+        "multipleOf": 1
+    }
+});
+</script>
+{% endraw %}
