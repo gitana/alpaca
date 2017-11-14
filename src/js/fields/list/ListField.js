@@ -240,6 +240,13 @@
 
                 val = array.join(",");
             }
+            else if (self.schema.type === "number")
+            {
+                if (this.data.length > 0)
+                {
+                    val = this.data[0].value;
+                }
+            }
             else if (self.schema.type === "boolean")
             {
                 val = (this.data.length > 0);
