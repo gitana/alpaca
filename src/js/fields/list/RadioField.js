@@ -134,7 +134,7 @@
                         {
                             if (self.selectOptions[i].value === value)
                             {
-                                newData.push(self.selectOptions[i]);
+                                newData.push(self.selectOptions[i].value);
                             }
                         }
                     });
