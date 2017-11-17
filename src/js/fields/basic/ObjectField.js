@@ -958,7 +958,7 @@
                 }
                 else
                 {
-                    valid = !Alpaca.isValEmpty(dependentOnField.data);
+                    valid = !Alpaca.isValEmpty(dependentOnData);
                 }
             }
             else
