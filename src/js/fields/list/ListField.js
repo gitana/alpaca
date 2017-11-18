@@ -323,9 +323,8 @@
             var values = [];
 
             var handled = false;
-            if (Alpaca.isEmpty(val))
+            if (Alpaca.isEmpty(val) || val === "")
             {
-                // keep empty array
                 handled = true;
             }
             else if (Alpaca.isString(val))
