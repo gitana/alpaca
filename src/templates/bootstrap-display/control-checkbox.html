@@ -1,0 +1,17 @@
+<script type="text/x-handlebars-template">
+
+		{{#if options.multiple}}
+			{{#each checkboxOptions}}
+				<div>
+					<span class="glyphicon {{#ifIn value ../data }}glyphicon-ok text-success{{else}}glyphicon-remove text-danger{{/ifIn}}" aria-hidden="true"></span>
+					{{{text}}}
+				</div>
+			{{/each}}
+		{{else}}
+			<div>
+				<span class="glyphicon {{#if data}}glyphicon-ok text-success{{else}}glyphicon-remove text-danger{{/if}}" aria-hidden="true"></span>
+				{{options.rightLabel}}
+			</div>
+		{{/if}}
+
+</script>
