@@ -33,6 +33,8 @@ For more information, visit the <a href="http://www.alpacajs.org">Alpaca Forms w
 
 ## Sponsors
 
+<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Buy Me a Coffee', '#b89d46', 'J3J36TFV');kofiwidget2.draw();</script> 
+
 Cloud CMS is actively developed and maintained by <a href="https://www.cloudcms.com">Cloud CMS</a>.
 
 Cloud CMS is an API-First, JSON-friendly Content Management Platform for mobile and web applications.  It provides the
