@@ -43,8 +43,7 @@
                 }
             }
 
-            if (typeof(data) !== "undefined")
-            {
+            if (data) {
                 data = "" + parseFloat(data).toFixed(options.centsLimit);
             }
 
@@ -89,13 +88,13 @@
                     var result = '';
                     for (var i in val) {
                         var cur = val[i];
-                        if (!isNaN(cur) || cur === "-") {
+                        if ((!isNaN(cur) || cur === "-") && cur !== " ") {
                             result += cur;
                         } else if (cur === this.options.centsSeparator) {
                             result += '.';
                         }
                     }
-                    return parseFloat(result);
+                    return result ? parseFloat(result) : result;
                 }.bind(this)();
                 if (this.options.round !== "none") {
                     unmasked = round(this.options.round)(unmasked);
