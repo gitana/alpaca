@@ -59,6 +59,12 @@
             {
                 self.options.multiselect.disableIfEmpty = true;
             }
+
+            // if we're in a display only mode, turn off multiselect
+            if (self.isDisplayOnly())
+            {
+                delete self.options.multiselect;
+            }
         },
 
         initControlEvents: function()
