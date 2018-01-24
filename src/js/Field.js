@@ -340,6 +340,14 @@
             if (Alpaca.isUndefined(this.options.showMessages)) {
                 this.options.showMessages = true;
             }
+
+            // support for "hidden" field on schema
+            if (typeof(this.options.hidden) === "undefined")
+            {
+                if (typeof(this.schema.hidden) !== "undefined") {
+                    this.options.hidden = this.schema.hidden;
+                }
+            }
         },
 
         setupField: function(callback)
