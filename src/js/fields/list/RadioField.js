@@ -104,12 +104,19 @@
                 }
 
                 // likewise, we auto-assign first pick if field required and removeDefaultNone is true
-                if (self.data.length === 0 && self.isRequired())
+                if (self.data.length === 0)
                 {
-                    if (self.options.removeDefaultNone === true)
+                    if (self.isRequired())
                     {
-                        self.selectOptions[0].selected = true;
-                        self.data = [self.selectOptions[0]];
+                        if (self.options.removeDefaultNone === true)
+                        {
+                            self.selectOptions[0].selected = true;
+                            self.data = [self.selectOptions[0]];
+                        }
+                    }
+                    else
+                    {
+                        self.options._noData = true;
                     }
                 }
 

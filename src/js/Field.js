@@ -113,6 +113,16 @@
                 this.options.readonly = this.schema.readonly;
             }
 
+            // in case they put "default" on options
+            if (typeof(this.schema.default) === "undefined")
+            {
+                if (typeof(this.options.default) !== "undefined")
+                {
+                    this.schema.default = this.options.default;
+                    delete this.options.default;
+                }
+            }
+
             // if data is empty, then we check whether we can fall back to a default value
             if (Alpaca.isValEmpty(this.data) && !Alpaca.isEmpty(this.schema["default"])) {
                 this.data = this.schema["default"];
