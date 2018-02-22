@@ -59,83 +59,11 @@
             {
                 self.options.multiselect.disableIfEmpty = true;
             }
-        },
 
-        getValue: function()
-        {
-            var self = this;
-
-            if (self.schema.type === "object")
+            // if we're in a display only mode, turn off multiselect
+            if (self.isDisplayOnly())
             {
-                return this.data;
-            }
-
-            return this.base();
-        },
-
-
-        /**
-         * @see Alpaca.Field#setValue
-         */
-        setValue: function(val)
-        {
-            var self = this;
-
-            var newScalarVal = self.convertToScalarValue(val);
-            var currentScalarVal = self.convertToScalarValue(self.getValue());
-
-            if (Alpaca.isArray(val))
-            {
-                // if values are different, then set
-                if (!Alpaca.compareArrayContent(newScalarVal, currentScalarVal))
-                {
-                    if (!Alpaca.isEmpty(newScalarVal) && this.control)
-                    {
-                        this.control.val(newScalarVal);
-                    }
-
-                    this.base(val);
-                }
-            }
-            else
-            {
-                var apply = false;
-                if (Alpaca.isEmpty(newScalarVal) && Alpaca.isEmpty(currentScalarVal))
-                {
-                    apply = true;
-                }
-                else if (newScalarVal !== currentScalarVal)
-                {
-                    apply = true;
-                }
-
-                if (apply)
-                {
-                    if (self.control && typeof(newScalarVal) !== "undefined" && newScalarVal !== null)
-                    {
-                        self.control.val(newScalarVal);
-                    }
-
-                    this.base(val);
-                }
-            }
-        },
-
-        /**
-         * @see Alpaca.ListField#getEnum
-         */
-        getEnum: function()
-        {
-            if (this.schema)
-            {
-                if (this.schema["enum"])
-                {
-                    return this.schema["enum"];
-                }
-                else if (this.schema["type"] && this.schema["type"] === "array" && this.schema["items"] && this.schema["items"]["enum"])
-                {
-                    return this.schema["items"]["enum"];
-                }
+                delete self.options.multiselect;
             }
         },
 
@@ -172,50 +100,38 @@
 
             this.base(function (model) {
 
-                model.selectOptions = self.selectOptions;
+                if (typeof(self.options.noneLabel) === "undefined")
+                {
+                    self.options.noneLabel = self.getMessage("noneLabel");
+                }
+
+                if (typeof(self.options.hideNone) === "undefined")
+                {
+                    if (typeof(self.options.removeDefaultNone) !== "undefined")
+                    {
+                        self.options.hideNone = self.options.removeDefaultNone;
+                    }
+                    else
+                    {
+                        self.options.hideNone = self.isRequired();
+                    }
+                }
+
+                // if emptySelectFirst and we have options but no data, then auto-select first item in the options list
+                if (self.data.length === 0 && self.options.emptySelectFirst && self.selectOptions.length > 0)
+                {
+                    self.selectOptions[0].selected = true;
+                    self.data = [self.selectOptions[0]];
+                }
+
+                // likewise, we auto-assign first pick if field required
+                if (self.data.length === 0 && self.isRequired() && self.selectOptions.length > 0)
+                {
+                    self.selectOptions[0].selected = true;
+                    self.data = [self.selectOptions[0]];
+                }
 
                 callback(model);
-            });
-        },
-
-        beforeRenderControl: function(model, callback)
-        {
-            var self = this;
-
-            this.base(model, function() {
-
-                // build out "displayableText"
-                var displayableTexts = [];
-                var map = {};
-                for (var i = 0; i < model.selectOptions.length; i++)
-                {
-                    map[model.selectOptions[i].value] = model.selectOptions[i].text;
-                }
-
-                if (Alpaca.isArray(model.data))
-                {
-                    for (var i = 0; i < model.data.length; i++)
-                    {
-                        var text = map[model.data[i]];
-                        if (text)
-                        {
-                            displayableTexts.push(text);
-                        }
-                    }
-                }
-                else
-                {
-                    var text = map[model.data];
-                    if (text)
-                    {
-                        displayableTexts.push(text);
-                    }
-                }
-
-                model.displayableText = displayableTexts.join(", ");
-
-                callback();
-
             });
         },
 
@@ -224,20 +140,6 @@
             var self = this;
 
             this.base(model, function() {
-
-                // if emptySelectFirst and nothing currently checked, then pick first item in the value list
-                // set data and visually select it
-                if (Alpaca.isUndefined(self.data) && self.options.emptySelectFirst && self.selectOptions && self.selectOptions.length > 0)
-                {
-                    self.data = self.selectOptions[0].value;
-                }
-
-                // do this little trick so that if we have a default value, it gets set during first render
-                // this causes the state of the control
-                if (self.data)
-                {
-                    self.setValue(self.data);
-                }
 
                 // if we are in multiple mode and the bootstrap multiselect plugin is available, bind it in
                 if (self.options.multiple && $.fn.multiselect && !self.isDisplayOnly())
@@ -262,156 +164,58 @@
                     $(self.getControlEl()).multiselect(settings);
                 }
 
+                var afterChangeHandler = function()
+                {
+                    var newData = [];
+
+                    var val = $(self.control).val();
+                    if (!val) {
+                        val = [];
+                    }
+                    if (Alpaca.isString(val)) {
+                        val = [val];
+                    }
+
+                    var tempMap = {};
+                    for (var i = 0; i < model.selectOptions.length; i++)
+                    {
+                        tempMap[model.selectOptions[i].value] = model.selectOptions[i];
+                    }
+
+                    for (var i = 0; i < val.length; i++)
+                    {
+                        newData.push(tempMap[val[i]].value);
+                    }
+
+                    // set value silently
+                    self.setValue(newData, true);
+
+                    self.refreshValidationState();
+                    self.triggerWithPropagation("change");
+                };
+
+                $(self.control).change(function(e) {
+                    afterChangeHandler();
+                });
+
                 callback();
 
             });
         },
 
-        /**
-         * Validate against enum property.
-         *
-         * @returns {Boolean} True if the element value is part of the enum list, false otherwise.
-         */
-        _validateEnum: function()
+        afterSetValue: function()
         {
-            var _this = this;
-
-            if (this.schema["enum"])
-            {
-                var val = this.data;
-
-                if (!this.isRequired() && Alpaca.isValEmpty(val))
-                {
-                    return true;
-                }
-
-                if (this.options.multiple)
-                {
-                    var isValid = true;
-
-                    if (!val)
-                    {
-                        val = [];
-                    }
-
-                    if (!Alpaca.isArray(val) && !Alpaca.isObject(val))
-                    {
-                        val = [val];
-                    }
-
-                    $.each(val, function(i,v) {
-
-                        var scalarValue = _this.convertToScalarValue(v);
-
-                        var inArray = Alpaca.inArray(_this.schema["enum"], scalarValue);
-                        if (!inArray)
-                        {
-                            isValid = false;
-                        }
-
-                    });
-
-                    return isValid;
-                }
-                else
-                {
-                    // in case we're an array modeled on a single select, just use the 0th element
-                    if (Alpaca.isArray(val)) {
-                        val = val[0];
-                    }
-
-                    var scalarValue = _this.convertToScalarValue(val);
-
-                    return Alpaca.inArray(this.schema["enum"], scalarValue);
-                }
-            }
-            else
-            {
-                return true;
-            }
-        },
-
-        /**
-         * @see Alpaca.Field#onChange
-         */
-        onChange: function(e) {
-
             var self = this;
 
-            var scalarValue = self.getControlValue();
-
-            self.convertToDataValue(scalarValue, function(err, data) {
-
-                // store back into data element
-                self.data = data;
-
-                // store scalar value onto control
-                self.control.val(scalarValue);
-
-                // trigger observables and updates
-                self.updateObservable();
-                self.triggerUpdate();
-                self.refreshValidationState();
-
-            });
-        },
-
-        /**
-         * Validates if number of items has been less than minItems.
-         * @returns {Boolean} true if number of items has been less than minItems
-         */
-        _validateMinItems: function()
-        {
-            if (this.schema.minItems && this.schema.minItems >= 0)
+            if (self.data.length > 0)
             {
-                if ($(":selected",this.control).length < this.schema.minItems)
-                {
-                    return false;
+                var values = [];
+                for (var i = 0; i < self.data.length; i++) {
+                    values.push(self.data[i].value);
                 }
+
+                $(self.control).val(values);
             }
-
-            return true;
-        },
-
-        /**
-         * Validates if number of items has been over maxItems.
-         * @returns {Boolean} true if number of items has been over maxItems
-         */
-        _validateMaxItems: function()
-        {
-            if (this.schema.maxItems && this.schema.maxItems >= 0)
-            {
-                if ($(":selected",this.control).length > this.schema.maxItems)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        },
-
-        /**
-         * @see Alpaca.ContainerField#handleValidate
-         */
-        handleValidate: function()
-        {
-            var baseStatus = this.base();
-
-            var valInfo = this.validation;
-
-            var status = this._validateMaxItems();
-            valInfo["tooManyItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.maxItems]),
-                "status": status
-            };
-
-            status = this._validateMinItems();
-            valInfo["notEnoughItems"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("notEnoughItems"), [this.schema.minItems]),
-                "status": status
-            };
-
-            return baseStatus && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"];
         },
 
         /**

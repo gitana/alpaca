@@ -377,12 +377,14 @@ $("#field14").alpaca({
             }
         }
     }
-});</script>
+});
+</script>
 {% endraw %}
 
 ## Example 15
 Here is an example where we explicitly disable sorting.  We do this within the field configuration.  We could also do
 this by globally setting <code>Alpaca.defaultSort</code> to <code>false</code>.
+
 <div id="field15"> </div>
 {% raw %}
 <script type="text/javascript" id="field15-script">
@@ -398,6 +400,46 @@ $("#field15").alpaca({
         "optionLabels": ["Vanille", "Chocolat", "Café", "Fraise", "Comme"],
         "sort": false
     }    
+});
+</script>
+{% endraw %}
+
+## Example 16
+An example where we set the value after render.
+<div id="field16"> </div>
+{% raw %}
+<script type="text/javascript" id="field16-script">
+$("#field16").alpaca({
+    "schema": {
+        "type": "object",
+        "properties": {
+            "flavor": {
+                "enum": ["vanilla", "chocolate", "coffee", "strawberry", "mint"]
+            },
+            "scoops": {
+                "type": "number"
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "flavor": {
+                "label": "Crème Glacée",
+                "helper": "Quelle saveur de crème glacée préférez-vous?",
+                "optionLabels": ["Vanille", "Chocolat", "Café", "Fraise", "Comme"],
+                "sort": false
+            },
+            "scoops": {
+                "label": "Scoops of Sugar"
+            }
+        }
+    },
+    "postRender": function(control) {
+        control.setValue({
+            "flavor": "coffee",
+            "scoops": 3
+        });
+    }
 });
 </script>
 {% endraw %}

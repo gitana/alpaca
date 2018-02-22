@@ -260,39 +260,42 @@
                 {
                     if ($.fn.DataTable)
                     {
-                        // if we're setting up for dragging rows, then add that column
-                        if (self.options.dragRows)
+                        if (self.options.datatables.columns.length === 0)
                         {
-                            self.options.datatables.columns.push({
-                                "orderable": false,
-                                "name": "dragRowsIndex",
-                                "hidden": true
-                            });
+                            // if we're setting up for dragging rows, then add that column
+                            if (self.options.dragRows)
+                            {
+                                self.options.datatables.columns.push({
+                                    "orderable": false,
+                                    "name": "dragRowsIndex",
+                                    "hidden": true
+                                });
 
-                            self.options.datatables.columns.push({
-                                "orderable": false,
-                                "name": "dragRowsDraggable"
-                            });
-                        }
+                                self.options.datatables.columns.push({
+                                    "orderable": false,
+                                    "name": "dragRowsDraggable"
+                                });
+                            }
 
-                        // mix in fields from the items
-                        for (var k in self.schema.items.properties)
-                        {
-                            var colConfig = {
-                                "orderable": true,
-                                "orderDataType": "alpaca"
-                            };
+                            // mix in fields from the items
+                            for (var k in self.schema.items.properties)
+                            {
+                                var colConfig = {
+                                    "orderable": true,
+                                    "orderDataType": "alpaca"
+                                };
 
-                            self.options.datatables.columns.push(colConfig);
-                        }
+                                self.options.datatables.columns.push(colConfig);
+                            }
 
-                        // if we have an actions column enabled, then turn off sorting for the actions column (assumed to be last)
-                        if (self.options.showActionsColumn)
-                        {
-                            self.options.datatables.columns.push({
-                                "orderable": false,
-                                "name": "actions"
-                            });
+                            // if we have an actions column enabled, then turn off sorting for the actions column (assumed to be last)
+                            if (self.options.showActionsColumn)
+                            {
+                                self.options.datatables.columns.push({
+                                    "orderable": false,
+                                    "name": "actions"
+                                });
+                            }
                         }
 
                         if (self.options.dragRows)
@@ -498,7 +501,7 @@
             }
 
             // find any alpaca-table-reorder-draggable-cell elements and slip a TD around them
-            var alpacaTableReorderIndexCells = self.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-draggable-cell");
+            //var alpacaTableReorderIndexCells = self.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-draggable-cell");
 
             // find any alpaca-table-reorder-index-cell elements and slip a TD around them
             var alpacaTableReorderIndexCells = self.getTableEl().children("tbody").children("tr").children("td.alpaca-table-reorder-index-cell");
@@ -511,9 +514,30 @@
                 });
             }
 
+            /*
             // find anything else with .alpaca-merge-up and merge up
-            this.getFieldEl().find(".alpaca-merge-up [data-merge-up-field-id='" + self.getId() + "']").each(function() {
+            this.getFieldEl().find(".alpaca-merge-up[data-merge-up-field-id='" + self.getId() + "']").each(function() {
                 mergeElementUp(this);
+            });
+            */
+
+            // find anything else with .alpaca-merge-up and merge up
+            $(trElements).each(function() {
+                var trAlpacaId = $(this).attr("data-alpaca-field-id");
+
+                // inject the TD to wrap
+                $(this).find(".alpaca-merge-up[data-merge-up-field-id='" + trAlpacaId + "'][data-alpaca-merge-tag='td']").each(function() {
+
+                    var td = $("<td></td>");
+                    $(this).before(td);
+                    $(td).append(this);
+
+                    mergeElementUp(this);
+
+                    $(td).attr("data-alpaca-merge-tag", null);
+                    $(td).attr("data-merge-up-field-id", null);
+                });
+
             });
         },
 

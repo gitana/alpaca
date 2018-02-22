@@ -67,16 +67,18 @@ var paths = {
             // fields
             "src/js/fields/basic/TextField.js",
             "src/js/fields/basic/TextAreaField.js",
-            "src/js/fields/basic/CheckBoxField.js",
             "src/js/fields/basic/FileField.js",
-            "src/js/fields/basic/ListField.js",
-            "src/js/fields/basic/RadioField.js",
-            "src/js/fields/basic/SelectField.js",
             "src/js/fields/basic/NumberField.js",
             "src/js/fields/basic/ArrayField.js",
             "src/js/fields/basic/ObjectField.js",
             "src/js/fields/basic/AnyField.js",
             "src/js/fields/basic/HiddenField.js",
+
+            "src/js/fields/list/ListField.js",
+            "src/js/fields/list/CheckBoxField.js",
+            "src/js/fields/list/RadioField.js",
+            "src/js/fields/list/SelectField.js",
+            "src/js/fields/list/ChooserField.js",
 
             "src/js/fields/advanced/AddressField.js",
             "src/js/fields/advanced/CKEditorField.js",

@@ -34,7 +34,17 @@ $("#field2").alpaca({
     "data": true,
     "options": {
         "label": "Question:",
-        "rightLabel": "Do you like Alpaca?"
+        "rightLabel": "Do you like Alpaca?",
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        }
     }
 });
 </script>
@@ -205,6 +215,49 @@ $("#field7").alpaca({
             "option1",
             "option3"
         ]
+    }
+});
+</script>
+{% endraw %}
+
+## Example 8
+Checkbox Field as a dependency
+<div id="field8"> </div>
+{% raw %}
+<script type="text/javascript" id="field8-script">
+$("#field8").alpaca({
+    "data": {
+        "hidememberinfo": true
+    },
+    "schema": {
+        "type": "object",
+        "properties": {
+            "hidememberinfo": {
+                "type": "boolean"
+            },
+            "level": {
+                "type": "string",
+                "title": "Membership Level",
+                "enum": ["silver", "gold", "platinum"]
+            }
+        },
+        "dependencies": {
+            "level": ["hidememberinfo"]
+        }
+    },
+    "options": {
+        "fields": {
+            "hide": {
+                "type": "checkbox",
+                "rightLabel": "Hide membership information"
+            },
+            "level": {
+                "optionLabels": ["Silver", "Gold", "Platinum"],
+                "dependencies": {
+                    "hidememberinfo": false
+                }
+            }
+        }
     }
 });
 </script>

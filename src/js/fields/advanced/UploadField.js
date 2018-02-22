@@ -328,6 +328,11 @@
                     {
                         model.dropZoneMessage = self.getMessage("dropZoneSingle");
                     }
+
+                    if (model.options.directory)
+                    {
+                        model.dropZoneMessage = self.getMessage("dropZoneMultipleDirectory");
+                    }
                 }
 
                 model.selectFromExistingMessage = self.options.selectFromExistingMessage;
@@ -423,7 +428,12 @@
             if (self.options.multiple)
             {
                 $(el).find(".alpaca-fileupload-input").attr("multiple", true);
-                //$(el).find(".alpaca-fileupload-input").attr("name", self.name + "_files[]");
+            }
+
+            if (self.options.directory)
+            {
+                $(el).find(".alpaca-fileupload-input").attr("directory", true);
+                //$(el).find(".alpaca-fileupload-input").attr("webkitdirectory", true);
             }
 
             if (self.options.name)
@@ -494,7 +504,24 @@
                         if (self.options.maxFileSize > -1)
                         {
                             if (data.files[i].size > self.options.maxFileSize) {
-                                uploadErrors.push('Filesize is too big: ' + data.files[i].size);
+                                uploadErrors.push('Filesize is too big.  The maximum allowed file size is ' + self.options.maxFileSize + ' and the file being uploaded has size ' + data.files[i].size);
+                                bad = true;
+                            }
+                        }
+
+                        // general "before add" validation function
+                        if (self.options.beforeAddValidator)
+                        {
+                            var errorMessage = self.options.beforeAddValidator(data.files[i]);
+                            if (Alpaca.isString(errorMessage) || errorMessage === false)
+                            {
+                                if (!Alpaca.isString(errorMessage))
+                                {
+                                    errorMessage = 'Not an accepted file: ' + data.files[i].name;
+                                }
+
+                                uploadErrors.push(errorMessage);
+
                                 bad = true;
                             }
                         }
@@ -643,11 +670,7 @@
              * When file uploads fail, alert...
              */
             fileUpload.bind("fileuploadfail", function(e, data) {
-
-                if (data.errorThrown)
-                {
-                    self.onUploadFail(data);
-                }
+                self.onUploadFail(data);
             });
 
 
@@ -664,7 +687,7 @@
             // allow for preloading of documents
             self.preload(fileUpload, el, function(files) {
 
-                if (files)
+                if (files && files.length > 0)
                 {
                     var form = $(self.control).find('.alpaca-fileupload-input');
                     $(form).fileupload('option', 'done').call(form, $.Event('done'), {
@@ -1102,12 +1125,18 @@
 
             if (self.options.errorHandler)
             {
-                self.options.errorHandler.call(self, [data.errorThrown]);
+                self.options.errorHandler.call(self, data);
             }
 
-            for (var i = 0; i < data.files.length; i++)
+            // if "error" not filled in for each file, do our best here
+            if (data.files && data.files.length > 0)
             {
-                data.files[i].error = data.errorThrown;
+                for (var i = 0; i < data.files.length; i++)
+                {
+                    if (!data.files[i].error) {
+                        data.files[i].error = data.errorThrown;
+                    }
+                }
             }
         },
 
@@ -1189,6 +1218,12 @@
                         "type": "boolean",
                         "default": false
                     },
+                    "directory": {
+                        "title": "Directory",
+                        "description": "Whether to allow directories (folders) to be dropped into the control for multi-document upload.",
+                        "type": "boolean",
+                        "default": false
+                    },
                     "showUploadPreview": {
                         "title": "Show Upload Preview",
                         "description": "Whether to show thumbnails for uploaded assets (requires preview support)",
@@ -1213,7 +1248,8 @@
         "chooseFile": "Choose File...",
         "chooseFiles": "Choose Files...",
         "dropZoneSingle": "Click the Choose button or Drag and Drop a file here to upload...",
-        "dropZoneMultiple": "Click the Choose button or Drag and Drop files here to upload..."
+        "dropZoneMultiple": "Click the Choose button or Drag and Drop files here to upload...",
+        "dropZoneMultipleDirectory": "Click the Choose button or Drag and Drop files or a folder here to upload..."
     });
 
     // https://github.com/private-face/jquery.bind-first/blob/master/dev/jquery.bind-first.js

@@ -265,9 +265,9 @@
             var floatValue = this.getValue();
 
             if (!Alpaca.isEmpty(this.schema.multipleOf)) {
-                if (floatValue && this.schema.multipleOf !== 0)
+                if (floatValue && this.schema.multipleOf > 0)
                 {
-                    return false;
+                    return (floatValue % this.schema.multipleOf) === 0;
                 }
             }
 

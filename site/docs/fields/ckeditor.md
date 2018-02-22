@@ -97,3 +97,21 @@ $("#field3").alpaca({
 });
 </script>
 {% endraw %}
+
+
+## Example 4
+An example where we set the value after render.
+<div id="field4"> </div>
+{% raw %}
+<script type="text/javascript" id="field4-script">
+$("#field4").alpaca({
+    "options": {
+        "type": "ckeditor"
+    },
+    "postRender": function(control) {
+        control.setValue("<p>Buddha built my hotrod</p>");
+    }
+});
+</script>
+{% endraw %}
+

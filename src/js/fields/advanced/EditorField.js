@@ -97,12 +97,14 @@
 
                 if (self.control)
                 {
+                    /*
                     // ACE HEIGHT
                     var aceHeight = self.options.aceHeight;
                     if (aceHeight)
                     {
                         $(self.control).css("height", aceHeight);
                     }
+                    */
 
                     // ACE WIDTH
                     var aceWidth = self.options.aceWidth;
@@ -190,6 +192,15 @@
                         // Whenever a change happens inside the ACE editor, update
                         // the size again
                         self.editor.getSession().on('change', heightUpdateFunction);
+                    }
+                    else
+                    {
+                        // ACE HEIGHT
+                        var aceHeight = self.options.aceHeight;
+                        if (aceHeight)
+                        {
+                            $(self.control).css("min-height", aceHeight + "px");
+                        }
                     }
 
                     // READONLY

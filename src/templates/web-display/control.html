@@ -6,15 +6,28 @@
         <label class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} alpaca-control-label" for="{{id}}">{{{options.label}}}</label>
         {{/if}}
 
+        {{#if options.helpers}}
+            {{#compare options.helpersPosition "above"}}
+                {{#each options.helpers}}
+                    <p class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+                        <i class="info-sign"></i>
+                        {{#showMessage .}}{{/showMessage}}
+                    </p>
+                {{/each}}
+            {{/compare}}
+        {{/if}}
+
         {{#control}}{{/control}}
 
         {{#if options.helpers}}
-        {{#each options.helpers}}
-        <p class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-            <i class="info-sign"></i>
-            {{{.}}}
-        </p>
-        {{/each}}
+            {{#compare options.helpersPosition "below"}}
+                {{#each options.helpers}}
+                    <p class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+                        <i class="info-sign"></i>
+                        {{#showMessage .}}{{/showMessage}}
+                    </p>
+                {{/each}}
+            {{/compare}}
         {{/if}}
 
     </div>

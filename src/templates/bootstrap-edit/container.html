@@ -19,15 +19,28 @@
         {{/if}}
 
         {{#if options.helpers}}
-        {{#each options.helpers}}
-        <p class="alpaca-helper help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-            <i class="alpaca-icon-16 glyphicon glyphicon-info-sign"></i>
-            {{{.}}}
-        </p>
-        {{/each}}
+            {{#compare options.helpersPosition "above"}}
+                {{#each options.helpers}}
+                <p class="alpaca-helper help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+                    <i class="alpaca-icon-16 glyphicon glyphicon-info-sign"></i>
+                    {{#showMessage .}}{{/showMessage}}
+                </p>
+                {{/each}}
+            {{/compare}}
         {{/if}}
 
         {{#container}}{{/container}}
+
+        {{#if options.helpers}}
+            {{#compare options.helpersPosition "below"}}
+                {{#each options.helpers}}
+                <p class="alpaca-helper help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+                    <i class="alpaca-icon-16 glyphicon glyphicon-info-sign"></i>
+                    {{#showMessage .}}{{/showMessage}}
+                </p>
+                {{/each}}
+            {{/compare}}
+        {{/if}}
 
     </div>
 

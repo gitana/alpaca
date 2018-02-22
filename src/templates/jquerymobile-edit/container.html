@@ -13,7 +13,7 @@
             {{#each options.helpers}}
             <input type="image" data-icon="icon-info">
             <small class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-                {{{.}}}
+                {{#showMessage .}}{{/showMessage}}
             </small>
             {{/each}}
             {{/if}}

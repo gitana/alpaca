@@ -323,3 +323,11 @@ legend.alpaca-container-label
 {
     color: #aaa;
 }
+
+.alpaca-required-indicator
+{
+    padding-left: 5px;
+    font-style: italic;
+    font-weight: 200;
+    color: #888;
+}

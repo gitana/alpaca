@@ -11,7 +11,7 @@
         {{#if options.helpers}}
         {{#each options.helpers}}
         <small class="alpaca-helper {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-            {{{.}}}
+            {{#showMessage .}}{{/showMessage}}
         </small>
         {{/each}}
         {{/if}}

@@ -101,8 +101,26 @@
                 delete this.options.helper;
             }
 
+            // options.helpersPosition defaults to above
+            if (!this.options.helpersPosition) {
+                this.options.helpersPosition = this.options.helperPosition
+            }
+            if (!this.options.helpersPosition) {
+                this.options.helpersPosition = Alpaca.defaultHelpersPosition;
+            }
+
             if (Alpaca.isEmpty(this.options.readonly) && !Alpaca.isEmpty(this.schema.readonly)) {
                 this.options.readonly = this.schema.readonly;
+            }
+
+            // in case they put "default" on options
+            if (typeof(this.schema.default) === "undefined")
+            {
+                if (typeof(this.options.default) !== "undefined")
+                {
+                    this.schema.default = this.options.default;
+                    delete this.options.default;
+                }
             }
 
             // if data is empty, then we check whether we can fall back to a default value
@@ -140,9 +158,9 @@
             this.updateObservable = function()
             {
                 // update observable
-                if (this.data)
+                if (this.getValue())
                 {
-                    this.observable(this.path).set(this.data);
+                    this.observable(this.path).set(this.getValue());
                 }
                 else
                 {
@@ -311,10 +329,12 @@
          */
         setup: function() {
 
+            /*
             if (!this.initializing)
             {
                 this.data = this.getValue();
             }
+            */
 
             // ensures that we have a template descriptor picked for this field
             this.initTemplateDescriptor();
@@ -337,6 +357,14 @@
             // MESSAGES
             if (Alpaca.isUndefined(this.options.showMessages)) {
                 this.options.showMessages = true;
+            }
+
+            // support for "hidden" field on schema
+            if (typeof(this.options.hidden) === "undefined")
+            {
+                if (typeof(this.schema.hidden) !== "undefined") {
+                    this.options.hidden = this.schema.hidden;
+                }
             }
         },
 
@@ -1028,7 +1056,8 @@
             var self = this;
 
             // store back data
-            var _data = self.data = self.getValue();
+            var _externalData = self.getValue();
+            this.data = self.getValue();
 
             // remember this stuff
             var oldDomEl = self.domEl;
@@ -1090,14 +1119,16 @@
                     // mark that we're refreshed
                     self.refreshed = true;
 
+                    /*
                     // this is apparently needed for objects and arrays
-                    if (typeof(_data) !== "undefined")
+                    if (typeof(_externalData) !== "undefined")
                     {
-                        if (Alpaca.isObject(_data) || Alpaca.isArray(_data))
+                        if (Alpaca.isObject(_externalData) || Alpaca.isArray(_externalData))
                         {
-                            self.setValue(_data);
+                            self.setValue(_externalData, true);
                         }
                     }
+                    */
 
                     // fire the "ready" event
                     Alpaca.fireReady(self);
@@ -1242,11 +1273,7 @@
         {
             var self = this;
 
-            var val = this.data;
-
-            val = self.ensureProperType(val);
-
-            return val;
+            return self.ensureProperType(this.data);
         },
 
         /**
@@ -1853,7 +1880,8 @@
         {
             var newValue = null;
 
-            if (this.data) {
+            if (this.data)
+            {
                 newValue = this.data;
             }
 
@@ -2003,7 +2031,7 @@
          */
         onChange: function(e) {
             // store back into data element
-            this.data = this.getValue();
+            //this.data = this.getValue();
             this.updateObservable();
             this.triggerUpdate();
         },
@@ -2535,6 +2563,13 @@
                             "type": "string"
                         }
                     },
+                    "helpersPosition": {
+                        "title": "Helpers Position",
+                        "description": "Defines the placement location of the helper text relative to the control (either 'above' or 'below')",
+                        "type": "string",
+                        "enum": ["above", "below"],
+                        "default": "below"
+                    },
                     "fieldClass": {
                         "title": "CSS class",
                         "description": "Specifies one or more CSS classes that should be applied to the dom element for this field once it is rendered.  Supports a single value, comma-delimited values, space-delimited values or values passed in as an array.",
@@ -2687,6 +2722,10 @@
                         "items": {
                             "type": "textarea"
                         }
+                    },
+                    "helpersPosition": {
+                        "type": "text",
+                        "optionLabels": ["Above", "Below"]
                     },
                     "fieldClass": {
                         "type": "text"

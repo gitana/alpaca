@@ -1,0 +1,86 @@
+<script type="text/x-handlebars-template">
+
+    <div id="{{id}}" class="well">
+        <div class="row">
+            <div class="chooser-panel chooser-panel-unselected col-md-6">
+                <div class="chooser-panel-header chooser-filter">
+                    <input type="text" placeholder="Filter..."/>
+                </div>
+                <div class="chooser-panel-items">
+
+                    {{#if showAllSelections}}
+
+                        {{#each selectOptions}}
+                            {{#if filtered}}
+                            {{else}}
+                            <div class="chooser-item {{#if selected}}disabled{{/if}}" data-chooser-item-text="{{{text}}}" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{unselectedIndex}}">
+                                <div class="chooser-item-text">{{text}}</div>
+                                <div class="chooser-item-buttons">
+                                    {{#if selected}}
+                                    {{else}}
+                                    <button class="btn btn-default btn-xs btn-add">
+                                        <i class="glyphicon glyphicon-plus-sign"/>
+                                    </button>
+                                    {{/if}}
+                                </div>
+                                <div class="clear:both"/>
+                            </div>
+                            {{/if}}
+                        {{/each}}
+
+                    {{else}}
+
+                        {{#if unselected.length}}
+                            {{#each unselected}}
+                                {{#if filtered}}
+                                {{else}}
+                                    <div class="chooser-item" data-chooser-item-text="{{{text}}}" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{@index}}">
+                                        <div class="chooser-item-text">{{text}}</div>
+                                        <div class="chooser-item-buttons">
+                                            <button class="btn btn-default btn-xs btn-add">
+                                                <i class="glyphicon glyphicon-plus-sign"/>
+                                            </button>
+                                        </div>
+                                        <div class="clear:both"/>
+                                    </div>
+                                {{/if}}
+                            {{/each}}
+                        {{else}}
+                            <div class="chooser-item-message">All options have been selected</div>
+                        {{/if}}
+
+                    {{/if}}
+                </div>
+            </div>
+            <div class="chooser-panel chooser-panel-selected col-md-6">
+                <div class="chooser-panel-header chooser-info"></div>
+                <div class="chooser-panel-items">
+
+                    {{#if selected.length}}
+                        {{#each selected}}
+                            <div class="chooser-item" data-chooser-item-text="{{{text}}}" data-chooser-item-value="{{{value}}}" data-chooser-item-index="{{@index}}">
+                                <div class="chooser-item-text">{{text}}</div>
+                                <div class="chooser-item-buttons">
+                                    <button class="btn btn-default btn-xs btn-remove">
+                                        <i class="glyphicon glyphicon-minus-sign"/>
+                                    </button>
+                                    <button class="btn btn-default btn-xs btn-up {{#if @first}}disabled{{/if}}">
+                                        <i class="glyphicon glyphicon-chevron-up"/>
+                                    </button>
+                                    <button class="btn btn-default btn-xs btn-down {{#if @last}}disabled{{/if}}">
+                                        <i class="glyphicon glyphicon-chevron-down"/>
+                                    </button>
+                                </div>
+                                <div class="clear:both"/>
+                            </div>
+                        {{/each}}
+                    {{else}}
+                        <div class="chooser-item-message">No options have been selected</div>
+                    {{/if}}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</script>

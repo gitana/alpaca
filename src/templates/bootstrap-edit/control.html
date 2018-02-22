@@ -6,15 +6,28 @@
         <label class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} control-label alpaca-control-label" for="{{id}}">{{{options.label}}}</label>
         {{/if}}
 
+        {{#if options.helpers}}
+            {{#compare options.helpersPosition "above"}}
+                {{#each options.helpers}}
+                <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+                    <i class="glyphicon glyphicon-info-sign"></i>
+                    {{#showMessage .}}{{/showMessage}}
+                </p>
+                {{/each}}
+            {{/compare}}
+        {{/if}}
+
         {{#control}}{{/control}}
 
         {{#if options.helpers}}
-        {{#each options.helpers}}
-        <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-            <i class="glyphicon glyphicon-info-sign"></i>
-            {{{.}}}
-        </p>
-        {{/each}}
+            {{#compare options.helpersPosition "below"}}
+                {{#each options.helpers}}
+                    <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+                        <i class="glyphicon glyphicon-info-sign"></i>
+                        {{#showMessage .}}{{/showMessage}}
+                    </p>
+                {{/each}}
+            {{/compare}}
         {{/if}}
 
         {{#if options.renderButtons}}

@@ -4,7 +4,7 @@
     {{else}}
     <div class="radio">
         <label>
-            <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value=""/>{{{options.noneLabel}}}
+            <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value="" {{#if options._noData}}checked="checked"{{/if}}/>{{{options.noneLabel}}}
         </label>
     </div>
     {{/if}}

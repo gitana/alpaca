@@ -232,7 +232,7 @@
 
                 if (!self.firstUpdateObservableFire)
                 {
-                    if ((typeof(self.data) == "undefined") || self.data == null)
+                    if (Alpaca.isEmpty(self.data))
                     {
                         // do not handle
                     }
@@ -501,6 +501,9 @@
                         x = self.trigger("keyup", e);
                     }
 
+                    // propagate up with "after_nested_change"
+                    self.triggerWithPropagation("after_nested_change", e);
+
                     return x;
                 });
 
@@ -508,10 +511,17 @@
                     var x = self.onKeyDown.call(self, e);
                     if (x !== false) {
                         x = self.trigger("keydown", e);
+
+                        // propagate up with "before_nested_change"
+                        self.triggerWithPropagation("before_nested_change", e);
+
+                        // propagate up with "nested_change"
+                        //self.triggerWithPropagation("nested_change", e);
                     }
 
                     return x;
                 });
+
             },
 
             /**
@@ -641,9 +651,13 @@
             {
                 var array = null;
 
-                if (this.schema && this.schema["enum"])
+                if (this.schema["enum"])
                 {
                     array = this.schema["enum"];
+                }
+                else if (this.schema.type === "array" && this.schema.items && this.schema.items.enum)
+                {
+                    array = this.schema.items.enum;
                 }
 
                 return array;

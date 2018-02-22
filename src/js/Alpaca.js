@@ -439,7 +439,7 @@
                 }
             }
 
-            if (loadedOptions.view)
+            if (loadedOptions.view && !view)
             {
                 loadedView = loadedOptions.view;
             }
@@ -5098,6 +5098,9 @@
     // use this to have invalid messages show up for read-only fields
     Alpaca.showReadOnlyInvalidState = false;
 
+    // use this to globally control the position of helper text
+    Alpaca.defaultHelpersPosition = "below";
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
@@ -5113,6 +5116,19 @@
     Alpaca.getCache = function(id)
     {
         return Alpaca.caches[id];
+    };
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // EXTERNAL MESSAGE SUPPORT
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // hook to support external message bundles
+    Alpaca.externalMessage = function(key)
+    {
+        return undefined;
     };
 
 

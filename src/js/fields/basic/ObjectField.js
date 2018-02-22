@@ -34,12 +34,7 @@
 
             this.containerItemTemplateDescriptor = self.view.getTemplateDescriptor("container-" + containerItemTemplateType + "-item", self);
 
-            if (Alpaca.isEmpty(this.data))
-            {
-                return;
-            }
-
-            if (this.data === "")
+            if (Alpaca.isEmpty(this.data) || this.data === "")
             {
                 return;
             }
@@ -121,7 +116,7 @@
             }
 
             // anything left in existingFieldsByPropertyId describes data that is missing, null or empty
-            // we null out those values
+            // we set those as undefined
             for (var propertyId in existingFieldsByPropertyId)
             {
                 var field = existingFieldsByPropertyId[propertyId];
@@ -942,7 +937,7 @@
                 return false;
             }
 
-            var dependentOnData = dependentOnField.data;
+            var dependentOnData = dependentOnField.getValue();
 
             // assume it isn't valid
             var valid = false;
@@ -963,7 +958,7 @@
                 }
                 else
                 {
-                    valid = !Alpaca.isValEmpty(dependentOnField.data);
+                    valid = !Alpaca.isValEmpty(dependentOnData);
                 }
             }
             else

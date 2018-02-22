@@ -19,6 +19,8 @@
          */
         setup: function()
         {
+            var self = this;
+
             this.base();
             
             if (this.options.name)
@@ -44,61 +46,13 @@
             }
         },
 
-        /**
-         * @see Alpaca.Fields.ControlField#getControlValue
-         */
-        getControlValue: function()
-        {
-            var self = this;
-
-            var val = null;
-
-            $(this.control).find(":checked").each(function() {
-                val = $(this).val();
-
-                val = self.ensureProperType(val);
-            });
-
-            return val;
-        },
-        
-        /**
-         * @see Alpaca.Field#setValue
-         */
-        setValue: function(val)
-        {
-            var self = this;
-
-            // clear all
-            $(this.control).find("input").each(function() {
-                Alpaca.checked($(this), null);
-            });
-
-            // mark selected value
-            if (typeof(val) != "undefined")
-            {
-                Alpaca.checked($(self.control).find("input[value=\"" + val + "\"]"), "checked");
-            }
-
-            // if none selected and "emptySelectFirst", then select
-            if (this.options.emptySelectFirst)
-            {
-                if ($(this.control).find("input:checked").length === 0)
-                {
-                    Alpaca.checked($(self.control).find("input:radio").first(), "checked");
-                }
-            }
-
-            this.base(val);
-        },
-
         initControlEvents: function()
         {
             var self = this;
 
             self.base();
 
-            var inputs = $(this.control).find("input");
+            var inputs = $(self.control).find("input");
 
             inputs.focus(function(e) {
                 if (!self.suspendBlurFocus)
@@ -123,8 +77,48 @@
 
             this.base(function(model) {
 
-                model.selectOptions = self.selectOptions;
                 model.removeDefaultNone = self.options.removeDefaultNone;
+
+                if (typeof(self.options.noneLabel) === "undefined")
+                {
+                    self.options.noneLabel = self.getMessage("noneLabel");
+                }
+
+                if (typeof(self.options.hideNone) === "undefined")
+                {
+                    if (typeof(self.options.removeDefaultNone) !== "undefined")
+                    {
+                        self.options.hideNone = self.options.removeDefaultNone;
+                    }
+                    else
+                    {
+                        self.options.hideNone = self.isRequired();
+                    }
+                }
+
+                // if emptySelectFirst and we have options but no data, then auto-select first item in the options list
+                if (self.data.length === 0 && self.options.emptySelectFirst && self.selectOptions.length > 0)
+                {
+                    self.selectOptions[0].selected = true;
+                    self.data = [self.selectOptions[0]];
+                }
+
+                // likewise, we auto-assign first pick if field required and removeDefaultNone is true
+                if (self.data.length === 0)
+                {
+                    if (self.isRequired())
+                    {
+                        if (self.options.removeDefaultNone === true)
+                        {
+                            self.selectOptions[0].selected = true;
+                            self.data = [self.selectOptions[0]];
+                        }
+                    }
+                    else
+                    {
+                        self.options._noData = true;
+                    }
+                }
 
                 callback(model);
             });
@@ -136,17 +130,36 @@
 
             this.base(model, function() {
 
-                // if emptySelectFirst and nothing currently checked, then pick first item in the value list
-                // set data and visually select it
-                if (self.options.emptySelectFirst && self.selectOptions && self.selectOptions.length > 0)
+                var afterChangeHandler = function()
                 {
-                    self.data = self.selectOptions[0].value;
+                    var newData = [];
 
-                    if ($("input:radio:checked", self.control).length === 0)
-                    {
-                        Alpaca.checked($(self.control).find("input:radio[value=\"" + self.data + "\"]"), "checked");
-                    }
-                }
+                    $(self.control).find("input:radio:checked").each(function() {
+
+                        var value = $(this).attr("value");
+                        for (var i = 0; i < self.selectOptions.length; i++)
+                        {
+                            if (self.selectOptions[i].value === value)
+                            {
+                                newData.push(self.selectOptions[i].value);
+                            }
+                        }
+                    });
+
+                    // set value silently
+                    self.setValue(newData, true);
+
+                    self.refreshValidationState();
+                    self.triggerWithPropagation("change");
+                };
+
+                $(self.control).find("input:radio").change(function(e) {
+
+                    e.preventDefault();
+
+                    afterChangeHandler();
+                });
+
 
                 // stack radio selectors vertically
                 if (self.options.vertical)
@@ -168,31 +181,28 @@
          */
         updateDOMElement: function()
         {
+            var self = this;
+
             this.base();
 
-            $(this.control).find("input:radio").attr("name", this.getName());
+            $(self.control).find("input:radio").attr("name", this.getName());
         },
 
-        /**
-         * @see Alpaca.ControlField#onClick
-         */
-        onClick: function(e)
+        afterSetValue: function()
         {
             var self = this;
-            var currentValue = self.getValue();
 
-            this.base(e);
+            Alpaca.checked($(self.control).find("input:radio"), false);
 
-            var val = $(e.currentTarget).find("input").val();
-            if (typeof(val) !== "undefined")
+            if (self.data.length > 0)
             {
-                self.setValue(val);
-                self.refreshValidationState();
-
-                // manually trigger change event
-                if (currentValue !== val) {
-
-                    self.trigger("change");
+                for (var i = 0; i < self.data.length; i++)
+                {
+                    var radio = $(self.control).find("input:radio[value='" + self.data[i].value + "']");
+                    if (radio.length > 0)
+                    {
+                        Alpaca.checked(radio, true);
+                    }
                 }
             }
         },
