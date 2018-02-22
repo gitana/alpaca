@@ -95,30 +95,6 @@
                 }, function(err) {
                     callback(err);
                 });
-
-                /*
-                $.ajax({
-                    "url": url,
-                    "dataType": "html",
-                    "success": function(html, code, xhr)
-                    {
-                        // cleanup html
-                        html = self.cleanup(html);
-
-                        self._compile(cacheKey, html, function(err) {
-                            callback(err);
-                        });
-                    },
-                    "error": function(xhr, code)
-                    {
-                        callback({
-                            "message": xhr.responseText,
-                            "xhr": xhr,
-                            "code": code
-                        }, null);
-                    }
-                });
-                */
             }
             else if (type === "html")
             {

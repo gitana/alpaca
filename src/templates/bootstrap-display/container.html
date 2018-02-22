@@ -23,7 +23,7 @@
                 {{#each options.helpers}}
                 <p class="alpaca-helper help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
                     <i class="alpaca-icon-16 glyphicon glyphicon-info-sign"></i>
-                    {{{.}}}
+                    {{#showMessage .}}{{/showMessage}}
                 </p>
                 {{/each}}
             {{/compare}}
@@ -36,7 +36,7 @@
                 {{#each options.helpers}}
                 <p class="alpaca-helper help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
                     <i class="alpaca-icon-16 glyphicon glyphicon-info-sign"></i>
-                    {{{.}}}
+                    {{#showMessage .}}{{/showMessage}}
                 </p>
                 {{/each}}
             {{/compare}}

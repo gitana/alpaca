@@ -9,7 +9,7 @@
         {{#if options.helpers}}
         {{#each options.helpers}}
         <h3 class="{{#if options.helperClass}}{{options.helperClass}}{{/if}}">
-            {{{.}}}
+            {{#showMessage .}}{{/showMessage}}
         </h3>
         {{/each}}
         {{/if}}

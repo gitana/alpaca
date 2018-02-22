@@ -11,7 +11,7 @@
                 {{#each options.helpers}}
                     <p class="alpaca-helper {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
                         <i class="alpaca-icon-helper"></i>
-                        {{{.}}}
+                        {{#showMessage .}}{{/showMessage}}
                     </p>
                 {{/each}}
             {{/compare}}
@@ -24,7 +24,7 @@
                 {{#each options.helpers}}
                     <p class="alpaca-helper {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
                         <i class="alpaca-icon-helper"></i>
-                        {{{.}}}
+                        {{#showMessage .}}{{/showMessage}}
                     </p>
                 {{/each}}
             {{/compare}}
