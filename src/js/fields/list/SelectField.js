@@ -125,7 +125,7 @@
                 }
 
                 // likewise, we auto-assign first pick if field required
-                if (self.data.length === 0 && self.isRequired() && self.selectOptions.length > 0)
+                if (self.data.length === 0 && self.isRequired() && self.selectOptions.length > 0 && self.options.hideNone)
                 {
                     self.selectOptions[0].selected = true;
                     self.data = [self.selectOptions[0]];
