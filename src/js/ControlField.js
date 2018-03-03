@@ -301,20 +301,6 @@
             {
                 var self = this;
 
-                /*
-                 // store reference to the label
-                 this.labelDiv = $(this.field).find(".alpaca-controlfield-label");
-                 var labelDiv = $('.alpaca-controlfield-label', this.outerEl);
-                 if (labelDiv.length) {
-                 this.labelDiv = labelDiv;
-                 }
-
-                 var helperDiv = $('.alpaca-controlfield-helper', this.outerEl);
-                 if (helperDiv.length) {
-                 this.helperDiv = helperDiv;
-                 }
-                 */
-
                 this.base(function() {
 
                     callback();
