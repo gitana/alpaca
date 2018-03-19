@@ -1327,7 +1327,9 @@
 
                         if (callback)
                         {
-                            callback(item);
+                            Alpaca.nextTick(function() {
+                                callback(item);
+                            });
                         }
 
                     });
@@ -1391,7 +1393,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
 
                 });
@@ -1485,7 +1489,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
 
                 });
@@ -1606,7 +1612,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
 
                 });
