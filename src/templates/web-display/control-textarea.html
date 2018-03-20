@@ -1,6 +1,6 @@
 <script type="text/x-handlebars-template">
 
-    <p>
+    <p {{#if options.controlClass}}class="{{options.controlClass}}"{{/if}}>
         {{{data}}}
     </p>
 
