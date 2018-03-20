@@ -273,6 +273,8 @@ These folks have made numerous contributions to Alpaca over the years:
 + [@mlarman70](https://github.com/mlarman70)
 + [@christoph007](https://github.com/christoph007)
 + [@MaZZly](https://github.com/MaZZly)
++ [@maximzmushko](https://github.com/maximzmushko)
++ [@DavidePastore](https://github.com/DavidePastore)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!

@@ -322,7 +322,7 @@
                     }
                     else
                     {
-                        self.removeItem(i);
+                        self.removeItem(i, null, true);
                     }
                 }
             }
@@ -1363,12 +1363,13 @@
 
          * @param {Number} childIndex index of the child to be removed
          * @param [Function] callback called after the child is removed
+         * @param [boolean] force whether to force the removal
          */
-        removeItem: function(childIndex, callback)
+        removeItem: function(childIndex, callback, force)
         {
             var self = this;
 
-            if (this._validateEqualMinItems())
+            if (this._validateEqualMinItems() || force)
             {
                 // unregister the child
                 self.unregisterChild(childIndex);
