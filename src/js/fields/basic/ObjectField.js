@@ -152,7 +152,7 @@
 
             for (var i = 0; i < this.children.length; i++)
             {
-                // the property key and vlaue
+                // the property key and value
                 var propertyId = this.children[i].propertyId;
                 var fieldValue = this.children[i].getValue();
 
