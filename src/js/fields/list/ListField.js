@@ -148,12 +148,12 @@
                     self.data = [self.selectOptions[0]];
                 }
 
+                self.populateDisplayableText(model);
+
                 callback();
             };
 
             this.base(model, function() {
-
-                self.populateDisplayableText(model);
 
                 if (self.options.dataSource)
                 {
