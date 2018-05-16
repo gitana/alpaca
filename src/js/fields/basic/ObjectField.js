@@ -1118,7 +1118,7 @@
             var self = this;
 
             // insert into dom
-            if (!index)
+            if (index==null)
             {
                 // insert first into container
                 $(self.container).prepend(item.containerItemEl);
