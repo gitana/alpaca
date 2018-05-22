@@ -9,6 +9,8 @@ tags: field
 
 The ```phone``` field.
 
+This editor field requires <a target="_blank" href="https://github.com/excellalabs/jquery.maskedinput">jQuery Masked Input Plugin</a>
+
 <!-- INCLUDE_API_DOCS: phone -->
 
 
