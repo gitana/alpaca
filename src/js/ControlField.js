@@ -500,9 +500,6 @@
 
                         // propagate up with "before_nested_change"
                         self.triggerWithPropagation("before_nested_change", e);
-
-                        // propagate up with "nested_change"
-                        //self.triggerWithPropagation("nested_change", e);
                     }
 
                     return x;
