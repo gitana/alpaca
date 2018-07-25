@@ -507,14 +507,18 @@
             }
 
             // handle $ref
-            if (propertySchema && propertySchema["$ref"])
-            {
-                var propertyReferenceId = propertySchema["$ref"];
-                var fieldReferenceId = propertySchema["$ref"];
-                if (propertyOptions["$ref"]) {
-                    fieldReferenceId = propertyOptions["$ref"];
-                }
+            var propertyReferenceId = null;
+            if (propertySchema) {
+                propertyReferenceId = propertySchema["$ref"];
+            }
+            var fieldReferenceId = null;
+            if (propertyOptions) {
+                fieldReferenceId = propertyOptions["$ref"];
+            }
 
+            if (propertyReferenceId || fieldReferenceId)
+            {
+                // walk up to find top field
                 var topField = this;
                 var fieldChain = [topField];
                 while (topField.parent)
@@ -528,19 +532,22 @@
 
                 Alpaca.loadRefSchemaOptions(topField, propertyReferenceId, fieldReferenceId, function(propertySchema, propertyOptions) {
 
-                    // walk the field chain to see if we have any circularity
+                    // walk the field chain to see if we have any circularity (for schema)
                     var refCount = 0;
                     for (var i = 0; i < fieldChain.length; i++)
                     {
-                        if (fieldChain[i].schema)
+                        if (propertyReferenceId)
                         {
-                            if ( (fieldChain[i].schema.id === propertyReferenceId) || (fieldChain[i].schema.id === "#" + propertyReferenceId))
+                            if (fieldChain[i].schema)
                             {
-                                refCount++;
-                            }
-                            else if ( (fieldChain[i].schema["$ref"] === propertyReferenceId))
-                            {
-                                refCount++;
+                                if ( (fieldChain[i].schema.id === propertyReferenceId) || (fieldChain[i].schema.id === "#" + propertyReferenceId))
+                                {
+                                    refCount++;
+                                }
+                                else if ( (fieldChain[i].schema["$ref"] === propertyReferenceId))
+                                {
+                                    refCount++;
+                                }
                             }
                         }
                     }
@@ -551,8 +558,7 @@
                     if (originalPropertySchema) {
                         Alpaca.mergeObject(resolvedPropertySchema, originalPropertySchema);
                     }
-                    if (propertySchema)
-                    {
+                    if (propertySchema) {
                         Alpaca.mergeObject(resolvedPropertySchema, propertySchema);
                     }
                     // keep original id
@@ -565,8 +571,7 @@
                     if (originalPropertyOptions) {
                         Alpaca.mergeObject(resolvedPropertyOptions, originalPropertyOptions);
                     }
-                    if (propertyOptions)
-                    {
+                    if (propertyOptions) {
                         Alpaca.mergeObject(resolvedPropertyOptions, propertyOptions);
                     }
 

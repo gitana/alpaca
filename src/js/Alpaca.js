@@ -2789,7 +2789,8 @@
         {
             return function(done)
             {
-                if (!optionsReferenceId) {
+                if (!optionsReferenceId)
+                {
                     done();
                 }
                 else if (optionsReferenceId === "#")
