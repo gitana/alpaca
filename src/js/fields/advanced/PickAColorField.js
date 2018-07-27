@@ -110,6 +110,7 @@
 
                         $(self.control).on("change", function(e) {
                             self.setValue($(this).val());
+                            self.refresh();
                         });
                     }
                 }

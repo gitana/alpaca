@@ -152,7 +152,7 @@
 
             for (var i = 0; i < this.children.length; i++)
             {
-                // the property key and vlaue
+                // the property key and value
                 var propertyId = this.children[i].propertyId;
                 var fieldValue = this.children[i].getValue();
 
@@ -507,14 +507,18 @@
             }
 
             // handle $ref
-            if (propertySchema && propertySchema["$ref"])
-            {
-                var propertyReferenceId = propertySchema["$ref"];
-                var fieldReferenceId = propertySchema["$ref"];
-                if (propertyOptions["$ref"]) {
-                    fieldReferenceId = propertyOptions["$ref"];
-                }
+            var propertyReferenceId = null;
+            if (propertySchema) {
+                propertyReferenceId = propertySchema["$ref"];
+            }
+            var fieldReferenceId = null;
+            if (propertyOptions) {
+                fieldReferenceId = propertyOptions["$ref"];
+            }
 
+            if (propertyReferenceId || fieldReferenceId)
+            {
+                // walk up to find top field
                 var topField = this;
                 var fieldChain = [topField];
                 while (topField.parent)
@@ -528,19 +532,22 @@
 
                 Alpaca.loadRefSchemaOptions(topField, propertyReferenceId, fieldReferenceId, function(propertySchema, propertyOptions) {
 
-                    // walk the field chain to see if we have any circularity
+                    // walk the field chain to see if we have any circularity (for schema)
                     var refCount = 0;
                     for (var i = 0; i < fieldChain.length; i++)
                     {
-                        if (fieldChain[i].schema)
+                        if (propertyReferenceId)
                         {
-                            if ( (fieldChain[i].schema.id === propertyReferenceId) || (fieldChain[i].schema.id === "#" + propertyReferenceId))
+                            if (fieldChain[i].schema)
                             {
-                                refCount++;
-                            }
-                            else if ( (fieldChain[i].schema["$ref"] === propertyReferenceId))
-                            {
-                                refCount++;
+                                if ( (fieldChain[i].schema.id === propertyReferenceId) || (fieldChain[i].schema.id === "#" + propertyReferenceId))
+                                {
+                                    refCount++;
+                                }
+                                else if ( (fieldChain[i].schema["$ref"] === propertyReferenceId))
+                                {
+                                    refCount++;
+                                }
                             }
                         }
                     }
@@ -551,8 +558,7 @@
                     if (originalPropertySchema) {
                         Alpaca.mergeObject(resolvedPropertySchema, originalPropertySchema);
                     }
-                    if (propertySchema)
-                    {
+                    if (propertySchema) {
                         Alpaca.mergeObject(resolvedPropertySchema, propertySchema);
                     }
                     // keep original id
@@ -565,8 +571,7 @@
                     if (originalPropertyOptions) {
                         Alpaca.mergeObject(resolvedPropertyOptions, originalPropertyOptions);
                     }
-                    if (propertyOptions)
-                    {
+                    if (propertyOptions) {
                         Alpaca.mergeObject(resolvedPropertyOptions, propertyOptions);
                     }
 
@@ -1104,7 +1109,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
 
                 });
@@ -1189,7 +1196,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
                 });
             }
@@ -1967,23 +1976,14 @@
             var onComplete = function()
             {
                 // swap order in children
-                var tempChildren = [];
-                for (var i = 0; i < self.children.length; i++)
-                {
-                    if (i === sourceIndex)
-                    {
-                        tempChildren[i] = self.children[targetIndex];
-                    }
-                    else if (i === targetIndex)
-                    {
-                        tempChildren[i] = self.children[sourceIndex];
-                    }
-                    else
-                    {
-                        tempChildren[i] = self.children[i];
-                    }
+                var adjustedTargetIndex = targetIndex;
+                if (sourceIndex < targetIndex) {
+                    adjustedTargetIndex--;
                 }
-                self.children = tempChildren;
+
+                // splice out child
+                var child = self.children.splice(sourceIndex, 1)[0];
+                self.children.splice(adjustedTargetIndex, 0, child);
 
                 // swap order in DOM
                 tempSourceMarker.replaceWith(targetContainer);

@@ -12,7 +12,7 @@ tags: field
  one by one in a stacked order.  The layout-driven mechanism allows you to provide a layout template that finely
  describes where your fields should be placed using DOM-driven injection.
 
- The use a layout, you simply need to provide a view that has a <code>layout</code> block.  The <code>layout</code>
+ To use a layout, you simply need to provide a view that has a <code>layout</code> block.  The <code>layout</code>
  block defines the HTML template to use and then optionally defines the bindings of fields into sections of the HTML.
 
  The layout block requires a <code>template</code> value to identify the HTML template that will render the fields.
