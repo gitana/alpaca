@@ -12,7 +12,7 @@ You might consider this a collection of best practices though certainly not the 
 
 ## Refreshing a Form
 
-If you render a form at some point decide that you want to refresh it, you can use the <code>get</code> <a href="/docs/api/functions.html">special function</a>to acquire the Alpaca control and the <code>refresh</code>
+If you render a form at some point decide that you want to refresh it, you can use the <code>get</code> <a href="/docs/api/functions.html">special function</a> to acquire the Alpaca control and the <code>refresh</code>
 method to do the deed.
 
 You might try something like this:

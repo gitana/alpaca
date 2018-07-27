@@ -150,10 +150,19 @@
     };
     helpers["showMessage"] = function(key, options)
     {
-        // can we load the value externally?
-        var value = Alpaca.externalMessage(key);
-        if (!value) {
-            value = key;
+        var value = key;
+
+        // if the key starts with "msg:", then load external
+        if (key && key.indexOf("msg:") === 0)
+        {
+            value = key = key.substring(4);
+
+            // can we load the value externally?
+            var externalValue = Alpaca.externalMessage(key);
+            if (externalValue)
+            {
+                value = externalValue;
+            }
         }
 
         return new Handlebars.SafeString(value);

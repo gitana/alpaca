@@ -301,8 +301,12 @@
         setValue: function(data)
         {
             var self = this;
+            
+            if (!data) {
+                data = [];
+            }
 
-            if (!data || !Alpaca.isArray(data))
+            if (!Alpaca.isArray(data))
             {
                 return;
             }
@@ -322,7 +326,7 @@
                     }
                     else
                     {
-                        self.removeItem(i);
+                        self.removeItem(i, null, true);
                     }
                 }
             }
@@ -612,14 +616,18 @@
             }
 
             // handle $ref
-            if (itemSchema && itemSchema["$ref"])
-            {
-                var schemaReferenceId = itemSchema["$ref"];
-                var optionsReferenceId = itemSchema["$ref"];
-                if (itemOptions["$ref"]) {
-                    optionsReferenceId = itemOptions["$ref"];
-                }
+            var schemaReferenceId = null;
+            if (itemSchema) {
+                schemaReferenceId = itemSchema["$ref"];
+            }
+            var optionsReferenceId = null;
+            if (itemOptions) {
+                optionsReferenceId = itemOptions["$ref"];
+            }
 
+            if (schemaReferenceId || optionsReferenceId)
+            {
+                // walk up to find top field
                 var topField = this;
                 var fieldChain = [topField];
                 while (topField.parent)
@@ -633,19 +641,22 @@
 
                 Alpaca.loadRefSchemaOptions(topField, schemaReferenceId, optionsReferenceId, function(itemSchema, itemOptions) {
 
-                    // walk the field chain to see if we have any circularity
+                    // walk the field chain to see if we have any circularity (for schema)
                     var refCount = 0;
                     for (var i = 0; i < fieldChain.length; i++)
                     {
                         if (fieldChain[i].schema)
                         {
-                            if ( (fieldChain[i].schema.id === schemaReferenceId) || (fieldChain[i].schema.id === "#" + schemaReferenceId))
+                            if (schemaReferenceId)
                             {
-                                refCount++;
-                            }
-                            else if ( (fieldChain[i].schema["$ref"] === schemaReferenceId))
-                            {
-                                refCount++;
+                                if ((fieldChain[i].schema.id === schemaReferenceId) || (fieldChain[i].schema.id === "#" + schemaReferenceId))
+                                {
+                                    refCount++;
+                                }
+                                else if ((fieldChain[i].schema["$ref"] === schemaReferenceId))
+                                {
+                                    refCount++;
+                                }
                             }
                         }
                     }
@@ -658,8 +669,7 @@
                     if (originalItemSchema) {
                         Alpaca.mergeObject(resolvedItemSchema, originalItemSchema);
                     }
-                    if (itemSchema)
-                    {
+                    if (itemSchema) {
                         Alpaca.mergeObject(resolvedItemSchema, itemSchema);
                     }
                     delete resolvedItemSchema.id;
@@ -668,8 +678,7 @@
                     if (originalItemOptions) {
                         Alpaca.mergeObject(resolvedItemOptions, originalItemOptions);
                     }
-                    if (itemOptions)
-                    {
+                    if (itemOptions) {
                         Alpaca.mergeObject(resolvedItemOptions, itemOptions);
                     }
 
@@ -1327,7 +1336,9 @@
 
                         if (callback)
                         {
-                            callback(item);
+                            Alpaca.nextTick(function() {
+                                callback(item);
+                            });
                         }
 
                     });
@@ -1361,12 +1372,13 @@
 
          * @param {Number} childIndex index of the child to be removed
          * @param [Function] callback called after the child is removed
+         * @param [boolean] force whether to force the removal
          */
-        removeItem: function(childIndex, callback)
+        removeItem: function(childIndex, callback, force)
         {
             var self = this;
 
-            if (this._validateEqualMinItems())
+            if (this._validateEqualMinItems() || force)
             {
                 // unregister the child
                 self.unregisterChild(childIndex);
@@ -1391,7 +1403,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
 
                 });
@@ -1485,7 +1499,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
 
                 });
@@ -1606,7 +1622,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
 
                 });

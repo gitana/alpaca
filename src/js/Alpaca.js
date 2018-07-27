@@ -538,7 +538,7 @@
          * @returns {Boolean} True if the variable is an array, false otherwise.
          */
         isArray: function(obj) {
-            return obj instanceof Array;
+            return Object.prototype.toString.call(obj) == "[object Array]";
         },
 
         /**
@@ -2789,7 +2789,8 @@
         {
             return function(done)
             {
-                if (!optionsReferenceId) {
+                if (!optionsReferenceId)
+                {
                     done();
                 }
                 else if (optionsReferenceId === "#")

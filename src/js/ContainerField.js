@@ -185,6 +185,11 @@
             this.base();
         },
 
+        // @Override
+        bindData: function()
+        {
+        },
+
         /**
          * Add a "container" dom element inside of the field which houses our custom container.
          *

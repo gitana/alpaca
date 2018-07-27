@@ -79,7 +79,7 @@
          * @see Alpaca.Fields.TextField#getDescription
          */
         getDescription: function() {
-            return "Text Field for personal name with captical letter for first letter & after hyphen, space or apostrophe.";
+            return "Text Field for personal name with capital letter for first letter & after hyphen, space or apostrophe.";
         }
 
         /* end_builder_helpers */
