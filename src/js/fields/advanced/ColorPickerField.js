@@ -31,15 +31,10 @@
 
             this.base();
 
-            // set up default spectrum settings
+            // set up default colorpicker settings
             if (typeof(this.options.colorpicker) === "undefined")
             {
                 this.options.colorpicker = {};
-            }
-
-            if (self.data)
-            {
-                self.options.colorpicker.color = self.data;
             }
         },
 
@@ -66,13 +61,24 @@
                 // if we can render the spectrum plugin...
                 if (self.simpleColorPickerAvailable && self.control)
                 {
-                    setTimeout(function() {
-                        $((self.control)[0]).colorpicker(self.options.colorpicker);
-                    }, 100);
+                    setTimeout(function(self) {
+                        return function() {
 
-                    $(self.control).on('changeColor.colorpicker', function(event) {
-                        self.setValue(event.color.toHex());
-                    });
+                            // create a copy of the color picker settings and bind that
+                            // this is because colorpicker jquery plugin seems to munge these configs across multiple instances
+                            var cp = JSON.parse(JSON.stringify(self.options.colorpicker));
+                            if (self.data)
+                            {
+                                cp.color = self.data;
+                            }
+
+
+                            $(self.control).colorpicker(cp);
+                            $(self.control).on('changeColor.colorpicker', function(event) {
+                                self.setValue(event.color.toHex());
+                            });
+                        }
+                    }(self, self));
                 }
 
                 callback();
