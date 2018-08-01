@@ -295,7 +295,7 @@
             return Alpaca.merge(this.base(), {
                 "properties": {
                     "multiple": {
-                        "title": "Mulitple Selection",
+                        "title": "Multiple Selection",
                         "description": "Allow multiple selection if true.",
                         "type": "boolean",
                         "default": false
