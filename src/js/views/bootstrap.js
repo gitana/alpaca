@@ -25,12 +25,12 @@
     var styles = {};
     styles["button"] = "btn btn-default";
     styles["smallButton"] = "btn btn-default btn-sm";
-    styles["addIcon"] = "glyphicon glyphicon-plus-sign";
-    styles["removeIcon"] = "glyphicon glyphicon-minus-sign";
-    styles["upIcon"] = "glyphicon glyphicon-chevron-up";
-    styles["downIcon"] = "glyphicon glyphicon-chevron-down";
-    styles["expandedIcon"] = "glyphicon glyphicon-circle-arrow-down";
-    styles["collapsedIcon"] = "glyphicon glyphicon-circle-arrow-right";
+    styles["addIcon"] = "fa fa-plus-circle";
+    styles["removeIcon"] = "fa fa-minus-circle";
+    styles["upIcon"] = "fa fa-chevron-up";
+    styles["downIcon"] = "fa fa-chevron-down";
+    styles["expandedIcon"] = "fa fa-circle-arrow-down";
+    styles["collapsedIcon"] = "fa fa-circle-arrow-right";
     styles["table"] = "table table-striped table-bordered table-hover";
 
     // custom callbacks
@@ -41,11 +41,11 @@
 
         // required fields get a little star in their label
         //var label = $(fieldEl).find("label.alpaca-control-label");
-        //$('<span class="alpaca-icon-required glyphicon glyphicon-star"></span>').prependTo(label);
+        //$('<span class="alpaca-icon-required fa fa-star"></span>').prependTo(label);
         var label = $(fieldEl).find("label.alpaca-control-label");
         if ($(label).length > 0)
         {
-            $(label).append("<span class='alpaca-required-indicator'>(required)</span>")
+            $(label).append("<span class='alpaca-required-indicator'>(obligatorisk)</span>")
         }
 
     };
@@ -193,7 +193,7 @@
     callbacks["tableHeaderRequired"] = function(schema, options, domEl)
     {
         // required fields get a little star in their label
-        $('<span class="alpaca-icon-required glyphicon glyphicon-star"></span>').prependTo(domEl);
+        $('<span class="alpaca-icon-required fa fa-star"></span>').prependTo(domEl);
 
     };
     callbacks["tableHeaderOptional"] = function(schema, options, domEl)
