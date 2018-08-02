@@ -141,13 +141,13 @@
                         "title": "Allow Negative",
                         "description": "Determines if negative numbers are allowed.",
                         "type": "boolean",
-                        "default": false
+                        "default": true
                     },
                     "centsLimit": {
                         "title": "Cents Limit",
                         "description": "The limit of fractional digits.",
                         "type": "number",
-                        "default": 2,
+                        "default": 0,
                         "minimum": 0
                     },
                     "centsSeparator": {
@@ -166,7 +166,7 @@
                         "title": "Clear Suffix",
                         "description": "Determines if the suffix is cleared on blur.",
                         "type": "boolean",
-                        "default": false
+                        "default": true
                     },
                     "insertPlusSign": {
                         "title": "Plus Sign",
@@ -185,7 +185,7 @@
                         "title": "Prefix",
                         "description": "The prefix if any for the field.",
                         "type": "text",
-                        "default": "$"
+                        "default": "kr "
                     },
                     "round": {
                         "title": "Round",
@@ -204,7 +204,7 @@
                         "title": "Thousands Separator",
                         "description": "The separator between thousands.",
                         "type": "string",
-                        "default": ","
+                        "default": " "
                     },
                     "unmask": {
                         "title": "Unmask",
