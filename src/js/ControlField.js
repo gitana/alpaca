@@ -1049,7 +1049,8 @@
                         "sort": {
                             "title": "Sort Function",
                             "description": "Defines an f(a,b) sort function for the array of enumerated values [{text, value}].  This is used to sort enum and optionLabels as well as results that come back from any data sources (for select and radio controls).  By default the items are sorted alphabetically.   Don't apply any sorting if false.",
-                            "type": "function"
+                            "type": "function",
+                            "default": true
                         }
                     }
                 });
@@ -1064,6 +1065,9 @@
                     "fields": {
                         "name": {
                             "type": "text"
+                        },
+                        "sort": {
+                            "type": "checkbox"
                         }
                     }
                 });
