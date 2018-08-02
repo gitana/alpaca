@@ -211,6 +211,18 @@
                         "description": "If true then the resulting value for this field will be unmasked.  That is, the resulting value will be a float instead of a string (with the prefix, suffix, etc. removed).",
                         "type": "boolean",
                         "default": true
+                    },
+                    "clearOnEmpty": {
+                        "title": "Clear on empty",
+                        "description": "If true the field will be cleared when it is empty.",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "allowZero": {
+                        "title": "Allow zero",
+                        "description": "If true the field will allow zero without clearing the value",
+                        "type": "boolean",
+                        "default": true
                     }
                 }
             };
@@ -265,6 +277,12 @@
                         "type": "text"
                     },
                     "unmask": {
+                        "type": "checkbox"
+                    },
+                    "clearOnEmpty": {
+                        "type": "checkbox"
+                    },
+                    "allowZero": {
                         "type": "checkbox"
                     }
                 }
