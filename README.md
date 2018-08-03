@@ -276,6 +276,7 @@ These folks have made numerous contributions to Alpaca over the years:
 + [@maximzmushko](https://github.com/maximzmushko)
 + [@DavidePastore](https://github.com/DavidePastore)
 + [@hauntingEcho](https://github.com/hauntingEcho)
++ [@ml2439](https://github.com/ml2439)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!
