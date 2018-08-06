@@ -724,11 +724,34 @@
             {
                 item.show();
                 item.onDependentReveal();
+                if(self.isTopLevel() && self.view.wizard && self.view.wizard.bindings[propertyId]){
+                    var wizardTab = self.view.wizard.bindings[propertyId];
+                    //show tab
+                    $(self.field).find("[data-alpaca-wizard-step-index='"+(wizardTab-1)+"']").css("display","block");
+                }
             }
             else
             {
                 item.hide();
                 item.onDependentConceal();
+                if(self.isTopLevel() && self.view.wizard && self.view.wizard.bindings[propertyId]){
+                    var wizardTab = self.view.wizard.bindings[propertyId];
+                    var fieldsInTab = self.children.filter(function (child){
+                      return self.view.wizard.bindings[child.propertyId] === wizardTab;
+                    });
+                    if(fieldsInTab.every(function (field){
+                      return field.isHidden();
+                    })){
+                      //hide tab
+                      var navTab = $(self.field).find("[data-alpaca-wizard-step-index='"+(wizardTab-1)+"']");
+                      if(!navTab.length){
+                        //prior to render need to stop the nav tab from being rendered
+                        self.view.wizard.steps[wizardTab-1].hidden = true;
+                      }else{
+                        navTab.css("display","none");
+                      }
+                    }
+                }
             }
 
             item.getFieldEl().trigger("fieldupdate");

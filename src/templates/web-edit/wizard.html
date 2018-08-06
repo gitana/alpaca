@@ -9,7 +9,7 @@
                 <div class="container-fluid alpaca-wizard-back">
                     <ul class="nav navbar-nav">
                         {{#each steps}}
-                        <li data-alpaca-wizard-step-index="{{@index}}">
+                        <li data-alpaca-wizard-step-index="{{@index}}" {{#if hidden}}style="display: none;"{{/if}}>
                             <div class="holder">
                                 <div class="title">{{{title}}}</div>
                                 <div class="description">{{{description}}}</div>
