@@ -728,6 +728,7 @@
                     var wizardTab = self.view.wizard.bindings[propertyId];
                     //show tab
                     $(self.field).find("[data-alpaca-wizard-step-index='"+(wizardTab-1)+"']").css("display","block");
+                    self.view.wizard.steps[wizardTab-1].hidden = false;
                 }
             }
             else
@@ -743,13 +744,12 @@
                       return field.isHidden();
                     })){
                       //hide tab
-                      var navTab = $(self.field).find("[data-alpaca-wizard-step-index='"+(wizardTab-1)+"']");
-                      if(!navTab.length){
-                        //prior to render need to stop the nav tab from being rendered
-                        self.view.wizard.steps[wizardTab-1].hidden = true;
-                      }else{
+                      var navTab = $(self.field).find("[data-alpaca-wizard-step-index='"+(wizardTab-1)+"']");                      
+                      //prior to render need to stop the nav tab from being rendered
+                      self.view.wizard.steps[wizardTab-1].hidden = true;
+                      if(navTab.length){
                         navTab.css("display","none");
-                      }
+                      }                      
                     }
                 }
             }
@@ -1513,8 +1513,8 @@
                         }
 
 
-                        // BUTTONS
-
+                        // BUTTONS                        
+                        // Important! Assume no hidden steps
                         // hide everything
                         previousButtonEl.hide();
                         nextButtonEl.hide();
