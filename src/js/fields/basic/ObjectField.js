@@ -1004,6 +1004,11 @@
                     dependentOnData = false;
                 }
 
+                // if this is a risk score field compare the label
+                if (dependentOnField.getType() === "RiskScore" && dependentOnData){
+                    dependentOnData = dependentOnData.label;
+                }
+
                 var conditionalData = conditionalDependencies[dependentOnPropertyId];
 
                 // if the option is a function, then evaluate the function to determine whether to show
@@ -1543,7 +1548,7 @@
                                 nextButtonEl.hide();
                                 submitButtonEl.show();
                             }
-                        }
+                        }                        
 
                         // hide all steps
                         $(wizardSteps).find("[data-alpaca-wizard-role='step']").hide();
@@ -1811,8 +1816,78 @@
 
 
                     refreshSteps();
-
+                    //initial calculation of risk score for wizard steps.
+                    for(var i=0;i<wizardSteps.length;i++){
+                        self.updateRiskScoreForStep(i);
+                    }
                 }(wizardNav, wizardSteps, wizardButtons, model));
+            }
+        },
+
+        /**
+         * Calculates the risk score for the given wizard step and updates the current step
+         */
+        updateRiskScoreForStep: function (stepNumber){
+            var self = this;
+            if(self.wizardConfigs && self.wizardConfigs.bindings){
+                //find all risk score fields in this tab
+                var allPropertiesInTab = Object.keys(self.wizardConfigs.bindings).filter( function(key){
+                    return self.wizardConfigs.bindings[key] === (stepNumber+1)
+                });
+                var allRiskScorePropertiesInTab = allPropertiesInTab.filter( function(propertyId){ 
+                    return self.childrenByPropertyId[propertyId] &&
+                     self.childrenByPropertyId[propertyId].options &&
+                     self.childrenByPropertyId[propertyId].options.type === "RiskScore";
+                });
+                if(!allRiskScorePropertiesInTab.length){
+                    //no risk score properties on this tab, just return
+                    return;
+                }
+            }
+            var risk = null;
+            var riskField = null;
+
+            function setHighestWizardStepRisk(riskScoreProperty){
+                if(!riskField){
+                    riskField = riskScoreProperty.propertyId;                    
+                    if(riskScoreProperty.data){
+                        risk = riskScoreProperty.data.risk;
+                    }
+                    return;
+                }
+                if(!riskScoreProperty.data){
+                    return;
+                }
+                if(risk && risk > riskScoreProperty.data.risk){
+                    return;
+                }
+                risk = riskScoreProperty.data.risk;
+                riskField = riskScoreProperty.propertyId;
+            }
+
+            allRiskScorePropertiesInTab.forEach(function (riskScorePropertyId){
+                var riskScoreProperty = self.childrenByPropertyId[riskScorePropertyId];
+                setHighestWizardStepRisk(riskScoreProperty);
+            })
+
+            //update color
+            var circle = $(self.domEl).find("[data-alpaca-wizard-step-index='"+ stepNumber +"'] i");
+            if(circle.length){
+                if(risk == null){
+                    circle.css("color","grey");
+                }
+                else if(risk >= 0.51){
+                    circle.css("color","red");                        
+                }else if(risk >= 0.3){
+                    circle.css("color","#FDEE00");
+                }else if(risk >= 0){
+                    circle.css("color","green");
+                }
+                if(riskField){
+                    circle.show();
+                }else{
+                    circle.hide();
+                }
             }
         },
 
