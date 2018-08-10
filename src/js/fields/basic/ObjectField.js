@@ -1005,7 +1005,7 @@
                 }
 
                 // if this is a risk score field compare the label
-                if (dependentOnField.getType() === "RiskScore" && dependentOnData){
+                if (dependentOnField.type === "RiskScore" && dependentOnData){
                     dependentOnData = dependentOnData.label;
                 }
 
