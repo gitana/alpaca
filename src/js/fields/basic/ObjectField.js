@@ -1869,26 +1869,19 @@
                 var riskScoreProperty = self.childrenByPropertyId[riskScorePropertyId];
                 setHighestWizardStepRisk(riskScoreProperty);
             })
-
-            //update color
-            var circle = $(self.domEl).find("[data-alpaca-wizard-step-index='"+ stepNumber +"'] i");
-            if(circle.length){
-                if(risk == null){
-                    circle.css("color","grey");
+                
+            if(Alpaca.updateRiskScoreColor){    
+                //update color                
+                var circle = $(self.domEl).find("[data-alpaca-wizard-step-index='"+ stepNumber +"'] i");
+                if(circle.length){
+                    Alpaca.updateRiskScoreColor(circle, risk);
+                    if(riskField){
+                        circle.show();
+                    }else{
+                        circle.hide();
+                    }
                 }
-                else if(risk >= 0.51){
-                    circle.css("color","red");                        
-                }else if(risk >= 0.3){
-                    circle.css("color","#FDEE00");
-                }else if(risk >= 0){
-                    circle.css("color","green");
-                }
-                if(riskField){
-                    circle.show();
-                }else{
-                    circle.hide();
-                }
-            }
+            }  
         },
 
         /**
