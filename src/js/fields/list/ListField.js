@@ -263,7 +263,7 @@
                 var values = [];
                 for (var i = 0; i < this.data.length; i++)
                 {
-                    if (self.schema.items && self.schema.items.type === "string")
+                    if (self.schema.items && self.schema.items.type === "string" || !self.schema.items && self.options.multiple)
                     {
                         values.push(this.data[i].value);
                     }
