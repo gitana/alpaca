@@ -1845,7 +1845,7 @@
                     return;
                 }
             }else{
-                //no bindings, jsut return
+                //no bindings, just return
                 return;
             }
             var risk = null;
