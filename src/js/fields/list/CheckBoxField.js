@@ -168,7 +168,13 @@
          * @see Alpaca.Field#getType
          */
         getType: function() {
-            return this.options.multiple && (this.schema.type === "boolean" || this.schema.type === "string") ? "string" : "boolean";
+            if (this.options.multiple) {
+                if (this.schema.type === "boolean" || !this.schema.type) {
+                    return "array";
+                }
+                return this.schema.type;
+            }
+            return this.schema.type || "boolean";
         }
 
         /* builder_helpers */
