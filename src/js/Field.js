@@ -1773,6 +1773,20 @@
             }
             else
             {
+                if(this.options && this.options.riskScoreThreshold){
+                  // if the risk score threshold is set only display it if the risk score of this tab is above the threshold
+                  if (this.view.wizard && this.view.wizard.bindings && this.view.wizard.bindings[this.propertyId]) {
+                      var wizardStepInt = this.view.wizard.bindings[this.propertyId] - 1;                    
+                      var riskScore = this.parent.getRiskScoreForStep(wizardStepInt);
+                      if(riskScore && riskScore < this.options.riskScoreThreshold){
+                          //hide it since it is less than the threshold
+                          if(!this.isHidden()){
+                            this.hide()
+                          }
+                          return;
+                      }
+                  }
+                }
                 // show the field
                 $(this.field).css({
                     "display": ""
@@ -2596,6 +2610,13 @@
                         "title": "Override of the view for this field",
                         "description": "Allows for this field to be rendered with a different view (such as 'display' or 'create')",
                         "type": "string"
+                    },
+                    "riskScoreThreshold": {
+                        "title": "Risk Score Threshold",
+                        "description": "Display this field only if the maximum risk score for this tab is above this threshold",
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
                     }
                 }
             };
@@ -2746,6 +2767,10 @@
                     },
                     "view": {
                         "type": "text"
+                    },
+                    "riskScoreThreshold":{
+                        "helper": "Display this field only if the maximum risk score for this tab is above this threshold",
+                        "type": "number"
                     }
                 }
             };

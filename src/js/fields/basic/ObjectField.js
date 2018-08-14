@@ -1829,6 +1829,7 @@
          */
         updateRiskScoreForStep: function (stepNumber){
             var self = this;
+            var allPropertiesInTab = null;
             if(self.wizardConfigs && self.wizardConfigs.bindings){
                 //find all risk score fields in this tab
                 var allPropertiesInTab = Object.keys(self.wizardConfigs.bindings).filter( function(key){
@@ -1843,6 +1844,9 @@
                     //no risk score properties on this tab, just return
                     return;
                 }
+            }else{
+                //no bindings, jsut return
+                return;
             }
             var risk = null;
             var riskField = null;
@@ -1881,7 +1885,23 @@
                         circle.hide();
                     }
                 }
-            }  
+            }
+            self.view.wizard.steps[stepNumber].risk = risk;
+            allPropertiesInTab.forEach(function (propertyId){
+                var item = self.childrenByPropertyId[propertyId];
+                if(!item){
+                  return;
+                }
+                var valid = self.determineAllDependenciesValid(propertyId);
+                if (valid)
+                {
+                    item.show();
+                }
+            });         
+        },
+
+        getRiskScoreForStep: function (stepNumber){
+            return this.view && this.view.wizard && this.view.wizard.steps && this.view.wizard.steps[stepNumber] && this.view.wizard.steps[stepNumber].risk;
         },
 
         /**
