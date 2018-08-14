@@ -162,6 +162,8 @@
                     }
 
                     $(self.getControlEl()).multiselect(settings);
+                }else if(!self.isDisplayOnly() && model.selectOptions && model.selectOptions.length > 6){
+                    $(self.getControlEl()).select2();
                 }
 
                 var afterChangeHandler = function()
