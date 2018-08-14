@@ -1004,11 +1004,6 @@
                     dependentOnData = false;
                 }
 
-                // if this is a risk score field compare the label
-                if (dependentOnField.type === "RiskScore" && dependentOnData){
-                    dependentOnData = dependentOnData.label;
-                }
-
                 var conditionalData = conditionalDependencies[dependentOnPropertyId];
 
                 // if the option is a function, then evaluate the function to determine whether to show
@@ -1855,17 +1850,17 @@
                 if(!riskField){
                     riskField = riskScoreProperty.propertyId;                    
                     if(riskScoreProperty.data){
-                        risk = riskScoreProperty.data.risk;
+                        risk = riskScoreProperty.getRisk();
                     }
                     return;
                 }
                 if(!riskScoreProperty.data){
                     return;
                 }
-                if(risk && risk > riskScoreProperty.data.risk){
+                if(risk && risk > riskScoreProperty.getRisk()){
                     return;
                 }
-                risk = riskScoreProperty.data.risk;
+                risk = riskScoreProperty.getRisk();
                 riskField = riskScoreProperty.propertyId;
             }
 
