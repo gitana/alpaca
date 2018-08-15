@@ -1782,9 +1782,7 @@
                           //hide it since it is less than the threshold
                           if(!this.isHidden()){
                             this.hide();
-                            this.onDependentConceal();
-                            var wizardTab = this.view.wizard.bindings[this.propertyId];
-                            this.parent.hideTabIfNoFieldsVisible(wizardTab);                                
+                            this.onDependentConceal();                           
                           }
                           return;
                       }
