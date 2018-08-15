@@ -227,6 +227,9 @@
                                 // manual wizard based on layout
                                 self.wizard();
                             }
+                        }else{
+                            //need to update the risk score for the empty step if there are no tabs/wizard
+                            self.updateRiskScoreForStep();
                         }
                     }
                 }
@@ -1830,20 +1833,19 @@
             var allPropertiesInTab = null;
             if(self.wizardConfigs && self.wizardConfigs.bindings){
                 //find all risk score fields in this tab
-                var allPropertiesInTab = Object.keys(self.wizardConfigs.bindings).filter( function(key){
+                allPropertiesInTab = Object.keys(self.wizardConfigs.bindings).filter( function(key){
                     return self.wizardConfigs.bindings[key] === (stepNumber+1)
-                });
-                var allRiskScorePropertiesInTab = allPropertiesInTab.filter( function(propertyId){ 
-                    return self.childrenByPropertyId[propertyId] &&
-                     self.childrenByPropertyId[propertyId].options &&
-                     self.childrenByPropertyId[propertyId].options.type === "RiskScore";
-                });
-                if(!allRiskScorePropertiesInTab.length){
-                    //no risk score properties on this tab, just return
-                    return;
-                }
+                });                
             }else{
-                //no bindings, just return
+                allPropertiesInTab = Object.keys(self.childrenByPropertyId);
+            }
+            var allRiskScorePropertiesInTab = allPropertiesInTab.filter( function(propertyId){ 
+                return self.childrenByPropertyId[propertyId] &&
+                 self.childrenByPropertyId[propertyId].options &&
+                 self.childrenByPropertyId[propertyId].options.type === "RiskScore";
+            });
+            if(!allRiskScorePropertiesInTab.length){
+                //no risk score properties on this tab, just return
                 return;
             }
             var risk = null;
@@ -1884,7 +1886,11 @@
                     }
                 }
             }
-            self.view.wizard.steps[stepNumber].risk = risk;
+            if(stepNumber == null){
+                self.risk = risk;
+            }else{
+                self.view.wizard.steps[stepNumber].risk = risk;
+            }
             allPropertiesInTab.forEach(function (propertyId){
                 var item = self.childrenByPropertyId[propertyId];
                 if(!item){
@@ -1899,6 +1905,9 @@
         },
 
         getRiskScoreForStep: function (stepNumber){
+            if(stepNumber == null){
+                return this.risk;
+            }
             return this.view && this.view.wizard && this.view.wizard.steps && this.view.wizard.steps[stepNumber] && this.view.wizard.steps[stepNumber].risk;
         },
 
