@@ -116,7 +116,8 @@ var paths = {
             "src/js/fields/advanced/UpperCaseField.js",
             "src/js/fields/advanced/URLField.js",
             "src/js/fields/advanced/ZipcodeField.js",
-
+            //Add all custom fields. If we have one custom field which extends another custom field, we will have to change to list them explicitly.
+            "src/js/fields/custom/*.js",
             // base view
             "src/js/views/base.js",
 

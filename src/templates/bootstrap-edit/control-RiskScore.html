@@ -1,0 +1,17 @@
+<script type="text/x-handlebars-template">
+    <div class="row vertical-center-flex-row">
+        <div class="col-md-1 text-center">        
+                <i class="fa fa-circle" style="color:grey"></i>
+        </div>
+        <div class="col-md-10">
+            {{#each options.riskOptions}}
+                <div class="radio">
+                    <label>
+                        <input type="radio" {{#if ../options.readonly}}readonly="readonly"{{/if}} name="{{../name}}" value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>{{{label}}}                        
+                    </label>
+                </div>          
+            {{/each}}  
+        </div>       
+    </div>
+
+</script>

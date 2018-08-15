@@ -1,0 +1,9 @@
+<script type="text/x-handlebars-template">
+
+    <div>
+        {{#if data}}
+        <i class="fa fa-circle" style="color:grey"></i> {{#each options.riskOptions}}{{#if selected}}{{label}}{{/if}}{{/each}}
+        {{/if}}
+    </div>
+
+</script>
