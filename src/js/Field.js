@@ -1778,10 +1778,13 @@
                   if (this.view.wizard && this.view.wizard.bindings && this.view.wizard.bindings[this.propertyId]) {
                       var wizardStepInt = this.view.wizard.bindings[this.propertyId] - 1;                    
                       var riskScore = this.parent.getRiskScoreForStep(wizardStepInt);
-                      if(riskScore && riskScore < this.options.riskScoreThreshold){
+                      if(!riskScore || riskScore < this.options.riskScoreThreshold){
                           //hide it since it is less than the threshold
                           if(!this.isHidden()){
-                            this.hide()
+                            this.hide();
+                            this.onDependentConceal();
+                            var wizardTab = this.view.wizard.bindings[this.propertyId];
+                            this.parent.hideTabIfNoFieldsVisible(wizardTab);                                
                           }
                           return;
                       }

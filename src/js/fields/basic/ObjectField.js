@@ -696,6 +696,22 @@
             return propertyCount >= minProperties;
         },
 
+        hideTabIfNoFieldsVisible: function(wizardTab) {
+            self = this;
+            var fieldsInTab = self.children.filter(function (child){
+                return self.view.wizard.bindings[child.propertyId] === wizardTab;
+            });
+            if(fieldsInTab.every(function (field){
+                return field.isHidden();
+            })){
+                //prior to render need to stop the nav tab from being rendered
+                self.view.wizard.steps[wizardTab-1].hidden = true;
+                //hide tab
+                var navTab = $(self.field).find("[data-alpaca-wizard-step-index='"+(wizardTab-1)+"']");                      
+                navTab.css("display","none");
+            }
+        },
+
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -737,23 +753,9 @@
                 item.onDependentConceal();
                 if(self.isTopLevel() && self.view.wizard && self.view.wizard.bindings[propertyId]){
                     var wizardTab = self.view.wizard.bindings[propertyId];
-                    var fieldsInTab = self.children.filter(function (child){
-                      return self.view.wizard.bindings[child.propertyId] === wizardTab;
-                    });
-                    if(fieldsInTab.every(function (field){
-                      return field.isHidden();
-                    })){
-                      //hide tab
-                      var navTab = $(self.field).find("[data-alpaca-wizard-step-index='"+(wizardTab-1)+"']");                      
-                      //prior to render need to stop the nav tab from being rendered
-                      self.view.wizard.steps[wizardTab-1].hidden = true;
-                      if(navTab.length){
-                        navTab.css("display","none");
-                      }                      
-                    }
+                    self.hideTabIfNoFieldsVisible(wizardTab);
                 }
             }
-
             item.getFieldEl().trigger("fieldupdate");
         },
 
@@ -1813,7 +1815,8 @@
                     refreshSteps();
                     //initial calculation of risk score for wizard steps.
                     for(var i=0;i<wizardSteps.length;i++){
-                        self.updateRiskScoreForStep(i);
+                        self.updateRiskScoreForStep(i);                
+                        self.hideTabIfNoFieldsVisible(i+1);
                     }
                 }(wizardNav, wizardSteps, wizardButtons, model));
             }
