@@ -1812,7 +1812,7 @@
 
                     refreshSteps();
                     //initial calculation of risk score for wizard steps.
-                    for(var i=0;i<wizardSteps.length;i++){
+                    for(var i=0;i<model.steps.length;i++){
                         self.updateRiskScoreForStep(i);
                     }
                 }(wizardNav, wizardSteps, wizardButtons, model));
