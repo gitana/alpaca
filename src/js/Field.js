@@ -1789,15 +1789,17 @@
                         return;
                     }
                 }
-                // show the field
-                $(this.field).css({
-                    "display": ""
-                });
+                if (this.isHidden()){
+                    // show the field
+                    $(this.field).css({
+                        "display": ""
+                    });
 
-                this.onShow();
+                    this.onShow();
 
-                // CALLBACK: "show"
-                this.fireCallback("show");
+                    // CALLBACK: "show"
+                    this.fireCallback("show");
+                }
             }
         },
 
@@ -1811,6 +1813,9 @@
          */
         hide: function()
         {
+            if (this.isHidden()){
+                return;
+            }
             $(this.field).css({
                 "display": "none"
             });

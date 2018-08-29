@@ -40,6 +40,16 @@
             return this.data;
         },
 
+        onShow: function()
+        {
+            this.updateStepRisk();
+        },
+
+        onHide: function()
+        {
+            this.updateStepRisk();
+        },
+
         updateStepRisk: function () {
             var wizardStepInt = null;
             if (this.view.wizard && this.view.wizard.bindings && this.view.wizard.bindings[this.propertyId]) {
@@ -78,7 +88,7 @@
         getRisk: function () {
             var risk = null;
             var self = this;
-            if (self.data) {
+            if (self.data && self.isShown()) {
                 var selectedOptions = self.options.riskOptions.filter(function (riskOption) {
                     return riskOption.value === self.data;
                 });
