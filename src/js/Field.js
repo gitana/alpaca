@@ -1777,7 +1777,7 @@
                     var wizardStepInt = null;
                     // if the risk score threshold is set only display it if the risk score of this tab is above the threshold
                     if (this.view.wizard && this.view.wizard.bindings && this.view.wizard.bindings[this.propertyId]) {
-                        var wizardStepInt = this.view.wizard.bindings[this.propertyId] - 1;  
+                        wizardStepInt = this.view.wizard.bindings[this.propertyId] - 1;  
                     }                
                     var riskScore = this.parent.getRiskScoreForStep(wizardStepInt);
                     if(!riskScore || riskScore < this.options.riskScoreThreshold){

@@ -152,9 +152,10 @@
 
             for (var i = 0; i < this.children.length; i++)
             {
+                var field = this.children[i];
                 // the property key and value
-                var propertyId = this.children[i].propertyId;
-                var fieldValue = this.children[i].getValue();
+                var propertyId = field.propertyId;
+                var fieldValue = field.getValue();
 
                 if(fieldValue !== fieldValue) {
                     // NaN
@@ -165,6 +166,17 @@
                 {
                     if (this.determineAllDependenciesValid(propertyId))
                     {
+                        if (field.options && field.options.riskScoreThreshold) {
+                            var wizardStepInt = null;
+                            // if the risk score threshold is set only display it if the risk score of this tab is above the threshold
+                            if (field.view.wizard && field.view.wizard.bindings && field.view.wizard.bindings[propertyId]) {
+                                wizardStepInt = field.view.wizard.bindings[propertyId] - 1;  
+                            }                
+                            var riskScore = field.parent.getRiskScoreForStep(wizardStepInt);
+                            if (!riskScore || riskScore < field.options.riskScoreThreshold){
+                                continue;
+                            }
+                        }
                         var assignedValue = null;
 
                         if (typeof(fieldValue) === "boolean")
