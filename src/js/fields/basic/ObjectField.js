@@ -983,6 +983,9 @@
             }
 
             var dependentOnData = dependentOnField.getValue();
+            if (dependentOnData && dependentOnField.getType() === "string" && dependentOnField.getFieldType() === "checkbox" && dependentOnField.options.multiple) {
+                dependentOnData = dependentOnData.split(',');
+            }
 
             // assume it isn't valid
             var valid = false;
