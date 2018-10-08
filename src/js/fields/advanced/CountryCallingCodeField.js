@@ -19,14 +19,16 @@
          */
         setup: function()
         {
+            var self = this;
+
             // defaults
-            if (Alpaca.isUndefined(this.options.capitalize))
+            if (Alpaca.isUndefined(self.options.capitalize))
             {
-                this.options.capitalize = false;
+                self.options.capitalize = false;
             }
 
-            this.schema["enum"] = [];
-            this.options.optionLabels = [];
+            self.schema["enum"] = [];
+            self.options.optionLabels = [];
 
             var countryCallingCodesList = this.getMessage("countryCallingCodes");
             if (countryCallingCodesList)
@@ -38,17 +40,17 @@
                 listClean.forEach(function(obj) {
                     var code = obj.dial_code.split('+').join('').split(' ').join('');
                     var label = obj.dial_code + ' (' + obj.name + ')';
-                    if (this.options.capitalize)
+                    if (self.options.capitalize)
                     {
                         label = label.toUpperCase();
                     }
 
-                    this.schema["enum"].push(code);
-                    this.options.optionLabels.push(label);
+                    self.schema["enum"].push(code);
+                    self.options.optionLabels.push(label);
                 });
             }
 
-            this.base();
+            self.base();
         }
 
         /* builder_helpers */
