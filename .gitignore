@@ -3,7 +3,7 @@
 *.iws
 .idea
 /.idea
-/build
+
 
 /node_modules
 /lib
