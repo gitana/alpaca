@@ -1,5 +1,36 @@
 <a href='https://ko-fi.com/J3J36TFV' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
+# Alpaca - Modified version - New features added
+
+- A Copy function for arrays. A new icon is added to the toolbar that copies
+  the current element. 
+
+- New dependency system. Dependencies are specified as part of the options json, using the field "x\_dependencies". x\_dependencies is an array of objects, with the following fields:
+  - "field" : path to field that is to be checked (no leading slash). Use "[]" to indicate all elements of an array. 
+  - "values": array of values against which field is checked.
+  - "enables": relative path to field that is enabled when field is equal to one of the values.
+
+  Example.
+  ```
+  {
+    "options": {
+        "x_dependencies": [
+            {
+                "field": "questions[]/openoption",
+                "values": [true],
+                "enables": "desc/nld_nld/openoption"
+            },
+            {
+                "field": "questions[]/type",
+                "values": ["likert","vas"],
+                "enables": "desc/nld_nld/anchors"
+            }
+        ]
+    }
+  }
+
+  ```
+
 # Alpaca - JSON Forms for jQuery and Bootstrap
 
 Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices. 

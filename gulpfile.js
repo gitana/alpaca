@@ -55,6 +55,7 @@ var paths = {
             "src/js/ControlField.js",
             "src/js/ContainerField.js",
             "src/js/Form.js",
+            "src/js/PathBasedDependencies.js",
 
             // cache implementations
             "src/js/cache/memory.js",

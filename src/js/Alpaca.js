@@ -394,6 +394,8 @@
                 _resetInitValidationError(field);
             }
 
+            // Dependency management is performed as a postrender call
+            Alpaca.PathBasedDependencies.postRenderCallback(field);
             if (renderedCallback)
             {
                 renderedCallback(field);
