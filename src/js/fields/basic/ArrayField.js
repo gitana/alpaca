@@ -252,6 +252,17 @@
                     });
                 }
             });
+            applyAction(self.actionbar.actions, "copy", {
+                "label": self.getMessage("addButtonLabel"),
+                "action": "copy",
+                "iconClass": self.view.getStyle("addIcon"),
+                "click": function(key, action, itemIndex) {
+
+                    self.handleActionBarCopyItemClick(itemIndex, function(item) {
+                        // done
+                    });
+                }
+            });
             applyAction(self.actionbar.actions, "remove", {
                 "label": self.getMessage("removeButtonLabel"),
                 "action": "remove",
@@ -1204,6 +1215,39 @@
                 var arrayValues = self.getValue();
 
                 var itemData = Alpaca.createEmptyDataInstance(itemSchema);
+                self.addItem(itemIndex + 1, itemSchema, itemOptions, itemData, function(item) {
+
+                    // this is necessary because some underlying fields require their data to be reset
+                    // in order for the display to work out properly (radio fields)
+                    arrayValues.splice(itemIndex + 1, 0, item.getValue());
+                    self.setValue(arrayValues);
+
+                    if (callback) {
+                        callback(item);
+                    }
+                });
+            });
+        },
+
+        handleActionBarCopyItemClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+
+                // we only allow addition if the resolved schema isn't circularly referenced
+                // or the schema is optional
+                if (circular)
+                {
+                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                }
+
+                var arrayValues = self.getValue();
+
+
+                //var itemData = Alpaca.createEmptyDataInstance(itemSchema);
+				var itemData = self.children[itemIndex].getValue();
+				// XXX no cloning necessary?
                 self.addItem(itemIndex + 1, itemSchema, itemOptions, itemData, function(item) {
 
                     // this is necessary because some underlying fields require their data to be reset
