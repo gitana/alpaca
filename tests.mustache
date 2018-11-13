@@ -14,15 +14,14 @@
             };
         }
     </script>
-
-    <script src="/testem/qunit.js"></script>
+    <script src="/tests/qunit/qunit.js"></script>
     <script src="/testem.js"></script>
 
     {{#serve_files}}
         <script src="{{src}}"></script>
     {{/serve_files}}
 
-    <link rel="stylesheet" href="/testem/qunit.css"/>
+    <link rel="stylesheet" href="/tests/qunit/qunit.css">
 </head>
 <body>
     <h1 id="qunit-header">Tests</h1>

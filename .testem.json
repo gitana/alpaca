@@ -2,20 +2,16 @@
   "framework": "qunit",
   "test_page": "tests.mustache",
   "src_files": [
-    "lib/jquery/jquery.min.js",
+    "lib/jquery/dist/jquery.min.js",
     "lib/handlebars/handlebars.min.js",
-    "lib/jquery-ui/ui/jquery-ui.js",
-    "lib/jwysiwyg/jquery.wysiwyg.js",
-    "lib/jquery-file-upload/js/jquery.fileupload.js",
-    "lib/base/Base.js",
+    "lib/jquery-ui/jquery-ui.js",
     "lib/json3/lib/json3.min.js",
-    "lib/validate/index.js",
     "lib/jquery-maskedinput/dist/jquery.maskedinput.min.js",
     "build/alpaca/bootstrap/alpaca.js",
+    "tests/qunit/qunit.js",
     "tests/js/fields/**/*.js"
   ],
   "launch_in_dev": [
-    "Chrome",
-    "Firefox"
+    "Chrome"
   ]
 }
