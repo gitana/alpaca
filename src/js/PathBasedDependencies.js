@@ -40,8 +40,8 @@ Alpaca.PathBasedDependencies = (function() {
 		// deps - array of dependencies: {field, values, enables}
 		//        field - path to source field
 		//        values - array of source field values 
-		//        enables - relative path to element(s) to enable when source field
-		//                  matches one of the values
+		//        enables - array of relative paths to element(s) to enable
+		//                  when source field matches one of the values
 		updateDeps: function(deps,rootelem,callback) {
 			for (var i=0; i<deps.length; i++) {
 				var dep = deps[i];
@@ -92,14 +92,18 @@ Alpaca.PathBasedDependencies = (function() {
 			// check if value matches one of the possible values
 			for (var i=0; i<dep.values.length; i++) {
 				if (current.getValue() == dep.values[i]) {
-					Alpaca.PathBasedDependencies.processDepLeafEnable(true,dep.enables,current.parent,
-						Alpaca.PathBasedDependencies.enableField);
+					for (var j=0; j<dep.enables.length; j++) {
+						Alpaca.PathBasedDependencies.processDepLeafEnable(true,dep.enables[j],current.parent,
+							Alpaca.PathBasedDependencies.enableField);
+					}
 					return;
 				}
 			}
 			// no match -> disable
-			Alpaca.PathBasedDependencies.processDepLeafEnable(false,dep.enables,current.parent,
-				Alpaca.PathBasedDependencies.enableField);
+			for (var j=0; j<dep.enables.length; j++) {
+				Alpaca.PathBasedDependencies.processDepLeafEnable(false,dep.enables[j],current.parent,
+					Alpaca.PathBasedDependencies.enableField);
+			}
 		},
 
 		// traverse path to enable/disable leaves

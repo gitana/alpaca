@@ -7,8 +7,8 @@
 
 - New dependency system. Dependencies are specified as part of the options json, using the field "x\_dependencies". x\_dependencies is an array of objects, with the following fields:
   - "field" : path to field that is to be checked (no leading slash). Use "[]" to indicate all elements of an array. 
-  - "values": array of values against which field is checked.
-  - "enables": relative path to field that is enabled when field is equal to one of the values.
+  - "values": array of values against which _field_ is checked.
+  - "enables": array of relative paths to fields that are to be enabled when _field_ is equal to one of the values.  The path root is the parent of the element indicated by _field_.  So, dependencies can refer to siblings of the _field_ element, or to elements deeper in the tree.  "[]" can again be used to specify all elements of an array.
 
   Example.
   ```
@@ -16,20 +16,15 @@
     "options": {
         "x_dependencies": [
             {
-                "field": "questions[]/openoption",
-                "values": [true],
-                "enables": "desc/nld_nld/openoption"
-            },
-            {
                 "field": "questions[]/type",
                 "values": ["likert","vas"],
-                "enables": "desc/nld_nld/anchors"
+                "enables": [ "desc/nld_nld/anchors", "range"]
             }
         ]
     }
   }
-
   ```
+  This checks if the _type_ field of each element of the _questions_ array is equal to either of the two given strings. If true, the _range_ field in the same element and the *desc.nld_nld.anchors* subfields are enabled. If false, they are disabled (hidden).
 
 # Alpaca - JSON Forms for jQuery and Bootstrap
 
