@@ -25,6 +25,9 @@ Alpaca.PathBasedDependencies = (function() {
 						Alpaca.PathBasedDependencies.processDepLeaf);
 				});
 			});
+			// now, run it once to initialize
+			Alpaca.PathBasedDependencies.updateDeps(deps,control,
+				Alpaca.PathBasedDependencies.processDepLeaf);
 		},
 
 		// call callback(element) on current and all of its children
