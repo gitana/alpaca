@@ -89,6 +89,20 @@
                 }
             }
 
+            var dragAndDrop = Alpaca.defaultDragAndDrop;
+
+            if (!Alpaca.isEmpty(this.view.dragAndDrop))
+            {
+                dragAndDrop = this.view.dragAndDrop;
+            }
+
+            if (!Alpaca.isEmpty(this.options.dragAndDrop))
+            {
+                dragAndDrop = this.options.dragAndDrop;
+            }
+
+            this.options.dragAndDrop = dragAndDrop;
+
             var toolbarSticky = Alpaca.defaultToolbarSticky;
 
             if (!Alpaca.isEmpty(this.view.toolbarSticky))
@@ -1036,6 +1050,51 @@
                 });
             }
 
+            //
+            // DRAG AND DROP
+            //
+
+            if (this.options.dragAndDrop)
+            {
+                // always hide the actionbars
+                this.options.toolbarSticky = false;
+
+                // enable drag and drop
+                document.addEventListener("dragenter", function (event) {
+                    event.preventDefault();
+                }, false);
+    
+                document.addEventListener("dragover", function (event) {
+                    event.preventDefault();
+                }, false);
+    
+                $(self.getFieldEl()).off().on("drop", function(ev) {
+                    ev.preventDefault();
+    
+                    var closestItem = ev.target.closest(".alpaca-container-item");
+                    if (closestItem) {
+                        var inSameArray = $(closestItem.parentElement).find(".focusing").length > 0;
+                        if (inSameArray) {
+                            var targetIndex = closestItem.dataset.alpacaContainerItemIndex;
+                            var sourceIndex = ev.originalEvent.dataTransfer.getData("sourceIndex");
+                            self.swapItem(sourceIndex, targetIndex, self.options.animate);
+                        }
+                    }
+                });
+    
+                var items = self.getFieldEl().find(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + self.getId() +  "']");
+                $(items).each(function(itemIndex) {
+                    $(this).attr("draggable", true);
+                    $(this).off().on("dragstart", function(ev) {
+                        var event = ev.originalEvent;
+                        event.dataTransfer.setData("sourceIndex", itemIndex);
+    
+                        // set focusing
+                        $(".focusing").removeClass("focusing");
+                        $(this)[0].classList.add("focusing");
+                    });
+                });
+            }
 
             //
             // ACTIONBAR
@@ -1753,6 +1812,12 @@
         getSchemaOfOptions: function() {
             var properties = {
                 "properties": {
+                    "dragAndDrop": {
+                        "title": "Drag and Drop",
+                        "description": "If true, drag and drop is enabled for array items. Toolbar is disabled.",
+                        "type": "boolean",
+                        "default": true
+                    },
                     "toolbarSticky": {
                         "title": "Sticky Toolbar",
                         "description": "If true, the array item toolbar will always be enabled.  If false, the toolbar is always disabled.  If undefined or null, the toolbar will appear when hovered over.",
@@ -1875,6 +1940,9 @@
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
                 "fields": {
+                    "dragAndDrop": {
+                        "type": "checkbox"
+                    },
                     "toolbarSticky": {
                         "type": "checkbox"
                     },
