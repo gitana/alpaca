@@ -38,6 +38,13 @@ legend.alpaca-container-label
     width: 100%;
 }
 
+.alpaca-array-item-remove
+{
+    width: 1em; 
+    border: none; 
+    box-shadow: none;
+}
+
 .alpaca-array-actionbar
 {
     overflow: hidden;
