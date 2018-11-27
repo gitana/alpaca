@@ -64,4 +64,4 @@ And you can also load it via AMD or right within a browser.
 of a form with UI components.
 
 ### Videos / Presentations
-* <a href="http://blog.productivist.com/alfraca-alfresco-meets-alpaca/" target="_blank">Alfraca - Alfresco with Alpaca Forms</a>
+* <a href="http://www.tribloom.com/index.php/blog/alfraca-alfresco-meets-alpaca" target="_blank">Alfraca - Alfresco with Alpaca Forms</a>
