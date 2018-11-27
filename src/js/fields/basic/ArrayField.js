@@ -1106,7 +1106,7 @@
                         if (inSameArray) {
                             var targetIndex = closestItem.dataset.alpacaContainerItemIndex;
                             var sourceIndex = ev.originalEvent.dataTransfer.getData("sourceIndex");
-                            self.swapItem(sourceIndex, targetIndex, self.options.animate);
+                            self.moveItem(sourceIndex, targetIndex, false);
                         }
                     }
                 });
