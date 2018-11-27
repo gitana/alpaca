@@ -32,6 +32,10 @@
 
             this.containerItemTemplateDescriptor = self.view.getTemplateDescriptor("container-" + containerItemTemplateType + "-item", self);
 
+            if (!this.options.dragAndDrop) {
+                this.options.dragAndDrop = Alpaca.isEmpty(this.view.dragAndDrop) ? Alpaca.defaultDragAndDrop : this.view.dragAndDrop;
+            }
+
             if (!this.options.toolbarStyle) {
                 this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle) ? "button" : this.view.toolbarStyle;
             }
@@ -89,20 +93,6 @@
                 }
             }
 
-            var dragAndDrop = Alpaca.defaultDragAndDrop;
-
-            if (!Alpaca.isEmpty(this.view.dragAndDrop))
-            {
-                dragAndDrop = this.view.dragAndDrop;
-            }
-
-            if (!Alpaca.isEmpty(this.options.dragAndDrop))
-            {
-                dragAndDrop = this.options.dragAndDrop;
-            }
-
-            this.options.dragAndDrop = dragAndDrop;
-
             var toolbarSticky = Alpaca.defaultToolbarSticky;
 
             if (!Alpaca.isEmpty(this.view.toolbarSticky))
@@ -117,8 +107,13 @@
 
             this.options.toolbarSticky = toolbarSticky;
 
-            // by default, hide toolbar is false
+            // by default, hide toolbar when children.count > 0
             if (typeof(self.options.hideToolbarWithChildren) === "undefined")
+            {
+                self.options.hideToolbarWithChildren = true;
+            }
+            // if dragAndDrop is enabled, do not hide toolbar
+            if (this.options.dragAndDrop)
             {
                 self.options.hideToolbarWithChildren = false;
             }
@@ -575,14 +570,8 @@
                         $(insertionPointEl).before(control.getFieldEl());
                         $(insertionPointEl).remove();
 
-                        // hide array item remove button if readonly or display mode
-                        if (self.schema.readonly || self.view.type === "display") 
-                        {
-                            $(containerItemEl).find(".alpaca-array-item-remove").css({
-                                "display": "none"
-                            });
-                        }
-                        else if (self.options.dragAndDrop)
+                        // adjust for drag and drop
+                        if (self.options.dragAndDrop)
                         {
                             // make it a flexbox
                             $(containerItemEl).css({
@@ -594,7 +583,7 @@
                             $(containerItemEl.children().get(0)).css({
                                 "flex-grow": 1
                             });
-                            // second child: remove on click (if not in display only mode)
+                            // click remove button
                             $(containerItemEl).find(".alpaca-array-item-remove").on("click", function() {
                                 var thisIndex = $(this.parentNode).attr("data-alpaca-container-item-index");
                                 self.handleActionBarRemoveItemClick(thisIndex);
@@ -1149,8 +1138,6 @@
             {
                 // always show the actionbars
                 $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() +  "']").css("display", "inline-block");
-                // hide top level toolbar
-                self.options.hideToolbarWithChildren = true;
             }
             else if (!this.options.toolbarSticky)
             {
@@ -1860,7 +1847,7 @@
                         "title": "Drag and Drop",
                         "description": "If true, drag and drop is enabled for array items.",
                         "type": "boolean",
-                        "default": true
+                        "default": false
                     },
                     "toolbarSticky": {
                         "title": "Sticky Toolbar",
@@ -1965,7 +1952,7 @@
                         "type": "boolean",
                         "title": "Hide Toolbar with Children",
                         "description": "Indicates whether to hide the top toolbar when child elements are available.",
-                        "default": false
+                        "default": true
                     }
                 }
             };

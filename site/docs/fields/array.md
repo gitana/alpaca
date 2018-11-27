@@ -223,7 +223,7 @@ Nested Array field name.
 {% raw %}
 <script type="text/javascript" id="field8-script">
 $("#field8").alpaca({
-    schema: {
+    "schema": {
         "type": "object",
         "readonly": false,
         "properties": {
@@ -514,6 +514,7 @@ $("#field14").alpaca({
 });</script>
 {% endraw %}
 
+
 ## Example 15
 An array field with radio selection embedded.
 <div id="field15"> </div>
@@ -549,6 +550,56 @@ $("#field15").alpaca({
                         alert(JSON.stringify(this.getValue(), null, "  "));
                     }
                 }
+            }
+        }
+    }
+});</script>
+{% endraw %}
+
+
+## Example 16
+An array field with <code>dragAndDrop</code> enabled.
+<div id="field16"> </div>
+{% raw %}
+<script type="text/javascript" id="field16-script">
+$("#field16").alpaca({
+    "data": ["test1", "test2", "test3"],
+    "schema": {
+        "type": "array"
+    },
+    "options": {
+        "dragAndDrop": true,
+        "type": "array"
+    }
+});</script>
+{% endraw %}
+
+
+## Example 17
+A nested array field with <code>dragAndDrop</code> enabled.
+<div id="field17"> </div>
+{% raw %}
+<script type="text/javascript" id="field17-script">
+$("#field17").alpaca({
+    "schema": {
+        "title": "Level1",
+        "type": "array",
+        "items": {
+            "title": "Level2",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "options": {
+        "type": "array",
+        "dragAndDrop": true,
+        "items": {
+            "type": "array",
+            "dragAndDrop": true,
+            "items": {
+                "type": "text"
             }
         }
     }

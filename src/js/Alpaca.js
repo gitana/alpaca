@@ -5094,7 +5094,7 @@
 
     // use this to set the default "drag and drop" behavior
     // set to true to have toolbars always disabled and drag and drop enabled
-    Alpaca.defaultDragAndDrop = true;
+    Alpaca.defaultDragAndDrop = false;
 
     // use this to set the default "sticky" toolbar behavior
     // set to true to have toolbars always stick or undefined to have them appear on hover
