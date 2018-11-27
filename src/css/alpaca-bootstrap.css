@@ -38,11 +38,20 @@ legend.alpaca-container-label
     width: 100%;
 }
 
-.alpaca-array-item-remove
+.alpaca-array-item-remove, .alpaca-array-item-move
 {
-    width: 1em; 
-    border: none; 
-    box-shadow: none;
+    width: 34px; 
+    height: 34px;
+    padding: 10px;
+}
+
+.alpaca-array-item-remove:hover
+{
+    cursor: pointer;
+}
+.alpaca-array-item-move:hover
+{
+    cursor: move;
 }
 
 .alpaca-array-actionbar
