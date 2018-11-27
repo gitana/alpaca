@@ -1099,29 +1099,22 @@
     
                 $(self.getFieldEl()).off().on("drop", function(ev) {
                     ev.preventDefault();
-    
-                    var closestItem = ev.target.closest(".alpaca-container-item");
+
+                    var closestItem = ev.target.closest(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + self.getId() +  "']");
                     if (closestItem) {
-                        var inSameArray = $(closestItem.parentElement).find(".focusing").length > 0;
-                        if (inSameArray) {
-                            var targetIndex = closestItem.dataset.alpacaContainerItemIndex;
-                            var sourceIndex = ev.originalEvent.dataTransfer.getData("sourceIndex");
-                            
-                            self.moveItem(sourceIndex, targetIndex);
-                        }
+                        var targetIndex = closestItem.dataset.alpacaContainerItemIndex;
+                        var sourceIndex = ev.originalEvent.dataTransfer.getData("sourceIndex");
+                        
+                        self.moveItem(sourceIndex, targetIndex);
                     }
                 });
-    
+
                 var items = self.getFieldEl().find(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + self.getId() +  "']");
                 $(items).each(function(itemIndex) {
                     $(this).attr("draggable", true);
                     $(this).off().on("dragstart", function(ev) {
                         var event = ev.originalEvent;
                         event.dataTransfer.setData("sourceIndex", itemIndex);
-    
-                        // set focusing
-                        $(".focusing").removeClass("focusing");
-                        $(this)[0].classList.add("focusing");
                     });
                 });
             }
@@ -1865,7 +1858,7 @@
                 "properties": {
                     "dragAndDrop": {
                         "title": "Drag and Drop",
-                        "description": "If true, drag and drop is enabled for array items. Toolbar is disabled.",
+                        "description": "If true, drag and drop is enabled for array items.",
                         "type": "boolean",
                         "default": true
                     },
