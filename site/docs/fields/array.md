@@ -173,31 +173,40 @@ Array field name.  Here we set the `toolbarPosition` option to `bottom` to posit
 <script type="text/javascript" id="field7-script">
 $("#field7").alpaca({
     "schema": {
-        "type": "array",
-        "items": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "enum": ["internal", "external"]
-                },
-                "url": {
-                    "type": "string",
-                    "format": "uri"
-                }
+        "type": "object",
+        "properties": {
+            "list": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "enum": ["internal", "external"]
+                        },
+                        "url": {
+                            "type": "string",
+                            "format": "uri"
+                        }
+                    }
+                }                
             }
         }
     },
     "options" : {
-        "toolbarSticky": true,
-        "toolbarPosition": "bottom",
-        "items": {
-            "fields": {
-                "type": {
-                    "label": "Type",
-                    "optionLabels": ["Internal", "External"]
-                },
-                "url": {
-                    "label": "URL"
+        "fields": {
+            "list": {
+                "toolbarSticky": true,
+                "toolbarPosition": "bottom",
+                "items": {
+                    "fields": {
+                        "type": {
+                            "label": "Type",
+                            "optionLabels": ["Internal", "External"]
+                        },
+                        "url": {
+                            "label": "URL"
+                        }
+                    }
                 }
             }
         },
@@ -522,26 +531,35 @@ An array field with radio selection embedded.
 <script type="text/javascript" id="field15-script">
 $("#field15").alpaca({
     "schema": {
-        "type": "array",
-        "title": "Layout",
-        "items": {
-            "type": "string",
-            "title": "Box Size",
-            "enum": ["Small", "Medium", "Large"]
+        "type": "object",
+        "properties": {
+            "list": {
+                "type": "array",
+                "title": "Layout",
+                "items": {
+                    "type": "string",
+                    "title": "Box Size",
+                    "enum": ["Small", "Medium", "Large"]
+                }
+            }
         }
     },
     "options": {
-        "type": "array",
-        "label": "Slots",
-        "items": {
-            "type": "radio",
-            "label": "Box Size",
-            "removeDefaultNone": true,
-            "vertical": false,
-            "emptySelectFirst": true,
-            "optionLabels": ["Small", "Medium", "Large"]
+        "fields": {
+            "list": {
+                "type": "array",
+                "label": "Slots",
+                "items": {
+                    "type": "radio",
+                    "label": "Box Size",
+                    "removeDefaultNone": true,
+                    "vertical": false,
+                    "emptySelectFirst": true,
+                    "optionLabels": ["Small", "Medium", "Large"]
+                },
+                "toolbarSticky": true
+            }
         },
-        "toolbarSticky": true,
         "form": {
             "buttons": {
                 "view": {
@@ -582,24 +600,40 @@ A nested array field with <code>dragAndDrop</code> enabled.
 <script type="text/javascript" id="field17-script">
 $("#field17").alpaca({
     "schema": {
-        "title": "Level1",
         "type": "array",
         "items": {
-            "title": "Level2",
-            "type": "array",
-            "items": {
-                "type": "string"
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "books": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
             }
         }
     },
     "options": {
         "type": "array",
         "dragAndDrop": true,
+        "label": "Author List",
         "items": {
-            "type": "array",
-            "dragAndDrop": true,
-            "items": {
-                "type": "text"
+            "fields": {
+                "title": {
+                    "type": "text",
+                    "label": "Author"
+                },
+                "books": {
+                    "type": "array",
+                    "dragAndDrop": true,
+                    "label": "Books",
+                    "items": {
+                        "type": "text"
+                    }
+                }
             }
         }
     }
