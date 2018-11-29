@@ -1090,6 +1090,13 @@
                             });
                         });
                     });
+                    $(this).on("dragend", function(ev) {
+                        ev.stopPropagation();
+
+                        $(".alpaca-array-item-move").css({
+                            "color": "#333"
+                        });
+                    });
                 });
             }
 
