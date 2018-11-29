@@ -1,45 +1,39 @@
 <script type="text/x-handlebars-template">
 
-    <div>
     {{#compare actionbarStyle "left"}}
-        <div class="pull-left">
-            {{#arrayActionbar}}{{/arrayActionbar}}
+        <div class="alpaca-array-item-flex-container">
+            <div>
+                {{#arrayActionbar}}{{/arrayActionbar}}
+            </div>
+            <div class="alpaca-array-item-flex-1">
+                {{#itemField}}{{/itemField}}
+            </div>
         </div>
-        <div class="pull-right">
-            {{#itemField}}{{/itemField}}
-        </div>
-        <div class="clear"></div>
     {{else}}
         {{#compare actionbarStyle "right"}}
-            <div class="pull-left">
+        <div class="alpaca-array-item-flex-container">
+            <div class="alpaca-array-item-flex-1">
                 {{#itemField}}{{/itemField}}
             </div>
-            <div class="pull-right">
+            <div>
                 {{#arrayActionbar}}{{/arrayActionbar}}
             </div>
-            <div class="alpaca-clear"></div>
+        </div>
         {{else}}
             <div>
-
-                {{#compare actionbarStyle "top"}}
-                {{#arrayActionbar}}{{/arrayActionbar}}
-                {{/compare}}
-
-                {{#itemField}}{{/itemField}}
-
-                {{#compare actionbarStyle "bottom"}}
-                {{#arrayActionbar}}{{/arrayActionbar}}
-                {{/compare}}
-
+                <div>
+                    {{#compare actionbarStyle "top"}}
+                    {{#arrayActionbar}}{{/arrayActionbar}}
+                    {{/compare}}
+    
+                    {{#itemField}}{{/itemField}}
+    
+                    {{#compare actionbarStyle "bottom"}}
+                    {{#arrayActionbar}}{{/arrayActionbar}}
+                    {{/compare}}    
+                </div>
             </div>
         {{/compare}}
     {{/compare}}
-
-    {{#if dragAndDrop}}
-        <i class="glyphicon glyphicon-menu-hamburger alpaca-array-item-move"></i>
-        <i class="glyphicon glyphicon-remove alpaca-array-item-remove"></i>
-    {{/if}}
-
-    </div>
 
 </script>

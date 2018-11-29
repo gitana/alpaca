@@ -33,6 +33,16 @@ legend.alpaca-container-label
     padding-top: 10px;
 }
 
+.alpaca-array-actionbar.alpaca-array-actionbar-left
+{
+    padding-right: 10px;
+}
+
+.alpaca-array-actionbar.alpaca-array-actionbar-right
+{
+    padding-left: 10px;
+}
+
 .alpaca-array-actionbar, .alpaca-array-actionbar.btn-group
 {
     width: 100%;
@@ -43,6 +53,18 @@ legend.alpaca-container-label
     width: 34px; 
     height: 34px;
     padding: 10px;
+}
+
+.alpaca-array-item-flex-container
+{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.alpaca-array-item-flex-1
+{
+    flex-grow: 1;
 }
 
 .alpaca-array-item-remove:hover
