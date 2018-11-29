@@ -1082,6 +1082,13 @@
                         var event = ev.originalEvent;
                         event.dataTransfer.setData("sourceIndex", this.dataset.alpacaContainerItemIndex);
                         event.dataTransfer.setData("parentFieldId", this.dataset.alpacaContainerItemParentFieldId);
+
+                        // find droppable area and highlight
+                        $(this).siblings(".alpaca-container-item").each(function() {
+                            $(this).children(".alpaca-array-item-move").css({
+                                "color": "#2CEAA3"
+                            });
+                        });
                     });
                 });
             }
