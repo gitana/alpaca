@@ -586,6 +586,7 @@ $("#field16").alpaca({
         "type": "array"
     },
     "options": {
+        "toolbarSticky": true,
         "dragAndDrop": true,
         "type": "array"
     }
@@ -618,6 +619,7 @@ $("#field17").alpaca({
     },
     "options": {
         "type": "array",
+        "toolbarSticky": true,
         "dragAndDrop": true,
         "label": "Author List",
         "items": {
@@ -628,6 +630,7 @@ $("#field17").alpaca({
                 },
                 "books": {
                     "type": "array",
+                    "toolbarSticky": true,
                     "dragAndDrop": true,
                     "label": "Books",
                     "items": {
