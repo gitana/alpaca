@@ -137,7 +137,14 @@ $("#field5").alpaca({
                 }
             }
         }
-    }
+    },
+    "data": [{
+        "flavor": "strawberry",
+        "topping": "nuts"
+    }, {
+        "flavor": "chocolate",
+        "topping": "raisin"
+    }]
 });
 </script>
 {% endraw %}
@@ -220,6 +227,15 @@ $("#field7").alpaca({
                 "submit": {}
             }
         }
+    },
+    "data": {
+        "list": [{
+            "type": "internal",
+            "url": "http://alpacajs.org"
+        },{
+            "type": "external",
+            "url": "https://cloudcms.com"
+        }]
     }
 });
 </script>
@@ -444,35 +460,38 @@ An array field with nested radio elements.
 {% raw %}
 <script type="text/javascript" id="field13-script">
 $("#field13").alpaca({
-   "schema": {
-       "title": "Array Test",
-       "type": "object",
-       "properties": {
-           "devices": {
-               "title": "Array test",
-               "type": "array",
-               "items": {
-                   "title": "Device",
-                   "type": "radio",
-                   "enum": ["Android", "iOS"],
-                   "default": "Android",
-                   "required": true
-               }
-           }
-       }
-   },
-   "options": {
-       "collapsible": false,
-       "fields": {
-           "devices": {
-               "type": "array",
-               "toolbarSticky": true,
-               "items": {
-                   "type": "radio"
-               }
-           }
-       }
-   }
+    "schema": {
+        "title": "Array Test",
+        "type": "object",
+        "properties": {
+            "devices": {
+                "title": "Array test",
+                "type": "array",
+                "items": {
+                    "title": "Device",
+                    "type": "radio",
+                    "enum": ["Android", "iOS"],
+                    "default": "Android",
+                    "required": true
+                }
+            }
+        }
+    },
+    "options": {
+        "collapsible": false,
+        "fields": {
+            "devices": {
+                "type": "array",
+                "toolbarSticky": true,
+                "items": {
+                    "type": "radio"
+                }
+            }
+        }
+    },
+    "data": {
+        "devices": ["iOS", "Android"]
+    }
 });</script>
 {% endraw %}
 
@@ -519,6 +538,12 @@ $("#field14").alpaca({
                 "toolbarSticky": true
             }
         }
+    },
+    "data": {
+        "id": "1234",
+        "name": "MyProduct",
+        "price": 999,
+        "tags": ["electric", "sale"]
     }
 });</script>
 {% endraw %}
@@ -605,7 +630,7 @@ $("#field17").alpaca({
         "items": {
             "type": "object",
             "properties": {
-                "title": {
+                "author": {
                     "type": "string"
                 },
                 "books": {
@@ -624,7 +649,7 @@ $("#field17").alpaca({
         "label": "Author List",
         "items": {
             "fields": {
-                "title": {
+                "author": {
                     "type": "text",
                     "label": "Author"
                 },
@@ -639,6 +664,13 @@ $("#field17").alpaca({
                 }
             }
         }
-    }
+    },
+    "data": [{
+        "author": "George Orwell",
+        "books": ["Animal Farm", "Nineteen Eighty-Four"]
+    }, {
+        "author": "余华",
+        "books": ["活着", "现实一种", "许三观卖血记"]
+    }]
 });</script>
 {% endraw %}
