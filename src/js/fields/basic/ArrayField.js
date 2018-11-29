@@ -112,11 +112,6 @@
             {
                 self.options.hideToolbarWithChildren = true;
             }
-            // if dragAndDrop is enabled, do not hide toolbar
-            if (this.options.dragAndDrop)
-            {
-                self.options.hideToolbarWithChildren = false;
-            }
 
             // Enable forceRevalidation option so that any change in children will trigger parent's revalidation.
             if (this.schema.items && this.schema.uniqueItems)
@@ -569,26 +564,6 @@
                         // copy into place
                         $(insertionPointEl).before(control.getFieldEl());
                         $(insertionPointEl).remove();
-
-                        // adjust for drag and drop
-                        if (self.options.dragAndDrop)
-                        {
-                            // make it a flexbox
-                            $(containerItemEl).css({
-                                "display": "flex",
-                                "flex-direction": "row",
-                                "align-items": "start"
-                            });
-                            // first child: array item
-                            $(containerItemEl.children().get(0)).css({
-                                "flex-grow": 1
-                            });
-                            // click remove button
-                            $(containerItemEl).find(".alpaca-array-item-remove").on("click", function() {
-                                var thisIndex = $(this.parentNode).attr("data-alpaca-container-item-index");
-                                self.handleActionBarRemoveItemClick(thisIndex);
-                            });
-                        }
 
                         control.containerItemEl = containerItemEl;
 
@@ -1072,11 +1047,6 @@
 
             if (self.options.dragAndDrop)
             {
-                // always hide the actionbars
-                self.options.toolbarSticky = false;
-                // always show toolbar (add item)
-                self.options.hideToolbarWithChildren = false;
-
                 // enable drag and drop
                 document.addEventListener("dragenter", function (event) {
                     event.preventDefault();
@@ -1152,25 +1122,6 @@
                 // always hide the actionbars
                 $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() +  "']").hide();
             }
-
-            // CLICK: array-item-remove button
-            var removeButtons = $(self.getFieldEl()).find(".alpaca-array-item-remove");
-            $(removeButtons).each(function() {
-
-                // if we're at min capacity, disable "remove" buttons
-                if (self._validateEqualMinItems())
-                {
-                    $(this).css({
-                        "display": "block"
-                    });
-                }
-                else
-                {
-                    $(this).css({
-                        "display": "none"
-                    });
-                }
-            });
 
             // CLICK: actionbar buttons
             // NOTE: actionbarEls size should be 0 or 1

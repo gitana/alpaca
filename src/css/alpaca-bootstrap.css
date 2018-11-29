@@ -48,7 +48,7 @@ legend.alpaca-container-label
     width: 100%;
 }
 
-.alpaca-array-item-remove, .alpaca-array-item-move
+.alpaca-array-item-move
 {
     width: 34px; 
     height: 34px;
@@ -67,10 +67,6 @@ legend.alpaca-container-label
     flex-grow: 1;
 }
 
-.alpaca-array-item-remove:hover
-{
-    cursor: pointer;
-}
 .alpaca-array-item-move:hover
 {
     cursor: move;
