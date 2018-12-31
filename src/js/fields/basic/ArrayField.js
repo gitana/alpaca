@@ -815,6 +815,8 @@
                         key = "";
                     }
 
+                    key = Alpaca.hashCode(key);
+
                     if (hash[key])
                     {
                         return false;

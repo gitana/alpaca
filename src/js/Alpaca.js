@@ -5055,6 +5055,31 @@
         return $.inArray(val, array);
     };
 
+    Alpaca.hashCode = function(text)
+    {        
+        var hash = 0, i, chr, len;
+
+        if (typeof text !== "string") {
+            text = JSON.stringify(text);
+        }
+
+        if (text.length === 0) {
+          return hash;
+        }
+      
+        for (i = 0, len = text.length; i < len; i++) {
+          chr = text.charCodeAt(i);
+          hash = ((hash << 5) - hash) + chr;
+          hash |= 0; // Convert to 32bit integer
+        }
+      
+        if (hash < 0) {
+          hash = hash * -1;
+        }
+      
+        return hash;
+    };
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
     // Moment.js static
