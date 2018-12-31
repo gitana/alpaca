@@ -2111,6 +2111,12 @@
                         "title": "Field Options",
                         "description": "List of options for child fields.",
                         "type": "object"
+                    },
+                    "collapsible": {
+                        "title": "Collapsible",
+                        "description": "Field set is collapsible if true.",
+                        "type": "boolean",
+                        "default": false
                     }
                 }
             };
