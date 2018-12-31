@@ -81,6 +81,7 @@ The following static variables can be set and will be picked up by field impleme
 - ```Alpaca.defaultTimeFormat``` - the default format string for times (defaults to "HH:SS").  See moment.js documentation for more information.
 - ```Alpaca.defaultView``` - the default view to use for any Alpaca invocations where view isn't specified
 - ```Alpaca.defaultToolbarSticky``` - the default options.toolbarSticky value to use for arrays.
+- ```Alpaca.defaultDragAndDrop``` - the default options.dragAndDrop value to use for arrays.
 - ```Alpaca.defaultUI``` - if view is omitted, Alpaca makes a best effort to determine which view to use.  Valid values are ```bootstrap```, ```jquerymobile``` or ```jqueryui```.  If not provided, defaults to a web view.
 
 ## Static Error Handler
