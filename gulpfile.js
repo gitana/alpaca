@@ -42,6 +42,7 @@ var paths = {
             "thirdparty/base/Base.js",
 
             "src/js/Alpaca.js",
+            "src/js/Alpaca-async.js",
             "src/js/ObservableUtils.js",
             "src/js/Observables.js",
             "src/js/Observable.js",
@@ -411,15 +412,8 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(wrapUmd(web_wrap))
                 .pipe(gulp.dest('build/alpaca/web'))
                 .pipe(concat('alpaca.min.js'))
-                .pipe(uglify())
+                //.pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/web')),
-            /*
-            gulp.src(paths.scripts.web)
-                .pipe(concat('alpaca-nobuilder.js'))
-                .pipe(wrap(web_wrap))
-                .pipe(stripper())
-                .pipe(gulp.dest('build/alpaca/web')),
-            */
 
             // bootstrap
             gulp.src(paths.scripts.bootstrap)
@@ -427,7 +421,7 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(wrapUmd(bootstrap_wrap))
                 .pipe(gulp.dest('build/alpaca/bootstrap'))
                 .pipe(concat('alpaca.min.js'))
-                .pipe(uglify())
+                //.pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/bootstrap')),
 
             // jqueryui
@@ -436,7 +430,7 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(wrapUmd(jqueryui_warp))
                 .pipe(gulp.dest('build/alpaca/jqueryui'))
                 .pipe(concat('alpaca.min.js'))
-                .pipe(uglify())
+                //.pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/jqueryui')),
 
             // jquerymobile
@@ -445,7 +439,7 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(wrapUmd(jquerymobile_wrap))
                 .pipe(gulp.dest('build/alpaca/jquerymobile'))
                 .pipe(concat('alpaca.min.js'))
-                .pipe(uglify())
+                //.pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/jquerymobile'))
 
         ).pipe(es.wait(function() {

@@ -105,59 +105,44 @@ The command line for doing this is basically:
     git clone https://github.com/gitana/alpaca.git
 
 
-### Prerequisites
+### Build
 
-To build Alpaca, you will need to have Node.js, Gulp and Bower installed.  If you're new to Node.js or Gulp, you could
-check out this writeup - http://travismaynard.com/writing/getting-started-with-gulp.
-
-Once you have Node.js installed, you essentially need to do this:
-
-    npm install -g gulp
-    npm install -g bower
-
-Alpaca requires python 2.7.x to build some of it's node_module dependencies.  Make sure you have this installed.
-If you're currently using Python 3.x, you will need to tell the build to use 2.7.x:
-
-    npm install --python=python2.7
-    (or)
-    npm config set python python2.7
-
-
-### Building Alpaca
+To build Alpaca, you will need to have Node.js installed.
 
 Building Alpaca is pretty easy.  Just run:
 
     npm install
+    
+And then:
 
-This will do the following for you:
+    npm run build
+    
+This will build to `build/alpaca`
 
-- pull down all of the Node module dependencies
-- run Bower to pull down client-side (browser) dependencies
+To clean the build:
 
-To then build, you can do this:
+    npm run clean
+    
 
-    npm start
+### Building the Web Site
 
-If you want to use Gulp directly, you can alternatively run this:
+To build the web site, you will also need to have Python and Jekyll installed (as global dependencies).
 
-    gulp clean default
+You will then also need to install the `redcarpet` and `pygments.rb` gems, sort of like this:
 
-Either ```npm start``` or ```gulp clean default``` will build everything.
-The build distribution assets will be in ```build/alpaca```.
+    gem install redcarpet
+    gem install pygments.rb
+
+Then run:    
+
+    npm run site
 
 
-### Building the Web Site and Running a local Web Server
-
-Alpaca includes a web site along with documentation, samples and much more.
-To build the web site, you will first need to install Jekyll (not covered here).
-
-Simply do this:
-
-    gulp site
+### Running a Local Web Server
 
 And you can run a local web server like this:
 
-    gulp server
+    npm run server
 
 
 ### Alpaca Distributions
@@ -173,27 +158,6 @@ Each directory contains a JS file and a CSS file for its respective build.
 
 Each JS file is UMD ready and will work within both an AMD and CommonJS container.
 
-
-### Troubleshooting
-
-If you run into any Bower related issues during the build, you might want to clear out your Bower cache using this
-command:
-
-    bower cache clean
-
-And then try again.
-
-
-### Manual build commands
-
-While ```npm install``` will pretty much do everything for you, there are also some manual commands you can run if you
-need to perform individual steps:
-
-- To install Bower assets, do ```bower install```
-- To clear Bower cache, do ```bower cache clean```
-- To run the Gulp build, do ```gulp```
-- To build the Alpaca web site, do ```gulp default server```
-- To run a local Alpaca web server, ```gulp default server```
 
 
 ## Contributors
