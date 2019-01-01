@@ -301,7 +301,7 @@
                     }
                 }
 
-                var pf = (function(propertyId, itemData, extraDataProperties)
+                var pf = (function(self, propertyId, itemData, extraDataProperties)
                 {
                     return function(_done)
                     {
@@ -330,7 +330,7 @@
                         });
                     };
 
-                })(propertyId, itemData, extraDataProperties);
+                })(self, propertyId, itemData, extraDataProperties);
 
                 propertyFunctions.push(pf);
             }
@@ -411,6 +411,7 @@
                 },
                 "notTopLevel":true,
                 "render" : function(fieldControl, cb) {
+
                     // render
                     fieldControl.parent = self;
                     // add the property Id
@@ -421,6 +422,7 @@
                     } else {
                         fieldControl.path = self.path + propertyId;
                     }
+
                     fieldControl.render(null, function() {
                         if (cb) {
                             cb();
@@ -451,10 +453,9 @@
                     }
                     if (insertionPointEl.length === 0)
                     {
-                        self.errorCallback.call(self, {
+                        return self.errorCallback.call(self, {
                             "message": "Cannot find insertion point for field: " + self.getId()
                         });
-                        return;
                     }
 
                     // copy into place

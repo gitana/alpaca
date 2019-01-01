@@ -635,6 +635,7 @@
                 {
                     form = new Alpaca.Form(self.domEl, this.options.form, self.view.id, self.connector, self.errorCallback);
                 }
+
                 form.render(function(form) {
 
                     // NOTE: form is the form instance (not the jquery element)

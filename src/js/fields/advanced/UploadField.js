@@ -897,10 +897,12 @@
                 }
 
                 self.convertDescriptorToFile(descriptors[i], function(err, file) {
+
                     if (file)
                     {
                         files.push(file);
                     }
+
                     f(i+1);
                 });
             };
