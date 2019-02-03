@@ -22,6 +22,10 @@
 
         getTemplateDescriptorId: function () {
             return "control";
+        },
+
+        _validateOptional: function() {
+            return true;
         }
     });
 
