@@ -4,11 +4,6 @@
 
     {{#if options.multiple}}
 
-        {{#if options.hideNone}}
-        {{else}}
-        <option value="">{{{options.noneLabel}}}</option>
-        {{/if}}
-
         {{#each selectOptions}}
         <option value="{{{value}}}" {{#if selected}}selected="selected"{{/if}}>{{text}}</option>
         {{/each}}
