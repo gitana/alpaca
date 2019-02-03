@@ -289,4 +289,38 @@
         return Alpaca.sanitizeHtml(html);
     });
 
+    Handlebars.registerHelper('fieldGridLabelOffsetColumnClasses', function(numOptions) {
+        switch(numOptions) {
+            case 1:
+                return "col-md-8 col-sm-7 col-xs-6";
+            case 2:
+                return "col-md-8 col-sm-6 col-xs-4";
+            case 3:
+                return "col-md-6 col-sm-3 col-xs-3";
+            case 4:
+                return "col-xs-4";
+            case 5:
+                return "col-xs-2";
+            default:
+                return "";
+        }
+    });
+
+    Handlebars.registerHelper('fieldGridControlColumnClasses', function(numOptions) {
+        switch(numOptions) {
+            case 1:
+                return "col-md-4 col-sm-5 col-xs-6";
+            case 2:
+                return "col-md-2 col-sm-3 col-xs-4";
+            case 3:
+                return "col-md-2 col-sm-3 col-xs-3";
+            case 4:
+                return "col-xs-2";
+            case 5:
+                return "col-xs-2";
+            default:
+                return "";
+        }
+    });
+
 })(jQuery);
