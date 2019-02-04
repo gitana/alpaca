@@ -155,6 +155,9 @@
             // has this field been previously validated?
             this._previouslyValidated = false;
 
+            // has field been hidden?
+            this._hidden = false;
+
             this.updateObservable = function()
             {
                 // update observable
@@ -1794,6 +1797,7 @@
                     $(this.field).css({
                         "display": ""
                     });
+                    this._hidden = false;
 
                     this.onShow();
 
@@ -1819,6 +1823,7 @@
             $(this.field).css({
                 "display": "none"
             });
+            this._hidden = true;
 
             this.onHide();
 
@@ -1845,7 +1850,7 @@
         },
 
         isHidden: function() {
-            return ("none" === $(this.field).css("display"));
+            return !!this._hidden;
         },
 
         /**
