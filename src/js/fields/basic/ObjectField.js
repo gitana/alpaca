@@ -716,7 +716,7 @@
             var fieldsInTab = self.children.filter(function (child){
                 return self.view.wizard.bindings[child.propertyId] === wizardTab;
             });
-            if(fieldsInTab.every(function (field){
+            if(!self.view.wizard.steps[wizardTab-1].hidden && fieldsInTab.every(function (field){
                 return field.isHidden();
             })){
                 //prior to render need to stop the nav tab from being rendered
@@ -757,9 +757,12 @@
                 item.onDependentReveal();
                 if(self.isTopLevel() && self.view.wizard && self.view.wizard.bindings[propertyId]){
                     var wizardTab = self.view.wizard.bindings[propertyId];
-                    //show tab
-                    $(self.field).find("[data-alpaca-wizard-step-index='"+(wizardTab-1)+"']").css("display","block");
-                    self.view.wizard.steps[wizardTab-1].hidden = false;
+                    if (self.view.wizard.steps[wizardTab-1].hidden) {
+                        //show tab
+                        $(self.field).find("[data-alpaca-wizard-step-index='"+(wizardTab-1)+"']").css("display","block");
+                        self.view.wizard.steps[wizardTab-1].hidden = false;
+                    }
+                    
                 }
             }
             else
