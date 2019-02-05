@@ -1882,6 +1882,7 @@
                     // hide field while rendering
                     $(el).addClass("alpaca-field-rendering");
                     $(el).addClass("alpaca-hidden");
+                    $(el).html('<i class="fa fa-spinner fa-spin fa-3x"/>');
 
                     Alpaca.fieldInstances[field.getId()] = field;
 
@@ -1946,6 +1947,7 @@
                         // reveal field after rendering
                         $(el).removeClass("alpaca-field-rendering");
                         $(el).removeClass("alpaca-hidden");
+                        $(el).children().first('i').remove();
 
                         // if there was a previous field that needs to be cleaned up, do so now
                         if (field._oldFieldEl)

@@ -4,6 +4,13 @@
     display: none;
 }
 
+/** Render loading spinner (font awesome) **/
+.alpaca-field-rendering
+{
+    display: inherit!important;
+    margin: 20px;
+}
+
 /** Added to every field outer element **/
 .alpaca-field
 {
