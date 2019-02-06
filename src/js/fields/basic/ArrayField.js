@@ -32,7 +32,7 @@
 
             this.containerItemTemplateDescriptor = self.view.getTemplateDescriptor("container-" + containerItemTemplateType + "-item", self);
 
-            if (!this.options.dragAndDrop) {
+            if (typeof(this.options.dragAndDrop) === "undefined") {
                 this.options.dragAndDrop = Alpaca.isEmpty(this.view.dragAndDrop) ? Alpaca.defaultDragAndDrop : this.view.dragAndDrop;
             }
 
