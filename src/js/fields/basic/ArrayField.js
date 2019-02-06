@@ -1077,22 +1077,40 @@
 
                 var items = self.getFieldEl().find(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + self.getId() +  "']");
                 $(items).each(function(itemIndex) {
+                    var target = null;
                     $(this).attr("draggable", true);
-                    $(this).off().on("dragstart", function(ev) {
+                    $(this).off().on("mousedown", function(ev) 
+                    {
                         ev.stopPropagation();
 
-                        var event = ev.originalEvent;
-                        event.dataTransfer.setData("sourceIndex", this.dataset.alpacaContainerItemIndex);
-                        event.dataTransfer.setData("parentFieldId", this.dataset.alpacaContainerItemParentFieldId);
-
-                        // find droppable area and highlight
-                        $(this).siblings(".alpaca-container-item").each(function() {
-                            $(this).children(".alpaca-array-item-move").css({
-                                "color": "#2CEAA3"
-                            });
-                        });
+                        target = ev.target;
                     });
-                    $(this).on("dragend", function(ev) {
+                    $(this).on("dragstart", function(ev) 
+                    {
+                        ev.stopPropagation();
+
+                        // if this item's move icon contains the target
+                        var dragHandle = $(this).children(".alpaca-array-item-move")[0];
+                        if (dragHandle && dragHandle.contains(target)) 
+                        {
+                            var event = ev.originalEvent;
+                            event.dataTransfer.setData("sourceIndex", this.dataset.alpacaContainerItemIndex);
+                            event.dataTransfer.setData("parentFieldId", this.dataset.alpacaContainerItemParentFieldId);
+    
+                            // find droppable area and highlight
+                            $(this).siblings(".alpaca-container-item").each(function() {
+                                $(this).children(".alpaca-array-item-move").css({
+                                    "color": "#2CEAA3"
+                                });
+                            });
+                        }
+                        else 
+                        {
+                            ev.preventDefault();
+                        }
+                    });
+                    $(this).on("dragend", function(ev) 
+                    {
                         ev.stopPropagation();
 
                         $(".alpaca-array-item-move").css({
