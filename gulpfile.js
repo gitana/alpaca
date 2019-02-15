@@ -10,7 +10,7 @@ var pkg  = require("./package.json");
 var path = require("path");
 
 var concat      = require("gulp-concat");
-var uglify      = require("gulp-uglify");
+var uglify      = require('gulp-uglify-es').default;
 var handlebars  = require("gulp-handlebars");
 var jshint      = require("gulp-jshint");
 var minifyCss   = require("gulp-minify-css");
@@ -412,7 +412,7 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(wrapUmd(web_wrap))
                 .pipe(gulp.dest('build/alpaca/web'))
                 .pipe(concat('alpaca.min.js'))
-                //.pipe(uglify())
+                .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/web')),
 
             // bootstrap
@@ -421,7 +421,7 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(wrapUmd(bootstrap_wrap))
                 .pipe(gulp.dest('build/alpaca/bootstrap'))
                 .pipe(concat('alpaca.min.js'))
-                //.pipe(uglify())
+                .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/bootstrap')),
 
             // jqueryui
@@ -430,7 +430,7 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(wrapUmd(jqueryui_warp))
                 .pipe(gulp.dest('build/alpaca/jqueryui'))
                 .pipe(concat('alpaca.min.js'))
-                //.pipe(uglify())
+                .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/jqueryui')),
 
             // jquerymobile
@@ -439,7 +439,7 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(wrapUmd(jquerymobile_wrap))
                 .pipe(gulp.dest('build/alpaca/jquerymobile'))
                 .pipe(concat('alpaca.min.js'))
-                //.pipe(uglify())
+                .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/jquerymobile'))
 
         ).pipe(es.wait(function() {
