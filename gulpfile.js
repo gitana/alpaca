@@ -100,6 +100,7 @@ var paths = {
             "src/js/fields/advanced/IntegerField.js",
             "src/js/fields/advanced/LowerCaseField.js",
             "src/js/fields/advanced/MapField.js",
+            "src/js/fields/advanced/MarkdownField.js",
             "src/js/fields/advanced/OptionTree.js",
             "src/js/fields/advanced/PasswordField.js",
             "src/js/fields/advanced/PersonalNameField.js",
