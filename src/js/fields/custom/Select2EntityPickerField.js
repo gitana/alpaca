@@ -124,7 +124,7 @@
                         "title": "Ekstra typefilter",
                         "description": "The type of entity to pick.",
                         "type": "string",
-                        "enum": ["Causality", "EstablishImprovementMeasureAssessment", "CreditAuthorizationBreachCausality", "Product", "AppealsBody", "AuditScore", "ExtentProposedImprovementSuggestionIsTakenIntoAccount", "EducationalLevel", "EducationalDirection", "CompetenceLevel", "RecruitmentRequirementsAnalysisStatus", "EducationalEstablishment", "PersonalDataCategory", "PersonalDataProcessingArea"]
+                        "enum": ["Causality", "EstablishImprovementMeasureAssessment", "CreditAuthorizationBreachCausality", "Product", "AppealsBody", "AuditScore", "ExtentProposedImprovementSuggestionIsTakenIntoAccount", "EducationalLevel", "EducationalDirection", "CompetenceLevel", "RecruitmentRequirementsAnalysisStatus", "EducationalEstablishment", "PersonalDataCategory", "PersonalDataProcessingArea", "CustomerChannel", "CustomerComplaintCategory"]
                     },
                     "actionType": {
                         "title": "Action type",
@@ -176,7 +176,7 @@
                         "rightLabel": "Extra type filter",
                         "helper": "Filter for types within the selection entity type",
                         "type": "select",
-                        "optionLabels": ["Årsakssammenheng", "Vurdering av behov for tiltak", "Årsak til brudd på kredittfullmakt", "Produkt", "Klageinstans", "Revisjonsresultat", "I hvilken grad foreslått forbedringsforslag tas til følge", "Utdanningsnivå", "Utdanningsretning", "Realkompetanse", "Status for behovsanalyse ved rekruttering", "Utdanningsinstitusjon", "Kategori av personopplysninger", "Personopplysningsbehandlingsområde"]
+                        "optionLabels": ["Årsakssammenheng", "Vurdering av behov for tiltak", "Årsak til brudd på kredittfullmakt", "Produkt", "Klageinstans", "Revisjonsresultat", "I hvilken grad foreslått forbedringsforslag tas til følge", "Utdanningsnivå", "Utdanningsretning", "Realkompetanse", "Status for behovsanalyse ved rekruttering", "Utdanningsinstitusjon", "Kategori av personopplysninger", "Personopplysningsbehandlingsområde", "Kundekanal", "Kundeklagekategori"]
                     },
                     "actionType": {
                         "hideNone": false,
