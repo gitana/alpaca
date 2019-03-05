@@ -2,7 +2,7 @@
 
     var Alpaca = $.alpaca;
 
-    Alpaca.Fields.CountryField = Alpaca.Fields.SelectField.extend(
+    Alpaca.Fields.CountryField = Alpaca.Fields.SelectFieldBase.extend(
     /**
      * @lends Alpaca.Fields.CountryField.prototype
      */

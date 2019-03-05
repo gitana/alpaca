@@ -2,7 +2,7 @@
 
     var Alpaca = $.alpaca;
 
-    Alpaca.Fields.Select2EntityPicker = Alpaca.Fields.SelectField.extend({
+    Alpaca.Fields.Select2EntityPicker = Alpaca.Fields.SelectFieldBase.extend({
         setup: function () {
             this.options.hideNone = true;
             this.base();

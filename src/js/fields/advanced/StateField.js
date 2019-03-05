@@ -69,7 +69,7 @@
         "Wyoming"                        : "WY"
     };
 
-    Alpaca.Fields.StateField = Alpaca.Fields.SelectField.extend(
+    Alpaca.Fields.StateField = Alpaca.Fields.SelectFieldBase.extend(
     /**
      * @lends Alpaca.Fields.StateField.prototype
      */

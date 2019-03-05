@@ -835,7 +835,7 @@
                         }
                     });
                 }
-                else if (Alpaca.isUri(self.options.dataSource))
+                else if (Alpaca.isUri(self.options.dataSource) && !self.options.useProxy)
                 {
                     var locale = self.view.locale;
 

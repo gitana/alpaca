@@ -2,11 +2,19 @@
 
     var Alpaca = $.alpaca;
 
-    Alpaca.Fields.SelectField = Alpaca.Fields.ListField.extend(
+    Alpaca.Fields.SelectField = Alpaca.Fields.SelectFieldBase.extend(
     /**
      * @lends Alpaca.Fields.SelectField.prototype
      */
     {
+        getValue: function () {
+            return this.data;
+        },
+
+        isEmpty: function () {
+            return (this.isDisplayOnly() ? this.data : this.getControlValue()).length === 0;
+        },
+
         /**
          * @see Alpaca.Field#getFieldType
          */
@@ -15,266 +23,128 @@
             return "select";
         },
 
-        /**
-         * @see Alpaca.Fields.ListField#setup
-         */
-        setup: function()
-        {
+        beforeRenderControl: function (model, callback) {
             var self = this;
-
-            this.base();
-
-            if (self.schema["type"] && self.schema["type"] === "array")
-            {
-                self.options.multiple = true;
-            }
-
-            // automatically turn on "hideNone" if we're in multiselect mode and have the multiselect plugin
-            if (self.options.multiple && $.fn.multiselect)
-            {
-                if (typeof(self.options.hideNone) === "undefined")
-                {
-                    self.options.hideNone = true;
+            this.base(model, function() { 
+                if (self.data) {
+                    model.displayableText = self.data.map(function (option) { return option.text; }).join(", ");
+                } else {
+                    model.displayableText = "";
                 }
-            }
-
-            // offer some backward compability here as older version of Alpaca used to incorrectly look for
-            // maxItems and minItems on the schema.items subobject.
-            // if not defined properly, we offer some automatic forward migration of these properties
-            if (this.schema.items && this.schema.items.maxItems && typeof(this.schema.maxItems) === "undefined") {
-                this.schema.maxItems = this.schema.items.maxItems;
-                delete this.schema.items.maxItems;
-            }
-            if (this.schema.items && this.schema.items.minItems && typeof(this.schema.minItems) === "undefined") {
-                this.schema.minItems = this.schema.items.minItems;
-                delete this.schema.items.minItems;
-            }
-
-            if (!self.options.multiselect && $.fn.multiselect)
-            {
-                self.options.multiselect = {};
-            }
-
-            if (self.options.multiselect && typeof(self.options.multiselect.disableIfEmpty) === "undefined")
-            {
-                self.options.multiselect.disableIfEmpty = true;
-            }
-
-            // if we're in a display only mode, turn off multiselect
-            if (self.isDisplayOnly())
-            {
-                delete self.options.multiselect;
-            }
-        },
-
-        initControlEvents: function()
-        {
-            var self = this;
-
-            self.base();
-
-            if (self.options.multiple)
-            {
-                var button = this.control.parent().find("button.multiselect");
-
-                button.focus(function(e) {
-                    if (!self.suspendBlurFocus)
-                    {
-                        self.onFocus.call(self, e);
-                        self.trigger("focus", e);
-                    }
-                });
-
-                button.blur(function(e) {
-                    if (!self.suspendBlurFocus)
-                    {
-                        self.onBlur.call(self, e);
-                        self.trigger("blur", e);
-                    }
-                });
-            }
-        },
-
-        prepareControlModel: function(callback) {
-            var self = this;
-
-            this.base(function (model) {
-
-                if (typeof(self.options.noneLabel) === "undefined")
-                {
-                    self.options.noneLabel = self.getMessage("noneLabel");
-                }
-
-                if (typeof(self.options.hideNone) === "undefined")
-                {
-                    if (typeof(self.options.removeDefaultNone) !== "undefined")
-                    {
-                        self.options.hideNone = self.options.removeDefaultNone;
-                    }
-                    else
-                    {
-                        self.options.hideNone = self.isRequired();
-                    }
-                }
-
-                // if emptySelectFirst and we have options but no data, then auto-select first item in the options list
-                if (self.data.length === 0 && self.options.emptySelectFirst && self.selectOptions.length > 0)
-                {
-                    self.selectOptions[0].selected = true;
-                    self.data = [self.selectOptions[0]];
-                }
-
-                // likewise, we auto-assign first pick if field required
-                if (self.data.length === 0 && self.isRequired() && self.selectOptions.length > 0 && self.options.hideNone)
-                {
-                    self.selectOptions[0].selected = true;
-                    self.data = [self.selectOptions[0]];
-                }
-
-                callback(model);
+                callback()
             });
         },
 
         afterRenderControl: function(model, callback)
         {
             var self = this;
-
-            this.base(model, function() {
-
-                // if we are in multiple mode and the bootstrap multiselect plugin is available, bind it in
-                if (self.options.multiple && $.fn.multiselect && !self.isDisplayOnly())
-                {
-                    var settings = null;
-                    if (self.options.multiselect) {
-                        settings = self.options.multiselect;
-                    }
-                    else
-                    {
-                        settings = {};
-                    }
-                    if (!settings.nonSelectedText)
-                    {
-                        settings.nonSelectedText = "None";
-                        if (self.options.noneLabel)
-                        {
-                            settings.nonSelectedText = self.options.noneLabel;
+            
+            if (!self.isDisplayOnly()){
+                
+                var $selectElement = $(self.getControlEl());  
+                var select2Options = {};
+                if (self.options.useProxy && self.options.dataSource && self.options.dataSource.length > 1) {
+                    select2Options.ajax = {
+                        url: "/api/selectlist/proxysearch",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        type: "POST",
+                        delay: 250,
+                        data: function (params) {
+                            return JSON.stringify({
+                                externalUrl: self.options.dataSource,
+                                term: params.term ? params.term : "", // search term
+                                page: params.page || 1,
+                                pageSize: 30,
+                            });
+                        },
+                        processData: true,
+                        processResults: function (data, params) {
+                            var results = data.results;
+                            if (self.options.multiple) {
+                                results = results.filter(function (result) {
+                                    if (!$selectElement.val()) {
+                                        return true;
+                                    }
+                                    return !$selectElement.val().includes(result.id);
+                                });
+                            }
+                            params.page = params.page || 1;
+                            return {
+                                results: results,
+                                pagination: data.pagination
+                            };
+                        },
+                        cache: false,
+                        error: function (xhr) {
+                            if (xhr.statusText !== "abort") {
+                                toastr.error("Det skjedde en feil i søket.", xhr.statusText);
+                            }
                         }
                     }
-
-                    $(self.getControlEl()).multiselect(settings);
-                }else if(!self.isDisplayOnly() && model.selectOptions && model.selectOptions.length > 6){
-                    $(self.getControlEl()).select2();
                 }
+                if (self.options.minimumInputLength) {
+                    select2Options.minimumInputLength = self.options.minimumInputLength;
+                }
+                $selectElement.select2(select2Options);
+                if (self.data) {
+                    var selectedItems = [];
+                    Alpaca.isArray(self.data) && self.data.forEach(function (selectedItem) {
+                        // add option if it is missing in select element
+                        if ($selectElement.find("option[value='" + selectedItem.value + "']").length) {
+                            selectedItems.push(selectedItem.value); 
+                        } else { 
+                            var newOption = new Option(selectedItem.text, selectedItem.value, true, true);
+                            $selectElement.append(newOption);
+                            selectedItems.push(selectedItem.value);
+                        } 
+                    });
 
-                var afterChangeHandler = function()
-                {
-                    var newData = [];
+                    $selectElement.val(selectedItems);
+                    $selectElement.trigger('change');
+                }
+            }
 
-                    var val = $(self.control).val();
-                    if (!val) {
-                        val = [];
-                    }
-                    if (Alpaca.isString(val)) {
-                        val = [val];
-                    }
-
-                    var tempMap = {};
-                    for (var i = 0; i < model.selectOptions.length; i++)
-                    {
-                        tempMap[model.selectOptions[i].value] = model.selectOptions[i];
-                    }
-
-                    for (var i = 0; i < val.length; i++)
-                    {
-                        newData.push(tempMap[val[i]].value);
-                    }
-
-                    // set value silently
-                    self.setValue(newData, true);
-
-                    self.refreshValidationState();
-                    self.triggerWithPropagation("change");
-                };
-
-                $(self.control).change(function(e) {
-                    afterChangeHandler();
+            var afterChangeHandler = function()
+            {
+                var newData = [];
+                var data =  $(self.getControlEl()).select2('data');
+                Alpaca.isArray(data) && data.forEach(function (selectedItem) {
+                    newData.push({value: selectedItem.id, text: selectedItem.text});
                 });
+                self.setValue(newData, true);
+                self.refreshValidationState();
+                self.triggerWithPropagation("change");
+            };
 
-                callback();
-
+            $(self.control).change(function(e) {
+                afterChangeHandler();
             });
+
+            callback();
         },
 
-        afterSetValue: function()
-        {
-            var self = this;
-
-            if (self.data.length > 0)
-            {
-                var values = [];
-                for (var i = 0; i < self.data.length; i++) {
-                    values.push(self.data[i].value);
-                }
-
-                $(self.control).val(values);
-            }
-        },
 
         /**
-         * @see Alpaca.Field#focus
+         * @see Alpaca.SelectFieldBase#focus
          */
-        focus: function(onFocusCallback)
-        {
-            if (this.control && this.control.length > 0)
-            {
-                // set focus onto the select
-                var el = $(this.control).get(0);
-
-                el.focus();
-
-                if (onFocusCallback)
-                {
-                    onFocusCallback(this);
+        focus: function (onFocusCallback) {
+            if (this.control) {
+                var $ddl = $(this.control);
+                if ($ddl.data('select2')) {
+                    $ddl.select2("focus");
+                    if (onFocusCallback) {
+                        onFocusCallback(this);
+                    }
                 }
             }
         },
 
-        /**
-         * @override
-         */
-        disable: function()
-        {
-            var self = this;
-
-            this.base();
-
-            if (self.options.multiselect)
-            {
-                $(self.getControlEl()).multiselect("disable");
-            }
+        _validateEnum: function () {
+            return true;
         },
-
-        /**
-         * @override
-         */
-        enable: function()
-        {
-            var self = this;
-
-            this.base();
-
-            if (self.options.multiselect)
-            {
-                $(self.getControlEl()).multiselect("enable");
-            }
-        }
-
-
-
 
         /* builder_helpers */
-        ,
-
         /**
          * @see Alpaca.Field#getTitle
          */
@@ -299,6 +169,17 @@
                     "multiple": {
                         "title": "Multiple Selection",
                         "description": "Allow multiple selection if true.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "minimumInputLength": {
+                        "title": "Minimum Input Length",
+                        "description": "Minimum characters enteren in search box before search is performed",
+                        "type": "number",
+                        "minimum": 0
+                    },
+                    "useProxy": {
+                        "title": "Use proxy for datasource",
                         "type": "boolean",
                         "default": false
                     },
@@ -333,6 +214,14 @@
                         "rightLabel": "Allow multiple selection ?",
                         "helper": "Allow multiple selection if checked",
                         "type": "checkbox"
+                    },
+                    "minimumInputLength": {
+                        "rightLabel": "Minimum Input Length",
+                        "type": "integer",
+                    },
+                    "useProxy": {
+                        "rightLabel": "Use proxy for datasource",
+                        "type": "checkbox",
                     },
                     "size": {
                         "type": "integer"
