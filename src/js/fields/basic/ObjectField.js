@@ -712,7 +712,7 @@
         },
 
         hideTabIfNoFieldsVisible: function(wizardTab) {
-            self = this;
+            var self = this;
             var fieldsInTab = self.children.filter(function (child){
                 return self.view.wizard.bindings[child.propertyId] === wizardTab;
             });
