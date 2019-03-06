@@ -45,7 +45,7 @@ if (!fs.existsSync(alpacaBootstrapOutputDirectory)) {
     console.log('\n\n')
 
     notify({message: message});
-    process.exit(1);
+    alpacaBootstrapOutputDirectory = './build/alpaca/bootstrap'
 }
 var paths = {
     scripts: {
