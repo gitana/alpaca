@@ -35,7 +35,18 @@ var VERSIONABLE_FILES = [
     "alpaca.jquery.json",
     "bower.json"
 ];
+// var alpacaBootstrapOutputDirectory = './build/alpaca/bootstrap'
+var alpacaBootstrapOutputDirectory = '../ServiceManager/Products/ServiceManager/Collabora.ServiceManager.SharePoint/Layouts/Collabora.ServiceManager/Script/alpaca/bootstrap'
+var fs = require('fs');
+if (!fs.existsSync(alpacaBootstrapOutputDirectory)) {
+    var message = 'WARNING: Directory ' + alpacaBootstrapOutputDirectory + ' does not exist';
+    console.log('\n\n')
+    console.warn('\x1b[41m\x1b[37m%s\x1b[0m', message);
+    console.log('\n\n')
 
+    notify({message: message});
+    process.exit(1);
+}
 var paths = {
     scripts: {
         core: [
@@ -426,10 +437,10 @@ gulp.task("build-scripts", function(cb) {
             gulp.src(paths.scripts.bootstrap)
                 .pipe(concat('alpaca.js'))
                 .pipe(wrapUmd(bootstrap_wrap))
-                .pipe(gulp.dest('build/alpaca/bootstrap'))
+                .pipe(gulp.dest(alpacaBootstrapOutputDirectory))
                 .pipe(concat('alpaca.min.js'))
                 .pipe(uglify())
-                .pipe(gulp.dest('build/alpaca/bootstrap')),
+                .pipe(gulp.dest(alpacaBootstrapOutputDirectory)),
 
             // jqueryui
             gulp.src(paths.scripts.jqueryui)
@@ -476,12 +487,12 @@ gulp.task("build-styles", function(cb) {
             // bootstrap
             gulp.src(paths.styles.bootstrap)
                 .pipe(concat('alpaca.css'))
-                .pipe(gulp.dest('build/alpaca/bootstrap'))
+                .pipe(gulp.dest(alpacaBootstrapOutputDirectory))
                 .pipe(rename({suffix: ".min"}))
                 .pipe(minifyCss())
-                .pipe(gulp.dest('build/alpaca/bootstrap')),
+                .pipe(gulp.dest(alpacaBootstrapOutputDirectory)),
             gulp.src("src/css/images/**")
-                .pipe(gulp.dest('./build/alpaca/bootstrap/images')),
+                .pipe(gulp.dest(alpacaBootstrapOutputDirectory + '/images')),
 
             // jqueryui
             gulp.src(paths.styles.jqueryui)
@@ -591,19 +602,17 @@ gulp.task("update-site-alpaca", function(cb) {
     })).pipe(notify({message: "Updated Alpaca into Web Site"}));
 });
 
-// Rerun the task when a file changes
 gulp.task('watch', function() {
-
     // scripts
     watch(paths.scripts.core, function(files, cb) {
-        runSequence("build-scripts", "update-site-alpaca", function() {
+        runSequence("build-scripts", function() {
             if (cb) {
                 cb();
             }
         });
     });
     watch(paths.scripts.all_views, function(files, cb) {
-        runSequence("build-scripts", "update-site-alpaca", function() {
+        runSequence("build-scripts", function() {
             if (cb) {
                 cb();
             }
@@ -612,7 +621,7 @@ gulp.task('watch', function() {
 
     // templates
     watch(paths.templates.all, function(files, cb) {
-        runSequence("build-templates", "build-scripts", "update-site-alpaca", function() {
+        runSequence("build-templates", "build-scripts", function() {
             if (cb) {
                 cb();
             }
@@ -621,21 +630,14 @@ gulp.task('watch', function() {
 
     // styles
     watch(paths.styles.all, function(files, cb) {
-        runSequence("build-styles", "update-site-alpaca", function() {
+        runSequence("build-styles", function() {
             if (cb) {
                 cb();
             }
         });
     });
 
-    // web
-    watch(["site/*/**", "site/*", "site/*.*"], function(files, cb) {
-        runSequence("build-site", "update-site-full", function() {
-            if (cb) {
-                cb();
-            }
-        });
-    });
+
 });
 
 gulp.task("package", function(cb) {
