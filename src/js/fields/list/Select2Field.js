@@ -59,7 +59,7 @@
                                 externalUrl: self.options.dataSource,
                                 term: params.term ? params.term : "", // search term
                                 page: params.page || 1,
-                                pageSize: 30,
+                                pageSize: self.options.size || 30
                             });
                         },
                         processData: true,
