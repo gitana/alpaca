@@ -90,6 +90,7 @@ var paths = {
             "src/js/fields/list/RadioField.js",
             "src/js/fields/list/SelectFieldBase.js",
             "src/js/fields/list/SelectField.js",
+            "src/js/fields/list/Select2Field.js",
             "src/js/fields/list/ChooserField.js",
 
             "src/js/fields/advanced/AddressField.js",
