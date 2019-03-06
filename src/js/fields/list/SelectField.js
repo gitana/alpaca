@@ -24,11 +24,6 @@
 
             this.base();
 
-            if (self.schema["type"] && self.schema["type"] === "array")
-            {
-                self.options.multiple = true;
-            }
-
             // automatically turn on "hideNone" if we're in multiselect mode and have the multiselect plugin
             if (self.options.multiple && $.fn.multiselect)
             {
