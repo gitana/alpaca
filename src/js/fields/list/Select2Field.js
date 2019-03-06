@@ -183,7 +183,7 @@
                         "minimum": 0
                     },
                     "useProxy": {
-                        "title": "Use proxy for datasource",
+                        "title": "Use proxy",
                         "type": "boolean",
                         "default": false
                     },
@@ -214,6 +214,9 @@
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
                 "fields": {
+                    "dataSource": {
+                        "order": 101
+                    },
                     "multiple": {
                         "rightLabel": "Allow multiple selection ?",
                         "helper": "Allow multiple selection if checked",
@@ -222,10 +225,12 @@
                     "minimumInputLength": {
                         "rightLabel": "Minimum Input Length",
                         "type": "integer",
+                        "order": 103
                     },
                     "useProxy": {
                         "rightLabel": "Use proxy for datasource",
                         "type": "checkbox",
+                        "order": 102
                     },
                     "size": {
                         "type": "integer"
