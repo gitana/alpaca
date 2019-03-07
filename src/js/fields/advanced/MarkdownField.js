@@ -60,6 +60,37 @@
             });
         },
 
+        setValue: function(value)
+        {
+            var self = this;
+
+            // be sure to call into base method
+            this.base(value);
+
+            if (self.editor)
+            {
+                self.editor.value(value);
+            }
+        },
+
+        /**
+         * @see Alpaca.Fields.ControlField#getControlValue
+         */
+        getControlValue: function()
+        {
+            var self = this;
+
+            var value = null;
+
+            if (self.editor)
+            {
+                value = self.editor.value();
+            }
+
+            return value;
+        },
+
+
         /* builder_helpers */
 
         /**

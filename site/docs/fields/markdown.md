@@ -76,3 +76,32 @@ $("#field3").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 4
+A SimpleMDE Markdown field with a button so that you can pull back the resulting JSON.
+<div id="field4"> </div>
+{% raw %}
+<script type="text/javascript" id="field4-script">
+$("#field4").alpaca({
+    "schema": {
+        "type": "string",
+    },
+    "options": {
+        "type": "markdown",
+        "markdown": {
+            "spellChecker": false
+        },
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        }
+    },
+    "data": "Hello World"
+});</script>
+{% endraw %}
