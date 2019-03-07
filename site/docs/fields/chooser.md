@@ -235,3 +235,39 @@ $("#field8").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 9
+An example using custom delimiters
+<div id="field9"> </div>
+{% raw %}
+<script type="text/javascript" id="field9-script">
+$("#field9").alpaca({
+    "schema": {
+        "type": "string",
+        "title": "Select your favorite colors",
+        "enum": ["red", "orange", "yellow", "green", "blue", "indigo", "violet"]
+    },
+    "options": {
+        "type": "chooser",
+        "optionLabels": ["Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet"],
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        },
+        "split": function(val) {
+            return val.split("|");
+        },
+        "join": function(vals) {
+            return vals.join("|");
+        }
+    },
+    "data": ["red", "yellow", "green"]
+});
+</script>
+{% endraw %}
