@@ -46,7 +46,9 @@
             if (!self.isDisplayOnly()){
                 
                 var $selectElement = $(self.getControlEl());  
-                var select2Options = {};
+                var select2Options = {
+                    placeholder: self.options.noneLabel
+                };
                 if (self.options.useProxy && self.options.dataSource && self.options.dataSource.length > 1) {
                     select2Options.ajax = {
                         url: "/api/selectlist/proxysearch",
@@ -90,11 +92,13 @@
                 if (self.options.minimumInputLength) {
                     select2Options.minimumInputLength = self.options.minimumInputLength;
                 }
+                               
+
                 $selectElement.select2(select2Options);
                 if (self.data) {
                     var selectedItems = [];
                     Alpaca.isArray(self.data) && self.data.forEach(function (selectedItem) {
-                        // add option if it is missing in select element
+                        // add option if it is missing in select element 
                         if ($selectElement.find("option[value='" + selectedItem.value + "']").length) {
                             selectedItems.push(selectedItem.value); 
                         } else { 
