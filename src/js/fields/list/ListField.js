@@ -65,10 +65,6 @@
                 {
                     self.options.multiple = true;
                 }
-                else if (typeof(self.schema["enum"]) !== "undefined")
-                {
-                    self.options.multiple = true;
-                }                
                 else
                 {
                     self.options.multiple = false;
