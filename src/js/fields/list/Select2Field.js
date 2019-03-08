@@ -49,6 +49,10 @@
                 var select2Options = {
                     placeholder: self.options.noneLabel
                 };
+                
+                if (!self.options.required) {
+                    select2Options.allowClear = true
+                }
                 if (self.options.useProxy && self.options.dataSource && self.options.dataSource.length > 1) {
                     select2Options.ajax = {
                         url: "/api/selectlist/proxysearch",
