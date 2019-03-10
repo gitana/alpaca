@@ -5,6 +5,7 @@
     Alpaca.Fields.Select2EntityPicker = Alpaca.Fields.SelectFieldBase.extend({
         setup: function () {
             this.options.hideNone = true;
+            this.options.skipRequiredSelectFirst = true;
             this.base();
             if (this.data) {
                 this.selectOptions = this.data;

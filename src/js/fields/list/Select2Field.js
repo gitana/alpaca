@@ -7,6 +7,22 @@
      * @lends Alpaca.Fields.SelectField.prototype
      */
     {
+        setup: function () {
+            this.options.hideNone = true;
+            this.options.skipRequiredSelectFirst = true;
+            this.options.noneLabel = "";
+            this.base();
+        },
+
+        getControlValue: function () {
+            return $(":selected", this.control).map(function () {
+                return {
+                    "value": $(this).val(),
+                    "text": $(this).text()
+                }
+            }).get();
+        },
+
         getValue: function () {
             return this.data;
         },
@@ -45,14 +61,14 @@
             
             if (!self.isDisplayOnly()){
                 
-                var $selectElement = $(self.getControlEl());  
+                var $selectElement = $(self.getControlEl());
+                if (!this.options.watermarkLabel) {
+                    this.options.watermarkLabel = " -Velg verdi - ";
+                }  
                 var select2Options = {
-                    placeholder: self.options.noneLabel
+                    placeholder: self.options.watermarkLabel,
+                    allowClear: true
                 };
-                
-                if (!self.options.required) {
-                    select2Options.allowClear = true
-                }
                 if (self.options.useProxy && self.options.dataSource && self.options.dataSource.length > 1) {
                     select2Options.ajax = {
                         url: "/api/selectlist/proxysearch",
@@ -95,8 +111,7 @@
                 }
                 if (self.options.minimumInputLength) {
                     select2Options.minimumInputLength = self.options.minimumInputLength;
-                }
-                               
+                }                               
 
                 $selectElement.select2(select2Options);
                 if (self.data) {
@@ -176,7 +191,7 @@
          * @see Alpaca.Fields.ListField#getSchemaOfOptions
          */
         getSchemaOfOptions: function() {
-            return Alpaca.merge(this.base(), {
+            var schemaOfOptions = Alpaca.merge(this.base(), {
                 "properties": {
                     "multiple": {
                         "title": "Multiple Selection",
@@ -197,22 +212,23 @@
                     },
                     "size": {
                         "title": "Displayed Options",
-                        "description": "Number of options to be shown.",
+                        "description": "Number of options to be shown per page. Scroll to show more pages.",
                         "type": "number"
                     },
-                    "emptySelectFirst": {
-                        "title": "Empty Select First",
-                        "description": "If the data is empty, then automatically select the first item in the list.",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "multiselect": {
-                        "title": "Multiselect Plugin Settings",
-                        "description": "Multiselect plugin properties - http://davidstutz.github.io/bootstrap-multiselect",
-                        "type": "any"
+                    "watermarkLabel": {
+                        "title": "Watermark label",
+                        "description": "The label to use for the watermark.",
+                        "type": "string",
+                        "default": " - Velg verdi - "
                     }
                 }
             });
+            delete schemaOfOptions.properties.multiselect;
+            delete schemaOfOptions.properties.emptySelectFirst;
+            delete schemaOfOptions.properties.noneLabel;
+            delete schemaOfOptions.properties.hideNone;
+            delete schemaOfOptions.properties.removeDefaultNone;
+            return schemaOfOptions;
         },
 
         /**
@@ -220,7 +236,7 @@
          * @see Alpaca.Fields.ListField#getOptionsForOptions
          */
         getOptionsForOptions: function() {
-            return Alpaca.merge(this.base(), {
+            var optionsForOptions =  Alpaca.merge(this.base(), {
                 "fields": {
                     "dataSource": {
                         "order": 101
@@ -243,17 +259,19 @@
                     "size": {
                         "type": "integer"
                     },
-                    "emptySelectFirst": {
-                        "type": "checkbox",
-                        "rightLabel": "Empty Select First"
-                    },
-                    "multiselect": {
-
-                        "type": "object",
-                        "rightLabel": "Multiselect plugin properties - http://davidstutz.github.io/bootstrap-multiselect"
+                    "watermarkLabel": {
+                        "rightLabel": "Watermark label",
+                        "helper": "Label to use on option displayed when user has not selected a value",
+                        "type": "text"
                     }
                 }
             });
+            delete optionsForOptions.fields.multiselect;
+            delete optionsForOptions.fields.emptySelectFirst;
+            delete optionsForOptions.fields.noneLabel;
+            delete optionsForOptions.fields.hideNone;
+            delete optionsForOptions.fields.removeDefaultNone;
+            return optionsForOptions;
         }
 
         /* end_builder_helpers */
