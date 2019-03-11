@@ -21,6 +21,20 @@
 
             var self = this;
 
+            if (typeof(self.options.multiple) === "undefined")
+            {
+                self.options.multiple = false;
+
+                if (self.schema.type === "array")
+                {
+                    self.options.multiple = true;
+                }
+                else if (typeof(self.schema["enum"]) !== "undefined")
+                {
+                    self.options.multiple = true;
+                }
+            }
+
             self.base();
 
             // in single mode, blank out rightlabel
