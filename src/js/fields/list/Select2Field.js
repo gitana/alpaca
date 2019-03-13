@@ -271,6 +271,8 @@
             delete optionsForOptions.fields.noneLabel;
             delete optionsForOptions.fields.hideNone;
             delete optionsForOptions.fields.removeDefaultNone;
+            delete optionsForOptions.fields.useDataSourceAsEnum;
+
             return optionsForOptions;
         }
 
