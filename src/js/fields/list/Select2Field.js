@@ -114,6 +114,15 @@
                 }                               
 
                 $selectElement.select2(select2Options);
+
+                if (self.options.multiple) {
+                    // fixes issue with search field losing focus after selecting item in multiselect
+                    $selectElement.on('select2:close', function (e) {
+                        var $searchfield = $(this).parent().find('.select2-search__field');
+                        setTimeout(function() {$searchfield.focus();}, 100);
+                    });
+                }
+
                 if (self.data) {
                     var selectedItems = [];
                     Alpaca.isArray(self.data) && self.data.forEach(function (selectedItem) {
