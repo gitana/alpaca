@@ -462,6 +462,7 @@ $("#field17").alpaca({
         "label": "Ice cream",
         "helper": "Guess my favorite ice cream?",
         "type": "select",
+        "multiple": true,
         "size": 5,
         "noneLabel": "Pick a flavour of Ice Cream!",
         "form": {
