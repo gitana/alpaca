@@ -41,9 +41,10 @@
                 // see if we can render Markdown Editor
                 if (!self.isDisplayOnly() && self.control && typeof(SimpleMDE) !== "undefined")
                 {
-                    self.options.markdown.element = $(self.control)[0];
-
                     self.on("ready", function() {
+
+                        self.options.markdown.element = $(self.control)[0];
+
                         if (!self.editor)
                         {
                             self.editor = new SimpleMDE(self.options.markdown);
