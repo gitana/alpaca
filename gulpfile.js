@@ -36,7 +36,7 @@ var VERSIONABLE_FILES = [
     "bower.json"
 ];
 // var alpacaBootstrapOutputDirectory = './build/alpaca/bootstrap'
-var alpacaBootstrapOutputDirectory = '../ServiceManager/Products/ServiceManager/Collabora.ServiceManager.SharePoint/Layouts/Collabora.ServiceManager/Script/alpaca/bootstrap'
+var alpacaBootstrapOutputDirectory = '../ServiceManager/Products/ServiceManager/IdentityStream.ServiceManager.Web/Layouts/Collabora.ServiceManager/Script/alpaca/bootstrap'
 var fs = require('fs');
 if (!fs.existsSync(alpacaBootstrapOutputDirectory)) {
     var message = 'WARNING: Directory ' + alpacaBootstrapOutputDirectory + ' does not exist';
