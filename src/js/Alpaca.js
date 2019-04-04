@@ -3211,7 +3211,7 @@
     /**
      * Determines whether any of the elements of the first argument are equal to the elements of the second argument.
      *
-     * @param first either a scalar value or a container (object or array) of values
+     * @param first either a scalar value or a container (object or array) of values. Can also be an array of value/text objects.
      * @param second either a scalar value or a container (object or array) of values
      * @returns whether at least one match is found
      */
@@ -3223,7 +3223,11 @@
         {
             for (var k in first)
             {
-                values[first[k]] = true;
+                if (typeof(first[k]) === "object" && first[k].value) {
+                    values[first[k].value] = true;
+                } else {
+                    values[first[k]] = true;
+                }
             }
         }
         else
