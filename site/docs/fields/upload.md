@@ -376,4 +376,61 @@ $("#field5").alpaca({
 {% endraw %}
 
 
+## Example 6
+The <code>progressall</code> property lets us specify a custom progress bar to indicate the progress of a file being uploaded.
+
+<div id="field6"> </div>
+{% raw %}
+<script type="text/javascript" id="field6-script">
+$("#field6").alpaca({
+    "view": "bootstrap-create",
+    "schema": {
+        "type": "object",
+        "properties": {
+            "files": {
+                "type": "string"
+            }
+        }
+    },
+    "options": {
+        "fields": {
+            "files": {
+                "label": "Upload File...",
+                "type": "upload",
+                "multiple": false,
+                "upload": {
+                    "url": "http://www.alpacajs.org/fileupload/index.php"
+                },
+                "progressall": function (e, data) {
+
+                    $("#field6").find(".progress").css("display", "block");
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#progress .progress-bar').css(
+                        'width',
+                        progress + '%'
+                    );
+
+                    if (data.loaded == data.total)
+                    {
+                        $("#field6").find(".progress").css("display", "none");
+                    }
+                }
+            }
+        },
+        "form": {
+            "attributes": {
+                "method": "POST",
+                "action": "http://www.httpbin.org/post",
+                "enctype": "multipart/form-data"
+            },
+            "buttons": {
+                "submit": {
+                    "value": "Submit"
+                }
+            }
+        }        
+    }
+});
+</script>
+{% endraw %}
 
