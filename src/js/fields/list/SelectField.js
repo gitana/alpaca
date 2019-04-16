@@ -179,7 +179,10 @@
 
                     for (var i = 0; i < val.length; i++)
                     {
-                        newData.push(tempMap[val[i]].value);
+                        if (tempMap[val[i]])
+                        {
+                            newData.push(tempMap[val[i]].value);
+                        }
                     }
 
                     // set value silently
