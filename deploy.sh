@@ -51,7 +51,7 @@ git commit -m "alpaca release build $VERSION"
 #
 
 # publish alpaca to CDN
-#grunt publish
+grunt publish
 
 
 
