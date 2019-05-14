@@ -51,7 +51,7 @@ git commit -m "alpaca release build $VERSION"
 #
 
 # publish alpaca to CDN
-grunt publish
+#grunt publish
 
 
 
@@ -81,9 +81,10 @@ cp bower.json npm
 cp -r dist npm
 cp license.txt npm
 cp package.json.npm npm/package.json
+cp .npmignore npm
 cp -r src npm
-cp -r tests npm
-cp -r thirdparty npm
+#cp -r tests npm
+#cp -r thirdparty npm
 cd npm
 npm publish --force
 cd ..

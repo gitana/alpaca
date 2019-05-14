@@ -11,7 +11,7 @@
     "url": "git://github.com/gitana/alpaca.git"
   },
   "license": "Apache-2.0",
-  "version": "1.5.24",
+  "version": "1.5.25",
   "main": "dist/alpaca/bootstrap/alpaca.js",
   "devDependencies": {
     "bower": "^1.8.4",
