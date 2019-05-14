@@ -707,10 +707,10 @@ gulp.task("dist", function() {
     return es.concat(
 
         gulp.src("build/alpaca/**/*")
-            .pipe(gulp.dest("dist/alpaca")),
+            .pipe(gulp.dest("dist/alpaca"))//,
 
-        gulp.src("lib/**/*")
-            .pipe(gulp.dest("dist/lib"))
+        //gulp.src("lib/**/*")
+        //    .pipe(gulp.dest("dist/lib"))
 
     ).pipe(es.wait(function() {
         // all done

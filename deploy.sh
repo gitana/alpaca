@@ -27,15 +27,15 @@ rm -r package.json.npm
 # STEP 1: BUILD ALPACA, WEB SITE JSDOCS
 #
 
-bower install
+./node_modules/.bin/bower install
 
 # build alpaca
 # build web site
 # copy to dist (for bower)
-gulp _deploy
+./node_modules/.bin/gulp _deploy
 
 # build jsdoc
-grunt jsdoc
+./node_modules/.bin/grunt jsdoc
 
 # add the ./dist directory to the commit
 git add dist -f
@@ -81,10 +81,9 @@ cp bower.json npm
 cp -r dist npm
 cp license.txt npm
 cp package.json.npm npm/package.json
-cp .npmignore npm
 cp -r src npm
-#cp -r tests npm
-#cp -r thirdparty npm
+cp -r tests npm
+cp -r thirdparty npm
 cd npm
 npm publish --force
 cd ..
@@ -103,9 +102,6 @@ zip -r ../$ZIP *
 cd ../..
 echo Copying ZIP file to web server
 scp -i ~/keys/gitana.pem -r build/$ZIP ec2-user@alpacajs.org:/web/code/alpaca
-#CMD1="cd /web/code/alpaca; rm /web/code/alpaca/$VERSION; unzip -o /web/code/alpaca/$ZIP -d /web/code/alpaca/$VERSION"
-#echo $CMD1
-#ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org $CMD1 >> deploy.log
 echo Unzipping to latest directory, writing to deploy.log
 CMD2="cd /web/code/alpaca; rm -r /web/code/alpaca/latest; unzip -o /web/code/alpaca/$ZIP -d /web/code/alpaca/latest"
 echo $CMD2

@@ -26,4 +26,6 @@ package.json.npm
 .vscode
 package-lock.json
 
-thirdparty
+lib
+dist
+dist/lib
