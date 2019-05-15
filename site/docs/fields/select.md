@@ -443,3 +443,45 @@ $("#field16").alpaca({
 });
 </script>
 {% endraw %}
+
+## Example 17
+Multiple select field for array data, using custom delimiters.
+<div id="field17"> </div>
+{% raw %}
+<script type="text/javascript" id="field17-script">
+$("#field17").alpaca({
+    "data": "Vanilla | Chocolate",
+    "schema": {
+        "type": "string",
+        "title": "Ice Cream",
+        "enum": ["Vanilla", "Chocolate", "Strawberry", "Mint"],
+        "minItems": 2,
+        "maxItems": 3
+    },
+    "options": {
+        "label": "Ice cream",
+        "helper": "Guess my favorite ice cream?",
+        "type": "select",
+        "multiple": true,
+        "size": 5,
+        "noneLabel": "Pick a flavour of Ice Cream!",
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        },
+        "split": function(val) {
+            return val.split("|");
+        },
+        "join": function(vals) {
+            return vals.join("|");
+        }
+    }
+});
+</script>
+{% endraw %}

@@ -24,11 +24,6 @@
 
             this.base();
 
-            if (self.schema["type"] && self.schema["type"] === "array")
-            {
-                self.options.multiple = true;
-            }
-
             // automatically turn on "hideNone" if we're in multiselect mode and have the multiselect plugin
             if (self.options.multiple && $.fn.multiselect)
             {
@@ -184,7 +179,10 @@
 
                     for (var i = 0; i < val.length; i++)
                     {
-                        newData.push(tempMap[val[i]].value);
+                        if (tempMap[val[i]])
+                        {
+                            newData.push(tempMap[val[i]].value);
+                        }
                     }
 
                     // set value silently
@@ -295,7 +293,7 @@
             return Alpaca.merge(this.base(), {
                 "properties": {
                     "multiple": {
-                        "title": "Mulitple Selection",
+                        "title": "Multiple Selection",
                         "description": "Allow multiple selection if true.",
                         "type": "boolean",
                         "default": false

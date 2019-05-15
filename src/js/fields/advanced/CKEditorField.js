@@ -106,20 +106,37 @@
                     self.trigger("keypress", e);
                 });
 
-                // NOTE: these do not seem to work with CKEditor?
-                /*
-                 // keyup event
-                 self.editor.on("keyup", function(e) {
-                 self.onKeyUp.call(self, e);
-                 self.trigger("keyup", e);
-                 });
+                // for "keydown" and "keyup" events, we need to wait for the "contentDom" event and then register
+                // using the CKEditor "editable"
+                self.editor.on("contentDom", function() {
+                    var editable = self.editor.editable();
 
-                 // keydown event
-                 self.editor.on("keydown", function(e) {
-                 self.onKeyDown.call(self, e);
-                 self.trigger("keydown", e);
-                 });
-                 */
+                    editable.attachListener(self.editor.document, 'keydown', function(e) {
+
+                        var x = self.onKeyDown.call(self, e);
+                        if (x !== false) {
+                            x = self.trigger("keydown", e);
+
+                            // propagate up with "before_nested_change"
+                            self.triggerWithPropagation("before_nested_change", e);
+                        }
+
+                        return x;
+                    });
+
+                    editable.attachListener(self.editor.document, 'keyup', function(e) {
+
+                        var x = self.onKeyUp.call(self, e);
+                        if (x !== false) {
+                            x = self.trigger("keyup", e);
+                        }
+
+                        // propagate up with "after_nested_change"
+                        self.triggerWithPropagation("after_nested_change", e);
+
+                        return x;
+                    });
+                });
             }
         },
 

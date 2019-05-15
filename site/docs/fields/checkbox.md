@@ -190,13 +190,11 @@ $("#field7").alpaca({
             "checkboxArrayEnum": {
                 "label": "Checkbox Array Enum",
                 "type": "checkbox",
-                "items": {
-                    "optionLabels": [
+                "optionLabels": [
                         "Option #1",
                         "Option #2",
                         "Option #3"
-                    ]
-                }
+                ]
             }
         },
         "form": {
@@ -257,6 +255,42 @@ $("#field8").alpaca({
                     "hidememberinfo": false
                 }
             }
+        }
+    }
+});
+</script>
+{% endraw %}
+
+## Example 9
+Checkbox Field with custom delimiters
+<div id="field9"> </div>
+{% raw %}
+<script type="text/javascript" id="field9-script">
+$("#field9").alpaca({
+    "data": "sandwich | cookie | drink",
+    "schema": {
+        "type": "string",
+        "enum": ["sandwich", "chips", "cookie", "drink"]
+    },
+    "options": {
+        "type": "checkbox",
+        "label": "What would you like with your order?",
+        "optionLabels": ["A Sandwich", "Potato Chips", "A Cookie", "Soft Drink"],
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }
+        },
+        "split": function(val) {
+            return val.split("|");  
+        },
+        "join": function(vals) {
+            return vals.join("|");
         }
     }
 });

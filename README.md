@@ -1,5 +1,3 @@
-<a href='https://ko-fi.com/J3J36TFV' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-
 # Alpaca - JSON Forms for jQuery and Bootstrap
 
 Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices. 
@@ -29,7 +27,15 @@ since thanks to a really awesome community of customers, consultants and technol
 For information, demos and documentation regarding Alpaca, please visit the 
 <a href="http://www.alpacajs.org">the Alpaca Forms web site</a>.
 
-All of the Alpaca distribution assets are available via CDN at http://code.cloudcms.com.
+Going forward, all distribution assets are available via free CDN via jsDelivr.
+
+For example - 
+
+    https://cdn.jsdelivr.net/npm/alpaca@<version>/dist/alpaca/bootstrap/alpaca.min.js
+    https://cdn.jsdelivr.net/npm/alpaca@<version>/dist/alpaca/bootstrap/alpaca.min.css
+    
+Where `<version>` should be filled in (example: 1.5.26).
+
 For more information, visit the <a href="http://www.alpacajs.org">Alpaca Forms web site</a>.
 
 
@@ -89,7 +95,7 @@ called life.
 ## Compatibility
 
 The latest release of Alpaca is compatible with jQuery 1.9.1 and up.  For a full breakdown of dependencies, check the 
-bower.json and/or ```/lib``` directory for third-party vendor libraries and versions that are used.
+bower.json and/or `/lib` directory for third-party vendor libraries and versions that are used.
  
 In general, we aspire to support the latest versions of our third-party dependencies.  Some folks may want Alpaca to be
 backward-compatible with earlier versions of dependencies and in general, it is our desire to have it be so.  But in
@@ -107,95 +113,59 @@ The command line for doing this is basically:
     git clone https://github.com/gitana/alpaca.git
 
 
-### Prerequisites
+### Build
 
-To build Alpaca, you will need to have Node.js, Gulp and Bower installed.  If you're new to Node.js or Gulp, you could
-check out this writeup - http://travismaynard.com/writing/getting-started-with-gulp.
-
-Once you have Node.js installed, you essentially need to do this:
-
-    npm install -g gulp
-    npm install -g bower
-
-Alpaca requires python 2.7.x to build some of it's node_module dependencies.  Make sure you have this installed.
-If you're currently using Python 3.x, you will need to tell the build to use 2.7.x:
-
-    npm install --python=python2.7
-    (or)
-    npm config set python python2.7
-
-
-### Building Alpaca
+To build Alpaca, you will need to have Node.js installed.
 
 Building Alpaca is pretty easy.  Just run:
 
     npm install
+    
+And then:
 
-This will do the following for you:
+    npm run build
+    
+This will build to `build/alpaca`
 
-- pull down all of the Node module dependencies
-- run Bower to pull down client-side (browser) dependencies
+To clean the build:
 
-To then build, you can do this:
+    npm run clean
+    
 
-    npm start
+### Building the Web Site
 
-If you want to use Gulp directly, you can alternatively run this:
+To build the web site, you will also need to have Python and Jekyll installed (as global dependencies).
 
-    gulp clean default
+You will then also need to install the `redcarpet` and `pygments.rb` gems, sort of like this:
 
-Either ```npm start``` or ```gulp clean default``` will build everything.
-The build distribution assets will be in ```build/alpaca```.
+    gem install redcarpet
+    gem install pygments.rb
+
+Then run:    
+
+    npm run site
 
 
-### Building the Web Site and Running a local Web Server
-
-Alpaca includes a web site along with documentation, samples and much more.
-To build the web site, you will first need to install Jekyll (not covered here).
-
-Simply do this:
-
-    gulp site
+### Running a Local Web Server
 
 And you can run a local web server like this:
 
-    gulp server
+    npm run server
 
 
 ### Alpaca Distributions
 
 The build produces four sets of assets and they are placed in:
 
-- ```build/alpaca/web``` (for basic web forms and layout)
-- ```build/alpaca/bootstrap``` (for bootstrap enabled forms and layout)
-- ```build/alpaca/jqueryui``` (for jQuery UI enabled forms and layout)
-- ```build/alpaca/jquerymobile``` (for jQuery Mobile enabled forms and layout)
+- `build/alpaca/web` (for basic web forms and layout)
+- `build/alpaca/bootstrap` (for bootstrap enabled forms and layout)
+- `build/alpaca/jqueryui` (for jQuery UI enabled forms and layout)
+- `build/alpaca/jquerymobile` (for jQuery Mobile enabled forms and layout)
 
 Each directory contains a JS file and a CSS file for its respective build.
 
 Each JS file is UMD ready and will work within both an AMD and CommonJS container.
 
-
-### Troubleshooting
-
-If you run into any Bower related issues during the build, you might want to clear out your Bower cache using this
-command:
-
-    bower cache clean
-
-And then try again.
-
-
-### Manual build commands
-
-While ```npm install``` will pretty much do everything for you, there are also some manual commands you can run if you
-need to perform individual steps:
-
-- To install Bower assets, do ```bower install```
-- To clear Bower cache, do ```bower cache clean```
-- To run the Gulp build, do ```gulp```
-- To build the Alpaca web site, do ```gulp default server```
-- To run a local Alpaca web server, ```gulp default server```
 
 
 ## Contributors
@@ -272,6 +242,12 @@ These folks have made numerous contributions to Alpaca over the years:
 + [@AzuraGroup](https://github.com/AzuraGroup)
 + [@mlarman70](https://github.com/mlarman70)
 + [@christoph007](https://github.com/christoph007)
++ [@MaZZly](https://github.com/MaZZly)
++ [@maximzmushko](https://github.com/maximzmushko)
++ [@DavidePastore](https://github.com/DavidePastore)
++ [@hauntingEcho](https://github.com/hauntingEcho)
++ [@ml2439](https://github.com/ml2439)
++ [@bradh](https://github.com/bradh)
 
 ...and many others via the [Alpaca Web Site](http://www.alpacajs.org) and
 [Alpaca Issues](https://github.com/gitana/alpaca/issues)!

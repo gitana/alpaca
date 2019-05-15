@@ -40,7 +40,12 @@
                 "invalidPhone": "Virheellinen puhelinnumero",
                 "invalidPattern": "Syötteen täytyy olla seuraavassa muodossa: {0}",
                 "stringTooShort": "Syötteen minimipituus on {0} merkkiä",
-                "stringTooLong": "Syötteen maksimipituus on {0} merkkiä"
+                "stringTooLong": "Syötteen maksimipituus on {0} merkkiä",
+                "addItemButtonLabel": "Lisää arvo",
+                "addButtonLabel": "Lisää",
+                "removeButtonLabel": "Poista",
+                "upButtonLabel": "Ylös",
+                "downButtonLabel": "Alas"
             }
 		}
 	});

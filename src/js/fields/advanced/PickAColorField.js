@@ -102,14 +102,15 @@
                     if (self.pickAColorFieldAvailable && self.options.pickacolor)
                     {
                         if (self.data) {
-                            $(self.control).attr("value", self.data);
+                            $(self.control).attr("value", "#" + self.data);
                         }
 
                         $(self.control).addClass("pick-a-color");
                         $(self.control).pickAColor(self.options.pickacolor);
 
                         $(self.control).on("change", function(e) {
-                            self.setValue($(this).val());
+                            self.setValue("#" + $(this).val());
+                            self.refresh();
                         });
                     }
                 }

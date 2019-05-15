@@ -31,6 +31,8 @@
         {
             var self = this;
 
+            self.options.multiple = true;
+
             this.base();
         },
 

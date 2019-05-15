@@ -152,7 +152,7 @@
 
             for (var i = 0; i < this.children.length; i++)
             {
-                // the property key and vlaue
+                // the property key and value
                 var propertyId = this.children[i].propertyId;
                 var fieldValue = this.children[i].getValue();
 
@@ -301,7 +301,7 @@
                     }
                 }
 
-                var pf = (function(propertyId, itemData, extraDataProperties)
+                var pf = (function(self, propertyId, itemData, extraDataProperties)
                 {
                     return function(_done)
                     {
@@ -330,7 +330,7 @@
                         });
                     };
 
-                })(propertyId, itemData, extraDataProperties);
+                })(self, propertyId, itemData, extraDataProperties);
 
                 propertyFunctions.push(pf);
             }
@@ -411,6 +411,7 @@
                 },
                 "notTopLevel":true,
                 "render" : function(fieldControl, cb) {
+
                     // render
                     fieldControl.parent = self;
                     // add the property Id
@@ -421,6 +422,7 @@
                     } else {
                         fieldControl.path = self.path + propertyId;
                     }
+
                     fieldControl.render(null, function() {
                         if (cb) {
                             cb();
@@ -451,10 +453,9 @@
                     }
                     if (insertionPointEl.length === 0)
                     {
-                        self.errorCallback.call(self, {
+                        return self.errorCallback.call(self, {
                             "message": "Cannot find insertion point for field: " + self.getId()
                         });
-                        return;
                     }
 
                     // copy into place
@@ -507,14 +508,18 @@
             }
 
             // handle $ref
-            if (propertySchema && propertySchema["$ref"])
-            {
-                var propertyReferenceId = propertySchema["$ref"];
-                var fieldReferenceId = propertySchema["$ref"];
-                if (propertyOptions["$ref"]) {
-                    fieldReferenceId = propertyOptions["$ref"];
-                }
+            var propertyReferenceId = null;
+            if (propertySchema) {
+                propertyReferenceId = propertySchema["$ref"];
+            }
+            var fieldReferenceId = null;
+            if (propertyOptions) {
+                fieldReferenceId = propertyOptions["$ref"];
+            }
 
+            if (propertyReferenceId || fieldReferenceId)
+            {
+                // walk up to find top field
                 var topField = this;
                 var fieldChain = [topField];
                 while (topField.parent)
@@ -528,19 +533,22 @@
 
                 Alpaca.loadRefSchemaOptions(topField, propertyReferenceId, fieldReferenceId, function(propertySchema, propertyOptions) {
 
-                    // walk the field chain to see if we have any circularity
+                    // walk the field chain to see if we have any circularity (for schema)
                     var refCount = 0;
                     for (var i = 0; i < fieldChain.length; i++)
                     {
-                        if (fieldChain[i].schema)
+                        if (propertyReferenceId)
                         {
-                            if ( (fieldChain[i].schema.id === propertyReferenceId) || (fieldChain[i].schema.id === "#" + propertyReferenceId))
+                            if (fieldChain[i].schema)
                             {
-                                refCount++;
-                            }
-                            else if ( (fieldChain[i].schema["$ref"] === propertyReferenceId))
-                            {
-                                refCount++;
+                                if ( (fieldChain[i].schema.id === propertyReferenceId) || (fieldChain[i].schema.id === "#" + propertyReferenceId))
+                                {
+                                    refCount++;
+                                }
+                                else if ( (fieldChain[i].schema["$ref"] === propertyReferenceId))
+                                {
+                                    refCount++;
+                                }
                             }
                         }
                     }
@@ -551,8 +559,7 @@
                     if (originalPropertySchema) {
                         Alpaca.mergeObject(resolvedPropertySchema, originalPropertySchema);
                     }
-                    if (propertySchema)
-                    {
+                    if (propertySchema) {
                         Alpaca.mergeObject(resolvedPropertySchema, propertySchema);
                     }
                     // keep original id
@@ -565,8 +572,7 @@
                     if (originalPropertyOptions) {
                         Alpaca.mergeObject(resolvedPropertyOptions, originalPropertyOptions);
                     }
-                    if (propertyOptions)
-                    {
+                    if (propertyOptions) {
                         Alpaca.mergeObject(resolvedPropertyOptions, propertyOptions);
                     }
 
@@ -1104,7 +1110,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
 
                 });
@@ -1189,7 +1197,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
                 });
             }
@@ -2102,6 +2112,12 @@
                         "title": "Field Options",
                         "description": "List of options for child fields.",
                         "type": "object"
+                    },
+                    "collapsible": {
+                        "title": "Collapsible",
+                        "description": "Field set is collapsible if true.",
+                        "type": "boolean",
+                        "default": false
                     }
                 }
             };

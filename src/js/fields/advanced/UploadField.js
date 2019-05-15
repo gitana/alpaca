@@ -450,27 +450,32 @@
              * @param e
              * @param data
              */
-            fileUploadConfig["progressall"] = function (e, data) {
+            if (self.options.progressall) {
+                fileUploadConfig["progressall"] = self.options.progressall;
+            }
+            else {
+                fileUploadConfig["progressall"] = function (e, data) {
 
-                var showProgressBar = false;
-                if (data.loaded < data.total)
-                {
-                    showProgressBar = true;
-                }
-                if (showProgressBar)
-                {
-                    $(el).find(".progress").css("display", "block");
-                    var progress = parseInt(data.loaded / data.total * 100, 10);
-                    $('#progress .progress-bar').css(
-                        'width',
-                        progress + '%'
-                    );
-                }
-                else
-                {
-                    $(el).find(".progress").css("display", "none");
-                }
-            };
+                    var showProgressBar = false;
+                    if (data.loaded < data.total)
+                    {
+                        showProgressBar = true;
+                    }
+                    if (showProgressBar)
+                    {
+                        $(el).find(".progress").css("display", "block");
+                        var progress = parseInt(data.loaded / data.total * 100, 10);
+                        $('#progress .progress-bar').css(
+                            'width',
+                            progress + '%'
+                        );
+                    }
+                    else
+                    {
+                        $(el).find(".progress").css("display", "none");
+                    }
+                };
+            }
 
             // some limit checks
             fileUploadConfig["add"] = function(e, data) {
@@ -897,10 +902,12 @@
                 }
 
                 self.convertDescriptorToFile(descriptors[i], function(err, file) {
+
                     if (file)
                     {
                         files.push(file);
                     }
+
                     f(i+1);
                 });
             };

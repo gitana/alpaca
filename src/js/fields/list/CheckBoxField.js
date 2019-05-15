@@ -21,8 +21,6 @@
 
             var self = this;
 
-            self.base();
-
             if (typeof(self.options.multiple) === "undefined")
             {
                 self.options.multiple = false;
@@ -36,6 +34,8 @@
                     self.options.multiple = true;
                 }
             }
+
+            self.base();
 
             // in single mode, blank out rightlabel
             if (!self.options.multiple)

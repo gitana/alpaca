@@ -52,8 +52,8 @@ Alpaca is open-source and provided to you under the Apache 2.0 license.  It is s
 &lt;script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"&gt;&lt;/script&gt;
 
 &lt;!-- alpaca --&gt;
-&lt;link type="text/css" href="//code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.css" rel="stylesheet"/&gt;
-&lt;script type="text/javascript" src="//code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.js"&gt;&lt;/script&gt;
+&lt;link type="text/css" href="//cdn.jsdelivr.net/npm/alpaca@{{site.alpaca_version}}/dist/alpaca/bootstrap/alpaca.min.css" rel="stylesheet"/&gt;
+&lt;script type="text/javascript" src="//cdn.jsdelivr.net/npm/alpaca@{{site.alpaca_version}}/dist/alpaca/bootstrap/alpaca.min.js"&gt;&lt;/script&gt;
 </pre>
 </div>
 

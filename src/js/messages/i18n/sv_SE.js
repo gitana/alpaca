@@ -40,7 +40,12 @@
                 "invalidPhone": "Ogiltigt telefonnummer",
                 "invalidPattern": "Fältet måste vara i följande format: {0}",
                 "stringTooShort": "Detta fält måste innehålla minst {0} tecken",
-                "stringTooLong": "Detta fält får innehålla högst {0} tecken"
+                "stringTooLong": "Detta fält får innehålla högst {0} tecken",
+                "addItemButtonLabel": "Lägg till element",
+                "addButtonLabel": "Lägg till",
+                "removeButtonLabel": "Ta bort",
+                "upButtonLabel": "Upp",
+                "downButtonLabel": "Ner"
             }
 		}
 	});

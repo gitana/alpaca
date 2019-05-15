@@ -10,7 +10,7 @@ var pkg  = require("./package.json");
 var path = require("path");
 
 var concat      = require("gulp-concat");
-var uglify      = require("gulp-uglify");
+var uglify      = require('gulp-uglify-es').default;
 var handlebars  = require("gulp-handlebars");
 var jshint      = require("gulp-jshint");
 var minifyCss   = require("gulp-minify-css");
@@ -42,6 +42,7 @@ var paths = {
             "thirdparty/base/Base.js",
 
             "src/js/Alpaca.js",
+            "src/js/Alpaca-async.js",
             "src/js/ObservableUtils.js",
             "src/js/Observables.js",
             "src/js/Observable.js",
@@ -85,6 +86,7 @@ var paths = {
             "src/js/fields/advanced/ColorField.js",
             "src/js/fields/advanced/ColorPickerField.js",
             "src/js/fields/advanced/CountryField.js",
+            "src/js/fields/advanced/CountryCallingCodeField.js",
             "src/js/fields/advanced/CurrencyField.js",
             "src/js/fields/advanced/DateField.js",
             "src/js/fields/advanced/DatetimeField.js",
@@ -98,6 +100,7 @@ var paths = {
             "src/js/fields/advanced/IntegerField.js",
             "src/js/fields/advanced/LowerCaseField.js",
             "src/js/fields/advanced/MapField.js",
+            "src/js/fields/advanced/MarkdownField.js",
             "src/js/fields/advanced/OptionTree.js",
             "src/js/fields/advanced/PasswordField.js",
             "src/js/fields/advanced/PersonalNameField.js",
@@ -412,13 +415,6 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(concat('alpaca.min.js'))
                 .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/web')),
-            /*
-            gulp.src(paths.scripts.web)
-                .pipe(concat('alpaca-nobuilder.js'))
-                .pipe(wrap(web_wrap))
-                .pipe(stripper())
-                .pipe(gulp.dest('build/alpaca/web')),
-            */
 
             // bootstrap
             gulp.src(paths.scripts.bootstrap)
@@ -711,10 +707,10 @@ gulp.task("dist", function() {
     return es.concat(
 
         gulp.src("build/alpaca/**/*")
-            .pipe(gulp.dest("dist/alpaca")),
+            .pipe(gulp.dest("dist/alpaca"))//,
 
-        gulp.src("lib/**/*")
-            .pipe(gulp.dest("dist/lib"))
+        //gulp.src("lib/**/*")
+        //    .pipe(gulp.dest("dist/lib"))
 
     ).pipe(es.wait(function() {
         // all done

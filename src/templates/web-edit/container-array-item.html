@@ -1,39 +1,54 @@
 <script type="text/x-handlebars-template">
 
-    <div>
     {{#compare actionbarStyle "left"}}
-        <div class="pull-left">
-            {{#arrayActionbar}}{{/arrayActionbar}}
+        <div class="alpaca-array-item-flex-container">
+            {{#if dragAndDrop}}
+            <i class="glyphicon glyphicon-menu-hamburger alpaca-array-item-move"></i>
+            {{/if}}
+            <div>
+                {{#arrayActionbar}}{{/arrayActionbar}}
+            </div>
+            <div class="alpaca-array-item-flex-1">
+                {{#itemField}}{{/itemField}}
+            </div>
         </div>
-        <div class="pull-right">
-            {{#itemField}}{{/itemField}}
-        </div>
-        <div class="clear"></div>
     {{else}}
         {{#compare actionbarStyle "right"}}
-            <div class="pull-left">
+        <div class="alpaca-array-item-flex-container">
+            {{#if dragAndDrop}}
+            <i class="glyphicon glyphicon-menu-hamburger alpaca-array-item-move"></i>
+            {{/if}}
+            <div class="alpaca-array-item-flex-1">
                 {{#itemField}}{{/itemField}}
             </div>
-            <div class="pull-right">
-                {{#arrayActionbar}}{{/arrayActionbar}}
-            </div>
-            <div class="alpaca-clear"></div>
-        {{else}}
             <div>
-
-                {{#compare actionbarStyle "top"}}
                 {{#arrayActionbar}}{{/arrayActionbar}}
-                {{/compare}}
+            </div>
+        </div>
+        {{else}}
+            {{#if dragAndDrop}}
+            <div class="alpaca-array-item-flex-container">
+                <i class="glyphicon glyphicon-menu-hamburger alpaca-array-item-move"></i>
+            {{else}}
+            <div>
+            {{/if}}
+                <div class="alpaca-array-item-flex-1">
+                    {{#compare actionbarStyle "top"}}
+                    <div>
+                    {{#arrayActionbar}}{{/arrayActionbar}}
+                    </div>
+                    {{/compare}}
 
-                {{#itemField}}{{/itemField}}
+                    {{#itemField}}{{/itemField}}
 
-                {{#compare actionbarStyle "bottom"}}
-                {{#arrayActionbar}}{{/arrayActionbar}}
-                {{/compare}}
-
+                    {{#compare actionbarStyle "bottom"}}
+                    <div>
+                    {{#arrayActionbar}}{{/arrayActionbar}}
+                    </div>
+                    {{/compare}} 
+                </div>   
             </div>
         {{/compare}}
     {{/compare}}
-    </div>
 
 </script>
