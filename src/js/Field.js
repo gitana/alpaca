@@ -594,16 +594,24 @@
                 // has path?
                 if (this.parent && this.parent.name && this.path)
                 {
-                    var lastSegment = this.path.substring(this.path.lastIndexOf('/') + 1);
-                    if (lastSegment.indexOf("[") !== -1 && lastSegment.indexOf("]") !== -1)
+                    if (this.propertyId)
                     {
-                        lastSegment = lastSegment.substring(lastSegment.indexOf("[") + 1, lastSegment.indexOf("]"));
-                    }
-
-                    if (lastSegment)
-                    {
-                        this.name = this.parent.name + "_" + lastSegment;
+                        this.name = this.parent.name + "_" + this.propertyId;
                         this.nameCalculated = true;
+                    }
+                    else
+                    {
+                        var lastSegment = this.path.substring(this.path.lastIndexOf('/') + 1);
+                        if (lastSegment.indexOf("[") !== -1 && lastSegment.indexOf("]") !== -1)
+                        {
+                            lastSegment = lastSegment.substring(lastSegment.indexOf("[") + 1, lastSegment.indexOf("]"));
+                        }
+    
+                        if (lastSegment)
+                        {
+                            this.name = this.parent.name + "_" + lastSegment;
+                            this.nameCalculated = true;
+                        }
                     }
                 }
                 else
@@ -638,6 +646,7 @@
                 {
                     form = new Alpaca.Form(self.domEl, this.options.form, self.view.id, self.connector, self.errorCallback);
                 }
+
                 form.render(function(form) {
 
                     // NOTE: form is the form instance (not the jquery element)

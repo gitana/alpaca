@@ -137,7 +137,14 @@ $("#field5").alpaca({
                 }
             }
         }
-    }
+    },
+    "data": [{
+        "flavor": "strawberry",
+        "topping": "nuts"
+    }, {
+        "flavor": "chocolate",
+        "topping": "raisin"
+    }]
 });
 </script>
 {% endraw %}
@@ -173,31 +180,40 @@ Array field name.  Here we set the `toolbarPosition` option to `bottom` to posit
 <script type="text/javascript" id="field7-script">
 $("#field7").alpaca({
     "schema": {
-        "type": "array",
-        "items": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "enum": ["internal", "external"]
-                },
-                "url": {
-                    "type": "string",
-                    "format": "uri"
-                }
+        "type": "object",
+        "properties": {
+            "list": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "enum": ["internal", "external"]
+                        },
+                        "url": {
+                            "type": "string",
+                            "format": "uri"
+                        }
+                    }
+                }                
             }
         }
     },
     "options" : {
-        "toolbarSticky": true,
-        "toolbarPosition": "bottom",
-        "items": {
-            "fields": {
-                "type": {
-                    "label": "Type",
-                    "optionLabels": ["Internal", "External"]
-                },
-                "url": {
-                    "label": "URL"
+        "fields": {
+            "list": {
+                "toolbarSticky": true,
+                "toolbarPosition": "bottom",
+                "items": {
+                    "fields": {
+                        "type": {
+                            "label": "Type",
+                            "optionLabels": ["Internal", "External"]
+                        },
+                        "url": {
+                            "label": "URL"
+                        }
+                    }
                 }
             }
         },
@@ -211,6 +227,15 @@ $("#field7").alpaca({
                 "submit": {}
             }
         }
+    },
+    "data": {
+        "list": [{
+            "type": "internal",
+            "url": "http://alpacajs.org"
+        },{
+            "type": "external",
+            "url": "https://cloudcms.com"
+        }]
     }
 });
 </script>
@@ -223,7 +248,7 @@ Nested Array field name.
 {% raw %}
 <script type="text/javascript" id="field8-script">
 $("#field8").alpaca({
-    schema: {
+    "schema": {
         "type": "object",
         "readonly": false,
         "properties": {
@@ -435,35 +460,38 @@ An array field with nested radio elements.
 {% raw %}
 <script type="text/javascript" id="field13-script">
 $("#field13").alpaca({
-   "schema": {
-       "title": "Array Test",
-       "type": "object",
-       "properties": {
-           "devices": {
-               "title": "Array test",
-               "type": "array",
-               "items": {
-                   "title": "Device",
-                   "type": "radio",
-                   "enum": ["Android", "iOS"],
-                   "default": "Android",
-                   "required": true
-               }
-           }
-       }
-   },
-   "options": {
-       "collapsible": false,
-       "fields": {
-           "devices": {
-               "type": "array",
-               "toolbarSticky": true,
-               "items": {
-                   "type": "radio"
-               }
-           }
-       }
-   }
+    "schema": {
+        "title": "Array Test",
+        "type": "object",
+        "properties": {
+            "devices": {
+                "title": "Array test",
+                "type": "array",
+                "items": {
+                    "title": "Device",
+                    "type": "radio",
+                    "enum": ["Android", "iOS"],
+                    "default": "Android",
+                    "required": true
+                }
+            }
+        }
+    },
+    "options": {
+        "collapsible": false,
+        "fields": {
+            "devices": {
+                "type": "array",
+                "toolbarSticky": true,
+                "items": {
+                    "type": "radio"
+                }
+            }
+        }
+    },
+    "data": {
+        "devices": ["iOS", "Android"]
+    }
 });</script>
 {% endraw %}
 
@@ -510,9 +538,16 @@ $("#field14").alpaca({
                 "toolbarSticky": true
             }
         }
+    },
+    "data": {
+        "id": "1234",
+        "name": "MyProduct",
+        "price": 999,
+        "tags": ["electric", "sale"]
     }
 });</script>
 {% endraw %}
+
 
 ## Example 15
 An array field with radio selection embedded.
@@ -521,26 +556,35 @@ An array field with radio selection embedded.
 <script type="text/javascript" id="field15-script">
 $("#field15").alpaca({
     "schema": {
-        "type": "array",
-        "title": "Layout",
-        "items": {
-            "type": "string",
-            "title": "Box Size",
-            "enum": ["Small", "Medium", "Large"]
+        "type": "object",
+        "properties": {
+            "list": {
+                "type": "array",
+                "title": "Layout",
+                "items": {
+                    "type": "string",
+                    "title": "Box Size",
+                    "enum": ["Small", "Medium", "Large"]
+                }
+            }
         }
     },
     "options": {
-        "type": "array",
-        "label": "Slots",
-        "items": {
-            "type": "radio",
-            "label": "Box Size",
-            "removeDefaultNone": true,
-            "vertical": false,
-            "emptySelectFirst": true,
-            "optionLabels": ["Small", "Medium", "Large"]
+        "fields": {
+            "list": {
+                "type": "array",
+                "label": "Slots",
+                "items": {
+                    "type": "radio",
+                    "label": "Box Size",
+                    "removeDefaultNone": true,
+                    "vertical": false,
+                    "emptySelectFirst": true,
+                    "optionLabels": ["Small", "Medium", "Large"]
+                },
+                "toolbarSticky": true
+            }
         },
-        "toolbarSticky": true,
         "form": {
             "buttons": {
                 "view": {
@@ -552,5 +596,81 @@ $("#field15").alpaca({
             }
         }
     }
+});</script>
+{% endraw %}
+
+
+## Example 16
+An array field with <code>dragAndDrop</code> enabled.
+<div id="field16"> </div>
+{% raw %}
+<script type="text/javascript" id="field16-script">
+$("#field16").alpaca({
+    "data": ["test1", "test2", "test3"],
+    "schema": {
+        "type": "array"
+    },
+    "options": {
+        "toolbarSticky": true,
+        "dragAndDrop": true,
+        "type": "array"
+    }
+});</script>
+{% endraw %}
+
+
+## Example 17
+A nested array field with <code>dragAndDrop</code> enabled.
+<div id="field17"> </div>
+{% raw %}
+<script type="text/javascript" id="field17-script">
+$("#field17").alpaca({
+    "schema": {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "books": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            }
+        }
+    },
+    "options": {
+        "type": "array",
+        "toolbarSticky": true,
+        "dragAndDrop": true,
+        "label": "Author List",
+        "items": {
+            "fields": {
+                "author": {
+                    "type": "text",
+                    "label": "Author"
+                },
+                "books": {
+                    "type": "array",
+                    "toolbarSticky": true,
+                    "dragAndDrop": true,
+                    "label": "Books",
+                    "items": {
+                        "type": "text"
+                    }
+                }
+            }
+        }
+    },
+    "data": [{
+        "author": "George Orwell",
+        "books": ["Animal Farm", "Nineteen Eighty-Four"]
+    }, {
+        "author": "余华",
+        "books": ["活着", "现实一种", "许三观卖血记"]
+    }]
 });</script>
 {% endraw %}

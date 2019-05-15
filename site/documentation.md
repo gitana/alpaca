@@ -73,6 +73,7 @@ whereas the extension types depend on various third-party libraries.
             <li><a href="{{ BASE_PATH }}/docs/fields/json.html">JSON</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/lowercase.html">Lower Case</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/map.html">Map</a></li>
+            <li><a href="{{ BASE_PATH }}/docs/fields/markdown.html">Markdown Editor</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/optiontree.html">Option Tree</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/password.html">Password</a></li>
             <li><a href="{{ BASE_PATH }}/docs/fields/personalname.html">Personal Name</a></li>

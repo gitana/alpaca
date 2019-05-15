@@ -32,6 +32,10 @@
 
             this.containerItemTemplateDescriptor = self.view.getTemplateDescriptor("container-" + containerItemTemplateType + "-item", self);
 
+            if (typeof(this.options.dragAndDrop) === "undefined") {
+                this.options.dragAndDrop = Alpaca.isEmpty(this.view.dragAndDrop) ? Alpaca.defaultDragAndDrop : this.view.dragAndDrop;
+            }
+
             if (!this.options.toolbarStyle) {
                 this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle) ? "button" : this.view.toolbarStyle;
             }
@@ -535,7 +539,8 @@
                             "name": control.name,
                             "parentFieldId": self.getId(),
                             "actionbarStyle": self.options.actionbarStyle,
-							"toolbarLocation": self.options.toolbarLocation,
+                            "toolbarLocation": self.options.toolbarLocation,
+                            "dragAndDrop": self.options.dragAndDrop,
                             "view": self.view,
                             "data": itemData
                         });
@@ -810,6 +815,8 @@
                         key = "";
                     }
 
+                    key = Alpaca.hashCode(key);
+
                     if (hash[key])
                     {
                         return false;
@@ -1036,6 +1043,82 @@
                 });
             }
 
+            //
+            // DRAG AND DROP
+            //
+
+            if (self.options.dragAndDrop)
+            {
+                // enable drag and drop
+                document.addEventListener("dragenter", function (event) {
+                    event.preventDefault();
+                }, false);
+    
+                document.addEventListener("dragover", function (event) {
+                    event.preventDefault();
+                }, false);
+    
+                $(self.getFieldEl()).off().on("drop", function(ev) {
+                    ev.preventDefault();
+
+                    var parentFieldId = ev.originalEvent.dataTransfer.getData("parentFieldId");
+                    if (parentFieldId == self.getId())
+                    {
+                        var closestItem = ev.target.closest(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + parentFieldId +  "']");
+                        if (closestItem) {
+                            var targetIndex = closestItem.dataset.alpacaContainerItemIndex;
+                            var sourceIndex = ev.originalEvent.dataTransfer.getData("sourceIndex");
+                            
+                            self.moveItem(sourceIndex, targetIndex);
+                            ev.stopPropagation();
+                        }
+                    }
+                });
+
+                var items = self.getFieldEl().find(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + self.getId() +  "']");
+                $(items).each(function(itemIndex) {
+                    var target = null;
+                    $(this).attr("draggable", true);
+                    $(this).off().on("mousedown", function(ev) 
+                    {
+                        ev.stopPropagation();
+
+                        target = ev.target;
+                    });
+                    $(this).on("dragstart", function(ev) 
+                    {
+                        ev.stopPropagation();
+
+                        // if this item's move icon contains the target
+                        var dragHandle = $(this).children(".alpaca-array-item-move")[0];
+                        if (dragHandle && dragHandle.contains(target)) 
+                        {
+                            var event = ev.originalEvent;
+                            event.dataTransfer.setData("sourceIndex", this.dataset.alpacaContainerItemIndex);
+                            event.dataTransfer.setData("parentFieldId", this.dataset.alpacaContainerItemParentFieldId);
+    
+                            // find droppable area and highlight
+                            $(this).siblings(".alpaca-container-item").each(function() {
+                                $(this).children(".alpaca-array-item-move").css({
+                                    "color": "#2CEAA3"
+                                });
+                            });
+                        }
+                        else 
+                        {
+                            ev.preventDefault();
+                        }
+                    });
+                    $(this).on("dragend", function(ev) 
+                    {
+                        ev.stopPropagation();
+
+                        $(".alpaca-array-item-move").css({
+                            "color": "#333"
+                        });
+                    });
+                });
+            }
 
             //
             // ACTIONBAR
@@ -1753,6 +1836,12 @@
         getSchemaOfOptions: function() {
             var properties = {
                 "properties": {
+                    "dragAndDrop": {
+                        "title": "Drag and Drop",
+                        "description": "If true, drag and drop is enabled for array items.",
+                        "type": "boolean",
+                        "default": false
+                    },
                     "toolbarSticky": {
                         "title": "Sticky Toolbar",
                         "description": "If true, the array item toolbar will always be enabled.  If false, the toolbar is always disabled.  If undefined or null, the toolbar will appear when hovered over.",
@@ -1875,6 +1964,9 @@
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
                 "fields": {
+                    "dragAndDrop": {
+                        "type": "checkbox"
+                    },
                     "toolbarSticky": {
                         "type": "checkbox"
                     },

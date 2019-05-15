@@ -21,6 +21,8 @@
         {
             var self = this;
 
+            self.options.multiple = false;
+
             this.base();
             
             if (this.options.name)
