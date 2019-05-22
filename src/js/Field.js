@@ -1029,6 +1029,7 @@
             if (this.options.hidden)
             {
                 this.field.hide();
+                this._isHidden = true;
             }
 
             var defaultHideInitValidationError = (this.view.type === 'create') && !this.refreshed;
@@ -1435,8 +1436,6 @@
                 };
             };
 
-            var t1 = new Date().getTime();
-
             // wrap up everything we need to do into async callback methods
             if (validateChildren)
             {
@@ -1463,14 +1462,8 @@
             // add ourselves in last
             functions.push(functionBuilder(this, contexts));
 
-            var t2 = new Date().getTime();
-            console.log("t1: " + (t2-t1));
-
             // now run all of the functions in parallel
             Alpaca.parallel(functions, function(err) {
-
-                var t3 = new Date().getTime();
-                console.log("t2: " + (t3-t2));
 
                 // contexts now contains all of the validation results
 
@@ -1528,9 +1521,6 @@
 
                 // now reverse it so that context is normalized with child fields first
                 mergedContext.reverse();
-
-                var t4 = new Date().getTime();
-                console.log("t3: " + (t4-t3));
 
                 // update validation state
                 if (!self.hideInitValidationError)
@@ -1783,6 +1773,8 @@
         {
             if (this.options && this.options.hidden)
             {
+                this._isHidden = true;
+
                 // if the hidden option is on, we're always hidden
                 return;
             }
@@ -1797,6 +1789,8 @@
 
                 // CALLBACK: "show"
                 this.fireCallback("show");
+
+                this._isHidden = false;
             }
         },
 
@@ -1818,6 +1812,8 @@
 
             // CALLBACK: "hide"
             this.fireCallback("hide");
+
+            this._isHidden = true;
         },
 
         onHide: function()
@@ -1840,7 +1836,12 @@
 
         isHidden: function()
         {
-            return ("none" === $(this.field).css("display"));
+            if (typeof(this._isHidden) === "undefined")
+            {
+                this._isHidden = ("none" === $(this.field).css("display"));
+            }
+
+            return this._isHidden;
         },
 
         /**
