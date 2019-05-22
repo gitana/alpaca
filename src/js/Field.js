@@ -447,9 +447,9 @@
                 {
                     for (var i = 0; i < this.children.length; i++)
                     {
-                        var child = this.children[i];
+                        var child1 = this.children[i];
 
-                        child.triggerWithPropagation.call(child, name, event, direction);
+                        child1.triggerWithPropagation.call(child1, name, event, direction);
                     }
                 }
 
@@ -461,11 +461,11 @@
                 // do any children first
                 if (this.children && this.children.length > 0)
                 {
-                    for (var i = 0; i < this.children.length; i++)
+                    for (var z = 0; z < this.children.length; z++)
                     {
-                        var child = this.children[i];
+                        var child2 = this.children[z];
 
-                        child.triggerWithPropagation.call(child, name, event, "down");
+                        child2.triggerWithPropagation.call(child2, name, event, "down");
                     }
                 }
 
@@ -1113,7 +1113,7 @@
                     var oldClasses = $(oldField).attr("class");
                     if (oldClasses) {
                         $.each(oldClasses.split(" "), function(i, v) {
-                            if (v && !v.indexOf("alpaca-") === 0) {
+                            if (v && v.indexOf("alpaca-") !== 0) {
                                 $(self.field).addClass(v);
                             }
                         });
@@ -1417,8 +1417,6 @@
          */
         refreshValidationState: function(validateChildren, cb)
         {
-            // console.log("Call refreshValidationState: " + this.path);
-
             var self = this;
 
             // run validation context compilation for ourselves and optionally any children
@@ -1428,17 +1426,16 @@
             // constructs an async function to validate context for a given field
             var functionBuilder = function(field, contexts)
             {
-                return function(callback)
+                return function(done)
                 {
-                    // run on the next tick
-                    Alpaca.nextTick(function() {
-                        Alpaca.compileValidationContext(field, function(context) {
-                            contexts.push(context);
-                            callback();
-                        });
+                    Alpaca.compileValidationContext(field, function(context) {
+                        contexts.push(context);
+                        done();
                     });
                 };
             };
+
+            var t1 = new Date().getTime();
 
             // wrap up everything we need to do into async callback methods
             if (validateChildren)
@@ -1466,8 +1463,14 @@
             // add ourselves in last
             functions.push(functionBuilder(this, contexts));
 
+            var t2 = new Date().getTime();
+            console.log("t1: " + (t2-t1));
+
             // now run all of the functions in parallel
             Alpaca.parallel(functions, function(err) {
+
+                var t3 = new Date().getTime();
+                console.log("t2: " + (t3-t2));
 
                 // contexts now contains all of the validation results
 
@@ -1525,6 +1528,9 @@
 
                 // now reverse it so that context is normalized with child fields first
                 mergedContext.reverse();
+
+                var t4 = new Date().getTime();
+                console.log("t3: " + (t4-t3));
 
                 // update validation state
                 if (!self.hideInitValidationError)
@@ -1832,7 +1838,8 @@
             return !this.isHidden();
         },
 
-        isHidden: function() {
+        isHidden: function()
+        {
             return ("none" === $(this.field).css("display"));
         },
 
