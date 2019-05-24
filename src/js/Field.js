@@ -447,9 +447,9 @@
                 {
                     for (var i = 0; i < this.children.length; i++)
                     {
-                        var child = this.children[i];
+                        var child1 = this.children[i];
 
-                        child.triggerWithPropagation.call(child, name, event, direction);
+                        child1.triggerWithPropagation.call(child1, name, event, direction);
                     }
                 }
 
@@ -461,11 +461,11 @@
                 // do any children first
                 if (this.children && this.children.length > 0)
                 {
-                    for (var i = 0; i < this.children.length; i++)
+                    for (var z = 0; z < this.children.length; z++)
                     {
-                        var child = this.children[i];
+                        var child2 = this.children[z];
 
-                        child.triggerWithPropagation.call(child, name, event, "down");
+                        child2.triggerWithPropagation.call(child2, name, event, "down");
                     }
                 }
 
@@ -1029,6 +1029,7 @@
             if (this.options.hidden)
             {
                 this.field.hide();
+                this._isHidden = true;
             }
 
             var defaultHideInitValidationError = (this.view.type === 'create') && !this.refreshed;
@@ -1113,7 +1114,7 @@
                     var oldClasses = $(oldField).attr("class");
                     if (oldClasses) {
                         $.each(oldClasses.split(" "), function(i, v) {
-                            if (v && !v.indexOf("alpaca-") === 0) {
+                            if (v && v.indexOf("alpaca-") !== 0) {
                                 $(self.field).addClass(v);
                             }
                         });
@@ -1417,8 +1418,6 @@
          */
         refreshValidationState: function(validateChildren, cb)
         {
-            // console.log("Call refreshValidationState: " + this.path);
-
             var self = this;
 
             // run validation context compilation for ourselves and optionally any children
@@ -1428,14 +1427,11 @@
             // constructs an async function to validate context for a given field
             var functionBuilder = function(field, contexts)
             {
-                return function(callback)
+                return function(done)
                 {
-                    // run on the next tick
-                    Alpaca.nextTick(function() {
-                        Alpaca.compileValidationContext(field, function(context) {
-                            contexts.push(context);
-                            callback();
-                        });
+                    Alpaca.compileValidationContext(field, function(context) {
+                        contexts.push(context);
+                        done();
                     });
                 };
             };
@@ -1777,6 +1773,8 @@
         {
             if (this.options && this.options.hidden)
             {
+                this._isHidden = true;
+
                 // if the hidden option is on, we're always hidden
                 return;
             }
@@ -1791,6 +1789,8 @@
 
                 // CALLBACK: "show"
                 this.fireCallback("show");
+
+                this._isHidden = false;
             }
         },
 
@@ -1812,6 +1812,8 @@
 
             // CALLBACK: "hide"
             this.fireCallback("hide");
+
+            this._isHidden = true;
         },
 
         onHide: function()
@@ -1832,8 +1834,14 @@
             return !this.isHidden();
         },
 
-        isHidden: function() {
-            return ("none" === $(this.field).css("display"));
+        isHidden: function()
+        {
+            if (typeof(this._isHidden) === "undefined")
+            {
+                this._isHidden = ("none" === $(this.field).css("display"));
+            }
+
+            return this._isHidden;
         },
 
         /**

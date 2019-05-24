@@ -27,7 +27,15 @@ since thanks to a really awesome community of customers, consultants and technol
 For information, demos and documentation regarding Alpaca, please visit the 
 <a href="http://www.alpacajs.org">the Alpaca Forms web site</a>.
 
-All of the Alpaca distribution assets are available via CDN at http://code.cloudcms.com.
+Going forward, all distribution assets are available via free CDN via jsDelivr.
+
+For example - 
+
+    https://cdn.jsdelivr.net/npm/alpaca@<version>/dist/alpaca/bootstrap/alpaca.min.js
+    https://cdn.jsdelivr.net/npm/alpaca@<version>/dist/alpaca/bootstrap/alpaca.min.css
+    
+Where `<version>` should be filled in (example: 1.5.26).
+
 For more information, visit the <a href="http://www.alpacajs.org">Alpaca Forms web site</a>.
 
 
@@ -87,7 +95,7 @@ called life.
 ## Compatibility
 
 The latest release of Alpaca is compatible with jQuery 1.9.1 and up.  For a full breakdown of dependencies, check the 
-bower.json and/or ```/lib``` directory for third-party vendor libraries and versions that are used.
+bower.json and/or `/lib` directory for third-party vendor libraries and versions that are used.
  
 In general, we aspire to support the latest versions of our third-party dependencies.  Some folks may want Alpaca to be
 backward-compatible with earlier versions of dependencies and in general, it is our desire to have it be so.  But in
@@ -149,10 +157,10 @@ And you can run a local web server like this:
 
 The build produces four sets of assets and they are placed in:
 
-- ```build/alpaca/web``` (for basic web forms and layout)
-- ```build/alpaca/bootstrap``` (for bootstrap enabled forms and layout)
-- ```build/alpaca/jqueryui``` (for jQuery UI enabled forms and layout)
-- ```build/alpaca/jquerymobile``` (for jQuery Mobile enabled forms and layout)
+- `build/alpaca/web` (for basic web forms and layout)
+- `build/alpaca/bootstrap` (for bootstrap enabled forms and layout)
+- `build/alpaca/jqueryui` (for jQuery UI enabled forms and layout)
+- `build/alpaca/jquerymobile` (for jQuery Mobile enabled forms and layout)
 
 Each directory contains a JS file and a CSS file for its respective build.
 

@@ -10,11 +10,11 @@ sitemap:
 The latest version of Alpaca is {{ site.alpaca_version }} released on {{ site.alpaca_date }}.
 
 ## CDN
-You can include Alpaca in your projects by referencing the JS and CSS right from our CDN:
+You can include Alpaca in your projects by referencing the JS and CSS right from the <a href="https://www.jsdelivr.com" target="_blank">jsDelivr CDN</a>:
 
 ```
-http://code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.js
-http://code.cloudcms.com/alpaca/{{site.alpaca_version}}/bootstrap/alpaca.min.css
+http://cdn.jsdelivr.net/npm/alpaca@{{site.alpaca_version}}/dist/alpaca/bootstrap/alpaca.min.js
+http://cdn.jsdelivr.net/npm/alpaca@{{site.alpaca_version}}/dist/alpaca/bootstrap/alpaca.min.css
 ```
 
 The example above is for <code>bootstrap</code>.  You can also access the builds for <code>web</code>,

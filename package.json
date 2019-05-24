@@ -1,20 +1,21 @@
 {
   "name": "alpaca",
   "scripts": {
-    "build": "./node_modules/gulp/bin/gulp.js default",
-    "site": "./node_modules/gulp/bin/gulp.js site",
-    "server": "./node_modules/gulp/bin/gulp.js server",
-    "clean": "./node_modules/gulp/bin/gulp.js clean"
+    "build": "./node_modules/.bin/gulp default",
+    "site": "./node_modules/.bin/gulp site",
+    "server": "./node_modules/.bin/gulp server",
+    "clean": "./node_modules/.bin/gulp clean",
+    "bower": "./node_modules/.bin/bower install"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/gitana/alpaca.git"
   },
   "license": "Apache-2.0",
-  "version": "1.5.24",
+  "version": "1.5.27",
   "main": "dist/alpaca/bootstrap/alpaca.js",
   "devDependencies": {
-    "bower": "^1.8.4",
+    "bower": "^1.8.8",
     "cucumber": "~0.3.3",
     "event-stream": "^4.0.1",
     "express": "^4.16.4",
