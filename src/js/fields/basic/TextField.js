@@ -430,6 +430,22 @@
          */
         setValue: function(value)
         {
+            if (!Alpaca.isEmpty(value) && Alpaca.isString(value) && this.schema.format)
+            {
+                if (this.schema.format === "uppercase")
+                {
+                    value = value.toUpperCase();
+                }
+                else if (this.schema.format === "lowercase")
+                {
+                    value = value.toLowerCase();
+                }
+
+                if (this.options.trim)
+                {
+                    value = value.trim();
+                }
+            }
             if (this.control && this.control.length > 0)
             {
                 if (Alpaca.isEmpty(value))
@@ -653,6 +669,11 @@
                     e.stopImmediatePropagation();
                 }
             }
+
+            Alpaca.later(25, this, function() {
+                var v = self.getValue();
+                self.setValue(v);
+            });
         },
 
         onKeyUp: function(e)
@@ -790,6 +811,12 @@
                     "disallowOnlyEmptySpaces": {
                         "title": "Disallow Only Empty Spaces",
                         "description": "Whether to disallow the entry of only empty spaces in the text",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "trim": {
+                        "title": "Trim Whitespace",
+                        "description": "Remove whitespace from the beginning and end of string",
                         "type": "boolean",
                         "default": false
                     }
