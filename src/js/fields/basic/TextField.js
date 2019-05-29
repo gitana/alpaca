@@ -425,6 +425,31 @@
             return value;
         },
 
+        getValue: function()
+        {
+            var self = this;
+
+            var value = this.base();
+            if (value && Alpaca.isString(value))
+            {
+                if (this.schema.format === "uppercase")
+                {
+                    value = value.toUpperCase();
+                }
+                else if (this.schema.format === "lowercase")
+                {
+                    value = value.toLowerCase();
+                }
+
+                if (this.options.trim)
+                {
+                    value = value.trim();
+                }
+            }
+
+            return value;
+        },
+
         /**
          * @see Alpaca.Field#setValue
          */
@@ -669,11 +694,6 @@
                     e.stopImmediatePropagation();
                 }
             }
-
-            Alpaca.later(25, this, function() {
-                var v = self.getValue();
-                self.setValue(v);
-            });
         },
 
         onKeyUp: function(e)
@@ -685,6 +705,21 @@
 
             // trigger "fieldkeyup"
             $(this.field).trigger("fieldkeyup");
+
+            // adjust value on the fly?
+            var adjust = false;
+            if (self.schema.format === "uppercase")
+            {
+                adjust = true;
+            }
+            else if (self.schema.format === "lowercase")
+            {
+                adjust = true;
+            }
+            if (adjust) {
+                var v = self.getValue();
+                self.setValue(v);
+            }
         }
 
 
