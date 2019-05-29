@@ -440,12 +440,13 @@
                 {
                     value = value.toLowerCase();
                 }
-
-                if (this.options.trim)
-                {
-                    value = value.trim();
-                }
             }
+
+            if (this.options.trim)
+            {
+                value = value.trim();
+            }
+
             if (this.control && this.control.length > 0)
             {
                 if (Alpaca.isEmpty(value))
