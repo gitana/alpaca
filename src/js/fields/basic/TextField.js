@@ -432,13 +432,16 @@
             var value = this.base();
             if (value && Alpaca.isString(value))
             {
-                if (this.schema.format === "uppercase")
+                if (this.schema.format)
                 {
-                    value = value.toUpperCase();
-                }
-                else if (this.schema.format === "lowercase")
-                {
-                    value = value.toLowerCase();
+                    if (this.schema.format === "uppercase")
+                    {
+                        value = value.toUpperCase();
+                    }
+                    else if (this.schema.format === "lowercase")
+                    {
+                        value = value.toLowerCase();
+                    }
                 }
 
                 if (this.options.trim)
@@ -455,21 +458,24 @@
          */
         setValue: function(value)
         {
-            if (!Alpaca.isEmpty(value) && Alpaca.isString(value) && this.schema.format)
+            if (!Alpaca.isEmpty(value) && Alpaca.isString(value))
             {
-                if (this.schema.format === "uppercase")
+                if (this.schema.format)
                 {
-                    value = value.toUpperCase();
+                    if (this.schema.format === "uppercase")
+                    {
+                        value = value.toUpperCase();
+                    }
+                    else if (this.schema.format === "lowercase")
+                    {
+                        value = value.toLowerCase();
+                    }
                 }
-                else if (this.schema.format === "lowercase")
-                {
-                    value = value.toLowerCase();
-                }
-            }
 
-            if (this.options.trim)
-            {
-                value = value.trim();
+                if (this.options.trim)
+                {
+                    value = value.trim();
+                }
             }
 
             if (this.control && this.control.length > 0)
