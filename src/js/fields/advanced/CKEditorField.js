@@ -26,7 +26,7 @@
 
             this.base();
 
-            if (typeof(this.options.ckeditor) == "undefined")
+            if (typeof(this.options.ckeditor) === "undefined")
             {
                 this.options.ckeditor = {};
             }

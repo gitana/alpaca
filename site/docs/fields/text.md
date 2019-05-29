@@ -447,4 +447,93 @@ $("#field15").alpaca({
 </script>
 {% endraw %}
 
+## Example 16
+Here we set the format to `uppercase` to have text content automatically store in upper case.  
+Click on the View button to see the results.
+
+<div id="field16"> </div>
+{% raw %}
+<script type="text/javascript" id="field16-script">
+$("#field16").alpaca({
+    "schema": {
+        "type": "string",
+        "format": "uppercase"
+    },
+    "options": {
+        "label": "Title:",
+        "type": "text",
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View",
+                    "click": function() {
+                        alert(this.getValue());
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+{% endraw %}
+
+## Example 17
+Here we set the format to `lowercase` to have text content automatically store in lower case.
+Click on the View button to see the results.
+
+<div id="field17"> </div>
+{% raw %}
+<script type="text/javascript" id="field17-script">
+$("#field17").alpaca({
+    "schema": {
+        "type": "string",
+        "format": "lowercase"
+    },
+    "options": {
+        "label": "Title:",
+        "type": "text",
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View",
+                    "click": function() {
+                        alert(this.getValue());
+                    }
+                }
+            }
+        }
+    }    
+});
+</script>
+{% endraw %}
+
+## Example 18
+Here we use the `trim` option to ensure that the value is trimmed upon retrieval.
+Click on the View button to see the results.
+
+<div id="field18"> </div>
+{% raw %}
+<script type="text/javascript" id="field18-script">
+$("#field18").alpaca({
+    "schema": {
+        "type": "string"
+    },
+    "options": {
+        "label": "Title:",
+        "type": "text",
+        "trim": true,
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View",
+                    "click": function() {
+                        alert("value: " + this.getValue() + ", length: " + this.getValue().length);
+                    }
+                }
+            }
+        }
+    }    
+});
+</script>
+{% endraw %}
 
