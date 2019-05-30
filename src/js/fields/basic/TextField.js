@@ -723,6 +723,10 @@
             {
                 adjust = true;
             }
+            if (self.options.trim)
+            {
+                adjust = true;
+            }
             if (adjust) {
                 var v = self.getValue();
                 self.setValue(v);
