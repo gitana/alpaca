@@ -257,6 +257,15 @@
             {
                 self.options.errorHandler = function(messages)
                 {
+                    if (messages && messages.messages)
+                    {
+                        messages = messages.messages;
+                    }
+
+                    if (!messages) {
+                        messages = ["An error occurred, please try again"];
+                    }
+
                     alert(messages.join("\n"));
                 };
             }
@@ -1132,7 +1141,14 @@
 
             if (self.options.errorHandler)
             {
-                self.options.errorHandler.call(self, data);
+                var messages = ["Failed to upload file"];
+
+                if (data && data.messages)
+                {
+                    messages = data.messages;
+                }
+
+                self.options.errorHandler.call(self, messages);
             }
 
             // if "error" not filled in for each file, do our best here
