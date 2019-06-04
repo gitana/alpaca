@@ -257,11 +257,6 @@
             {
                 self.options.errorHandler = function(messages)
                 {
-                    if (messages && messages.messages)
-                    {
-                        messages = messages.messages;
-                    }
-
                     if (!messages) {
                         messages = ["An error occurred, please try again"];
                     }
@@ -1143,9 +1138,30 @@
             {
                 var messages = ["Failed to upload file"];
 
-                if (data && data.messages)
+                if (data && data.errorThrown)
                 {
-                    messages = data.messages;
+                    messages = [data.errorThrown];
+                }
+
+                if (data && data.jqXHR)
+                {
+                    if (data.jqXHR.responseText)
+                    {
+                        messages = [data.jqXHR.responseText];
+
+                        try
+                        {
+                            var json = JSON.parse("" + data.jqXHR.responseText);
+                            if (json.message)
+                            {
+                                messages = [json.message];
+                            }
+                        }
+                        catch (e)
+                        {
+                            // swallow
+                        }
+                    }
                 }
 
                 self.options.errorHandler.call(self, messages);
