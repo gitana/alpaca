@@ -82,6 +82,6 @@
     });
 
     Alpaca.registerFieldClass("lowercase", Alpaca.Fields.LowerCaseField);
-    Alpaca.registerDefaultFormatFieldMapping("lowercase", "lowercase");
+    // Alpaca.registerDefaultFormatFieldMapping("lowercase", "lowercase");
 
 })(jQuery);
