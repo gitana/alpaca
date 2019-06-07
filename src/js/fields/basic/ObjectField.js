@@ -364,12 +364,12 @@
                         var orderA = a.options.order;
                         if (!orderA)
                         {
-                            orderA = 0;
+                            orderA = 2147483647; // max int
                         }
                         var orderB = b.options.order;
                         if (!orderB)
                         {
-                            orderB = 0;
+                            orderB = 2147483647; // max int
                         }
 
                         return (orderA - orderB);
@@ -2032,10 +2032,11 @@
             {
                 onComplete();
             }
-        },
+        }
 
 
         /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.Field#getTitle
@@ -2098,11 +2099,11 @@
         getSchemaOfOptions: function() {
             var schemaOfOptions = Alpaca.merge(this.base(), {
                 "properties": {
-                },
-                "order": {
-                    "type": "number",
-                    "title": "Order",
-                    "description": "Allows for optional specification of the index of this field in the properties array."
+                    "order": {
+                        "type": "number",
+                        "title": "Order",
+                        "description": "Allows for optional specification of the index of this field in the properties array."
+                    }
                 }
             });
 
