@@ -26,6 +26,7 @@ var bump        = require('gulp-bump');
 var wrapUmd     = require("gulp-wrap-umd");
 var awspublish  = require('gulp-awspublish');
 var gulpTemplate = require('gulp-template');
+var babel       = require('gulp-babel');
 
 // custom builder_helper stripper to remove builder helper functions
 var stripper = require("./gulp/gulp-stripper");
@@ -415,6 +416,7 @@ gulp.task("build-scripts", function(cb) {
     // core
     var first = gulp.src(paths.scripts.core)
                     .pipe(concat('scripts-core.js'))
+                    .pipe(babel({presets: ['es2015']}))
                     .pipe(gulp.dest('build/tmp'));
 
     first.on("end", function() {
