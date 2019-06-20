@@ -414,9 +414,14 @@ gulp.task("build-scripts", function(cb) {
 
     //console.log("build-scripts start");
     // core
-    var first = gulp.src(paths.scripts.core)
-                    .pipe(concat('scripts-core.js'))
-                    .pipe(babel({presets: ['es2015']}))
+    var first = gulp.src(paths.scripts.core)                                     
+                    .pipe(concat('scripts-core.js'))      
+                    .pipe(babel({
+                        targets:{
+                            'ie': '9'
+                        },
+                        presets: ['@babel/preset-env']}
+                    ))              
                     .pipe(gulp.dest('build/tmp'));
 
     first.on("end", function() {

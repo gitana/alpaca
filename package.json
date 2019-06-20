@@ -16,7 +16,7 @@
   "main": "dist/alpaca/bootstrap/alpaca.js",
   "devDependencies": {
     "@babel/core": "^7.4.5",
-    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "@babel/preset-env": "^7.4.5",
     "bower": "^1.8.8",
     "cucumber": "~0.3.3",
     "event-stream": "^4.0.1",
