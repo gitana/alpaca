@@ -58,6 +58,7 @@
                 $select.attr('data-entity-type', this.options.entityType);
                 $select.attr('data-filter', this.options.typeFilter);
                 $select.attr('data-minimum-input-length', this.options.minimumInputLength);
+                $select.data("additional-options", this.options.additionalOptions);
                 if (!this.isRequired()) {
                     $select.attr('data-allow-clear', true);
                 }
@@ -132,6 +133,11 @@
                         "description": "The type of action to perform with the entity picked.",
                         "type": "string",
                         "enum": ["Approver1", "Approver2", "Approver3", "Approver4", "Approver5", "Approver6", "Approver7", "Approver8", "Approver9", "Approver10"]
+                    },
+                    "additionalOptions": {
+                      "title": "Additional options",
+                      "description": "Additional options to pass to the entity search",
+                      "type": "string"
                     }
                 }
             });
@@ -186,6 +192,9 @@
                         "helper": "The type of action to perform with the entity picked.",
                         "type": "select",
                         "optionLabels": ["Approver 01", "Approver 02", "Approver 03", "Approver 04", "Approver 05", "Approver 06", "Approver 07", "Approver 08", "Approver 09", "Approver 10"]
+                    },
+                    "additionalOptions": {
+                      "type": "json"
                     }
                 }
             });
