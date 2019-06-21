@@ -50,11 +50,15 @@ if (!fs.existsSync(alpacaBootstrapOutputDirectory)) {
 }
 var paths = {
     scripts: {
+        filesToTranspile:[
+            "src/js/Alpaca-async.js",
+        ],
         core: [
+            "src/js/polyfills/*.js",
             "thirdparty/base/Base.js",
 
             "src/js/Alpaca.js",
-            "src/js/Alpaca-async.js",
+            "build/tmp/transpiled/Alpaca-async.js",
             "src/js/ObservableUtils.js",
             "src/js/Observables.js",
             "src/js/Observable.js",
@@ -414,7 +418,7 @@ gulp.task("build-scripts", function(cb) {
 
     //console.log("build-scripts start");
     // core
-    var first = gulp.src(paths.scripts.core)
+    var first = gulp.src(paths.scripts.filesToTranspile)
                     .pipe(babel({
                         presets: [
                             ['@babel/preset-env', {
@@ -423,13 +427,17 @@ gulp.task("build-scripts", function(cb) {
                                 }
                             }]
                         ]
-                    }))                                 
-                    .pipe(concat('scripts-core.js'))                                            
-                    .pipe(gulp.dest('build/tmp'));
+                    }))                                            
+                    .pipe(gulp.dest('build/tmp/transpiled'));
+                    
+    first.on("end", function(){
+        var second = gulp.src(paths.scripts.core)                                 
+                        .pipe(concat('scripts-core.js'))                                            
+                        .pipe(gulp.dest('build/tmp'));
 
-    first.on("end", function() {
+        second.on("end", function() {
 
-        es.concat(
+            es.concat(
 
             // web
             gulp.src(paths.scripts.web)
@@ -467,13 +475,14 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/jquerymobile'))
 
-        ).pipe(es.wait(function() {
+            ).pipe(es.wait(function() {
 
             //console.log("build-scripts completed");
             cb();
 
-        })).pipe(notify({message: "Built Alpaca JS"}));
-    });
+            })).pipe(notify({message: "Built Alpaca JS"}));
+        });
+    })
 });
 
 gulp.task("build-styles", function(cb) {
