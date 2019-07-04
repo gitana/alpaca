@@ -412,7 +412,7 @@
             var self = this;
 
             var formEl = $("<div></div>");
-            formEl.alpaca({
+            formEl.alpaca($.extend(true, {}, {
                 "data" : itemData,
                 "options": itemOptions,
                 "schema" : itemSchema,
@@ -490,7 +490,7 @@
                         postRenderCallback(control);
                     }
                 }
-            });
+            }));
         },
 
         /**
