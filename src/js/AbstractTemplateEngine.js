@@ -1,5 +1,7 @@
 (function($)
 {
+    var Alpaca = $.alpaca;
+
     Alpaca.AbstractTemplateEngine = Base.extend(
     {
         constructor: function(id)

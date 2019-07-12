@@ -1,5 +1,7 @@
-(function()
+(function($)
 {
+    var Alpaca = $.alpaca;
+
     Alpaca.TemplateEngineRegistry = (function() {
 
         var registry = {};
@@ -55,4 +57,4 @@
         };
     })();
 
-})();
+})(jQuery);
