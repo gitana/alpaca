@@ -105,7 +105,7 @@
                         error: function (xhr) {
                             if (xhr.statusText !== "abort") {
                                 var errorMessage = xhr && xhr.responseJSON && xhr.responseJSON.exceptionMessage;
-                                toastr.error(errorMessage || "Det skjedde en feil i søket.", xhr.statusText);
+                                ServiceManagerLibrary.notifications.error(errorMessage || "Det skjedde en feil i søket.", xhr.statusText);
                             }
                         }
                     }
