@@ -151,6 +151,9 @@
                 {
                     self.selectOptions[0].selected = true;
                     self.data = [self.selectOptions[0]];
+
+                    self.updateObservable();
+                    self.triggerUpdate();
                 }
 
                 // likewise, we auto-assign first pick if field required
@@ -158,6 +161,9 @@
                 {
                     self.selectOptions[0].selected = true;
                     self.data = [self.selectOptions[0]];
+
+                    self.updateObservable();
+                    self.triggerUpdate();
                 }
 
                 callback();
