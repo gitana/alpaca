@@ -154,6 +154,7 @@
 
                     self.updateObservable();
                     self.triggerUpdate();
+                    self.triggerWithPropagation("change");
                 }
 
                 // likewise, we auto-assign first pick if field required
@@ -164,6 +165,7 @@
 
                     self.updateObservable();
                     self.triggerUpdate();
+                    self.triggerWithPropagation("change");
                 }
 
                 callback();
