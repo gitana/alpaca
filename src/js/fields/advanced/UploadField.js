@@ -106,6 +106,12 @@
                             self.triggerWithPropagation("change");
                             setTimeout(function() {
                                 self.refreshUIState();
+
+                                if (self.options.afterFileUploadRemove)
+                                {
+                                    self.options.afterFileUploadRemove.call(self, row);
+                                }
+
                             }, 200);
                         });
                     });
@@ -658,6 +664,12 @@
                     if (i === data.files.length) // jshint ignore:line
                     {
                         self.setValueAsArray(array);
+
+                        if (self.options.afterFileUploadDone)
+                        {
+                            self.options.afterFileUploadDone.call(self, data);
+                        }
+
                         return;
                     }
 
@@ -680,6 +692,11 @@
              */
             fileUpload.bind("fileuploadfail", function(e, data) {
                 self.onUploadFail(data);
+
+                if (self.options.afterFileUploadFail)
+                {
+                    self.options.afterFileUploadFail.call(self, data);
+                }
             });
 
 
@@ -688,6 +705,12 @@
              */
             fileUpload.bind("fileuploadalways", function(e, data) {
                 self.refreshUIState();
+
+                if (self.options.afterFileUploadAlways)
+                {
+                    self.options.afterFileUploadAlways.call(self, data);
+                }
+
             });
 
             // allow for extension
