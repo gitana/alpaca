@@ -1684,14 +1684,16 @@
 
             var onComplete = function()
             {
-                var sourceChild = self.children[sourceIndex];
-                var targetChild = self.children[targetIndex];
+                var newData = self.getValue();
+                var sourceChild = newData[sourceIndex];
+                var targetChild = newData[targetIndex];
 
-                self.children[sourceIndex] = targetChild;
-                self.children[targetIndex] = sourceChild;
 
-                // copy back data and refresh
-                self.data = self.getValue();
+                newData[sourceIndex] = targetChild;
+                newData[targetIndex] = sourceChild;
+
+                self.setValue(newData);
+
                 self.refresh(function() {
 
                     // refresh validation state

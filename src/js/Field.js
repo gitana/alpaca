@@ -1002,7 +1002,7 @@
 
                 // we bind data if we're in "edit" mode
                 // typically, we don't bind data if we're in "create" or any other mode
-                if (this.view.type && this.view.type === 'edit')
+                if (this.view.type && (this.view.type === 'edit' || this.view.type === 'create'))
                 {
                     this.bindData();
                 }
@@ -1901,7 +1901,7 @@
             {
                 newValue = this.data;
             }
-
+            
             this.setValue(newValue);
         },
 
