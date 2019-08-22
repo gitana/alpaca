@@ -1563,12 +1563,16 @@
                     adjustedTargetIndex--;
                 }
 
-                // splice out child
-                var child = self.children.splice(sourceIndex, 1)[0];
-                self.children.splice(adjustedTargetIndex, 0, child);
+                var newData = self.getValue();
+                var sourceChild = newData[sourceIndex];
+                var targetChild = newData[targetIndex];
 
-                // set data and refresh
-                self.data = self.getValue();
+
+                newData[sourceIndex] = targetChild;
+                newData[targetIndex] = sourceChild;
+
+                self.setValue(newData);
+
                 self.refresh(function() {
 
                     // refresh validation state

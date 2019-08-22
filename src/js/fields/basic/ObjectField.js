@@ -359,15 +359,16 @@
                 if (hasOrderInformation)
                 {
                     // sort by order?
+                    debugger;
                     items.sort(function (a, b) {
-
+                        debugger;
                         var orderA = a.options.order;
-                        if (!orderA)
+                        if (orderA === undefined || orderA === null || orderA === -1)
                         {
                             orderA = 2147483647; // max int
                         }
                         var orderB = b.options.order;
-                        if (!orderB)
+                        if (orderB === undefined || orderB === null || orderB === -1)
                         {
                             orderB = 2147483647; // max int
                         }
