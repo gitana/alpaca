@@ -359,9 +359,7 @@
                 if (hasOrderInformation)
                 {
                     // sort by order?
-                    debugger;
                     items.sort(function (a, b) {
-                        debugger;
                         var orderA = a.options.order;
                         if (orderA === undefined || orderA === null || orderA === -1)
                         {
