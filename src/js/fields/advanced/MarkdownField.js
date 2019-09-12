@@ -70,7 +70,15 @@
 
             if (self.editor)
             {
-                self.editor.value(value);
+                debugger;
+                if (!value)
+                {
+                    self.editor.value("");
+                }
+                else
+                {
+                    self.editor.value(value);
+                }
             }
         },
 
