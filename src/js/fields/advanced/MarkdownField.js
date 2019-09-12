@@ -78,7 +78,6 @@
 
             if (self.editor)
             {
-                debugger;
                 if (!value)
                 {
                     self.editor.value("");
