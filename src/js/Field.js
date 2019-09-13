@@ -158,6 +158,8 @@
             // has field been hidden?
             this._hidden = false;
 
+            this._isInView = true;
+
             this.updateObservable = function()
             {
                 // update observable
@@ -271,6 +273,16 @@
         isTop: function()
         {
             return !this.parent;
+        },
+
+        isInView: function()
+        {
+            return this._isInView;
+        },
+
+        setIsInView: function(isInView)
+        {
+             this._isInView = isInView;
         },
 
         /**
@@ -1778,7 +1790,7 @@
          */
         show: function()
         {
-            if (this.options && this.options.hidden)
+            if (this.options && this.options.hidden || !this.isInView())
             {
                 // if the hidden option is on, we're always hidden
                 return;

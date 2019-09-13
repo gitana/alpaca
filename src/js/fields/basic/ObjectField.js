@@ -717,6 +717,9 @@
             var fieldsInTab = self.children.filter(function (child){
                 return self.view.wizard.bindings[child.propertyId] === wizardTab;
             });
+            if (!self.view.wizard.steps[wizardTab - 1]) {
+                return;
+            }
             if(!self.view.wizard.steps[wizardTab-1].hidden && fieldsInTab.every(function (field){
                 return field.isHidden();
             })){
@@ -758,7 +761,7 @@
                 item.onDependentReveal();
                 if(self.isTopLevel() && self.view.wizard && self.view.wizard.bindings[propertyId]){
                     var wizardTab = self.view.wizard.bindings[propertyId];
-                    if (self.view.wizard.steps[wizardTab-1].hidden) {
+                    if (self.view.wizard.steps[wizardTab - 1] && self.view.wizard.steps[wizardTab-1].hidden) {
                         //show tab
                         $(self.field).find("[data-alpaca-wizard-step-index='"+(wizardTab-1)+"']").css("display","block");
                         self.view.wizard.steps[wizardTab-1].hidden = false;
@@ -837,7 +840,7 @@
             }
 
             // first check for dependencies declared within the object (container)
-            var itemDependencies = self.getChildDependencies(propertyId);;
+            var itemDependencies = self.getChildDependencies(propertyId);
             if (!itemDependencies)
             {
                 // no dependencies, so yes, we pass
@@ -1936,7 +1939,8 @@
         autoWizard: function()
         {
             var stepBindings = this.wizardConfigs.bindings;
-            if (!stepBindings)
+            var noBindings = !stepBindings;
+            if (noBindings)
             {
                 stepBindings = {};
             }
@@ -1946,6 +1950,14 @@
                 if (!stepBindings.hasOwnProperty(propertyId))
                 {
                     stepBindings[propertyId] = 1;
+                    if (!noBindings)
+                    {
+                        if (this.childrenByPropertyId && this.childrenByPropertyId[propertyId])
+                        {
+                            this.childrenByPropertyId[propertyId].setIsInView(false);
+                            this.childrenByPropertyId[propertyId].hide();
+                        }
+                    }
                 }
             }
 
