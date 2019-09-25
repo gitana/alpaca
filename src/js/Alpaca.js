@@ -3480,6 +3480,13 @@
                                     "message": field.validation[messageId]["message"]
                                 });
                             }
+                            else if (field.validation[messageId]["status"] && field.validation[messageId]["message"])
+                            {
+                                messages.push({
+                                    "id": messageId,
+                                    "message": field.validation[messageId]["message"]
+                                });
+                            }
                         }
 
                         field.displayMessage(messages, field.valid);
