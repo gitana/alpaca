@@ -40,6 +40,44 @@
             }
         },
 
+        initMarkdownEditorEvents: function()
+        {
+            var self = this;
+
+            if (self.editor)
+            {
+                self.editor.codemirror.on("change", function(e) {
+                    self.onChange();
+                    self.triggerWithPropagation("change", e);
+                    self.triggerWithPropagation("after_nested_change", e);
+                });
+
+                self.editor.codemirror.on("beforeChange", function(e) {
+                    self.triggerWithPropagation("before_nested_change", e);
+                });
+
+                self.editor.codemirror.on("keyHandled", function(e) {
+                    self.onKeyPress.call(self, e);
+                    self.trigger("keypress", e);
+                });
+
+                self.editor.codemirror.on('blur', function (e) {
+                    self.onBlur();
+                    self.trigger("blur", e);
+                });
+
+                self.editor.codemirror.on("focus", function (e) {
+                    self.onFocus.call(self, e);
+                    self.trigger("focus", e);
+                });
+
+                self.editor.codemirror.on("mousedown", function (e) {
+                    self.onClick.call(self, e);
+                    self.trigger("click", e);
+                });
+            }
+        },
+
         afterRenderControl: function(model, callback)
         {
             var self = this;
@@ -57,6 +95,8 @@
                         {
                             self.editor = new SimpleMDE(self.options.markdown);
                         }
+
+                        self.initMarkdownEditorEvents();
                     });
                 }
 

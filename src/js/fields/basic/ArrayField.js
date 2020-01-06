@@ -1394,6 +1394,9 @@
 
             if (self._validateEqualMaxItems())
             {
+                // propagate up with "before_nested_change"
+                self.triggerWithPropagation("before_nested_change");
+
                 self.createItem(index, schema, options, data, function(item) {
 
                     // register the child
@@ -1416,6 +1419,12 @@
 
                         // trigger update
                         self.triggerUpdate();
+
+                        self.onChange.call(self);
+                        self.triggerWithPropagation("change");
+
+                        // propagate up with "after_nested_change"
+                        self.triggerWithPropagation("after_nested_change");
 
                         if (callback)
                         {
@@ -1463,6 +1472,9 @@
 
             if (this._validateEqualMinItems() || force)
             {
+                // propagate up with "before_nested_change"
+                self.triggerWithPropagation("before_nested_change");
+
                 // unregister the child
                 self.unregisterChild(childIndex);
 
@@ -1483,6 +1495,12 @@
 
                     // trigger update
                     self.triggerUpdate();
+
+                    self.onChange.call(self);
+                    self.triggerWithPropagation("change");
+
+                    // propagate up with "after_nested_change"
+                    self.triggerWithPropagation("after_nested_change");
 
                     if (callback)
                     {
@@ -1558,6 +1576,9 @@
 
             var onComplete = function()
             {
+                // propagate up with "before_nested_change"
+                self.triggerWithPropagation("before_nested_change");
+
                 var adjustedTargetIndex = targetIndex;
                 if (sourceIndex < targetIndex) {
                     adjustedTargetIndex--;
@@ -1583,6 +1604,12 @@
 
                     // dispatch event: move
                     self.trigger("move");
+
+                    self.onChange.call(self);
+                    self.triggerWithPropagation("change");
+
+                    // propagate up with "after_nested_change"
+                    self.triggerWithPropagation("after_nested_change");
 
                     if (callback)
                     {
