@@ -25,19 +25,18 @@
             }
 
             this.base();
-
             if (typeof(this.options.markdown) === "undefined")
             {
                 this.options.markdown = {};
-            }
-
-            if (Alpaca.Fields.MarkdownField.defaults && Alpaca.Fields.MarkdownField.defaults.options && Alpaca.Fields.MarkdownField.defaults.options.markdown)
-            {
-                for (var k in Alpaca.Fields.MarkdownField.defaults.options.markdown)
+                if (Alpaca.Fields.MarkdownField.defaults && Alpaca.Fields.MarkdownField.defaults.options && Alpaca.Fields.MarkdownField.defaults.options.markdown)
                 {
-                    this.options.markdown[k] = Alpaca.Fields.MarkdownField.defaults.options.markdown[k];
+                    for (var k in Alpaca.Fields.MarkdownField.defaults.options.markdown)
+                    {
+                        this.options.markdown[k] = Alpaca.Fields.MarkdownField.defaults.options.markdown[k];
+                    }
                 }
             }
+
         },
 
         afterRenderControl: function(model, callback)
