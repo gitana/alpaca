@@ -265,7 +265,9 @@
 
             var val = null;
 
-            if (!self.schema.type || self.schema.type === "string")
+            var schemaType = Alpaca.schemaTypeFromArray(self.schema.type);
+
+            if (!schemaType || schemaType === "string")
             {
                 var array = [];
                 for (var i = 0; i < this.data.length; i++) {
@@ -282,18 +284,18 @@
                     val = array.join(",");
                 }
             }
-            else if (self.schema.type === "number")
+            else if (schemaType === "number")
             {
                 if (this.data.length > 0)
                 {
                     val = this.data[0].value;
                 }
             }
-            else if (self.schema.type === "boolean")
+            else if (schemaType === "boolean")
             {
                 val = (this.data.length > 0);
             }
-            else if (self.schema.type === "array")
+            else if (schemaType === "array")
             {
                 var values = [];
                 for (var i = 0; i < this.data.length; i++)
@@ -310,7 +312,7 @@
 
                 val = values;
             }
-            else if (self.schema.type === "object")
+            else if (schemaType === "object")
             {
                 if (this.data.length > 0)
                 {
