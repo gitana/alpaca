@@ -132,7 +132,7 @@
                             selectedItems.push(selectedItem.value); 
                         } else { 
                             var newOption = new Option(selectedItem.text, selectedItem.value, true, true);
-                            $selectElement.append(newOption);
+                            $selectElement[0].appendChild(newOption);
                             selectedItems.push(selectedItem.value);
                         } 
                     });
