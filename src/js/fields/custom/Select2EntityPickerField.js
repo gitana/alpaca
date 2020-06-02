@@ -65,7 +65,7 @@
                 if (!this.options.watermarkLabel) {
                     this.options.watermarkLabel = " - Finn medarbeider - ";
                 }
-                SetupEntitySelect2Control($select, -1, this.options.watermarkLabel, false, true, false, this.options.crossTenantSelection);
+                SetupEntitySelect2Control($select, -1, this.options.watermarkLabel, false, true, false, this.options.crossTenantSelection ? 'IncludeGuests' : 'Tenant');
             }
             callback();
         },
