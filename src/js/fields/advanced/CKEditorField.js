@@ -240,4 +240,13 @@
 
     Alpaca.registerFieldClass("ckeditor", Alpaca.Fields.CKEditorField);
 
+    // wait for window.CKEDITOR to become available
+    var waitCKEDITOR = setInterval(function() {
+        if (window.CKEDITOR) {
+            clearInterval(waitCKEDITOR);
+            window.CKEDITOR.disableAutoInline = true;
+        }
+    }, 250);
+
+
 })(jQuery);

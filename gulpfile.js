@@ -74,6 +74,7 @@ var paths = {
             "src/js/fields/basic/ObjectField.js",
             "src/js/fields/basic/AnyField.js",
             "src/js/fields/basic/HiddenField.js",
+            //"src/js/fields/basic/ContentEditableField.js",
 
             "src/js/fields/list/ListField.js",
             "src/js/fields/list/CheckBoxField.js",
