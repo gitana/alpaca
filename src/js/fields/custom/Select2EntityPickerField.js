@@ -56,7 +56,11 @@
                     this.options.entityType = "UserEntity";
                 }
                 $select.attr('data-entity-type', this.options.entityType);
-                $select.attr('data-filter', this.options.typeFilter);
+                if (this.options.entityType == 'UserEntity' && !this.options.typeFilter) {
+                    $select.attr('data-filter', 'CaseWorker');
+                } else {
+                    $select.attr('data-filter', this.options.typeFilter);
+                }
                 $select.attr('data-minimum-input-length', this.options.minimumInputLength);
                 $select.data("additional-options", this.options.additionalOptions);
                 if (!this.isRequired()) {
@@ -126,7 +130,7 @@
                         "title": "Ekstra typefilter",
                         "description": "The type of entity to pick.",
                         "type": "string",
-                        "enum": ["Causality", "EstablishImprovementMeasureAssessment", "CreditAuthorizationBreachCausality", "Product", "AppealsBody", "AuditScore", "ExtentProposedImprovementSuggestionIsTakenIntoAccount", "EducationalLevel", "EducationalDirection", "CompetenceLevel", "RecruitmentRequirementsAnalysisStatus", "EducationalEstablishment", "PersonalDataCategory", "PersonalDataProcessingArea", "CustomerChannel", "CustomerComplaintCategory"]
+                        "enum": ["UserCaseWorker", "UserAll", "UserPermanentEmployee", "Causality", "EstablishImprovementMeasureAssessment", "CreditAuthorizationBreachCausality", "Product", "AppealsBody", "AuditScore", "ExtentProposedImprovementSuggestionIsTakenIntoAccount", "EducationalLevel", "EducationalDirection", "CompetenceLevel", "RecruitmentRequirementsAnalysisStatus", "EducationalEstablishment", "PersonalDataCategory", "PersonalDataProcessingArea", "CustomerChannel", "CustomerComplaintCategory"]
                     },
                     "actionType": {
                         "title": "Action type",
@@ -183,7 +187,7 @@
                         "rightLabel": "Extra type filter",
                         "helper": "Filter for types within the selection entity type",
                         "type": "select",
-                        "optionLabels": ["Årsakssammenheng", "Vurdering av behov for tiltak", "Årsak til brudd på kredittfullmakt", "Produkt", "Klageinstans", "Revisjonsresultat", "I hvilken grad foreslått forbedringsforslag tas til følge", "Utdanningsnivå", "Utdanningsretning", "Realkompetanse", "Status for behovsanalyse ved rekruttering", "Utdanningsinstitusjon", "Kategori av personopplysninger", "Personopplysningsbehandlingsområde", "Kundekanal", "Kundeklagekategori"]
+                        "optionLabels": ["Brukere som kan benyttes i saksgang", "Alle brukere", "Fast ansatte (brukere)", "Årsakssammenheng", "Vurdering av behov for tiltak", "Årsak til brudd på kredittfullmakt", "Produkt", "Klageinstans", "Revisjonsresultat", "I hvilken grad foreslått forbedringsforslag tas til følge", "Utdanningsnivå", "Utdanningsretning", "Realkompetanse", "Status for behovsanalyse ved rekruttering", "Utdanningsinstitusjon", "Kategori av personopplysninger", "Personopplysningsbehandlingsområde", "Kundekanal", "Kundeklagekategori"]
                     },
                     "actionType": {
                         "hideNone": false,
