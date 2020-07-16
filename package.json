@@ -26,7 +26,7 @@
     "grunt-cloudfront": "^0.2.2",
     "grunt-invalidate-cloudfront": "^1.0.0",
     "grunt-jsdoc": "^2.3.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-awspublish": "^3.4.0",
     "gulp-babel": "^8.0.0",
     "gulp-bump": "^3.1.1",

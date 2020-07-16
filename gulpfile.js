@@ -28,17 +28,14 @@ var awspublish  = require('gulp-awspublish');
 var gulpTemplate = require('gulp-template');
 var babel       = require('gulp-babel');
 
-// custom builder_helper stripper to remove builder helper functions
-var stripper = require("./gulp/gulp-stripper");
-
 var VERSIONABLE_FILES = [
     "package.json",
     "alpaca.jquery.json",
     "bower.json"
 ];
+
 // var alpacaBootstrapOutputDirectory = './build/alpaca/bootstrap'
 var alpacaBootstrapOutputDirectory = '../ServiceManager/Products/ServiceManager/IdentityStream.ServiceManager.Web/wwwroot/Script/alpaca/bootstrap'
-var fs = require('fs');
 if (!fs.existsSync(alpacaBootstrapOutputDirectory)) {
     var message = 'WARNING: Directory ' + alpacaBootstrapOutputDirectory + ' does not exist';
     console.log('\n\n')
@@ -48,6 +45,7 @@ if (!fs.existsSync(alpacaBootstrapOutputDirectory)) {
     notify({message: message});
     alpacaBootstrapOutputDirectory = './build/alpaca/bootstrap'
 }
+
 var paths = {
     scripts: {
         filesToTranspile:[
@@ -251,20 +249,15 @@ var paths = {
     }
 };
 
-gulp.task("clean", function() {
-    return gulp.src(["build", "dist"], {read: false})
-        .pipe(clean());
-});
+gulp.task("clean", () => gulp.src(["build", "dist"], {read: false, allowEmpty: true}).pipe(clean()));
 
-gulp.task("build-templates", function(cb)
-{
+gulp.task("build-templates", () => {
     // Mozilla
-    var escapeRegExp = function(string){
+    var escapeRegExp = (string) => {
             return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     };
 
-    var processName = function(filepath)
-    {
+    var processName = (filepath) => {
         // strip .js from end
         var i = filepath.indexOf(".js");
         if (i > -1)
@@ -284,7 +277,6 @@ gulp.task("build-templates", function(cb)
 
     //console.log("build-templates start");
     return es.concat(
-
         // web
         gulp.src(paths.templates["web"])
             .pipe(handlebars({ handlebars: require('handlebars') }))
@@ -333,14 +325,13 @@ gulp.task("build-templates", function(cb)
             .pipe(concat('templates-jquerymobile.js'))
             .pipe(gulp.dest('build/tmp/'))
 
-    ).pipe(es.wait(function() {
+    ).pipe(es.wait(() => {
         //console.log("build-templates complete");
         //cb();
     })).pipe(notify({message: "Built Alpaca Templates"}));
 });
 
-gulp.task("build-scripts", function(cb) {
-
+gulp.task("build-scripts", (cb) => {
     // alpaca umd
     var wrapper = "" + fs.readFileSync("./config/umd-wrapper.txt");
 
@@ -358,6 +349,7 @@ gulp.task("build-scripts", function(cb) {
         exports: "Alpaca",
         template: wrapper
     };
+
     var bootstrap_wrap = {
         deps: [{
             "name": "jquery",
@@ -377,6 +369,7 @@ gulp.task("build-scripts", function(cb) {
         template: wrapper,
         defaultView: 'bootstrap'
     };
+
     var jqueryui_warp = {
         deps: [{
             "name": "jquery",
@@ -396,6 +389,7 @@ gulp.task("build-scripts", function(cb) {
         template: wrapper,
         defaultView: 'jqueryui'
     };
+
     var jquerymobile_wrap = {
         deps: [{
             "name": "jquery",
@@ -430,12 +424,12 @@ gulp.task("build-scripts", function(cb) {
                     }))                                            
                     .pipe(gulp.dest('build/tmp/transpiled'));
                     
-    first.on("end", function(){
+    first.on("end", () => {
         var second = gulp.src(paths.scripts.core)                                 
                         .pipe(concat('scripts-core.js'))                                            
                         .pipe(gulp.dest('build/tmp'));
 
-        second.on("end", function() {
+        second.on("end", () => {
 
             es.concat(
 
@@ -475,7 +469,7 @@ gulp.task("build-scripts", function(cb) {
                 .pipe(uglify())
                 .pipe(gulp.dest('build/alpaca/jquerymobile'))
 
-            ).pipe(es.wait(function() {
+            ).pipe(es.wait(() => {
 
             //console.log("build-scripts completed");
             cb();
@@ -485,11 +479,8 @@ gulp.task("build-scripts", function(cb) {
     })
 });
 
-gulp.task("build-styles", function(cb) {
-
-    //console.log("build-styles start");
+gulp.task("build-styles", () => {
     return es.concat(
-
             // web
             gulp.src(paths.styles.web)
                 .pipe(concat('alpaca.css'))
@@ -530,7 +521,7 @@ gulp.task("build-styles", function(cb) {
             gulp.src("src/css/images/**")
                 .pipe(gulp.dest('./build/alpaca/jquerymobile/images'))
 
-        ).pipe(es.wait(function() {
+        ).pipe(es.wait(() => {
 
             //console.log("build-styles completed");
             //cb();
@@ -538,8 +529,7 @@ gulp.task("build-styles", function(cb) {
         })).pipe(notify({message: "Built Alpaca CSS"}));
 });
 
-gulp.task("build-site", function(cb)
-{
+gulp.task("build-site", (cb) => {
     console.log("build-site start");
 
     var now = new Date();
@@ -552,15 +542,13 @@ gulp.task("build-site", function(cb)
     fs.writeFileSync("./_custom_config.yml", "alpaca_version: " + pkg.version + "\r\nalpaca_date: " + datetime);
 
     var cmd = "jekyll build --config ./site/_config.yml,./_custom_config.yml -s ./site -d ./build/site --trace";
-    exec(cmd, function(err, stdout, stderr) {
-
+    exec(cmd, (err, stdout, stderr) => {
         console.log("jekyll completed");
 
         // clean up temp file
         fs.unlinkSync("./_custom_config.yml");
 
-        if (err)
-        {
+        if (err) {
             console.log(stderr);
             cb(err);
             return;
@@ -568,11 +556,11 @@ gulp.task("build-site", function(cb)
 
         // fix up alpaca-standalone-sample.html
         console.log("Apply HTML Variables");
-        applyHtmlVariables("./build/site", function() {
+        applyHtmlVariables("./build/site", () => {
 
             // now run post-processors over all of the HTML to insert builder code
             console.log("Annotating Field-Level Documentation");
-            applyFieldAnnotations("./build/site", function() {
+            applyFieldAnnotations("./build/site", () => {
                 console.log("Annotations Completed");
                 cb();
             });
@@ -582,13 +570,11 @@ gulp.task("build-site", function(cb)
 
 });
 
-gulp.task("update-site-full", function(cb) {
-
-    //console.log("update-site-full start");
-    es.concat(
-
+gulp.task("update-site-full", (cb) => {
+    return es.concat(
         // copy site into web
-        gulp.src("build/site/**").pipe(gulp.dest("./build/web")),
+        gulp.src("build/site/**")
+            .pipe(gulp.dest("./build/web")),
 
         // copy lib/ into web
         gulp.src("lib/**")
@@ -598,13 +584,13 @@ gulp.task("update-site-full", function(cb) {
         gulp.src("build/alpaca/**")
             .pipe(gulp.dest('./build/web/lib/alpaca'))
 
-    ).pipe(es.wait(function() {
+    ).pipe(es.wait(() => {
         console.log("update-site-full completed");
         cb();
     })).pipe(notify({message: "Built Alpaca Web Site"}));
 });
 
-gulp.task("update-site-alpaca", function(cb) {
+gulp.task("update-site-alpaca", () => {
 
     //console.log("update-site-alpaca start");
     return es.concat(
@@ -613,91 +599,31 @@ gulp.task("update-site-alpaca", function(cb) {
         gulp.src("build/alpaca/**")
             .pipe(gulp.dest('./build/web/lib/alpaca'))
 
-    ).pipe(es.wait(function() {
+    ).pipe(es.wait(() => {
         //console.log("update-site-alpaca completed");
     })).pipe(notify({message: "Updated Alpaca into Web Site"}));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', () => {
     // scripts
-    watch(paths.scripts.core, function(files, cb) {
-        runSequence("build-scripts", function() {
-            if (cb) {
-                cb();
-            }
-        });
-    });
-    watch(paths.scripts.all_views, function(files, cb) {
-        runSequence("build-scripts", function() {
-            if (cb) {
-                cb();
-            }
-        });
-    });
+    gulp.watch(paths.scripts.core, gulp.series("build-scripts"));
+    gulp.watch(paths.scripts.all_views, gulp.series("build-scripts"));
 
     // templates
-    watch(paths.templates.all, function(files, cb) {
-        runSequence("build-templates", "build-scripts", function() {
-            if (cb) {
-                cb();
-            }
-        });
-    });
+    gulp.watch(paths.templates.all, gulp.series("build-templates", "build-scripts"));
 
     // styles
-    watch(paths.styles.all, function(files, cb) {
-        runSequence("build-styles", function() {
-            if (cb) {
-                cb();
-            }
-        });
-    });
-
-
+    gulp.watch(paths.styles.all, gulp.series("build-styles"));
 });
 
-gulp.task("package", function(cb) {
-
-    //console.log("package start");
+gulp.task("package", (cb) => {
     fs.writeFileSync("./build/version.properties", "version=" + pkg.version);
-
-    /*
-    var jQueryJson = require("./alpaca.jquery.json");
-    jQueryJson.version = pkg.version;
-    fs.writeFileSync("./alpaca.jquery.json", JSON.stringify(jQueryJson, null, "  "));
-    */
-
-    //console.log("package completed");
     cb();
 });
 
-gulp.task("default", function(cb) {
-    runSequence(
-        "update-release-txt",
-        "build-templates",
-        ["build-scripts", "build-styles", "package"],
-        function() {
-            if (cb) {
-                cb();
-            }
-        }
-    );
-});
+gulp.task("site", gulp.series("build-site", "update-site-full"));
 
-gulp.task("site", function(cb) {
-    runSequence(
-        "build-site",
-        "update-site-full",
-        function() {
-            if (cb) {
-                cb();
-            }
-        }
-    );
-});
-
-gulp.task("server", ["watch"], function() {
-
+gulp.task("server", gulp.parallel("watch", () => {
     // NOTE: aaaaa is just a dummy folder to avoid nodemon from setting up a proper watch
     // we control the watch separately
     nodemon({
@@ -710,90 +636,60 @@ gulp.task("server", ["watch"], function() {
         ],
         watch: "aaaaa/**"
     });
+}));
 
-});
+gulp.task("dist", () =>
+    gulp.src("build/alpaca/**/*")
+        .pipe(gulp.dest("dist/alpaca")));
 
-gulp.task("web", function(cb) {
-    runSequence(
-        "default",
-        "site",
-        "server",
-        function() {
-            if (cb) {
-                cb();
-            }
-        }
-    );
-});
+gulp.task("bump", () =>
+    gulp.src(VERSIONABLE_FILES)
+        .pipe(bump())
+        .pipe(gulp.dest("./")));
 
-gulp.task("dist", function() {
+gulp.task("bumpMinor", () => 
+    gulp.src(VERSIONABLE_FILES)
+        .pipe(bump({ type: "minor" }))
+        .pipe(gulp.dest("./")));
 
-    return es.concat(
+gulp.task("bumpMajor", () =>
+    gulp.src(VERSIONABLE_FILES)
+        .pipe(bump({ type: "major" }))
+        .pipe(gulp.dest("./")));
 
-        gulp.src("build/alpaca/**/*")
-            .pipe(gulp.dest("dist/alpaca"))//,
-
-        //gulp.src("lib/**/*")
-        //    .pipe(gulp.dest("dist/lib"))
-
-    ).pipe(es.wait(function() {
-        // all done
-    }));
-});
-
-gulp.task("bump", function(){
-    gulp.src(VERSIONABLE_FILES).pipe(bump()).pipe(gulp.dest("./"));
-});
-
-gulp.task("bumpMinor", function(){
-    gulp.src(VERSIONABLE_FILES).pipe(bump({type:"minor"})).pipe(gulp.dest("./"));
-});
-
-gulp.task("bumpMajor", function(){
-    gulp.src(VERSIONABLE_FILES).pipe(bump({type:"major"})).pipe(gulp.dest("./"));
-});
-
-gulp.task("cdn", function(){
-
+gulp.task("cdn", () => {
     var aws = JSON.parse(fs.readFileSync("./_s3.json"));
 
     // create a new publisher
     var publisher = awspublish.create(aws);
-    gulp
+
+    return gulp
         .src("./build/alpaca/**/*")
-        .pipe(rename(function(x) {
+        .pipe(rename((x) => {
             x.dirname = path.join("alpaca", pkg.version, x.dirname);
         }))
         .pipe(publisher.publish())
-        //.pipe(publisher.sync())
         .pipe(awspublish.reporter());
 });
-
 
 //
 // TESTING
 //
 
-gulp.task("testsite", ["watch"], function() {
+gulp.task("testsite", gulp.parallel("watch", () => {
+    nodemon({ script: "server/test-webserver.js" });
+}));
 
-    nodemon({
-        script: "server/test-webserver.js"
-    });
-
-});
-
-gulp.task("lint", function() {
+gulp.task("lint", () =>
   gulp.src(_.flatten([paths.scripts.core, "!lib/**/*"]))
     .pipe(jshint())
-    .pipe(jshint.reporter("jshint-stylish"));
-});
+    .pipe(jshint.reporter("jshint-stylish")));
 
-gulp.task("watch:lint", ["lint"], function() {
-  gulp.watch(paths.scripts.core, ["lint"]);
-});
+gulp.task("watch:lint", gulp.series("lint", () =>
+    gulp.watch(paths.scripts.core, gulp.series("lint"))));
 
-gulp.task("cucumber", function(cb) {
-    require("child_process").exec("./node_modules/.bin/cucumber.js -r features", function(err, stdout, stderr) {
+gulp.task("cucumber", () => {
+    require("child_process").exec("./node_modules/.bin/cucumber.js -r features", (err, stdout, stderr) => {
         if (err) {
             console.log("Error: " + err);
         } else {
@@ -803,8 +699,7 @@ gulp.task("cucumber", function(cb) {
     });
 });
 
-var generateTable = function(schema)
-{
+var generateTable = (schema) => {
     var table = "";
 
     table += "<table class='table table-bordered table-responsive table-hover table-condensed'>";
@@ -837,24 +732,20 @@ var generateTable = function(schema)
     return table;
 };
 
-var applyFieldAnnotationsToFile = function(filePath, Alpaca)
-{
+var applyFieldAnnotationsToFile = (filePath, Alpaca) => {
     var text = "" + fs.readFileSync(filePath);
 
     var c1 = text.indexOf("<!-- INCLUDE_API_DOCS:");
-    if (c1 > -1)
-    {
+    if (c1 > -1) {
         var c2 = text.indexOf("-->", c1 + 1);
-        if (c2 > -1)
-        {
+        if (c2 > -1) {
             var type = text.substring(c1 + 22, c2);
             type = type.trim();
 
             console.log(" -> Annotating type: " + type + " in file: " + filePath);
 
             var constructor = Alpaca.fieldClassRegistry[type];
-            if (constructor)
-            {
+            if (constructor) {
                 var instance = new constructor();
                 //domEl, data, options, schema, viewId, connector, errorCallback
 
@@ -865,8 +756,7 @@ var applyFieldAnnotationsToFile = function(filePath, Alpaca)
                 //var optionsOptions = instance.getOptionsForOptions();
 
                 // sort the schema and options
-                var leSort = function(properties)
-                {
+                var leSort = (properties) => {
                     var newProperties = {};
 
                     var keys = [];
@@ -876,8 +766,7 @@ var applyFieldAnnotationsToFile = function(filePath, Alpaca)
 
                     keys.sort();
 
-                    for (var i = 0; i < keys.length; i++)
-                    {
+                    for (var i = 0; i < keys.length; i++) {
                         newProperties[keys[i]] = properties[keys[i]];
                     }
 
@@ -888,8 +777,7 @@ var applyFieldAnnotationsToFile = function(filePath, Alpaca)
 
 
                 // general
-                var stampFunction = function(name, value, link)
-                {
+                var stampFunction = (name, value, link) => {
                     var x = "";
                     x += "<tr>";
                     x += "<td>" + name + "</td>";
@@ -925,12 +813,10 @@ var applyFieldAnnotationsToFile = function(filePath, Alpaca)
                     gen += stampFunction("JSON Schema Type(s)", schemaType);
                 }
                 gen += stampFunction("Field Type", fieldType, "/docs/fields/" + fieldType + ".html");
-                if (baseFieldType)
-                {
+                if (baseFieldType) {
                     gen += stampFunction("Base Field Type", baseFieldType, "/docs/fields/" + baseFieldType + ".html");
                 }
-                else
-                {
+                else {
                     gen += stampFunction("Base Field Type", "None");
                 }
                 gen += "</tbody>";
@@ -945,16 +831,14 @@ var applyFieldAnnotationsToFile = function(filePath, Alpaca)
 
                 fs.writeFileSync(filePath, text);
             }
-            else
-            {
+            else {
                 console.log(" -> Could not find field type: " + type);
             }
         }
     }
 };
 
-var applyFieldAnnotations = function(basePath, callback)
-{
+var applyFieldAnnotations = (basePath, callback) => {
     var jsdom = require("jsdom");
     var html = '<html><body><div id="form"></div></html>';
 
@@ -981,8 +865,7 @@ var applyFieldAnnotations = function(basePath, callback)
         $("#form").alpaca({
             "data": "",
             "view": "web-edit",
-            "postRender": function(control)
-            {
+            "postRender": (control) => {
                 var all = wrench.readdirSyncRecursive(basePath);
 
                 var files = [];
@@ -1002,34 +885,28 @@ var applyFieldAnnotations = function(basePath, callback)
                 callback();
             }
         });
-
     });
 };
 
-var applyHtmlVariables = function(basePath, callback)
-{
+var applyHtmlVariables = (basePath, callback) => {
     var wrench = require("wrench");
     var all = wrench.readdirSyncRecursive(basePath);
 
     var files = [];
-    for (var i = 0; i < all.length; i++)
-    {
-        if (all[i].indexOf(".html") > -1)
-        {
+    for (var i = 0; i < all.length; i++) {
+        if (all[i].indexOf(".html") > -1) {
             files.push(path.join(basePath, all[i]));
         }
     }
 
-    for (var i = 0; i < files.length; i++)
-    {
+    for (var i = 0; i < files.length; i++) {
         applyHtmlVariablesToFile(files[i]);
     }
 
     callback();
 };
 
-var applyHtmlVariablesToFile = function(filePath)
-{
+var applyHtmlVariablesToFile = (filePath) => {
     var text = "" + fs.readFileSync(filePath);
 
     text = doReplace(text, "$ALPACA_VERSION", pkg.version);
@@ -1037,14 +914,11 @@ var applyHtmlVariablesToFile = function(filePath)
     fs.writeFileSync(filePath, text);
 };
 
-var doReplace = function(text, token, value)
-{
+var doReplace = (text, token, value) => {
     var i = -1;
-    do
-    {
+    do {
         i = text.indexOf(token);
-        if (i > -1)
-        {
+        if (i > -1) {
             text = text.replace(token, value);
         }
     }
@@ -1053,43 +927,29 @@ var doReplace = function(text, token, value)
     return text;
 };
 
-gulp.task("update-release-txt", function() {
-
-    if (fs.existsSync("license.txt"))
-    {
+gulp.task("update-release-txt", () => {
+    if (fs.existsSync("license.txt")) {
         fs.unlinkSync("license.txt");
     }
 
-    return gulp.src("license.txt.template", {
-        "cwd": "./config"
-    })
-        .pipe(gulpTemplate({
-            version: pkg.version
-        }))
+    return gulp.src("license.txt.template", { cwd: "./config" })
+        .pipe(gulpTemplate({ version: pkg.version }))
         .pipe(rename("license.txt"))
         .pipe(gulp.dest("."));
-
 });
 
-gulp.task("website", function(cb) {
-    runSequence("default", "site", "server", function () {
-        cb();
-    });
-});
+gulp.task("default", gulp.series("update-release-txt", "build-templates", gulp.parallel("build-scripts", "build-styles", "package")));
 
-gulp.task("npmpackage", function(cb) {
+gulp.task("web", gulp.series("default", "site", "server"));
 
+gulp.task("website", gulp.series("default", "site", "server"));
+
+gulp.task("npmpackage", (cb) => {
     var npmPkg = JSON.parse(JSON.stringify(pkg));
     delete npmPkg.scripts.postinstall;
     delete npmPkg.scripts.postupdate;
-
     fs.writeFileSync("./package.json.npm", JSON.stringify(npmPkg, null, "  "));
-
     cb();
 });
 
-gulp.task("_deploy", function(cb) {
-    runSequence("default", "site", "dist", "npmpackage", function () {
-        cb();
-    });
-});
+gulp.task("_deploy", gulp.series("default", "site", "dist", "npmpackage"));
