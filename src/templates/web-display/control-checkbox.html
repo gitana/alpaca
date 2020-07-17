@@ -1,7 +1,37 @@
 <script type="text/x-handlebars-template">
 
-    <div>
-        {{displayableText}}
-    </div>
+    {{#if options.multiple}}
+
+        {{#each selectOptions}}
+
+            <div>
+
+                <label>
+
+                    <input type="checkbox" data-checkbox-index="{{@index}}" data-checkbox-value="{{value}}" {{#if selected}}checked{{/if}} disabled="disabled" {{#if name}}name="{{name}}"{{/if}} {{#each ../options.data}}data-{{@key}}="{{value}}"{{/each}}/>
+                    {{{text}}}
+
+                </label>
+            </div>
+
+        {{/each}}
+
+    {{else}}
+
+        <div>
+
+            <label class="checkbox-label">
+
+                <input type="checkbox" {{#if data.length}}checked{{/if}} disabled="disabled" {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{value}}"{{/each}}/>
+
+                {{#if options.label}}
+                    {{{options.label}}}
+                {{/if}}
+
+            </label>
+
+        </div>
+
+    {{/if}}
 
 </script>

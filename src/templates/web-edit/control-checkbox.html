@@ -20,12 +20,12 @@
 
         <div>
 
-            <label>
+            <label class="checkbox-label">
 
                 <input type="checkbox" {{#if data.length}}checked{{/if}} {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{value}}"{{/each}}/>
 
-                {{#if options.rightLabel}}
-                    {{{options.rightLabel}}}
+                {{#if options.label}}
+                    {{{options.label}}}
                 {{/if}}
 
             </label>
