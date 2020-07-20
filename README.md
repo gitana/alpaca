@@ -116,10 +116,6 @@ The command line for doing this is basically:
 
 To build Alpaca, you will need to have Node.js installed.
 
-Use the following version
-    node 10.16.3
-If you have multiple node versions install, use nvm to switch: nvm use 10.16.3
-
 Building Alpaca is pretty easy.  Just run:
 
     npm install
