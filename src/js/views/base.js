@@ -1498,7 +1498,7 @@
     };
 
     Handlebars.registerHelper('sanitizeHtml', function(html) {
-        return Alpaca.sanitizeHtml(html);
+        return Alpaca.sanitizeHtml(html || '');
     });
 
     Handlebars.registerHelper('fieldGridLabelOffsetColumnClasses', function(numOptions) {
