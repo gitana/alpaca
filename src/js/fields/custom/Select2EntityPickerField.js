@@ -124,7 +124,7 @@
                         "description": "The type of entity to pick.",
                         "type": "string",
                         "default": "UserEntity",
-                        "enum": ["CompanyEntity", "ComputerEntity", "DepartmentEntity", "JobTitleEntity", "KeywordEntity", "ServiceEntity", "UserEntity", "ProcessEntity", "Supplier", "PersonalDataProcessingActivity", "RoleEntity"]
+                        "enum": ["CompanyEntity", "ComputerEntity", "DepartmentEntity", "JobTitleEntity", "KeywordEntity", "ServiceEntity", "UserEntity", "ProcessEntity", "Supplier", "PersonalDataProcessingActivity", "RoleEntity", "Contract"]
                     },
                     "typeFilter": {
                         "title": "Ekstra typefilter",
@@ -179,7 +179,7 @@
                         "rightLabel": "Entity type",
                         "helper": "The type of entity to pick",
                         "type": "select",
-                        "optionLabels": ["Company", "Machine", "Department", "Job title", "Keyword", "Service", "Person", "Process", "Supplier", "Personal data processing activity", "Role"]
+                        "optionLabels": ["Company", "Machine", "Department", "Job title", "Keyword", "Service", "Person", "Process", "Supplier", "Personal data processing activity", "Role", "Contract"]
                     },
                     "typeFilter": {
                         "hideNone": false,
