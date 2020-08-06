@@ -2617,6 +2617,11 @@
                         "enum": ["above", "below"],
                         "default": "below"
                     },
+                    "entityMappedProperty": {
+                        "title": "Entity Mapped Property",
+                        "description": "Defines the property of the entity that is set to the value this form property",
+                        "type": "string"
+                    },
                     "fieldClass": {
                         "title": "CSS class",
                         "description": "Specifies one or more CSS classes that should be applied to the dom element for this field once it is rendered.  Supports a single value, comma-delimited values, space-delimited values or values passed in as an array.",
@@ -2780,6 +2785,9 @@
                     "helpersPosition": {
                         "type": "text",
                         "optionLabels": ["Above", "Below"]
+                    },
+                    "entityMappedProperty": {
+                        "type": "text"
                     },
                     "fieldClass": {
                         "type": "text"
