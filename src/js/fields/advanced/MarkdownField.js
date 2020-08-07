@@ -92,6 +92,20 @@
 
                         if (!self.editor)
                         {
+                            // Replace toolbar buttons with configured plugins
+                            var toolbar = self.options.markdown.toolbar;
+                            if (toolbar && Alpaca.isArray(toolbar))
+                            {
+                                for (var i = 0; i < toolbar.length; i++)
+                                {
+                                    var toolbarItem = toolbar[i];
+                                    if (Alpaca.isString(toolbarItem) && toolbarItem in Alpaca.Fields.MarkdownField.ToolbarButtonPlugins )
+                                    {
+                                        toolbar[i] = Alpaca.Fields.MarkdownField.ToolbarButtonPlugins[toolbarItem];
+                                    }
+                                }
+                            }
+                            
                             self.editor = new SimpleMDE(self.options.markdown);
                         }
 
@@ -194,6 +208,13 @@
 
         /* end_builder_helpers */
     });
+
+    Alpaca.Fields.MarkdownField.ToolbarButtonPlugins = {};
+
+    Alpaca.Fields.MarkdownField.registerToolbarButtonPlugin = function(key, config)
+    {
+        Alpaca.Fields.MarkdownField.ToolbarButtonPlugins[key] = config;
+    };
 
     Alpaca.registerFieldClass("markdown", Alpaca.Fields.MarkdownField);
 
