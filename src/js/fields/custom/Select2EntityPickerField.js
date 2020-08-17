@@ -107,6 +107,12 @@
                         "type": "boolean",
                         "default": false
                     },
+                    "portfolio": {
+                        "title": "Is portfolio",
+                        "description": "Field will be set to the other user in portfolio transfer if checked. Note that this option applies only if entity type is Person.",
+                        "type": "boolean",
+                        "default": false
+                    },
                     "watermarkLabel": {
                         "title": "Watermark label",
                         "description": "The label to use for the watermark.",
@@ -162,6 +168,11 @@
                     "crossTenantSelection": {
                         "rightLabel": "Allow select people in all tenants ?",
                         "helper": "Allow select people in all tenants if checked. Note that this option applies only if entity type is Person.",
+                        "type": "checkbox"
+                    },
+                    "portfolio": {
+                        "rightLabel": "Is portfolio field that should be transferred to other user",
+                        "helper": "Field will be set to the other user in portfolio transfer if checked. Note that this option applies only if entity type is Person.",
                         "type": "checkbox"
                     },
                     "watermarkLabel": {
