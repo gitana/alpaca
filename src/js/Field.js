@@ -2620,7 +2620,8 @@
                     "entityMappedProperty": {
                         "title": "Entity Mapped Property",
                         "description": "Defines the property of the entity that is set to the value this form property",
-                        "type": "string"
+                        "type": "string",
+                        "enum": ["Subject", "NotificationDate", "ExpirationDate", "TerminationDate", "TerminationMonths", "TerminationDays", "AssigneeUserId"]
                     },
                     "fieldClass": {
                         "title": "CSS class",
@@ -2787,7 +2788,9 @@
                         "optionLabels": ["Above", "Below"]
                     },
                     "entityMappedProperty": {
-                        "type": "text"
+                        "helper": "Feltet som skal settes på entiteten som skjemaet lagres på",
+                        "type": "select",
+                        "optionLabels": ["Emne", "Varslingsdato", "Utløpsdato", "Oppsigelsesdato", "Oppsigelsesmåneder", "Oppsigelsesdager", "Tilegnet saksbehandler"]
                     },
                     "fieldClass": {
                         "type": "text"
