@@ -100,19 +100,7 @@
 
         getSchemaOfOptions: function () {
             var schemaOfOptions = Alpaca.merge(this.base(), {
-                "properties": {
-                    "crossTenantSelection": {
-                        "title": "Cross tenant selection",
-                        "description": "Allow cross tenant selection if true. Note that this option applies only if entity type is Person.",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "portfolio": {
-                        "title": "Is portfolio",
-                        "description": "Field will be set to the other user in portfolio transfer if checked. Note that this option applies only if entity type is Person.",
-                        "type": "boolean",
-                        "default": false
-                    },
+                "properties": {                   
                     "watermarkLabel": {
                         "title": "Watermark label",
                         "description": "The label to use for the watermark.",
@@ -144,11 +132,27 @@
                         "type": "string",
                         "enum": ["Approver1", "Approver2", "Approver3", "Approver4", "Approver5", "Approver6", "Approver7", "Approver8", "Approver9", "Approver10"]
                     },
+                    "crossTenantSelection": {
+                        "title": "Cross tenant selection",
+                        "description": "Allow cross tenant selection if true. Note that this option applies only if entity type is Person.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "portfolio": {
+                        "title": "Is portfolio",
+                        "description": "Field will be set to the other user in portfolio transfer if checked. Note that this option applies only if entity type is Person.",
+                        "type": "boolean",
+                        "default": false
+                    },
                     "additionalOptions": {
                       "title": "Additional options",
                       "description": "Additional options to pass to the entity search",
                       "type": "string"
                     }
+                },
+                "dependencies": {
+                    "portfolio": ["entityType"],
+                    "crossTenantSelection": ["entityType"]
                 }
             });
             delete schemaOfOptions.properties.multiselect;
@@ -164,17 +168,7 @@
 
         getOptionsForOptions: function () {
             var optionsForOptions = Alpaca.merge(this.base(), {
-                "fields": {
-                    "crossTenantSelection": {
-                        "rightLabel": "Allow select people in all tenants ?",
-                        "helper": "Allow select people in all tenants if checked. Note that this option applies only if entity type is Person.",
-                        "type": "checkbox"
-                    },
-                    "portfolio": {
-                        "rightLabel": "Is portfolio field that should be transferred to other user",
-                        "helper": "Field will be set to the other user in portfolio transfer if checked. Note that this option applies only if entity type is Person.",
-                        "type": "checkbox"
-                    },
+                "fields": {                    
                     "watermarkLabel": {
                         "rightLabel": "Watermark label",
                         "helper": "Label to use on option displayed when user has not selected a value",
@@ -207,6 +201,22 @@
                         "helper": "The type of action to perform with the entity picked.",
                         "type": "select",
                         "optionLabels": ["Approver 01", "Approver 02", "Approver 03", "Approver 04", "Approver 05", "Approver 06", "Approver 07", "Approver 08", "Approver 09", "Approver 10"]
+                    },
+                    "crossTenantSelection": {
+                        "rightLabel": "Allow select people in all tenants?",
+                        "helper": "Allow select people in all tenants if checked.",
+                        "type": "checkbox",
+                        "dependencies": {
+                            "entityType": "UserEntity"
+                        }
+                    },
+                    "portfolio": {
+                        "rightLabel": "Is portfolio field that should be transferred to other user",
+                        "helper": "Field will be set to the other user in portfolio transfer if checked.",
+                        "type": "checkbox",
+                        "dependencies": {
+                            "entityType": "UserEntity"
+                        }
                     },
                     "additionalOptions": {
                       "type": "json"
