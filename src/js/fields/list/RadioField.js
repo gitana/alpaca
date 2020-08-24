@@ -130,11 +130,6 @@
                         }
                     });
 
-                    if (self.schema.type === "boolean") 
-                    {
-                        newData = newData.includes(true);
-                    }
-
                     // set value silently
                     self.setValue(newData, true);
 
