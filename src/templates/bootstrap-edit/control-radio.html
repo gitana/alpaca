@@ -1,0 +1,35 @@
+<script type="text/x-handlebars-template">
+
+    {{#if options.vertical}}
+        {{#if options.hideNone}}
+        {{else}}
+        <div class="radio">
+            <label>
+                <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value="" {{#if options._noData}}checked="checked"{{/if}}/>{{{options.noneLabel}}}
+            </label>
+        </div>
+        {{/if}}
+        {{#each selectOptions}}
+        <div class="radio">
+            <label>
+                <input type="radio" {{#if ../options.readonly}}readonly="readonly"{{/if}} name="{{../name}}" value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>{{{text}}}
+            </label>
+        </div>
+        {{/each}}
+    {{else}}
+        <div>
+            {{#if options.hideNone}}
+            {{else}}
+            <label class="radio-inline">
+                <input type="radio" {{#if options.readonly}}readonly="readonly"{{/if}} name="{{name}}" value="" {{#if options._noData}}checked="checked"{{/if}}/>{{{options.noneLabel}}}
+            </label>
+            {{/if}}
+            {{#each selectOptions}}
+            <label class="radio-inline">
+                <input type="radio" {{#if ../options.readonly}}readonly="readonly"{{/if}} name="{{../name}}" value="{{value}}" {{#if selected}}checked="checked"{{/if}}/>{{{text}}}
+            </label>
+            {{/each}}
+        </div>
+    {{/if}}
+
+</script>
