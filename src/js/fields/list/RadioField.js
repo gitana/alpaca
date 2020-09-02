@@ -150,19 +150,7 @@
                     afterChangeHandler();
                 });
 
-
-                // stack radio selectors vertically
-                if (self.options.vertical)
-                {
-                    $(self.control).css("display", "block");
-                }
-                else
-                {
-                    $(self.control).css("display", "inline-block");
-                }
-
                 callback();
-
             });
         },
 
