@@ -124,7 +124,7 @@
                         "title": "Ekstra typefilter",
                         "description": "The type of entity to pick.",
                         "type": "string",
-                        "enum": ["UserCaseWorker", "UserAll", "UserPermanentEmployee", "Causality", "EstablishImprovementMeasureAssessment", "CreditAuthorizationBreachCausality", "Product", "AppealsBody", "AuditScore", "ExtentProposedImprovementSuggestionIsTakenIntoAccount", "EducationalLevel", "EducationalDirection", "CompetenceLevel", "RecruitmentRequirementsAnalysisStatus", "EducationalEstablishment", "PersonalDataCategory", "PersonalDataProcessingArea", "CustomerChannel", "CustomerComplaintCategory", "InternalContractingParty"]
+                        "enum": ["CaseWorker", "UserAll", "UserPermanentEmployee", "Causality", "EstablishImprovementMeasureAssessment", "CreditAuthorizationBreachCausality", "Product", "AppealsBody", "AuditScore", "ExtentProposedImprovementSuggestionIsTakenIntoAccount", "EducationalLevel", "EducationalDirection", "CompetenceLevel", "RecruitmentRequirementsAnalysisStatus", "EducationalEstablishment", "PersonalDataCategory", "PersonalDataProcessingArea", "CustomerChannel", "CustomerComplaintCategory", "InternalContractingParty"]
                     },
                     "actionType": {
                         "title": "Action type",
