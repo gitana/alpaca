@@ -644,7 +644,11 @@
                 var originalItemSchema = itemSchema;
                 var originalItemOptions = itemOptions;
 
-                Alpaca.loadRefSchemaOptions(topField, schemaReferenceId, optionsReferenceId, function(itemSchema, itemOptions) {
+                var topConnector = topField.connector;
+                var topSchema = topField.schema;
+                var topOptions = topField.options;
+
+                Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaReferenceId, optionsReferenceId, topConnector, function(err, itemSchema, itemOptions) {
 
                     // walk the field chain to see if we have any circularity (for schema)
                     var refCount = 0;
