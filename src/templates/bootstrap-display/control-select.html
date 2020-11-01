@@ -1,7 +1,11 @@
 <script type="text/x-handlebars-template">
 
     <div>
-        {{displayableText}}
+        {{#if html}}
+            {{{html}}}
+        {{else}}
+            {{displayableText}}
+        {{/if}}
     </div>
 
 </script>

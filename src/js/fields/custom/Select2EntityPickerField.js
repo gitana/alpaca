@@ -41,8 +41,12 @@
         },
 
         beforeRenderControl: function (model, callback) {
-            if (this.data) {
-                model.displayableText = this.data.map(function (option) { return option.text; }).join(", ");
+            if (this.data) {                
+                if (this.options.entityType == 'ServiceEntity') {
+                    model.html = this.data.map(function (option) { return "<a href='/ServicePage.aspx?serviceId=" + option.value + "' target='_blank'>" + option.text + "</a>"; }).join(", ");
+                } else {
+                    model.displayableText = this.data.map(function (option) { return  option.text; }).join(", ");
+                }
             } else {
                 model.displayableText = "";
             }
