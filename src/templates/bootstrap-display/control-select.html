@@ -2,7 +2,7 @@
 
     <div>
         {{#if html}}
-            {{{html}}}
+            {{{sanitizeHtml html}}}
         {{else}}
             {{displayableText}}
         {{/if}}
