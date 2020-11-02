@@ -874,8 +874,11 @@
                 {
                     $(this.field).addClass("alpaca-required");
 
-                    // CALLBACK: "required"
-                    self.fireCallback("required");
+                    // CALLBACK: "required" (only for non-container fields)
+                    if (!self.isContainer())
+                    {
+                        self.fireCallback("required");
+                    }
                 }
                 else
                 {
