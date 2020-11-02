@@ -544,7 +544,12 @@
                         {
                             if (fieldChain[i].schema)
                             {
-                                if ( (fieldChain[i].schema.id === propertyReferenceId) || (fieldChain[i].schema.id === "#" + propertyReferenceId))
+                                if (fieldChain[i]["type"] === "array")
+                                {
+                                    // we found an array field, which is ok to be circular since it can be size 0
+                                    refCount = 0;
+                                }
+                                else if ( (fieldChain[i].schema.id === propertyReferenceId) || (fieldChain[i].schema.id === "#" + propertyReferenceId))
                                 {
                                     refCount++;
                                 }
