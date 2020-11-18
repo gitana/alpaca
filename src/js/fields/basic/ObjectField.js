@@ -288,6 +288,14 @@
 
             var itemsByPropertyId = {};
 
+            var executionState = self.top().executionState;
+            if (!executionState)
+            {
+                executionState = self.top().executionState = {
+                    "halt": false
+                };
+            }
+
             // wrap into waterfall functions
             var propertyFunctions = [];
             for (var propertyId in properties)
@@ -302,10 +310,18 @@
                 }
 
                 // only allow this if we have data, otherwise we end up with circular reference
-                var pf = (function(self, propertyId, itemData, extraDataProperties)
+                var pf = (function(self, propertyId, itemData, extraDataProperties, executionState)
                 {
                     return function(_done)
                     {
+                        // allow for pre-emptive termination if one of the other parallel runners hit a circular recursion issue
+                        // this makes things faster because otherwise, for deeply nested $ref documents, we can spin a long time waiting
+                        // for the parallel executing set to complete
+                        if (executionState.halt)
+                        {
+                            return _done();
+                        }
+
                         // if (!itemData)
                         // {
                         //     return _done();
@@ -319,7 +335,14 @@
                             if (circularityCheck && circularityCheck.circular)
                             {
                                 circularityCheck.object = self.top().schema;
-                                return Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
+
+                                // halt execution of other parallel runners
+                                executionState.halt = true;
+                                Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
+
+                                return _done({
+                                    "message": "A circular recursion error occurred with this schema"
+                                });
                             }
 
                             if (!schema) {
@@ -338,7 +361,7 @@
                         });
                     };
 
-                })(self, propertyId, itemData, extraDataProperties);
+                })(self, propertyId, itemData, extraDataProperties, executionState);
 
                 propertyFunctions.push(pf);
             }
@@ -495,14 +518,14 @@
         {
             var _this = this;
 
-            var completionFunction = function(resolvedPropertySchema, resolvedPropertyOptions)
+            var completionFunction = function(resolvedPropertySchema, resolvedPropertyOptions, circularityCheckResult)
             {
                 // special caveat:  if we're in read-only mode, the child must also be in read-only mode
-                if (_this.options.readonly) {
+                if (_this.options.readonly && resolvedPropertyOptions) {
                     resolvedPropertyOptions.readonly = true;
                 }
 
-                callback(resolvedPropertySchema, resolvedPropertyOptions);
+                callback(resolvedPropertySchema, resolvedPropertyOptions, circularityCheckResult);
             };
 
             var propertySchema = null;
@@ -515,38 +538,44 @@
             }
 
             // handle $ref
-            var schemaReferenceId = null;
+            var schemaRef = null;
             if (propertySchema) {
-                schemaReferenceId = propertySchema["$ref"];
+                schemaRef = propertySchema["$ref"];
             }
-            var optionsReferenceId = null;
+            var optionsRef = null;
             if (propertyOptions) {
-                optionsReferenceId = propertyOptions["$ref"];
+                optionsRef = propertyOptions["$ref"];
             }
 
-            if (schemaReferenceId || optionsReferenceId)
+            if (schemaRef || optionsRef)
             {
                 var topField = this.top();
 
                 // safety check for circularity on schema $ref
-                if (schemaReferenceId)
+                if (schemaRef)
                 {
-                    var circularityCheckResult1 = Alpaca.assertNonCircularSchemaReferences(this, schemaReferenceId);
+                    var circularityCheckResult1 = Alpaca.assertNonCircularSchemaReferences(this, schemaRef);
                     if (circularityCheckResult1 && circularityCheckResult1.circular)
                     {
                         circularityCheckResult1.object = topField.schema;
-                        return callback(null, null, circularityCheckResult1);
+
+                        return Alpaca.nextTick(function() {
+                            completionFunction(null, null, circularityCheckResult1);
+                        });
                     }
                 }
 
                 // safety check for circularity on options $ref
-                if (optionsReferenceId)
+                if (optionsRef)
                 {
-                    var circularityCheckResult2 = Alpaca.assertNonCircularOptionsReferences(this, optionsReferenceId);
+                    var circularityCheckResult2 = Alpaca.assertNonCircularOptionsReferences(this, optionsRef);
                     if (circularityCheckResult2 && circularityCheckResult2.circular)
                     {
                         circularityCheckResult2.object = topField.options;
-                        return callback(null, null, circularityCheckResult2);
+
+                        return Alpaca.nextTick(function() {
+                            completionFunction(null, null, circularityCheckResult2);
+                        });
                     }
                 }
 
@@ -559,7 +588,7 @@
                 var schemaReferenceCacheFn = Alpaca.schemaReferenceCacheFn;
                 var optionsReferenceCacheFn = Alpaca.optionsReferenceCacheFn;
 
-                Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaReferenceId, optionsReferenceId, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, propertySchema, propertyOptions) {
+                Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaRef, optionsRef, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, propertySchema, propertyOptions) {
 
                     var resolvedPropertySchema = {};
                     if (originalPropertySchema) {
@@ -573,6 +602,9 @@
                         resolvedPropertySchema.id = originalPropertySchema.id;
                     }
                     //delete resolvedPropertySchema.id;
+                    if (schemaRef) {
+                        resolvedPropertySchema["$ref"] = schemaRef;
+                    }
 
                     var resolvedPropertyOptions = {};
                     if (originalPropertyOptions) {
@@ -580,6 +612,9 @@
                     }
                     if (propertyOptions) {
                         Alpaca.mergeObject(resolvedPropertyOptions, propertyOptions);
+                    }
+                    if (optionsRef) {
+                        resolvedPropertyOptions["$ref"] = optionsRef;
                     }
 
                     Alpaca.nextTick(function() {

@@ -54,7 +54,6 @@
                 if (branch)
                 {
                     self.branch = Chain(branch);
-
                     self.bindHelperFunctions(self.branch);
                 }
 
@@ -197,6 +196,21 @@
 
         },
 
+        getBranch: function()
+        {
+            var self = this;
+
+            var chainedBranch = null;
+
+            if (self.branch)
+            {
+                chainedBranch = Chain(self.branch);
+                self.bindHelperFunctions(chainedBranch);
+            }
+
+            return chainedBranch;
+        },
+
         /**
          * Loads data from Cloud CMS.
          *
@@ -210,13 +224,14 @@
             var self = this;
 
             // if we didn't connect to a branch, then use the default method
-            if (!self.branch)
+            var branch = self.getBranch();
+            if (!branch)
             {
                 return this.base(nodeId, resources, successCallback, errorCallback);
             }
 
             // load from cloud cms
-            self.branch.loadAlpacaData(nodeId, resources, function(err, data) {
+            branch.loadAlpacaData(nodeId, resources, function(err, data) {
 
                 if (err)
                 {
@@ -248,13 +263,14 @@
             var self = this;
 
             // if we didn't connect to a branch, then use the default method
-            if (!self.branch)
+            var branch = self.getBranch();
+            if (!branch)
             {
                 return this.base(schemaIdentifier, resources, successCallback, errorCallback);
             }
 
             // load from cloud cms
-            self.branch.loadAlpacaSchema(schemaIdentifier, resources, function(err, schema) {
+            branch.loadAlpacaSchema(schemaIdentifier, resources, function(err, schema) {
 
                 if (err)
                 {
@@ -280,13 +296,14 @@
             var self = this;
 
             // if we didn't connect to a branch, then use the default method
-            if (!self.branch)
+            var branch = self.getBranch();
+            if (!branch)
             {
                 return this.base(optionsIdentifier, resources, successCallback, errorCallback);
             }
 
             // load from cloud cms
-            self.branch.loadAlpacaOptions(optionsIdentifier, resources, function(err, options) {
+            branch.loadAlpacaOptions(optionsIdentifier, resources, function(err, options) {
 
                 if (err)
                 {
@@ -440,7 +457,8 @@
             var self = this;
 
             // if we didn't connect to a branch, then use the default method
-            if (!self.branch)
+            var branch = self.getBranch();
+            if (!branch)
             {
                 return this.base(config, successCallback, errorCallback);
             }
@@ -448,7 +466,7 @@
             var pagination = config.pagination;
             delete config.pagination;
 
-            return self.branch.loadAlpacaDataSource(config, pagination, function(err, array) {
+            return branch.loadAlpacaDataSource(config, pagination, function(err, array) {
                 if (err) {
                     errorCallback(err);
                     return;

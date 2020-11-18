@@ -602,7 +602,7 @@
             var completionFunction = function(resolvedItemSchema, resolvedItemOptions, circularityCheck)
             {
                 // special caveat:  if we're in read-only mode, the child must also be in read-only mode
-                if (_this.options.readonly) {
+                if (_this.options.readonly && resolvedItemOptions) {
                     resolvedItemOptions.readonly = true;
                 }
 
@@ -623,34 +623,38 @@
             }
 
             // handle $ref
-            var schemaReferenceId = null;
+            var schemaRef = null;
             if (itemSchema) {
-                schemaReferenceId = itemSchema["$ref"];
+                schemaRef = itemSchema["$ref"];
             }
-            var optionsReferenceId = null;
+            var optionsRef = null;
             if (itemOptions) {
-                optionsReferenceId = itemOptions["$ref"];
+                optionsRef = itemOptions["$ref"];
             }
 
-            if (schemaReferenceId || optionsReferenceId)
+            if (schemaRef || optionsRef)
             {
                 // safety check for circularity on schema $ref
-                if (schemaReferenceId)
+                if (schemaRef)
                 {
-                    var circularityCheckResult1 = Alpaca.assertNonCircularSchemaReferences(this, schemaReferenceId);
+                    var circularityCheckResult1 = Alpaca.assertNonCircularSchemaReferences(this, schemaRef);
                     if (circularityCheckResult1 && circularityCheckResult1.circular)
                     {
-                        return callback(null, null, circularityCheckResult1);
+                        return Alpaca.nextTick(function() {
+                            completionFunction(null, null, circularityCheckResult1);
+                        });
                     }
                 }
 
                 // safety check for circularity on options $ref
-                if (optionsReferenceId)
+                if (optionsRef)
                 {
-                    var circularityCheckResult2 = Alpaca.assertNonCircularOptionsReferences(this, optionsReferenceId);
+                    var circularityCheckResult2 = Alpaca.assertNonCircularOptionsReferences(this, optionsRef);
                     if (circularityCheckResult2 && circularityCheckResult2.circular)
                     {
-                        return callback(null, null, circularityCheckResult2);
+                        return Alpaca.nextTick(function() {
+                            completionFunction(null, null, circularityCheckResult2);
+                        });
                     }
                 }
 
@@ -665,7 +669,7 @@
                 var schemaReferenceCacheFn = Alpaca.schemaReferenceCacheFn;
                 var optionsReferenceCacheFn = Alpaca.optionsReferenceCacheFn;
 
-                Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaReferenceId, optionsReferenceId, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, itemSchema, itemOptions) {
+                Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaRef, optionsRef, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, itemSchema, itemOptions) {
 
                     var resolvedItemSchema = {};
                     if (originalItemSchema) {
@@ -674,7 +678,10 @@
                     if (itemSchema) {
                         Alpaca.mergeObject(resolvedItemSchema, itemSchema);
                     }
-                    delete resolvedItemSchema.id;
+                    //delete resolvedItemSchema.id;
+                    if (schemaRef) {
+                        resolvedItemSchema["$ref"] = schemaRef;
+                    }
 
                     var resolvedItemOptions = {};
                     if (originalItemOptions) {
@@ -682,6 +689,9 @@
                     }
                     if (itemOptions) {
                         Alpaca.mergeObject(resolvedItemOptions, itemOptions);
+                    }
+                    if (optionsRef) {
+                        resolvedItemOptions["$ref"] = optionsRef;
                     }
 
                     Alpaca.nextTick(function() {
