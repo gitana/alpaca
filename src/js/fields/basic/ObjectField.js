@@ -301,10 +301,16 @@
                     }
                 }
 
+                // only allow this if we have data, otherwise we end up with circular reference
                 var pf = (function(self, propertyId, itemData, extraDataProperties)
                 {
                     return function(_done)
                     {
+                        if (!itemData)
+                        {
+                            return _done();
+                        }
+
                         // only allow this if we have data, otherwise we end up with circular reference
                         self.resolvePropertySchemaOptions(propertyId, function (schema, options, circular) {
 
@@ -533,10 +539,13 @@
                 var topConnector = topField.connector;
                 var topSchema = topField.schema;
                 var topOptions = topField.options;
+                var schemaReferenceCacheFn = Alpaca.schemaReferenceCacheFn;
+                var optionsReferenceCacheFn = Alpaca.optionsReferenceCacheFn;
 
-                Alpaca.loadRefSchemaOptions(topSchema, topOptions, propertyReferenceId, fieldReferenceId, topConnector, function(err, propertySchema, propertyOptions) {
+                Alpaca.loadRefSchemaOptions(topSchema, topOptions, propertyReferenceId, fieldReferenceId, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, propertySchema, propertyOptions) {
 
                     // walk the field chain to see if we have any circularity (for schema)
+                    var circular = false;
                     var refCount = 0;
                     for (var i = 0; i < fieldChain.length; i++)
                     {
@@ -559,9 +568,13 @@
                                 }
                             }
                         }
-                    }
 
-                    var circular = (refCount > 1);
+                        if (refCount > 1)
+                        {
+                            circular = true;
+                            break;
+                        }
+                    }
 
                     var resolvedPropertySchema = {};
                     if (originalPropertySchema) {

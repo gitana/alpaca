@@ -2700,9 +2700,11 @@
      * @param schemaReferenceString
      * @param optionsReferenceString
      * @param connector (required for any remote loading)
+     * @param schemaReferenceCacheFn
+     * @param optionsReferenceCacheFn
      * @param callback
      */
-    Alpaca.loadRefSchemaOptions = function(schema, options, schemaReferenceString, optionsReferenceString, connector, callback)
+    Alpaca.loadRefSchemaOptions = function(schema, options, schemaReferenceString, optionsReferenceString, connector, schemaReferenceCacheFn, optionsReferenceCacheFn, callback)
     {
         var fns = [];
 
@@ -2744,7 +2746,7 @@
         if (schemaReferenceString)
         {
             // schema loading function
-            var fn1 = function(schema, referenceString, resolution, connector)
+            var fn1 = function(schema, referenceString, resolution, connector, referenceCacheFn)
             {
                 return function(done)
                 {
@@ -2753,8 +2755,14 @@
                         return done();
                     }
 
-                    var reference = splitReferenceString(referenceString);
+                    var cachedSchema = referenceCacheFn(referenceString);
+                    if (cachedSchema)
+                    {
+                        resolution.schema = cachedSchema;
+                        return done();
+                    }
 
+                    var reference = splitReferenceString(referenceString);
                     if (reference.resource)
                     {
                         // a reference by ID or by path (since we support "a" and "/a/b/c")
@@ -2762,6 +2770,7 @@
                         if (resolvedSchema)
                         {
                             resolution.schema = resolvedSchema;
+                            referenceCacheFn(referenceString, resolvedSchema);
                             return done();
                         }
 
@@ -2776,6 +2785,7 @@
                             if (!reference.hash)
                             {
                                 resolution.schema = schema;
+                                referenceCacheFn(referenceString, schema);
                                 return done();
                             }
 
@@ -2784,12 +2794,13 @@
                             if (resolvedSchema)
                             {
                                 resolution.schema = resolvedSchema;
+                                referenceCacheFn(referenceString, resolvedSchema);
                                 return done();
                             }
 
                             done();
                         }, function(err) {
-                            done();
+                            done(err);
                         });
                     }
 
@@ -2800,6 +2811,7 @@
                         if (resolvedSchema)
                         {
                             resolution.schema = resolvedSchema;
+                            referenceCacheFn(referenceString, resolvedSchema);
                         }
 
                         return done();
@@ -2808,15 +2820,22 @@
                     done();
                 };
             };
-            fns.push(fn1(schema, schemaReferenceString, resolution, connector));
+            fns.push(fn1(schema, schemaReferenceString, resolution, connector, schemaReferenceCacheFn));
         }
 
-        var fn2 = function(options, referenceString, resolution, connector)
+        var fn2 = function(options, referenceString, resolution, connector, referenceCacheFn)
         {
             return function(done)
             {
                 if (!referenceString)
                 {
+                    return done();
+                }
+
+                var cachedOptions = referenceCacheFn(referenceString);
+                if (cachedOptions)
+                {
+                    resolution.options = cachedOptions;
                     return done();
                 }
 
@@ -2829,6 +2848,7 @@
                     if (resolvedOptions)
                     {
                         resolution.options = resolvedOptions;
+                        referenceCacheFn(referenceString, resolvedOptions);
                         return done();
                     }
 
@@ -2843,6 +2863,7 @@
                         if (!reference.hash)
                         {
                             resolution.options = options;
+                            referenceCacheFn(referenceString, options);
                             return done();
                         }
 
@@ -2851,6 +2872,7 @@
                         if (resolvedOptions)
                         {
                             resolution.options = resolvedOptions;
+                            referenceCacheFn(referenceString, resolvedOptions);
                             return done();
                         }
 
@@ -2867,6 +2889,7 @@
                     if (resolvedOptions)
                     {
                         resolution.options = resolvedOptions;
+                        referenceCacheFn(referenceString, resolvedOptions);
                     }
 
                     return done();
@@ -2875,7 +2898,7 @@
                 done();
             };
         };
-        fns.push(fn2(options, optionsReferenceString, resolution, connector));
+        fns.push(fn2(options, optionsReferenceString, resolution, connector, optionsReferenceCacheFn));
 
         // run loads in parallel
         Alpaca.parallel(fns, function(err) {
@@ -4275,6 +4298,51 @@
     {
         return undefined;
     };
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // REFERENCE CACHE ($ref)
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Alpaca.NOOP_REFERENCE_CACHE_FN = function()
+    {
+        return function(reference, value)
+        {
+            return null;
+        }
+    }();
+
+    Alpaca.MEMORY_REFERENCE_CACHE_FN = function()
+    {
+        var map = {};
+
+        return function(reference, value)
+        {
+            if (!reference) {
+                return;
+            }
+
+            if (typeof(value) !== "undefined")
+            {
+                if (value === null)
+                {
+                    delete map[reference];
+                }
+                else
+                {
+                    map[reference] = value;
+                }
+            }
+
+            return map[reference];
+        }
+    }();
+
+    Alpaca.schemaReferenceCacheFn = Alpaca.NOOP_REFERENCE_CACHE_FN;
+    Alpaca.optionsReferenceCacheFn = Alpaca.NOOP_REFERENCE_CACHE_FN;
 
 
 })(jQuery);

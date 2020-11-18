@@ -647,10 +647,13 @@
                 var topConnector = topField.connector;
                 var topSchema = topField.schema;
                 var topOptions = topField.options;
+                var schemaReferenceCacheFn = Alpaca.schemaReferenceCacheFn;
+                var optionsReferenceCacheFn = Alpaca.optionsReferenceCacheFn;
 
-                Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaReferenceId, optionsReferenceId, topConnector, function(err, itemSchema, itemOptions) {
+                Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaReferenceId, optionsReferenceId, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, itemSchema, itemOptions) {
 
                     // walk the field chain to see if we have any circularity (for schema)
+                    var circular = false;
                     var refCount = 0;
                     for (var i = 0; i < fieldChain.length; i++)
                     {
@@ -673,11 +676,13 @@
                                 }
                             }
                         }
-                    }
 
-                    // use a higher limit for arrays, perhaps 10
-                    //var circular = (refCount > 1);
-                    var circular = (refCount > 10);
+                        if (refCount > 10)
+                        {
+                            circular = true;
+                            break;
+                        }
+                    }
 
                     var resolvedItemSchema = {};
                     if (originalItemSchema) {
