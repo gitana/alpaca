@@ -217,7 +217,7 @@ are a few notable ones:
 
 <br/>
 
-If you'd like to have your company logo listed above, please <a href="support.html">drop us a line</a>.
+If you'd like to have your company logo listed above, please submit a pull request.
 
 
 ## What Browsers are Supported?
@@ -243,16 +243,6 @@ ideas and technical wonder.  The project started at Cloud CMS where we used Alpa
 You can freely <a href="https://github.com/gitana/alpaca" target="_blank">fork Alpaca</a> by visiting the
 <a href="https://github.com/gitana/alpaca" target="_blank">Alpaca project at GitHub</a>.
 
-## Is Alpaca supported?
-
-Yes, Alpaca is supported if you <a href="support.html">sign up for a support contract with Cloud CMS</a>.
-We have engineers who offer consulting services, technical support and training.
-
-<a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> sponsors Alpaca and is ready to work with you to support your live engagements.
-<a href="support.html">Let us know how we can help</a>!
-
-If you don't want production support, the project is open source and has an active community.  Check out our
-<a href="contribute.html">contribution</a> page to learn how you can <a href="contribute.html">get involved</a>
 
 ## How do I get started?
 
@@ -261,41 +251,13 @@ you can plug in wherever you'd like.  You can <a href="download.html">install or
 tools like Bower or NPM.  Or you can <a href="download.html">grab a release</a> from our
  <a href="download.html">download page</a>.
 
+
 ## How do I get help from the community?
 
 If you have a question, we recommend asking away on <a href="http://stackoverflow.com/questions/tagged/alpacajs" target="_blank">Stack Overflow</a>
 or within your developer community of choice.  We recommend Stack Overflow based on the quality of developers who respond.
 Chances are that someone has run into something similar and can help out.
 
-## Join a Meetup
-
-<table style="width: 100%">
-  <tr>
-    <td style="text-align: center">
-      <a href="http://www.meetup.com/Sydney-AlpacaJS-Meetup" target="_blank">
-        <img src="/images/meetups/AlpacaAUS.png" style="width: 256px">
-      </a>
-    </td>
-    <td style="text-align: center">
-      <a href="http://www.meetup.com/Cleveland-JavaScript-Meetup" target="_blank">
-        <img src="/images/meetups/AlpacaCLE.jpeg" style="width: 200px">
-      </a>
-    </td>
-    <td style="text-align: center">
-      <a href="http://www.meetup.com/boston_JS" target="_blank">
-        <img src="http://photos3.meetupstatic.com/photos/event/7/5/d/6/600_431910166.jpeg" style="width: 256px">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align: center"><a href="http://www.meetup.com/Sydney-AlpacaJS-Meetup" target="_blank">Sydney, Australia</a></td>
-    <td style="text-align: center"><a href="http://www.meetup.com/Cleveland-JavaScript-Meetup" target="_blank">Cleveland, OH USA</a></td>
-    <td style="text-align: center"><a href="http://www.meetup.com/boston_JS" target="_blank">Boston, MA USA</a></td>
-</table>
-
-<br/>
-
-If you're interested in presenting Alpaca at a local meetup, <a href="support.html">contact us</a> and we'll work with you.
 
 ## How do I contribute to Alpaca?
 
@@ -305,6 +267,7 @@ When contributing, please attempt to match the code style already in the codebas
 Note that we use four spaces per indentation stop.
 
 For more thoughts on code style, see https://github.com/rwldrn/idiomatic.js/.
+
 
 ### Best Practices
 
@@ -320,7 +283,8 @@ When fixing bugs and adding features, when appropriate please also:
 - Add/update any related unit tests (if applicable)
 - Add/update any documentation pages
 
-### Make it happen, captain
+
+### Make it happen, Captain
 
 If you're new to the project, check out our
 <a href="https://github.com/gitana/alpaca/labels/good%20first%20contribution" target="_blank">good first contribution</a>

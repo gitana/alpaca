@@ -4344,5 +4344,162 @@
     Alpaca.schemaReferenceCacheFn = Alpaca.NOOP_REFERENCE_CACHE_FN;
     Alpaca.optionsReferenceCacheFn = Alpaca.NOOP_REFERENCE_CACHE_FN;
 
+    var assertNonCircularSchemaReferences = Alpaca.assertNonCircularSchemaReferences = function(field, ref)
+    {
+        var result = {
+            "circular": false,
+            "scope": "schema",
+            "ref": ref,
+            "paths": []
+        };
+
+        // collect a chain of fields back up to the top
+        // the order is [top] -> [child] -> [this]
+        var _field = field;
+        var fieldChain = [_field];
+        while (_field.parent)
+        {
+            _field = _field.parent;
+            fieldChain.unshift(_field);
+        }
+
+        var referencingFields = [];
+
+        for (var i = 0; i < fieldChain.length; i++)
+        {
+            var _field = fieldChain[i];
+            if (_field.schema)
+            {
+                if (_field["type"] === "array")
+                {
+                    // we found an array field, which is ok to be circular since it can be size 0
+                    referencingFields = [];
+                }
+                else if ((_field.schema.id === ref) || (_field.schema.id === "#" + ref))
+                {
+                    referencingFields.push(_field);
+                }
+                else if ((_field.schema["$ref"] === ref))
+                {
+                    referencingFields.push(_field);
+                }
+            }
+        }
+
+        if (referencingFields.length > 1)
+        {
+            result.circular = true;
+            for (var z = 0; z < referencingFields.length; z++)
+            {
+                result.paths.push(referencingFields[z].path);
+            }
+        }
+
+        return result;
+    };
+
+    var assertNonCircularOptionsReferences = Alpaca.assertNonCircularOptionsReferences = function(field, ref)
+    {
+        var result = {
+            "circular": false,
+            "scope": "options",
+            "ref": ref,
+            "paths": []
+        };
+
+        // collect a chain of fields back up to the top
+        // the order is [top] -> [child] -> [this]
+        var _field = field;
+        var fieldChain = [_field];
+        while (_field.parent)
+        {
+            _field = _field.parent;
+            fieldChain.unshift(_field);
+        }
+
+        var referencingFields = [];
+
+        for (var i = 0; i < fieldChain.length; i++)
+        {
+            var _field = fieldChain[i];
+            if (_field.options)
+            {
+                if (_field["type"] === "array")
+                {
+                    // we found an array field, which is ok to be circular since it can be size 0
+                    referencingFields = [];
+                }
+                else if ((_field.options.id === ref) || (_field.options.id === "#" + ref))
+                {
+                    referencingFields.push(_field);
+                }
+                else if ((_field.options["$ref"] === ref))
+                {
+                    referencingFields.push(_field);
+                }
+            }
+        }
+
+        if (referencingFields.length > 1)
+        {
+            result.circular = true;
+            for (var z = 0; z < referencingFields.length; z++)
+            {
+                result.paths.push(referencingFields[z].path);
+            }
+        }
+
+        return result;
+    };
+
+    /**
+     * Utility method that throws a reference circularity error for either schema or options.
+     *
+     * @param circularityCheck
+     * @param errorCallback
+     */
+    Alpaca.throwReferenceCircularityError = function(circularityCheck, errorCallback)
+    {
+        var messages = [];
+
+        if (circularityCheck.scope === "schema")
+        {
+            messages.push("Circular reference detected for schema");
+        }
+
+        if (circularityCheck.scope === "options")
+        {
+            messages.push("Circular reference detected for options");
+        }
+
+        if (circularityCheck.object)
+        {
+            messages.push("object: " + JSON.stringify(circularityCheck.object, null, 2));
+        }
+
+        if (circularityCheck.ref)
+        {
+            messages.push("reference: " + circularityCheck.ref);
+        }
+
+        if (circularityCheck.paths)
+        {
+            messages.push("paths: " + JSON.stringify(circularityCheck.paths));
+        }
+
+        var err = {
+            "message": messages.join(", ")
+        };
+
+        if (errorCallback)
+        {
+            errorCallback(err);
+        }
+        else
+        {
+            Alpaca.defaultErrorCallback(err);
+        }
+    };
+
 
 })(jQuery);

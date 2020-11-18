@@ -340,7 +340,7 @@
             // then we need to add the new fields
             if (i < data.length)
             {
-                self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+                self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circularityCheck) {
 
                     if (!itemSchema)
                     {
@@ -349,9 +349,10 @@
 
                     // we only allow addition if the resolved schema isn't circularly referenced
                     // or the schema is optional
-                    if (circular)
+                    if (circularityCheck && circularityCheck.circular)
                     {
-                        return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                        circularityCheck.object = self.top().options;
+                        return Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
                     }
 
                     // waterfall functions
@@ -432,13 +433,14 @@
 
                 // all items within the array have the same schema and options
                 // so we only need to load this once
-                self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+                self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circularityCheck) {
 
                     // we only allow addition if the resolved schema isn't circularly referenced
                     // or the schema is optional
-                    if (circular)
+                    if (circularityCheck && circularityCheck.circular)
                     {
-                        return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                        circularityCheck.object = self.top().options;
+                        return Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
                     }
 
                     // waterfall functions
@@ -597,14 +599,14 @@
         {
             var _this = this;
 
-            var completionFunction = function(resolvedItemSchema, resolvedItemOptions, circular)
+            var completionFunction = function(resolvedItemSchema, resolvedItemOptions, circularityCheck)
             {
                 // special caveat:  if we're in read-only mode, the child must also be in read-only mode
                 if (_this.options.readonly) {
                     resolvedItemOptions.readonly = true;
                 }
 
-                callback(resolvedItemSchema, resolvedItemOptions, circular);
+                callback(resolvedItemSchema, resolvedItemOptions, circularityCheck);
             };
 
             var itemOptions;
@@ -632,14 +634,27 @@
 
             if (schemaReferenceId || optionsReferenceId)
             {
-                // walk up to find top field
-                var topField = this;
-                var fieldChain = [topField];
-                while (topField.parent)
+                // safety check for circularity on schema $ref
+                if (schemaReferenceId)
                 {
-                    topField = topField.parent;
-                    fieldChain.push(topField);
+                    var circularityCheckResult1 = Alpaca.assertNonCircularSchemaReferences(this, schemaReferenceId);
+                    if (circularityCheckResult1 && circularityCheckResult1.circular)
+                    {
+                        return callback(null, null, circularityCheckResult1);
+                    }
                 }
+
+                // safety check for circularity on options $ref
+                if (optionsReferenceId)
+                {
+                    var circularityCheckResult2 = Alpaca.assertNonCircularOptionsReferences(this, optionsReferenceId);
+                    if (circularityCheckResult2 && circularityCheckResult2.circular)
+                    {
+                        return callback(null, null, circularityCheckResult2);
+                    }
+                }
+
+                var topField = this.top();
 
                 var originalItemSchema = itemSchema;
                 var originalItemOptions = itemOptions;
@@ -651,38 +666,6 @@
                 var optionsReferenceCacheFn = Alpaca.optionsReferenceCacheFn;
 
                 Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaReferenceId, optionsReferenceId, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, itemSchema, itemOptions) {
-
-                    // walk the field chain to see if we have any circularity (for schema)
-                    var circular = false;
-                    var refCount = 0;
-                    for (var i = 0; i < fieldChain.length; i++)
-                    {
-                        if (fieldChain[i].schema)
-                        {
-                            if (schemaReferenceId)
-                            {
-                                if (fieldChain[i]["type"] === "array")
-                                {
-                                    // we found an array field, which is ok to be circular since it can be size 0
-                                    refCount = 0;
-                                }
-                                else if ((fieldChain[i].schema.id === schemaReferenceId) || (fieldChain[i].schema.id === "#" + schemaReferenceId))
-                                {
-                                    refCount++;
-                                }
-                                else if ((fieldChain[i].schema["$ref"] === schemaReferenceId))
-                                {
-                                    refCount++;
-                                }
-                            }
-                        }
-
-                        if (refCount > 10)
-                        {
-                            circular = true;
-                            break;
-                        }
-                    }
 
                     var resolvedItemSchema = {};
                     if (originalItemSchema) {
@@ -702,7 +685,7 @@
                     }
 
                     Alpaca.nextTick(function() {
-                        completionFunction(resolvedItemSchema, resolvedItemOptions, circular);
+                        completionFunction(resolvedItemSchema, resolvedItemOptions);
                     });
                 });
             }
@@ -1269,13 +1252,14 @@
         {
             var self = this;
 
-            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circularityCheck) {
 
                 // we only allow addition if the resolved schema isn't circularly referenced
                 // or the schema is optional
-                if (circular)
+                if (circularityCheck && circularityCheck.circular)
                 {
-                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                    circularityCheck.object = self.top().options;
+                    return Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
                 }
 
                 // how many children do we have currently?
@@ -1294,13 +1278,14 @@
         {
             var self = this;
 
-            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circularityCheck) {
 
                 // we only allow addition if the resolved schema isn't circularly referenced
                 // or the schema is optional
-                if (circular)
+                if (circularityCheck && circularityCheck.circular)
                 {
-                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                    circularityCheck.object = self.top().options;
+                    return Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
                 }
 
                 var arrayValues = self.getValue();

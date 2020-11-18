@@ -306,18 +306,20 @@
                 {
                     return function(_done)
                     {
-                        if (!itemData)
-                        {
-                            return _done();
-                        }
+                        // if (!itemData)
+                        // {
+                        //     return _done();
+                        // }
 
                         // only allow this if we have data, otherwise we end up with circular reference
-                        self.resolvePropertySchemaOptions(propertyId, function (schema, options, circular) {
+                        self.resolvePropertySchemaOptions(propertyId, function (schema, options, circularityCheck) {
 
                             // we only allow addition if the resolved schema isn't circularly referenced
                             // or the schema is optional
-                            if (circular) {
-                                return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(schema), self.errorCallback);
+                            if (circularityCheck && circularityCheck.circular)
+                            {
+                                circularityCheck.object = self.top().schema;
+                                return Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
                             }
 
                             if (!schema) {
@@ -493,14 +495,14 @@
         {
             var _this = this;
 
-            var completionFunction = function(resolvedPropertySchema, resolvedPropertyOptions, circular)
+            var completionFunction = function(resolvedPropertySchema, resolvedPropertyOptions)
             {
                 // special caveat:  if we're in read-only mode, the child must also be in read-only mode
                 if (_this.options.readonly) {
                     resolvedPropertyOptions.readonly = true;
                 }
 
-                callback(resolvedPropertySchema, resolvedPropertyOptions, circular);
+                callback(resolvedPropertySchema, resolvedPropertyOptions);
             };
 
             var propertySchema = null;
@@ -513,24 +515,39 @@
             }
 
             // handle $ref
-            var propertyReferenceId = null;
+            var schemaReferenceId = null;
             if (propertySchema) {
-                propertyReferenceId = propertySchema["$ref"];
+                schemaReferenceId = propertySchema["$ref"];
             }
-            var fieldReferenceId = null;
+            var optionsReferenceId = null;
             if (propertyOptions) {
-                fieldReferenceId = propertyOptions["$ref"];
+                optionsReferenceId = propertyOptions["$ref"];
             }
 
-            if (propertyReferenceId || fieldReferenceId)
+            if (schemaReferenceId || optionsReferenceId)
             {
-                // walk up to find top field
-                var topField = this;
-                var fieldChain = [topField];
-                while (topField.parent)
+                var topField = this.top();
+
+                // safety check for circularity on schema $ref
+                if (schemaReferenceId)
                 {
-                    topField = topField.parent;
-                    fieldChain.push(topField);
+                    var circularityCheckResult1 = Alpaca.assertNonCircularSchemaReferences(this, schemaReferenceId);
+                    if (circularityCheckResult1 && circularityCheckResult1.circular)
+                    {
+                        circularityCheckResult1.object = topField.schema;
+                        return callback(null, null, circularityCheckResult1);
+                    }
+                }
+
+                // safety check for circularity on options $ref
+                if (optionsReferenceId)
+                {
+                    var circularityCheckResult2 = Alpaca.assertNonCircularOptionsReferences(this, optionsReferenceId);
+                    if (circularityCheckResult2 && circularityCheckResult2.circular)
+                    {
+                        circularityCheckResult2.object = topField.options;
+                        return callback(null, null, circularityCheckResult2);
+                    }
                 }
 
                 var originalPropertySchema = propertySchema;
@@ -542,39 +559,7 @@
                 var schemaReferenceCacheFn = Alpaca.schemaReferenceCacheFn;
                 var optionsReferenceCacheFn = Alpaca.optionsReferenceCacheFn;
 
-                Alpaca.loadRefSchemaOptions(topSchema, topOptions, propertyReferenceId, fieldReferenceId, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, propertySchema, propertyOptions) {
-
-                    // walk the field chain to see if we have any circularity (for schema)
-                    var circular = false;
-                    var refCount = 0;
-                    for (var i = 0; i < fieldChain.length; i++)
-                    {
-                        if (propertyReferenceId)
-                        {
-                            if (fieldChain[i].schema)
-                            {
-                                if (fieldChain[i]["type"] === "array")
-                                {
-                                    // we found an array field, which is ok to be circular since it can be size 0
-                                    refCount = 0;
-                                }
-                                else if ( (fieldChain[i].schema.id === propertyReferenceId) || (fieldChain[i].schema.id === "#" + propertyReferenceId))
-                                {
-                                    refCount++;
-                                }
-                                else if ( (fieldChain[i].schema["$ref"] === propertyReferenceId))
-                                {
-                                    refCount++;
-                                }
-                            }
-                        }
-
-                        if (refCount > 1)
-                        {
-                            circular = true;
-                            break;
-                        }
-                    }
+                Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaReferenceId, optionsReferenceId, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, propertySchema, propertyOptions) {
 
                     var resolvedPropertySchema = {};
                     if (originalPropertySchema) {
@@ -598,7 +583,7 @@
                     }
 
                     Alpaca.nextTick(function() {
-                        completionFunction(resolvedPropertySchema, resolvedPropertyOptions, circular);
+                        completionFunction(resolvedPropertySchema, resolvedPropertyOptions);
                     });
                 });
             }
