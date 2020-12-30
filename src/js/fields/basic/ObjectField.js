@@ -1949,7 +1949,9 @@
             {
                 if (!stepBindings.hasOwnProperty(propertyId))
                 {
-                    stepBindings[propertyId] = 1;
+                    if (noBindings) {
+                        stepBindings[propertyId] = 1; // views are cached and must not be modified
+                    }
                     if (!noBindings)
                     {
                         if (this.childrenByPropertyId && this.childrenByPropertyId[propertyId])
