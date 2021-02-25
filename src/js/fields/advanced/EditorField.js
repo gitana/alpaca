@@ -374,7 +374,14 @@
                 }
                 else
                 {
-                    value = JSON.parse(value);
+                    //don't throw error if user entered bad json
+                    try {
+                      value = JSON.parse(value);
+                    }
+                    catch(err){
+                      //bad json
+                      value = null;
+                    }
                 }
             }
 
