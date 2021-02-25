@@ -4236,7 +4236,7 @@
             throw new Error("The moment.js library has not been included, cannot produce moment object");
         }
 
-        return Alpaca._moment.call(this, arguments);
+        return Alpaca._moment.apply(this, arguments);
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
