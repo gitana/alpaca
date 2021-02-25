@@ -42,7 +42,7 @@
         // required fields get a little star in their label
         //var label = $(fieldEl).find("label.alpaca-control-label");
         //$('<span class="alpaca-icon-required glyphicon glyphicon-star"></span>').prependTo(label);
-        var label = $(fieldEl).find("label.alpaca-control-label");
+        var label = $(fieldEl).children("label.alpaca-control-label");
         if ($(label).length > 0)
         {
             $(label).append("<span class='alpaca-required-indicator'>(required)</span>")
