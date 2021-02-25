@@ -1,5 +1,7 @@
 (function($, Handlebars, HandlebarsPrecompiled)
 {
+    var Alpaca = $.alpaca;
+
     // runtime cache of precompiled templates keyed by cacheKey
     var COMPILED_TEMPLATES = {};
 
