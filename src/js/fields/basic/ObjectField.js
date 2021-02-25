@@ -683,7 +683,7 @@
 
             status = this._validateMinProperties();
             valInfo["tooFewProperties"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.minProperties]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooFewProperties"), [this.schema.minProperties]),
                 "status": status
             };
 
