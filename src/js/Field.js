@@ -1397,7 +1397,8 @@
                             "message": messageObject.message,
                             "view": self.view
                         });
-                        messageElement.addClass("alpaca-message");
+                        // Fix a problem of the misplacement of the message
+                        messageElement.addClass(self.view.horizontal ? "alpaca-message col-sm-offset-3 col-sm-9" : "alpaca-message");
                         if (hidden)
                         {
                             messageElement.addClass("alpaca-message-hidden");
