@@ -1,6 +1,6 @@
 <script type="text/x-handlebars-template">
 
-    <div class="alpaca-control-url-anchor-wrapper">
+    <div class="alpaca-control-url-anchor-wrapper {{#if options.controlClass}}{{options.controlClass}}{{/if}}">
         <a href="{{data}}" {{#if options.anchorTarget}}target="{{options.anchorTarget}}"{{/if}} title="{{#if options.anchorTitle}}{{options.anchorTitle}}{{else}}{{data}}{{/if}}">
         {{#if options.anchorTitle}}
             {{options.anchorTitle}}

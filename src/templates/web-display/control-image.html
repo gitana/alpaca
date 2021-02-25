@@ -1,6 +1,6 @@
 <script type="text/x-handlebars-template">
 
-    <div class="alpaca-image-display">
+    <div class="alpaca-image-display {{#if options.controlClass}}{{options.controlClass}}{{/if}}">
         <img id="{{id}}-image" src="{{data}}">
     </div>
 
