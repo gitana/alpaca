@@ -139,10 +139,7 @@
                 {
                     for (var j = 0; j < self.data.length; j++)
                     {
-                        if (self.data[j].value === self.selectOptions[i].value)
-                        {
-                            self.selectOptions[i].selected = true;
-                        }
+                        self.selectOptions[i].selected = (self.data[j].value === self.selectOptions[i].value);
                     }
                 }
 
