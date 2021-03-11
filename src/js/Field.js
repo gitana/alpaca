@@ -603,7 +603,7 @@
                         {
                             lastSegment = lastSegment.substring(lastSegment.indexOf("[") + 1, lastSegment.indexOf("]"));
                         }
-    
+
                         if (lastSegment)
                         {
                             this.name = this.parent.name + "_" + lastSegment;
@@ -1904,7 +1904,7 @@
             {
                 newValue = this.data;
             }
-            
+
             this.setValue(newValue);
         },
 
@@ -1988,7 +1988,7 @@
 
                         if (Alpaca.isFunction(func))
                         {
-                            if (event === "render" || event === "ready" || event === "blur" || event === "focus")
+                            if (event === "render" || event === "ready" || event === "blur" || event === "focus" || event === "add")
                             {
                                 _this.on(event, function(e, a, b, c) {
                                     func.call(_this, e, a, b, c);
