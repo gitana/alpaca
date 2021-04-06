@@ -2211,8 +2211,9 @@
         subscribe: function()
         {
             var args = Alpaca.makeArray(arguments);
-            args.unshift(this.getObservableScope());
-
+            if (args.length == 2) {
+                args.unshift(this.getObservableScope());
+            }
             return Alpaca.subscribe.apply(this, args);
         },
 
