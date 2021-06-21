@@ -131,7 +131,9 @@
             else
             {
                 var checkbox = $(self.getFieldEl()).find("input:checkbox");
-                if (self.data.length > 0)
+                var vals = self.data.map(d => d.value);
+                var check = vals.includes(true);
+                if (check)
                 {
                     Alpaca.checked(checkbox, true);
                 }

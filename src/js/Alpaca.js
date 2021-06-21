@@ -1182,15 +1182,15 @@
          */
         regexps:
         {
-            "email": /^[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+(?:\.[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,6}$/i,
-            "url": /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(\:[0-9]{1,5})?(\/.*)?$/i,
-            "intranet-url": /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*(\:[0-9]{1,5})?(\/.*)?$/i,
+            "email": /^([a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+(?:\.[a-z0-9!\#\$%&'\*\-\/=\?\+\-\^_`\{\|\}~]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,6})?$/i,
+            "url": /^((http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(\:[0-9]{1,5})?(\/.*)?)?$/i,
+            "intranet-url": /^((http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*(\:[0-9]{1,5})?(\/.*)?)?$/i,
             "password": /^[0-9a-zA-Z\x20-\x7E]*$/,
-            "date": /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.]\d\d$/,
-            "integer": /^([\+\-]?([1-9]\d*)|0)$/,
-            "number":/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))$/,
+            "date": /^((0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.]\d\d)?$/,
+            "integer": /^([\+\-]?([1-9]\d*)|0)?$/,
+            "number":/^([\+\-]?((([0-9]+(\.)?)|([0-9]*\.[0-9]+))([eE][+-]?[0-9]+)?))?$/,
             "phone":/^(\D?(\d{3})\D?\D?(\d{3})\D?(\d{4}))?$/,
-            "ipv4":/^(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)(?:\.(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)){3}$/,
+            "ipv4":/^((?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)(?:\.(?:1\d?\d?|2(?:[0-4]\d?|[6789]|5[0-5]?)?|[3-9]\d?|0)){3})?$/,
             "zipcode-five": /^(\d{5})?$/,
             "zipcode-nine": /^(\d{5}(-\d{4})?)?$/,
             "whitespace": /^\s+$/
@@ -2684,193 +2684,198 @@
         return $(el).attr(name);
     };
 
-    Alpaca.loadRefSchemaOptions = function(topField, schemaReferenceId, optionsReferenceId, callback)
+    /**
+     * Loads the schema and options for a form given their $ref strings.
+     *
+     * Each $ref string could look like:
+     *
+     *    "id"                                   (an ID for a schema element)
+     *    "#id"                                  (an ID for a schema element)
+     *    "#a/b"                                 (a path to a schema element)
+     *    "#/a/b"                                (a path to a schema elemnet)
+     *    "https://server.com/resource#/a/b      (a path to a schema element inside of a remote resource)
+     *    "https://server.com/resource#a"        (an ID for a schema element inside of a remote resource
+     *    "qname://a/b#c/d                       (a path to a schema element inside of a branch schema)
+     *
+     * @param schema
+     * @param options
+     * @param schemaReferenceString
+     * @param optionsReferenceString
+     * @param connector (required for any remote loading)
+     * @param schemaReferenceCacheFn
+     * @param optionsReferenceCacheFn
+     * @param callback
+     */
+    Alpaca.loadRefSchemaOptions = function(schema, options, schemaReferenceString, optionsReferenceString, connector, schemaReferenceCacheFn, optionsReferenceCacheFn, callback)
     {
         var fns = [];
 
         // holds resolution information
         var resolution = {};
 
-        // schema loading function
-        var fn1 = function(schema, schemaReferenceId, resolution)
+        var splitReferenceString = function(referenceString)
         {
-            return function(done)
+            // split "qname://a/b#/c/d" -> id = "qname://a/b" and hash = "#/c/d"
+            var referenceResource = null;
+            var referenceHash = null;
+            var x = referenceString.indexOf("#");
+            if (x > -1)
             {
-                if (!schemaReferenceId)
-                {
-                    done();
-                }
-                else if (schemaReferenceId === "#")
-                {
-                    resolution.schema = schema;
+                referenceResource = referenceString.substring(0, x);
+                referenceHash = referenceString.substring(x);
+            }
+            else
+            {
+                referenceResource = referenceString;
+                referenceHash = null;
+            }
 
-                    done();
-                }
-                else if (schemaReferenceId.indexOf("#/") === 0)
+            if (referenceResource === "") {
+                referenceResource = null;
+            }
+
+            var result = {};
+            if (referenceResource) {
+                result.resource = referenceResource;
+            };
+            if (referenceHash) {
+                result.hash = referenceHash;
+            }
+
+            return result;
+        };
+
+        if (schemaReferenceString)
+        {
+            // schema loading function
+            var fn1 = function(schema, referenceString, resolution, connector, referenceCacheFn)
+            {
+                return function(done)
                 {
-                    // this is a property path relative to the root of the current schema
-                    schemaReferenceId = schemaReferenceId.substring(2);
-
-                    // split into tokens
-                    var tokens = schemaReferenceId.split("/");
-
-                    var defSchema = schema;
-                    for (var i = 0; i < tokens.length; i++)
+                    if (!referenceString)
                     {
-                        var token = tokens[i];
-
-                        // schema
-                        if (defSchema[token])
-                        {
-                            defSchema = defSchema[token];
-                        }
-                        else if (defSchema.properties && defSchema.properties[token])
-                        {
-                            defSchema = defSchema.properties[token];
-                        }
-                        else if (defSchema.definitions && defSchema.definitions[token])
-                        {
-                            defSchema = defSchema.definitions[token];
-                        }
-                        else
-                        {
-                            defSchema = null;
-                            break;
-                        }
+                        return done();
                     }
 
-                    resolution.schema = defSchema;
-
-                    done();
-                }
-                else if (schemaReferenceId.indexOf("#") === 0)
-                {
-                    // this is the ID of a node in the current schema document
-
-                    // walk the current document schema until we find the referenced node (using id property)
-                    var resolvedSchema = Alpaca.resolveSchemaReference(schema, schemaReferenceId);
-                    if (resolvedSchema)
+                    var cachedSchema = referenceCacheFn(referenceString);
+                    if (cachedSchema)
                     {
-                        resolution.schema = resolvedSchema;
+                        resolution.schema = cachedSchema;
+                        return done();
                     }
 
-                    done();
-                }
-                else
-                {
-                    // the reference is considered to be a URI with or without a "#" in it to point to a specific location in
-                    // the target schema
-
-                    var referenceParts = Alpaca.pathParts(schemaReferenceId);
-
-                    topField.connector.loadReferenceSchema(referenceParts.path, function (schema) {
-
-                        if (referenceParts.id)
+                    var reference = splitReferenceString(referenceString);
+                    if (reference.resource)
+                    {
+                        // a reference by ID or by path (since we support "a" and "/a/b/c")
+                        var resolvedSchema = Alpaca.resolveSchemaReference(schema, reference.resource);
+                        if (resolvedSchema)
                         {
-                            var resolvedSchema = Alpaca.resolveSchemaReference(schema, referenceParts.id);
+                            resolution.schema = resolvedSchema;
+                            referenceCacheFn(referenceString, resolvedSchema);
+                            return done();
+                        }
+
+                        if (!connector)
+                        {
+                            return done();
+                        }
+
+                        // it's a remote reference?
+                        return connector.loadReferenceSchema(reference.resource, function (schema) {
+
+                            if (!reference.hash)
+                            {
+                                resolution.schema = schema;
+                                referenceCacheFn(referenceString, schema);
+                                return done();
+                            }
+
+                            // offset path into remote resource (after hash)
+                            var resolvedSchema = Alpaca.resolveSchemaReference(schema, reference.hash);
                             if (resolvedSchema)
                             {
                                 resolution.schema = resolvedSchema;
+                                referenceCacheFn(referenceString, resolvedSchema);
+                                return done();
                             }
-                        }
-                        else
+
+                            done();
+                        }, function(err) {
+                            done(err);
+                        });
+                    }
+
+                    if (reference.hash)
+                    {
+                        // a reference by ID or by path
+                        var resolvedSchema = Alpaca.resolveSchemaReference(schema, reference.hash);
+                        if (resolvedSchema)
                         {
-                            resolution.schema = schema;
+                            resolution.schema = resolvedSchema;
+                            referenceCacheFn(referenceString, resolvedSchema);
                         }
 
-                        done();
-                    }, function(err) {
-                        done();
-                    });
-                }
-            };
-        };
-        fns.push(fn1(topField.schema, schemaReferenceId, resolution));
+                        return done();
+                    }
 
-        var fn2 = function(options, optionsReferenceId, resolution)
+                    done();
+                };
+            };
+            fns.push(fn1(schema, schemaReferenceString, resolution, connector, schemaReferenceCacheFn));
+        }
+
+        var fn2 = function(options, referenceString, resolution, connector, referenceCacheFn)
         {
             return function(done)
             {
-                if (!optionsReferenceId)
+                if (!referenceString)
                 {
-                    done();
+                    return done();
                 }
-                else if (optionsReferenceId === "#")
-                {
-                    resolution.options = options;
 
-                    done();
+                var cachedOptions = referenceCacheFn(referenceString);
+                if (cachedOptions)
+                {
+                    resolution.options = cachedOptions;
+                    return done();
                 }
-                else if (optionsReferenceId.indexOf("#/") === 0)
+
+                var reference = splitReferenceString(referenceString);
+
+                if (reference.resource)
                 {
-                    // this is a property path relative to the root of the current schema
-                    optionsReferenceId = optionsReferenceId.substring(2);
-
-                    // split into tokens
-                    var tokens = optionsReferenceId.split("/");
-
-                    var defOptions = options;
-                    for (var i = 0; i < tokens.length; i++)
-                    {
-                        var token = tokens[i];
-
-                        // options
-                        if (defOptions[token])
-                        {
-                            defOptions = defOptions[token];
-                        }
-                        else if (defOptions.fields && defOptions.fields[token])
-                        {
-                            defOptions = defOptions.fields[token];
-                        }
-                        else if (defOptions.definitions && defOptions.definitions[token])
-                        {
-                            defOptions = defOptions.definitions[token];
-                        }
-                        else
-                        {
-                            defOptions = null;
-                            break;
-                        }
-                    }
-
-                    resolution.options = defOptions;
-
-                    done();
-                }
-                else if (optionsReferenceId.indexOf("#") === 0)
-                {
-                    // this is the ID of a node in the current schema document
-
-                    // walk the current document schema until we find the referenced node (using id property)
-                    var resolvedOptions = Alpaca.resolveOptionsReference(options, optionsReferenceId);
+                    // a reference by ID or by path (since we support "a" and "/a/b/c")
+                    var resolvedOptions = Alpaca.resolveOptionsReference(options, reference.resource);
                     if (resolvedOptions)
                     {
                         resolution.options = resolvedOptions;
+                        referenceCacheFn(referenceString, resolvedOptions);
+                        return done();
                     }
 
-                    done();
-                }
-                else
-                {
-                    // the reference is considered to be a URI with or without a "#" in it to point to a specific location in
-                    // the target schema
+                    if (!connector)
+                    {
+                        return done();
+                    }
 
-                    var optionReferenceParts = Alpaca.pathParts(optionsReferenceId);
+                    // it's a remote reference?
+                    return connector.loadReferenceOptions(reference.resource, function (options) {
 
-                    topField.connector.loadReferenceOptions(optionReferenceParts.path, function (options) {
-
-                        if (optionReferenceParts.id)
-                        {
-                            var resolvedOptions = Alpaca.resolveOptionsReference(options, optionReferenceParts.id);
-                            if (resolvedOptions)
-                            {
-                                resolution.options = resolvedOptions;
-                            }
-                        }
-                        else
+                        if (!reference.hash)
                         {
                             resolution.options = options;
+                            referenceCacheFn(referenceString, options);
+                            return done();
+                        }
+
+                        // offset path into remote resource (after hash)
+                        var resolvedOptions = Alpaca.resolveOptionsReference(options, reference.hash);
+                        if (resolvedOptions)
+                        {
+                            resolution.options = resolvedOptions;
+                            referenceCacheFn(referenceString, resolvedOptions);
+                            return done();
                         }
 
                         done();
@@ -2878,13 +2883,28 @@
                         done();
                     });
                 }
+
+                if (reference.hash)
+                {
+                    // a reference by ID or by path
+                    var resolvedOptions = Alpaca.resolveOptionsReference(options, reference.hash);
+                    if (resolvedOptions)
+                    {
+                        resolution.options = resolvedOptions;
+                        referenceCacheFn(referenceString, resolvedOptions);
+                    }
+
+                    return done();
+                }
+
+                done();
             };
         };
-        fns.push(fn2(topField.options, optionsReferenceId, resolution));
+        fns.push(fn2(options, optionsReferenceString, resolution, connector, optionsReferenceCacheFn));
 
         // run loads in parallel
-        Alpaca.parallel(fns, function() {
-            callback(resolution.schema, resolution.options);
+        Alpaca.parallel(fns, function(err) {
+            callback(null, resolution.schema, resolution.options);
         });
     };
 
@@ -2959,22 +2979,94 @@
     /**
      * Resolves a schema path reference to the given sub-schema.
      *
+     * The schema referenceId can either be an explicit ID (such as "123" or "#123")
+     * or it can be a relative path within the current document (i.e. "#/a/b/c").
+     *
      * @param schema
      * @param referenceId
      * @returns {*}
      */
     Alpaca.resolveSchemaReference = function(schema, referenceId)
     {
-        if ((schema.id === referenceId) || (("#" + schema.id) === referenceId)) // jshint ignore:line
+        if (!referenceId)
+        {
+            return null;
+        }
+
+        if ((schema.id === referenceId) || (("#" + schema.id) === referenceId) || referenceId === "/") // jshint ignore:line
         {
             return schema;
         }
 
-        if (schema.properties)
+        if (Alpaca.startsWith(referenceId, "#"))
         {
-            for (var propertyId in schema.properties)
+            referenceId = referenceId.substring(1);
+        }
+
+        if (Alpaca.endsWith(referenceId, "/"))
+        {
+            referenceId = referenceId.substring(0, referenceId.length - 1);
+        }
+
+        if (Alpaca.startsWith(referenceId, "/"))
+        {
+            // path based lookup
+            referenceId = referenceId.substring(1);
+
+            // split into tokens
+            var tokens = referenceId.split("/");
+
+            var defSchema = schema;
+            for (var i = 0; i < tokens.length; i++)
             {
-                var subSchema = schema.properties[propertyId];
+                var token = tokens[i];
+
+                // schema
+                if (defSchema[token])
+                {
+                    defSchema = defSchema[token];
+                }
+                else if (defSchema.properties && defSchema.properties[token])
+                {
+                    defSchema = defSchema.properties[token];
+                }
+                else if (defSchema.definitions && defSchema.definitions[token])
+                {
+                    defSchema = defSchema.definitions[token];
+                }
+                else if (defSchema.items)
+                {
+                    defSchema = defSchema.items[token];
+                }
+                else
+                {
+                    defSchema = null;
+                    break;
+                }
+            }
+
+            return defSchema;
+        }
+        else
+        {
+            // id based lookup
+
+            if (schema.properties)
+            {
+                for (var propertyId in schema.properties)
+                {
+                    var subSchema = schema.properties[propertyId];
+
+                    var x = Alpaca.resolveSchemaReference(subSchema, referenceId);
+                    if (x)
+                    {
+                        return x;
+                    }
+                }
+            }
+            else if (schema.items)
+            {
+                var subSchema = schema.items;
 
                 var x = Alpaca.resolveSchemaReference(subSchema, referenceId);
                 if (x)
@@ -2983,48 +3075,97 @@
                 }
             }
         }
-        else if (schema.items)
-        {
-            var subSchema = schema.items;
-
-            var x = Alpaca.resolveSchemaReference(subSchema, referenceId);
-            if (x)
-            {
-                return x;
-            }
-        }
 
         return null;
     };
 
     Alpaca.resolveOptionsReference = function(options, referenceId)
     {
-        if ((options.id === referenceId) || (("#" + options.id) === referenceId)) // jshint ignore:line
+        if (!referenceId)
+        {
+            return null;
+        }
+
+        if ((options.id === referenceId) || (("#" + options.id) === referenceId) || referenceId === "/") // jshint ignore:line
         {
             return options;
         }
 
-        if (options.fields)
+        if (Alpaca.startsWith(referenceId, "#"))
         {
-            for (var fieldId in options.fields)
+            referenceId = referenceId.substring(1);
+        }
+
+        if (Alpaca.endsWith(referenceId, "/"))
+        {
+            referenceId = referenceId.substring(0, referenceId.length - 1);
+        }
+
+        // if it's a path...
+        if (Alpaca.startsWith(referenceId, "/"))
+        {
+            referenceId = referenceId.substring(1);
+
+            // split into tokens
+            var tokens = referenceId.split("/");
+
+            var defOptions = options;
+            for (var i = 0; i < tokens.length; i++)
             {
-                var subOptions = options.fields[fieldId];
+                var token = tokens[i];
+
+                // options
+                if (defOptions[token])
+                {
+                    defOptions = defOptions[token];
+                }
+                else if (defOptions.fields && defOptions.fields[token])
+                {
+                    defOptions = defOptions.fields[token];
+                }
+                else if (defOptions.definitions && defOptions.definitions[token])
+                {
+                    defOptions = defOptions.definitions[token];
+                }
+                else if (defOptions.items && defOptions.items[token])
+                {
+                    defOptions = defOptions.items[token];
+                }
+                else
+                {
+                    defOptions = null;
+                    break;
+                }
+            }
+
+            return defOptions;
+        }
+        else
+        {
+            // it's an ID lookup, use this legacy approach
+
+            if (options.fields)
+            {
+                for (var fieldId in options.fields)
+                {
+                    var subOptions = options.fields[fieldId];
+
+                    var x = Alpaca.resolveOptionsReference(subOptions, referenceId);
+                    if (x)
+                    {
+                        return x;
+                    }
+                }
+            }
+            else if (options.items)
+            {
+                var subOptions = options.items;
 
                 var x = Alpaca.resolveOptionsReference(subOptions, referenceId);
                 if (x)
                 {
                     return x;
                 }
-            }
-        }
-        else if (options.items)
-        {
-            var subOptions = options.items;
-
-            var x = Alpaca.resolveOptionsReference(subOptions, referenceId);
-            if (x)
-            {
-                return x;
             }
         }
 
@@ -3399,7 +3540,7 @@
             {
                 ourselvesHandler(current, entry, function() {
                     done();
-                })
+                });
             }
         };
 
@@ -3480,6 +3621,13 @@
                         for (var messageId in field.validation)
                         {
                             if (!field.validation[messageId]["status"])
+                            {
+                                messages.push({
+                                    "id": messageId,
+                                    "message": field.validation[messageId]["message"]
+                                });
+                            }
+                            else if (field.validation[messageId]["status"] && field.validation[messageId]["message"])
                             {
                                 messages.push({
                                     "id": messageId,
@@ -4094,7 +4242,7 @@
             throw new Error("The moment.js library has not been included, cannot produce moment object");
         }
 
-        return Alpaca._moment.call(this, arguments);
+        return Alpaca._moment.apply(this, arguments);
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4155,6 +4303,208 @@
     Alpaca.externalMessage = function(key)
     {
         return undefined;
+    };
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // REFERENCE CACHE ($ref)
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Alpaca.NOOP_REFERENCE_CACHE_FN = function()
+    {
+        return function(reference, value)
+        {
+            return null;
+        }
+    }();
+
+    Alpaca.MEMORY_REFERENCE_CACHE_FN = function()
+    {
+        var map = {};
+
+        return function(reference, value)
+        {
+            if (!reference) {
+                return;
+            }
+
+            if (typeof(value) !== "undefined")
+            {
+                if (value === null)
+                {
+                    delete map[reference];
+                }
+                else
+                {
+                    map[reference] = value;
+                }
+            }
+
+            return map[reference];
+        }
+    }();
+
+    Alpaca.schemaReferenceCacheFn = Alpaca.NOOP_REFERENCE_CACHE_FN;
+    Alpaca.optionsReferenceCacheFn = Alpaca.NOOP_REFERENCE_CACHE_FN;
+
+    var assertNonCircularSchemaReferences = Alpaca.assertNonCircularSchemaReferences = function(field, ref)
+    {
+        var result = {
+            "circular": false,
+            "scope": "schema",
+            "ref": ref,
+            "paths": []
+        };
+
+        // collect a chain of fields back up to the top
+        // the order is [top] -> [child] -> [this]
+        var _field = field;
+        var fieldChain = [_field];
+        while (_field.parent)
+        {
+            _field = _field.parent;
+            fieldChain.unshift(_field);
+        }
+
+        var referencingFields = [];
+
+        for (var i = 0; i < fieldChain.length; i++)
+        {
+            var _field = fieldChain[i];
+            if (_field.schema)
+            {
+                if (_field["type"] === "array")
+                {
+                    // we found an array field, which is ok to be circular since it can be size 0
+                    referencingFields = [];
+                }
+                else if ((_field.schema.id === ref) || (_field.schema.id === "#" + ref))
+                {
+                    referencingFields.push(_field);
+                }
+                else if ((_field.schema["$ref"] === ref))
+                {
+                    referencingFields.push(_field);
+                }
+            }
+        }
+
+        if (referencingFields.length > 1)
+        {
+            result.circular = true;
+            for (var z = 0; z < referencingFields.length; z++)
+            {
+                result.paths.push(referencingFields[z].path);
+            }
+        }
+
+        return result;
+    };
+
+    var assertNonCircularOptionsReferences = Alpaca.assertNonCircularOptionsReferences = function(field, ref)
+    {
+        var result = {
+            "circular": false,
+            "scope": "options",
+            "ref": ref,
+            "paths": []
+        };
+
+        // collect a chain of fields back up to the top
+        // the order is [top] -> [child] -> [this]
+        var _field = field;
+        var fieldChain = [_field];
+        while (_field.parent)
+        {
+            _field = _field.parent;
+            fieldChain.unshift(_field);
+        }
+
+        var referencingFields = [];
+
+        for (var i = 0; i < fieldChain.length; i++)
+        {
+            var _field = fieldChain[i];
+            if (_field.options)
+            {
+                if (_field["type"] === "array")
+                {
+                    // we found an array field, which is ok to be circular since it can be size 0
+                    referencingFields = [];
+                }
+                else if ((_field.options.id === ref) || (_field.options.id === "#" + ref))
+                {
+                    referencingFields.push(_field);
+                }
+                else if ((_field.options["$ref"] === ref))
+                {
+                    referencingFields.push(_field);
+                }
+            }
+        }
+
+        if (referencingFields.length > 1)
+        {
+            result.circular = true;
+            for (var z = 0; z < referencingFields.length; z++)
+            {
+                result.paths.push(referencingFields[z].path);
+            }
+        }
+
+        return result;
+    };
+
+    /**
+     * Utility method that throws a reference circularity error for either schema or options.
+     *
+     * @param circularityCheck
+     * @param errorCallback
+     */
+    Alpaca.throwReferenceCircularityError = function(circularityCheck, errorCallback)
+    {
+        var messages = [];
+
+        if (circularityCheck.scope === "schema")
+        {
+            messages.push("Circular reference detected for schema");
+        }
+
+        if (circularityCheck.scope === "options")
+        {
+            messages.push("Circular reference detected for options");
+        }
+
+        if (circularityCheck.object)
+        {
+            messages.push("object: " + JSON.stringify(circularityCheck.object, null, 2));
+        }
+
+        if (circularityCheck.ref)
+        {
+            messages.push("reference: " + circularityCheck.ref);
+        }
+
+        if (circularityCheck.paths)
+        {
+            messages.push("paths: " + JSON.stringify(circularityCheck.paths));
+        }
+
+        var err = {
+            "message": messages.join(", ")
+        };
+
+        if (errorCallback)
+        {
+            errorCallback(err);
+        }
+        else
+        {
+            Alpaca.defaultErrorCallback(err);
+        }
     };
 
 

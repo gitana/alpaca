@@ -303,6 +303,14 @@
 
             var itemsByPropertyId = {};
 
+            var executionState = self.top().executionState;
+            if (!executionState)
+            {
+                executionState = self.top().executionState = {
+                    "halt": false
+                };
+            }
+
             // wrap into waterfall functions
             var propertyFunctions = [];
             for (var propertyId in properties)
@@ -316,17 +324,40 @@
                     }
                 }
 
-                var pf = (function(self, propertyId, itemData, extraDataProperties)
+                // only allow this if we have data, otherwise we end up with circular reference
+                var pf = (function(self, propertyId, itemData, extraDataProperties, executionState)
                 {
                     return function(_done)
                     {
+                        // allow for pre-emptive termination if one of the other parallel runners hit a circular recursion issue
+                        // this makes things faster because otherwise, for deeply nested $ref documents, we can spin a long time waiting
+                        // for the parallel executing set to complete
+                        if (executionState.halt)
+                        {
+                            return _done();
+                        }
+
+                        // if (!itemData)
+                        // {
+                        //     return _done();
+                        // }
+
                         // only allow this if we have data, otherwise we end up with circular reference
-                        self.resolvePropertySchemaOptions(propertyId, function (schema, options, circular) {
+                        self.resolvePropertySchemaOptions(propertyId, function (schema, options, circularityCheck) {
 
                             // we only allow addition if the resolved schema isn't circularly referenced
                             // or the schema is optional
-                            if (circular) {
-                                return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(schema), self.errorCallback);
+                            if (circularityCheck && circularityCheck.circular)
+                            {
+                                circularityCheck.object = self.top().schema;
+
+                                // halt execution of other parallel runners
+                                executionState.halt = true;
+                                Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
+
+                                return _done({
+                                    "message": "A circular recursion error occurred with this schema"
+                                });
                             }
 
                             if (!schema) {
@@ -345,7 +376,7 @@
                         });
                     };
 
-                })(self, propertyId, itemData, extraDataProperties);
+                })(self, propertyId, itemData, extraDataProperties, executionState);
 
                 propertyFunctions.push(pf);
             }
@@ -375,16 +406,15 @@
                 {
                     // sort by order?
                     items.sort(function (a, b) {
-
                         var orderA = a.options.order;
-                        if (!orderA)
+                        if (orderA === undefined || orderA === null || orderA === -1)
                         {
-                            orderA = 0;
+                            orderA = 2147483647; // max int
                         }
                         var orderB = b.options.order;
-                        if (!orderB)
+                        if (orderB === undefined || orderB === null || orderB === -1)
                         {
-                            orderB = 0;
+                            orderB = 2147483647; // max int
                         }
 
                         return (orderA - orderB);
@@ -503,14 +533,14 @@
         {
             var _this = this;
 
-            var completionFunction = function(resolvedPropertySchema, resolvedPropertyOptions, circular)
+            var completionFunction = function(resolvedPropertySchema, resolvedPropertyOptions, circularityCheckResult)
             {
                 // special caveat:  if we're in read-only mode, the child must also be in read-only mode
-                if (_this.options.readonly) {
+                if (_this.options.readonly && resolvedPropertyOptions) {
                     resolvedPropertyOptions.readonly = true;
                 }
 
-                callback(resolvedPropertySchema, resolvedPropertyOptions, circular);
+                callback(resolvedPropertySchema, resolvedPropertyOptions, circularityCheckResult);
             };
 
             var propertySchema = null;
@@ -523,52 +553,57 @@
             }
 
             // handle $ref
-            var propertyReferenceId = null;
+            var schemaRef = null;
             if (propertySchema) {
-                propertyReferenceId = propertySchema["$ref"];
+                schemaRef = propertySchema["$ref"];
             }
-            var fieldReferenceId = null;
+            var optionsRef = null;
             if (propertyOptions) {
-                fieldReferenceId = propertyOptions["$ref"];
+                optionsRef = propertyOptions["$ref"];
             }
 
-            if (propertyReferenceId || fieldReferenceId)
+            if (schemaRef || optionsRef)
             {
-                // walk up to find top field
-                var topField = this;
-                var fieldChain = [topField];
-                while (topField.parent)
+                var topField = this.top();
+
+                // safety check for circularity on schema $ref
+                if (schemaRef)
                 {
-                    topField = topField.parent;
-                    fieldChain.push(topField);
+                    var circularityCheckResult1 = Alpaca.assertNonCircularSchemaReferences(this, schemaRef);
+                    if (circularityCheckResult1 && circularityCheckResult1.circular)
+                    {
+                        circularityCheckResult1.object = topField.schema;
+
+                        return Alpaca.nextTick(function() {
+                            completionFunction(null, null, circularityCheckResult1);
+                        });
+                    }
+                }
+
+                // safety check for circularity on options $ref
+                if (optionsRef)
+                {
+                    var circularityCheckResult2 = Alpaca.assertNonCircularOptionsReferences(this, optionsRef);
+                    if (circularityCheckResult2 && circularityCheckResult2.circular)
+                    {
+                        circularityCheckResult2.object = topField.options;
+
+                        return Alpaca.nextTick(function() {
+                            completionFunction(null, null, circularityCheckResult2);
+                        });
+                    }
                 }
 
                 var originalPropertySchema = propertySchema;
                 var originalPropertyOptions = propertyOptions;
 
-                Alpaca.loadRefSchemaOptions(topField, propertyReferenceId, fieldReferenceId, function(propertySchema, propertyOptions) {
+                var topConnector = topField.connector;
+                var topSchema = topField.schema;
+                var topOptions = topField.options;
+                var schemaReferenceCacheFn = Alpaca.schemaReferenceCacheFn;
+                var optionsReferenceCacheFn = Alpaca.optionsReferenceCacheFn;
 
-                    // walk the field chain to see if we have any circularity (for schema)
-                    var refCount = 0;
-                    for (var i = 0; i < fieldChain.length; i++)
-                    {
-                        if (propertyReferenceId)
-                        {
-                            if (fieldChain[i].schema)
-                            {
-                                if ( (fieldChain[i].schema.id === propertyReferenceId) || (fieldChain[i].schema.id === "#" + propertyReferenceId))
-                                {
-                                    refCount++;
-                                }
-                                else if ( (fieldChain[i].schema["$ref"] === propertyReferenceId))
-                                {
-                                    refCount++;
-                                }
-                            }
-                        }
-                    }
-
-                    var circular = (refCount > 1);
+                Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaRef, optionsRef, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, propertySchema, propertyOptions) {
 
                     var resolvedPropertySchema = {};
                     if (originalPropertySchema) {
@@ -582,6 +617,9 @@
                         resolvedPropertySchema.id = originalPropertySchema.id;
                     }
                     //delete resolvedPropertySchema.id;
+                    if (schemaRef) {
+                        resolvedPropertySchema["$ref"] = schemaRef;
+                    }
 
                     var resolvedPropertyOptions = {};
                     if (originalPropertyOptions) {
@@ -590,9 +628,12 @@
                     if (propertyOptions) {
                         Alpaca.mergeObject(resolvedPropertyOptions, propertyOptions);
                     }
+                    if (optionsRef) {
+                        resolvedPropertyOptions["$ref"] = optionsRef;
+                    }
 
                     Alpaca.nextTick(function() {
-                        completionFunction(resolvedPropertySchema, resolvedPropertyOptions, circular);
+                        completionFunction(resolvedPropertySchema, resolvedPropertyOptions);
                     });
                 });
             }
@@ -657,7 +698,7 @@
 
             status = this._validateMinProperties();
             valInfo["tooFewProperties"] = {
-                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.minProperties]),
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooFewProperties"), [this.schema.minProperties]),
                 "status": status
             };
 
@@ -2173,10 +2214,11 @@
             {
                 onComplete();
             }
-        },
+        }
 
 
         /* builder_helpers */
+        ,
 
         /**
          * @see Alpaca.Field#getTitle
@@ -2239,11 +2281,11 @@
         getSchemaOfOptions: function() {
             var schemaOfOptions = Alpaca.merge(this.base(), {
                 "properties": {
-                },
-                "order": {
-                    "type": "number",
-                    "title": "Order",
-                    "description": "Allows for optional specification of the index of this field in the properties array."
+                    "order": {
+                        "type": "number",
+                        "title": "Order",
+                        "description": "Allows for optional specification of the index of this field in the properties array."
+                    }
                 }
             });
 

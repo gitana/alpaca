@@ -106,6 +106,12 @@
                             self.triggerWithPropagation("change");
                             setTimeout(function() {
                                 self.refreshUIState();
+
+                                if (self.options.afterFileUploadRemove)
+                                {
+                                    self.options.afterFileUploadRemove.call(self, row);
+                                }
+
                             }, 200);
                         });
                     });
@@ -257,6 +263,10 @@
             {
                 self.options.errorHandler = function(messages)
                 {
+                    if (!messages) {
+                        messages = ["An error occurred, please try again"];
+                    }
+
                     alert(messages.join("\n"));
                 };
             }
@@ -654,6 +664,12 @@
                     if (i === data.files.length) // jshint ignore:line
                     {
                         self.setValueAsArray(array);
+
+                        if (self.options.afterFileUploadDone)
+                        {
+                            self.options.afterFileUploadDone.call(self, data);
+                        }
+
                         return;
                     }
 
@@ -676,6 +692,11 @@
              */
             fileUpload.bind("fileuploadfail", function(e, data) {
                 self.onUploadFail(data);
+
+                if (self.options.afterFileUploadFail)
+                {
+                    self.options.afterFileUploadFail.call(self, data);
+                }
             });
 
 
@@ -684,6 +705,12 @@
              */
             fileUpload.bind("fileuploadalways", function(e, data) {
                 self.refreshUIState();
+
+                if (self.options.afterFileUploadAlways)
+                {
+                    self.options.afterFileUploadAlways.call(self, data);
+                }
+
             });
 
             // allow for extension
@@ -1132,7 +1159,35 @@
 
             if (self.options.errorHandler)
             {
-                self.options.errorHandler.call(self, data);
+                var messages = ["Failed to upload file"];
+
+                if (data && data.errorThrown)
+                {
+                    messages = [data.errorThrown];
+                }
+
+                if (data && data.jqXHR)
+                {
+                    if (data.jqXHR.responseText)
+                    {
+                        messages = [data.jqXHR.responseText];
+
+                        try
+                        {
+                            var json = JSON.parse("" + data.jqXHR.responseText);
+                            if (json.message)
+                            {
+                                messages = [json.message];
+                            }
+                        }
+                        catch (e)
+                        {
+                            // swallow
+                        }
+                    }
+                }
+
+                self.options.errorHandler.call(self, messages);
             }
 
             // if "error" not filled in for each file, do our best here

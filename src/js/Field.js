@@ -462,9 +462,9 @@
                 {
                     for (var i = 0; i < this.children.length; i++)
                     {
-                        var child = this.children[i];
+                        var child1 = this.children[i];
 
-                        child.triggerWithPropagation.call(child, name, event, direction);
+                        child1.triggerWithPropagation.call(child1, name, event, direction);
                     }
                 }
 
@@ -476,11 +476,11 @@
                 // do any children first
                 if (this.children && this.children.length > 0)
                 {
-                    for (var i = 0; i < this.children.length; i++)
+                    for (var z = 0; z < this.children.length; z++)
                     {
-                        var child = this.children[i];
+                        var child2 = this.children[z];
 
-                        child.triggerWithPropagation.call(child, name, event, "down");
+                        child2.triggerWithPropagation.call(child2, name, event, "down");
                     }
                 }
 
@@ -889,8 +889,11 @@
                 {
                     $(this.field).addClass("alpaca-required");
 
-                    // CALLBACK: "required"
-                    self.fireCallback("required");
+                    // CALLBACK: "required" (only for non-container fields)
+                    if (!self.isContainer())
+                    {
+                        self.fireCallback("required");
+                    }
                 }
                 else
                 {
@@ -1017,7 +1020,7 @@
 
                 // we bind data if we're in "edit" mode
                 // typically, we don't bind data if we're in "create" or any other mode
-                if (this.view.type && this.view.type === 'edit')
+                if (this.view.type && (this.view.type === 'edit' || this.view.type === 'create'))
                 {
                     this.bindData();
                 }
@@ -1044,6 +1047,7 @@
             if (this.options.hidden)
             {
                 this.field.hide();
+                this._isHidden = true;
             }
 
             var defaultHideInitValidationError = (this.view.type === 'create') && !this.refreshed;
@@ -1128,7 +1132,7 @@
                     var oldClasses = $(oldField).attr("class");
                     if (oldClasses) {
                         $.each(oldClasses.split(" "), function(i, v) {
-                            if (v && !v.indexOf("alpaca-") === 0) {
+                            if (v && v.indexOf("alpaca-") !== 0) {
                                 $(self.field).addClass(v);
                             }
                         });
@@ -1432,8 +1436,6 @@
          */
         refreshValidationState: function(validateChildren, cb)
         {
-            // console.log("Call refreshValidationState: " + this.path);
-
             var self = this;
 
             // run validation context compilation for ourselves and optionally any children
@@ -1443,14 +1445,11 @@
             // constructs an async function to validate context for a given field
             var functionBuilder = function(field, contexts)
             {
-                return function(callback)
+                return function(done)
                 {
-                    // run on the next tick
-                    Alpaca.nextTick(function() {
-                        Alpaca.compileValidationContext(field, function(context) {
-                            contexts.push(context);
-                            callback();
-                        });
+                    Alpaca.compileValidationContext(field, function(context) {
+                        contexts.push(context);
+                        done();
                     });
                 };
             };
@@ -1792,6 +1791,8 @@
         {
             if (this.options && this.options.hidden || !this.isInView())
             {
+                this._isHidden = true;
+
                 // if the hidden option is on, we're always hidden
                 return;
             }
@@ -1818,12 +1819,13 @@
                     $(this.field).css({
                         "display": ""
                     });
-                    this._hidden = false;
 
                     this.onShow();
 
                     // CALLBACK: "show"
                     this.fireCallback("show");
+
+                    this._isHidden = false;
                 }
             }
         },
@@ -1841,15 +1843,17 @@
             if (this.isHidden()){
                 return;
             }
+
             $(this.field).css({
                 "display": "none"
             });
-            this._hidden = true;
 
             this.onHide();
 
             // CALLBACK: "hide"
             this.fireCallback("hide");
+
+            this._isHidden = true;
         },
 
         onHide: function()
@@ -1871,7 +1875,12 @@
         },
 
         isHidden: function() {
-            return !!this._hidden;
+            if (typeof(this._isHidden) === "undefined")
+            {
+                this._isHidden = ("none" === $(this.field).css("display"));
+            }
+
+            return this._isHidden;
         },
 
         /**

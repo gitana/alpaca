@@ -425,11 +425,59 @@
             return value;
         },
 
+        getValue: function()
+        {
+            var self = this;
+
+            var value = this.base();
+            if (value && Alpaca.isString(value))
+            {
+                if (this.schema.format)
+                {
+                    if (this.schema.format === "uppercase")
+                    {
+                        value = value.toUpperCase();
+                    }
+                    else if (this.schema.format === "lowercase")
+                    {
+                        value = value.toLowerCase();
+                    }
+                }
+
+                if (this.options.trim)
+                {
+                    value = value.trim();
+                }
+            }
+
+            return value;
+        },
+
         /**
          * @see Alpaca.Field#setValue
          */
         setValue: function(value)
         {
+            if (!Alpaca.isEmpty(value) && Alpaca.isString(value))
+            {
+                if (this.schema.format)
+                {
+                    if (this.schema.format === "uppercase")
+                    {
+                        value = value.toUpperCase();
+                    }
+                    else if (this.schema.format === "lowercase")
+                    {
+                        value = value.toLowerCase();
+                    }
+                }
+
+                if (this.options.trim)
+                {
+                    value = value.trim();
+                }
+            }
+
             if (this.control && this.control.length > 0)
             {
                 if (Alpaca.isEmpty(value))
@@ -664,9 +712,26 @@
 
             // trigger "fieldkeyup"
             $(this.field).trigger("fieldkeyup");
+
+            // adjust value on the fly?
+            var adjust = false;
+            if (self.schema.format === "uppercase")
+            {
+                adjust = true;
+            }
+            else if (self.schema.format === "lowercase")
+            {
+                adjust = true;
+            }
+            if (self.options.trim)
+            {
+                adjust = true;
+            }
+            if (adjust) {
+                var v = self.getValue();
+                self.setValue(v);
+            }
         }
-
-
 
         /* builder_helpers */
         ,
@@ -790,6 +855,12 @@
                     "disallowOnlyEmptySpaces": {
                         "title": "Disallow Only Empty Spaces",
                         "description": "Whether to disallow the entry of only empty spaces in the text",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "trim": {
+                        "title": "Trim Whitespace",
+                        "description": "Remove whitespace from the beginning and end of string",
                         "type": "boolean",
                         "default": false
                     }

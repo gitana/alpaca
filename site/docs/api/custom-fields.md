@@ -19,10 +19,6 @@ For a complete example of how to build fields, the best path is to look at the
 <a href="https://github.com/gitana/alpaca">Alpaca source code</a>.  After all, Alpaca is completely open-source and
 so the source code is always going to be the very best place to go.
 
-If you're looking for professional services or support around custom fields, forms or functionality, please
-<a href="support.html">contact the Alpaca team</a> and we can put together a services arrangement to deliver what
-you need.
-
 Here we provide some lightweight guidance here on how to build your own fields.
 
 ## Example: Capitalize all Words

@@ -25,10 +25,55 @@
             }
 
             this.base();
-
-            if (typeof(this.options.markdown) == "undefined")
+            if (typeof(this.options.markdown) === "undefined")
             {
                 this.options.markdown = {};
+                if (Alpaca.Fields.MarkdownField.defaults && Alpaca.Fields.MarkdownField.defaults.options && Alpaca.Fields.MarkdownField.defaults.options.markdown)
+                {
+                    for (var k in Alpaca.Fields.MarkdownField.defaults.options.markdown)
+                    {
+                        this.options.markdown[k] = Alpaca.Fields.MarkdownField.defaults.options.markdown[k];
+                    }
+                }
+            }
+
+        },
+
+        initMarkdownEditorEvents: function()
+        {
+            var self = this;
+
+            if (self.editor)
+            {
+                self.editor.codemirror.on("change", function(e) {
+                    self.onChange();
+                    self.triggerWithPropagation("change", e);
+                    self.triggerWithPropagation("after_nested_change", e);
+                });
+
+                self.editor.codemirror.on("beforeChange", function(e) {
+                    self.triggerWithPropagation("before_nested_change", e);
+                });
+
+                self.editor.codemirror.on("keyHandled", function(e) {
+                    self.onKeyPress.call(self, e);
+                    self.trigger("keypress", e);
+                });
+
+                self.editor.codemirror.on('blur', function (e) {
+                    self.onBlur();
+                    self.trigger("blur", e);
+                });
+
+                self.editor.codemirror.on("focus", function (e) {
+                    self.onFocus.call(self, e);
+                    self.trigger("focus", e);
+                });
+
+                self.editor.codemirror.on("mousedown", function (e) {
+                    self.onClick.call(self, e);
+                    self.trigger("click", e);
+                });
             }
         },
 
@@ -47,8 +92,24 @@
 
                         if (!self.editor)
                         {
+                            // Replace toolbar buttons with configured plugins
+                            var toolbar = self.options.markdown.toolbar;
+                            if (toolbar && Alpaca.isArray(toolbar))
+                            {
+                                for (var i = 0; i < toolbar.length; i++)
+                                {
+                                    var toolbarItem = toolbar[i];
+                                    if (Alpaca.isString(toolbarItem) && toolbarItem in Alpaca.Fields.MarkdownField.ToolbarButtonPlugins )
+                                    {
+                                        toolbar[i] = Alpaca.Fields.MarkdownField.ToolbarButtonPlugins[toolbarItem];
+                                    }
+                                }
+                            }
+                            
                             self.editor = new SimpleMDE(self.options.markdown);
                         }
+
+                        self.initMarkdownEditorEvents();
                     });
                 }
 
@@ -70,7 +131,14 @@
 
             if (self.editor)
             {
-                self.editor.value(value);
+                if (!value)
+                {
+                    self.editor.value("");
+                }
+                else
+                {
+                    self.editor.value(value);
+                }
             }
         },
 
@@ -140,6 +208,13 @@
 
         /* end_builder_helpers */
     });
+
+    Alpaca.Fields.MarkdownField.ToolbarButtonPlugins = {};
+
+    Alpaca.Fields.MarkdownField.registerToolbarButtonPlugin = function(key, config)
+    {
+        Alpaca.Fields.MarkdownField.ToolbarButtonPlugins[key] = config;
+    };
 
     Alpaca.registerFieldClass("markdown", Alpaca.Fields.MarkdownField);
 
