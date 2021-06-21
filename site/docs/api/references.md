@@ -16,7 +16,7 @@ to identify a URI to a remote resource.  It also allows you to point to JSON str
 current document, enabling re-use.
 
 Alpaca extends `$ref` by allowing for additional loaders such as a dictionary definition loader for Cloud CMS.
-Alapca lets you register <a href="/documentation/connectors.html">Connectors</a> to handle loading of your custom
+Alpaca lets you register <a href="/documentation/connectors.html">Connectors</a> to handle loading of your custom
 `$ref` values.
 
 Alpaca also lets you use `$ref` structures within your options blocks.  This lets you load options from remote sources
@@ -26,8 +26,17 @@ By default, if Alpaca encounters a `$ref` in your schema, it look to see if ther
 options.  That is, unless you provide a specific `$ref` in your options for the same block, in which case it will use
 that instead.
 
+If you are using alpaca in CloudCMS, you can use references to refer to other content types by their qnames. Learn more here:
 
-## Example #1: Nested Tree (using Array)
+https://www.cloudcms.com/documentation/forms/references.html
+
+https://www.cloudcms.com/documentation/content-models/references.html
+
+
+
+## Examples
+
+### Example #1: Nested Tree (using Array)
 
 This example demonstrates the use of JSON Schema referencing to include or pull in
 schema definitions from other parts of the document.  Alpaca supports referencing within
@@ -63,7 +72,7 @@ $("#field1").alpaca({
 {% endraw %}
 
 
-## Example #2: Deeply Nested Tree (loaded from data)
+### Example #2: Deeply Nested Tree (loaded from data)
 
 This example shows a deeply nested tree loaded with data.  Note that unlike the previous
 example, this example uses a non-'create' view which allows data to bind.
@@ -114,7 +123,7 @@ $("#field2").alpaca({
 {% endraw %}
 
 
-## Example #3: Internal Definitions
+### Example #3: Internal Definitions
 
 Here is an example of an object that derives one of its sub-object
 properties from a referenced definition.  The definition is stored in a special
@@ -165,7 +174,7 @@ $("#field3").alpaca({
 {% endraw %}
 
 
-## Example #4: Using `$ref` within options
+### Example #4: Using `$ref` within options
 
 Suppose that you have a remote Author schema and options and that their URIs are:
 
@@ -176,7 +185,7 @@ Let's define an article that reuses the Author schema and options via `$ref` lik
 
 <div id="field4"> </div>
 {% raw %}
-<script type="text/javascript" id="field1-script">
+<script type="text/javascript" id="field4-script">
 $("#field4").alpaca({
     "type": "create",
     "schema": {

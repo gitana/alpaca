@@ -365,3 +365,8 @@ legend.alpaca-container-label
     font-weight: 200;
     color: #888;
 }
+
+.alpaca-field.alpaca-edit .CodeMirror-fullscreen
+{
+    z-index: 100;
+}
