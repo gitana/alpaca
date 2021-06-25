@@ -151,6 +151,21 @@
                 {
                     self.selectOptions[0].selected = true;
                     self.data = [self.selectOptions[0]];
+
+                    self.updateObservable();
+                    self.triggerUpdate();
+                    self.triggerWithPropagation("change");
+                }
+
+                // likewise, we auto-assign first pick if field required
+                if (self.data.length === 0 && self.isRequired() && self.selectOptions.length > 0)
+                {
+                    self.selectOptions[0].selected = true;
+                    self.data = [self.selectOptions[0]];
+
+                    self.updateObservable();
+                    self.triggerUpdate();
+                    self.triggerWithPropagation("change");
                 }
 
                 callback();
@@ -276,7 +291,15 @@
             }
             else if (self.schema.type === "boolean")
             {
-                val = (this.data.length > 0);
+                if (this.data.length > 0)
+                {
+                    var vals = this.data.map(d => d.value);
+                    val = vals.includes(true);
+                }
+                else
+                {
+                    val = false;
+                }
             }
             else if (self.schema.type === "array")
             {
@@ -420,6 +443,11 @@
                     } else if (Alpaca.isNumber(val[i])) {
                         values.push({
                             "text": "" + val[i],
+                            "value": val[i]
+                        });
+                    } else if (Alpaca.isBoolean(val[i])) { 
+                        values.push({
+                            "text": "",
                             "value": val[i]
                         });
                     } else {

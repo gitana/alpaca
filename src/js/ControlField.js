@@ -437,8 +437,16 @@
 
                     // we use a timeout here because we want this to run AFTER control click handlers
                     setTimeout(function() {
+
+                        // propagate up with "before_nested_change"
+                        self.triggerWithPropagation("before_nested_change", e);
+
                         self.onChange.call(self, e);
                         self.triggerWithPropagation("change", e);
+
+                        // propagate up with "after_nested_change"
+                        self.triggerWithPropagation("after_nested_change", e);
+
                     }, 200);
                 });
 

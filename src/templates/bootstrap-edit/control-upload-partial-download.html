@@ -16,13 +16,13 @@
     {{else}}
         <td class="preview">
             {{#if file.thumbnailUrl}}
-            <a href="{{file.url}}" title="{{file.name}}" data-gallery="gallery" download="{{file.name}}">
+            <a href="{{file.url}}" title="{{file.name}}" target="_blank">
                 <img src="{{file.thumbnailUrl}}">
             </a>
             {{/if}}
         </td>
         <td class="name">
-            <a href="{{file.url}}" title="{{file.name}}" data-gallery="{{file.thumbnailUrl}}gallery" download="{{file.name}}">{{file.name}}</a>
+            <a href="{{file.url}}" title="{{file.name}}" target="_blank">{{file.name}}</a>
         </td>
         <td class="size"><span>{{file.size}}</span></td>
         <td colspan="2"></td>

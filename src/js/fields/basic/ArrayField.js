@@ -340,7 +340,7 @@
             // then we need to add the new fields
             if (i < data.length)
             {
-                self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+                self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circularityCheck) {
 
                     if (!itemSchema)
                     {
@@ -349,9 +349,10 @@
 
                     // we only allow addition if the resolved schema isn't circularly referenced
                     // or the schema is optional
-                    if (circular)
+                    if (circularityCheck && circularityCheck.circular)
                     {
-                        return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                        circularityCheck.object = self.top().options;
+                        return Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
                     }
 
                     // waterfall functions
@@ -432,13 +433,14 @@
 
                 // all items within the array have the same schema and options
                 // so we only need to load this once
-                self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+                self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circularityCheck) {
 
                     // we only allow addition if the resolved schema isn't circularly referenced
                     // or the schema is optional
-                    if (circular)
+                    if (circularityCheck && circularityCheck.circular)
                     {
-                        return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                        circularityCheck.object = self.top().options;
+                        return Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
                     }
 
                     // waterfall functions
@@ -597,14 +599,14 @@
         {
             var _this = this;
 
-            var completionFunction = function(resolvedItemSchema, resolvedItemOptions, circular)
+            var completionFunction = function(resolvedItemSchema, resolvedItemOptions, circularityCheck)
             {
                 // special caveat:  if we're in read-only mode, the child must also be in read-only mode
-                if (_this.options.readonly) {
+                if (_this.options.readonly && resolvedItemOptions) {
                     resolvedItemOptions.readonly = true;
                 }
 
-                callback(resolvedItemSchema, resolvedItemOptions, circular);
+                callback(resolvedItemSchema, resolvedItemOptions, circularityCheck);
             };
 
             var itemOptions;
@@ -621,54 +623,53 @@
             }
 
             // handle $ref
-            var schemaReferenceId = null;
+            var schemaRef = null;
             if (itemSchema) {
-                schemaReferenceId = itemSchema["$ref"];
+                schemaRef = itemSchema["$ref"];
             }
-            var optionsReferenceId = null;
+            var optionsRef = null;
             if (itemOptions) {
-                optionsReferenceId = itemOptions["$ref"];
+                optionsRef = itemOptions["$ref"];
             }
 
-            if (schemaReferenceId || optionsReferenceId)
+            if (schemaRef || optionsRef)
             {
-                // walk up to find top field
-                var topField = this;
-                var fieldChain = [topField];
-                while (topField.parent)
+                // safety check for circularity on schema $ref
+                if (schemaRef)
                 {
-                    topField = topField.parent;
-                    fieldChain.push(topField);
+                    var circularityCheckResult1 = Alpaca.assertNonCircularSchemaReferences(this, schemaRef);
+                    if (circularityCheckResult1 && circularityCheckResult1.circular)
+                    {
+                        return Alpaca.nextTick(function() {
+                            completionFunction(null, null, circularityCheckResult1);
+                        });
+                    }
                 }
+
+                // safety check for circularity on options $ref
+                if (optionsRef)
+                {
+                    var circularityCheckResult2 = Alpaca.assertNonCircularOptionsReferences(this, optionsRef);
+                    if (circularityCheckResult2 && circularityCheckResult2.circular)
+                    {
+                        return Alpaca.nextTick(function() {
+                            completionFunction(null, null, circularityCheckResult2);
+                        });
+                    }
+                }
+
+                var topField = this.top();
 
                 var originalItemSchema = itemSchema;
                 var originalItemOptions = itemOptions;
 
-                Alpaca.loadRefSchemaOptions(topField, schemaReferenceId, optionsReferenceId, function(itemSchema, itemOptions) {
+                var topConnector = topField.connector;
+                var topSchema = topField.schema;
+                var topOptions = topField.options;
+                var schemaReferenceCacheFn = Alpaca.schemaReferenceCacheFn;
+                var optionsReferenceCacheFn = Alpaca.optionsReferenceCacheFn;
 
-                    // walk the field chain to see if we have any circularity (for schema)
-                    var refCount = 0;
-                    for (var i = 0; i < fieldChain.length; i++)
-                    {
-                        if (fieldChain[i].schema)
-                        {
-                            if (schemaReferenceId)
-                            {
-                                if ((fieldChain[i].schema.id === schemaReferenceId) || (fieldChain[i].schema.id === "#" + schemaReferenceId))
-                                {
-                                    refCount++;
-                                }
-                                else if ((fieldChain[i].schema["$ref"] === schemaReferenceId))
-                                {
-                                    refCount++;
-                                }
-                            }
-                        }
-                    }
-
-                    // use a higher limit for arrays, perhaps 10
-                    //var circular = (refCount > 1);
-                    var circular = (refCount > 10);
+                Alpaca.loadRefSchemaOptions(topSchema, topOptions, schemaRef, optionsRef, topConnector, schemaReferenceCacheFn, optionsReferenceCacheFn, function(err, itemSchema, itemOptions) {
 
                     var resolvedItemSchema = {};
                     if (originalItemSchema) {
@@ -677,7 +678,10 @@
                     if (itemSchema) {
                         Alpaca.mergeObject(resolvedItemSchema, itemSchema);
                     }
-                    delete resolvedItemSchema.id;
+                    //delete resolvedItemSchema.id;
+                    if (schemaRef) {
+                        resolvedItemSchema["$ref"] = schemaRef;
+                    }
 
                     var resolvedItemOptions = {};
                     if (originalItemOptions) {
@@ -686,9 +690,12 @@
                     if (itemOptions) {
                         Alpaca.mergeObject(resolvedItemOptions, itemOptions);
                     }
+                    if (optionsRef) {
+                        resolvedItemOptions["$ref"] = optionsRef;
+                    }
 
                     Alpaca.nextTick(function() {
-                        completionFunction(resolvedItemSchema, resolvedItemOptions, circular);
+                        completionFunction(resolvedItemSchema, resolvedItemOptions);
                     });
                 });
             }
@@ -1255,13 +1262,14 @@
         {
             var self = this;
 
-            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circularityCheck) {
 
                 // we only allow addition if the resolved schema isn't circularly referenced
                 // or the schema is optional
-                if (circular)
+                if (circularityCheck && circularityCheck.circular)
                 {
-                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                    circularityCheck.object = self.top().options;
+                    return Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
                 }
 
                 // how many children do we have currently?
@@ -1280,13 +1288,14 @@
         {
             var self = this;
 
-            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circularityCheck) {
 
                 // we only allow addition if the resolved schema isn't circularly referenced
                 // or the schema is optional
-                if (circular)
+                if (circularityCheck && circularityCheck.circular)
                 {
-                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                    circularityCheck.object = self.top().options;
+                    return Alpaca.throwReferenceCircularityError(circularityCheck, self.errorCallback);
                 }
 
                 var arrayValues = self.getValue();
@@ -1394,6 +1403,9 @@
 
             if (self._validateEqualMaxItems())
             {
+                // propagate up with "before_nested_change"
+                self.triggerWithPropagation("before_nested_change");
+
                 self.createItem(index, schema, options, data, function(item) {
 
                     // register the child
@@ -1416,6 +1428,12 @@
 
                         // trigger update
                         self.triggerUpdate();
+
+                        self.onChange.call(self);
+                        self.triggerWithPropagation("change");
+
+                        // propagate up with "after_nested_change"
+                        self.triggerWithPropagation("after_nested_change");
 
                         if (callback)
                         {
@@ -1463,6 +1481,9 @@
 
             if (this._validateEqualMinItems() || force)
             {
+                // propagate up with "before_nested_change"
+                self.triggerWithPropagation("before_nested_change");
+
                 // unregister the child
                 self.unregisterChild(childIndex);
 
@@ -1483,6 +1504,12 @@
 
                     // trigger update
                     self.triggerUpdate();
+
+                    self.onChange.call(self);
+                    self.triggerWithPropagation("change");
+
+                    // propagate up with "after_nested_change"
+                    self.triggerWithPropagation("after_nested_change");
 
                     if (callback)
                     {
@@ -1558,17 +1585,24 @@
 
             var onComplete = function()
             {
+                // propagate up with "before_nested_change"
+                self.triggerWithPropagation("before_nested_change");
+
                 var adjustedTargetIndex = targetIndex;
                 if (sourceIndex < targetIndex) {
                     adjustedTargetIndex--;
                 }
 
-                // splice out child
-                var child = self.children.splice(sourceIndex, 1)[0];
-                self.children.splice(adjustedTargetIndex, 0, child);
+                var newData = self.getValue();
+                var sourceChild = newData[sourceIndex];
+                var targetChild = newData[targetIndex];
 
-                // set data and refresh
-                self.data = self.getValue();
+
+                newData[sourceIndex] = targetChild;
+                newData[targetIndex] = sourceChild;
+
+                self.setValue(newData);
+
                 self.refresh(function() {
 
                     // refresh validation state
@@ -1579,6 +1613,12 @@
 
                     // dispatch event: move
                     self.trigger("move");
+
+                    self.onChange.call(self);
+                    self.triggerWithPropagation("change");
+
+                    // propagate up with "after_nested_change"
+                    self.triggerWithPropagation("after_nested_change");
 
                     if (callback)
                     {
@@ -1684,14 +1724,16 @@
 
             var onComplete = function()
             {
-                var sourceChild = self.children[sourceIndex];
-                var targetChild = self.children[targetIndex];
+                var newData = self.getValue();
+                var sourceChild = newData[sourceIndex];
+                var targetChild = newData[targetIndex];
 
-                self.children[sourceIndex] = targetChild;
-                self.children[targetIndex] = sourceChild;
 
-                // copy back data and refresh
-                self.data = self.getValue();
+                newData[sourceIndex] = targetChild;
+                newData[targetIndex] = sourceChild;
+
+                self.setValue(newData);
+
                 self.refresh(function() {
 
                     // refresh validation state

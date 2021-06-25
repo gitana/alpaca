@@ -127,6 +127,12 @@
                     $(self.control).find("input:radio:checked").each(function() {
 
                         var value = $(this).attr("value");
+
+                        if (self.schema.type === "boolean") 
+                        {
+                            value = (value === "true");
+                        }
+                        
                         for (var i = 0; i < self.selectOptions.length; i++)
                         {
                             if (self.selectOptions[i].value === value)

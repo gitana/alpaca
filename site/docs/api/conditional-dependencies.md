@@ -135,15 +135,15 @@ $("#field2").alpaca({
                 "fields": {
                     "breakfast": {
                         "type": "checkbox",
-                        "rightLabel": "Five Star Continental Breakfast"
+                        "rightLabel": "Five Star Continental Breakfast at Okenshields"
                     },
                     "lunch": {
                         "type": "checkbox",
-                        "rightLabel": "Lunch at Statler Hall"
+                        "rightLabel": "Lunch at Trillium"
                     },
                     "dinner": {
                         "type": "checkbox",
-                        "rightLabel": "Concourse Dinner at Okenshields"
+                        "rightLabel": "Concourse Dinner at Statler Hall"
                     }
                 },
                 "dependencies": {
