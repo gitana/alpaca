@@ -103,6 +103,10 @@
                 {
                     self.selectOptions[0].selected = true;
                     self.data = [self.selectOptions[0]];
+
+                    self.updateObservable();
+                    self.triggerUpdate();
+                    self.triggerWithPropagation("change");
                 }
 
                 if (self.data.length === 0)
