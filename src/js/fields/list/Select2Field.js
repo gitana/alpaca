@@ -104,7 +104,7 @@
                         cache: false,
                         error: function (xhr) {
                             if (xhr.statusText !== "abort") {
-                                var errorMessage = xhr && xhr.responseJSON && xhr.responseJSON.exceptionMessage;
+                                var errorMessage = xhr && xhr.responseJSON && xhr.responseJSON.message;
                                 ServiceManagerLibrary.notifications.error(errorMessage || "Det skjedde en feil i søket.", xhr.statusText);
                             }
                         }
