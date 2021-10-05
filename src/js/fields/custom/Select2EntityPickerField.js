@@ -128,7 +128,7 @@
                         "title": "Ekstra typefilter",
                         "description": "The type of entity to pick.",
                         "type": "string",
-                        "enum": ["CaseWorker", "UserAll", "UserPermanentEmployee", "Causality", "EstablishImprovementMeasureAssessment", "CreditAuthorizationBreachCausality", "Product", "AppealsBody", "AuditScore", "ExtentProposedImprovementSuggestionIsTakenIntoAccount", "EducationalLevel", "EducationalDirection", "CompetenceLevel", "RecruitmentRequirementsAnalysisStatus", "EducationalEstablishment", "PersonalDataCategory", "PersonalDataProcessingArea", "CustomerChannel", "CustomerComplaintCategory", "InternalContractingParty"]
+                        "enum": ["CaseWorker", "UserAll", "UserPermanentEmployee", "GuestUser", "Causality", "EstablishImprovementMeasureAssessment", "CreditAuthorizationBreachCausality", "Product", "AppealsBody", "AuditScore", "ExtentProposedImprovementSuggestionIsTakenIntoAccount", "EducationalLevel", "EducationalDirection", "CompetenceLevel", "RecruitmentRequirementsAnalysisStatus", "EducationalEstablishment", "PersonalDataCategory", "PersonalDataProcessingArea", "CustomerChannel", "CustomerComplaintCategory", "InternalContractingParty"]
                     },
                     "actionType": {
                         "title": "Action type",
@@ -196,7 +196,7 @@
                         "rightLabel": "Extra type filter",
                         "helper": "Filter for types within the selection entity type",
                         "type": "select",
-                        "optionLabels": ["Brukere som kan benyttes i saksgang", "Alle brukere", "Fast ansatte (brukere)", "Årsakssammenheng", "Vurdering av behov for tiltak", "Årsak til brudd på kredittfullmakt", "Produkt", "Klageinstans", "Revisjonsresultat", "I hvilken grad foreslått forbedringsforslag tas til følge", "Utdanningsnivå", "Utdanningsretning", "Realkompetanse", "Status for behovsanalyse ved rekruttering", "Utdanningsinstitusjon", "Kategori av personopplysninger", "Personopplysningsbehandlingsområde", "Kundekanal", "Kundeklagekategori", "Intern kontraktspart"]
+                        "optionLabels": ["Brukere som kan benyttes i saksgang", "Alle brukere", "Fast ansatte (brukere)", "Gjestebrukere", "Årsakssammenheng", "Vurdering av behov for tiltak", "Årsak til brudd på kredittfullmakt", "Produkt", "Klageinstans", "Revisjonsresultat", "I hvilken grad foreslått forbedringsforslag tas til følge", "Utdanningsnivå", "Utdanningsretning", "Realkompetanse", "Status for behovsanalyse ved rekruttering", "Utdanningsinstitusjon", "Kategori av personopplysninger", "Personopplysningsbehandlingsområde", "Kundekanal", "Kundeklagekategori", "Intern kontraktspart"]
                     },
                     "actionType": {
                         "hideNone": false,
