@@ -282,7 +282,7 @@
             {
                 if (this.data.length > 0)
                 {
-                    var vals = this.data.map(d => d.value);
+                    var vals = this.data.map(function (d) { return d.value; });
                     val = vals.includes(true);
                 }
                 else

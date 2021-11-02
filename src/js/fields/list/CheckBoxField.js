@@ -131,7 +131,7 @@
             else
             {
                 var checkbox = $(self.getFieldEl()).find("input:checkbox");
-                var vals = self.data.map(d => d.value);
+                var vals = self.data.map(function (d) { return d.value; });
                 var check = vals.includes(true);
                 if (check)
                 {
