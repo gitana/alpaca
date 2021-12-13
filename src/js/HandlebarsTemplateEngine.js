@@ -165,6 +165,7 @@
             }
         }
 
+        value = Handlebars.Utils.escapeExpression(value);
         return new Handlebars.SafeString(value);
     };
     Handlebars.registerHelper("arrayToolbar", helpers["arrayToolbar"]);
