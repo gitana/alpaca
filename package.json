@@ -1,11 +1,11 @@
 {
   "name": "alpaca",
   "scripts": {
-    "build": "./node_modules/.bin/gulp default",
-    "site": "./node_modules/.bin/gulp site",
-    "server": "./node_modules/.bin/gulp server",
-    "clean": "./node_modules/.bin/gulp clean",
-    "bower": "./node_modules/.bin/bower install"
+    "build": "gulp default",
+    "site": "gulp site",
+    "server": "gulp server",
+    "clean": "gulp clean",
+    "bower": "bower install"
   },
   "repository": {
     "type": "git",
