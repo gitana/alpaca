@@ -359,6 +359,7 @@
 
                                                 // show by default
                                                 control.show();
+                                                self.control.prop("readonly", true);
 
                                                 done();
                                             }
