@@ -347,11 +347,9 @@
                                                                 val = self.options.tree.data[i].value;
                                                             }
                                                         }
-
-                                                        if (val)
-                                                        {
-                                                            self.setValue(val);
-                                                        }
+                                                        self.setValue(val);
+                                                    } else {
+                                                        self.setValue(null);
                                                     }
 
                                                     self.refreshOptionTreeControls();
