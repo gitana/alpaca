@@ -40,7 +40,12 @@
                 "invalidPhone": "Ugyldig telefonnummer",
                 "invalidPattern": "Feltet må være i følgende format: {0}",
                 "stringTooShort": "Dette feltet må minst inneholde {0} tegn",
-                "stringTooLong": "Dette feltet kan maks inneholde {0} tegn"
+                "stringTooLong": "Dette feltet kan maks inneholde {0} tegn",
+                "addItemButtonLabel": "Legg til element",
+                "addButtonLabel": "Legg til",
+                "removeButtonLabel": "Fjern",
+                "upButtonLabel": "Opp",
+                "downButtonLabel": "Ned"
             }
 		}
 	});
