@@ -73,7 +73,7 @@
                 if (!this.options.watermarkLabel) {
                     this.options.watermarkLabel = " - Finn medarbeider - ";
                 }
-                ServiceManagerLibrary.utils.entitypicker.setupEntitySelect2Control($select, -1, this.options.watermarkLabel, false, true, false, this.options.crossTenantSelection ? 'IncludeUsersFromAllianceTenants' : 'Tenant');
+                ServiceManagerLibrary.utils.entitypicker.setupEntitySelect2Control($select, tenantId, this.options.watermarkLabel, false, true, false, this.options.crossTenantSelection ? 'IncludeUsersFromAllianceTenants' : 'Tenant');
             }
             callback();
         },
