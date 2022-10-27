@@ -1306,7 +1306,7 @@
                     // this is necessary because some underlying fields require their data to be reset
                     // in order for the display to work out properly (radio fields)
                     arrayValues.splice(itemIndex + 1, 0, item.getValue());
-                    self.setValue(arrayValues);
+                    // self.setValue(arrayValues);
 
                     if (callback) {
                         callback(item);
@@ -1406,6 +1406,33 @@
                 // propagate up with "before_nested_change"
                 self.triggerWithPropagation("before_nested_change");
 
+                // fix the radio fields reset issue
+                //
+                // before new DOM control is added to the "index" position
+                // the already existing control on this position "index" must change the name
+                //
+                // other vice when browser adds DOM controls for radio buttons at position "index"
+                // the name of old and new controls will be the same, so browser will
+                // lose the old values of existing controls
+
+                // loop starts from the end of the array
+                for (let nextIndex = self.children.length - 1; nextIndex >= index; nextIndex--) {
+                    let child = self.children[nextIndex];
+                    // new position
+                    let i = nextIndex + 1;
+
+                    if (self.schema.type === "array") {
+                        child.path = self.path + "[" + i + "]"
+                    } else if (!!child.propertyId) {
+                        child.path = self.path + "/" + child.propertyId
+                    }
+                    child.name = undefined;
+                    child.calculateName();
+                    $(child.containerItemEl).attr("data-alpaca-container-item-index", i);
+                    $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
+                    child.updateDOMElement()
+                }
+                
                 self.createItem(index, schema, options, data, function(item) {
 
                     // register the child
