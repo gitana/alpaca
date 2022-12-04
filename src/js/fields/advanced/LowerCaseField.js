@@ -23,7 +23,7 @@
 
             this.base();
 
-            if (this.data) {
+            if (this.data && this.data.toLowerCase) {
                 this.data = this.data.toLowerCase();
             }
         },
