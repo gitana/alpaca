@@ -559,9 +559,7 @@
                     {
                         circularityCheckResult1.object = topField.schema;
 
-                        return Alpaca.nextTick(function() {
-                            completionFunction(null, null, circularityCheckResult1);
-                        });
+                        completionFunction(null, null, circularityCheckResult1);
                     }
                 }
 
@@ -573,9 +571,7 @@
                     {
                         circularityCheckResult2.object = topField.options;
 
-                        return Alpaca.nextTick(function() {
-                            completionFunction(null, null, circularityCheckResult2);
-                        });
+                        completionFunction(null, null, circularityCheckResult2);
                     }
                 }
 
@@ -617,16 +613,12 @@
                         resolvedPropertyOptions["$ref"] = optionsRef;
                     }
 
-                    Alpaca.nextTick(function() {
-                        completionFunction(resolvedPropertySchema, resolvedPropertyOptions);
-                    });
+                    completionFunction(resolvedPropertySchema, resolvedPropertyOptions);
                 });
             }
             else
             {
-                Alpaca.nextTick(function() {
-                    completionFunction(propertySchema, propertyOptions);
-                });
+                completionFunction(propertySchema, propertyOptions);
             }
         },
 
@@ -1151,9 +1143,7 @@
 
                     if (callback)
                     {
-                        Alpaca.nextTick(function() {
-                            callback();
-                        });
+                        callback();
                     }
 
                 });
@@ -1238,9 +1228,7 @@
 
                     if (callback)
                     {
-                        Alpaca.nextTick(function() {
-                            callback();
-                        });
+                        callback();
                     }
                 });
             }

@@ -640,9 +640,7 @@
                     var circularityCheckResult1 = Alpaca.assertNonCircularSchemaReferences(this, schemaRef);
                     if (circularityCheckResult1 && circularityCheckResult1.circular)
                     {
-                        return Alpaca.nextTick(function() {
-                            completionFunction(null, null, circularityCheckResult1);
-                        });
+                        completionFunction(null, null, circularityCheckResult1);
                     }
                 }
 
@@ -652,9 +650,7 @@
                     var circularityCheckResult2 = Alpaca.assertNonCircularOptionsReferences(this, optionsRef);
                     if (circularityCheckResult2 && circularityCheckResult2.circular)
                     {
-                        return Alpaca.nextTick(function() {
-                            completionFunction(null, null, circularityCheckResult2);
-                        });
+                        completionFunction(null, null, circularityCheckResult2);
                     }
                 }
 
@@ -694,16 +690,12 @@
                         resolvedItemOptions["$ref"] = optionsRef;
                     }
 
-                    Alpaca.nextTick(function() {
-                        completionFunction(resolvedItemSchema, resolvedItemOptions);
-                    });
+                    completionFunction(resolvedItemSchema, resolvedItemOptions);
                 });
             }
             else
             {
-                Alpaca.nextTick(function() {
-                    completionFunction(itemSchema, itemOptions);
-                });
+                completionFunction(itemSchema, itemOptions);
             }
         },
 
@@ -1464,9 +1456,7 @@
 
                         if (callback)
                         {
-                            Alpaca.nextTick(function() {
-                                callback(item);
-                            });
+                            callback(item);
                         }
 
                     });
@@ -1540,9 +1530,7 @@
 
                     if (callback)
                     {
-                        Alpaca.nextTick(function() {
-                            callback();
-                        });
+                        callback();
                     }
 
                 });
@@ -1649,9 +1637,7 @@
 
                     if (callback)
                     {
-                        Alpaca.nextTick(function() {
-                            callback();
-                        });
+                        callback();
                     }
 
                 });
@@ -1774,9 +1760,7 @@
 
                     if (callback)
                     {
-                        Alpaca.nextTick(function() {
-                            callback();
-                        });
+                        callback();
                     }
 
                 });
