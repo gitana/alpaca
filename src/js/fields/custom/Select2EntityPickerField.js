@@ -99,7 +99,7 @@
         },
 
         getDescription: function () {
-            return "Provides a select control for picking entities such as people, companies, departments, computers and so forth.";
+            return "Provides a select control for picking entities such as people, companies, departments, customers, computers and so forth.";
         },
 
         getSchemaOfOptions: function () {
@@ -122,7 +122,20 @@
                         "description": "The type of entity to pick.",
                         "type": "string",
                         "default": "UserEntity",
-                        "enum": ["CompanyEntity", "ComputerEntity", "DepartmentEntity", "JobTitleEntity", "KeywordEntity", "ServiceEntity", "UserEntity", "ProcessEntity", "Supplier", "PersonalDataProcessingActivity", "RoleEntity", "Contract"]
+                        "enum": [   "CompanyEntity", 
+                                    "ComputerEntity", 
+                                    "DepartmentEntity", 
+                                    "JobTitleEntity", 
+                                    "KeywordEntity", 
+                                    "ServiceEntity", 
+                                    "UserEntity", 
+                                    "ProcessEntity", 
+                                    "Supplier", 
+                                    "PersonalDataProcessingActivity", 
+                                    "RoleEntity", 
+                                    "Contract", 
+                                    "CustomerEntity",
+                                ]
                     },
                     "typeFilter": {
                         "title": "Ekstra typefilter",
@@ -188,7 +201,20 @@
                         "rightLabel": "Entity type",
                         "helper": "The type of entity to pick",
                         "type": "select",
-                        "optionLabels": ["Company", "Machine", "Department", "Job title", "Keyword", "Service", "Person", "Process", "Supplier", "Personal data processing activity", "Role", "Contract"]
+                        "optionLabels": [   "Company", 
+                                            "Machine", 
+                                            "Department", 
+                                            "Job title", 
+                                            "Keyword", 
+                                            "Service", 
+                                            "Person", 
+                                            "Process", 
+                                            "Supplier", 
+                                            "Personal data processing activity", 
+                                            "Role", 
+                                            "Contract", 
+                                            "Customer",
+                                        ]
                     },
                     "typeFilter": {
                         "hideNone": false,
