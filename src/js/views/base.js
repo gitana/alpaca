@@ -1479,22 +1479,8 @@
         }
     });
 
-    Alpaca.sanitizeHtmlTrimAttributes = function (node) {
-        $.each(node.attributes, function() {
-            var attrName = this.name;
-            var attrValue = this.value;
-            if (attrName.indexOf('on') == 0 || attrValue.indexOf('javascript:') == 0) {
-                $(node).removeAttr(attrName);
-            }
-        });
-    };
-    // https://gist.github.com/ufologist/5a0da51b2b9ef1b861c30254172ac3c9
-    Alpaca.sanitizeHtml = function (html) {
-        var output = $($.parseHTML('<div>' + html + '</div>', null, false));
-        output.find('*').each(function() {
-            Alpaca.sanitizeHtmlTrimAttributes(this);
-        });
-        return output.html();
+    Alpaca.sanitizeHtml = function (html) {        
+        return DOMPurify.sanitize(html);
     };
 
     Handlebars.registerHelper('sanitizeHtml', function(html) {
