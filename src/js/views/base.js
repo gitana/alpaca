@@ -6,6 +6,14 @@
 
     var Alpaca = $.alpaca;
 
+    DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+        // set all elements owning target to target=_blank
+        if ('target' in node) {
+          node.setAttribute('target', '_blank');
+          node.setAttribute('rel', 'noopener');
+        }
+      });
+
     Alpaca.registerView({
         "id": "base",
         "title": "Abstract base view",
@@ -1479,7 +1487,7 @@
         }
     });
 
-    Alpaca.sanitizeHtml = function (html) {        
+    Alpaca.sanitizeHtml = function (html) {
         return DOMPurify.sanitize(html);
     };
 
