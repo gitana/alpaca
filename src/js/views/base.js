@@ -5,7 +5,8 @@
 (function($) {
 
     var Alpaca = $.alpaca;
-
+    
+    // https://github.com/cure53/DOMPurify/issues/317#issuecomment-698800327
     DOMPurify.addHook('afterSanitizeAttributes', function (node) {
         // set all elements owning target to target=_blank
         if ('target' in node) {
