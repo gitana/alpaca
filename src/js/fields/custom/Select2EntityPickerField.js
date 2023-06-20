@@ -59,6 +59,9 @@
                 if (!this.options.entityType) {
                     this.options.entityType = "UserEntity";
                 }
+                if (!this.options.includeInactiveEntities) {
+                    this.options.includeInactiveEntities = false;
+                }
                 $select.attr('data-entity-type', this.options.entityType);
                 if (this.options.entityType == 'UserEntity' && !this.options.typeFilter) {
                     $select.attr('data-filter', 'CaseWorker');
@@ -73,7 +76,7 @@
                 if (!this.options.watermarkLabel) {
                     this.options.watermarkLabel = " - Finn medarbeider - ";
                 }
-                ServiceManagerLibrary.utils.entitypicker.setupEntitySelect2Control($select, tenantId, this.options.watermarkLabel, false, true, false, this.options.crossTenantSelection ? 'IncludeUsersFromAllianceTenants' : 'Tenant');
+                ServiceManagerLibrary.utils.entitypicker.setupEntitySelect2Control($select, tenantId, this.options.watermarkLabel, false, true, false, this.options.crossTenantSelection ? 'IncludeUsersFromAllianceTenants' : 'Tenant', this.options.includeInactiveEntities);
             }
             callback();
         },
@@ -184,6 +187,12 @@
                         "type": "boolean",
                         "default": false
                     },
+                    "includeInactiveEntities": {
+                        "title": "Include Inactive Entities",
+                        "description": "Raise this flag to fetch inactive entities.",
+                        "type": "boolean",
+                        "default": false,
+                    },
                     "additionalOptions": {
                       "title": "Additional options",
                       "description": "Additional options to pass to the entity search",
@@ -293,6 +302,11 @@
                         "dependencies": {
                             "entityType": "UserEntity"
                         }
+                    },
+                    "includeInactiveEntities": {
+                        "rightLabel": "Include inactive entities",
+                        "helper": "Raise this flag to fetch inactive entities.",
+                        "type": "checkbox",
                     },
                     "additionalOptions": {
                       "type": "json"
