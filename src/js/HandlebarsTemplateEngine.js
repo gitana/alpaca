@@ -255,6 +255,10 @@
 
     });
 
+    Handlebars.registerHelper("markdown", function(text) {
+        return SimpleMDE.prototype.markdown(text);
+    });
+
     //Handlebars.registerHelper("each", helpers["each"]);
     Handlebars.registerHelper("compare", helpers["compare"]);
     Handlebars.registerHelper("control", helpers["control"]);
