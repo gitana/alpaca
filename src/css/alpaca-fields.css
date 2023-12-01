@@ -316,6 +316,10 @@ table.dt-rowReorder-float .alpaca-table-reorder-draggable-cell
     margin-left: 10px;
 }
 
+.alpaca-control.checkbox {
+  margin-left: 10px;
+}
+
 .alpaca-control.radio label
 {
     line-height: 20px;
