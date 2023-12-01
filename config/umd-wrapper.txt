@@ -35,6 +35,7 @@ var depNames = deps ? _.pluck(deps, 'paramName') : stdDeps;
     <% if (exports) { %>
         <%= contents %>
         <% if (typeof defaultView != 'undefined') { %>
+            var <%= exports %> = $.alpaca;
             <%= exports %>.defaultView = '<%= defaultView %>';
         <% } %>
         return <%= exports %>;
@@ -44,6 +45,7 @@ var depNames = deps ? _.pluck(deps, 'paramName') : stdDeps;
             <%= contents %>
         })();
         <% if (typeof defaultView != 'undefined') { %>
+            var <%= exports %> = $.alpaca;
             exports.defaultView = '<%= defaultView %>';
         <% } %>
         return exports;
