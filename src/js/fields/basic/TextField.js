@@ -411,7 +411,7 @@
 
             var value = this._getControlVal(true);
 
-            if (self.control.mask && self.options.maskString)
+            if (self.control.mask && self.options.maskString && self.options.unmask)
             {
                 // get unmasked value
                 var fn = $(this.control).data($.mask.dataName);
