@@ -138,6 +138,7 @@
                                     "RoleEntity", 
                                     "Contract", 
                                     "CustomerEntity",
+                                    "AccessLevelEntity"
                                 ]
                     },
                     "typeFilter": {
@@ -246,6 +247,7 @@
                                             "Role", 
                                             "Contract", 
                                             "Customer",
+                                            "Access level"
                                         ]
                     },
                     "typeFilter": {
