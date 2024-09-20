@@ -6,9 +6,10 @@
             {{#if options.multiple}}
                 <label class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} control-label alpaca-control-label" for="{{id}}">{{{options.label}}}</label>
             {{else}}
-                {{#compare options.type "checkbox" operator="!="}}
+                {{#includedInList options.type "checkbox,AccessLevelCheckBox"}}
+                {{else}}
                     <label class="{{#if options.labelClass}}{{options.labelClass}}{{/if}} control-label alpaca-control-label" for="{{id}}">{{{options.label}}}</label>
-                {{/compare}}
+                {{/includedInList}}
             {{/if}}
         {{/if}}
 

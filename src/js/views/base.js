@@ -1530,4 +1530,18 @@
         }
     });
 
+    Handlebars.registerHelper('includedInList', function(value, valuesString, options) {
+        const errorMessagePrefix = "Handlebars Helper 'includedInList' needs";
+        if (arguments.length != 3) {
+            throw new Error(`${errorMessagePrefix} 2 parameters`);
+        }
+        if (!valuesString || typeof valuesString !== 'string') {
+            throw new Error(`${errorMessagePrefix} a string with a comma separated list as second parameter`);
+        }
+  		values = valuesString.split(',')
+  		if (values.includes(value)){
+           return options.fn(this);	
+        }
+        return options.inverse(this);
+    });
 })(jQuery);
