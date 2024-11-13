@@ -100,6 +100,7 @@ var paths = {
 
             "src/js/fields/advanced/AddressField.js",
             "src/js/fields/advanced/CKEditorField.js",
+            "src/js/fields/advanced/RichTextEditorField.js",
             "src/js/fields/advanced/ColorField.js",
             "src/js/fields/advanced/ColorPickerField.js",
             "src/js/fields/advanced/CountryField.js",
