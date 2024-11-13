@@ -1,0 +1,11 @@
+[src/js/**.js]
+indent_style = space
+indent_size = 4
+
+[src/templates/**.html]
+indent_style = space
+indent_size = 4
+
+[src/css/**.css]
+indent_style = space
+indent_size = 4
