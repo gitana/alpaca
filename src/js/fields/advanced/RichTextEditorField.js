@@ -63,7 +63,8 @@
                             properties: {
                                 label: {
                                     title: "Label",
-                                    description: "The label of the string insert selector.",
+                                    description:
+                                        "The label of the string insert selector.",
                                     type: "string",
                                 },
                                 trigger: {
@@ -73,7 +74,8 @@
                                 },
                                 endTrigger: {
                                     title: "End trigger",
-                                    description: "The autocompletion end trigger.",
+                                    description:
+                                        "The autocompletion end trigger.",
                                     type: "string",
                                 },
                                 options: {
