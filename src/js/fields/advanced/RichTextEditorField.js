@@ -19,7 +19,7 @@
                 this.base(value);
 
                 // trigger re-render
-                this.control.dispatchEvent(new Event("input"));
+                this.control[0].dispatchEvent(new Event("input"));
             },
 
             /* builder_helpers */
