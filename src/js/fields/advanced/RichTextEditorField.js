@@ -174,4 +174,5 @@
         "richtexteditor",
         Alpaca.Fields.RichTextEditorField
     );
+    Alpaca.registerFieldClass("ckeditor", Alpaca.Fields.RichTextEditorField);
 })(jQuery);
