@@ -1,6 +1,11 @@
 <script type="text/x-handlebars-template">
 
-    <textarea id="{{id}}" data-controller="rich-textbox">
+    <textarea
+        id="{{id}}"
+        data-controller="rich-textbox"
+        {{#if options.height}}data-rich-textbox-height="{{options.height}}" {{/if}}
+        {{#if options.placeholder}} placeholder="{{options.placeholder}}" {{/if}}
+        {{#if options.hideToolbar}} data-rich-textbox-hide-toolbar="{{options.hideToolbar}}" {{/if}}
+    >
     </textarea>
-
 </script>

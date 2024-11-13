@@ -37,6 +37,54 @@
             getDescription: function () {
                 return "Provides an instance of a rich text editor control for use in editing HTML.";
             },
+
+            /**
+             * @private
+             * @see Alpaca.Fields.TextAreaField#getSchemaOfOptions
+             */
+            getSchemaOfOptions: function () {
+                const options = Alpaca.merge(this.base(), {
+                    properties: {
+                        height: {
+                            title: "Height",
+                            description: "The height of the field",
+                            type: "text",
+                            default: "300px",
+                        },
+                        hideToolbar: {
+                            title: "Hide toolbar",
+                            description: "Hide the editor toolbar on first load",
+                            type: "boolean",
+                            default: false,
+                        },
+                    },
+                });
+                delete options.properties.rows;
+                delete options.properties.cols;
+                return options;
+            },
+
+            /**
+             * @private
+             * @see Alpaca.Fields.TextAreaField#getOptionsForOptions
+             */
+            getOptionsForOptions: function () {
+                const options = Alpaca.merge(this.base(), {
+                    fields: {
+                        height: {
+                            type: "text",
+                            helper: "Height in css units such as px, %, rem ...",
+                        },
+                        hideToolbar: {
+                            type: "checkbox",
+                            label: "Hide the editor toolbar on first load",
+                        },
+                    },
+                });
+                delete options.fields.rows;
+                delete options.fields.cols;
+                return options;
+            },
         }
     );
 
