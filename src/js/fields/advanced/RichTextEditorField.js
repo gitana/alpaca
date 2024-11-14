@@ -56,7 +56,7 @@
                             description:
                                 "Hide the editor toolbar on first load",
                             type: "boolean",
-                            default: false,
+                            default: true,
                         },
                         stringInsert: {
                             type: "object",
