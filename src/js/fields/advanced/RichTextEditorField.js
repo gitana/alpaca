@@ -1,7 +1,5 @@
 (function ($) {
     var Alpaca = $.alpaca;
-
-    console.log("rich text editor");
     Alpaca.Fields.RichTextEditorField = Alpaca.Fields.TextAreaField.extend(
         /**
          * @lends Alpaca.Fields.RichTextEditorField.prototype
@@ -18,8 +16,26 @@
                 // be sure to call into base method
                 this.base(value);
 
+                const textArea = this.control[0].querySelector("textarea");
+                if (!textArea) {
+                    return;
+                }
+                textArea.value = value
+                
                 // trigger re-render
-                this.control[0].dispatchEvent(new Event("input"));
+                textArea.dispatchEvent(new Event("input"));
+            },
+
+            /**
+             * @see Alpaca.Fields.ControlField#getControlValue
+             */
+            getControlValue: function()
+            {
+                const textArea = this.control[0].querySelector("textarea");
+                if (!textArea) {
+                    return;
+                }
+                return textArea.value;
             },
 
             /* builder_helpers */
