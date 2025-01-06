@@ -16,10 +16,10 @@
         {{#if options.helpers}}
             {{#compare options.helpersPosition "above"}}
                 {{#each options.helpers}}
-                    <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+                    <div class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
                         <i class="fa fa-info-circle"></i>
                         {{#showMessage .}}{{/showMessage}}
-                    </p>
+                    </div>
                 {{/each}}
             {{/compare}}
         {{/if}}
@@ -29,10 +29,10 @@
         {{#if options.helpers}}
             {{#compare options.helpersPosition "below"}}
                 {{#each options.helpers}}
-                    <p class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
+                    <div class="help-block {{#if options.helperClass}}{{options.helperClass}}{{/if}}">
                         <i class="fa fa-info-circle"></i>
                         {{#showMessage .}}{{/showMessage}}
-                    </p>
+                    </div>
                 {{/each}}
             {{/compare}}
         {{/if}}
