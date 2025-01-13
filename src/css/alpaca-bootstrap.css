@@ -370,8 +370,3 @@ legend.alpaca-container-label
 {
     z-index: 100;
 }
-
-/* Make the first container in the help block inline  */
-.alpaca-field .help-block :nth-child(2) {
-    display: inline;
-}
