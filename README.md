@@ -41,7 +41,7 @@ For more information, visit the <a href="http://www.alpacajs.org">Alpaca Forms w
 
 ## Sponsors
 
-Cloud CMS is actively developed and maintained by <a href="https://gitana.io">Gitana Software, Inc. (https://gitana.io)</a>.
+Cloud CMS is actively developed and maintained by <a href="https://gitana.io">Gitana Software, Inc.</a> (https://gitana.io).
 
 Cloud CMS is an API-First, JSON-friendly Content Management Platform for mobile and web applications.  It provides the
 ideal backend for Alpaca forms design, capture and reporting.  Stop by our web site to 
