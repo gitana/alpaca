@@ -32,7 +32,7 @@ rm -r package.json.npm
 # build alpaca
 # build web site
 # copy to dist (for bower)
-./node_modules/.bin/gulp _deploy
+source ./node_modules/.bin/gulp _deploy
 
 # build jsdoc
 ./node_modules/.bin/grunt jsdoc
@@ -101,11 +101,11 @@ cd build/web
 zip -r ../$ZIP *
 cd ../..
 echo Copying ZIP file to web server
-scp -i ~/keys/gitana.pem -r build/$ZIP ec2-user@alpacajs.org:/web/code/alpaca
+scp -i ~/keys/alpaca.pem -r build/$ZIP ec2-user@alpacajs.org:~
 echo Unzipping to latest directory, writing to deploy.log
-CMD2="cd /web/code/alpaca; rm -r /web/code/alpaca/latest; unzip -o /web/code/alpaca/$ZIP -d /web/code/alpaca/latest"
+CMD2="cd ~; rm -r ./latest; unzip -o $ZIP -d ./latest"
 echo $CMD2
-ssh -i ~/keys/gitana.pem ec2-user@alpacajs.org $CMD2 >> deploy.log
+ssh -i ~/keys/alpaca.pem ec2-user@alpacajs.org $CMD2 >> deploy.log
 
 
 
