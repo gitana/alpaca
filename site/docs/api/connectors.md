@@ -107,7 +107,7 @@ $("#field2").alpaca({
 
 Alpaca comes with a <code>cloudcms</code> connector that lets you load form information and data directly from
 Cloud CMS.  The Cloud CMS connector requires that you first load the
-<a href="https://www.cloudcms.com/javascript.html">Cloud CMS JavaScript Driver</a>.
+<a href="https://gitana.io/javascript.html">Cloud CMS JavaScript Driver</a>.
 
 To use it, simply set the <code>connector.id</code> property to <code>cloudcms</code> and provide the following
 information to connect to your tenant:
@@ -119,7 +119,7 @@ information to connect to your tenant:
 - application
 
 You can get these bits by downloading your
-<a href="https://www.cloudcms.com/apikeys.html">Developer API Keys</a>.
+<a href="https://gitana.io/apikeys.html">Developer API Keys</a>.
 
 The Cloud CMS Connector lets you load content type definitions (schema), forms (options) and nodes (data)
 seamlessly by referencing their QNames or Node IDs directly.

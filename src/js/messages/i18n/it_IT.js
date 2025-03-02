@@ -27,7 +27,7 @@
 				"valueNotUnique": "I valori non sono univoci",
 				"notAnArray": "Questo valore non è di tipo array",
 				"invalidDate": "Data invalida per il formato {0}",
-				"invalidEmail": "Indirizzo email invalido, si attendono valori del tipo: info@cloudcms.com",
+				"invalidEmail": "Indirizzo email invalido, si attendono valori del tipo: info@gitana.io",
 				"stringNotAnInteger": "Questo valore non è un numero intero",
 				"invalidIPv4": "Indirizzo IPv4 invalido, si attendono valori del tipo: 192.168.0.1",
 				"stringValueTooSmall": "Il valore minimo per questo campo è {0}",

@@ -68,7 +68,7 @@
 				"editorAnnotationsExist": "Editor má v sobě chyby, které musí být opraveny",
 
 				// fields/advanced/EmailField.js
-				"invalidEmail": "Chybná e-mailová adresa, př.: info@cloudcms.com",
+				"invalidEmail": "Chybná e-mailová adresa, př.: info@gitana.io",
 
 				// fields/advanced.IntegerField.js
 				"stringNotAnInteger": "Tato hodnota není číslo.",

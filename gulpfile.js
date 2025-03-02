@@ -517,6 +517,7 @@ gulp.task("build-site", function(cb)
     //datetime += now.getHours()+':'+now.getMinutes()+':'+now.getSeconds();
 
     // write temp file
+    datetime = "5/14/2019";
     fs.writeFileSync("./_custom_config.yml", "alpaca_version: " + pkg.version + "\r\nalpaca_date: " + datetime);
 
     var cmd = "jekyll build --config ./site/_config.yml,./_custom_config.yml -s ./site -d ./build/site --trace";

@@ -24,11 +24,7 @@
   "authors": [
     {
       "name": "Michael Uzquiano",
-      "email": "michael.uzquiano@cloudcms.com"
-    },
-    {
-      "name": "William Yaworsky",
-      "email": "will.yaworsky@cloudcms.com"
+      "email": "michael.uzquiano@gitana.io"
     }
   ],
   "homepage": "http://www.alpacajs.org",

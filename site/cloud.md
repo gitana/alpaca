@@ -8,33 +8,33 @@ sitemap:
 ---
 {% include JB/setup %}
 
-<a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> provides a hosted cloud service for Alpaca Forms that
+<a href="https://gitana.io" target="_blank">Cloud CMS</a> provides a hosted cloud service for Alpaca Forms that
 provides everything your organization needs to run Alpaca Forms on your own web sites.  Design your Forms in the cloud
 and present them on your web site.  Form data is captured and stored on the Cloud CMS backend, letting you and your
 team retrieve information and generate real-time reports.
 
 Cloud CMS provides enterprise content management for your business applications.
-In addition to forms management, <a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> provides
+In addition to forms management, <a href="https://gitana.io" target="_blank">Cloud CMS</a> provides
 robust object and team-based security, storage,
 <a href="#collaboration">team collaboration</a>,
 <a href="#reports">reporting</a> and a
 <a href="#form-builder">visual form designer</a>.  It offers a board and integrated set of features to
 empower your organization and make it more productive.
 
-Cloud CMS is available as a <a href="https://www.cloudcms.com/pricing.html" target="_blank">monthly subscription</a>.
-You can <a href="https://www.cloudcms.com/trial.html">sign up for a free trial</a> to evaluate the product at any time.
+Cloud CMS is available as a <a href="https://gitana.io/pricing.html" target="_blank">monthly subscription</a>.
+You can <a href="https://gitana.io/trial.html">sign up for a free trial</a> to evaluate the product at any time.
 
 <a name="hosting"></a>
 ## Cloud Hosting
 
-Alpaca connects seamlessly to <a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> to load form information
+Alpaca connects seamlessly to <a href="https://gitana.io" target="_blank">Cloud CMS</a> to load form information
 (such as JSON schema, options and layout information) and then uses that to render right on your web site.  When
 your customers complete the form, the form data is posted back to
-<a href="https://www.cloudcms.com" target="_blank">Cloud CMS</a> and stored in a data list.  All of this data is
+<a href="https://gitana.io" target="_blank">Cloud CMS</a> and stored in a data list.  All of this data is
 captured, including JSON fields and binary form attachments, allowing your team to query against it and generate
 reports (such as PDF or CSV/Excel) at any time.
 
-We offer several <a href="https://www.cloudcms.com/pricing.html" target="_blank">subscription plans</a>
+We offer several <a href="https://gitana.io/pricing.html" target="_blank">subscription plans</a>
 that are cost-effective and scalable for your organization's needs.
 
 <div class="row">

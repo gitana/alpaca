@@ -27,7 +27,7 @@
 				"valueNotUnique": "De waarden zijn uniek",
 				"notAnArray": "Deze waarde is geen lijst",
 				"invalidDate": "De datum komt niet overeen met formaat {0}",
-				"invalidEmail": "Ongeldig e-mailadres, vb.: info@cloudcms.com",
+				"invalidEmail": "Ongeldig e-mailadres, vb.: info@gitana.io",
 				"stringNotAnInteger": "Deze waarde is geen geheel getal.",
 				"invalidIPv4": "Ongeldig IPv4 adres, vb.: 192.168.0.1",
 				"stringValueTooSmall": "De minimale waarde voor dit veld is {0}",

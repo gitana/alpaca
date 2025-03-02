@@ -27,7 +27,7 @@
                 "valueNotUnique": "Te wartości nie są unikalne",
                 "notAnArray": "Ta wartość nie jest tablicą",
                 "invalidDate": "Niepoprawny format daty: {0}",
-                "invalidEmail": "Niepoprawny adres email, n.p.: info@cloudcms.com",
+                "invalidEmail": "Niepoprawny adres email, n.p.: info@gitana.io",
                 "stringNotAnInteger": "Ta wartość nie jest liczbą całkowitą",
                 "invalidIPv4": "Niepoprawny adres IPv4, n.p.: 192.168.0.1",
                 "stringValueTooSmall": "Minimalna wartość dla tego pola wynosi {0}",

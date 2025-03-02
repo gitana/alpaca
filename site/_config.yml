@@ -12,7 +12,7 @@ title : Alpaca Forms
 tagline: Web Forms for jQuery
 author :
   name : Gitana Software, Inc.
-  email : info@cloudcms.com
+  email : info@gitana.io
   github : gitana/alpaca
   twitter : alpacajs
 meta:
@@ -20,9 +20,9 @@ meta:
   keywords: alpaca,forms,jquery,bootstrap,json,json-schema,schema,form,html,html5,angular,builder,cms
 
 
-markdown: redcarpet
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
+#markdown: redcarpet
+#redcarpet:
+#  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 

@@ -439,7 +439,7 @@
 
                     self.errorCallback.call(self, err);
                 },
-                "notTopLevel":true,
+                "notTopLevel": true,
                 "render" : function(fieldControl, cb) {
 
                     // render

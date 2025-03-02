@@ -27,7 +27,7 @@
 				"valueNotUnique": "Los valores no son únicos",
 				"notAnArray": "Este valor no es un arsenal",
 				"invalidDate": "Fecha inválida para el formato {0}",
-				"invalidEmail": "Email address inválido, ex: info@cloudcms.com",
+				"invalidEmail": "Email address inválido, ex: info@gitana.io",
 				"stringNotAnInteger": "Este valor no es un número entero.",
 				"invalidIPv4": "Dirección inválida IPv4, ex: 192.168.0.1",
 				"stringValueTooSmall": "El valor mínimo para este campo es {0}",

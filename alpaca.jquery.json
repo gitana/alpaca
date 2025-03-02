@@ -18,13 +18,13 @@
   "version": "1.5.24",
   "author": {
     "name": "Cloud CMS",
-    "url": "http://www.cloudcms.com"
+    "url": "https://gitana.io"
   },
   "maintainers": [
     {
       "name": "Michael Uzquiano",
-      "email": "uzi@cloudcms.com",
-      "url": "http://www.cloudcms.com"
+      "email": "uzi@gitana.io",
+      "url": "https://gitana.io"
     }
   ],
   "licenses": [

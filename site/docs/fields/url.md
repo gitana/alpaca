@@ -53,7 +53,7 @@ URL field - with field set to display mode.  Override the anchor title and ancho
 {% raw %}
 <script type="text/javascript" id="field3-script">
 $("#field3").alpaca({
-    "data": "http://www.cloudcms.com",
+    "data": "http://www.cloudc",
     "schema": {
         "format": "uri"
     },
@@ -74,7 +74,7 @@ URL field - display only view
 {% raw %}
 <script type="text/javascript" id="field4-script">
 $("#field4").alpaca({
-    "data": "http://www.cloudcms.com",
+    "data": "https://gitana.io",
     "options": {
         "type": "url",
         "label": "Web Address"

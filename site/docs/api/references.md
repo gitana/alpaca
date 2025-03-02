@@ -28,9 +28,9 @@ that instead.
 
 If you are using alpaca in CloudCMS, you can use references to refer to other content types by their qnames. Learn more here:
 
-https://www.cloudcms.com/documentation/forms/references.html
+https://gitana.io/documentation/forms/references.html
 
-https://www.cloudcms.com/documentation/content-models/references.html
+https://gitana.io/documentation/content-models/references.html
 
 
 

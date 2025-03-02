@@ -234,7 +234,7 @@ $("#field7").alpaca({
             "url": "http://alpacajs.org"
         },{
             "type": "external",
-            "url": "https://cloudcms.com"
+            "url": "https://gitana.io"
         }]
     }
 });

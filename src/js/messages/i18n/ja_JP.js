@@ -39,7 +39,7 @@
                 "stringTooLong": "この項目は {0} 文字以下でなければなりません",
                 "invalidTime": "時間が正しくありません",
                 "invalidDate": "日付が {0} ではありません",
-                "invalidEmail": "メールアドレスが正しくありません。例えば info@cloudcms.com のような形式です",
+                "invalidEmail": "メールアドレスが正しくありません。例えば info@gitana.io のような形式です",
                 "invalidIPv4": "IPv4 アドレスが正しくありません。例えば 192.168.0.1 のような形式です",
                 "invalidPassword": "パスワードが正しくありません",
                 "invalidPhone": "電話番号が正しくありません。例えば (123) 456-9999 のような形式です",

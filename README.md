@@ -41,11 +41,11 @@ For more information, visit the <a href="http://www.alpacajs.org">Alpaca Forms w
 
 ## Sponsors
 
-Cloud CMS is actively developed and maintained by <a href="https://www.cloudcms.com">Cloud CMS</a>.
+Cloud CMS is actively developed and maintained by <a href="https://gitana.io">Cloud CMS</a>.
 
 Cloud CMS is an API-First, JSON-friendly Content Management Platform for mobile and web applications.  It provides the
 ideal backend for Alpaca forms design, capture and reporting.  Stop by our web site to 
-<a href="https://www.cloudcms.com">learn more about Cloud CMS</a>.
+<a href="https://gitana.io">learn more about Cloud CMS</a>.
 
 The project also has a large number of customers who use Alpaca, contribute code and receive support, some of whom are 
 listed on our <a href="https://www.alpacajs.org">web site</a>.
@@ -136,9 +136,11 @@ To clean the build:
 
 To build the web site, you will also need to have Python and Jekyll installed (as global dependencies).
 
-You will then also need to install the `redcarpet` and `pygments.rb` gems, sort of like this:
+    brew install ruby
+    gem install -n /usr/local/bin jekyll
 
-    gem install redcarpet
+You will then also need to install the `pygments.rb` gem, sort of like this:
+
     gem install pygments.rb
 
 Then run:    

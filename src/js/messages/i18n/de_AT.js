@@ -27,7 +27,7 @@
                 "valueNotUnique": "Diese Werte sind nicht eindeutig",
                 "notAnArray": "Keine Liste von Werten",
                 "invalidDate": "Falsches Datumsformat: {0}",
-                "invalidEmail": "Ungültige e-Mail Adresse, z.B.: info@cloudcms.com",
+                "invalidEmail": "Ungültige e-Mail Adresse, z.B.: info@gitana.io",
                 "stringNotAnInteger": "Eingabe ist keine Ganz Zahl.",
                 "invalidIPv4": "Ungültige IPv4 Adresse, z.B.: 192.168.0.1",
                 "stringValueTooSmall": "Die Mindestanzahl von Zeichen ist {0}",

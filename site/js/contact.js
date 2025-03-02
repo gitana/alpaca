@@ -46,7 +46,7 @@ $(document).ready(function() {
         "options": {
             "form":{
                 "attributes":{
-                    "action":"https://www.cloudcms.com/landing/alpaca",
+                    "action":"https://gitana.io/landing/alpaca",
                     "method":"post"
                 },
                 "buttons":{

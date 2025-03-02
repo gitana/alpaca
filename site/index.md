@@ -27,7 +27,7 @@ object-oriented pattern, allowing you to implement new controls, templates, I18N
 persistence for your projects.
 
 Alpaca is open-source and provided to you under the Apache 2.0 license.  It is supported by
-<a href="https://www.cloudcms.com">Cloud CMS</a> and is in use by organizations and within projects all around the world.
+<a href="https://gitana.io">Cloud CMS</a> and is in use by organizations and within projects all around the world.
 
 <div class="video-container" align="center">
      <iframe src="http://www.youtube.com/embed/mK4BXiGNbvA" frameborder="0" width="560" height="315"> </iframe>
@@ -147,7 +147,7 @@ are a few notable ones:
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
-                <a href="http://www.cloudcms.com/" target="_blank">
+                <a href="https://gitana.io/" target="_blank">
                     <img src="{{ BASE_PATH }}/images/community/cloudcms-150.png" style="max-width:125px" />
                 </a>
             </div>
