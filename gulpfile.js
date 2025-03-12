@@ -40,7 +40,7 @@ var paths = {
     scripts: {
         core: [
             "thirdparty/base/Base.js",
-
+            "thirdparty/jquery-vhtml/jquery-vhtml.umd.js",
             "src/js/Alpaca.js",
             "src/js/Alpaca-async.js",
             "src/js/ObservableUtils.js",

@@ -548,11 +548,11 @@
                         });
 
                         // find the insertion point
-                        var insertionPointEl = $(containerItemEl).find("." + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD);
+                        var insertionPointEl = containerItemEl.find("." + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD);
                         if (insertionPointEl.length === 0)
                         {
-                            if ($(containerItemEl).hasClass(Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD)) {
-                                insertionPointEl = $(containerItemEl);
+                            if (containerItemEl.hasClass(Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD)) {
+                                insertionPointEl = containerItemEl;
                             }
                         }
                         if (insertionPointEl.length === 0)
@@ -564,8 +564,8 @@
                         }
 
                         // copy into place
-                        $(insertionPointEl).before(control.getFieldEl());
-                        $(insertionPointEl).remove();
+                        insertionPointEl.before(control.getFieldEl());
+                        insertionPointEl.remove();
 
                         control.containerItemEl = containerItemEl;
 
@@ -1350,7 +1350,7 @@
             if (index === 0)
             {
                 // insert first into container
-                $(addItemContainer).append(item.containerItemEl);
+                addItemContainer.append(item.containerItemEl);
             }
             else
             {
@@ -1420,8 +1420,8 @@
                     }
                     child.name = undefined;
                     child.calculateName();
-                    $(child.containerItemEl).attr("data-alpaca-container-item-index", i);
-                    $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
+                    child.containerItemEl.attr("data-alpaca-container-item-index", i);
+                    child.containerItemEl.attr("data-alpaca-container-item-name", child.name);
                     child.updateDOMElement()
                 }
                 

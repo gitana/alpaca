@@ -474,11 +474,11 @@
                     });
 
                     // find the insertion point
-                    var insertionPointEl = $(containerItemEl).find("." + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD);
+                    var insertionPointEl = containerItemEl.find("." + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD);
                     if (insertionPointEl.length === 0)
                     {
-                        if ($(containerItemEl).hasClass(Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD)) {
-                            insertionPointEl = $(containerItemEl);
+                        if (containerItemEl.hasClass(Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD)) {
+                            insertionPointEl = containerItemEl;
                         }
                     }
                     if (insertionPointEl.length === 0)
@@ -489,8 +489,8 @@
                     }
 
                     // copy into place
-                    $(insertionPointEl).before(control.getFieldEl());
-                    $(insertionPointEl).remove();
+                    insertionPointEl.before(control.getFieldEl());
+                    insertionPointEl.remove();
 
                     control.containerItemEl = containerItemEl;
 

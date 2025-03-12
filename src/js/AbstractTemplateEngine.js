@@ -1,5 +1,7 @@
 (function($)
 {
+    var scriptRegex = /<[\/]?script([^>]*)>/gim
+
     Alpaca.AbstractTemplateEngine = Base.extend(
     {
         constructor: function(id)
@@ -10,20 +12,23 @@
 
             this.cleanup = function(html)
             {
-                if (html)
-                {
-                    // if if starts with a script tag, then we strip that out
-                    if ($(html).length === 1)
-                    {
-                        if ($(html)[0].nodeName.toLowerCase() === "script")
-                        {
-                            return $(html).html();
+                // if (html)
+                // {
+                //     // if if starts with a script tag, then we strip that out
+                //     if ($(html).length === 1)
+                //     {
+                //         if ($(html)[0].nodeName.toLowerCase() === "script")
+                //         {
+                //             // debugger;
+                //             return html.replace(scriptRegex, "");
+                //             // return $(html).html();
 
-                        }
-                    }
-                }
+                //         }
+                //     }
+                // }
+                if (!html) return html;
 
-                return html;
+                return html.replace(scriptRegex, "");
             };
         },
 
@@ -86,6 +91,7 @@
                 connector.loadTemplate(url, function(html) {
 
                     // cleanup html
+
                     html = self.cleanup(html);
 
                     self._compile(cacheKey, html, function(err) {
@@ -165,6 +171,7 @@
             var html = this.doExecute(cacheKey, model, errorCallback);
 
             // removes wrapping <script/> tag
+            
             html = this.cleanup(html);
 
             return html;

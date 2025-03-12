@@ -595,14 +595,21 @@
                 var converted = null;
                 try
                 {
+                    // debugger;
+                    // converted = $("<div></div>").vhtml(x).children();
+                    // debugger;
+
+                    // converted = $("");
+                    // debugger; 
+                    // converted.vhtml(x);
                     converted = $(x);
                 }
                 catch (e)
                 {
                     // make another attempt to account for safety in some browsers
                     x = "<div>" + x + "</div>";
-
                     converted = $(x).children();
+                    // converted = $("<div></div>").vhtml(x).children();
                 }
 
                 return converted;
@@ -1773,6 +1780,8 @@
         {
             var self = this;
 
+            var theEl = $(el);
+
             ///////////////////////////////////////////////////////////////////////////////////////////////////
             //
             // VIEW RESOLUTION
@@ -1880,8 +1889,8 @@
                 if (field)
                 {
                     // hide field while rendering
-                    $(el).addClass("alpaca-field-rendering");
-                    $(el).addClass("alpaca-hidden");
+                    theEl.addClass("alpaca-field-rendering");
+                    theEl.addClass("alpaca-hidden");
 
                     Alpaca.fieldInstances[field.getId()] = field;
 
@@ -1944,8 +1953,8 @@
                         //$(tempHolder).remove();
 
                         // reveal field after rendering
-                        $(el).removeClass("alpaca-field-rendering");
-                        $(el).removeClass("alpaca-hidden");
+                        theEl.removeClass("alpaca-field-rendering");
+                        theEl.removeClass("alpaca-hidden");
 
                         // if there was a previous field that needs to be cleaned up, do so now
                         if (field._oldFieldEl)
