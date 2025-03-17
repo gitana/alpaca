@@ -2676,6 +2676,12 @@
                         "type": "number",
                         "minimum": 0,
                         "maximum": 1
+                    },
+                    "orDependencies": {
+                        "title": "Cross field OR Dependencies",
+                        "description": "Indicates whether the field should show if only one field dependency is satisfied.",
+                        "type": "boolean",
+                        "default": false
                     }
                 }
             };
@@ -2846,7 +2852,12 @@
                     "riskScoreThreshold":{
                         "helper": "Display this field only if the maximum risk score for this tab is above this threshold",
                         "type": "number"
-                    }
+                    },
+                    "orDependencies": {
+                        "rightLabel": "Cross field OR Dependencies",
+                        "helper": "Indicates whether the field should show if only one field dependency is satisfied.",
+                        "type": "checkbox"
+                    },
                 }
             };
             if (this.isTopLevel()) {

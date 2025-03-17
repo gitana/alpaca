@@ -888,15 +888,27 @@
                 return true;
             }
 
-            var valid = true;
+            var valid;
             if (Alpaca.isString(itemDependencies))
             {
                 valid = self.determineSingleDependencyValid(propertyId, itemDependencies);
             }
             else if (Alpaca.isArray(itemDependencies))
             {
+                var orDependencies = self.childrenByPropertyId[propertyId].options.orDependencies === true;
+                valid = !orDependencies;
                 $.each(itemDependencies, function(index, value) {
-                    valid = valid && self.determineSingleDependencyValid(propertyId, value);
+                    if (orDependencies) {
+                        valid = valid || self.determineSingleDependencyValid(propertyId, value);
+                        if (valid) {
+                            return true;
+                        }
+                    } else {
+                        valid = valid && self.determineSingleDependencyValid(propertyId, value);
+                        if (!valid) {
+                            return false;
+                        }
+                    }
                 });
             }
 
