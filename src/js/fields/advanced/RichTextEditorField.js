@@ -67,12 +67,11 @@
                             type: "text",
                             default: "300px",
                         },
-                        hideToolbar: {
-                            title: "Hide toolbar",
-                            description:
-                                "Hide the editor toolbar on first load",
+                        defaultExtendToolbar: {
+                            title: "Show extended toolbar as default",
+                            description: "Show extended toolbar as default",
                             type: "boolean",
-                            default: true,
+                            default: false,
                         },
                         stringInsert: {
                             type: "object",
@@ -136,7 +135,6 @@
                         },
                         hideToolbar: {
                             type: "checkbox",
-                            label: "Hide the editor toolbar on first load",
                         },
                         stringInsert: {
                             type: "object",
