@@ -138,7 +138,8 @@
                                     "RoleEntity", 
                                     "Contract", 
                                     "CustomerEntity",
-                                    "AccessLevelEntity"
+                                    "AccessLevelEntity",
+                                    "Outsourcing"
                                 ]
                     },
                     "typeFilter": {
@@ -248,7 +249,8 @@
                                             "Role", 
                                             "Contract", 
                                             "Customer",
-                                            "Access level"
+                                            "Access level", 
+                                            "Outsourcing / ICT service agreement"
                                         ]
                     },
                     "typeFilter": {
