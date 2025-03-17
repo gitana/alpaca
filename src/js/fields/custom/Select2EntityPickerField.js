@@ -139,7 +139,8 @@
                                     "Contract", 
                                     "CustomerEntity",
                                     "AccessLevelEntity",
-                                    "Outsourcing"
+                                    "Outsourcing",
+                                    "RiskAssessment"
                                 ]
                     },
                     "typeFilter": {
@@ -250,7 +251,8 @@
                                             "Contract", 
                                             "Customer",
                                             "Access level", 
-                                            "Outsourcing / ICT service agreement"
+                                            "Outsourcing / ICT service agreement", 
+                                            "Risk assessment"
                                         ]
                     },
                     "typeFilter": {
