@@ -489,8 +489,9 @@
                     }
 
                     // copy into place
-                    $(insertionPointEl).before(control.getFieldEl());
-                    $(insertionPointEl).remove();
+                    insertionPointEl = Alpaca.replaceWith(insertionPointEl, control.getFieldEl());
+                    // $(insertionPointEl).before(control.getFieldEl());
+                    // $(insertionPointEl).remove();
 
                     control.containerItemEl = containerItemEl;
 
@@ -1554,7 +1555,7 @@
 
                         // hide all steps
                         $(wizardSteps).find("[data-alpaca-wizard-role='step']").hide();
-                        $($(wizardSteps).find("[data-alpaca-wizard-role='step']")[currentIndex]).show();
+                        $(wizardSteps).find("[data-alpaca-wizard-role='step']")[currentIndex].show();
 
                     };
 
@@ -1569,7 +1570,7 @@
                         // collect all of the fields on the current step
                         var fields = [];
 
-                        var currentStepEl = $($(wizardSteps).find("[data-alpaca-wizard-role='step']")[currentIndex]);
+                        var currentStepEl = $(wizardSteps).find("[data-alpaca-wizard-role='step']")[currentIndex];
                         $(currentStepEl).find(".alpaca-field").each(function() {
                             var fieldId = $(this).attr("data-alpaca-field-id");
                             if (fieldId)
@@ -1879,7 +1880,7 @@
                     }
                     else
                     {
-                        stepEl = $($(this.field).find("[data-alpaca-wizard-role='step']")[step-1]);
+                        stepEl = $(this.field).find("[data-alpaca-wizard-role='step']")[step-1];
                     }
 
                     // is there any order information in the items?
@@ -2025,8 +2026,10 @@
                 self.children = tempChildren;
 
                 // swap order in DOM
-                tempSourceMarker.replaceWith(targetContainer);
-                tempTargetMarker.replaceWith(sourceContainer);
+                tempSourceMarker = Alpaca.replaceWith(tempSourceMarker, targetContainer);
+                //tempSourceMarker.replaceWith(targetContainer);
+                tempTargetMarker = Alpaca.replaceWith(tempTargetMarker, sourceContainer);
+                //tempTargetMarker.replaceWith(sourceContainer);
 
                 // updates dom markers for this element and any siblings
                 self.handleRepositionDOMRefresh();

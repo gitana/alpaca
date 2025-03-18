@@ -230,7 +230,7 @@
         {
             var self = this;
 
-            return $($(self.container).find("table")[0]);
+            return $(self.container).find("table")[0];
         },
 
         /**
@@ -457,7 +457,8 @@
                 // replace field with children
                 if (mergeElementChildren.length > 0)
                 {
-                    $(mergeElement).replaceWith(mergeElementChildren);
+                    mergeElement = Alpaca.replaceWith(mergeElement, mergeElementChildren);
+                    //$(mergeElement).replaceWith(mergeElementChildren);
                 }
                 else
                 {

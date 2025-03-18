@@ -12,13 +12,20 @@
             {
                 if (html)
                 {
-                    // if if starts with a script tag, then we strip that out
-                    if ($(html).length === 1)
-                    {
-                        if ($(html)[0].nodeName.toLowerCase() === "script")
-                        {
-                            return $(html).html();
+                    var t1 = html.trim();
+                    var t2 = t1.toLowerCase();
 
+                    var z1 = t2.indexOf("<script");
+                    if (z1 > -1)
+                    {
+                        var z2 = t2.indexOf(">", z1);
+                        if (z2 > -1)
+                        {
+                            var z3 = t2.lastIndexOf("</script>");
+                            if (z3 > -1)
+                            {
+                                return t1.substring(z2 + 1, z3);
+                            }
                         }
                     }
                 }

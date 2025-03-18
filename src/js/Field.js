@@ -797,14 +797,14 @@
 
                         if ("div" === name || "span" === name)
                         {
-                            single = $($(renderedDomElement)[i]);
+                            single = $(renderedDomElement[i]);
                             break;
                         }
                     }
                 }
                 if (!single)
                 {
-                    single = $($(renderedDomElement).last());
+                    single = $(renderedDomElement.last());
                 }
                 if (single)
                 {

@@ -140,8 +140,9 @@
                     });
 
                     // replace the insertion point
-                    $(insertionPointEl).before(toolbar);
-                    $(insertionPointEl).remove();
+                    Alpaca.replaceWith(insertionPointEl, toolbar);
+                    // $(insertionPointEl).before(toolbar);
+                    // $(insertionPointEl).remove();
                 }
             }
         }
@@ -193,8 +194,9 @@
                         });
 
                         // replace the insertion point
-                        $(insertionPointEl).before(actionbar);
-                        $(insertionPointEl).remove();
+                        Alpaca.replaceWith(insertionPointEl, actionbar);
+                        // $(insertionPointEl).before(actionbar);
+                        // $(insertionPointEl).remove();
                     }
                 }
             }

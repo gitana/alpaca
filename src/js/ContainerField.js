@@ -211,8 +211,9 @@
 
                         if (containerField)
                         {
-                            self.container.replaceWith(containerField);
-                            self.container = containerField;
+                            //self.container.replaceWith(containerField);
+                            self.container = Alpaca.replaceWith(self.container, containerField);
+                            //self.container = containerField;
 
                             self.container.addClass(Alpaca.CLASS_CONTAINER);
                         }
@@ -430,7 +431,8 @@
                 {
                     var holder = $(insertionPoint).parent();
 
-                    $(insertionPoint).replaceWith(item.containerItemEl);
+                    //$(insertionPoint).replaceWith(item.containerItemEl);
+                    Alpaca.replaceWith(insertionPoint, item.containerItemEl);
 
                     // reset domEl to allow for refresh
                     item.domEl = holder;

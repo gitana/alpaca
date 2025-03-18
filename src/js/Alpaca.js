@@ -445,7 +445,7 @@
             }
 
             // init alpaca
-            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, initialSettings, callback, _renderedCallback, connector, errorCallback);
+            return Alpaca.init(el, loadedData, loadedOptions, loadedSchema, loadedView, initialSettings, callback, _renderedCallback, connector, errorCallback, notTopLevel);
 
         }, function (loadError) {
             errorCallback(loadError);
@@ -1708,7 +1708,7 @@
          *
          * @returns {Alpaca.Field} New field instance.
          */
-        init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback) {
+        init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, notTopLevel) {
 
             var self = this;
 
@@ -1720,7 +1720,8 @@
 
             // if they provided an inline view object, we assign an id and store onto views map
             // so that it gets compiled along with the rest
-            if (Alpaca.isObject(view)) {
+            if (Alpaca.isObject(view))
+            {
                 var viewId = view.id;
                 if (!viewId) {
                     view.id = this.generateViewId();
@@ -1765,11 +1766,11 @@
                     return Alpaca.throwErrorWithCallback("View compilation failed, cannot initialize Alpaca. " + messages.join(", "), errorCallback);
                 }
 
-                self._init(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback);
+                self._init(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, notTopLevel);
             }, errorCallback);
         },
 
-        _init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback)
+        _init: function(el, data, options, schema, view, initialSettings, callback, renderedCallback, connector, errorCallback, notTopLevel)
         {
             var self = this;
 
@@ -1870,11 +1871,31 @@
                 //
                 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+                // PLACEHOLDER
+                // var originalEl = el;
+                // el = document.createElement("div");
+                // var fragment = document.createDocumentFragment();
+                // fragment.appendChild(el);
+
                 // TEST - swap code
                 // swap el -> placeholder
-                //var tempHolder = $("<div></div>");
-                //$(el).before(tempHolder);
-                //$(el).remove();
+                // var tempHolder = $("<div></div>");
+                // $(el).before(tempHolder);
+                // $(el).remove();
+
+                // NEW approach
+                var tempHolder = null;
+                if (!notTopLevel)
+                {
+                    var tempHolderHtml = Alpaca.generateTempHolder();
+                    if (!tempHolderHtml) {
+                        tempHolderHtml = "<div style='display:none'></div>";
+                    }
+                    tempHolder = $(tempHolderHtml);
+                    $(el).before(tempHolder);
+                    var fragment = document.createDocumentFragment();
+                    fragment.appendChild($(el)[0]);
+                }
 
                 var field = Alpaca.createFieldInstance(el, data, options, schema, view, connector, errorCallback);
                 if (field)
@@ -1938,11 +1959,6 @@
                         }
                         */
 
-                        // TEST - swap code
-                        // swap placeholder -> el
-                        //$(tempHolder).before(el);
-                        //$(tempHolder).remove();
-
                         // reveal field after rendering
                         $(el).removeClass("alpaca-field-rendering");
                         $(el).removeClass("alpaca-hidden");
@@ -1953,6 +1969,17 @@
                             $(field._oldFieldEl).remove();
                         }
 
+                        // PLACEHOLDER RESTORE
+                        //Alpaca.replaceWith(originalEl, el);
+
+                        // TEST - swap code
+                        // swap placeholder -> el
+                        // $(tempHolder).before(fragment);
+                        // $(tempHolder).remove();
+                        if (!notTopLevel)
+                        {
+                            Alpaca.replaceWith(tempHolder, fragment);
+                        }
 
                         renderedCallback(field);
                     };
@@ -3212,8 +3239,10 @@
         return this.each(function() {
             var copy_to = $(to).clone();
             var copy_from = $(this).clone();
-            $(to).replaceWith(copy_from);
-            $(this).replaceWith(copy_to);
+            //$(to).replaceWith(copy_from);
+            //$(this).replaceWith(copy_to);
+            Alpaca.replaceWith(to, copy_from);
+            Alpaca.replaceWith(this, copy_to);
         });
     };
 
@@ -3668,6 +3697,13 @@
     Alpaca.replaceAll = function(text, find, replace)
     {
         return text.replace(new RegExp(find, 'g'), replace);
+    };
+
+    Alpaca.replaceWith = function(originalEl, replacementEl)
+    {
+        $(originalEl).replaceWith(replacementEl);
+
+        return replacementEl;
     };
 
     Alpaca.asArray = function(thing)
@@ -4499,6 +4535,11 @@
         {
             Alpaca.defaultErrorCallback(err);
         }
+    };
+
+    Alpaca.generateTempHolder = function()
+    {
+        return "<div style='display:none'></div>";
     };
 
 

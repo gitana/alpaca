@@ -564,8 +564,9 @@
                         }
 
                         // copy into place
-                        $(insertionPointEl).before(control.getFieldEl());
-                        $(insertionPointEl).remove();
+                        insertionPointEl = Alpaca.replaceWith(insertionPointEl, control.getFieldEl());
+                        // $(insertionPointEl).before(control.getFieldEl());
+                        // $(insertionPointEl).remove();
 
                         control.containerItemEl = containerItemEl;
 

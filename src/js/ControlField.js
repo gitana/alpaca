@@ -164,8 +164,9 @@
 
                             if (controlField)
                             {
-                                self.control.replaceWith(controlField);
-                                self.control = controlField;
+                                //self.control.replaceWith(controlField);
+                                self.control = Alpaca.replaceWith(self.control, controlField);
+                                //self.control = controlField;
 
                                 self.control.addClass(Alpaca.CLASS_CONTROL);
                             }
