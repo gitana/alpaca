@@ -72,6 +72,7 @@
                 $select.data("additional-options", this.options.additionalOptions);
                 if (!this.isRequired()) {
                     $select.attr('data-allow-clear', true);
+                    $select.attr('data-select-on-close', false);
                 }
                 if (!this.options.watermarkLabel) {
                     this.options.watermarkLabel = " - Finn medarbeider - ";
