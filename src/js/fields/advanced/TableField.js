@@ -230,7 +230,7 @@
         {
             var self = this;
 
-            return $(self.container).find("table")[0];
+            return $(self.container).find("table");
         },
 
         /**
