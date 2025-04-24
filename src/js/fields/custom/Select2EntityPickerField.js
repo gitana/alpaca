@@ -141,7 +141,8 @@
                                     "CustomerEntity",
                                     "AccessLevelEntity",
                                     "Outsourcing",
-                                    "RiskAssessment"
+                                    "RiskAssessment",
+                                    "LocationEntity",
                                 ]
                     },
                     "typeFilter": {
@@ -253,7 +254,8 @@
                                             "Customer",
                                             "Access level", 
                                             "Outsourcing / ICT service agreement", 
-                                            "Risk assessment"
+                                            "Risk assessment", 
+                                            "Kontorlokasjon"
                                         ]
                     },
                     "typeFilter": {
