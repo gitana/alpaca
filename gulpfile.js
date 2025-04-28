@@ -26,7 +26,6 @@ var bump        = require('gulp-bump');
 var wrapUmd     = require("gulp-wrap-umd");
 var awspublish  = require('gulp-awspublish');
 var gulpTemplate = require('gulp-template');
-var babel       = require('gulp-babel');
 
 var VERSIONABLE_FILES = [
     "package.json",
@@ -48,14 +47,12 @@ if (!fs.existsSync(alpacaBootstrapOutputDirectory)) {
 
 var paths = {
     scripts: {
-        filesToTranspile:[
-            "src/js/Alpaca-async.js",
-        ],
         core: [
             "src/js/polyfills/*.js",
             "thirdparty/base/Base.js",
 
             "src/js/Alpaca.js",
+            "src/js/Alpaca-async.js",
             "build/tmp/transpiled/Alpaca-async.js",
             "src/js/ObservableUtils.js",
             "src/js/Observables.js",
@@ -414,70 +411,55 @@ gulp.task("build-scripts", (cb) => {
 
     //console.log("build-scripts start");
     // core
-    var first = gulp.src(paths.scripts.filesToTranspile)
-                    .pipe(babel({
-                        presets: [
-                            ['@babel/preset-env', {
-                                targets: {
-                                    'ie': '9'
-                                }
-                            }]
-                        ]
-                    }))                                            
-                    .pipe(gulp.dest('build/tmp/transpiled'));
+    var first = gulp.src(paths.scripts.core)
+                    .pipe(concat('scripts-core.js'))                                           
+                    .pipe(gulp.dest('build/tmp'));
                     
     first.on("end", () => {
-        var second = gulp.src(paths.scripts.core)                                 
-                        .pipe(concat('scripts-core.js'))                                            
-                        .pipe(gulp.dest('build/tmp'));
+        es.concat(
 
-        second.on("end", () => {
+        // web
+        gulp.src(paths.scripts.web)
+            .pipe(concat('alpaca.js'))
+            .pipe(wrapUmd(web_wrap))
+            .pipe(gulp.dest('build/alpaca/web'))
+            .pipe(concat('alpaca.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('build/alpaca/web')),
 
-            es.concat(
+        // bootstrap
+        gulp.src(paths.scripts.bootstrap)
+            .pipe(concat('alpaca.js'))
+            .pipe(wrapUmd(bootstrap_wrap))
+            .pipe(gulp.dest(alpacaBootstrapOutputDirectory))
+            .pipe(concat('alpaca.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest(alpacaBootstrapOutputDirectory)),
 
-            // web
-            gulp.src(paths.scripts.web)
-                .pipe(concat('alpaca.js'))
-                .pipe(wrapUmd(web_wrap))
-                .pipe(gulp.dest('build/alpaca/web'))
-                .pipe(concat('alpaca.min.js'))
-                .pipe(uglify())
-                .pipe(gulp.dest('build/alpaca/web')),
+        // jqueryui
+        gulp.src(paths.scripts.jqueryui)
+            .pipe(concat('alpaca.js'))
+            .pipe(wrapUmd(jqueryui_warp))
+            .pipe(gulp.dest('build/alpaca/jqueryui'))
+            .pipe(concat('alpaca.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('build/alpaca/jqueryui')),
 
-            // bootstrap
-            gulp.src(paths.scripts.bootstrap)
-                .pipe(concat('alpaca.js'))
-                .pipe(wrapUmd(bootstrap_wrap))
-                .pipe(gulp.dest(alpacaBootstrapOutputDirectory))
-                .pipe(concat('alpaca.min.js'))
-                .pipe(uglify())
-                .pipe(gulp.dest(alpacaBootstrapOutputDirectory)),
+        // jquerymobile
+        gulp.src(paths.scripts.jquerymobile)
+            .pipe(concat('alpaca.js'))
+            .pipe(wrapUmd(jquerymobile_wrap))
+            .pipe(gulp.dest('build/alpaca/jquerymobile'))
+            .pipe(concat('alpaca.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('build/alpaca/jquerymobile'))
 
-            // jqueryui
-            gulp.src(paths.scripts.jqueryui)
-                .pipe(concat('alpaca.js'))
-                .pipe(wrapUmd(jqueryui_warp))
-                .pipe(gulp.dest('build/alpaca/jqueryui'))
-                .pipe(concat('alpaca.min.js'))
-                .pipe(uglify())
-                .pipe(gulp.dest('build/alpaca/jqueryui')),
+        ).pipe(es.wait(() => {
 
-            // jquerymobile
-            gulp.src(paths.scripts.jquerymobile)
-                .pipe(concat('alpaca.js'))
-                .pipe(wrapUmd(jquerymobile_wrap))
-                .pipe(gulp.dest('build/alpaca/jquerymobile'))
-                .pipe(concat('alpaca.min.js'))
-                .pipe(uglify())
-                .pipe(gulp.dest('build/alpaca/jquerymobile'))
+        //console.log("build-scripts completed");
+        cb();
 
-            ).pipe(es.wait(() => {
-
-            //console.log("build-scripts completed");
-            cb();
-
-            })).pipe(notify({message: "Built Alpaca JS"}));
-        });
+        })).pipe(notify({message: "Built Alpaca JS"}));
     })
 });
 
