@@ -34,7 +34,7 @@ var VERSIONABLE_FILES = [
 ];
 
 // var alpacaBootstrapOutputDirectory = './build/alpaca/bootstrap'
-var alpacaBootstrapOutputDirectory = '../ServiceManager/Products/ServiceManager/IdentityStream.ServiceManager.Web/wwwroot/Script/alpaca/bootstrap'
+var alpacaBootstrapOutputDirectory = '../IdentityStream/Products/ServiceManager/IdentityStream.ServiceManager.Web/wwwroot/Script/alpaca/bootstrap'
 if (!fs.existsSync(alpacaBootstrapOutputDirectory)) {
     var message = 'WARNING: Directory ' + alpacaBootstrapOutputDirectory + ' does not exist';
     console.log('\n\n')
@@ -53,7 +53,6 @@ var paths = {
 
             "src/js/Alpaca.js",
             "src/js/Alpaca-async.js",
-            "build/tmp/transpiled/Alpaca-async.js",
             "src/js/ObservableUtils.js",
             "src/js/Observables.js",
             "src/js/Observable.js",
