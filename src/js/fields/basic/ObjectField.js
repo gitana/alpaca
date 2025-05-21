@@ -560,7 +560,9 @@
                     {
                         circularityCheckResult1.object = topField.schema;
 
-                        completionFunction(null, null, circularityCheckResult1);
+                        return Alpaca.nextTick(function() {
+                            completionFunction(null, null, circularityCheckResult1);
+                        });
                     }
                 }
 
@@ -572,7 +574,9 @@
                     {
                         circularityCheckResult2.object = topField.options;
 
-                        completionFunction(null, null, circularityCheckResult2);
+                        return Alpaca.nextTick(function() {
+                            completionFunction(null, null, circularityCheckResult2);
+                        });
                     }
                 }
 
@@ -614,12 +618,16 @@
                         resolvedPropertyOptions["$ref"] = optionsRef;
                     }
 
-                    completionFunction(resolvedPropertySchema, resolvedPropertyOptions);
+                    Alpaca.nextTick(function() {
+                        completionFunction(resolvedPropertySchema, resolvedPropertyOptions);
+                    });
                 });
             }
             else
             {
-                completionFunction(propertySchema, propertyOptions);
+                Alpaca.nextTick(function() {
+                    completionFunction(propertySchema, propertyOptions);
+                });
             }
         },
 
@@ -1144,7 +1152,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
 
                 });
@@ -1229,7 +1239,9 @@
 
                     if (callback)
                     {
-                        callback();
+                        Alpaca.nextTick(function() {
+                            callback();
+                        });
                     }
                 });
             }
