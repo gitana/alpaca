@@ -148,6 +148,14 @@
                 }
             }
 
+            if (!this.allData)
+            {
+                this.allData = this.data;
+                this.itemsShown = 0;
+            }
+
+            window.counter = window.counter ? window.counter + 1 : 1;
+
             if (!Alpaca.isArray(this.data) && !Alpaca.isObject(this.data))
             {
                 return Alpaca.logWarn("ArrayField data is not an array: " + JSON.stringify(this.data, null, "  "));
@@ -364,9 +372,12 @@
                         {
                             return function(_done)
                             {
-                                self.addItem(i, itemSchema, itemOptions, data[i], function() {
-                                    _done();
-                                });
+                                // Need to wrap this since parallel doesn't create new tasks if a function is passed (ikr)
+                                Alpaca.nextTick(function() {
+                                    self.addItem(i, itemSchema, itemOptions, data[i], function() {
+                                        _done();
+                                    });
+                                })
                             };
                         })(i, data);
 
@@ -425,9 +436,11 @@
             var self = this;
 
             var items = [];
-
-            if (self.data && self.data.length > 0)
+            if (self.allData && self.allData.length > 0)
             {
+                self.data = self.allData;
+                self.data = self.allData.slice(0, self.itemsShown);
+
                 var totalItemCount = self.data.length;
                 var itemsByIndex = {};
 
@@ -453,12 +466,14 @@
                         {
                             return function(_done)
                             {
-                                self.createItem(index, itemSchema, itemOptions, value, function(item) {
-
-                                    itemsByIndex[index] = item;
-
-                                    _done();
-                                });
+                                Alpaca.nextTick(function() {
+                                    self.createItem(index, itemSchema, itemOptions, value, function(item) {
+    
+                                        itemsByIndex[index] = item;
+    
+                                        _done();
+                                    });
+                                })
                             };
 
                         })(index, value);
@@ -735,7 +750,13 @@
                 "status": status
             };
 
-            return baseStatus && valInfo["valueNotUnique"]["status"] && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"];
+            status = !this.loading;
+            valInfo["loading"] = {
+                "message": status ? "" : "Still loading!",
+                "status": status
+            }
+
+            return baseStatus && valInfo["valueNotUnique"]["status"] && valInfo["tooManyItems"]["status"] && valInfo["notEnoughItems"]["status"] && valInfo["loading"]["status"];
         },
 
         /**
@@ -858,7 +879,25 @@
             this.base(function() {
 
                 //  if there are zero children, show the array toolbar
-                self.updateToolbars();
+                if (self.allData.length !== self.itemsShown)
+                {
+                    var spinner = $(self.getContainerEl()).append("<div class='spin-container' style='display: block; padding: 10px'></div>").find(".spin-container");
+                    
+                    self.loading = true;
+                    Alpaca.spin(spinner);
+
+                    self.itemsShown = self.allData.length;
+                    Alpaca.nextTick(function() {
+                        self.refresh(function() {
+                            spinner.remove();
+                            self.loading = false;
+                        });
+                    })
+                }
+                else
+                {
+                    self.updateToolbars();
+                }
 
                 callback();
 

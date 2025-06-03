@@ -937,6 +937,7 @@ var applyFieldAnnotations = function(basePath, callback)
     var html = '<html><body><div id="form"></div></html>';
 
     var jQuerySrc = fs.readFileSync("./lib/jquery/dist/jquery.js", "utf-8");
+    var spinjsSrc = fs.readFileSync("./lib/spin.js/jquery.spin.js", "utf-8");
     var alpacaSrc = fs.readFileSync("./build/alpaca/web/alpaca.js", "utf-8");
     var handlebarsSrc = fs.readFileSync("./lib/handlebars/handlebars.js", "utf-8");
 
@@ -946,7 +947,7 @@ var applyFieldAnnotations = function(basePath, callback)
 
     // first argument can be html string, filename, or url
     jsdom.env(html, {
-        src: [jQuerySrc, handlebarsSrc, alpacaSrc],
+        src: [jQuerySrc, spinjsSrc, handlebarsSrc, alpacaSrc],
         virtualConsole: virtualConsole
     }, function (errors, window) {
 

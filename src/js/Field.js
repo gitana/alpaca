@@ -1561,7 +1561,7 @@
             // the control can still be considered to be initializing
             var status = true;
 
-            if (!this.initializing && this.options.validate)
+            if ((!this.initializing || this.loading) && this.options.validate)
             {
                 // if validateChildren, then walk recursively down into child elements
                 if (this.children && validateChildren)

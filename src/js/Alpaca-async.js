@@ -41,6 +41,32 @@
         });
     };
 
+    var tasks = new Set()
+    Alpaca.setTimeout = function(f, delay)
+    {
+        var timeout = setTimeout(function() {
+            try
+            {
+                f();
+            }
+            finally
+            {
+                tasks.delete(timeout);
+            }
+        }, delay);
+        tasks.add(timeout);
+    }
+
+    Alpaca.clearTasks = function()
+    {
+        for (var task of tasks)
+        {
+            clearTimeout(task);
+        }
+
+        tasks.clear();
+    }
+
 
 
     // here is where async begins
@@ -109,7 +135,7 @@
     var hasNextTick = typeof process === 'object' && typeof process.nextTick === 'function';
 
     function fallback(fn) {
-        setTimeout(fn, 0);
+        Alpaca.setTimeout(fn, 0);
     }
 
     function wrap(defer) {
@@ -476,6 +502,7 @@
     function awaitify (asyncFn, arity = asyncFn.length) {
         if (!arity) throw new Error('arity is undefined')
         function awaitable (...args) {
+            // How is this parallel? Would not create a new task if a function is passed, as in ArrayField setValue
             if (typeof args[arity - 1] === 'function') {
                 return asyncFn.apply(this, args)
             }
