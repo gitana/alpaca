@@ -2641,6 +2641,8 @@
                             "Description",
                             "TargetUserId",
                             "AccessAssignmentUsers",
+                            "Process",
+                            "TargetService"
                         ]
                     },
                     "fieldClass": {
@@ -2827,6 +2829,8 @@
                             "Beskrivelse",
                             "Målbruker",
                             "Målbrukere for tilgangsendring",
+                            "Prosess",
+                            "Måltjeneste"
                         ]
                     },
                     "fieldClass": {
