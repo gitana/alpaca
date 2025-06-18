@@ -774,7 +774,11 @@
                 item.onDependentConceal();
             }
 
-            item.getFieldEl().trigger("fieldupdate");
+            // Only fire the update event if we're not loading in
+            if (!item.loading)
+            {
+                item.getFieldEl().trigger("fieldupdate");
+            }
         },
 
         /**

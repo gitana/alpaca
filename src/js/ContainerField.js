@@ -563,62 +563,67 @@
         {
             var self = this;
 
-            this.base();
-
-            if (self.children.length > 0)
+            // Don't update if field is still loading in
+            if (!self.loading)
             {
-                $(self.getContainerEl()).addClass("alpaca-container-has-items");
-                $(self.getContainerEl()).attr("data-alpaca-container-item-count", self.children.length);
-            }
-            else
-            {
-                $(self.getContainerEl()).removeClass("alpaca-container-has-items");
-                $(self.getContainerEl()).removeAttr("data-alpaca-container-item-count");
-            }
-
-            for (var i = 0; i < self.children.length; i++)
-            {
-                var child = self.children[i];
-
-                // set path if not set
-                if (!child.path)
+                this.base();
+    
+                if (self.children.length > 0)
                 {
-                    if (child.schema.type === "array")
+                    $(self.getContainerEl()).addClass("alpaca-container-has-items");
+                    $(self.getContainerEl()).attr("data-alpaca-container-item-count", self.children.length);
+                }
+                else
+                {
+                    $(self.getContainerEl()).removeClass("alpaca-container-has-items");
+                    $(self.getContainerEl()).removeAttr("data-alpaca-container-item-count");
+                }
+    
+                for (var i = 0; i < self.children.length; i++)
+                {
+                    var child = self.children[i];
+    
+                    // set path if not set
+                    if (!child.path)
                     {
-                        child.path = self.path + "[" + i + "]";
+                        if (child.schema.type === "array")
+                        {
+                            child.path = self.path + "[" + i + "]";
+                        }
+                        else
+                        {
+                            child.path = self.path + "/" + child.propertyId;
+                        }
                     }
-                    else
+    
+                    child.calculateName();
+    
+                    $(child.containerItemEl).removeClass("alpaca-container-item-first");
+                    $(child.containerItemEl).removeClass("alpaca-container-item-last");
+                    $(child.containerItemEl).removeClass("alpaca-container-item-index");
+                    $(child.containerItemEl).removeClass("alpaca-container-item-key");
+    
+                    $(child.containerItemEl).addClass("alpaca-container-item");
+    
+                    if (i === 0)
                     {
-                        child.path = self.path + "/" + child.propertyId;
+                        $(child.containerItemEl).addClass("alpaca-container-item-first");
                     }
+                    if (i + 1 === self.children.length)
+                    {
+                        $(child.containerItemEl).addClass("alpaca-container-item-last");
+                    }
+    
+                    $(child.containerItemEl).attr("data-alpaca-container-item-index", i);
+                    $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
+                    $(child.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
+    
+                    self.updateChildDOMWrapperElement(i, child);
+    
+                    child.updateDOMElement();
                 }
-
-                child.calculateName();
-
-                $(child.containerItemEl).removeClass("alpaca-container-item-first");
-                $(child.containerItemEl).removeClass("alpaca-container-item-last");
-                $(child.containerItemEl).removeClass("alpaca-container-item-index");
-                $(child.containerItemEl).removeClass("alpaca-container-item-key");
-
-                $(child.containerItemEl).addClass("alpaca-container-item");
-
-                if (i === 0)
-                {
-                    $(child.containerItemEl).addClass("alpaca-container-item-first");
-                }
-                if (i + 1 === self.children.length)
-                {
-                    $(child.containerItemEl).addClass("alpaca-container-item-last");
-                }
-
-                $(child.containerItemEl).attr("data-alpaca-container-item-index", i);
-                $(child.containerItemEl).attr("data-alpaca-container-item-name", child.name);
-                $(child.containerItemEl).attr("data-alpaca-container-item-parent-field-id", self.getId());
-
-                self.updateChildDOMWrapperElement(i, child);
-
-                child.updateDOMElement();
             }
+
         },
 
         /**
