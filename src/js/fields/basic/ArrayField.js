@@ -323,6 +323,8 @@
                 return;
             }
 
+            self.allData = data;
+
             // set fields
             var i = 0;
             do
@@ -438,7 +440,6 @@
             var items = [];
             if (self.allData && self.allData.length > 0)
             {
-                self.data = self.allData;
                 self.data = self.allData.slice(0, self.itemsShown);
 
                 var totalItemCount = self.data.length;
