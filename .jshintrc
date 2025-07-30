@@ -8,6 +8,7 @@
   "sub":      true,
   "boss":     true,
   "eqnull":   true,
+  "esversion": 6,
   "globals":  {
 
   }
