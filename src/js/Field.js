@@ -1561,7 +1561,7 @@
             // the control can still be considered to be initializing
             var status = true;
 
-            if ((!this.initializing || this.loading) && this.options.validate)
+            if (!(this.initializing || this.loading) && this.options.validate)
             {
                 // if validateChildren, then walk recursively down into child elements
                 if (this.children && validateChildren)
@@ -1925,6 +1925,11 @@
          */
         isValid: function(checkChildren)
         {
+            if (this.initializing || this.loading)
+            {
+                return false;
+            }
+            
             if (checkChildren && this.children)
             {
                 for (var i = 0; i < this.children.length; i++) {
@@ -1934,6 +1939,8 @@
                         if (!child.isValid(checkChildren)) {
                             return false;
                         }
+
+                        // update validation state?
                     }
                 }
             }

@@ -681,6 +681,11 @@
             }
         },
 
+        isAutoFocusable: function()
+        {
+            return true;
+        },
+
         /**
          * Focus an element in the container.  Find the first invalid element or if no invalid elements, pick
          * the first child.  If a callback is provided, the callback is fired and passed the control element
@@ -719,7 +724,6 @@
                 if (pageOrderedChildren[i])
                 {
                     if (!pageOrderedChildren[i].isValid(true) &&
-                        pageOrderedChildren[i].isControlField &&
                         pageOrderedChildren[i].isAutoFocusable() &&
                         !pageOrderedChildren[i].options.readonly)
                     {

@@ -343,7 +343,7 @@
 
                     if (options.focus)
                     {
-                        if (field.isControlField && field.isAutoFocusable())
+                        if (field.isAutoFocusable())
                         {
                             // just focus on this one
                             doFocus(field);
