@@ -779,7 +779,6 @@
             invokeDataSource: function(array, model, onFinish)
             {
                 var self = this;
-
                 var completionFunction = function(err)
                 {
                     var self = this;
@@ -930,7 +929,7 @@
                         }
                         else if (Alpaca.isObject(ds[i]))
                         {
-                            array.push(ds[i]);
+                            array.push(Alpaca.copyOf(ds[i]));
                         }
                     }
 
@@ -987,10 +986,10 @@
                         // load from standard object
                         for (var k in self.options.dataSource)
                         {
-                            array.push({
+                            array.push(Alpaca.copyOf({
                                 "text": self.options.dataSource[k],
                                 "value": k
-                            });
+                            }));
                         }
 
                         completionFunction();
