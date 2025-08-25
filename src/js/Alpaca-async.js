@@ -14,10 +14,12 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-(function() {
+(function($) {
 
     //'use strict';
 
+
+    var Alpaca = $.alpaca;
     var async = {};
 
     Alpaca.series = Alpaca.serial = function(funcs, callback)
@@ -4702,4 +4704,4 @@
     exports.during = whilst$1;
     exports.doDuring = doWhilst$1;
 
-})();
+})(jQuery);
