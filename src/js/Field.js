@@ -890,11 +890,16 @@
 
                 var doDisableField = function()
                 {
+                    // by default the fields will be disabled unless specified in the schema
+                    var disableField =  true;
+                    if (self.schema.disabled != undefined){
+                        disableField = self.schema.disabled;
+                    }                    
                     // mark "disabled" attribute onto underlying element
-                    Alpaca.disabled($('input', self.field), true);
-                    Alpaca.disabled($('select', self.field), true);
-                    Alpaca.disabled($(':radio', self.field), true);
-                    Alpaca.disabled($(':checkbox', self.field), true);
+                    Alpaca.disabled($('input', self.field), disableField);
+                    Alpaca.disabled($('select', self.field), disableField);
+                    Alpaca.disabled($(':radio', self.field), disableField);
+                    Alpaca.disabled($(':checkbox', self.field), disableField);
 
                     // special case for radio buttons (prevent clicks)
                     $(":radio", self.field).off().click(function(e) {
@@ -927,10 +932,10 @@
                 {
                     $(this.field).addClass("alpaca-readonly");
 
-                    $('input', this.field).attr('readonly', 'readonly');
-
                     // disable the field
                     doDisableField();
+
+                    $('input', this.field).attr('readonly', 'readonly');
 
                     // CALLBACK: "readonly"
                     self.fireCallback("readonly");
