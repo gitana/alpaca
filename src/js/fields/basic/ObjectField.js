@@ -2023,23 +2023,14 @@
             var onComplete = function()
             {
                 // swap order in children
-                var tempChildren = [];
-                for (var i = 0; i < self.children.length; i++)
-                {
-                    if (i === sourceIndex)
-                    {
-                        tempChildren[i] = self.children[targetIndex];
-                    }
-                    else if (i === targetIndex)
-                    {
-                        tempChildren[i] = self.children[sourceIndex];
-                    }
-                    else
-                    {
-                        tempChildren[i] = self.children[i];
-                    }
+                var adjustedTargetIndex = targetIndex;
+                if (sourceIndex < targetIndex) {
+                    adjustedTargetIndex--;
                 }
-                self.children = tempChildren;
+
+                // splice out child
+                var child = self.children.splice(sourceIndex, 1)[0];
+                self.children.splice(adjustedTargetIndex, 0, child);
 
                 // swap order in DOM
                 tempSourceMarker = Alpaca.replaceWith(tempSourceMarker, targetContainer);
