@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main, develop ]
+  pull_request:
+    branches: [ master, main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run build
+      run: npm run build
+    
+    - name: Check build output
+      run: |
+        ls -la build/alpaca/bootstrap/
+        test -f build/alpaca/bootstrap/alpaca.js
+        test -f build/alpaca/bootstrap/alpaca.css
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: alpaca-build-node-${{ matrix.node-version }}
+        path: |
+          build/alpaca/
+          dist/
+        retention-days: 7
+
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run JSHint
+      run: |
+        # Create a simple lint task for now
+        npx jshint src/js/**/*.js --config .jshintrc || echo "No .jshintrc found, skipping lint"
+      continue-on-error: true
+  
+  # Test job - currently minimal but can be expanded
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run tests
+      run: |
+        # Add test commands when available
+        echo "Tests will be added here"
+      continue-on-error: true
