@@ -230,9 +230,13 @@
 
             this.base();
 
-            if (self.options.multiselect)
+            if (self.options.multiselect && self.options.multiple)
             {
                 $(self.getControlEl()).multiselect("disable");
+            }
+            else
+            {
+              $(self.getControlEl()).prop('disabled', true);
             }
         },
 
@@ -245,9 +249,13 @@
 
             this.base();
 
-            if (self.options.multiselect)
+            if (self.options.multiselect && self.options.multiple)
             {
                 $(self.getControlEl()).multiselect("enable");
+            }
+            else
+            {
+              $(self.getControlEl()).prop('disabled', false);
             }
         }
 
