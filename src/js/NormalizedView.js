@@ -1,8 +1,7 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.NormalizedView = Base.extend(
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+import Base from "../../thirdparty/base/Base.js";
+var $ = jQuery;Alpaca.NormalizedView = Base.extend(
     /**
      * @lends Alpaca.NormalizedView.prototype
      */
@@ -161,4 +160,3 @@
             return true;
         }
     });
-})(jQuery);

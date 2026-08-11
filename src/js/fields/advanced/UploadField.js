@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.UploadField = Alpaca.ControlField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.UploadField = Alpaca.ControlField.extend(
     /**
      * @lends Alpaca.Fields.UploadField.prototype
      */
@@ -1372,4 +1370,3 @@
 
     })($);
 
-})(jQuery);

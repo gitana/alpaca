@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.EditorField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.EditorField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.EditorField.prototype
      */
@@ -477,4 +475,3 @@
 
     Alpaca.registerFieldClass("editor", Alpaca.Fields.EditorField);
 
-})(jQuery);

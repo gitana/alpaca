@@ -1,3 +1,7 @@
+import jQuery from "jquery";
+import Alpaca from "../Alpaca.js";
+
+var $ = jQuery;
 /**
  * Twitter Bootstrap Theme ("bootstrap")
  *
@@ -17,9 +21,10 @@
  *    }
  *
  */
-(function($) {
 
-    var Alpaca = $.alpaca;
+
+
+
 
     // custom styles
     var styles = {};
@@ -250,4 +255,3 @@
         "horizontal": true
     });
 
-})(jQuery);

@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.JSONField = Alpaca.Fields.TextAreaField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.JSONField = Alpaca.Fields.TextAreaField.extend(
     /**
      * @lends Alpaca.Fields.JSONField.prototype
      */
@@ -293,4 +291,3 @@
         jQuery.event.special[ this ] = { add: keyHandler };
     });
 
-})(jQuery);

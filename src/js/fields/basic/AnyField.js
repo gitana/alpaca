@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.AnyField = Alpaca.ControlField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.AnyField = Alpaca.ControlField.extend(
     /**
      * @lends Alpaca.Fields.AnyField.prototype
      */
@@ -151,4 +149,3 @@
     Alpaca.registerFieldClass("any", Alpaca.Fields.AnyField);
     Alpaca.registerDefaultSchemaFieldMapping("any", "any");
 
-})(jQuery);

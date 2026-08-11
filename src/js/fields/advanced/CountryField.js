@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.CountryField = Alpaca.Fields.SelectField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.CountryField = Alpaca.Fields.SelectField.extend(
     /**
      * @lends Alpaca.Fields.CountryField.prototype
      */
@@ -105,4 +103,3 @@
     Alpaca.registerFieldClass("country", Alpaca.Fields.CountryField);
     Alpaca.registerDefaultFormatFieldMapping("country", "country");
 
-})(jQuery);

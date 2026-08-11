@@ -1,6 +1,6 @@
-(function($) {
-
-    var round = (function() {
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;var round = (function() {
         var strategies = {
             up:      Math.ceil,
             down:    function(input) { return ~~input; },
@@ -10,8 +10,6 @@
             return strategies[strategy];
         };
     })();
-
-    var Alpaca = $.alpaca;
 
     Alpaca.Fields.CurrencyField = Alpaca.Fields.TextField.extend(
     /**
@@ -277,4 +275,3 @@
 
     Alpaca.registerFieldClass("currency", Alpaca.Fields.CurrencyField);
 
-})(jQuery);

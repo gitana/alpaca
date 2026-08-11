@@ -1,3 +1,7 @@
+import jQuery from "jquery";
+import Alpaca from "../Alpaca.js";
+
+var $ = jQuery;
 /**
  * jQuery UI Theme ("jqueryui")
  *
@@ -17,9 +21,10 @@
  *    }
  *
  */
-(function($) {
 
-    var Alpaca = $.alpaca;
+
+
+
 
     // custom callbacks
     var callbacks = {};
@@ -186,4 +191,3 @@
         "horizontal": true
     });
 
-})(jQuery);

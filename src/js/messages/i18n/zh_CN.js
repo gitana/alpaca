@@ -1,8 +1,6 @@
-(function($) {
-
-    // chinese - china
-
-	var Alpaca = $.alpaca;
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;// chinese - china
 
 	Alpaca.registerView ({
 		"id": "base",
@@ -45,4 +43,3 @@
         }
     });
 
-})(jQuery);

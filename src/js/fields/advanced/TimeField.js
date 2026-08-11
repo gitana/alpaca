@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.TimeField = Alpaca.Fields.DateField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.TimeField = Alpaca.Fields.DateField.extend(
     /**
      * @lends Alpaca.Fields.TimeField.prototype
      */
@@ -57,4 +55,3 @@
     Alpaca.registerFieldClass("time", Alpaca.Fields.TimeField);
     Alpaca.registerDefaultFormatFieldMapping("time", "time");
 
-})(jQuery);

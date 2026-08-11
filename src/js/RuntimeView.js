@@ -1,24 +1,28 @@
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+import Base from "../../thirdparty/base/Base.js";
+
+var $ = jQuery;
+
 /*jshint -W004 */ // duplicate variables
-(function($) {
 
-    var Alpaca = $.alpaca;
-
+    /**
+     * Runtime implementation of a view as applied to a field.
+     *
+     * This provides accessors into the nested behaviors of views and also takes into account field-level attributes
+     * of the currently rendering dom element.
+     */
     Alpaca.RuntimeView = Base.extend(
     /**
      * @lends Alpaca.RuntimeView.prototype
      */
     {
         /**
-         * Runtime implementation of a view as applied to a field.
-         *
-         * This provides accessors into the nested behaviors of views and also takes into account field-level attributes
-         * of the currently rendering dom element.
-         *
          * @constructs
          *
          * @class Class for managing view components such as layout, template, message etc.
          *
-         * @param {String} the view id
+         * @param {String} viewId the view id
          * @param {Object} field the field control
          */
         constructor: function(viewId, field) {
@@ -29,7 +33,7 @@
         /**
          * Sets the view that this runtime view adapters should consult during render.
          *
-         * @param {String} the view id
+         * @param {String} viewId the view id
          */
         setView: function (viewId)
         {
@@ -130,6 +134,7 @@
          * Retrieves view parameter based on configuration Id or Id array.
          *
          * @param {String|Array} configId Configuration id or array.
+         * @param {Boolean} topLevelOnly
          *
          * @returns {Any} View parameter mapped to configuration Id or Id array.
          */
@@ -231,4 +236,3 @@
 
 
     });
-})(jQuery);

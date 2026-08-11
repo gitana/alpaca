@@ -1,3 +1,7 @@
+import jQuery from "jquery";
+import Alpaca from "../Alpaca.js";
+
+var $ = jQuery;
 /**
  * Web Theme ("web")
  *
@@ -18,9 +22,10 @@
  *
  */
 
-(function($) {
 
-    var Alpaca = $.alpaca;
+
+
+
 
     /**
      * This is the default injector ("web").
@@ -273,4 +278,3 @@
         "horizontal": true
     });
 
-})(jQuery);

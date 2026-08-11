@@ -1,7 +1,8 @@
 {
   "name": "alpaca",
   "scripts": {
-    "build": "./node_modules/.bin/gulp default",
+    "build": "npx vite build",
+    "build:gulp": "./node_modules/.bin/gulp default",
     "site": "./node_modules/.bin/gulp site",
     "server": "./node_modules/.bin/gulp server",
     "clean": "./node_modules/.bin/gulp clean",
@@ -13,7 +14,14 @@
   },
   "license": "Apache-2.0",
   "version": "1.5.27",
-  "main": "dist/alpaca/bootstrap/alpaca.js",
+  "main": "dist/alpaca/alpaca.cjs.js",
+  "module": "dist/alpaca/alpaca.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/alpaca/alpaca.es.js",
+      "require": "./dist/alpaca/alpaca.cjs.js"
+    }
+  },
   "devDependencies": {
     "bower": "^1.8.8",
     "cucumber": "~0.3.3",
@@ -43,8 +51,11 @@
     "gulp-watch": "^5.0.1",
     "gulp-wrap": "^0.14.0",
     "gulp-wrap-umd": "^0.2.1",
-    "handlebars": "^4.7.6",
-    "jquery": "^3.5.1",
+    "handlebars": "^4.7.8",
+    "happy-dom": "^20.3.7",
+    "jquery": "^3.7.1",
+    "jquery-ui-dist": "^1.13.3",
+    "jquery.maskedinput": "^1.4.1",
     "jsdom": "^9.12.0",
     "jshint": "^2.9.7",
     "jshint-stylish": "^2.2.1",
@@ -53,10 +64,17 @@
     "node-static": "^0.7.11",
     "phantom": "^6.0.3",
     "q": "^1.5.1",
+    "rollup": "^4.55.2",
     "run-sequence": "^2.2.1",
+    "selenium-webdriver": "^4.40.0",
     "stream-browserify": "^2.0.1",
     "through2": "^3.0.0",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18",
     "wd": "^1.12.1",
     "wrench": "^1.5.9"
+  },
+  "dependencies": {
+    "jquery-price-format": "^0.0.1"
   }
 }

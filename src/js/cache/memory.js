@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.MemoryCache = function(config)
+import jQuery from "jquery";
+import Alpaca from "../Alpaca.js";
+var $ = jQuery;Alpaca.MemoryCache = function(config)
     {
         if (!config) {
             config = {};
@@ -66,4 +64,3 @@
 
     Alpaca.registerCache("memory", Alpaca.MemoryCache);
 
-})(jQuery);

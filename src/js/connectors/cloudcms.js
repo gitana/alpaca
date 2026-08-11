@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.CloudCmsConnector = Alpaca.Connector.extend(
+import jQuery from "jquery";
+import Alpaca from "../Alpaca.js";
+var $ = jQuery;Alpaca.CloudCmsConnector = Alpaca.Connector.extend(
     /**
      * @lends Alpaca.CloudCmsConnector.prototype
      */
@@ -480,4 +478,3 @@
 
     Alpaca.registerConnectorClass("cloudcms", Alpaca.CloudCmsConnector);
 
-})(jQuery);

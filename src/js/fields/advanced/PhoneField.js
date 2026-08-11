@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.PhoneField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.PhoneField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.PhoneField.prototype
      */
@@ -148,4 +146,3 @@
     Alpaca.registerFieldClass("phone", Alpaca.Fields.PhoneField);
     Alpaca.registerDefaultFormatFieldMapping("phone", "phone");
 
-})(jQuery);

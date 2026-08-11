@@ -1,8 +1,7 @@
-(function($)
-{
-    var Alpaca = $.alpaca;
-
-    /**
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+import Base from "../../thirdparty/base/Base.js";
+var $ = jQuery;/**
      * Collection of observables.
      */
     Alpaca.Observables = Base.extend(
@@ -71,4 +70,3 @@
 
     });
 
-})(jQuery);

@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.OptionTreeField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.OptionTreeField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.OptionTree.prototype
      */
@@ -489,4 +487,3 @@
 
     Alpaca.registerFieldClass("optiontree", Alpaca.Fields.OptionTreeField);
 
-})(jQuery);

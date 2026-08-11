@@ -1,8 +1,6 @@
-﻿(function($) {
-
-	// norwegian - norway
-
-	var Alpaca = $.alpaca;
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;// norwegian - norway
 
 	Alpaca.registerView ({
 		"id": "base",
@@ -45,4 +43,3 @@
 		}
 	});
 
-})(jQuery);

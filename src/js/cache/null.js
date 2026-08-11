@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.NullCache = function(config)
+import jQuery from "jquery";
+import Alpaca from "../Alpaca.js";
+var $ = jQuery;Alpaca.NullCache = function(config)
     {
         return function(k, v, ttl)
         {
@@ -16,4 +14,3 @@
 
     Alpaca.registerCache("null", Alpaca.NullCache);
 
-})(jQuery);

@@ -1,8 +1,6 @@
-(function($) {
-
-	// croatian - croatia
-
-	var Alpaca = $.alpaca;
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;// croatian - croatia
 
 	Alpaca.registerView ({
 		"id": "base",
@@ -45,4 +43,3 @@
         }
     });
 
-})(jQuery);

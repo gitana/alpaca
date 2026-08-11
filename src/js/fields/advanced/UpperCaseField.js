@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.UpperCaseField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.UpperCaseField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.UpperCaseField.prototype
      */
@@ -87,4 +85,3 @@
     Alpaca.registerFieldClass("uppercase", Alpaca.Fields.UpperCaseField);
     // Alpaca.registerDefaultFormatFieldMapping("uppercase", "uppercase");
 
-})(jQuery);

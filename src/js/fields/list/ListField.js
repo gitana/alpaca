@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.ListField = Alpaca.ControlField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.ListField = Alpaca.ControlField.extend(
     /**
      * @lends Alpaca.Fields.ListField.prototype
      */
@@ -690,4 +688,3 @@
         "noneLabel": "None"
     });
 
-})(jQuery);

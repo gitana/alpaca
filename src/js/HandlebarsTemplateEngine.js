@@ -1,5 +1,10 @@
-(function($, Handlebars, HandlebarsPrecompiled)
-{
+import jQuery from "jquery";
+import Handlebars from "handlebars";
+import Alpaca from "./Alpaca.js";
+
+var $ = jQuery;
+var HandlebarsPrecompiled = window.HandlebarsPrecompiled;
+
     // runtime cache of precompiled templates keyed by cacheKey
     var COMPILED_TEMPLATES = {};
 
@@ -393,5 +398,3 @@
 
     // auto register
     Alpaca.TemplateEngineRegistry.register("handlebars", new Alpaca.HandlebarsTemplateEngine("handlebars"));
-
-})(jQuery, ((typeof(Handlebars) != "undefined") ? Handlebars : window.Handlebars), ((typeof(HandlebarsPrecompiled) != "undefined") ? HandlebarsPrecompiled : window.HandlebarsPrecompiled));

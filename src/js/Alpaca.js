@@ -3,7 +3,8 @@
 /**
  * Alpaca forms engine for jQuery
  */
-(function($) {
+import jQuery from "jquery";
+var $ = jQuery;
 
     /**
      * Renders an Alpaca field instance that is bound to a DOM element.
@@ -281,29 +282,40 @@
         }
 
         // resets the hideInitValidationError back to default state after first render
-        var _resetInitValidationError = function(field)
+        var _resetInitValidationError = function(field, callback)
         {
+            var cb = function() {
+                if (callback) {
+                    callback();
+                }
+            };
+
             // if this is the top-level alpaca field, then we call for validation state to be recalculated across
             // all child fields
             if (!field.parent)
             {
+                var finish = function() {
+                    // force hideInitValidationError to false for field and all children
+                    if (field.view.type !== 'view')
+                    {
+                        Alpaca.fieldApplyFieldAndChildren(field, function(field) {
+
+                            // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
+                            field.hideInitValidationError = false;
+
+                        });
+                    }
+                    cb();
+                };
+
                 // final call to update validation state
-                // only do this if we're not supposed to suspend initial validation errors
-                if (!field.hideInitValidationError)
-                {
-                    field.refreshValidationState(true);
-                }
-
-                // force hideInitValidationError to false for field and all children
-                if (field.view.type !== 'view')
-                {
-                    Alpaca.fieldApplyFieldAndChildren(field, function(field) {
-
-                        // set to false after first validation (even if in CREATE mode, we only force init validation error false on first render)
-                        field.hideInitValidationError = false;
-
-                    });
-                }
+                field.refreshValidationState(true, function() {
+                    finish();
+                });
+            }
+            else
+            {
+                cb();
             }
         };
 
@@ -328,6 +340,13 @@
             if (Alpaca.isUndefined(options.focus) && !field.parent) {
                 options.focus = Alpaca.defaultFocus;
             }
+
+            var doRenderedCallback = function() {
+                if (renderedCallback)
+                {
+                    renderedCallback(field);
+                }
+            };
 
             // auto-set the focus?
             if (options && options.focus)
@@ -385,18 +404,13 @@
                             }
                         }
 
-                        _resetInitValidationError(field);
+                        _resetInitValidationError(field, doRenderedCallback);
                     }
                 }, 500);
             }
             else
             {
-                _resetInitValidationError(field);
-            }
-
-            if (renderedCallback)
-            {
-                renderedCallback(field);
+                _resetInitValidationError(field, doRenderedCallback);
             }
         };
 
@@ -2364,9 +2378,16 @@
                 // now invoke all of the functions
                 // this tells each template to compile
                 var totalCalls = functionArray.length;
-                for (var i = 0; i < functionArray.length; i++)
+                if (totalCalls === 0)
                 {
-                    functionArray[i](totalCalls);
+                     finalCallback(normalizedViews);
+                }
+                else
+                {
+                    for (var i = 0; i < functionArray.length; i++)
+                    {
+                        functionArray[i](totalCalls);
+                    }
                 }
             };
 
@@ -4596,4 +4617,4 @@
     };
 
 
-})(jQuery);
+export default Alpaca;

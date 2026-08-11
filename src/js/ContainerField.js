@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.ContainerField = Alpaca.Field.extend(
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+var $ = jQuery;Alpaca.ContainerField = Alpaca.Field.extend(
     /**
      * @lends Alpaca.ContainerField.prototype
      */
@@ -917,4 +915,3 @@
         /* end_builder_helpers */
     });
 
-})(jQuery);

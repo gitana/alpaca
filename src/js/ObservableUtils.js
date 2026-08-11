@@ -1,8 +1,9 @@
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+
+var $ = jQuery;
 /*jshint -W014 */ // bad line breaking
 /*jshint -W004 */ // duplicate variables
-(function($)
-{
-    var Alpaca = $.alpaca;
 
     Alpaca.listenerId = function()
     {
@@ -154,6 +155,7 @@
     {
         var scope;
         var id;
+        var observable;
 
         var args = Alpaca.makeArray(arguments);
         if (args.length == 1)
@@ -267,5 +269,3 @@
 
         return observables.dependentObservable(id, func);
     };
-
-})(jQuery);

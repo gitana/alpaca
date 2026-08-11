@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.GridField = Alpaca.Fields.ArrayField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.GridField = Alpaca.Fields.ArrayField.extend(
     /**
      * @lends Alpaca.Fields.GridField.prototype
      */
@@ -110,4 +108,3 @@
 
     Alpaca.registerFieldClass("grid", Alpaca.Fields.GridField);
 
-})(jQuery);

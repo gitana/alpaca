@@ -1,12 +1,10 @@
-(function($) {
+import $ from 'jquery';
 
-    window.simulateClick = function(el, callback)
-    {
-        $(el).click();
+window.simulateClick = function(el, callback)
+{
+    $(el).click();
 
-        window.setTimeout(function() {
-            callback();
-        }, 100);
-    };
-
-}(jQuery));
+    window.setTimeout(function() {
+        callback();
+    }, 100);
+};

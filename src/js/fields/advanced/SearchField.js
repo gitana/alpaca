@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.SearchField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.SearchField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.SearchField.prototype
      */
@@ -56,4 +54,3 @@
     Alpaca.registerFieldClass("search", Alpaca.Fields.SearchField);
     Alpaca.registerDefaultSchemaFieldMapping("search", "search");
 
-})(jQuery);

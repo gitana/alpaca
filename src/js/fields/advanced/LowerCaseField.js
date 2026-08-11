@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.LowerCaseField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.LowerCaseField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.LowerCaseField.prototype
      */
@@ -84,4 +82,3 @@
     Alpaca.registerFieldClass("lowercase", Alpaca.Fields.LowerCaseField);
     // Alpaca.registerDefaultFormatFieldMapping("lowercase", "lowercase");
 
-})(jQuery);

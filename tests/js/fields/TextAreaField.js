@@ -21,8 +21,8 @@
                 var inputElem = $('#textarea-1 textarea');
                 ok(inputElem.length, 'Textarea input field generated.');
                 equal(inputElem.val(), data, "Textarea input field value populated correctly.");
-                equals(inputElem.attr('cols'),80, 'Textarea has right number of columns.')
-                equals(inputElem.attr('rows'),6, 'Textarea has right number of rows.')
+                equal(inputElem.attr('cols'),80, 'Textarea has right number of columns.');
+                equal(inputElem.attr('rows'),6, 'Textarea has right number of rows.');
                 start();
             }
         });

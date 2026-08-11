@@ -1,8 +1,7 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Form = Base.extend(
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+import Base from "../../thirdparty/base/Base.js";
+var $ = jQuery;Alpaca.Form = Base.extend(
     /**
      * @lends Alpaca.Form.prototype
      */
@@ -626,4 +625,3 @@
 
     });
 
-})(jQuery);

@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.ChooserField = Alpaca.Fields.ListField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.ChooserField = Alpaca.Fields.ListField.extend(
     /**
      * @lends Alpaca.Fields.ChooserField.prototype
      */
@@ -368,4 +366,3 @@
 
     Alpaca.registerFieldClass("chooser", Alpaca.Fields.ChooserField);
 
-})(jQuery);

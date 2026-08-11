@@ -1,6 +1,15 @@
 (function($) {
 
-    module("wizard: wizard");
+    module("wizard: wizard", {
+        setup: function() {
+            $("#qunit-fixture").append('<div id="wizard-1"></div>');
+            $("#qunit-fixture").append('<div id="wizard-2"></div>');
+        },
+        teardown: function() {
+            $("#wizard-1").remove();
+            $("#wizard-2").remove();
+        }
+    });
 
     // Test case 1 : Configuration-based wizard without using a layout template.
     test("Configuration-based wizard without using a layout template.", function() {

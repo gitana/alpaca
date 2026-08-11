@@ -1,8 +1,6 @@
-﻿(function($) {
-
-	// finnish - finland
-
-	var Alpaca = $.alpaca;
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;// finnish - finland
 
 	Alpaca.registerView ({
 		"id": "base",
@@ -50,4 +48,3 @@
 		}
 	});
 
-})(jQuery);

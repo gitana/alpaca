@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.TagField = Alpaca.Fields.LowerCaseField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.TagField = Alpaca.Fields.LowerCaseField.extend(
     /**
      * @lends Alpaca.Fields.TagField.prototype
      */
@@ -136,4 +134,3 @@
 
     Alpaca.registerFieldClass("tag", Alpaca.Fields.TagField);
 
-})(jQuery);

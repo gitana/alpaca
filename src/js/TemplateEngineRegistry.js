@@ -1,6 +1,6 @@
-(function()
-{
-    Alpaca.TemplateEngineRegistry = (function() {
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+var $ = jQuery;Alpaca.TemplateEngineRegistry = (function() {
 
         var registry = {};
 
@@ -55,4 +55,3 @@
         };
     })();
 
-})();

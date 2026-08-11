@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.IntegerField = Alpaca.Fields.NumberField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.IntegerField = Alpaca.Fields.NumberField.extend(
     /**
      * @lends Alpaca.Fields.IntegerField.prototype
      */
@@ -245,4 +243,3 @@
     Alpaca.registerFieldClass("integer", Alpaca.Fields.IntegerField);
     Alpaca.registerDefaultSchemaFieldMapping("integer", "integer");
 
-})(jQuery);

@@ -1,9 +1,7 @@
-(function($) {
-
-    // NOTE: this requires bootstrap-datetimepicker.js
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;// NOTE: this requires bootstrap-datetimepicker.js
     // NOTE: this requires moment.js
-
-    var Alpaca = $.alpaca;
 
     Alpaca.Fields.DateField = Alpaca.Fields.TextField.extend(
     /**
@@ -405,4 +403,3 @@
     Alpaca.registerFieldClass("date", Alpaca.Fields.DateField);
     Alpaca.registerDefaultFormatFieldMapping("date", "date");
 
-})(jQuery);

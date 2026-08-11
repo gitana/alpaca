@@ -1,8 +1,6 @@
-(function($) {
-
-	// czech - czech republic
-
-	var Alpaca = $.alpaca;
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;// czech - czech republic
 
 	Alpaca.registerView ({
 		"id": "base",
@@ -105,4 +103,3 @@
         }
 	});
 
-})(jQuery);

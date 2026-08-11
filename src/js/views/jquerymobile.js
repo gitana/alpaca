@@ -1,3 +1,7 @@
+import jQuery from "jquery";
+import Alpaca from "../Alpaca.js";
+
+var $ = jQuery;
 /**
  * jQuery Mobile Theme ("mobile")
  *
@@ -16,9 +20,10 @@
  *       "type": "view" | ""edit" | "create"
  *    }
  *
- */(function($) {
+ */
 
-    var Alpaca = $.alpaca;
+
+
 
     // custom styles
     var styles = {};
@@ -148,4 +153,3 @@
 
 
 
-})(jQuery);

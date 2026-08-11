@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.TextAreaField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.TextAreaField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.TextAreaField.prototype
      */
@@ -149,4 +147,3 @@
 
     Alpaca.registerFieldClass("textarea", Alpaca.Fields.TextAreaField);
 
-})(jQuery);

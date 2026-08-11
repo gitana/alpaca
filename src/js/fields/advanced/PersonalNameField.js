@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.PersonalNameField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.PersonalNameField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.PersonalNameField.prototype
      */
@@ -87,4 +85,3 @@
 
     Alpaca.registerFieldClass("personalname", Alpaca.Fields.PersonalNameField);
 
-})(jQuery);

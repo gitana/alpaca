@@ -1,8 +1,6 @@
-﻿(function($) {
-
-	// swedish - sweden
-
-	var Alpaca = $.alpaca;
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;// swedish - sweden
 
 	Alpaca.registerView ({
 		"id": "base",
@@ -50,4 +48,3 @@
 		}
 	});
 
-})(jQuery);

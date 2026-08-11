@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.TableRowField = Alpaca.Fields.ObjectField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.TableRowField = Alpaca.Fields.ObjectField.extend(
     /**
      * @lends Alpaca.Fields.TableRowField.prototype
      */
@@ -66,4 +64,3 @@
 
     Alpaca.registerFieldClass("tablerow", Alpaca.Fields.TableRowField);
 
-})(jQuery);

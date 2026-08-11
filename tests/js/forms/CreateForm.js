@@ -1,6 +1,15 @@
 (function($) {
 
-    module("forms: create");
+    module("forms: create", {
+        setup: function() {
+            $("#qunit-fixture").append('<div id="createform-1"></div>');
+            $("#qunit-fixture").append('<div id="createform-2"></div>');
+        },
+        teardown: function() {
+            $("#createform-1").remove();
+            $("#createform-2").remove();
+        }
+    });
 
     // Test case 1 : Form for creating new content.
     test("Form for creating new content.", function() {

@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.CKEditorField = Alpaca.Fields.TextAreaField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.CKEditorField = Alpaca.Fields.TextAreaField.extend(
     /**
      * @lends Alpaca.Fields.CKEditorField.prototype
      */
@@ -249,4 +247,3 @@
     }, 250);
 
 
-})(jQuery);

@@ -1,8 +1,9 @@
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+
+var $ = jQuery;
 /*jshint -W004 */ // duplicate variables
 /*jshint -W083 */ // inline functions are used safely
-(function($) {
-
-    var Alpaca = $.alpaca;
 
     Alpaca.Fields.ObjectField = Alpaca.ContainerField.extend(
     /**
@@ -25,6 +26,16 @@
 
             this.base();
 
+            // defaults
+            if (!this.options.fields) {
+                this.options.fields = {};
+            }
+            if (!this.schema.properties) {
+                this.schema.properties = {};
+            }
+
+            // set default template type
+            // this can be overridden by options.templateType
             var containerItemTemplateType = self.resolveContainerItemTemplateType();
             if (!containerItemTemplateType)
             {
@@ -2184,6 +2195,23 @@
             }
 
             return Alpaca.merge(schemaOfOptions, properties);
+        },
+
+        /**
+         * @private
+         * @see Alpaca.ContainerField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "fields": {
+                        "type": "object"
+                    },
+                    "alwaysSubmit": {
+                        "type": "checkbox"
+                    }
+                }
+            });
         }
 
         /* end_builder_helpers */
@@ -2197,5 +2225,3 @@
 
     Alpaca.registerFieldClass("object", Alpaca.Fields.ObjectField);
     Alpaca.registerDefaultSchemaFieldMapping("object", "object");
-
-})(jQuery);

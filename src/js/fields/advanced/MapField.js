@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.MapField = Alpaca.Fields.ArrayField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.MapField = Alpaca.Fields.ArrayField.extend(
     /**
      * @lends Alpaca.Fields.MapField.prototype
      */
@@ -179,4 +177,3 @@
         "keyMissing": "Map contains an empty key."
     });
 
-})(jQuery);

@@ -1,8 +1,6 @@
-(function($) {
-
-    // japanese - japan
-
-    var Alpaca = $.alpaca;
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;// japanese - japan
 
     Alpaca.registerView ({
         "id": "base",
@@ -57,4 +55,3 @@
         }
     });
 
-})(jQuery);

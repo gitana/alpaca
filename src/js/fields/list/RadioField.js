@@ -1,8 +1,6 @@
-(function($){
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.RadioField = Alpaca.Fields.ListField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.RadioField = Alpaca.Fields.ListField.extend(
     /**
      * @lends Alpaca.Fields.RadioField.prototype
      */
@@ -265,4 +263,3 @@
     
     Alpaca.registerFieldClass("radio", Alpaca.Fields.RadioField);
     
-})(jQuery);

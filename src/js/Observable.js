@@ -1,8 +1,7 @@
-(function($)
-{
-    var Alpaca = $.alpaca;
-
-    Alpaca.Observable = Base.extend(
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+import Base from "../../thirdparty/base/Base.js";
+var $ = jQuery;Alpaca.Observable = Base.extend(
     {
         constructor: function(scope, id)
         {
@@ -132,4 +131,3 @@
 
     });
 
-})(jQuery);

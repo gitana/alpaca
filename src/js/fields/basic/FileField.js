@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.FileField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.FileField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.FileField.prototype
      */
@@ -134,4 +132,3 @@
 
     Alpaca.registerFieldClass("file", Alpaca.Fields.FileField);
 
-})(jQuery);

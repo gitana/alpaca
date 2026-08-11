@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.PasswordField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.PasswordField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.PasswordField.prototype
      */
@@ -110,4 +108,3 @@
     });
     Alpaca.registerFieldClass("password", Alpaca.Fields.PasswordField);
     Alpaca.registerDefaultFormatFieldMapping("password", "password");
-})(jQuery);

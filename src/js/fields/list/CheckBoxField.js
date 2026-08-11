@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.CheckBoxField = Alpaca.Fields.ListField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.CheckBoxField = Alpaca.Fields.ListField.extend(
     /**
      * @lends Alpaca.Fields.CheckBoxField.prototype
      */
@@ -250,4 +248,3 @@
     Alpaca.registerFieldClass("checkbox", Alpaca.Fields.CheckBoxField);
     Alpaca.registerDefaultSchemaFieldMapping("boolean", "checkbox");
 
-})(jQuery);

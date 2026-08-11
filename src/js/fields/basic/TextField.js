@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.TextField = Alpaca.ControlField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.TextField = Alpaca.ControlField.extend(
     /**
      * @lends Alpaca.Fields.TextField.prototype
      */
@@ -910,4 +908,3 @@
     Alpaca.registerFieldClass("text", Alpaca.Fields.TextField);
     Alpaca.registerDefaultSchemaFieldMapping("string", "text");
 
-})(jQuery);

@@ -1,7 +1,8 @@
-/*jshint -W083 */ // inline functions are used safely
-(function($) {
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
 
-    var Alpaca = $.alpaca;
+var $ = jQuery;
+/*jshint -W083 */ // inline functions are used safely
 
     Alpaca.Fields.ArrayField = Alpaca.ContainerField.extend(
     /**
@@ -892,15 +893,15 @@
                         self.refresh(function() {
                             spinner.remove();
                             self.loading = false;
+                            callback();
                         });
                     })
                 }
                 else
                 {
                     self.updateToolbars();
+                    callback();
                 }
-
-                callback();
 
             });
         },
@@ -2108,5 +2109,3 @@
         "upButtonLabel": "Up",
         "downButtonLabel": "Down"
     });
-
-})(jQuery);

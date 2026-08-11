@@ -1,8 +1,7 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Field = Base.extend(
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+import Base from "../../thirdparty/base/Base.js";
+var $ = jQuery;Alpaca.Field = Base.extend(
     /**
      * @lends Alpaca.Field.prototype
      */
@@ -2813,4 +2812,3 @@
         "notOptional": "This field is not optional."
     });
 
-})(jQuery);

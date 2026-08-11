@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.CountryCallingCodeField = Alpaca.Fields.SelectField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.CountryCallingCodeField = Alpaca.Fields.SelectField.extend(
     /**
      * @lends Alpaca.Fields.CountryCallingCodeField.prototype
      */
@@ -110,4 +108,3 @@
     Alpaca.registerFieldClass("countryCallingCode", Alpaca.Fields.CountryCallingCodeField);
     Alpaca.registerDefaultFormatFieldMapping("countryCallingCode", "countryCallingCode");
 
-})(jQuery);

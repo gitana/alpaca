@@ -1,8 +1,6 @@
-(function($) {
-
-	// dutch - belgium
-
-	var Alpaca = $.alpaca;
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;// dutch - belgium
 
 	Alpaca.registerView ({
 		"id": "base",
@@ -45,4 +43,3 @@
         }
     });
 
-})(jQuery);

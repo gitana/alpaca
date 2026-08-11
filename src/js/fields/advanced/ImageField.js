@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.ImageField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.ImageField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.ImageField.prototype
      */
@@ -36,4 +34,3 @@
 
     Alpaca.registerFieldClass("image", Alpaca.Fields.ImageField);
 
-})(jQuery);

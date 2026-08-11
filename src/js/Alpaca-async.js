@@ -1,4 +1,7 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+var $ = jQuery;/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -14,7 +17,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-(function() {
 
     //'use strict';
 
@@ -4598,108 +4600,7 @@
         doDuring: doWhilst$1
     };
 
-    var exports = async;
+    Object.assign(async, index);
 
-    exports.default = index;
-    exports.apply = apply;
-    exports.applyEach = applyEach$1;
-    exports.applyEachSeries = applyEachSeries;
-    exports.asyncify = asyncify;
-    exports.auto = auto;
-    exports.autoInject = autoInject;
-    exports.cargo = cargo;
-    exports.cargoQueue = cargo$1;
-    exports.compose = compose;
-    exports.concat = concat$1;
-    exports.concatLimit = concatLimit$1;
-    exports.concatSeries = concatSeries$1;
-    exports.constant = constant;
-    exports.detect = detect$1;
-    exports.detectLimit = detectLimit$1;
-    exports.detectSeries = detectSeries$1;
-    exports.dir = dir;
-    exports.doUntil = doUntil;
-    exports.doWhilst = doWhilst$1;
-    exports.each = each;
-    exports.eachLimit = eachLimit$2;
-    exports.eachOf = eachOf$1;
-    exports.eachOfLimit = eachOfLimit$2;
-    exports.eachOfSeries = eachOfSeries$1;
-    exports.eachSeries = eachSeries$1;
-    exports.ensureAsync = ensureAsync;
-    exports.every = every$1;
-    exports.everyLimit = everyLimit$1;
-    exports.everySeries = everySeries$1;
-    exports.filter = filter$1;
-    exports.filterLimit = filterLimit$1;
-    exports.filterSeries = filterSeries$1;
-    exports.forever = forever$1;
-    exports.groupBy = groupBy;
-    exports.groupByLimit = groupByLimit$1;
-    exports.groupBySeries = groupBySeries;
-    exports.log = log;
-    exports.map = map$1;
-    exports.mapLimit = mapLimit$1;
-    exports.mapSeries = mapSeries$1;
-    exports.mapValues = mapValues;
-    exports.mapValuesLimit = mapValuesLimit$1;
-    exports.mapValuesSeries = mapValuesSeries;
-    exports.memoize = memoize;
-    exports.nextTick = nextTick;
-    exports.parallel = parallel;
-    exports.parallelLimit = parallelLimit;
-    exports.priorityQueue = priorityQueue;
-    exports.queue = queue$1;
-    exports.race = race$1;
-    exports.reduce = reduce$1;
-    exports.reduceRight = reduceRight;
-    exports.reflect = reflect;
-    exports.reflectAll = reflectAll;
-    exports.reject = reject$2;
-    exports.rejectLimit = rejectLimit$1;
-    exports.rejectSeries = rejectSeries$1;
-    exports.retry = retry;
-    exports.retryable = retryable;
-    exports.seq = seq;
-    exports.series = series;
-    exports.setImmediate = setImmediate$1;
-    exports.some = some$1;
-    exports.someLimit = someLimit$1;
-    exports.someSeries = someSeries$1;
-    exports.sortBy = sortBy$1;
-    exports.timeout = timeout;
-    exports.times = times;
-    exports.timesLimit = timesLimit;
-    exports.timesSeries = timesSeries;
-    exports.transform = transform;
-    exports.tryEach = tryEach$1;
-    exports.unmemoize = unmemoize;
-    exports.until = until;
-    exports.waterfall = waterfall$1;
-    exports.whilst = whilst$1;
-    exports.all = every$1;
-    exports.allLimit = everyLimit$1;
-    exports.allSeries = everySeries$1;
-    exports.any = some$1;
-    exports.anyLimit = someLimit$1;
-    exports.anySeries = someSeries$1;
-    exports.find = detect$1;
-    exports.findLimit = detectLimit$1;
-    exports.findSeries = detectSeries$1;
-    exports.forEach = each;
-    exports.forEachSeries = eachSeries$1;
-    exports.forEachLimit = eachLimit$2;
-    exports.forEachOf = eachOf$1;
-    exports.forEachOfSeries = eachOfSeries$1;
-    exports.forEachOfLimit = eachOfLimit$2;
-    exports.inject = reduce$1;
-    exports.foldl = reduce$1;
-    exports.foldr = reduceRight;
-    exports.select = filter$1;
-    exports.selectLimit = filterLimit$1;
-    exports.selectSeries = filterSeries$1;
-    exports.wrapSync = asyncify;
-    exports.during = whilst$1;
-    exports.doDuring = doWhilst$1;
+export default async;
 
-})();

@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.MarkdownField = Alpaca.Fields.TextAreaField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.MarkdownField = Alpaca.Fields.TextAreaField.extend(
     /**
      * @lends Alpaca.Fields.MarkdownField.prototype
      */
@@ -218,4 +216,3 @@
 
     Alpaca.registerFieldClass("markdown", Alpaca.Fields.MarkdownField);
 
-})(jQuery);

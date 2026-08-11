@@ -7,7 +7,7 @@
     "lib/jquery-ui/jquery-ui.js",
     "lib/json3/lib/json3.min.js",
     "lib/jquery-maskedinput/dist/jquery.maskedinput.min.js",
-    "build/alpaca/bootstrap/alpaca.js",
+    "dist/alpaca/alpaca.umd.js",
     "tests/qunit/qunit.js",
     "tests/js/fields/**/*.js"
   ],

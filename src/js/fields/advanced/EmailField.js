@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.EmailField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.EmailField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.EmailField.prototype
      */
@@ -114,4 +112,3 @@
     Alpaca.registerFieldClass("email", Alpaca.Fields.EmailField);
     Alpaca.registerDefaultFormatFieldMapping("email", "email");
 
-})(jQuery);

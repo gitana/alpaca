@@ -1,6 +1,15 @@
 (function($) {
 
-    module("forms: edit");
+    module("forms: edit", {
+        setup: function() {
+            $("#qunit-fixture").append('<div id="editform-1"></div>');
+            $("#qunit-fixture").append('<div id="editform-2"></div>');
+        },
+        teardown: function() {
+            $("#editform-1").remove();
+            $("#editform-2").remove();
+        }
+    });
 
     // Test case 1 : Edit form with readonly fields.
     test("Edit form with readonly fields.", function() {
@@ -15,11 +24,11 @@
             },
             "postRender": function (renderedField) {
                 expect(4);
-                equal($('#editform-1 input:text[readOnly]').length, 7, 'Right number of readonly text input fields rendered.');
+                equal($('#editform-1 input[type="text"][readonly], #editform-1 input[type="number"][readonly]').length, 6, 'Right number of readonly text input fields rendered.');
                 // this was 3 but it's now 2 since we set to required
-                equal($('#editform-1 input:radio[readOnly]').length, 2, 'Right number of readonly radio input fields rendered.');
-                equal($('#editform-1 select[readOnly]').length, 1, 'Right number of readonly select input fields rendered.');
-                equal($('#editform-2 span.alpaca-controlfield:hidden').length, 0, 'No hidden field.');
+                equal($('#editform-1 input[type="radio"][readonly]').length, 2, 'Right number of readonly radio input fields rendered.');
+                equal($('#editform-1 select[readonly]').length, 1, 'Right number of readonly select input fields rendered.');
+                equal($('#editform-2 .alpaca-controlfield:hidden').length, 0, 'No hidden field.');
                 start();
             }
         });
@@ -38,7 +47,9 @@
             },
             "postRender": function (renderedField) {
                 expect(1);
-                var textInputElems = $('#editform-2 span.alpaca-controlfield:visible');
+                var textInputElems = $('#editform-2 .alpaca-controlfield').filter(function() {
+                    return $(this).css('display') !== 'none';
+                });
                 equal(textInputElems.length, 2, 'Right number of input fields are shown.');
                 start();
             }

@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.TinyMCEField = Alpaca.Fields.TextAreaField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.TinyMCEField = Alpaca.Fields.TextAreaField.extend(
         /**
          * @lends Alpaca.Fields.tinyMCEField.prototype
          */
@@ -217,4 +215,3 @@
 
     Alpaca.registerFieldClass("tinymce", Alpaca.Fields.TinyMCEField);
 
-})(jQuery);

@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.HiddenField = Alpaca.ControlField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.HiddenField = Alpaca.ControlField.extend(
     /**
      * @lends Alpaca.Fields.ControlField.prototype
      */
@@ -76,4 +74,3 @@
 
     Alpaca.registerFieldClass("hidden", Alpaca.Fields.HiddenField);
 
-})(jQuery);

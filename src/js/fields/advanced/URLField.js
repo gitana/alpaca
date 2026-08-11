@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.URLField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.URLField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.URLField.prototype
      */
@@ -113,4 +111,3 @@
     Alpaca.registerFieldClass("url", Alpaca.Fields.URLField);
     Alpaca.registerDefaultFormatFieldMapping("url", "url");
 
-})(jQuery);

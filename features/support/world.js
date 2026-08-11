@@ -1,10 +1,18 @@
 var path      = require('path');
 var webdriver = require('selenium-webdriver');
+var chrome = require('selenium-webdriver/chrome');
 
 var _ = require('lodash');
 
+var options = new chrome.Options();
+options.addArguments('--headless');
+options.addArguments('--no-sandbox');
+options.addArguments('--disable-dev-shm-usage');
+options.addArguments('--remote-debugging-port=9222');
+
 var driver = new webdriver.Builder().
-    withCapabilities(webdriver.Capabilities.chrome()).
+    forBrowser('chrome').
+    setChromeOptions(options).
     build();
 
 var World = function(cb) {

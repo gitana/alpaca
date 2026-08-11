@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    /**
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;/**
      * The table field is used for data representations that consist of an array with objects inside of it.  The objects
      * must have a uniform structure.  The table field renders a standard HTML table using the table.  The individual
      * columns are either editable (in edit mode) or simply displayed in read-only mode.
@@ -692,4 +690,3 @@
 
     Alpaca.registerFieldClass("table", Alpaca.Fields.TableField);
 
-})(jQuery);

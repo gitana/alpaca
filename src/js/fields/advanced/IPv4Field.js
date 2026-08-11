@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.IPv4Field = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.IPv4Field = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.IPv4Field.prototype
      */
@@ -111,4 +109,3 @@
     Alpaca.registerFieldClass("ipv4", Alpaca.Fields.IPv4Field);
     Alpaca.registerDefaultFormatFieldMapping("ip-address", "ipv4");
 
-})(jQuery);

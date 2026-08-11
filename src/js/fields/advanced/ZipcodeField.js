@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.ZipcodeField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.ZipcodeField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.ZipcodeField.prototype
      */
@@ -139,4 +137,3 @@
     Alpaca.registerFieldClass("zipcode", Alpaca.Fields.ZipcodeField);
     Alpaca.registerDefaultFormatFieldMapping("zipcode", "zipcode");
 
-})(jQuery);

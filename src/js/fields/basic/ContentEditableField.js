@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.ContentEditableField = Alpaca.ControlField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.ContentEditableField = Alpaca.ControlField.extend(
     /**
      * @lends Alpaca.Fields.ContentEditableField.prototype
      */
@@ -456,4 +454,3 @@
     });
     Alpaca.registerFieldClass("contenteditable", Alpaca.Fields.ContentEditableField);
 
-})(jQuery);

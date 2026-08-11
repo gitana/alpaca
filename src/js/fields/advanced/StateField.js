@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.usHoldings = {};
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.usHoldings = {};
 
     Alpaca.usHoldings.territories = {
         "American Samoa"                 : "AS",
@@ -253,4 +251,3 @@
         };
     })();
 
-})(jQuery);

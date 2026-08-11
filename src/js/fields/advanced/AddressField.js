@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.AddressField = Alpaca.Fields.ObjectField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.AddressField = Alpaca.Fields.ObjectField.extend(
     /**
      * @lends Alpaca.Fields.AddressField.prototype
      */
@@ -269,4 +267,3 @@
 
     Alpaca.registerFieldClass("address", Alpaca.Fields.AddressField);
 
-})(jQuery);

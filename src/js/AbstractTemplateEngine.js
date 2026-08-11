@@ -1,6 +1,9 @@
-(function($)
-{
-    Alpaca.AbstractTemplateEngine = Base.extend(
+import jQuery from "jquery";
+import Alpaca from "./Alpaca.js";
+import Base from "../../thirdparty/base/Base.js";
+var $ = jQuery;
+
+Alpaca.AbstractTemplateEngine = Base.extend(
     {
         constructor: function(id)
         {
@@ -232,4 +235,3 @@
 
     });
 
-})(jQuery);

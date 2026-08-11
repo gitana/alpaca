@@ -1,8 +1,7 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Connector = Base.extend(
+import jQuery from "jquery";
+import Alpaca from "../Alpaca.js";
+import Base from "../../../thirdparty/base/Base.js";
+var $ = jQuery;Alpaca.Connector = Base.extend(
     /**
      * @lends Alpaca.Connector.prototype
      */
@@ -456,4 +455,3 @@
 
     Alpaca.registerConnectorClass("default", Alpaca.Connector);
 
-})(jQuery);

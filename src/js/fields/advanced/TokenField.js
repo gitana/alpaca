@@ -1,8 +1,6 @@
-(function($) {
-
-    var Alpaca = $.alpaca;
-
-    Alpaca.Fields.TokenField = Alpaca.Fields.TextField.extend(
+import jQuery from "jquery";
+import Alpaca from "../../Alpaca.js";
+var $ = jQuery;Alpaca.Fields.TokenField = Alpaca.Fields.TextField.extend(
     /**
      * @lends Alpaca.Fields.TokenField.prototype
      */
@@ -139,4 +137,3 @@
 
     Alpaca.registerFieldClass("token", Alpaca.Fields.TokenField);
 
-})(jQuery);
