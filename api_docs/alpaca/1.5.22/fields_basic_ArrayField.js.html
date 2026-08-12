@@ -1,0 +1,2481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="google-translate-customization" content="5417d948061b56ad-a958f0a86e9ce3fc-gb8a4f09ff822561e-1e"></meta>
+    <title>Source: fields/basic/ArrayField.js</title>
+    <meta name="description" content="Jaguar.js is a Javascript library that helps to create highly optimized animations and games using HTML 5. Collie runs on both PC and mobile using HTML 5 canvas and CSS 3D. Try out Jaguar.js for fast and easy development, tuned for best performance in various PC and mobile devices." />
+    <meta name="keywords" content="javascript,animation library,HTML5,Canvas,CSS,Mobile,Javascript Game,Web Game,Performance,game engine" />
+    <meta name="keyword" content="javascript,animation library,HTML5,Canvas,CSS,Mobile,Javascript Game,Web Game,Performance,game engine" />
+    <meta property="og:title" content="Jaguar.js - High Performance Animation Library for Javascript"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="http://jindo.dev.naver.com/collie/img/logo/logo_200x200.png"/>
+    <meta property="og:site_name" content="Jaguar.js"/>
+    <meta property="og:url" content="http://davidshimjs.github.io/jaguarjs"/>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery.min.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-34154461-2']);
+      _gaq.push(['_trackPageview']);
+    
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html"></a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Namespace for all Alpaca Connector Class Implementations.">
+            <span class="title">
+                <a href="Namespace%2520for%2520all%2520Alpaca%2520Connector%2520Class%2520Implementations..html">Namespace for all Alpaca Connector Class Implementations.</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Namespace for all Alpaca Field Class Implementations.">
+            <span class="title">
+                <a href="Namespace%2520for%2520all%2520Alpaca%2520Field%2520Class%2520Implementations..html">Namespace for all Alpaca Field Class Implementations.</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.Connector">
+            <span class="title">
+                <a href="Alpaca.Connector.html">Alpaca.Connector</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.Connector#buildAjaxConfig"><a href="Alpaca.Connector.html#buildAjaxConfig">buildAjaxConfig</a></li>
+            
+                <li data-name="Alpaca.Connector#connect"><a href="Alpaca.Connector.html#connect">connect</a></li>
+            
+                <li data-name="Alpaca.Connector#loadAll"><a href="Alpaca.Connector.html#loadAll">loadAll</a></li>
+            
+                <li data-name="Alpaca.Connector#loadData"><a href="Alpaca.Connector.html#loadData">loadData</a></li>
+            
+                <li data-name="Alpaca.Connector#loadDataSource"><a href="Alpaca.Connector.html#loadDataSource">loadDataSource</a></li>
+            
+                <li data-name="Alpaca.Connector#loadJson"><a href="Alpaca.Connector.html#loadJson">loadJson</a></li>
+            
+                <li data-name="Alpaca.Connector#loadOptions"><a href="Alpaca.Connector.html#loadOptions">loadOptions</a></li>
+            
+                <li data-name="Alpaca.Connector#loadReferenceOptions"><a href="Alpaca.Connector.html#loadReferenceOptions">loadReferenceOptions</a></li>
+            
+                <li data-name="Alpaca.Connector#loadReferenceSchema"><a href="Alpaca.Connector.html#loadReferenceSchema">loadReferenceSchema</a></li>
+            
+                <li data-name="Alpaca.Connector#loadSchema"><a href="Alpaca.Connector.html#loadSchema">loadSchema</a></li>
+            
+                <li data-name="Alpaca.Connector#loadTemplate"><a href="Alpaca.Connector.html#loadTemplate">loadTemplate</a></li>
+            
+                <li data-name="Alpaca.Connector#loadUri"><a href="Alpaca.Connector.html#loadUri">loadUri</a></li>
+            
+                <li data-name="Alpaca.Connector#loadView"><a href="Alpaca.Connector.html#loadView">loadView</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.Field">
+            <span class="title">
+                <a href="Alpaca.Field.html">Alpaca.Field</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.Field#_processRender"><a href="Alpaca.Field.html#_processRender">_processRender</a></li>
+            
+                <li data-name="Alpaca.Field#_render"><a href="Alpaca.Field.html#_render">_render</a></li>
+            
+                <li data-name="Alpaca.Field#_validateCustomValidator"><a href="Alpaca.Field.html#_validateCustomValidator">_validateCustomValidator</a></li>
+            
+                <li data-name="Alpaca.Field#_validateDisallow"><a href="Alpaca.Field.html#_validateDisallow">_validateDisallow</a></li>
+            
+                <li data-name="Alpaca.Field#_validateOptional"><a href="Alpaca.Field.html#_validateOptional">_validateOptional</a></li>
+            
+                <li data-name="Alpaca.Field#applyStyle"><a href="Alpaca.Field.html#applyStyle">applyStyle</a></li>
+            
+                <li data-name="Alpaca.Field#bindData"><a href="Alpaca.Field.html#bindData">bindData</a></li>
+            
+                <li data-name="Alpaca.Field#clear"><a href="Alpaca.Field.html#clear">clear</a></li>
+            
+                <li data-name="Alpaca.Field#destroy"><a href="Alpaca.Field.html#destroy">destroy</a></li>
+            
+                <li data-name="Alpaca.Field#disable"><a href="Alpaca.Field.html#disable">disable</a></li>
+            
+                <li data-name="Alpaca.Field#displayMessage"><a href="Alpaca.Field.html#displayMessage">displayMessage</a></li>
+            
+                <li data-name="Alpaca.Field#enable"><a href="Alpaca.Field.html#enable">enable</a></li>
+            
+                <li data-name="Alpaca.Field#fireCallback"><a href="Alpaca.Field.html#fireCallback">fireCallback</a></li>
+            
+                <li data-name="Alpaca.Field#focus"><a href="Alpaca.Field.html#focus">focus</a></li>
+            
+                <li data-name="Alpaca.Field#getBaseFieldType"><a href="Alpaca.Field.html#getBaseFieldType">getBaseFieldType</a></li>
+            
+                <li data-name="Alpaca.Field#getControlByPath"><a href="Alpaca.Field.html#getControlByPath">getControlByPath</a></li>
+            
+                <li data-name="Alpaca.Field#getControlsByFieldType"><a href="Alpaca.Field.html#getControlsByFieldType">getControlsByFieldType</a></li>
+            
+                <li data-name="Alpaca.Field#getControlsBySchemaType"><a href="Alpaca.Field.html#getControlsBySchemaType">getControlsBySchemaType</a></li>
+            
+                <li data-name="Alpaca.Field#getDescription"><a href="Alpaca.Field.html#getDescription">getDescription</a></li>
+            
+                <li data-name="Alpaca.Field#getFieldEl"><a href="Alpaca.Field.html#getFieldEl">getFieldEl</a></li>
+            
+                <li data-name="Alpaca.Field#getFieldType"><a href="Alpaca.Field.html#getFieldType">getFieldType</a></li>
+            
+                <li data-name="Alpaca.Field#getId"><a href="Alpaca.Field.html#getId">getId</a></li>
+            
+                <li data-name="Alpaca.Field#getMessage"><a href="Alpaca.Field.html#getMessage">getMessage</a></li>
+            
+                <li data-name="Alpaca.Field#getName"><a href="Alpaca.Field.html#getName">getName</a></li>
+            
+                <li data-name="Alpaca.Field#getOptionsForOptions"><a href="Alpaca.Field.html#getOptionsForOptions">getOptionsForOptions</a></li>
+            
+                <li data-name="Alpaca.Field#getOptionsForSchema"><a href="Alpaca.Field.html#getOptionsForSchema">getOptionsForSchema</a></li>
+            
+                <li data-name="Alpaca.Field#getParent"><a href="Alpaca.Field.html#getParent">getParent</a></li>
+            
+                <li data-name="Alpaca.Field#getPath"><a href="Alpaca.Field.html#getPath">getPath</a></li>
+            
+                <li data-name="Alpaca.Field#getSchemaOfOptions"><a href="Alpaca.Field.html#getSchemaOfOptions">getSchemaOfOptions</a></li>
+            
+                <li data-name="Alpaca.Field#getSchemaOfSchema"><a href="Alpaca.Field.html#getSchemaOfSchema">getSchemaOfSchema</a></li>
+            
+                <li data-name="Alpaca.Field#getTemplateDescriptor"><a href="Alpaca.Field.html#getTemplateDescriptor">getTemplateDescriptor</a></li>
+            
+                <li data-name="Alpaca.Field#getTemplateDescriptorId"><a href="Alpaca.Field.html#getTemplateDescriptorId">getTemplateDescriptorId</a></li>
+            
+                <li data-name="Alpaca.Field#getTitle"><a href="Alpaca.Field.html#getTitle">getTitle</a></li>
+            
+                <li data-name="Alpaca.Field#getType"><a href="Alpaca.Field.html#getType">getType</a></li>
+            
+                <li data-name="Alpaca.Field#getValue"><a href="Alpaca.Field.html#getValue">getValue</a></li>
+            
+                <li data-name="Alpaca.Field#handleValidate"><a href="Alpaca.Field.html#handleValidate">handleValidate</a></li>
+            
+                <li data-name="Alpaca.Field#hide"><a href="Alpaca.Field.html#hide">hide</a></li>
+            
+                <li data-name="Alpaca.Field#initEvents"><a href="Alpaca.Field.html#initEvents">initEvents</a></li>
+            
+                <li data-name="Alpaca.Field#initTemplateDescriptor"><a href="Alpaca.Field.html#initTemplateDescriptor">initTemplateDescriptor</a></li>
+            
+                <li data-name="Alpaca.Field#isContainer"><a href="Alpaca.Field.html#isContainer">isContainer</a></li>
+            
+                <li data-name="Alpaca.Field#isDisabled"><a href="Alpaca.Field.html#isDisabled">isDisabled</a></li>
+            
+                <li data-name="Alpaca.Field#isEmpty"><a href="Alpaca.Field.html#isEmpty">isEmpty</a></li>
+            
+                <li data-name="Alpaca.Field#isEnabled"><a href="Alpaca.Field.html#isEnabled">isEnabled</a></li>
+            
+                <li data-name="Alpaca.Field#isRequired"><a href="Alpaca.Field.html#isRequired">isRequired</a></li>
+            
+                <li data-name="Alpaca.Field#isTopLevel"><a href="Alpaca.Field.html#isTopLevel">isTopLevel</a></li>
+            
+                <li data-name="Alpaca.Field#isValid"><a href="Alpaca.Field.html#isValid">isValid</a></li>
+            
+                <li data-name="Alpaca.Field#off"><a href="Alpaca.Field.html#off">off</a></li>
+            
+                <li data-name="Alpaca.Field#on"><a href="Alpaca.Field.html#on">on</a></li>
+            
+                <li data-name="Alpaca.Field#onBlur"><a href="Alpaca.Field.html#onBlur">onBlur</a></li>
+            
+                <li data-name="Alpaca.Field#onChange"><a href="Alpaca.Field.html#onChange">onChange</a></li>
+            
+                <li data-name="Alpaca.Field#onDependentConceal"><a href="Alpaca.Field.html#onDependentConceal">onDependentConceal</a></li>
+            
+                <li data-name="Alpaca.Field#onDependentReveal"><a href="Alpaca.Field.html#onDependentReveal">onDependentReveal</a></li>
+            
+                <li data-name="Alpaca.Field#onFocus"><a href="Alpaca.Field.html#onFocus">onFocus</a></li>
+            
+                <li data-name="Alpaca.Field#onMouseOut"><a href="Alpaca.Field.html#onMouseOut">onMouseOut</a></li>
+            
+                <li data-name="Alpaca.Field#onMouseOver"><a href="Alpaca.Field.html#onMouseOver">onMouseOver</a></li>
+            
+                <li data-name="Alpaca.Field#postRender"><a href="Alpaca.Field.html#postRender">postRender</a></li>
+            
+                <li data-name="Alpaca.Field#print"><a href="Alpaca.Field.html#print">print</a></li>
+            
+                <li data-name="Alpaca.Field#refresh"><a href="Alpaca.Field.html#refresh">refresh</a></li>
+            
+                <li data-name="Alpaca.Field#refreshValidationState"><a href="Alpaca.Field.html#refreshValidationState">refreshValidationState</a></li>
+            
+                <li data-name="Alpaca.Field#reload"><a href="Alpaca.Field.html#reload">reload</a></li>
+            
+                <li data-name="Alpaca.Field#render"><a href="Alpaca.Field.html#render">render</a></li>
+            
+                <li data-name="Alpaca.Field#renderField"><a href="Alpaca.Field.html#renderField">renderField</a></li>
+            
+                <li data-name="Alpaca.Field#renderFieldElements"><a href="Alpaca.Field.html#renderFieldElements">renderFieldElements</a></li>
+            
+                <li data-name="Alpaca.Field#setDefault"><a href="Alpaca.Field.html#setDefault">setDefault</a></li>
+            
+                <li data-name="Alpaca.Field#setTemplateDescriptor"><a href="Alpaca.Field.html#setTemplateDescriptor">setTemplateDescriptor</a></li>
+            
+                <li data-name="Alpaca.Field#setup"><a href="Alpaca.Field.html#setup">setup</a></li>
+            
+                <li data-name="Alpaca.Field#setValue"><a href="Alpaca.Field.html#setValue">setValue</a></li>
+            
+                <li data-name="Alpaca.Field#show"><a href="Alpaca.Field.html#show">show</a></li>
+            
+                <li data-name="Alpaca.Field#top"><a href="Alpaca.Field.html#top">top</a></li>
+            
+                <li data-name="Alpaca.Field#trigger"><a href="Alpaca.Field.html#trigger">trigger</a></li>
+            
+                <li data-name="Alpaca.Field#triggerUpdate"><a href="Alpaca.Field.html#triggerUpdate">triggerUpdate</a></li>
+            
+                <li data-name="Alpaca.Field#triggerWithPropagation"><a href="Alpaca.Field.html#triggerWithPropagation">triggerWithPropagation</a></li>
+            
+                <li data-name="Alpaca.Field#updateDOMElement"><a href="Alpaca.Field.html#updateDOMElement">updateDOMElement</a></li>
+            
+                <li data-name="Alpaca.Field#validate"><a href="Alpaca.Field.html#validate">validate</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.Fields.CurrencyField">
+            <span class="title">
+                <a href="Alpaca.Fields.CurrencyField.html">Alpaca.Fields.CurrencyField</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#_validateMaxLength"><a href="Alpaca.Fields.CurrencyField.html#_validateMaxLength">_validateMaxLength</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#_validateMinLength"><a href="Alpaca.Fields.CurrencyField.html#_validateMinLength">_validateMinLength</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#_validatePattern"><a href="Alpaca.Fields.CurrencyField.html#_validatePattern">_validatePattern</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#afterRenderControl"><a href="Alpaca.Fields.CurrencyField.html#afterRenderControl">afterRenderControl</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#destroy"><a href="Alpaca.Fields.CurrencyField.html#destroy">destroy</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#focus"><a href="Alpaca.Fields.CurrencyField.html#focus">focus</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getControlValue"><a href="Alpaca.Fields.CurrencyField.html#getControlValue">getControlValue</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getDescription"><a href="Alpaca.Fields.CurrencyField.html#getDescription">getDescription</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getFieldType"><a href="Alpaca.Fields.CurrencyField.html#getFieldType">getFieldType</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getOptionsForOptions"><a href="Alpaca.Fields.CurrencyField.html#getOptionsForOptions">getOptionsForOptions</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getOptionsForSchema"><a href="Alpaca.Fields.CurrencyField.html#getOptionsForSchema">getOptionsForSchema</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getSchemaOfOptions"><a href="Alpaca.Fields.CurrencyField.html#getSchemaOfOptions">getSchemaOfOptions</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getSchemaOfSchema"><a href="Alpaca.Fields.CurrencyField.html#getSchemaOfSchema">getSchemaOfSchema</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getTitle"><a href="Alpaca.Fields.CurrencyField.html#getTitle">getTitle</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#getType"><a href="Alpaca.Fields.CurrencyField.html#getType">getType</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#handleValidate"><a href="Alpaca.Fields.CurrencyField.html#handleValidate">handleValidate</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#onKeyPress"><a href="Alpaca.Fields.CurrencyField.html#onKeyPress">onKeyPress</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#postRender"><a href="Alpaca.Fields.CurrencyField.html#postRender">postRender</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#setup"><a href="Alpaca.Fields.CurrencyField.html#setup">setup</a></li>
+            
+                <li data-name="Alpaca.Fields.CurrencyField#setValue"><a href="Alpaca.Fields.CurrencyField.html#setValue">setValue</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.Fields.UploadField">
+            <span class="title">
+                <a href="Alpaca.Fields.UploadField.html">Alpaca.Fields.UploadField</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.Fields.UploadField#applyBindings"><a href="Alpaca.Fields.UploadField.html#applyBindings">applyBindings</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#applyConfiguration"><a href="Alpaca.Fields.UploadField.html#applyConfiguration">applyConfiguration</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#convertDescriptorToFile"><a href="Alpaca.Fields.UploadField.html#convertDescriptorToFile">convertDescriptorToFile</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#convertFileToDescriptor"><a href="Alpaca.Fields.UploadField.html#convertFileToDescriptor">convertFileToDescriptor</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#disable"><a href="Alpaca.Fields.UploadField.html#disable">disable</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#enable"><a href="Alpaca.Fields.UploadField.html#enable">enable</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#enhanceFiles"><a href="Alpaca.Fields.UploadField.html#enhanceFiles">enhanceFiles</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getControlValue"><a href="Alpaca.Fields.UploadField.html#getControlValue">getControlValue</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getDescription"><a href="Alpaca.Fields.UploadField.html#getDescription">getDescription</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getDownloadTemplate"><a href="Alpaca.Fields.UploadField.html#getDownloadTemplate">getDownloadTemplate</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getFieldType"><a href="Alpaca.Fields.UploadField.html#getFieldType">getFieldType</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getSchemaOfOptions"><a href="Alpaca.Fields.UploadField.html#getSchemaOfOptions">getSchemaOfOptions</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getTitle"><a href="Alpaca.Fields.UploadField.html#getTitle">getTitle</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getType"><a href="Alpaca.Fields.UploadField.html#getType">getType</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getUploadTemplate"><a href="Alpaca.Fields.UploadField.html#getUploadTemplate">getUploadTemplate</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getValue"><a href="Alpaca.Fields.UploadField.html#getValue">getValue</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#getValueAsArray"><a href="Alpaca.Fields.UploadField.html#getValueAsArray">getValueAsArray</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#handleBeforeFileUploadSubmit"><a href="Alpaca.Fields.UploadField.html#handleBeforeFileUploadSubmit">handleBeforeFileUploadSubmit</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#preload"><a href="Alpaca.Fields.UploadField.html#preload">preload</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#setup"><a href="Alpaca.Fields.UploadField.html#setup">setup</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#setValue"><a href="Alpaca.Fields.UploadField.html#setValue">setValue</a></li>
+            
+                <li data-name="Alpaca.Fields.UploadField#setValueAsArray"><a href="Alpaca.Fields.UploadField.html#setValueAsArray">setValueAsArray</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.Form">
+            <span class="title">
+                <a href="Alpaca.Form.html">Alpaca.Form</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.Form#ajaxSubmit"><a href="Alpaca.Form.html#ajaxSubmit">ajaxSubmit</a></li>
+            
+                <li data-name="Alpaca.Form#clear"><a href="Alpaca.Form.html#clear">clear</a></li>
+            
+                <li data-name="Alpaca.Form#destroy"><a href="Alpaca.Form.html#destroy">destroy</a></li>
+            
+                <li data-name="Alpaca.Form#disable"><a href="Alpaca.Form.html#disable">disable</a></li>
+            
+                <li data-name="Alpaca.Form#enable"><a href="Alpaca.Form.html#enable">enable</a></li>
+            
+                <li data-name="Alpaca.Form#fireCallback"><a href="Alpaca.Form.html#fireCallback">fireCallback</a></li>
+            
+                <li data-name="Alpaca.Form#focus"><a href="Alpaca.Form.html#focus">focus</a></li>
+            
+                <li data-name="Alpaca.Form#getFormEl"><a href="Alpaca.Form.html#getFormEl">getFormEl</a></li>
+            
+                <li data-name="Alpaca.Form#getId"><a href="Alpaca.Form.html#getId">getId</a></li>
+            
+                <li data-name="Alpaca.Form#getParent"><a href="Alpaca.Form.html#getParent">getParent</a></li>
+            
+                <li data-name="Alpaca.Form#getType"><a href="Alpaca.Form.html#getType">getType</a></li>
+            
+                <li data-name="Alpaca.Form#getValue"><a href="Alpaca.Form.html#getValue">getValue</a></li>
+            
+                <li data-name="Alpaca.Form#hide"><a href="Alpaca.Form.html#hide">hide</a></li>
+            
+                <li data-name="Alpaca.Form#initEvents"><a href="Alpaca.Form.html#initEvents">initEvents</a></li>
+            
+                <li data-name="Alpaca.Form#isEmpty"><a href="Alpaca.Form.html#isEmpty">isEmpty</a></li>
+            
+                <li data-name="Alpaca.Form#isFormValid"><a href="Alpaca.Form.html#isFormValid">isFormValid</a></li>
+            
+                <li data-name="Alpaca.Form#onSubmit"><a href="Alpaca.Form.html#onSubmit">onSubmit</a></li>
+            
+                <li data-name="Alpaca.Form#processRender"><a href="Alpaca.Form.html#processRender">processRender</a></li>
+            
+                <li data-name="Alpaca.Form#refreshValidationState"><a href="Alpaca.Form.html#refreshValidationState">refreshValidationState</a></li>
+            
+                <li data-name="Alpaca.Form#registerSubmitHandler"><a href="Alpaca.Form.html#registerSubmitHandler">registerSubmitHandler</a></li>
+            
+                <li data-name="Alpaca.Form#render"><a href="Alpaca.Form.html#render">render</a></li>
+            
+                <li data-name="Alpaca.Form#setValue"><a href="Alpaca.Form.html#setValue">setValue</a></li>
+            
+                <li data-name="Alpaca.Form#show"><a href="Alpaca.Form.html#show">show</a></li>
+            
+                <li data-name="Alpaca.Form#submit"><a href="Alpaca.Form.html#submit">submit</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.NormalizedView">
+            <span class="title">
+                <a href="Alpaca.NormalizedView.html">Alpaca.NormalizedView</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.NormalizedView#normalize"><a href="Alpaca.NormalizedView.html#normalize">normalize</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Alpaca.RuntimeView">
+            <span class="title">
+                <a href="Alpaca.RuntimeView.html">Alpaca.RuntimeView</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Alpaca.RuntimeView#_getConfigVal"><a href="Alpaca.RuntimeView.html#_getConfigVal">_getConfigVal</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getGlobalTemplateDescriptor"><a href="Alpaca.RuntimeView.html#getGlobalTemplateDescriptor">getGlobalTemplateDescriptor</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getLayout"><a href="Alpaca.RuntimeView.html#getLayout">getLayout</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getMessage"><a href="Alpaca.RuntimeView.html#getMessage">getMessage</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getTemplateDescriptor"><a href="Alpaca.RuntimeView.html#getTemplateDescriptor">getTemplateDescriptor</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getViewParam"><a href="Alpaca.RuntimeView.html#getViewParam">getViewParam</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#getWizard"><a href="Alpaca.RuntimeView.html#getWizard">getWizard</a></li>
+            
+                <li data-name="Alpaca.RuntimeView#setView"><a href="Alpaca.RuntimeView.html#setView">setView</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="fields_basic_ArrayField.js.html">Source: fields/basic/ArrayField.js</h1>
+        
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/*jshint -W083 */ // inline functions are used safely
+(function($) {
+
+    var Alpaca = $.alpaca;
+
+    Alpaca.Fields.ArrayField = Alpaca.ContainerField.extend(
+    /**
+     * @lends Alpaca.Fields.ArrayField.prototype
+     */
+    {
+        /**
+         * @see Alpaca.Field#getFieldType
+         */
+        getFieldType: function() {
+            return "array";
+        },
+
+        /**
+         * @see Alpaca.ContainerField#setup
+         */
+        setup: function()
+        {
+            var self = this;
+
+            this.base();
+
+            var containerItemTemplateType = self.resolveContainerItemTemplateType();
+            if (!containerItemTemplateType)
+            {
+                return Alpaca.throwErrorWithCallback("Unable to find template descriptor for container item: " + self.getFieldType());
+            }
+
+            this.containerItemTemplateDescriptor = self.view.getTemplateDescriptor("container-" + containerItemTemplateType + "-item", self);
+
+            if (!this.options.toolbarStyle) {
+                this.options.toolbarStyle = Alpaca.isEmpty(this.view.toolbarStyle) ? "button" : this.view.toolbarStyle;
+            }
+            if (!this.options.toolbarStyle) {
+                this.options.toolbarStyle = "button";
+            }
+
+            if (!this.options.actionbarStyle) {
+                this.options.actionbarStyle = Alpaca.isEmpty(this.view.actionbarStyle) ? "top" : this.view.actionbarStyle;
+            }
+            if (!this.options.actionbarStyle) {
+                this.options.actionbarStyle = "top";
+            }
+
+            if (!this.schema.items)
+            {
+                this.schema.items = {};
+            }
+
+            if (!this.options.items)
+            {
+                this.options.items = {};
+            }
+
+            // offer some backward compability here as older version of Alpaca used to incorrectly look for
+            // maxItems, minItems and uniqueItems on the schema.items subobject.
+            // if not defined properly, we offer some automatic forward migration of these properties
+            if (this.schema.items &amp;&amp; this.schema.items.maxItems &amp;&amp; typeof(this.schema.maxItems) === "undefined") {
+                this.schema.maxItems = this.schema.items.maxItems;
+                delete this.schema.items.maxItems;
+            }
+            if (this.schema.items &amp;&amp; this.schema.items.minItems &amp;&amp; typeof(this.schema.minItems) === "undefined") {
+                this.schema.minItems = this.schema.items.minItems;
+                delete this.schema.items.minItems;
+            }
+            if (this.schema.items &amp;&amp; this.schema.items.uniqueItems &amp;&amp; typeof(this.schema.uniqueItems) === "undefined") {
+                this.schema.uniqueItems = this.schema.items.uniqueItems;
+                delete this.schema.items.uniqueItems;
+            }
+
+            // determine whether we are using "ruby on rails" compatibility mode
+            this.options.rubyrails = false;
+            if (this.parent &amp;&amp; this.parent.options &amp;&amp; this.parent.options.form &amp;&amp; this.parent.options.form.attributes)
+            {
+                if (!Alpaca.isEmpty(this.parent.options.form.attributes.rubyrails))
+                {
+                    this.options.rubyrails = true;
+                }
+            }
+
+            var toolbarSticky = Alpaca.defaultToolbarSticky;
+
+            if (!Alpaca.isEmpty(this.view.toolbarSticky))
+            {
+                toolbarSticky = this.view.toolbarSticky;
+            }
+
+            if (!Alpaca.isEmpty(this.options.toolbarSticky))
+            {
+                toolbarSticky = this.options.toolbarSticky;
+            }
+
+            this.options.toolbarSticky = toolbarSticky;
+
+            // by default, hide toolbar when children.count > 0
+            if (typeof(self.options.hideToolbarWithChildren) === "undefined")
+            {
+                self.options.hideToolbarWithChildren = true;
+            }
+
+            // Enable forceRevalidation option so that any change in children will trigger parent's revalidation.
+            if (this.schema.items &amp;&amp; this.schema.uniqueItems)
+            {
+                Alpaca.mergeObject(this.options, {
+                    "forceRevalidation" : true
+                });
+            }
+
+            if (typeof(this.data) == "undefined")
+            {
+                this.data = [];
+            }
+
+            if (this.data == null)
+            {
+                this.data = [];
+            }
+
+            if ("" == this.data)
+            {
+                this.data = [];
+            }
+
+            if (Alpaca.isString(this.data))
+            {
+                // assume to be a serialized array or object, convert
+                try
+                {
+                    var parsedJSON = Alpaca.parseJSON(this.data);
+
+                    if (!Alpaca.isArray(parsedJSON) &amp;&amp; !Alpaca.isObject(parsedJSON))
+                    {
+                        Alpaca.logWarn("ArrayField parsed string data but it was not an array: " + this.data);
+                        return;
+                    }
+
+                    this.data = parsedJSON;
+                }
+                catch (e)
+                {
+                    // assume just a string value, put into array
+                    this.data = [this.data];
+                }
+            }
+
+            if (!Alpaca.isArray(this.data) &amp;&amp; !Alpaca.isObject(this.data))
+            {
+                Alpaca.logWarn("ArrayField data is not an array: " + JSON.stringify(this.data, null, "  "));
+                return;
+            }
+
+            //
+            // ACTIONS
+            //
+            var applyAction = function(actions, key, actionConfig) {
+                var action = self.findAction(actions, key);
+                if (!action) {
+                    action = {
+                        "core": true
+                    };
+                    actions.push(action);
+                }
+                for (var k in actionConfig) {
+                    if (!action[k]) {
+                        action[k] = actionConfig[k];
+                    }
+                }
+            };
+            var cleanupActions = function(actions, showLabels) {
+                var i = 0;
+                do {
+
+                    // assume enabled by default
+                    if (typeof(actions[i].enabled) === "undefined") {
+                        actions[i].enabled = true;
+                    }
+
+                    // hide label if global disable
+                    if (!showLabels) {
+                        delete actions[i].label;
+                    }
+
+                    if (!actions[i].enabled) {
+                        actions.splice(i, 1);
+                    } else {
+                        i++;
+                    }
+
+                } while (i &lt; actions.length);
+
+                // sort so that core actions appear first
+                actions.sort(function(a, b) {
+                    if (a.core &amp;&amp; !b.core) {
+                        return -1;
+                    }
+                    if (!a.core &amp;&amp; b.core) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            };
+
+            // set up default actions for the top array toolbar
+            self.toolbar = {};
+            if (self.options.toolbar)
+            {
+                for (var k in self.options.toolbar) {
+                    self.toolbar[k] = Alpaca.copyOf(self.options.toolbar[k]);
+                }
+            }
+            if (typeof(self.toolbar.showLabels) === "undefined") {
+                self.toolbar.showLabels = true;
+            }
+            if (!self.toolbar.actions) {
+                self.toolbar.actions = [];
+            }
+            applyAction(self.toolbar.actions, "add", {
+                "label": self.getMessage("addItemButtonLabel"),
+                "action": "add",
+                "iconClass": self.view.getStyle("addIcon"),
+                "click": function(key, action) {
+
+                    self.handleToolBarAddItemClick(function(item) {
+                        // done
+                    });
+                }
+            });
+            cleanupActions(self.toolbar.actions, self.toolbar.showLabels);
+
+            // determine which actions to add into the per-item actionbar
+            self.actionbar = {};
+            if (self.options.actionbar)
+            {
+                for (var k2 in self.options.actionbar) {
+                    self.actionbar[k2] = Alpaca.copyOf(self.options.actionbar[k2]);
+                }
+            }
+            if (typeof(self.actionbar.showLabels) === "undefined") {
+                self.actionbar.showLabels = false;
+            }
+            if (!self.actionbar.actions) {
+                self.actionbar.actions = [];
+            }
+            applyAction(self.actionbar.actions, "add", {
+                "label": self.getMessage("addButtonLabel"),
+                "action": "add",
+                "iconClass": self.view.getStyle("addIcon"),
+                "click": function(key, action, itemIndex) {
+
+                    self.handleActionBarAddItemClick(itemIndex, function(item) {
+                        // done
+                    });
+                }
+            });
+            applyAction(self.actionbar.actions, "remove", {
+                "label": self.getMessage("removeButtonLabel"),
+                "action": "remove",
+                "iconClass": self.view.getStyle("removeIcon"),
+                "click": function(key, action, itemIndex) {
+
+                    self.handleActionBarRemoveItemClick(itemIndex, function(item) {
+                        // done
+                    });
+                }
+            });
+            applyAction(self.actionbar.actions, "up", {
+                "label": self.getMessage("upButtonLabel"),
+                "action": "up",
+                "iconClass": self.view.getStyle("upIcon"),
+                "click": function(key, action, itemIndex) {
+
+                    self.handleActionBarMoveItemUpClick(itemIndex, function() {
+                        // done
+                    });
+                }
+            });
+            applyAction(self.actionbar.actions, "down", {
+                "label": self.getMessage("downButtonLabel"),
+                "action": "down",
+                "iconClass": self.view.getStyle("downIcon"),
+                "click": function(key, action, itemIndex) {
+
+                    self.handleActionBarMoveItemDownClick(itemIndex, function() {
+                        // done
+                    });
+                }
+            });
+            cleanupActions(self.actionbar.actions, self.actionbar.showLabels);
+
+            var len = this.data.length;
+            var data = $.extend(true, {}, this.data);
+            data.length = len;
+
+            this.data = Array.prototype.slice.call(data);
+        },
+
+        /**
+         * Picks apart the array and set onto child fields.
+         * @see Alpaca.ContainerField#setup
+         */
+        setValue: function(data)
+        {
+            var self = this;
+
+            if (!data || !Alpaca.isArray(data))
+            {
+                return;
+            }
+
+            // set fields
+            var i = 0;
+            do
+            {
+                if (i &lt; self.children.length)
+                {
+                    var childField = self.children[i];
+
+                    if (data.length > i)
+                    {
+                        childField.setValue(data[i]);
+                        i++;
+                    }
+                    else
+                    {
+                        self.removeItem(i);
+                    }
+                }
+            }
+            while (i &lt; self.children.length);
+
+            // if the number of items in the data is greater than the number of existing child elements
+            // then we need to add the new fields
+            if (i &lt; data.length)
+            {
+                self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+
+                    if (!itemSchema)
+                    {
+                        Alpaca.logDebug("Unable to resolve schema for item: " + i);
+                    }
+
+                    // we only allow addition if the resolved schema isn't circularly referenced
+                    // or the schema is optional
+                    if (circular)
+                    {
+                        return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                    }
+
+                    // waterfall functions
+                    var funcs = [];
+
+                    while (i &lt; data.length)
+                    {
+                        var f = (function(i, data)
+                        {
+                            return function(callback)
+                            {
+                                self.addItem(i, itemSchema, itemOptions, data[i], function() {
+
+                                    // by the time we get here, we may have constructed a very large child chain of
+                                    // sub-dependencies and so we use nextTick() instead of a straight callback so as to
+                                    // avoid blowing out the stack size
+                                    Alpaca.nextTick(function() {
+                                        callback();
+                                    });
+
+                                });
+                            };
+                        })(i, data);
+
+                        funcs.push(f);
+
+                        i++;
+                    }
+
+                    Alpaca.series(funcs, function() {
+                        // nothing
+                    });
+                });
+            }
+
+        },
+
+        /**
+         * @see Alpaca.ContainerField#getContainerValue
+         */
+        getContainerValue: function()
+        {
+            // if we're empty and we're also not required, then we hand back undefined
+            if (this.children.length === 0 &amp;&amp; !this.isRequired())
+            {
+                return [];
+            }
+
+            // otherwise, construct an array and hand it back
+            var o = [];
+            for (var i = 0; i &lt; this.children.length; i++)
+            {
+                var v = this.children[i].getValue();
+
+                if(v !== v) {
+                    // NaN
+                    v = undefined;
+                }
+
+                if (typeof(v) !== "undefined")
+                {
+                    o.push(v);
+                }
+            }
+            return o;
+        },
+
+        /**
+         * @override
+         *
+         * Creates sub-items for this object.
+         *
+         * @param callback
+         */
+        createItems: function(callback)
+        {
+            var self = this;
+
+            var items = [];
+
+            if (self.data &amp;&amp; self.data.length > 0)
+            {
+                // all items within the array have the same schema and options
+                // so we only need to load this once
+                self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+
+                    // we only allow addition if the resolved schema isn't circularly referenced
+                    // or the schema is optional
+                    if (circular)
+                    {
+                        return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                    }
+
+                    // waterfall functions
+                    var funcs = [];
+                    for (var index = 0; index &lt; self.data.length; index++)
+                    {
+                        var value = self.data[index];
+
+                        var pf = (function(index, value)
+                        {
+                            return function(_done)
+                            {
+                                self.createItem(index, itemSchema, itemOptions, value, function(item) {
+
+                                    items.push(item);
+
+                                    // by the time we get here, we may have constructed a very large child chain of
+                                    // sub-dependencies and so we use nextTick() instead of a straight callback so as to
+                                    // avoid blowing out the stack size
+                                    //Alpaca.nextTick(function() {
+                                    //    callback();
+                                    //});
+
+                                    _done();
+                                });
+                            };
+
+                        })(index, value);
+
+                        funcs.push(pf);
+                    }
+
+                    // run on the next-tick
+                    Alpaca.nextTick(function() {
+                        Alpaca.series(funcs, function(err) {
+                            callback(items);
+                        });
+                    });
+
+                });
+            }
+            else
+            {
+                callback(items);
+            }
+        },
+
+        /**
+         * Workhorse method for createItem.
+         *
+         * @param index
+         * @param itemSchema
+         * @param itemOptions
+         * @param itemData
+         * @param postRenderCallback
+         * @return {*}
+         * @private
+         */
+        createItem: function(index, itemSchema, itemOptions, itemData, postRenderCallback)
+        {
+            var self = this;
+
+            if (self._validateEqualMaxItems())
+            {
+                var formEl = $("&lt;div>&lt;/div>");
+                formEl.alpaca({
+                    "data" : itemData,
+                    "options": itemOptions,
+                    "schema" : itemSchema,
+                    "view" : this.view.id ? this.view.id : this.view,
+                    "connector": this.connector,
+                    "error": function(err)
+                    {
+                        self.destroy();
+
+                        self.errorCallback.call(self, err);
+                    },
+                    "notTopLevel":true,
+                    "render": function(fieldControl, cb) {
+                        // render
+                        fieldControl.parent = self;
+                        // setup item path
+                        fieldControl.path = self.path + "[" + index + "]";
+                        //fieldControl.nameCalculated = true;
+                        fieldControl.render(null, function() {
+                            if (cb) {
+                                cb();
+                            }
+                        });
+                    },
+                    "postRender": function(control)
+                    {
+                        // alpaca finished
+
+                        // render the outer container
+                        var containerItemEl = Alpaca.tmpl(self.containerItemTemplateDescriptor, {
+                            "id": self.getId(),
+                            "name": control.name,
+                            "parentFieldId": self.getId(),
+                            "actionbarStyle": self.options.actionbarStyle,
+                            "view": self.view,
+                            "data": itemData
+                        });
+
+                        // find the insertion point
+                        var insertionPointEl = $(containerItemEl).find("." + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD);
+                        if (insertionPointEl.length === 0)
+                        {
+                            if ($(containerItemEl).hasClass(Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM_FIELD)) {
+                                insertionPointEl = $(containerItemEl);
+                            }
+                        }
+                        if (insertionPointEl.length === 0)
+                        {
+                            self.errorCallback.call(self, {
+                                "message": "Cannot find insertion point for field: " + self.getId()
+                            });
+                            return;
+                        }
+
+                        // copy into place
+                        $(insertionPointEl).before(control.getFieldEl());
+                        $(insertionPointEl).remove();
+
+                        control.containerItemEl = containerItemEl;
+
+                        // TODO: verify, as per: https://github.com/emircal/alpaca/commit/4061c33787bd7a2b86fb613317374d365d9acc92
+                        // Reset hideInitValidationError after render
+                        Alpaca.fieldApplyFieldAndChildren(control, function(_control) {
+                            _control.hideInitValidationError = false;
+                        });
+
+                        // PR: https://github.com/gitana/alpaca/pull/124
+                        if (Alpaca.isFunction(self.options.items.postRender))
+                        {
+                            self.options.items.postRender.call(control, insertionPointEl);
+                        }
+
+                        if (postRenderCallback)
+                        {
+                            postRenderCallback(control);
+                        }
+                    }
+                });
+            }
+        },
+
+        /**
+         * Determines the schema and options to utilize for items within this array.
+         *
+         * @param callback
+         */
+        resolveItemSchemaOptions: function(callback)
+        {
+            var _this = this;
+
+            var completionFunction = function(resolvedItemSchema, resolvedItemOptions, circular)
+            {
+                // special caveat:  if we're in read-only mode, the child must also be in read-only mode
+                if (_this.options.readonly) {
+                    resolvedItemOptions.readonly = true;
+                }
+
+                callback(resolvedItemSchema, resolvedItemOptions, circular);
+            };
+
+            var itemOptions;
+            // legacy support for options.fields.item
+            if (!itemOptions &amp;&amp; _this.options &amp;&amp; _this.options.fields &amp;&amp; _this.options.fields.item) {
+                itemOptions = _this.options.fields.item;
+            }
+            if (!itemOptions &amp;&amp; _this.options &amp;&amp; _this.options.items) {
+                itemOptions = _this.options.items;
+            }
+            var itemSchema;
+            if (_this.schema &amp;&amp; _this.schema.items) {
+                itemSchema = _this.schema.items;
+            }
+
+            // handle $ref
+            if (itemSchema &amp;&amp; itemSchema["$ref"])
+            {
+                var referenceId = itemSchema["$ref"];
+
+                var topField = this;
+                var fieldChain = [topField];
+                while (topField.parent)
+                {
+                    topField = topField.parent;
+                    fieldChain.push(topField);
+                }
+
+                var originalItemSchema = itemSchema;
+                var originalItemOptions = itemOptions;
+
+                Alpaca.loadRefSchemaOptions(topField, referenceId, function(itemSchema, itemOptions) {
+
+                    // walk the field chain to see if we have any circularity
+                    var refCount = 0;
+                    for (var i = 0; i &lt; fieldChain.length; i++)
+                    {
+                        if (fieldChain[i].schema)
+                        {
+                            if ( (fieldChain[i].schema.id === referenceId) || (fieldChain[i].schema.id === "#" + referenceId))
+                            {
+                                refCount++;
+                            }
+                            else if ( (fieldChain[i].schema["$ref"] === referenceId))
+                            {
+                                refCount++;
+                            }
+                        }
+                    }
+
+                    // use a higher limit for arrays, perhaps 10
+                    //var circular = (refCount > 1);
+                    var circular = (refCount > 10);
+
+                    var resolvedItemSchema = {};
+                    if (originalItemSchema) {
+                        Alpaca.mergeObject(resolvedItemSchema, originalItemSchema);
+                    }
+                    if (itemSchema)
+                    {
+                        Alpaca.mergeObject(resolvedItemSchema, itemSchema);
+                    }
+                    delete resolvedItemSchema.id;
+
+                    var resolvedItemOptions = {};
+                    if (originalItemOptions) {
+                        Alpaca.mergeObject(resolvedItemOptions, originalItemOptions);
+                    }
+                    if (itemOptions)
+                    {
+                        Alpaca.mergeObject(resolvedItemOptions, itemOptions);
+                    }
+
+                    Alpaca.nextTick(function() {
+                        completionFunction(resolvedItemSchema, resolvedItemOptions, circular);
+                    });
+                });
+            }
+            else
+            {
+                Alpaca.nextTick(function() {
+                    completionFunction(itemSchema, itemOptions);
+                });
+            }
+        },
+
+        /**
+         * @see Alpaca.ContainerField#handleValidate
+         */
+        handleValidate: function()
+        {
+            var baseStatus = this.base();
+
+            var valInfo = this.validation;
+
+            var status = this._validateUniqueItems();
+            valInfo["valueNotUnique"] = {
+                "message": status ? "" : this.getMessage("valueNotUnique"),
+                "status": status
+            };
+
+            status = this._validateMaxItems();
+            valInfo["tooManyItems"] = {
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("tooManyItems"), [this.schema.maxItems]),
+                "status": status
+            };
+
+            status = this._validateMinItems();
+            valInfo["notEnoughItems"] = {
+                "message": status ? "" : Alpaca.substituteTokens(this.getMessage("notEnoughItems"), [this.schema.minItems]),
+                "status": status
+            };
+
+            return baseStatus &amp;&amp; valInfo["valueNotUnique"]["status"] &amp;&amp; valInfo["tooManyItems"]["status"] &amp;&amp; valInfo["notEnoughItems"]["status"];
+        },
+
+        /**
+         * Validates if the number of items has been reached to maxItems.
+         * @returns {Boolean} true if the number of items has been reached to maxItems
+         */
+        _validateEqualMaxItems: function()
+        {
+            if (this.schema.maxItems &amp;&amp; this.schema.maxItems >= 0)
+            {
+                if (this.getSize() >= this.schema.maxItems)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        },
+
+        /**
+         * Validates if the number of items has been reached to minItems.
+         * @returns {Boolean} true if number of items has been reached to minItems
+         */
+        _validateEqualMinItems: function()
+        {
+            if (this.schema.minItems &amp;&amp; this.schema.minItems >= 0)
+            {
+                if (this.getSize() &lt;= this.schema.minItems)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        },
+
+        /**
+         * Validates if number of items has been less than minItems.
+         * @returns {Boolean} true if number of items has been less than minItems
+         */
+        _validateMinItems: function()
+        {
+            if (this.schema.minItems &amp;&amp; this.schema.minItems >= 0)
+            {
+                if (this.getSize() &lt; this.schema.minItems)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        },
+
+        /**
+         * Validates if number of items has been over maxItems.
+         * @returns {Boolean} true if number of items has been over maxItems
+         */
+        _validateMaxItems: function()
+        {
+            if (this.schema.maxItems &amp;&amp; this.schema.maxItems >= 0)
+            {
+                if (this.getSize() > this.schema.maxItems)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        },
+
+        /**
+         * Validates if all items are unique.
+         * @returns {Boolean} true if all items are unique.
+         */
+        _validateUniqueItems: function()
+        {
+            if (this.schema.items &amp;&amp; this.schema.uniqueItems)
+            {
+                var hash = {};
+
+                for (var i = 0; i &lt; this.children.length; i++)
+                {
+                    var key = this.children[i].getValue();
+                    if (!key) {
+                        key = "";
+                    }
+
+                    if (hash[key])
+                    {
+                        return false;
+                    }
+
+                    hash[key] = true;
+                }
+            }
+
+            return true;
+        },
+
+        findAction: function(actionsArray, actionKey)
+        {
+            var action = null;
+
+            $.each(actionsArray, function(i, v) {
+                if (v.action === actionKey) // jshint ignore:line
+                {
+                    action = v;
+                }
+            });
+
+            return action;
+        },
+
+        postRender: function(callback)
+        {
+            var self = this;
+
+            this.base(function() {
+
+                //  if there are zero children, show the array toolbar
+                self.updateToolbars();
+
+                callback();
+
+            });
+        },
+
+        /*
+        afterApplyCreatedItems: function(model, callback)
+        {
+            var self = this;
+
+            //  if there are zero children, show the array toolbar
+            self.updateToolbars();
+
+            callback();
+        },
+        */
+
+        /**
+         * Returns number of children.
+         */
+        getSize: function() {
+            return this.children.length;
+        },
+
+        /**
+         * @OVERRIDE
+         *
+         * Adjust the path and name ahead of refreshing the DOM.
+         */
+        updateDOMElement: function()
+        {
+            this.updatePathAndName();
+
+            this.base();
+        },
+
+        /**
+         * This method gets invoked after items are dynamically added, removed or moved around in the child chain.
+         * It adjusts classes on child DOM elements to make sure they're correct.
+         */
+        updatePathAndName: function()
+        {
+            var self = this;
+
+            var updateChildrenPathAndName = function(parent)
+            {
+                if (parent.children)
+                {
+                    $.each(parent.children, function(i, v) {
+
+                        if (parent.prePath &amp;&amp; Alpaca.startsWith(v.path, parent.prePath))
+                        {
+                            v.prePath = v.path;
+                            v.path = v.path.replace(parent.prePath, parent.path);
+                        }
+
+                        // re-calculate name
+                        if (parent.preName &amp;&amp; Alpaca.startsWith(v.name, parent.preName))
+                        {
+                            v.preName = v.name;
+                            v.name = v.name.replace(parent.preName, parent.name);
+                            if (v.field)
+                            {
+                                $(v.field).attr("name", v.name);
+                            }
+                        }
+
+                        updateChildrenPathAndName(v);
+                    });
+                }
+            };
+
+            if (this.children &amp;&amp; this.children.length > 0)
+            {
+                $.each(this.children, function(i, v) {
+
+                    var idx = v.path.lastIndexOf('/');
+                    var lastSegment = v.path.substring(idx+1);
+                    if (lastSegment.indexOf("[") &lt; 0 &amp;&amp; lastSegment.indexOf("]") &lt; 0)
+                    {
+                        lastSegment = lastSegment.substring(lastSegment.indexOf("[") + 1, lastSegment.indexOf("]"));
+                    }
+
+                    if (lastSegment !== i)
+                    {
+                        v.prePath = v.path;
+                        v.path = v.path.substring(0, idx) + "/[" + i + "]";
+                    }
+
+                    // re-calculate name
+                    if (v.nameCalculated)
+                    {
+                        v.preName = v.name;
+
+                        if (v.parent &amp;&amp; v.parent.name &amp;&amp; v.path)
+                        {
+                            v.name = v.parent.name + "_" + i;
+                        }
+                        else
+                        {
+                            if (v.path)
+                            {
+                                v.name = v.path.replace(/\//g, "").replace(/\[/g, "_").replace(/\]/g, "");
+                            }
+                        }
+
+                        if (this.parent.options.rubyrails )
+                        {
+                            $(v.field).attr("name", v.parent.name);
+                        }
+                        else
+                        {
+                            $(v.field).attr("name", v.name);
+                        }
+
+                    }
+
+                    if (!v.prePath)
+                    {
+                        v.prePath = v.path;
+                    }
+
+                    updateChildrenPathAndName(v);
+                });
+            }
+        },
+
+        /**
+         * Updates the status of array item action toolbar buttons.
+         */
+        updateToolbars: function()
+        {
+            var self = this;
+
+            // if we're in display mode, we do not do this
+            if (this.view.type === "display")
+            {
+                return;
+            }
+
+            // if we're in readonly mode, don't do this
+            if (this.schema.readonly)
+            {
+                return;
+            }
+
+            // fire callbacks to view to remove and create toolbar
+            if (self.toolbar)
+            {
+                self.fireCallback("arrayToolbar", true);
+                self.fireCallback("arrayToolbar");
+            }
+
+            // fire callbacks to view to remove and create an actionbar for each item
+            if (self.actionbar)
+            {
+                self.fireCallback("arrayActionbars", true);
+                self.fireCallback("arrayActionbars");
+            }
+
+            //
+            // TOOLBAR
+            //
+
+            var toolbarEl = $(this.getFieldEl()).find(".alpaca-array-toolbar[data-alpaca-array-toolbar-field-id='" + self.getId() + "']");
+            if (this.children.length > 0 &amp;&amp; self.options.hideToolbarWithChildren)
+            {
+                // hide toolbar
+                $(toolbarEl).hide();
+            }
+            else
+            {
+                // show toolbar
+                $(toolbarEl).show();
+
+                // CLICK: array toolbar buttons
+                $(toolbarEl).find("[data-alpaca-array-toolbar-action]").each(function() {
+
+                    var actionKey = $(this).attr("data-alpaca-array-toolbar-action");
+                    var action = self.findAction(self.toolbar.actions, actionKey);
+                    if (action)
+                    {
+                        $(this).off().click(function(e) {
+                            e.preventDefault();
+                            action.click.call(self, actionKey, action);
+                        });
+                    }
+                });
+            }
+
+
+            //
+            // ACTIONBAR
+            //
+
+            // if we're not using the "sticky" toolbar, then show and hide the item action buttons when hovered
+            if (typeof(this.options.toolbarSticky) === "undefined" || this.options.toolbarSticky === null)
+            {
+                // find each item
+                var items = this.getFieldEl().find(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + self.getId() +  "']");
+                $(items).each(function(itemIndex) {
+
+                    // find the actionbar for this item
+                    // find from containerItemEl
+                    var actionbarEl = $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() +  "'][data-alpaca-array-actionbar-item-index='" + itemIndex + "']");
+                    if (actionbarEl &amp;&amp; actionbarEl.length > 0)
+                    {
+                        $(this).hover(function() {
+                            $(actionbarEl).show();
+                        }, function() {
+                            $(actionbarEl).hide();
+                        });
+
+                        $(actionbarEl).hide();
+                    }
+                });
+            }
+            else if (this.options.toolbarSticky)
+            {
+                // always show the actionbars
+                $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() +  "']").css("display", "inline-block");
+            }
+            else if (!this.options.toolbarSticky)
+            {
+                // always hide the actionbars
+                $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() +  "']").hide();
+            }
+
+            // CLICK: actionbar buttons
+            // NOTE: actionbarEls size should be 0 or 1
+            var actionbarEls = $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() + "']");
+            $(actionbarEls).each(function() {
+
+                var targetIndex = $(this).attr("data-alpaca-array-actionbar-item-index");
+                if (typeof(targetIndex) === "string")
+                {
+                    targetIndex = parseInt(targetIndex, 10);
+                }
+
+                // bind button click handlers
+                $(this).children("[data-alpaca-array-actionbar-action]").each(function() {
+
+                    var actionKey = $(this).attr("data-alpaca-array-actionbar-action");
+                    var action = self.findAction(self.actionbar.actions, actionKey);
+                    if (action)
+                    {
+                        $(this).off().click(function(e) {
+                            e.preventDefault();
+                            action.click.call(self, actionKey, action, targetIndex);
+                        });
+                    }
+                });
+
+                // if we're at max capacity, disable "add" buttons
+                if (self._validateEqualMaxItems())
+                {
+                    $(this).children("[data-alpaca-array-toolbar-action='add']").each(function(index) {
+                        $(this).removeClass('alpaca-button-disabled');
+                        self.fireCallback("enableButton", this);
+                    });
+
+                    $(this).children("[data-alpaca-array-actionbar-action='add']").each(function(index) {
+                        $(this).removeClass('alpaca-button-disabled');
+                        self.fireCallback("enableButton", this);
+                    });
+                }
+                else
+                {
+                    $(this).children("[data-alpaca-array-toolbar-action='add']").each(function(index) {
+                        $(this).addClass('alpaca-button-disabled');
+                        self.fireCallback("disableButton", this);
+                    });
+
+                    $(this).children("[data-alpaca-array-actionbar-action='add']").each(function(index) {
+                        $(this).addClass('alpaca-button-disabled');
+                        self.fireCallback("disableButton", this);
+                    });
+                }
+
+                // if we're at min capacity, disable "remove" buttons
+                if (self._validateEqualMinItems())
+                {
+                    $(this).children("[data-alpaca-array-actionbar-action='remove']").each(function(index) {
+                        $(this).removeClass('alpaca-button-disabled');
+                        self.fireCallback("enableButton", this);
+                    });
+                }
+                else
+                {
+                    $(this).children("[data-alpaca-array-actionbar-action='remove']").each(function(index) {
+                        $(this).addClass('alpaca-button-disabled');
+                        self.fireCallback("disableButton", this);
+                    });
+                }
+            });
+            // first actionbar has its "move up" button disabled
+            $(actionbarEls).first().children("[data-alpaca-array-actionbar-action='up']").each(function() {
+                $(this).addClass('alpaca-button-disabled');
+                self.fireCallback("disableButton", this);
+            });
+            // last actionbar has its "move down" button disabled
+            $(actionbarEls).last().children("[data-alpaca-array-actionbar-action='down']").each(function() {
+                $(this).addClass('alpaca-button-disabled');
+                self.fireCallback("disableButton", this);
+            });
+
+        },
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DYNAMIC METHODS
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+        doResolveItemContainer: function()
+        {
+            var self = this;
+
+            return $(self.container);
+        },
+
+        handleToolBarAddItemClick: function(callback)
+        {
+            var self = this;
+
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+
+                // we only allow addition if the resolved schema isn't circularly referenced
+                // or the schema is optional
+                if (circular)
+                {
+                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                }
+
+                // how many children do we have currently?
+                var insertionPoint = self.children.length;
+
+                var itemData = Alpaca.createEmptyDataInstance(itemSchema);
+                self.addItem(insertionPoint, itemSchema, itemOptions, itemData, function(item) {
+                    if (callback) {
+                        callback(item);
+                    }
+                });
+            });
+        },
+
+        handleActionBarAddItemClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.resolveItemSchemaOptions(function(itemSchema, itemOptions, circular) {
+
+                // we only allow addition if the resolved schema isn't circularly referenced
+                // or the schema is optional
+                if (circular)
+                {
+                    return Alpaca.throwErrorWithCallback("Circular reference detected for schema: " + JSON.stringify(itemSchema), self.errorCallback);
+                }
+
+                var arrayValues = self.getValue();
+
+                var itemData = Alpaca.createEmptyDataInstance(itemSchema);
+                self.addItem(itemIndex + 1, itemSchema, itemOptions, itemData, function(item) {
+
+                    // this is necessary because some underlying fields require their data to be reset
+                    // in order for the display to work out properly (radio fields)
+                    arrayValues.splice(itemIndex + 1, 0, item.getValue());
+                    self.setValue(arrayValues);
+
+                    if (callback) {
+                        callback(item);
+                    }
+                });
+            });
+        },
+
+        handleActionBarRemoveItemClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.removeItem(itemIndex, function() {
+                if (callback) {
+                    callback();
+                }
+            });
+        },
+
+        handleActionBarMoveItemUpClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.swapItem(itemIndex, itemIndex - 1, self.options.animate, function() {
+                if (callback) {
+                    callback();
+                }
+            });
+        },
+
+        handleActionBarMoveItemDownClick: function(itemIndex, callback)
+        {
+            var self = this;
+
+            self.swapItem(itemIndex, itemIndex + 1, self.options.animate, function() {
+                if (callback) {
+                    callback();
+                }
+            });
+        },
+
+        doAddItem: function(index, item, callback)
+        {
+            var self = this;
+
+            var addItemContainer = self.doResolveItemContainer();
+
+            // insert into dom
+            if (index === 0)
+            {
+                // insert first into container
+                $(addItemContainer).append(item.containerItemEl);
+            }
+            else
+            {
+                // insert at a specific index
+                var existingElement = addItemContainer.children("[data-alpaca-container-item-index='" + (index-1) + "']");
+                if (existingElement &amp;&amp; existingElement.length > 0)
+                {
+                    // insert after
+                    existingElement.after(item.containerItemEl);
+                }
+            }
+
+            self.doAfterAddItem(item, function(err) {
+
+                // trigger ready
+                Alpaca.fireReady(item);
+
+                callback(err);
+            });
+        },
+
+        doAfterAddItem: function(item, callback)
+        {
+            callback();
+        },
+
+        /**
+         * Adds an item to the array.
+         *
+         * This gets called from the toolbar when items are added via the user interface.  The method can also
+         * be called programmatically to insert items on the fly.
+         *
+         * @param {Integer} index the index where the item should be inserted
+         * @param {Object} schema the json schema
+         * @param {Object} options the json options
+         * @param {Any} data the data for the newly inserted item
+         * @param [Function] callback called after the child is added
+         */
+        addItem: function(index, schema, options, data, callback)
+        {
+            var self = this;
+
+            if (self._validateEqualMaxItems())
+            {
+                self.createItem(index, schema, options, data, function(item) {
+
+                    // register the child
+                    self.registerChild(item, index);
+
+                    // insert into dom
+                    self.doAddItem(index, item, function() {
+
+                        // updates dom markers for this element and any siblings
+                        self.handleRepositionDOMRefresh();
+
+                        // update the array item toolbar state
+                        self.updateToolbars();
+
+                        // refresh validation state
+                        self.refreshValidationState();
+
+                        // dispatch event: add
+                        self.trigger("add", item);
+
+                        // trigger update
+                        self.triggerUpdate();
+
+                        if (callback)
+                        {
+                            callback(item);
+                        }
+
+                    });
+                });
+            }
+        },
+
+        doRemoveItem: function(childIndex, callback)
+        {
+            var self = this;
+
+            var removeItemContainer = self.doResolveItemContainer();
+
+            removeItemContainer.children(".alpaca-container-item[data-alpaca-container-item-index='" + childIndex + "']").remove();
+
+            self.doAfterRemoveItem(childIndex, function(err) {
+                callback(err);
+            });
+        },
+
+        doAfterRemoveItem: function(childIndex, callback)
+        {
+            callback();
+        },
+
+        /**
+         * Removes an item from the array.
+         *
+         * This gets called automatically from setValue() when the number of items being set is less than the number
+         * of field elements.
+
+         * @param {Number} childIndex index of the child to be removed
+         * @param [Function] callback called after the child is removed
+         */
+        removeItem: function(childIndex, callback)
+        {
+            var self = this;
+
+            if (this._validateEqualMinItems())
+            {
+                // unregister the child
+                self.unregisterChild(childIndex);
+
+                // remove itemContainerEl from DOM
+                self.doRemoveItem(childIndex, function() {
+
+                    // updates dom markers for this element and any siblings
+                    self.handleRepositionDOMRefresh();
+
+                    // update the array item toolbar state
+                    self.updateToolbars();
+
+                    // refresh validation state
+                    self.refreshValidationState();
+
+                    // dispatch event: remove
+                    self.trigger("remove", childIndex);
+
+                    // trigger update
+                    self.triggerUpdate();
+
+                    if (callback)
+                    {
+                        callback();
+                    }
+
+                });
+            }
+        },
+
+        /**
+         * Workhorse method for moving an item in the array to a new index.
+         *
+         * @param {Number} sourceIndex the index of the child to be moved
+         * @param {Number} targetIndex the index to be moved to
+         * @param [Boolean] animate whether to animate
+         * @param [Function] callback called after the child is added and refresh occurs
+         */
+        moveItem: function(sourceIndex, targetIndex, animate, callback)
+        {
+            var self = this;
+
+            if (typeof(animate) == "function")
+            {
+                callback = animate;
+                animate = self.options.animate;
+            }
+
+            if (typeof(animate) == "undefined")
+            {
+                animate = self.options.animate ? self.options.animate : true;
+            }
+
+            if (typeof(sourceIndex) === "string")
+            {
+                sourceIndex = parseInt(sourceIndex, 10);
+            }
+
+            if (typeof(targetIndex) === "string")
+            {
+                targetIndex = parseInt(targetIndex, 10);
+            }
+
+            if (targetIndex &lt; 0)
+            {
+                targetIndex = 0;
+            }
+            if (targetIndex >= self.children.length)
+            {
+                targetIndex = self.children.length - 1;
+            }
+
+            if (targetIndex === -1)
+            {
+                // no target index
+                return;
+            }
+
+            if (sourceIndex === targetIndex)
+            {
+                // nothing to do
+                return;
+            }
+
+            var targetChild = self.children[targetIndex];
+            if (!targetChild)
+            {
+                // target child not found
+                return;
+            }
+
+            var onComplete = function()
+            {
+                var adjustedTargetIndex = targetIndex;
+                if (sourceIndex &lt; targetIndex) {
+                    adjustedTargetIndex--;
+                }
+
+                // splice out child
+                var child = self.children.splice(sourceIndex, 1)[0];
+                self.children.splice(adjustedTargetIndex, 0, child);
+
+                // set data and refresh
+                self.data = self.getValue();
+                self.refresh(function() {
+
+                    // refresh validation state
+                    self.refreshValidationState();
+
+                    // trigger update
+                    self.triggerUpdate();
+
+                    // dispatch event: move
+                    self.trigger("move");
+
+                    if (callback)
+                    {
+                        callback();
+                    }
+
+                });
+            };
+
+            var duration = 0;
+            if (animate)
+            {
+                duration = 500;
+            }
+
+            if (duration > 0)
+            {
+                var parentFieldId = self.getId();
+
+                // the source and target DOM elements
+                var sourceContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + sourceIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
+                var targetContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + targetIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
+
+                // create two temp elements as markers for switch
+                var tempSourceMarker = $("&lt;div class='tempMarker1'>&lt;/div>");
+                sourceContainer.before(tempSourceMarker);
+                var tempTargetMarker = $("&lt;div class='tempMarker2'>&lt;/div>");
+                targetContainer.before(tempTargetMarker);
+
+                // moves div visually
+                Alpaca.animatedMove(sourceContainer, targetContainer, duration, function () {
+                    onComplete();
+                });
+            }
+            else
+            {
+                onComplete();
+            }
+        },
+
+        /**
+         * Workhorse method for swapping an item from one index in the array to another.
+         *
+         * @param {Number} sourceIndex the index of the child to be moved
+         * @param {Number} targetIndex the index to be moved to
+         * @param [Boolean] animate whether to animate
+         * @param [Function] callback called after the child is added and refresh occurs
+         */
+        swapItem: function(sourceIndex, targetIndex, animate, callback)
+        {
+            var self = this;
+
+            if (typeof(animate) == "function")
+            {
+                callback = animate;
+                animate = self.options.animate;
+            }
+
+            if (typeof(animate) == "undefined")
+            {
+                animate = self.options.animate ? self.options.animate : true;
+            }
+
+            if (typeof(sourceIndex) === "string")
+            {
+                sourceIndex = parseInt(sourceIndex, 10);
+            }
+
+            if (typeof(targetIndex) === "string")
+            {
+                targetIndex = parseInt(targetIndex, 10);
+            }
+
+            if (targetIndex &lt; 0)
+            {
+                targetIndex = 0;
+            }
+            if (targetIndex >= self.children.length)
+            {
+                targetIndex = self.children.length - 1;
+            }
+
+            if (targetIndex === -1)
+            {
+                // no target index
+                return;
+            }
+
+            if (sourceIndex === targetIndex)
+            {
+                // nothing to do
+                return;
+            }
+
+            var targetChild = self.children[targetIndex];
+            if (!targetChild)
+            {
+                // target child not found
+                return;
+            }
+
+            var onComplete = function()
+            {
+                var sourceChild = self.children[sourceIndex];
+                var targetChild = self.children[targetIndex];
+
+                self.children[sourceIndex] = targetChild;
+                self.children[targetIndex] = sourceChild;
+
+                // copy back data and refresh
+                self.data = self.getValue();
+                self.refresh(function() {
+
+                    // refresh validation state
+                    self.refreshValidationState();
+
+                    // trigger update
+                    self.triggerUpdate();
+
+                    // dispatch event: move
+                    self.trigger("move");
+
+                    if (callback)
+                    {
+                        callback();
+                    }
+
+                });
+            };
+
+            var duration = 0;
+            if (animate)
+            {
+                duration = 500;
+            }
+
+            if (duration > 0)
+            {
+                var parentFieldId = self.getId();
+
+                // the source and target DOM elements
+                var sourceContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + sourceIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
+                var targetContainer = self.getContainerEl().find(".alpaca-container-item[data-alpaca-container-item-index='" + targetIndex + "'][data-alpaca-container-item-parent-field-id='" + parentFieldId + "']");
+
+                // create two temp elements as markers for switch
+                var tempSourceMarker = $("&lt;div class='tempMarker1'>&lt;/div>");
+                sourceContainer.before(tempSourceMarker);
+                var tempTargetMarker = $("&lt;div class='tempMarker2'>&lt;/div>");
+                targetContainer.before(tempTargetMarker);
+
+                // swap divs visually
+                Alpaca.animatedSwap(sourceContainer, targetContainer, duration, function () {
+                    onComplete();
+                });
+            }
+            else
+            {
+                onComplete();
+            }
+        },
+
+        /**
+         * @see Alpaca.ContainerField#getType
+         */
+        getType: function() {
+            return "array";
+        },
+
+
+        /* builder_helpers */
+
+        /**
+         * @see Alpaca.ContainerField#getTitle
+         */
+        getTitle: function() {
+            return "Array Field";
+        },
+
+        /**
+         * @see Alpaca.ContainerField#getDescription
+         */
+        getDescription: function() {
+            return "Field for list of items with same data type or structure.";
+        },
+
+        /**
+         * @private
+         * @see Alpaca.ContainerField#getSchemaOfSchema
+         */
+        getSchemaOfSchema: function() {
+            var properties = {
+                "properties": {
+                    "items": {
+                        "title": "Array Items",
+                        "description": "Schema for array items.",
+                        "type": "object"
+                    },
+                    "minItems": {
+                        "title": "Minimum Items",
+                        "description": "Minimum number of items.",
+                        "type": "number"
+                    },
+                    "maxItems": {
+                        "title": "Maximum Items",
+                        "description": "Maximum number of items.",
+                        "type": "number"
+                    },
+                    "uniqueItems": {
+                        "title": "Items Unique",
+                        "description": "Item values should be unique if true.",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            };
+
+            if (this.children &amp;&amp; this.children[0]) {
+                Alpaca.merge(properties.properties.items.properties, this.children[0].getSchemaOfSchema());
+            }
+
+            return Alpaca.merge(this.base(), properties);
+        },
+
+        /**
+         * @private
+         * @see Alpaca.ContainerField#getOptionsForSchema
+         */
+        getOptionsForSchema: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "items": {
+                        "type": "object"
+                    },
+                    "minItems": {
+                        "type": "integer"
+                    },
+                    "maxItems": {
+                        "type": "integer"
+                    },
+                    "uniqueItems": {
+                        "type": "checkbox"
+                    }
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @see Alpaca.ContainerField#getSchemaOfOptions
+         */
+        getSchemaOfOptions: function() {
+            var properties = {
+                "properties": {
+                    "toolbarSticky": {
+                        "title": "Sticky Toolbar",
+                        "description": "If true, the array item toolbar will always be enabled.  If false, the toolbar is always disabled.  If undefined or null, the toolbar will appear when hovered over.",
+                        "type": "boolean",
+                        "default": undefined
+                    },
+                    "toolbarStyle": {
+                        "title": "Toolbar Style",
+                        "description": "The kind of top-level toolbar to render for the array field.  Either 'button' or 'link'.",
+                        "type": "string",
+                        "default": "button"
+                    },
+                    "actionbarStyle": {
+                        "title": "Actionbar Style",
+                        "description": "The kind of actionbar to render for each item in the array.  Either 'top', 'bottom', 'left', or 'right'.",
+                        "type": "string",
+                        "default": "top"
+                    },
+                    "toolbar": {
+                        "type": "object",
+                        "title": "Toolbar Configuration",
+                        "properties": {
+                            "showLabels": {
+                                "type": "boolean",
+                                "default": true,
+                                "title": "Whether to show labels next to actions"
+                            },
+                            "actions": {
+                                "type": "array",
+                                "title": "Toolbar Actions Configuration",
+                                "items": {
+                                    "action": {
+                                        "type": "string",
+                                        "title": "Action Key"
+                                    },
+                                    "label": {
+                                        "type": "string",
+                                        "title": "Action Label"
+                                    },
+                                    "iconClass": {
+                                        "type": "string",
+                                        "title": "Action CSS Classes for Icon"
+                                    },
+                                    "click": {
+                                        "type": "function",
+                                        "title": "Action Click Handler"
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "title": "Whether to enable the action",
+                                        "default": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "actionbar": {
+                        "type": "object",
+                        "properties": {
+                            "showLabels": {
+                                "type": "boolean",
+                                "default": false,
+                                "title": "Whether to show labels next to actions"
+                            },
+                            "actions": {
+                                "type": "array",
+                                "title": "Actions Bar Actions Configuration",
+                                "items": {
+                                    "action": {
+                                        "type": "string",
+                                        "title": "Action Key"
+                                    },
+                                    "label": {
+                                        "type": "string",
+                                        "title": "Action Label"
+                                    },
+                                    "iconClass": {
+                                        "type": "string",
+                                        "title": "Action CSS Classes for Icon"
+                                    },
+                                    "click": {
+                                        "type": "function",
+                                        "title": "Action Click Handler"
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "title": "Whether to enable the action",
+                                        "default": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "hideToolbarWithChildren": {
+                        "type": "boolean",
+                        "title": "Hide Toolbar with Children",
+                        "description": "Indicates whether to hide the top toolbar when child elements are available.",
+                        "default": true
+                    }
+                }
+            };
+
+            if (this.children &amp;&amp; this.children[0]) {
+                Alpaca.merge(properties.properties.items.properties, this.children[0].getSchemaOfSchema());
+            }
+
+            return Alpaca.merge(this.base(), properties);
+        },
+
+        /**
+         * @private
+         * @see Alpaca.ContainerField#getOptionsForOptions
+         */
+        getOptionsForOptions: function() {
+            return Alpaca.merge(this.base(), {
+                "fields": {
+                    "toolbarSticky": {
+                        "type": "checkbox"
+                    },
+                    "items": {
+                        "type": "object",
+                        "fields": {
+                        }
+                    }
+                }
+            });
+        }
+
+        /* end_builder_helpers */
+    });
+
+    Alpaca.registerMessages({
+        "notEnoughItems": "The minimum number of items is {0}",
+        "tooManyItems": "The maximum number of items is {0}",
+        "valueNotUnique": "Values are not unique",
+        "notAnArray": "This value is not an Array"
+    });
+    Alpaca.registerFieldClass("array", Alpaca.Fields.ArrayField);
+    Alpaca.registerDefaultSchemaFieldMapping("array", "array");
+
+    Alpaca.registerMessages({
+        "addItemButtonLabel": "Add New Item",
+        "addButtonLabel": "Add",
+        "removeButtonLabel": "Remove",
+        "upButtonLabel": "Up",
+        "downButtonLabel": "Down"
+    });
+
+})(jQuery);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+        <!-- disqus code -->
+        <div id="disqus_thread"></div>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        <!-- // disqus code -->
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Sat Oct 29 2016 09:34:50 GMT-0500 (COT)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
