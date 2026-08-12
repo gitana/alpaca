@@ -44,6 +44,13 @@
                     this.options.rightLabel = "";
                 }
             }
+
+            // assume vertical orientation
+            // empty select first to false by default
+            if (Alpaca.isUndefined(this.options.vertical))
+            {
+                this.options.vertical = true;
+            }
         },
 
         prepareControlModel: function(callback)
@@ -107,6 +114,16 @@
                 $(self.getFieldEl()).find("input:checkbox").change(function(evt) {
                     afterChangeHandler();
                 });
+
+                // stack checkbox selectors vertically
+                if (self.options.vertical)
+                {
+                  $(self.control).css("display", "block");
+                }
+                else
+                {
+                  $(self.control).css("display", "inline-block");
+                }
 
                 callback();
             });
@@ -216,6 +233,12 @@
                     "useDataSourceAsEnum": {
                         "title": "Use Data Source as Enumerated Values",
                         "description": "Whether to constrain the field's schema enum property to the values that come back from the data source.",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "vertical": {
+                        "title": "Position the checkbox selector items vertically",
+                        "description": "By default, checkbox controls are stacked vertically.  Set to false if you'd like checkbox controls to lay out horizontally.",
                         "type": "boolean",
                         "default": true
                     }
