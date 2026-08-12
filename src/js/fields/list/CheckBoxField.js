@@ -170,7 +170,7 @@
          * @see Alpaca.Field#getType
          */
         getType: function() {
-            return "boolean"; // or string, or array of strings or array of objects
+            return this.options.multiple && (this.schema.type === "boolean" || this.schema.type === "string") ? "string" : "boolean";
         }
 
         /* builder_helpers */

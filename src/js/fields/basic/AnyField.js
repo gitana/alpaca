@@ -7,6 +7,7 @@
      * @lends Alpaca.Fields.AnyField.prototype
      */
     {
+        isJSON: false,
         /**
          * @see Alpaca.Field#getFieldType
          */
@@ -27,6 +28,10 @@
          */
         getControlValue: function()
         {
+            if (this.isJSON)
+            {
+                return JSON.parse(this._getControlVal(true));
+            }
             return this._getControlVal(true);
         },
 
@@ -42,6 +47,11 @@
             else
             {
                 this.control.val(value);
+                if (this.control.val() === '[object Object]' && $.type(value) === 'object')
+                {
+                    this.control.val(JSON.stringify(value));
+                    this.isJSON = true;
+                }
             }
 
             // be sure to call into base method
