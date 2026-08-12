@@ -2,7 +2,7 @@
 
 Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices. 
 It runs simply as HTML5 or more elaborately using Bootstrap, jQuery Mobile or jQuery UI. 
-Alpaca uses Handlebars to process JSON schema and provide developers with an extensible framework for implementing controls, wizards, layouts, I18N support and an custom data persistence.
+Alpaca uses Handlebars to process JSON schema and provide developers with an extensible framework for implementing controls, wizards, layouts, I18N support and a custom data persistence.
 
 The goal of Alpaca is to provide the open source community with a fantastic forms engine that rivals or beats what most
 proprietary vendors offer.  Using Alpaca, you can host really nice forms for your back end services, whether they
@@ -25,7 +25,7 @@ since thanks to a really awesome community of customers, consultants and technol
 ## Web Site, Documentation and CDN
 
 For information, demos and documentation regarding Alpaca, please visit the 
-<a href="http://www.alpacajs.org">the Alpaca Forms web site</a>.
+<a href="http://www.alpacajs.org"> Alpaca Forms web site</a>.
 
 Going forward, all distribution assets are available via free CDN via jsDelivr.
 
@@ -36,7 +36,7 @@ For example -
     
 Where `<version>` should be filled in (example: 1.5.26).
 
-For more information, visit the <a href="http://www.alpacajs.org">Alpaca Forms web site</a>.
+For more information, visit the <a href="http://www.alpacajs.org">Alpaca Forms website</a>.
 
 
 ## Sponsors
@@ -48,7 +48,7 @@ ideal backend for Alpaca forms design, capture and reporting.  Stop by our web s
 <a href="https://gitana.io">learn more about Cloud CMS</a>.
 
 The project also has a large number of customers who use Alpaca, contribute code and receive support, some of whom are 
-listed on our <a href="https://www.alpacajs.org">web site</a>.
+listed on our <a href="https://www.alpacajs.org">website</a>.
 
 
 ## Official Support
@@ -82,7 +82,7 @@ Alpaca is ideal for consultants or organizations that wish to have a solid JavaS
 that they can grow into for current and future project needs.
 
 
-## Can I fork Alpaca and use it my own projects?
+## Can I fork Alpaca and use it for my own projects?
 
 Yes, absolutely.  That's the whole idea.  Fork it, use it in your projects, make money from it, live a better life, spend more time with
 your kids.  We hope that Alpaca is useful to you.
@@ -117,7 +117,7 @@ The command line for doing this is basically:
 
 To build Alpaca, you will need to have Node.js installed.
 
-Building Alpaca is pretty easy.  Just run:
+Building an Alpaca is pretty easy.  Just run:
 
     npm install
     
