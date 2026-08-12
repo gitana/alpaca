@@ -70,21 +70,22 @@
 
                     rows = $(rows);
                     $(rows).each(function() {
+                        var row = this;
 
                         if (options.fileupload && options.fileupload.autoUpload)
                         {
                             // disable start button
-                            $(this).find("button.start").css("display", "none");
+                            $(row).find("button.start").css("display", "none");
                         }
 
-                        self.handleWrapRow(this, options);
+                        self.handleWrapRow(row, options);
 
                         // this event gets fired when fileimpl has cleaned up the DOM element
                         // we handle Ajax related stuff on our own here
                         //$(this).find("button.delete").on("destroyed", function() {
-                        $(this).find("button.delete").on("click", function() {
-
-                            var button = $(row).find("button.delete");
+                        $(row).find("button.delete").on("click", function() {
+                            
+                            var button = this;
 
                             var fileIndex = $(button).attr("data-file-index");
                             var file = files[fileIndex];
