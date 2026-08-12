@@ -35,6 +35,11 @@
             {
                 this.options.tokenfield.showAutocompleteOnFocus = true;
             }
+
+            //add initial data to tokenfield options
+            if (!Alpaca.isEmpty(this.data) && !this.options.tokenfield.tokens) {
+              this.options.tokenfield.tokens = this.data;
+            }
         },
 
         /**
