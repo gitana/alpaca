@@ -104,7 +104,7 @@
                             }
 
                             self.triggerWithPropagation("change");
-                            setTimeout(function() {
+                            Alpaca.nextTick(function() {
                                 self.refreshUIState();
 
                                 if (self.options.afterFileUploadRemove)
@@ -587,7 +587,7 @@
                 // copy back down into data.files
                 data.files = data.result.files;
 
-                setTimeout(function() {
+                Alpaca.nextTick(function() {
                     self.refreshValidationState(true);
                     self.refreshUIState();
                 }, 250);

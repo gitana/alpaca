@@ -180,7 +180,7 @@
 
                             if (first)
                             {
-                                window.setTimeout(function() {
+                                Alpaca.nextTick(function() {
                                     self.editor.clearSelection();
                                 }, 100);
                             }

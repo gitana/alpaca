@@ -144,7 +144,7 @@
                         self.getFieldEl().on("dp.change", function(e) {
 
                             // we use a timeout here because we want this to run AFTER control click handlers
-                            setTimeout(function() {
+                            Alpaca.nextTick(function() {
                                 self.onChange.call(self, e);
                                 self.triggerWithPropagation("change", e);
                             }, 250);

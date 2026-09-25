@@ -61,7 +61,7 @@
                 // if we can render the spectrum plugin...
                 if (self.simpleColorPickerAvailable && self.control)
                 {
-                    setTimeout(function(self) {
+                    Alpaca.nextTick(function(self) {
                         return function() {
 
                             // create a copy of the color picker settings and bind that

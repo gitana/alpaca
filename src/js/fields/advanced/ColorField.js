@@ -30,7 +30,7 @@
                 this.inputType = "color";
             }
 
-            this.base();
+            this.base();e
             if (self.spectrumAvailable){
                 // set up default spectrum settings
                 if (typeof(this.options.spectrum) === "undefined")
@@ -79,7 +79,7 @@
                 // if we can render the spectrum plugin...
                 if (self.spectrumAvailable && self.control)
                 {
-                    setTimeout(function() {
+                    Alpaca.nextTick(function() {
                         $((self.control)[0]).spectrum(
                           $.extend({ color: self.data }, self.options.spectrum)
                         );

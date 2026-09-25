@@ -332,7 +332,7 @@
             // auto-set the focus?
             if (options && options.focus)
             {
-                window.setTimeout(function() {
+                Alpaca.nextTick(function() {
 
                     var doFocus = function(__field)
                     {
@@ -4126,7 +4126,7 @@
                 $(this).remove();
             });
 
-            window.setTimeout(function() {
+            Alpaca.nextTick(function() {
                 from_clone.remove();
                 dest_clone.remove();
                 callback();
@@ -4199,7 +4199,7 @@
             });
             */
 
-            window.setTimeout(function() {
+            Alpaca.nextTick(function() {
                 from_clone.remove();
                 //dest_clone.remove();
                 callback();

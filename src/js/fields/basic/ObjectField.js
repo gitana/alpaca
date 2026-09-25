@@ -1689,7 +1689,7 @@
                                 else
                                 {
                                     // allow focus to settle on invalid field
-                                    window.setTimeout(function() {
+                                    Alpaca.nextTick(function() {
                                         self.focus(function(field) {
                                             // done
                                         });
@@ -1728,7 +1728,7 @@
                                 else
                                 {
                                     // allow focus to settle on invalid field
-                                    window.setTimeout(function() {
+                                    Alpaca.nextTick(function() {
                                         self.focus(function(field) {
                                             // done
                                         });

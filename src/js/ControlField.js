@@ -437,7 +437,7 @@
                 control.change(function(e) {
 
                     // we use a timeout here because we want this to run AFTER control click handlers
-                    setTimeout(function() {
+                    Alpaca.nextTick(function() {
 
                         // propagate up with "before_nested_change"
                         self.triggerWithPropagation("before_nested_change", e);
@@ -558,7 +558,7 @@
                     // this timeout provides the browser with enough time to plug the value into the input control
                     // which the validation logic uses to determine whether the control is now in a valid state
                     //
-                    window.setTimeout(function () {
+                    Alpaca.nextTick(function () {
                         self.refreshValidationState();
                     }, 50);
                 }

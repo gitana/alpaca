@@ -240,7 +240,7 @@
                     self.filterUnselectedItems(filterText);
                 });
 
-                setTimeout(function() {
+                Alpaca.nextTick(function() {
                     if (typeof(model.height) === "undefined")
                     {
                         var _height = -1;
@@ -264,7 +264,7 @@
                         $(self.control).find(".chooser-item-message").css("margin-top", (($(self.control).find(".chooser-panel-items").height() / 2) - 8) + "px");
                     }
 
-                }, 0);
+                });
 
                 callback();
 

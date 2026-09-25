@@ -34,37 +34,77 @@
         });
     };
 
-    Alpaca.nextTick = function(f)
-    {
-        async.nextTick(function() {
-            f();
-        });
-    };
+    // Alpaca.nextTick = function(f)
+    // {
+    //     async.nextTick(function() {
+    //         f();
+    //     });
+    // };
 
-    var tasks = new Set()
-    Alpaca.setTimeout = function(f, delay)
+    // NEXT TICK
+
+    // method used to run a task immediately
+    var runMicrotask = null;
+    if (typeof(queueMicrotask) !== "undefined")
     {
-        var timeout = setTimeout(function() {
-            try
-            {
-                f();
-            }
-            finally
-            {
-                tasks.delete(timeout);
-            }
-        }, delay);
-        tasks.add(timeout);
+        runMicrotask = queueMicrotask;
+    }
+    else
+    {
+        runMicrotask = function(fn) {
+            return setTimeout(fn, 0);
+        };
     }
 
-    Alpaca.clearTasks = function()
+    var ticks = new Set()
+
+    Alpaca.nextTick = Alpaca.nextTick || function (fn, delayMs)
     {
-        for (var task of tasks)
+        var tick = null;
+
+        if (typeof(delayMs) === "undefined" || delayMs === null || delayMs <= 0)
         {
-            clearTimeout(task);
+            tick = runMicrotask(function()
+            {
+                try
+                {
+                    fn();
+                }
+                finally
+                {
+                    ticks.delete(tick);
+                }
+            });
+        }
+        else
+        {
+            tick = setTimeout(function() {
+
+                try
+                {
+                    fn();
+                }
+                finally
+                {
+                    ticks.delete(tick);
+                }
+
+            }, delayMs);
+
+
+        ticks.add(tick);
+
+        return tick;
+    };
+
+    Alpaca.clearTasks = Alpaca.clearTicks = function()
+    {
+        for (var ticks of ticks)
+        {
+            clearTimeout(ticks);
         }
 
-        tasks.clear();
+        ticks.clear();
     }
 
 
@@ -135,7 +175,7 @@
     var hasNextTick = typeof process === 'object' && typeof process.nextTick === 'function';
 
     function fallback(fn) {
-        Alpaca.setTimeout(fn, 0);
+        Alpaca.nextTick(fn, 0);
     }
 
     function wrap(defer) {
@@ -3675,7 +3715,7 @@
                 if (err && attempt++ < options.times &&
                     (typeof options.errorFilter != 'function' ||
                         options.errorFilter(err))) {
-                    setTimeout(retryAttempt, options.intervalFunc(attempt));
+                    Alpaca.nextTick(retryAttempt, options.intervalFunc(attempt));
                 } else {
                     callback(err, ...args);
                 }
@@ -4049,7 +4089,7 @@
             });
 
             // setup timer and call original function
-            timer = setTimeout(timeoutCallback, milliseconds);
+            timer = Alpaca.nextTick(timeoutCallback, milliseconds);
             fn(...args);
         });
     }
