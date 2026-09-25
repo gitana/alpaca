@@ -5,7 +5,6 @@ header: Wizards
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca lets you arrange your form into simple multi-step wizards along with buttons for previous, next and submit
 using a simple configuration-driven approach.  Wizards are essentially fields within a single form that are split

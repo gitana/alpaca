@@ -5,7 +5,6 @@ header: Personal Name Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```personalname``` field.
 

@@ -5,7 +5,6 @@ header: Summernote Editor Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```summernote``` field.
 

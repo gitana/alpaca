@@ -5,11 +5,9 @@
 /.idea
 /build
 
-/node_modules
-/lib
+node_modules
 
 /site/_site
-/site/lib
 
 notes.md
 /dist

@@ -5,7 +5,6 @@ header: TinyMCE Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```tinymce``` field.
 

@@ -5,7 +5,6 @@ header: Select Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```select``` field.
 

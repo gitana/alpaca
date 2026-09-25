@@ -5,7 +5,6 @@ header: Search Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```search``` field implements a search box that provides a search-optimized control running in most modern
 browsers.  It allows for the specification of search terms with an optimized user interface.

@@ -5,7 +5,6 @@ header: References
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 This page shows examples of using JSON schema <code>$ref</code> markup to reference
 definitions and other structures within your JSON schema definition to generate

@@ -5,7 +5,6 @@ header: Views
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 When Alpaca runs, the very first thing it does is sort out which view implementation it will use to render the schema
 and options that you provide.  A view implementation consists of an ID and an implementation class.  The implementation
@@ -33,8 +32,7 @@ your own views is covered at bottom of this page.
 ## Default Views
 
 A good number of views are provided out of the box.  You can use these views to render straight up, non-fancy HTML
-layouts (```web```), Bootstrap responsive layouts (```bootstrap```), jQueryUI responsive layouts (```jqueryui```)
-and JQuery Mobile layouts (```jquerymobile```).
+layouts (```web```) and Bootstrap responsive layouts (```bootstrap```).
 
 The following views are provided out of the box.  Views are hierarchical such that child views inherit properties
 form parent views.  Here is the default hierarchy:
@@ -45,34 +43,22 @@ base
         web-display-horizontal
         bootstrap-display
             bootstrap-display-horizontal
-        jqueryui-display
-            jqueryui-display-horizontal
-        jquerymobile-display
-            jquerymobile-display-horizontal
     web-edit
         web-edit-horizontal
         bootstrap-edit
             bootstrap-edit-horizontal
-        jqueryui-edit
-            jqueryui-edit-horizontal
-        jquerymobile-display
-            jquerymobile-display-horizontal
     web-create
         web-create-horizontal
         bootstrap-create
             bootstrap-create-horizontal
-        jqueryui-create
-            jqueryui-create-horizontal
-        jquerymobile-create
-            jquerymobile-create-horizontal
 ````
 
 ## Using Views
 With views in place, you can select views right from your call to Alpaca.  Suppose you have your schema and options at
-hand.  The follow two calls are equivalent except that the former chooses the jQuery UI engine to layout the create
-form where as the latter uses jQuery Mobile.
+hand.  The follow two calls are equivalent except that the former chooses the Bootstrap engine to layout the create
+form where as the latter uses plain HTML5.
 
-Using jQuery UI:
+Using Bootstrap:
 
 ```
 {% raw %}
@@ -81,13 +67,13 @@ Using jQuery UI:
         "schema": schema,
         "options": options,
         "data": data,
-        "view": "jqueryui-create"
+        "view": "bootstrap-create"
     });
 </script>
 {% endraw %}
 ```
 
-Using jQuery Mobile:
+Using plain HTML5:
 
 ```
 {% raw %}
@@ -96,7 +82,7 @@ Using jQuery Mobile:
         "schema": schema,
         "options": options,
         "data": data,
-        "view": "jquerymobile-create"
+        "view": "web-create"
     });
 </script>
 {% endraw %}
@@ -215,6 +201,7 @@ the ```wow``` class to it.
 Note: what exactly the <b>wow</b> class does is left as an exercise for the imagination.  wow.
 
 ```
+{% raw %}
 var newTemplate = ' \
 <script type="text/x-handlebars-template"> \
     <input class="wow" type="text" id="{{id}}" {{#if options.placeholder}}placeholder="{{options.placeholder}}"{{/if}} {{#if options.size}}size="{{options.size}}"{{/if}} {{#if options.readonly}}readonly="readonly"{{/if}} {{#if name}}name="{{name}}"{{/if}} {{#each options.data}}data-{{@key}}="{{this}}"{{/each}}/> \
@@ -227,6 +214,7 @@ Alpaca.registerView({
         "control-text": newTemplate
     }
 });
+{% endraw %}
 ````
 
 You can now use the ```my-view``` view in your Alpaca calls.  Alpaca will compile your template and you'll be off to the races.
@@ -331,7 +319,7 @@ Alpaca.registerView({
     "id": "<viewId>",
     "parent": "<parentViewId>",
     "type": "<type>", // either "display", "edit" or "create"
-    "ui": "<ui>", // usually "web", "bootstrap", "jqueryui", "jquerymobile" or your own
+    "ui": "<ui>", // usually "web", "bootstrap" or your own
     "title": "<title>"
     "displayReadonly": <boolean>, // whether to display read only properties
     "templates": {

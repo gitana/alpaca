@@ -5,7 +5,6 @@ header: Radio Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```radio``` field.
 

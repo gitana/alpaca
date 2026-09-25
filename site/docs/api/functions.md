@@ -5,7 +5,6 @@ header: Functions
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 ## General Usage
 

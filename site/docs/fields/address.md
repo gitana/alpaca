@@ -5,7 +5,6 @@ header: Address Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```address``` field.
 

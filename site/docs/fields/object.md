@@ -5,7 +5,6 @@ header: Object Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```object``` field.
 

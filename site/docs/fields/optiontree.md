@@ -5,7 +5,6 @@ header: Option Tree Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```optiontree``` field.
 

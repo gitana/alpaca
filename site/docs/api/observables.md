@@ -5,7 +5,6 @@ header: Observables
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca maintains observables that can be subscribed to by listeners that want to listen for changes to values
 in the form.  An observable exists for every field and registration can be either programmatic or driven from

@@ -5,7 +5,6 @@ header: URL Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```url``` field.
 

@@ -5,7 +5,6 @@ header: Lookups
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca provides abstractions for forms, fields, connectors and other types so as to provide a consistent and easy-to-use
 interface.  This interface lets you find other objects in the JSON structure and plug in function handlers that

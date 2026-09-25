@@ -5,7 +5,6 @@ header: Zip Code Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```zipcode``` field.
 

@@ -1,7 +1,7 @@
 # Alpaca - JSON Forms for jQuery and Bootstrap
 
 Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices. 
-It runs simply as HTML5 or more elaborately using Bootstrap, jQuery Mobile or jQuery UI. 
+It runs simply as HTML5 or more elaborately using Bootstrap.
 Alpaca uses Handlebars to process JSON schema and provide developers with an extensible framework for implementing controls, wizards, layouts, I18N support and an custom data persistence.
 
 The goal of Alpaca is to provide the open source community with a fantastic forms engine that rivals or beats what most
@@ -11,11 +11,10 @@ are proprietary, enterprise or SaaS offerings.
 The philosophy behind Alpaca is that you should design your forms once and have them work on lots of different devices
 and UI engines without having to do the same work twice.
 
-Here is a sample registration form written once and rendered using four different approaches:
+Here is a sample registration form written once and rendered using different approaches:
 
 - [Twitter Bootstrap](http://www.alpacajs.org/demos/bootstrap/registration)
-- [jQuery Mobile](http://www.alpacajs.org/demos/jquerymobile/registration)
-- [jQuery UI](http://www.alpacajs.org/demos/browser/registration)
+- [Plain HTML5](http://www.alpacajs.org/demos/web/registration)
 - [With AMD and RequireJS](http://www.alpacajs.org/demos/amd/registration)
 
 Alpaca is an open-source project licensed under Apache 2.0.  It was started in 2010 and has been growing steadily
@@ -94,8 +93,8 @@ called life.
  
 ## Compatibility
 
-The latest release of Alpaca is compatible with jQuery 1.9.1 and up.  For a full breakdown of dependencies, check the 
-bower.json and/or `/lib` directory for third-party vendor libraries and versions that are used.
+The latest release of Alpaca is compatible with jQuery 1.9.1 and up.  For a full breakdown of the third-party
+libraries (and versions) that the optional fields integrate with, check `site/package.json`.
  
 In general, we aspire to support the latest versions of our third-party dependencies.  Some folks may want Alpaca to be
 backward-compatible with earlier versions of dependencies and in general, it is our desire to have it be so.  But in
@@ -115,58 +114,77 @@ The command line for doing this is basically:
 
 ### Build
 
-To build Alpaca, you will need to have Node.js installed.
-
-Building Alpaca is pretty easy.  Just run:
+All you need is Node.js (20 or later).  Install the dependencies:
 
     npm install
-    
-And then:
+
+And then build:
 
     npm run build
-    
-This will build to `build/alpaca`
 
-To clean the build:
+This will build to `dist/alpaca` (the directory that gets published) in well under a second.  Handlebars
+templates are precompiled and JS / CSS are minified with [esbuild](https://esbuild.github.io).  The build script lives in `scripts/build.mjs` and the ordered list
+of source files lives in `scripts/sources.mjs`.
 
-    npm run clean
-    
+| Command              | What it does                                                              |
+|----------------------|---------------------------------------------------------------------------|
+| `npm run build`      | Build the library into `dist/alpaca`                                      |
+| `npm run watch`      | Build, then rebuild whenever `src/` changes                               |
+| `npm test`           | Build, then run the test suite                                            |
+| `npm run test:watch` | Run the test suite in watch mode                                          |
+| `npm run dev`        | Watch the library and serve the web site with live reload on :9999        |
+| `npm run site`       | Build the library and the web site into `dist/site`                       |
+| `npm run site:install` | Reinstall the web site's third-party libraries (`site/package.json`)      |
+| `npm run docs:api`   | Generate JSDoc API docs into `build/jsdoc`                                |
+| `npm run lint`       | Run JSHint over `src/js`                                                  |
+| `npm run clean`      | Remove `build` and `dist`                                                 |
+| `npm run bump`       | Bump the minor version in `package.json` (no git commit or tag)           |
+
+
+### Tests
+
+Tests use [Vitest](https://vitest.dev).  Each test boots a fresh [jsdom](https://github.com/jsdom/jsdom) window with
+jQuery, Handlebars and the built Alpaca bundle loaded as browser globals (see `tests/harness.js`), so they exercise
+exactly what ships in `dist/alpaca`.  Test suites cover both the `web` and `bootstrap` distributions.
+
+    npm test
+
 
 ### Building the Web Site
 
-To build the web site, you will also need to have Python and Jekyll installed (as global dependencies).
+The web site (`site/`) is built with [Eleventy](https://www.11ty.dev) using Liquid templates and Markdown.  The site's
+third-party libraries (jQuery, Bootstrap, CKEditor, etc.) are declared in `site/package.json` and published under
+`/lib`.  They're installed automatically the first time you build or serve the site.
 
-    brew install ruby
-    gem install -n /usr/local/bin jekyll
-
-You will then also need to install the `pygments.rb` gem, sort of like this:
-
-    gem install pygments.rb
-
-Then run:    
+Build it to `dist/site`:
 
     npm run site
 
+Or run it locally with live reload at http://localhost:9999 (this also rebuilds Alpaca as you edit `src/`):
 
-### Running a Local Web Server
+    npm run dev
 
-And you can run a local web server like this:
-
-    npm run server
+Only files that start with front matter (`---`) are treated as templates; everything else under `site/` is copied
+as-is.  Field documentation pages can include `<!-- INCLUDE_API_DOCS: <fieldType> -->` to have schema and options
+tables generated from the field's implementation.
 
 
 ### Alpaca Distributions
 
-The build produces four sets of assets and they are placed in:
+The build produces two sets of assets and they are placed in:
 
-- `build/alpaca/web` (for basic web forms and layout)
-- `build/alpaca/bootstrap` (for bootstrap enabled forms and layout)
-- `build/alpaca/jqueryui` (for jQuery UI enabled forms and layout)
-- `build/alpaca/jquerymobile` (for jQuery Mobile enabled forms and layout)
+- `dist/alpaca/web` (for basic web forms and layout)
+- `dist/alpaca/bootstrap` (for bootstrap enabled forms and layout)
 
-Each directory contains a JS file and a CSS file for its respective build.
+Each directory contains a JS file and a CSS file (plus minified versions) for its respective build.
 
-Each JS file is UMD ready and will work within both an AMD and CommonJS container.
+Each JS file is UMD ready and will work within both an AMD and CommonJS container, or as a plain `<script>` that
+defines a global `Alpaca`.
+
+
+### Releasing
+
+Bump the minor version with `npm run bump` (or use `npm version patch` / `major`).  Then run `./deploy.sh` to build, tag, publish to npm and push the web site.
 
 
 

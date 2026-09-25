@@ -5,7 +5,6 @@ header: Map Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```map``` field.
 

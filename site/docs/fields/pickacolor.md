@@ -5,7 +5,6 @@ header: Pick A Color Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```pickacolor``` field implements a simple color picker that lets the end user choose from a selection of
 colors.  It runs on Botostrap and relies on the following library:

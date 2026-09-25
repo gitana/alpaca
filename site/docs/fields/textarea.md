@@ -4,7 +4,6 @@ title: Text Area Field
 header: Text Area Field
 group: navigation
 ---
-{% include JB/setup %}
 
 The ```textarea``` field is used to represent text within a form.
 

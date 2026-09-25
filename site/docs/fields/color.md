@@ -5,7 +5,6 @@ header: Color Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```color``` field implements a color picker that runs on most modern browsers.  It allows for the selection
 of hexadecimal color values using the browser's preferred color picker.

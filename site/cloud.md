@@ -6,7 +6,6 @@ group: navigation
 sitemap:
   priority: 1.0
 ---
-{% include JB/setup %}
 
 <a href="https://gitana.io" target="_blank">Cloud CMS</a> provides a hosted cloud service for Alpaca Forms that
 provides everything your organization needs to run Alpaca Forms on your own web sites.  Design your Forms in the cloud

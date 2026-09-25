@@ -5,7 +5,6 @@ title: Download Alpaca
 sitemap:
   priority: 1.0
 ---
-{% include JB/setup %}
 
 The latest version of Alpaca is {{ site.alpaca_version }} released on {{ site.alpaca_date }}.
 
@@ -17,8 +16,7 @@ http://cdn.jsdelivr.net/npm/alpaca@{{site.alpaca_version}}/dist/alpaca/bootstrap
 http://cdn.jsdelivr.net/npm/alpaca@{{site.alpaca_version}}/dist/alpaca/bootstrap/alpaca.min.css
 ```
 
-The example above is for <code>bootstrap</code>.  You can also access the builds for <code>web</code>,
-<code>jquerymobile</code> and <code>jqueryui</code>.  SSL support is included with the CDN.
+The example above is for <code>bootstrap</code>.  You can also access the build for <code>web</code>.  SSL support is included with the CDN.
 
 ## NPM
 The easiest way to get Alpaca is to use <a href="https://www.npmjs.com/package/alpaca">NPM</a> (Node Package Manager):
@@ -27,21 +25,14 @@ The easiest way to get Alpaca is to use <a href="https://www.npmjs.com/package/a
 npm install alpaca
 ````
 
-## Bower
-The other easiest way to get Alpaca is to use <a href="http://bower.io" target="_blank">Twitter Bower</a>:
-
-````
-bower install alpaca
-````
-
 ## Build it from Source
 If you're a system integrator, a developer or someone who likes to understand how things work, then the best way to
 get your hands on Alpaca is to <a href="https://github.com/gitana/alpaca" target="_blank">build Alpaca from source</a>.
 
 The build is pretty straightforward.  Check the README.md file for precise instructions.
 
-It uses Bower, Node and Gulp to produce different distributions.  It also optionally uses Jekyll to produce the web site,
-documentation and samples, all of which you can run locally.
+It only needs Node.js to produce the distributions, the web site, documentation and samples, all of which you
+can run locally.
 
 Here is a link to the download of the project source:
 

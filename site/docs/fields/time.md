@@ -4,7 +4,6 @@ title: Time Field
 header: Time Field
 group: navigation
 ---
-{% include JB/setup %}
 
 The ```time``` field.
 

@@ -109,7 +109,7 @@
 
                 // core properties
                 setScalar(this, element, "type"); // view, edit, create
-                setScalar(this, element, "ui"); // bootstrap, jqueryui, jquerymobile, web
+                setScalar(this, element, "ui"); // bootstrap, web
 
                 // whether the view is readonly
                 setScalar(this, element, "displayReadonly");

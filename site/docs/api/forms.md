@@ -5,7 +5,6 @@ header: Forms
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca lets you wrap a standard HTML form binding around your rendered fields to support both direct HTML submits
 and Ajax, behind-the-scenes submits.  You can pass form configuration into the Alpaca engine to control the POST

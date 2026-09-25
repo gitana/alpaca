@@ -5,7 +5,6 @@ header: Password Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```password``` field.
 

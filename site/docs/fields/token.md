@@ -5,7 +5,6 @@ header: Token Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```token``` field.  This provides an implementation of the Bootstrap TokenField plugin on top of a text field
 to allow for autocomplete and typeahead tokens in a comma (or alternative separator) delimited string.

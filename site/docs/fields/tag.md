@@ -5,7 +5,6 @@ header: Tag Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```tag``` field.
 

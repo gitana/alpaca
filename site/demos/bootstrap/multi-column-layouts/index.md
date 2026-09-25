@@ -4,7 +4,6 @@ title: Multi-Column Layouts
 header: Multi-Column Layouts
 framework: Twitter Bootstrap
 ---
-{% include JB/setup %}
 
 This page includes demos using a two column layout.
 

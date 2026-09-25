@@ -1807,26 +1807,14 @@
 
 
             // make some intelligent guesses about what view id we might default to in case they want to use
-            // auto-view selection.  We detect jquery-ui, bootstrap and jquerymobile.  If nothing can be detected,
-            // we fall back to straight web views.
+            // auto-view selection.  We detect bootstrap.  If nothing can be detected, we fall back to straight web views.
             var fallbackUI   = Alpaca.defaultView || null;
             var fallbackType = null;
-
-            // detect jQuery Mobile
-            if ($.mobile && !fallbackUI) {
-                fallbackUI = "jquerymobile";
-            }
 
             // detect twitter bootstrap
             var bootstrapDetected = (typeof $.fn.modal === 'function');
             if (bootstrapDetected && !fallbackUI) {
                 fallbackUI = "bootstrap";
-            }
-
-            // detect jquery ui
-            var jQueryUIDetected = (typeof($.ui) !== "undefined");
-            if (jQueryUIDetected && !fallbackUI) {
-                fallbackUI = "jqueryui";
             }
 
             if (fallbackUI)
@@ -2633,6 +2621,11 @@
 
         spin: function(el)
         {
+            // the spinner is optional - skip it if the spin.js jQuery plugin isn't loaded
+            if (typeof($.fn.spin) !== "function") {
+                return;
+            }
+
             var opts = {
                 lines: 12,            // The number of lines to draw
                 length: 7,            // The length of each line

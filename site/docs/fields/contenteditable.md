@@ -4,7 +4,6 @@ title: ContentEditable Field
 header: ContentEditable Field
 group: navigation
 ---
-{% include JB/setup %}
 
 
 The ```contenteditable``` field is used to represent editable text within a form.

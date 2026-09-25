@@ -5,7 +5,6 @@ header: Events
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca allows you to bind event handlers to containers and individual fields that are triggered either
 directly or via propagation.

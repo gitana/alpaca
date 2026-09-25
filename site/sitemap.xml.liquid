@@ -1,0 +1,19 @@
+---
+eleventyExcludeFromCollections: true
+permalink: /sitemap.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    {% for item in collections.all %}
+    <url>
+        <loc>{{ site.production_url }}{{ item.url }}</loc>
+        {% if item.data.sitemap %}
+        <priority>{{ item.data.sitemap.priority }}</priority>
+        {% else %}
+        <priority>0.5000</priority>
+        {% endif %}
+    </url>
+    {% endfor %}
+
+</urlset>

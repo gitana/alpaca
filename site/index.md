@@ -8,7 +8,6 @@ keywords: alpaca,forms,jquery,bootstrap
 sitemap:
   priority: 1.0
 ---
-{% include JB/setup %}
 
 <p class="alert alert-warning" style="text-align: center">
 Latest version: <a href="download.html">{{ site.alpaca_version }}</a> released on {{ site.alpaca_date }}.
@@ -16,9 +15,7 @@ Latest version: <a href="download.html">{{ site.alpaca_version }}</a> released o
 
 Alpaca provides the easiest way to generate interactive HTML5 forms for web and mobile applications.
 It uses JSON Schema and simple Handlebars templates to generate great looking user interfaces on top of
-<a href="http://twitter.github.com/bootstrap" target="_blank">Twitter Bootstrap</a>,
-<a href="http://jqueryui.com" target="_blank">jQuery UI</a>,
-<a href="http://jquerymobile.com" target="_blank">jQuery Mobile</a>
+<a href="http://twitter.github.com/bootstrap" target="_blank">Twitter Bootstrap</a>
 and HTML5.
 
 Everything you need is provided out of the box.  Alpaca comes pre-stocked with a large library of controls,
@@ -38,7 +35,7 @@ Alpaca is open-source and provided to you under the Apache 2.0 license.  It is s
 
 <!-- STEP 1 -->
 <div class="step">
-    <img src="{{ BASE_PATH }}/images/step-1.png"/>
+    <img src="/images/step-1.png"/>
     Copy the following into the <code>&lt;head/&gt;</code> block of your web page:
     <br/>
     <br/>
@@ -61,7 +58,7 @@ Alpaca is open-source and provided to you under the Apache 2.0 license.  It is s
 
 <!-- STEP 2 -->
 <div class="step">
-    <img src="{{ BASE_PATH }}/images/step-2.png"/>
+    <img src="/images/step-2.png"/>
     Call <code>$.alpaca()</code> with your form schema and any configuration:
     <br/>
     <br/>
@@ -95,7 +92,7 @@ $("#form1").alpaca({
 
 <!-- STEP 3 -->
 <div class="step">
-    <img src="{{ BASE_PATH }}/images/step-3.png"/>
+    <img src="/images/step-3.png"/>
     Enjoy your newly rendered Alpaca form!
     <br/>
     <br/>
@@ -108,8 +105,8 @@ $("#form1").alpaca({
     </div>
 </div>
 
-The example above uses the Alpaca + Bootstrap combination.  Combinations are also available for jQuery UI, jQuery Mobile
-and straight-up web HTML5.  The required assets (jQuery, Bootstrap and Handlebars) are loaded from CDN sources.
+The example above uses the Alpaca + Bootstrap combination.  A combination is also available for
+straight-up web HTML5.  The required assets (jQuery, Bootstrap and Handlebars) are loaded from CDN sources.
 
 To get started on your own projects, take a look at the
 <a href="/demos/alpaca-standalone-sample.html">sample Alpaca/Bootstrap HTML page</a>.
@@ -127,28 +124,28 @@ are a few notable ones:
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="http://www.pearsoned.com/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/pearson-150.png" style="max-width:125px" />
+                    <img src="/images/community/pearson-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="http://www.fox.com/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/fox-entertainment-150.png" style="max-width:125px" />
+                    <img src="/images/community/fox-entertainment-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="http://www.trinet.com/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/trinet-150.jpg" style="max-width:125px" />
+                    <img src="/images/community/trinet-150.jpg" style="max-width:125px" />
                 </a>
             </div>
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="https://gitana.io/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/cloudcms-150.png" style="max-width:125px" />
+                    <img src="/images/community/cloudcms-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>
@@ -157,28 +154,28 @@ are a few notable ones:
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="http://www.sony.com/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/sony-150.jpg" style="max-width:125px" />
+                    <img src="/images/community/sony-150.jpg" style="max-width:125px" />
                 </a>
             </div>
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="https://iilab.org/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/iilab-150.png" style="max-width:125px" />
+                    <img src="/images/community/iilab-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="http://www.biogenidec.com/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/biogen-idec-150.png" style="max-width:125px" />
+                    <img src="/images/community/biogen-idec-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="http://www.fii-inc.com/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/fii-inc-150.png" style="max-width:125px" />
+                    <img src="/images/community/fii-inc-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>
@@ -187,28 +184,28 @@ are a few notable ones:
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="http://www.virginmobileusa.com/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/virgin-mobile-150.jpg" style="max-width:125px" />
+                    <img src="/images/community/virgin-mobile-150.jpg" style="max-width:125px" />
                 </a>
             </div>
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="http://www.sprint.com/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/sprint-150.png" style="max-width:125px" />
+                    <img src="/images/community/sprint-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="http://www.evolvedmediasolutions.co.uk/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/evolved-media-solutions-150.png" style="max-width:125px" />
+                    <img src="/images/community/evolved-media-solutions-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>
         <div class="col-md-3">
             <div class="icon-holder">
                 <a href="http://www.fxnetworks.com/" target="_blank">
-                    <img src="{{ BASE_PATH }}/images/community/fx-networks-150.png" style="max-width:125px" />
+                    <img src="/images/community/fx-networks-150.png" style="max-width:125px" />
                 </a>
             </div>
         </div>

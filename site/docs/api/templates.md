@@ -5,7 +5,6 @@ header: Templates
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca includes an advanced templating system that is driven by <a href="views.html">views</a>.  You can create your
 own views and templates at compile time (when you actually build Alpaca) or you can override them on the fly at

@@ -5,7 +5,6 @@ header: Custom Fields
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca has a pretty inclusive field library that you can use straight away.  Fields are simply referenced by their
 <code>type</code> within your Alpaca forms configuration.  If you don't provide specific field types to use, Alpaca

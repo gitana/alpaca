@@ -28,7 +28,7 @@
                     <i class="fa fa-envelope"></i>
                 </a>
                 {% endif %}
-                <a class="navbar-brand" href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">
+                <a class="navbar-brand" href="/">
                     <img src="http://www.gravatar.com/avatar/{{site.author.email_md5}}?s=35" class="img-circle" />
                     {{ site.title }}
                 </a>
@@ -37,12 +37,12 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Home</a></li>
-                    <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
-                    <li><a href="{{ BASE_PATH}}/examples.html">Examples and Demos</a></li>
-                    <li><a href="{{ BASE_PATH}}/documentation.html">Documentation</a></li>
-                    <li><a href="{{ BASE_PATH}}/download.html">Download</a></li>
-                    <li><a href="{{ BASE_PATH}}/contact.html">Contact Us</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/tutorial.html">Getting Started</a></li>
+                    <li><a href="/examples.html">Examples and Demos</a></li>
+                    <li><a href="/documentation.html">Documentation</a></li>
+                    <li><a href="/download.html">Download</a></li>
+                    <li><a href="/contact.html">Contact Us</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -54,12 +54,12 @@
              <i class="fa fa-bars"></i>
            </button>
            <ul class="dropdown-menu" role="menu">
-             <li><a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">Home</a></li>
-             <li><a href="{{ BASE_PATH}}/tutorial.html">Getting Started</a></li>
-             <li><a href="{{ BASE_PATH}}/examples.html">Examples and Demos</a></li>
-             <li><a href="{{ BASE_PATH}}/documentation.html">Documentation</a></li>
-             <li><a href="{{ BASE_PATH}}/download.html">Download</a></li>
-             <li><a href="{{ BASE_PATH}}/contact.html">Contact Us</a></li>
+             <li><a href="/">Home</a></li>
+             <li><a href="/tutorial.html">Getting Started</a></li>
+             <li><a href="/examples.html">Examples and Demos</a></li>
+             <li><a href="/documentation.html">Documentation</a></li>
+             <li><a href="/download.html">Download</a></li>
+             <li><a href="/contact.html">Contact Us</a></li>
              <li class="divider"></li>
              <li><a href="#">Top of Page</a></li>
            </ul>
@@ -84,8 +84,7 @@
             </div>
         </div>
 
-        {% include JB/analytics %}
-        <script type="text/javascript" src="{{ ASSET_PATH }}/js/app.js"></script>
+        <script type="text/javascript" src="/assets/themes/dbyll/js/app.js"></script>
 
 	</body>
 

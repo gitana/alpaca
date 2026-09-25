@@ -5,7 +5,6 @@ header: Currency Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```currency``` field.
 

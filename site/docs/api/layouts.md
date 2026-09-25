@@ -5,7 +5,6 @@ header: Layouts
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
  Alpaca features both automatic and layout-driven mechanisms for placing your fields onto a page.
  The automatic mechanism simply walks through your fields in the order they are expressed in schema and places them

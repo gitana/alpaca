@@ -5,7 +5,6 @@ header: Date Time Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```datetime``` field.
 

@@ -5,7 +5,6 @@ header: Recursive References
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca tracks references when looking up schema and options information so as to avoid circular loops.  A circular
 loop happens when a child schema points back to a parent schema.  If the reference is a hard reference (meaning that

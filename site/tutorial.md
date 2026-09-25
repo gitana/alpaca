@@ -5,7 +5,6 @@ title: Getting Started with Alpaca
 sitemap:
   priority: 1.0
 ---
-{% include JB/setup %}
 
 This page provides a detailed, walk-through tutorial that describes how you might go about building your first
 Alpaca form.  It isn't all that complicated but this guide goes step-by-step.  Because, well... some people
@@ -22,7 +21,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
 <!-- STEP 1 -->
 <div class="step">
 
-    <img src="{{ BASE_PATH }}/images/step-1.png"/>
+    <img src="/images/step-1.png"/>
 
     <p>
         Launch your favorite text editor and create an empty HTML file.  We're going to build a web page so you're
@@ -45,7 +44,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
 
 <!-- STEP 2 -->
 <div class="step">
-    <img src="{{ BASE_PATH }}/images/step-2.png"/>
+    <img src="/images/step-2.png"/>
     <p>So far so good.  Of course, the page doesn't do much yet.  Let's add in a form!</p>
     <p>Add a <code>div</code> to the body section of your HTML file.  This <code>DIV</code> is a placeholder element
     that we're going to use to hold our Alpaca form.  We use jQuery to get a hold of the <code>DIV</code>
@@ -89,7 +88,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
 
 <!-- STEP 3 -->
 <div class="step">
-    <img src="{{ BASE_PATH }}/images/step-3.png"/>
+    <img src="/images/step-3.png"/>
     <p>
         To render a better feedback form, let us add an options parameter in addition to the schema parameter. The
         options parameter is another JSON document that specifies type and options for the rendered form fields. It now
@@ -120,7 +119,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
 
 <!-- STEP 4 -->
 <div class="step">
-    <img src="{{ BASE_PATH }}/images/step-4.png"/>
+    <img src="/images/step-4.png"/>
     <p>
         The ultimate reason for using Alpaca forms service is to provide end users with a friendly interface for
         collecting their inputs. Those collected information normally needs to be submitted to and stored in a backend
@@ -176,7 +175,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
 
 <!-- STEP 5 -->
 <div class="step">
-    <img src="{{ BASE_PATH }}/images/step-5.png"/>
+    <img src="/images/step-5.png"/>
     <p>
         Alpaca is capable of not only rendering a form based on JSON schema but also reassembling form inputs into a
         JSON document according to the data structure described by the same JSON schema.
@@ -222,7 +221,7 @@ If you're more interested in seeing a quick demo, check out our <a href="example
 
 <!-- STEP 6 -->
 <div class="step">
-    <img src="{{ BASE_PATH }}/images/step-6.png"/>
+    <img src="/images/step-6.png"/>
     <p>
         Alpaca is a client-side forms engine which means form rendition and data processing all happen on client
         side <i>e.g.</i> client browser. This provides a great foundation for high performance and scalability since
@@ -243,4 +242,4 @@ If you're more interested in seeing a quick demo, check out our <a href="example
     </p>
 </div>
 
-<script type="text/javascript" src="{{ BASE_PATH }}/tutorial/tutorial.js"> </script>
+<script type="text/javascript" src="/tutorial/tutorial.js"> </script>

@@ -5,7 +5,6 @@ header: Markdown Editor Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```markdown``` field.
 

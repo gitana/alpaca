@@ -5,7 +5,6 @@ header: Callbacks
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca provides several places where you can hook in callbacks.
 

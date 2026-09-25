@@ -5,7 +5,6 @@ header: Validation
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca computes the validity of fields in a rendered form and updates the DOM automatically to reflect things
 nicely for the end user.

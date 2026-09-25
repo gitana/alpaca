@@ -5,7 +5,6 @@ header: Ordering
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The default rendering engine that Alpaca utilizes will render your fields in the order that they are described within
 your schema.  

@@ -5,7 +5,6 @@ header: Color Picker Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```colorpicker``` field implements a color picker that runs on Bootstrap.  It relies on the following library:
 

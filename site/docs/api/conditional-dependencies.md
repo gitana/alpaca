@@ -5,7 +5,6 @@ header: Conditional Dependencies
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca extends JSON Schema's <a href="dependencies.html">dependencies</a> capabilities by allowing you to define
 conditional dependencies where dependencies are only valid based on conditional value matches with other fields.

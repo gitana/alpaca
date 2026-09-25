@@ -5,7 +5,6 @@ header: Nested Tables
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 <div id="field3"> </div>
 {% raw %}

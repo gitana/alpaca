@@ -5,7 +5,6 @@ header: JSON Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```json``` field.
 

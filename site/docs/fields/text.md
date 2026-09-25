@@ -4,7 +4,6 @@ title: Text Field
 header: Text Field
 group: navigation
 ---
-{% include JB/setup %}
 
 
 The ```text``` field is used to represent text within a form.

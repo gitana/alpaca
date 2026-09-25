@@ -5,7 +5,6 @@ header: IPv4 Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```ipv4``` field.
 

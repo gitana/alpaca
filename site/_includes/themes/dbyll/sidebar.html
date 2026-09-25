@@ -3,11 +3,11 @@
 <br/>
 
 <header class="sidebar-header" role="banner">
-	<a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">
-		<img src="{{ ASSET_PATH }}/images/alpaca-icon.png" class="img-circle" />
+	<a href="/">
+		<img src="/assets/themes/dbyll/images/alpaca-icon.png" class="img-circle" />
 	</a>
 	<h3 class="title">
-        <a href="{% if BASE_PATH %}{{ BASE_PATH }}{% else %}/{% endif %}">{{ site.title }}</a>
+        <a href="/">{{ site.title }}</a>
     </h3>
     <p class="subtitle">
         Easy Forms for jQuery
@@ -28,11 +28,11 @@
 
 <div>
     <ul class="nav nav-pills nav-stacked sidenav">
-        <li><a href="{{ BASE_PATH }}/index.html">Overview</a></li>
-        <li><a href="{{ BASE_PATH }}/documentation.html">Documentation</a></li>
-        <li><a href="{{ BASE_PATH }}/download.html">Download</a></li>
-        <li><a href="{{ BASE_PATH }}/tutorial.html">Tutorial</a></li>
-        <li><a href="{{ BASE_PATH }}/examples.html">Examples</a></li>
+        <li><a href="/index.html">Overview</a></li>
+        <li><a href="/documentation.html">Documentation</a></li>
+        <li><a href="/download.html">Download</a></li>
+        <li><a href="/tutorial.html">Tutorial</a></li>
+        <li><a href="/examples.html">Examples</a></li>
     </ul>
 </div>
 
@@ -45,7 +45,7 @@
         Alpaca is sponsored by
     </p>
     <a href="https://gitana.io" target="_blank">
-        <img src="{{ ASSET_PATH }}/images/cloudcms_logo.png" style="width: 225px" />
+        <img src="/assets/themes/dbyll/images/cloudcms_logo.png" style="width: 225px" />
     </a>
 </header>
 
@@ -90,7 +90,7 @@
 		</li>
 		{% endif %}
 		<li>
-			<a class="btn btn-default btn-sm" href="{{ BASE_PATH }}{{ site.JB.rss_path }}">
+			<a class="btn btn-default btn-sm" href="{{ site.JB.rss_path }}">
 				<i class="fa fa-rss fa-lg"></i>
 			</a>
 		</li>

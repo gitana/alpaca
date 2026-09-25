@@ -5,7 +5,6 @@ header: Connectors
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca supports Connectors as a means for loading schema, options, view and data information from remote data sources.
 By default, Alpaca comes with a <code>default</code> connector that handles loading of data from public / unprotected

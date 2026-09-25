@@ -5,7 +5,6 @@ header: Cookbook
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Here we collect a series of odds and ends related to the kinds of common things you might do with Alpaca.
 You might consider this a collection of best practices though certainly not the only way to do things.

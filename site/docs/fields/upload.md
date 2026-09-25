@@ -5,7 +5,6 @@ header: Upload Field
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 The ```upload``` field provides a mechanism that enables end users to upload one or more files to a server endpoint and
 have references to those files stored in the JSON of your form.  For example, you may have an array of files in your

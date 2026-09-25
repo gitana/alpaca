@@ -1,4 +1,4 @@
-VERSION="$(node server/version)"
+VERSION="$(node -p "require('./package.json').version")"
 BRANCH="$VERSION-release"
 ZIP="alpaca-$VERSION.zip"
 
@@ -16,29 +16,26 @@ git checkout master
 git checkout -b $BRANCH
 
 # initial clean
-rm -r build
-rm -r npm
-rm -r lib
-mkdir -p build
-rm -r package.json.npm
+rm -rf build dist
 
 
 #
 # STEP 1: BUILD ALPACA, WEB SITE JSDOCS
 #
 
-./node_modules/.bin/bower install
+npm install
 
-# build alpaca
-# build web site
-# copy to dist (for bower)
-source ./node_modules/.bin/gulp _deploy
+# build alpaca into dist and run the tests
+npm test || exit 1
+
+# build web site (installs the site's libraries from site/package.json)
+npm run site
 
 # build jsdoc
-./node_modules/.bin/grunt jsdoc
+npm run docs:api
 
-# add the ./dist directory to the commit
-git add dist -f
+# add the alpaca distribution (dist/alpaca) to the commit - not the web site (dist/site)
+git add dist/alpaca -f
 
 # commit changes to local branch
 git commit -m "alpaca release build $VERSION"
@@ -50,14 +47,13 @@ git commit -m "alpaca release build $VERSION"
 # STEP 2: PUBLISH DISTRIBUTION FILES TO CDN
 #
 
-# publish alpaca to CDN
-#grunt publish
+# jsDelivr serves the npm package directly (see STEP 4)
 
 
 
 
 #
-# STEP 3: TAG REPO FOR BOWER
+# STEP 3: TAG REPO
 #
 
 # create a tag
@@ -71,24 +67,9 @@ git push origin $VERSION
 
 #
 # STEP 4: NPM
-# This copies essentials into a new directory.
-# And then publishes that directory.
+# The "files" field in package.json controls what gets published.
 #
-rm -r npm
-mkdir npm
-cp README.md npm
-cp bower.json npm
-cp -r dist npm
-cp license.txt npm
-cp package.json.npm npm/package.json
-cp -r src npm
-cp -r tests npm
-cp -r thirdparty npm
-cd npm
-npm publish --force
-cd ..
-rm -r npm
-rm -r package.json.npm
+npm publish
 
 
 
@@ -96,12 +77,12 @@ rm -r package.json.npm
 # STEP 5: PUBLISH WEB SITE
 #
 
-rm -R build/$ZIP
-cd build/web
+rm -f dist/$ZIP
+cd dist/site
 zip -r ../$ZIP *
 cd ../..
 echo Copying ZIP file to web server
-scp -i ~/keys/alpaca.pem -r build/$ZIP ec2-user@alpacajs.org:~
+scp -i ~/keys/alpaca.pem -r dist/$ZIP ec2-user@alpacajs.org:~
 echo Unzipping to latest directory, writing to deploy.log
 CMD2="cd ~; rm -r ./latest; unzip -o $ZIP -d ./latest"
 echo $CMD2

@@ -1,0 +1,7 @@
+---
+eleventyExcludeFromCollections: true
+title : Sitemap
+permalink: /sitemap.txt
+---
+{% for item in collections.all %}
+{{site.production_url}}{{ item.url }}{% endfor %}

@@ -5,7 +5,6 @@ header: Dependencies
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 JSON Schema provides support for dependencies as a means for describing dependencies between fields.  Using
 dependencies, you can establish that <code>property2</code> should be supplied when <code>property1</code> is supplied.

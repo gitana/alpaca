@@ -5,7 +5,6 @@ header: Serialization
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Serialization is the process of taking the data contained in a form and converting it into JSON or some other format
 so that you can transport it.  Alpaca serializes data for you automatically, taking into account references, nested

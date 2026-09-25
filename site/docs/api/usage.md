@@ -5,7 +5,6 @@ header: Usage
 group: navigation
 tags: field
 ---
-{% include JB/setup %}
 
 Alpaca is packaged up as a function that you call to render a form on top of a DOM element.  The function takes
 in the target DOM element and a configuration block.  It then figures out the schema, options and layout information
@@ -82,7 +81,7 @@ The following static variables can be set and will be picked up by field impleme
 - ```Alpaca.defaultView``` - the default view to use for any Alpaca invocations where view isn't specified
 - ```Alpaca.defaultToolbarSticky``` - the default options.toolbarSticky value to use for arrays.
 - ```Alpaca.defaultDragAndDrop``` - the default options.dragAndDrop value to use for arrays.
-- ```Alpaca.defaultUI``` - if view is omitted, Alpaca makes a best effort to determine which view to use.  Valid values are ```bootstrap```, ```jquerymobile``` or ```jqueryui```.  If not provided, defaults to a web view.
+- ```Alpaca.defaultUI``` - if view is omitted, Alpaca makes a best effort to determine which view to use.  Valid values are ```bootstrap``` or ```web```.  If not provided, defaults to a web view.
 
 ## Static Error Handler
 
