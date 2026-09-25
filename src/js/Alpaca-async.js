@@ -34,13 +34,6 @@
         });
     };
 
-    // Alpaca.nextTick = function(f)
-    // {
-    //     async.nextTick(function() {
-    //         f();
-    //     });
-    // };
-
     // NEXT TICK
 
     // method used to run a task immediately
@@ -90,7 +83,7 @@
                 }
 
             }, delayMs);
-
+        }
 
         ticks.add(tick);
 
