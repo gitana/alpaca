@@ -92,9 +92,9 @@
 
     Alpaca.clearTasks = Alpaca.clearTicks = function()
     {
-        for (var ticks of ticks)
+        for (var tick of ticks)
         {
-            clearTimeout(ticks);
+            clearTimeout(tick);
         }
 
         ticks.clear();
