@@ -30,7 +30,7 @@
                 this.inputType = "color";
             }
 
-            this.base();e
+            this.base();
             if (self.spectrumAvailable){
                 // set up default spectrum settings
                 if (typeof(this.options.spectrum) === "undefined")
