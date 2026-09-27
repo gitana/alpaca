@@ -112,8 +112,7 @@
 
             for (var i = 0; i < this.children.length; i++)
             {
-                var v = this.children[i].getValue();
-                var key = v["_key"];
+                var key = this._getItemKey(this.children[i]);
 
                 if (!key)
                 {
@@ -137,8 +136,7 @@
             var keys = {};
             for (var i = 0; i < this.children.length; i++)
             {
-                var v = this.children[i].getValue();
-                var key = v["_key"];
+                var key = this._getItemKey(this.children[i]);
 
                 if (keys[key])
                 {
@@ -149,6 +147,26 @@
             }
 
             return isValid;
+        },
+
+        /**
+         * Hands back the key for a map item.
+         *
+         * Reads the item's "_key" field directly where possible, rather than computing the item's entire value
+         * (which, for nested items, walks the whole subtree).
+         *
+         * @param item the child field for a map entry
+         * @returns {*} the key
+         */
+        _getItemKey: function(item)
+        {
+            if (item.childrenByPropertyId && item.childrenByPropertyId["_key"])
+            {
+                return item.childrenByPropertyId["_key"].getValue();
+            }
+
+            var v = item.getValue();
+            return v ? v["_key"] : undefined;
         }
 
         /* builder_helpers */

@@ -1175,13 +1175,15 @@
             // if we're not using the "sticky" toolbar, then show and hide the item action buttons when hovered
             if (typeof(this.options.toolbarSticky) === "undefined" || this.options.toolbarSticky === null)
             {
+                // find this field's actionbars once, keyed by item index (rather than searching the field per item)
+                var actionbarsByIndex = Alpaca.indexElementsByAttr(self.getFieldEl(), ".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() +  "']", "data-alpaca-array-actionbar-item-index");
+
                 // find each item
                 var items = this.getFieldEl().find(".alpaca-container-item[data-alpaca-container-item-parent-field-id='" + self.getId() +  "']");
                 $(items).each(function(itemIndex) {
 
                     // find the actionbar for this item
-                    // find from containerItemEl
-                    var actionbarEl = $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-parent-field-id='" + self.getId() +  "'][data-alpaca-array-actionbar-item-index='" + itemIndex + "']");
+                    var actionbarEl = $(actionbarsByIndex[itemIndex] || []);
                     if (actionbarEl && actionbarEl.length > 0)
                     {
                         $(this).hover(function() {

@@ -421,12 +421,15 @@
                 $(self.container).removeAttr("data-alpaca-container-item-count");
             }
 
+            // find all of the insertion points up front (rather than searching the container once per item)
+            var insertionPoints = Alpaca.indexElementsByAttr(self.container, "." + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM, Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY);
+
             for (var i = 0; i < model.items.length; i++)
             {
                 var item = model.items[i];
 
                 // find the insertion point
-                var insertionPoint = $(self.container).find("." + Alpaca.MARKER_CLASS_CONTAINER_FIELD_ITEM + "[" + Alpaca.MARKER_DATA_CONTAINER_FIELD_ITEM_KEY + "='" + item.name + "']");
+                var insertionPoint = $(insertionPoints[item.name] || []);
                 if (!layoutBindings)
                 {
                     var holder = $(insertionPoint).parent();

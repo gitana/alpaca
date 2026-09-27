@@ -3752,6 +3752,36 @@
         return replacementEl;
     };
 
+    /**
+     * Finds all elements under a root that match a selector and groups them by the value of an attribute.
+     *
+     * Use this instead of running a separate find() for each value, which searches the whole subtree every time.
+     * Each value maps to an array of elements in document order (the same set a per-value find would return).
+     *
+     * @param rootEl the element to search under
+     * @param selector the selector to match
+     * @param attr the attribute to group by
+     * @returns {Object} map of attribute value -> array of elements
+     */
+    Alpaca.indexElementsByAttr = function(rootEl, selector, attr)
+    {
+        // no prototype, so that keys like "constructor" or "toString" (valid field names) don't match anything
+        var index = Object.create(null);
+
+        $(rootEl).find(selector).each(function() {
+            var key = this.getAttribute(attr);
+            if (key !== null)
+            {
+                if (!index[key]) {
+                    index[key] = [];
+                }
+                index[key].push(this);
+            }
+        });
+
+        return index;
+    };
+
     Alpaca.asArray = function(thing)
     {
         if (!Alpaca.isArray(thing))

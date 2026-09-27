@@ -154,6 +154,10 @@
 
         var self = this;
 
+        // find the existing action bars (or insertion point markers) once, rather than searching the field per child
+        var existingActionbars = remove ? Alpaca.indexElementsByAttr(self.getFieldEl(), ".alpaca-array-actionbar", "data-alpaca-array-actionbar-field-id") : null;
+        var insertionPoints = remove ? null : Alpaca.indexElementsByAttr(self.getFieldEl(), "." + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR, Alpaca.MARKER_DATA_ARRAY_ITEM_KEY);
+
         // walk over all children
         for (var childIndex = 0; childIndex < self.children.length; childIndex++)
         {
@@ -164,7 +168,7 @@
             {
                 // find the existing action bar for this child
                 // if we have one, remove it and replace it with an insertion point marker
-                var existingActionbar = $(self.getFieldEl()).find(".alpaca-array-actionbar[data-alpaca-array-actionbar-field-id='" + childFieldId + "']");
+                var existingActionbar = $(existingActionbars[childFieldId] || []);
                 if (existingActionbar.length > 0)
                 {
                     var insertionPointEl = $("<div class='" + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR + "' " + Alpaca.MARKER_DATA_ARRAY_ITEM_KEY + "='" + childField.name + "'></div>");
@@ -177,7 +181,7 @@
             {
                 // find the insertion point marker
                 // if we find one, bind in the action toolbar
-                var insertionPointEl = $(self.getFieldEl()).find("." + Alpaca.MARKER_CLASS_ARRAY_ITEM_ACTIONBAR + "[" + Alpaca.MARKER_DATA_ARRAY_ITEM_KEY + "='" + childField.name + "']");
+                var insertionPointEl = $(insertionPoints[childField.name] || []);
                 if (insertionPointEl.length > 0)
                 {
                     var templateDescriptor = self.view.getTemplateDescriptor("container-array-actionbar", self);

@@ -132,6 +132,7 @@ of source files lives in `scripts/sources.mjs`.
 | `npm run watch`      | Build, then rebuild whenever `src/` changes                               |
 | `npm test`           | Build, then run the test suite                                            |
 | `npm run test:watch` | Run the test suite in watch mode                                          |
+| `npm run bench`      | Benchmark rendering, validation and refresh (`--save` / `--compare` a run) |
 | `npm run dev`        | Watch the library and serve the web site with live reload on :9999        |
 | `npm run site`       | Build the library and the web site into `dist/site`                       |
 | `npm run site:install` | Reinstall the web site's third-party libraries (`site/package.json`)      |

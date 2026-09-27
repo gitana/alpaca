@@ -20,6 +20,7 @@
     "watch": "node scripts/build.mjs --watch",
     "test": "node scripts/build.mjs && vitest run",
     "test:watch": "vitest",
+    "bench": "node scripts/build.mjs && node --no-warnings scripts/bench.mjs",
     "dev": "node scripts/dev.mjs",
     "site": "node scripts/site-deps.mjs && node scripts/build.mjs && eleventy",
     "site:install": "node scripts/site-deps.mjs --force",
