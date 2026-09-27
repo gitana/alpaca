@@ -1033,6 +1033,7 @@
             {
                 this.field.hide();
                 this._isHidden = true;
+                Alpaca.invalidateValidity(this);
             }
 
             var defaultHideInitValidationError = (this.view.type === 'create') && !this.refreshed;
@@ -1465,8 +1466,15 @@
             // add ourselves in last
             functions.push(functionBuilder(this, contexts));
 
+            // cache container validity while the pass runs, so that each ancestor's subtree isn't re-walked for
+            // every field (see Alpaca.beginValidityCache)
+            var endValidityCache = Alpaca.beginValidityCache();
+
             // now run all of the functions in parallel
             Alpaca.parallel(functions, function(err) {
+
+                // the pass is done - don't cache for anything that runs from here on (including user callbacks)
+                endValidityCache();
 
                 // contexts now contains all of the validation results
 
@@ -1536,6 +1544,9 @@
                     cb();
                 }
             });
+
+            // if any validators are asynchronous, the pass carries on after this point without the cache
+            endValidityCache();
         },
 
         /**
@@ -1598,6 +1609,9 @@
 
             this._previouslyValidated = true;
 
+            // our validation state may have changed
+            Alpaca.invalidateValidity(this);
+
             return status;
         },
 
@@ -1635,6 +1649,7 @@
 
                     // always store in "custom"
                     _this.validation["custom"] = valInfo;
+                    Alpaca.invalidateValidity(_this);
 
                     callback();
                 });
@@ -1777,6 +1792,7 @@
             if (this.options && this.options.hidden)
             {
                 this._isHidden = true;
+                Alpaca.invalidateValidity(this);
 
                 // if the hidden option is on, we're always hidden
                 return;
@@ -1794,6 +1810,7 @@
                 this.fireCallback("show");
 
                 this._isHidden = false;
+                Alpaca.invalidateValidity(this);
             }
         },
 
@@ -1817,6 +1834,7 @@
             this.fireCallback("hide");
 
             this._isHidden = true;
+            Alpaca.invalidateValidity(this);
         },
 
         onHide: function()
@@ -1932,19 +1950,46 @@
             
             if (checkChildren && this.children)
             {
-                for (var i = 0; i < this.children.length; i++) {
-                    var child = this.children[i];
-                    if (child.isValidationParticipant())
-                    {
-                        if (!child.isValid(checkChildren)) {
-                            return false;
-                        }
+                // during a validation pass, reuse this container's result if nothing beneath it has changed
+                // (see Alpaca.beginValidityCache)
+                var cache = Alpaca._validityCache;
+                var id = cache ? this.getId() : null;
+                if (cache && (id in cache))
+                {
+                    return cache[id];
+                }
 
-                        // update validation state?
+                var valid = this._isValidWithChildren(checkChildren);
+                if (cache)
+                {
+                    cache[id] = valid;
+                }
+
+                return valid;
+            }
+
+            return this._isValidSelf();
+        },
+
+        _isValidWithChildren: function(checkChildren)
+        {
+            for (var i = 0; i < this.children.length; i++) {
+                var child = this.children[i];
+                if (child.isValidationParticipant())
+                {
+                    if (!child.isValid(checkChildren)) {
+                        return false;
                     }
+
+                    // update validation state?
                 }
             }
 
+            return this._isValidSelf();
+        },
+
+        _isValidSelf: function()
+        {
             if ($.isEmptyObject(this.validation)) {
                 return true;
             } else {

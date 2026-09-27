@@ -3491,6 +3491,70 @@
      *
      * @returns {Array}
      */
+    /**
+     * Validity cache.
+     *
+     * A validation pass (see Field.refreshValidationState) asks every field for isValid(true), and each of those
+     * checks its ancestors' isValid(true) too - which walks each ancestor's entire subtree.  Without caching that
+     * is quadratic in the size of the form.
+     *
+     * While a pass is running, Field.isValid(true) remembers each container's result here, keyed by field id.
+     * Anything that can change a result (validating a field, a custom validator reporting, a field being shown or
+     * hidden, children being added or removed) calls Alpaca.invalidateValidity(field), which forgets the cached
+     * result for that field and all of its ancestors.  So a cached answer is always the one isValid(true) would
+     * have computed.
+     *
+     * The cache only exists while a pass runs synchronously.  It is dropped before the pass's completion callback
+     * runs, so user code (and any asynchronous custom validators) always see uncached results.
+     */
+    Alpaca._validityCache = null;
+    var validityCacheDepth = 0;
+
+    /**
+     * Starts (or joins) a validity cache scope.
+     *
+     * @returns {Function} call to end the scope (safe to call more than once)
+     */
+    Alpaca.beginValidityCache = function()
+    {
+        if (validityCacheDepth === 0)
+        {
+            Alpaca._validityCache = Object.create(null);
+        }
+        validityCacheDepth++;
+
+        var ended = false;
+        return function()
+        {
+            if (!ended)
+            {
+                ended = true;
+                validityCacheDepth--;
+                if (validityCacheDepth === 0)
+                {
+                    Alpaca._validityCache = null;
+                }
+            }
+        };
+    };
+
+    /**
+     * Forgets any cached validity for the given field and its ancestors.
+     *
+     * @param field
+     */
+    Alpaca.invalidateValidity = function(field)
+    {
+        var cache = Alpaca._validityCache;
+        if (cache)
+        {
+            for (var f = field; f; f = f.parent)
+            {
+                delete cache[f.getId()];
+            }
+        }
+    };
+
     Alpaca.compileValidationContext = function(field, callback)
     {
         // walk up the parent tree until we find the top-most control

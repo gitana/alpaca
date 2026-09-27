@@ -529,6 +529,9 @@
             }
 
             child.parent = this;
+
+            // our set of children changed
+            Alpaca.invalidateValidity(this);
         },
 
         /**
@@ -556,6 +559,9 @@
             }
 
             child.parent = null;
+
+            // our set of children changed
+            Alpaca.invalidateValidity(this);
         },
 
         /**
