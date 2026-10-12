@@ -13,7 +13,7 @@
     "datatables.net-bs": "1.10.10",
     "datatables.net-rowreorder": "1.1.0",
     "google-code-prettify": "1.0.5",
-    "handlebars": "4.7.6",
+    "handlebars": "4.7.10",
     "handsontable": "github:handsontable/handsontable#0.11.4",
     "jquery": "2.1.4",
     "jquery-maskedinput": "npm:jquery.maskedinput@1.4.1",

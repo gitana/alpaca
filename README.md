@@ -2,6 +2,7 @@
 
 Alpaca provides the easiest and fastest way to generate interactive forms for the web and mobile devices. 
 It runs simply as HTML5 or more elaborately using Bootstrap.
+
 Alpaca uses Handlebars to process JSON schema and provide developers with an extensible framework for implementing controls, wizards, layouts, I18N support and an custom data persistence.
 
 The goal of Alpaca is to provide the open source community with a fantastic forms engine that rivals or beats what most
