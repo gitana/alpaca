@@ -28,7 +28,7 @@
     "spectrum": "npm:spectrum-colorpicker@1.7.1",
     "summernote": "0.8.1",
     "tinycolor": "npm:tinycolor2@1.3.0",
-    "tinymce": "4.1.7",
+    "tinymce": "7.9.3",
     "typeahead.js": "0.10.5"
   }
 }
