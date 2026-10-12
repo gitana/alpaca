@@ -15,7 +15,7 @@
     "google-code-prettify": "1.0.5",
     "handlebars": "4.7.10",
     "handsontable": "github:handsontable/handsontable#0.11.4",
-    "jquery": "2.1.4",
+    "jquery": "3.5.0",
     "jquery-maskedinput": "npm:jquery.maskedinput@1.4.1",
     "jquery-ui": "github:components/jqueryui#1.11.2",
     "jqueryui-timepicker-addon": "github:trentrichardson/jQuery-Timepicker-Addon#v1.5.0",
