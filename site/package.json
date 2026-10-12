@@ -5,7 +5,7 @@
   "dependencies": {
     "ace-builds": "1.2.6",
     "blueimp-file-upload": "github:blueimp/jQuery-File-Upload#9.12.3",
-    "bootstrap": "3.3.2",
+    "bootstrap": "5.0.0",
     "bootstrap-multiselect": "0.9.13",
     "bootstrap-tokenfield": "github:sliptree/bootstrap-tokenfield#v0.12.1",
     "ckeditor": "4.5.6",
